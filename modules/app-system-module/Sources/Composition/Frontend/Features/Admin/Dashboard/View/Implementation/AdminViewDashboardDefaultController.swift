@@ -24,6 +24,6 @@ struct AdminViewDashboardDefaultController: AdminViewDashboardController {
                 to: now
             )
         )
-        return presenter.renderPage(model: model)
+        return try await presenter.renderPage(model: model)
     }
 }

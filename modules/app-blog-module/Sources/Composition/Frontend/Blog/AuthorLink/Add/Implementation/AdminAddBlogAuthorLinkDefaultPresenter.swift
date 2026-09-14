@@ -13,22 +13,18 @@ import WebFrontend
 
 struct AdminAddBlogAuthorLinkDefaultPresenter: AdminAddBlogAuthorLinkPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderAddPage(
         menuId: String,
         state: BlogAuthorLinkForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add blog author link",
-            description: "Add a blog author link in management",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: BlogAuthorLinkAdd(
                 state: .init(
                     menuId: menuId,
@@ -41,18 +37,7 @@ struct AdminAddBlogAuthorLinkDefaultPresenter: AdminAddBlogAuthorLinkPresenter {
 
     func breadcrumb(
         menuId: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Authors", link: "/admin/blog/authors/"),
-                .init(label: "Author", link: "/admin/blog/authors/\(menuId)/"),
-                .init(
-                    label: "Links",
-                    link: "/admin/blog/authors/\(menuId)/links/"
-                ),
-            ]
-        )
+    ) -> [NewAdminBreadcrumb.Link] {
+        BlogAdminRoutes.authorLinksBreadcrumb(RouterPath(menuId))
     }
 }

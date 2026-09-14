@@ -29,6 +29,7 @@ struct AdminEditBlogPost {
                     ),
                     presenter: AdminEditBlogPostDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

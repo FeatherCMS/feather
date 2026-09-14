@@ -1,7 +1,7 @@
 import AnalyticsAdminAPI
+import AnalyticsContracts
 import FeatherAdmin
-import FeatherValidation
-import Foundation
+import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
@@ -9,160 +9,101 @@ import WebBuilders
 import WebComponents
 
 struct AnalyticsLogTable: Component {
-
-    private static let methodOptions = [
-        ("", "All methods"),
-        ("GET", "GET"),
-        ("POST", "POST"),
-        ("PUT", "PUT"),
-        ("PATCH", "PATCH"),
-        ("DELETE", "DELETE"),
-        ("HEAD", "HEAD"),
-        ("OPTIONS", "OPTIONS"),
-    ]
-
-    private static let statusOptions = [
-        ("", "All statuses"),
-        ("200", "200 OK"),
-        ("201", "201 Created"),
-        ("204", "204 No Content"),
-        ("301", "301 Moved Permanently"),
-        ("302", "302 Found"),
-        ("304", "304 Not Modified"),
-        ("400", "400 Bad Request"),
-        ("401", "401 Unauthorized"),
-        ("403", "403 Forbidden"),
-        ("404", "404 Not Found"),
-        ("409", "409 Conflict"),
-        ("422", "422 Unprocessable Entity"),
-        ("429", "429 Too Many Requests"),
-        ("500", "500 Internal Server Error"),
-        ("502", "502 Bad Gateway"),
-        ("503", "503 Service Unavailable"),
-    ]
-
     struct State {
         let canAccess: Bool
-        let permissions: Set<String>
+        let permissions: NewAdminListActions
         let logs: [Components.Schemas.AnalyticsLogListItemSchema]
-        let page: Int
-        let pageSize: Int
-        let total: Int
+        let pageState: NewAdminListPageState
         let search: String
         let source: String
         let method: String
         let responseCode: String
-        let deniedInfo: String
-        let deniedMessage: String
-        let breadcrumb: AdminBreadcrumb.State
+        let error: String?
     }
 
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
+            context.render(
+                NewAdminBreadcrumb(links: AnalyticsAdminRoutes.breadcrumb)
+            )
             if !state.canAccess {
-                H1(state.deniedInfo)
-                P(state.deniedMessage)
+                context.render(
+                    NewAdminStatusView(
+                        state: .init(
+                            title: "Forbidden",
+                            message:
+                                "Your account cannot access analytics logs."
+                        ),
+                        icon: FeatherIcons.alertCircle()
+                    )
+                )
             }
             else {
-                context.render(AdminBreadcrumb(state: state.breadcrumb))
-                H1("Analytics logs")
-                Form {
-                    Div {
-                        Input()
-                            .type(.search)
-                            .name("search")
-                            .placeholder("Quick search path")
-                            .value(state.search)
-                        Select {
-                            Option("All sources").value("")
-                            if state.source == "backend_api" {
-                                Option("Backend API")
-                                    .value("backend_api")
-                                    .selected()
-                            }
-                            else {
-                                Option("Backend API")
-                                    .value("backend_api")
-                            }
-                            if state.source == "web_app" {
-                                Option("Web app")
-                                    .value("web_app")
-                                    .selected()
-                            }
-                            else {
-                                Option("Web app")
-                                    .value("web_app")
-                            }
-                        }
-                        .name("source")
-                        Select {
-                            for option in Self.methodOptions {
-                                if state.method == option.0 {
-                                    Option(option.1)
-                                        .value(option.0)
-                                        .selected()
-                                }
-                                else {
-                                    Option(option.1)
-                                        .value(option.0)
-                                }
-                            }
-                        }
-                        .name("method")
-                        Select {
-                            for option in Self.statusOptions {
-                                if state.responseCode == option.0 {
-                                    Option(option.1)
-                                        .value(option.0)
-                                        .selected()
-                                }
-                                else {
-                                    Option(option.1)
-                                        .value(option.0)
-                                }
-                            }
-                        }
-                        .name("responseCode")
-                        Button("Search").type(.submit)
-                        A("Reset")
-                            .href("/admin/analytics/logs/")
-                    }
-                    .class("table-search-form", "analytics-log-search-form")
-                }
-                .method(.get)
-                .action("/admin/analytics/logs/")
-
-                if state.logs.isEmpty {
-                    let totalPages = max(
-                        1,
-                        (state.total + state.pageSize - 1) / state.pageSize
-                    )
-                    if state.total > 0 && state.page > totalPages {
-                        P("Page \(state.page) does not exist.")
-                        P {
-                            Span("Go to ")
-                            A("page 1").href("/admin/analytics/logs/?page=1")
-                            Span(" or ")
-                            A("page \(totalPages)")
-                                .href(
-                                    "/admin/analytics/logs/?page=\(totalPages)"
-                                )
-                            Span(".")
-                        }
-                    }
-                    else {
-                        P(
-                            state.search.isEmpty
-                                ? "No analytics logs yet."
-                                : "No analytics logs match your search."
+                context.render(
+                    NewAdminPageHeader(
+                        state: .init(
+                            title: "Analytics logs",
+                            description: "Browse tracked request log records."
                         )
-                    }
+                    )
+                )
+                if let error = state.error {
+                    P(error).class("new-admin-form__error")
+                }
+                context.render(content(context: &context))
+            }
+        }
+        .class("cms-section")
+    }
+
+    private func content(context: inout RenderContext) -> NewAdminList {
+        let hasActiveQuery =
+            !state.search.isEmpty || !state.source.isEmpty
+            || !state.method.isEmpty || !state.responseCode.isEmpty
+        return NewAdminList(
+            table: {
+                if state.pageState.isPageOutOfRange {
+                    context.render(
+                        NewAdminListInvalidPageState(
+                            pageState: state.pageState,
+                            path: AnalyticsAdminRoutes.logs.description
+                        )
+                    )
+                }
+                else if state.logs.isEmpty {
+                    context.render(
+                        NewAdminListNoResultsState(
+                            message: hasActiveQuery
+                                ? "No analytics logs match your search."
+                                : "No analytics logs yet.",
+                            icon: FeatherIcons.activity(),
+                            action: {
+                                if hasActiveQuery {
+                                    context.render(
+                                        NewAdminButton(
+                                            "Reset search",
+                                            href: AnalyticsAdminRoutes.logs
+                                                .description,
+                                            style: .secondary
+                                        )
+                                    )
+                                }
+                            }
+                        )
+                    )
                 }
                 else {
                     context.render(
-                        ListTableShell(
+                        NewAdminListShell(
+                            layout: .init(
+                                name: "analytics-logs",
+                                columns: [
+                                    .fixed(90), .fixed(100), .fixed(120),
+                                    .fraction(2), .fraction(1), .fixed(160),
+                                ]
+                            ),
                             table: Table {
                                 Thead {
                                     Tr {
@@ -177,14 +118,28 @@ struct AnalyticsLogTable: Component {
                                 Tbody {
                                     for log in state.logs {
                                         Tr {
-                                            Td(log.method)
-                                                .data("label", "Method")
-                                            Td("\(log.responseCode)")
-                                                .data("label", "Status")
-                                            Td(log.source)
-                                                .data("label", "Source")
-                                            Td(log.path)
-                                                .data("label", "Path")
+                                            Td {
+                                                context.render(
+                                                    NewAdminChip(
+                                                        label: log.method,
+                                                        color: .blue
+                                                    )
+                                                )
+                                            }
+                                            .data("label", "Method")
+                                            Td {
+                                                context.render(
+                                                    statusChip(log.responseCode)
+                                                )
+                                            }
+                                            .data("label", "Status")
+                                            Td {
+                                                context.render(
+                                                    sourceChip(log.source)
+                                                )
+                                            }
+                                            .data("label", "Source")
+                                            Td(log.path).data("label", "Path")
                                             Td(
                                                 DateFormatting
                                                     .formatUnixTimestamp(
@@ -193,23 +148,26 @@ struct AnalyticsLogTable: Component {
                                             )
                                             .data("label", "Created")
                                             context.render(
-                                                ListTableRowActions(
-                                                    state: .init(
-                                                        label: "Actions",
-                                                        actions: [
-                                                            .init(
-                                                                title:
-                                                                    "Details",
-                                                                href:
-                                                                    "/admin/analytics/logs/\(log.id)/",
-                                                                className: nil,
-                                                                permission:
-                                                                    "analytics:logs:list"
-                                                            )
-                                                        ],
-                                                        permissions: state
-                                                            .permissions
-                                                    )
+                                                NewAdminListRowActions(
+                                                    label: "Actions",
+                                                    actions: [
+                                                        .init(
+                                                            "Details",
+                                                            href:
+                                                                AnalyticsAdminRoutes
+                                                                .log(
+                                                                    RouterPath(
+                                                                        log.id
+                                                                    )
+                                                                )
+                                                                .description,
+                                                            permission:
+                                                                AnalyticsPermissions
+                                                                .Logs.list
+                                                        )
+                                                    ],
+                                                    permissions: state
+                                                        .permissions
                                                 )
                                             )
                                         }
@@ -219,25 +177,98 @@ struct AnalyticsLogTable: Component {
                             .class("cms-table", "action-table")
                         )
                     )
-                    context.render(
-                        ListTablePagination(
-                            state: .init(
-                                path: "/admin/analytics/logs/",
-                                page: state.page,
-                                pageSize: state.pageSize,
-                                total: state.total,
-                                search: state.search,
-                                queryItems: [
-                                    ("source", state.source),
-                                    ("method", state.method),
-                                    ("responseCode", state.responseCode),
-                                ]
-                            )
+                }
+            },
+            search: {
+                context.render(
+                    NewAdminListSearch(
+                        state: .init(
+                            action: AnalyticsAdminRoutes.logs.description,
+                            placeholder: "Quick search path",
+                            search: state.search,
+                            queryItems: [
+                                .init(name: "source", value: state.source),
+                                .init(name: "method", value: state.method),
+                                .init(
+                                    name: "responseCode",
+                                    value: state.responseCode
+                                ),
+                            ]
+                        ),
+                        additionalFields: { filters }
+                    )
+                )
+            },
+            pagination: {
+                context.render(
+                    NewAdminListPagination(
+                        state: .init(
+                            path: AnalyticsAdminRoutes.logs.description,
+                            pageState: state.pageState,
+                            search: state.search,
+                            queryItems: [
+                                .init(name: "source", value: state.source),
+                                .init(name: "method", value: state.method),
+                                .init(
+                                    name: "responseCode",
+                                    value: state.responseCode
+                                ),
+                            ]
                         )
                     )
+                )
+            }
+        )
+    }
+
+    private var filters: [any FlowContent] {
+        [
+            Select {
+                Option("All sources").value("")
+                    .if(state.source.isEmpty) { $0.selected() }
+                Option("Backend API").value("backend_api")
+                    .if(state.source == "backend_api") { $0.selected() }
+                Option("Web app").value("web_app")
+                    .if(state.source == "web_app") { $0.selected() }
+            }
+            .name("source"),
+            Select {
+                for option in [
+                    "", "GET", "POST", "PUT", "PATCH", "DELETE", "HEAD",
+                    "OPTIONS",
+                ] {
+                    Option(option.isEmpty ? "All methods" : option)
+                        .value(option)
+                        .if(state.method == option) { $0.selected() }
                 }
             }
-        }
-        .class("cms-section")
+            .name("method"),
+            Select {
+                for option in [
+                    "", "200", "201", "204", "301", "302", "304", "400", "401",
+                    "403", "404", "409", "422", "429", "500", "502", "503",
+                ] {
+                    Option(option.isEmpty ? "All statuses" : option)
+                        .value(option)
+                        .if(state.responseCode == option) { $0.selected() }
+                }
+            }
+            .name("responseCode"),
+        ]
+    }
+
+    private func statusChip(_ status: Int) -> NewAdminChip {
+        let color: NewAdminChip.ColorName =
+            status >= 500
+            ? .red
+            : (status >= 400 ? .orange : (status >= 300 ? .yellow : .green))
+        return .init(label: "\(status)", color: color)
+    }
+
+    private func sourceChip(_ source: String) -> NewAdminChip {
+        .init(
+            label: source == "web_app" ? "Web app" : "Backend API",
+            color: source == "web_app" ? .purple : .blue
+        )
     }
 }

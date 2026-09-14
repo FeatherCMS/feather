@@ -28,7 +28,7 @@ struct AdminAddBlogPostDefaultController: AdminAddBlogPostController {
         let options =
             (try? await runtime.interactor.loadOptions())
             ?? .init(authors: [], tags: [])
-        return runtime.presenter.renderAddPage(
+        return try await runtime.presenter.renderAddPage(
             state: formState(options: options, slugPrefix: slugPrefix),
             permissions: context.currentUserPermissions
         )
@@ -51,15 +51,12 @@ struct AdminAddBlogPostDefaultController: AdminAddBlogPostController {
             try await payload.validate()
             try await runtime.interactor.execute(input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/blog/posts/",
-                        title: "Added",
-                        message: "Blog post added successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/blog/posts/",
+                notification: .init(
+                    title: "Added",
+                    message: "Blog post added successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -80,7 +77,7 @@ struct AdminAddBlogPostDefaultController: AdminAddBlogPostController {
                 slugPrefix: slugPrefix
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions
@@ -101,7 +98,7 @@ struct AdminAddBlogPostDefaultController: AdminAddBlogPostController {
                 slugPrefix: slugPrefix
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions
@@ -122,7 +119,7 @@ struct AdminAddBlogPostDefaultController: AdminAddBlogPostController {
                 slugPrefix: slugPrefix
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions
@@ -185,7 +182,6 @@ struct AdminAddBlogPostDefaultController: AdminAddBlogPostController {
             authorIdsError: nil,
             tagIdsError: nil,
             error: nil,
-            success: nil
         )
     }
 

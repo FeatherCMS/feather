@@ -15,7 +15,7 @@ extension AdminListAnalyticsLogController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/analytics/logs/",
+            AnalyticsAdminRoutes.logs,
             use: getAnalyticsLogs
         )
     }

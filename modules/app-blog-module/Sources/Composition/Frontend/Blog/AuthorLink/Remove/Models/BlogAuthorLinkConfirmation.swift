@@ -17,27 +17,24 @@ struct BlogAuthorLinkConfirmation: Component {
         let menuId: String
         let id: String
         let label: String
-        let breadcrumb: AdminBreadcrumb.State
+        let breadcrumb: [NewAdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
         context.render(
-            AdminConfirmationDialog(
-                state: .init(
-                    breadcrumb: state.breadcrumb,
+            NewAdminConfirmation(
+                breadcrumb: state.breadcrumb,
+                pageHeader: .init(
                     title: "Remove blog author link",
-                    message:
-                        "Are you sure you want to remove this blog author link? This action cannot be undone.",
-                    details: [
-                        .init(prefix: "Label: ", value: state.label)
-                    ],
-                    submitLabel: "Remove link",
-                    actionURL:
-                        "/admin/blog/authors/\(state.menuId)/links/\(state.id)/remove/",
-                    cancelURL: "/admin/blog/authors/\(state.menuId)/links/"
-                )
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: [state.label],
+                action:
+                    "/admin/blog/authors/\(state.menuId)/links/\(state.id)/remove/",
+                cancel: "/admin/blog/authors/\(state.menuId)/links/",
+                submitLabel: "Remove link"
             )
         )
     }

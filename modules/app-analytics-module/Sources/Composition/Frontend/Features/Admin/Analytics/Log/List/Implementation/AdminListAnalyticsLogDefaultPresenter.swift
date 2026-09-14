@@ -1,16 +1,13 @@
 import AnalyticsContracts
 import FeatherAdmin
 import FeatherContracts
-import HTML
 import Hummingbird
-import SGML
-import WebBuilders
-import WebComponents
 
 struct AdminListAnalyticsLogDefaultPresenter:
     AdminListAnalyticsLogPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderListPage(
@@ -21,65 +18,33 @@ struct AdminListAnalyticsLogDefaultPresenter:
         method: String?,
         responseCode: String?,
         error: String?
-    ) -> HTMLResponse {
+    ) async throws -> HTMLResponse {
         let canAccess = permissions.contains(
             AnalyticsPermissions.Logs.list.rawValue
         )
-        if let error {
-            return renderEngine.renderAdminPage(
-                request: request,
-                title: "Analytics logs",
-                description: "Analytics log list",
-                imagePath: "images/logos/logo.png",
-                sidebarState: renderEngine.adminSidebarState(
-                    request: request,
-                    permissions: permissions
-                ),
-                content: AnalyticsLogError(
-                    state: .init(
-                        info: "Unable to load analytics logs.",
-                        message: error,
-                        breadcrumb: analyticsLogBreadcrumbState()
-                    )
-                )
-            )
-        }
-        return renderEngine.renderAdminPage(
+        return try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Analytics logs",
-            description: "Analytics log list",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AnalyticsLogTable(
                 state: .init(
                     canAccess: canAccess,
-                    permissions: permissions,
+                    permissions: .init(
+                        Set(permissions.map(PermissionKey.init))
+                    ),
                     logs: model.items,
-                    page: model.page,
-                    pageSize: model.pageSize,
-                    total: model.total,
+                    pageState: .init(
+                        page: model.page,
+                        pageSize: model.pageSize,
+                        total: model.total
+                    ),
                     search: search ?? "",
                     source: source ?? model.source,
                     method: method ?? model.method,
                     responseCode: responseCode ?? model.responseCode,
-                    deniedInfo: "Forbidden",
-                    deniedMessage:
-                        "Your account cannot access analytics logs.",
-                    breadcrumb: analyticsLogBreadcrumbState()
+                    error: error
                 )
             )
-        )
-    }
-
-    private func analyticsLogBreadcrumbState() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Analytics", link: "/admin/analytics/"),
-            ]
         )
     }
 }

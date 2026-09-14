@@ -16,26 +16,23 @@ struct BlogPostConfirmation: Component {
     struct State {
         let id: String
         let source: String
-        let breadcrumb: AdminBreadcrumb.State
+        let breadcrumb: [NewAdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
         context.render(
-            AdminConfirmationDialog(
-                state: .init(
-                    breadcrumb: state.breadcrumb,
+            NewAdminConfirmation(
+                breadcrumb: state.breadcrumb,
+                pageHeader: .init(
                     title: "Remove post",
-                    message:
-                        "Are you sure you want to remove this post? This action cannot be undone.",
-                    details: [
-                        .init(prefix: "Title: ", value: state.source)
-                    ],
-                    submitLabel: "Remove post",
-                    actionURL: "/admin/blog/posts/\(state.id)/remove/",
-                    cancelURL: "/admin/blog/posts/"
-                )
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: [state.source],
+                action: "/admin/blog/posts/\(state.id)/remove/",
+                cancel: "/admin/blog/posts/",
+                submitLabel: "Remove post"
             )
         )
     }

@@ -31,7 +31,7 @@ struct AdminEditBlogAuthorDefaultController:
         let permissions = context.currentUserPermissions
         do {
             let menu = try await runtime.interactor.load(id: id)
-            return runtime.presenter.renderEditPage(
+            return try await runtime.presenter.renderEditPage(
                 id: id,
                 state: formState(
                     name: menu.name,
@@ -42,12 +42,11 @@ struct AdminEditBlogAuthorDefaultController:
                     selectedProfileImage: menu.profileImage,
                     permissions: permissions
                 ),
-                isEdited: request.hasQueryFlag("edited"),
                 permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
+            return try await runtime.presenter.renderErrorPage(
                 id: id,
                 info: error.errorTitle,
                 message: error.errorDescription,
@@ -74,15 +73,12 @@ struct AdminEditBlogAuthorDefaultController:
             try await payload.validate()
             try await runtime.interactor.update(id: id, input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/blog/authors/\(id)/edit/",
-                        title: "Saved",
-                        message: "Author edited successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/blog/authors/\(id)/edit/",
+                notification: .init(
+                    title: "Saved",
+                    message: "Author edited successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -98,11 +94,10 @@ struct AdminEditBlogAuthorDefaultController:
                 permissions: permissions
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -116,11 +111,10 @@ struct AdminEditBlogAuthorDefaultController:
                 permissions: permissions
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -134,11 +128,10 @@ struct AdminEditBlogAuthorDefaultController:
                 permissions: permissions
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -183,7 +176,6 @@ struct AdminEditBlogAuthorDefaultController:
                 MediaPermissions.Assets.create.rawValue
             ),
             error: nil,
-            success: nil
         )
     }
 }

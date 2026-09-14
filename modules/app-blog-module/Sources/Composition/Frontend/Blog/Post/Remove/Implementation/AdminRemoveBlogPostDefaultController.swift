@@ -29,14 +29,14 @@ struct AdminRemoveBlogPostDefaultController:
         let permissions = context.currentUserPermissions
         do {
             let page = try await runtime.interactor.get(id: id)
-            return runtime.presenter.renderRemovePage(
+            return try await runtime.presenter.renderRemovePage(
                 id: id,
                 source: page.title,
                 permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
+            return try await runtime.presenter.renderErrorPage(
                 id: id,
                 info: error.errorTitle,
                 message: error.errorDescription,
@@ -54,19 +54,16 @@ struct AdminRemoveBlogPostDefaultController:
         let permissions = context.currentUserPermissions
         do {
             try await runtime.interactor.delete(id: id)
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/blog/posts/",
-                        title: "Removed",
-                        message: "Blog post removed successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/blog/posts/",
+                notification: .init(
+                    title: "Removed",
+                    message: "Blog post removed successfully."
+                )
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderErrorPage(
                     id: id,
                     info: error.errorTitle,

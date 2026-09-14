@@ -18,26 +18,26 @@ struct AdminViewAnalyticsOverviewComponent: Component {
             title: "Web",
             description:
                 "Explore audience, referrers, browsers, regions, and top pages.",
-            href: "/admin/analytics/web/",
+            href: AnalyticsAdminRoutes.web.description,
             icon: "monitor"
         ),
         Destination(
             title: "API",
             description:
                 "Explore request volume, status families, paths, and methods.",
-            href: "/admin/analytics/api/",
+            href: AnalyticsAdminRoutes.api.description,
             icon: "server"
         ),
         Destination(
             title: "Logs",
             description: "Browse the tracked request log records directly.",
-            href: "/admin/analytics/logs/",
+            href: AnalyticsAdminRoutes.logs.description,
             icon: "activity"
         ),
         Destination(
             title: "404s",
             description: "Inspect requests that could not be found.",
-            href: "/admin/analytics/not-found/",
+            href: AnalyticsAdminRoutes.notFound.description,
             icon: "alertCircle"
         ),
     ]
@@ -82,9 +82,7 @@ struct AdminViewAnalyticsOverviewComponent: Component {
     func html(context: inout RenderContext) -> Section {
         Section {
             context.render(
-                NewAdminBreadcrumb(links: [
-                    .init(label: "Admin", link: "/admin/")
-                ])
+                NewAdminBreadcrumb(links: AnalyticsAdminRoutes.adminBreadcrumb)
             )
             context.render(
                 NewAdminPageHeader(

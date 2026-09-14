@@ -3,137 +3,122 @@ import BlogAppAPI
 import BlogContracts
 import FeatherAdmin
 import FeatherContracts
-import FeatherValidation
 import Foundation
 import HTML
 import Hummingbird
-import MediaFrontend
-import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
 import WebFrontend
 
 struct BlogTagTable: Component {
-
     struct State {
-        let isAdded: Bool
-        let isEdited: Bool
-        let isRemoved: Bool
-        let isPublished: Bool
-        let isUnpublished: Bool
         let canAccess: Bool
         let canEdit: Bool
-        let permissions: Set<String>
         let canAdd: Bool
-        let rules: [AdminListBlogTagItemModel]
-        let page: Int
-        let pageSize: Int
-        let total: Int
+        let items: [AdminListBlogTagItemModel]
+        let pageState: NewAdminListPageState
         let search: String
-        let deniedInfo: String
-        let deniedMessage: String
-        let breadcrumb: AdminBreadcrumb.State
+        let permissions: NewAdminListActions
+        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let error: String?
     }
-
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
+            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
             if !state.canAccess {
-                H1(state.deniedInfo)
-                P(state.deniedMessage)
+                context.render(
+                    NewAdminStatusView(
+                        state: .init(
+                            title: "Forbidden",
+                            message: "Your account cannot access blog tags."
+                        ),
+                        icon: FeatherIcons.alertCircle()
+                    )
+                )
             }
             else {
-                context.render(AdminBreadcrumb(state: state.breadcrumb))
-                H1("Blog tags")
-                statusFormDefinitions(context: &context)
-
-                if state.isAdded {
-                    P("Blog tag added successfully.")
-                }
-                if state.isEdited {
-                    P("Blog tag edited successfully.")
-                }
-                if state.isRemoved {
-                    P("Blog tag removed successfully.")
-                }
-                if state.isPublished {
-                    P("Blog tag published successfully.")
-                }
-                if state.isUnpublished {
-                    P("Blog tag unpublished successfully.")
-                }
-                if state.canAdd {
-                    Div {
-                        context.render(
-                            AdminNavigationButton(
-                                "Add tag",
-                                href: "/admin/blog/tags/add/"
-                            )
-                        )
-                    }
-                    .class("button-row")
-                    Br()
-                    Br()
-                }
                 context.render(
-                    ListTableSearchForm(
+                    NewAdminPageHeader(
                         state: .init(
-                            action: "/admin/blog/tags/",
-                            placeholder: "Quick search blog tags",
-                            search: state.search
+                            title: "Blog tags",
+                            description:
+                                "Manage tags and their publication status."
                         )
                     )
                 )
+                if let error = state.error {
+                    P(error).class("new-admin-form__error")
+                }
+                context.render(BlogTagTableContent(state: state))
+            }
+        }
+        .class("cms-section")
+    }
+}
 
-                if state.rules.isEmpty {
-                    let totalPages = max(
-                        1,
-                        (state.total + state.pageSize - 1) / state.pageSize
-                    )
-                    if state.total > 0 && state.page > totalPages {
-                        P("Page \(state.page) does not exist.")
-                        P {
-                            Span("Go to ")
-                            A("page 1").href("/admin/blog/tags/?page=1")
-                            Span(" or ")
-                            A("page \(totalPages)")
-                                .href(
-                                    "/admin/blog/tags/?page=\(totalPages)"
-                                )
-                            Span(".")
-                        }
-                    }
-                    else {
-                        P(
-                            state.search.isEmpty
+private struct BlogTagTableContent: Component {
+    let state: BlogTagTable.State
+    func html(context: inout RenderContext) -> Div {
+        let canDelete = state.permissions.allows(BlogPermissions.Tags.delete)
+        return NewAdminList(
+            table: {
+                if state.items.isEmpty {
+                    context.render(
+                        NewAdminListNoResultsState(
+                            message: state.search.isEmpty
                                 ? "No blog tags yet."
                                 : "No blog tags match your search."
                         )
-                    }
+                    )
                 }
                 else {
-                    let canRemove = state.permissions.contains(
-                        "blog:tags:delete"
-                    )
+                    if state.canEdit {
+                        for item in state.items {
+                            context.render(
+                                NewAdminStatusSelectFormDefinition(
+                                    id: statusFormID(item.id),
+                                    action:
+                                        BlogAdminRoutes.tagStatus(
+                                            RouterPath(item.id)
+                                        )
+                                        .description,
+                                    returnTo: BlogAdminRoutes.tags.description
+                                )
+                            )
+                        }
+                    }
                     context.render(
-                        ListTableRemoveForm(
+                        NewAdminListSelectionForm(
                             state: .init(
-                                action: "/admin/blog/tags/remove/",
-                                page: state.page,
+                                action: BlogAdminRoutes.tagRemove().description,
+                                pageState: state.pageState,
                                 search: state.search,
-                                canRemove: canRemove,
-                                buttonTitle: "Remove selected"
+                                button: .init(
+                                    "Remove selected",
+                                    style: .destructive
+                                ),
+                                isEnabled: canDelete
                             ),
                             table: context.render(
-                                ListTableShell(
+                                NewAdminListShell(
+                                    layout: .init(
+                                        name: "blog-tags",
+                                        columns: [
+                                            .fraction(2), .fraction(1),
+                                            .fraction(1), .fraction(1),
+                                            .fixed(220),
+                                        ]
+                                    ),
+                                    hasSelection: canDelete,
                                     table: Table {
                                         Thead {
                                             Tr {
-                                                if canRemove {
+                                                if canDelete {
                                                     context.render(
-                                                        ListTableSelectAllCheckbox()
+                                                        NewAdminListSelectAllCheckbox()
                                                     )
                                                 }
                                                 Th("Title")
@@ -144,25 +129,56 @@ struct BlogTagTable: Component {
                                             }
                                         }
                                         Tbody {
-                                            for item in state.rules {
+                                            for item in state.items {
                                                 Tr {
-                                                    if canRemove {
+                                                    if canDelete {
                                                         context.render(
-                                                            ListTableRowSelectCheckbox(
-                                                                state: .init(
-                                                                    id: item.id
-                                                                )
+                                                            NewAdminListRowCheckbox(
+                                                                id: item.id
                                                             )
                                                         )
                                                     }
-                                                    titleCell(
-                                                        for: item,
-                                                        context: &context
-                                                    )
-                                                    statusCell(
-                                                        for: item,
-                                                        context: &context
-                                                    )
+                                                    Td {
+                                                        A(item.title)
+                                                            .href(
+                                                                BlogAdminRoutes
+                                                                    .tag(
+                                                                        RouterPath(
+                                                                            item
+                                                                                .id
+                                                                        )
+                                                                    )
+                                                                    .description
+                                                            )
+                                                    }
+                                                    .data("label", "Title")
+                                                    Td {
+                                                        if state.canEdit {
+                                                            context.render(
+                                                                NewAdminStatusSelectField(
+                                                                    formID:
+                                                                        statusFormID(
+                                                                            item
+                                                                                .id
+                                                                        ),
+                                                                    selectedStatus:
+                                                                        item
+                                                                        .metadata
+                                                                        .normalizedStatus
+                                                                )
+                                                            )
+                                                        }
+                                                        else {
+                                                            context.render(
+                                                                statusChip(
+                                                                    item
+                                                                        .metadata
+                                                                        .normalizedStatus
+                                                                )
+                                                            )
+                                                        }
+                                                    }
+                                                    .data("label", "Status")
                                                     Td(
                                                         format(
                                                             item.metadata
@@ -179,158 +195,141 @@ struct BlogTagTable: Component {
                                                                 .expirationDate
                                                         )
                                                     )
-                                                    .data(
-                                                        "label",
-                                                        "Expiration"
+                                                    .data("label", "Expiration")
+                                                    context.render(
+                                                        NewAdminListRowActions(
+                                                            label: "Actions",
+                                                            actions: [
+                                                                .init(
+                                                                    "Details",
+                                                                    href:
+                                                                        BlogAdminRoutes
+                                                                        .tag(
+                                                                            RouterPath(
+                                                                                item
+                                                                                    .id
+                                                                            )
+                                                                        )
+                                                                        .description,
+                                                                    permission:
+                                                                        BlogPermissions
+                                                                        .Tags
+                                                                        .read
+                                                                ),
+                                                                .init(
+                                                                    "Edit",
+                                                                    href:
+                                                                        BlogAdminRoutes
+                                                                        .tagEdit(
+                                                                            RouterPath(
+                                                                                item
+                                                                                    .id
+                                                                            )
+                                                                        )
+                                                                        .description,
+                                                                    style:
+                                                                        .ghost(
+                                                                            .secondary
+                                                                        ),
+                                                                    permission:
+                                                                        BlogPermissions
+                                                                        .Tags
+                                                                        .update
+                                                                ),
+                                                                .init(
+                                                                    "Remove",
+                                                                    href:
+                                                                        NewAdminLocation
+                                                                        .remove(
+                                                                            path:
+                                                                                BlogAdminRoutes
+                                                                                .tagRemove()
+                                                                                .description,
+                                                                            ids: [
+                                                                                item
+                                                                                    .id
+                                                                            ],
+                                                                            returnTo:
+                                                                                BlogAdminRoutes
+                                                                                .tags
+                                                                                .description
+                                                                        ),
+                                                                    style:
+                                                                        .destructive,
+                                                                    permission:
+                                                                        BlogPermissions
+                                                                        .Tags
+                                                                        .delete
+                                                                ),
+                                                            ],
+                                                            permissions: state
+                                                                .permissions
+                                                        )
                                                     )
-                                                    actionsCell(for: item)
                                                 }
                                             }
                                         }
                                     }
                                     .class("cms-table", "action-table")
-                                    .if(canRemove) { $0.class("select-table") }
+                                    .if(canDelete) { $0.class("select-table") }
                                 )
                             )
                         )
                     )
-                    context.render(
-                        ListTablePagination(
-                            state: .init(
-                                path: "/admin/blog/tags/",
-                                page: state.page,
-                                pageSize: state.pageSize,
-                                total: state.total,
-                                search: state.search
-                            )
+                }
+            },
+            search: {
+                context.render(
+                    NewAdminListSearch(
+                        state: .init(
+                            action: BlogAdminRoutes.tags.description,
+                            placeholder: "Search blog tags",
+                            search: state.search
                         )
                     )
-                }
-            }
-        }
-        .class("cms-section")
-    }
-
-    private func actionsCell(
-        for item: AdminListBlogTagItemModel
-    ) -> some BasicTag {
-        Td {
-            if state.permissions.contains(
-                BlogPermissions.Tags.read.rawValue
-            ) {
-                A("Details")
-                    .href("/admin/blog/tags/\(item.id)/")
-                    .class("row-btn")
-                Span(" ")
-            }
-            if state.permissions.contains(
-                BlogPermissions.Tags.update.rawValue
-            ) {
-                A("Edit")
-                    .href("/admin/blog/tags/\(item.id)/edit/")
-                    .class("row-btn", "edit")
-                Span(" ")
-            }
-            if state.permissions.contains(
-                BlogPermissions.Tags.delete.rawValue
-            ) {
-                A("Remove")
-                    .href("/admin/blog/tags/\(item.id)/remove/")
-                    .class("row-btn", "delete")
-            }
-        }
-        .data("label", "Actions")
-        .class("action-cell")
-    }
-
-    private func titleCell(
-        for item: AdminListBlogTagItemModel,
-        context: inout RenderContext
-    ) -> some BasicTag {
-
-        Td {
-            Span {
-                Span(item.title)
-                if let previewPath = previewPath(for: item.metadata) {
-                    A {
-                        FeatherIcons.externalLink()
-                    }
-                    .href(previewPath)
-                    .target(.blank)
-                    .ariaLabel("Preview \(item.title)")
-                    .style(
-                        "display:inline-flex;align-items:center;justify-content:center;width:0.95rem;height:0.95rem;flex:0 0 auto;"
+                )
+            },
+            toolbar: {
+                if state.canAdd {
+                    context.render(
+                        NewAdminListToolbar {
+                            context.render(
+                                NewAdminButton(
+                                    "Add tag",
+                                    href: BlogAdminRoutes.tagAdd().description
+                                )
+                            )
+                        }
                     )
                 }
-            }
-            .style(
-                "display:inline-flex;align-items:center;gap:0.35rem;vertical-align:middle;line-height:1.25;position:relative;top:1px;"
-            )
-        }
-        .data("label", "Title")
-    }
-
-    private func statusCell(
-        for item: AdminListBlogTagItemModel,
-        context: inout RenderContext
-    ) -> some BasicTag {
-        Td {
-            if state.canEdit {
+            },
+            pagination: {
                 context.render(
-                    AdminStatusSelectField(
-                        formID: statusFormID(for: item.id),
-                        selectedStatus: item.metadata.normalizedStatus
+                    NewAdminListPagination(
+                        state: .init(
+                            path: BlogAdminRoutes.tags.description,
+                            pageState: state.pageState,
+                            search: state.search
+                        )
                     )
                 )
             }
-            else {
-                Span(item.metadata.status.capitalized)
-            }
-        }
-        .data("label", "Status")
+        )
+        .html(context: &context)
     }
-
-    private func statusFormDefinitions(
-        context: inout RenderContext
-    ) -> some FlowContent {
-        Div {
-            if state.canEdit {
-                for item in state.rules {
-                    context.render(
-                        AdminStatusSelectFormDefinition(
-                            id: statusFormID(for: item.id),
-                            action: "/admin/blog/tags/\(item.id)/status/",
-                            returnTo: "/admin/blog/tags/"
-                        )
-                    )
-                }
-            }
-        }
-        .style("display:none;")
-    }
-
-    private func statusFormID(
-        for id: String
-    ) -> String {
+    private func statusFormID(_ id: String) -> String {
         "blog-tag-status-\(id)"
     }
-
-    private func format(
-        _ value: String
-    ) -> String {
-        guard let timestamp = AdminMetadataSchemaBuilder.parseTimestamp(value)
-        else {
-            return "-"
-        }
-        return DateFormatting.formatUnixTimestamp(
-            timestamp
+    private func statusChip(_ status: String) -> NewAdminChip {
+        .init(
+            label: status.capitalized,
+            color: status == "published"
+                ? .green : (status == "archived" ? .red : .yellow)
         )
     }
-
-    private func previewPath(
-        for metadata: AdminMetadataFormValue
-    ) -> String? {
-        let slug = metadata.normalizedSlug
-        return slug.isEmpty ? nil : "/\(slug)/"
+    private func format(_ value: String) -> String {
+        guard let timestamp = AdminMetadataSchemaBuilder.parseTimestamp(value)
+        else { return "-" }
+        return DateFormatting.formatUnixTimestamp(timestamp)
     }
 }

@@ -16,7 +16,7 @@ protocol AdminAddBlogAuthorPresenter: Sendable {
     func renderAddPage(
         state: BlogAuthorForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
-    func breadcrumb() -> AdminBreadcrumb.State
+    func breadcrumb() -> [NewAdminBreadcrumb.Link]
 }

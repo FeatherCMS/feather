@@ -66,7 +66,7 @@ struct AdminListAnalyticsLogDefaultController:
             model = emptyModel
             error = nil
         }
-        return presenter.renderListPage(
+        return try await presenter.renderListPage(
             model: model,
             permissions: permissions,
             search: search,

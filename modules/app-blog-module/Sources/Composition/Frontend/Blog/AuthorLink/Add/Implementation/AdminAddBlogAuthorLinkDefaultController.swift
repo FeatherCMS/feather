@@ -25,7 +25,7 @@ struct AdminAddBlogAuthorLinkDefaultController: AdminAddBlogAuthorLinkController
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
-        return runtime.presenter.renderAddPage(
+        return try await runtime.presenter.renderAddPage(
             menuId: menuId,
             state: formState(),
             permissions: context.currentUserPermissions
@@ -60,7 +60,7 @@ struct AdminAddBlogAuthorLinkDefaultController: AdminAddBlogAuthorLinkController
                 state.apply(errors: [
                     "priority": "Priority must be a valid integer."
                 ])
-                return try runtime.presenter
+                return try await runtime.presenter
                     .renderAddPage(
                         menuId: menuId,
                         state: state,
@@ -70,15 +70,12 @@ struct AdminAddBlogAuthorLinkDefaultController: AdminAddBlogAuthorLinkController
             }
             try await runtime.interactor.execute(menuId: menuId, input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/blog/authors/\(menuId)/",
-                        title: "Added",
-                        message: "Link added successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/blog/authors/\(menuId)/",
+                notification: .init(
+                    title: "Added",
+                    message: "Link added successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -95,7 +92,7 @@ struct AdminAddBlogAuthorLinkDefaultController: AdminAddBlogAuthorLinkController
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     menuId: menuId,
                     state: state,
@@ -113,7 +110,7 @@ struct AdminAddBlogAuthorLinkDefaultController: AdminAddBlogAuthorLinkController
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     menuId: menuId,
                     state: state,
@@ -131,7 +128,7 @@ struct AdminAddBlogAuthorLinkDefaultController: AdminAddBlogAuthorLinkController
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     menuId: menuId,
                     state: state,
@@ -187,7 +184,6 @@ struct AdminAddBlogAuthorLinkDefaultController: AdminAddBlogAuthorLinkController
                 error: nil
             ),
             error: nil,
-            success: nil
         )
     }
 }

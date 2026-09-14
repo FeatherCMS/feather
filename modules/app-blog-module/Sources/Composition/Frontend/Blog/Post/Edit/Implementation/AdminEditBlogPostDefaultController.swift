@@ -32,7 +32,7 @@ struct AdminEditBlogPostDefaultController:
             let options =
                 (try? await runtime.interactor.loadOptions())
                 ?? .init(authors: [], tags: [])
-            return runtime.presenter.renderEditPage(
+            return try await runtime.presenter.renderEditPage(
                 id: id,
                 state: formState(
                     title: page.title,
@@ -45,12 +45,11 @@ struct AdminEditBlogPostDefaultController:
                     selectedTagIds: page.tagIds,
                     options: options
                 ),
-                isEdited: request.hasQueryFlag("edited"),
                 permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
+            return try await runtime.presenter.renderErrorPage(
                 id: id,
                 info: error.errorTitle,
                 message: error.errorDescription,
@@ -77,15 +76,12 @@ struct AdminEditBlogPostDefaultController:
             try await payload.validate()
             try await runtime.interactor.update(id: id, input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/blog/posts/\(id)/edit/",
-                        title: "Saved",
-                        message: "Post edited successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/blog/posts/\(id)/edit/",
+                notification: .init(
+                    title: "Saved",
+                    message: "Post edited successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -104,11 +100,10 @@ struct AdminEditBlogPostDefaultController:
                     ?? .init(authors: [], tags: [])
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -125,11 +120,10 @@ struct AdminEditBlogPostDefaultController:
                     ?? .init(authors: [], tags: [])
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -146,11 +140,10 @@ struct AdminEditBlogPostDefaultController:
                     ?? .init(authors: [], tags: [])
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -208,7 +201,6 @@ struct AdminEditBlogPostDefaultController:
             authorIdsError: nil,
             tagIdsError: nil,
             error: nil,
-            success: nil
         )
     }
 

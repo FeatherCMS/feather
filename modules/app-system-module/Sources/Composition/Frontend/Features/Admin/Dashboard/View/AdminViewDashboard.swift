@@ -17,8 +17,8 @@ struct AdminViewDashboard {
                     ),
                     presenter: AdminViewDashboardDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine,
-                        permissions: context.currentUserPermissions
                     )
                 )
             }

@@ -25,6 +25,7 @@ struct AdminAddBlogTag {
                     ),
                     presenter: AdminAddBlogTagDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

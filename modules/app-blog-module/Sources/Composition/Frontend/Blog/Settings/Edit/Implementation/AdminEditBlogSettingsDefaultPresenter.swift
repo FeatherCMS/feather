@@ -15,21 +15,17 @@ struct AdminEditBlogSettingsDefaultPresenter:
     AdminEditBlogSettingsPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderPage(
         state: BlogSettingsEdit.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Settings",
-            description: "Edit blog settings",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: BlogSettingsEdit(state: state)
         )
     }
@@ -38,32 +34,19 @@ struct AdminEditBlogSettingsDefaultPresenter:
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "No permission",
-            description: "No permission",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: PermissionDeniedView(
-                state: .init(
-                    info: info,
-                    message: message,
-                    breadcrumb: breadcrumb()
-                )
+            content: NewAdminStatusView(
+                state: .init(title: info, message: message),
+                icon: FeatherIcons.alertCircle()
             )
         )
     }
 
-    private func breadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Blog", link: "/admin/blog/"),
-            ]
-        )
+    func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        BlogAdminRoutes.breadcrumb
     }
 }

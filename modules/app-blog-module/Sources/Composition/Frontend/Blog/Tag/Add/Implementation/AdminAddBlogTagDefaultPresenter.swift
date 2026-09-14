@@ -13,21 +13,17 @@ import WebFrontend
 
 struct AdminAddBlogTagDefaultPresenter: AdminAddBlogTagPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderAddPage(
         state: BlogTagForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add tag",
-            description: "Add a tag in management",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: BlogTagAdd(
                 state: .init(
                     form: state,
@@ -37,13 +33,7 @@ struct AdminAddBlogTagDefaultPresenter: AdminAddBlogTagPresenter {
         )
     }
 
-    func breadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Tags", link: "/admin/blog/tags/"),
-            ]
-        )
+    func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        BlogAdminRoutes.tagsBreadcrumb
     }
 }

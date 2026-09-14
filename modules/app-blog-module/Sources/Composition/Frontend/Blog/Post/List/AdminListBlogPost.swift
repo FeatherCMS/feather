@@ -25,6 +25,7 @@ struct AdminListBlogPost {
                     ),
                     presenter: AdminListBlogPostDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

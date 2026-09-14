@@ -15,27 +15,23 @@ struct BlogTagEdit: Component {
 
     struct State {
         let id: String
-        let isEdited: Bool
         let form: BlogTagForm.State
-        let breadcrumb: AdminBreadcrumb.State
+        let breadcrumb: [NewAdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminBreadcrumb(state: state.breadcrumb))
-
-            H1 {
-                Span("Edit tag")
-                context.render(
-                    AdminPreviewLink(
-                        slug: state.form.metadata.slug.value,
-                        label: "Preview tag"
+            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Edit tag",
+                        description: "Update this blog tag."
                     )
                 )
-            }
-            if state.isEdited { P("Tag edited successfully.") }
+            )
             context.render(
                 BlogTagForm(
                     state: state.form,

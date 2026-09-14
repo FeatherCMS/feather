@@ -16,17 +16,20 @@ struct BlogTagError: Component {
     struct State {
         let info: String
         let message: String
-        let breadcrumb: AdminBreadcrumb.State
+        let breadcrumb: [NewAdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminBreadcrumb(state: state.breadcrumb))
-
-            H1(state.info)
-            P(state.message)
+            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.render(
+                NewAdminStatusView(
+                    state: .init(title: state.info, message: state.message),
+                    icon: FeatherIcons.alertCircle()
+                )
+            )
         }
         .class("cms-section")
     }

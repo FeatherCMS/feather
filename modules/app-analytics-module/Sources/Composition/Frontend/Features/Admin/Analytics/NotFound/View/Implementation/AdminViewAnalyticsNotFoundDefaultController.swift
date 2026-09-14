@@ -1,0 +1,54 @@
+import AnalyticsContracts
+import FeatherAdmin
+import Foundation
+import Hummingbird
+
+struct AdminViewAnalyticsNotFoundDefaultController:
+    AdminViewAnalyticsNotFoundController
+{
+    let buildRuntime:
+        @Sendable (Request, DefaultRequestContext) -> (
+            interactor: any AdminViewAnalyticsNotFoundInteractor,
+            presenter: any AdminViewAnalyticsNotFoundPresenter
+        )
+
+    func getNotFound(
+        request: Request,
+        context: DefaultRequestContext
+    ) async throws -> HTMLResponse {
+        let (interactor, presenter) = buildRuntime(request, context)
+        let permissions = context.currentUserPermissions
+        let canAccess = context.isCurrentUserAllowed(
+            to: AnalyticsPermissions.NotFound.list
+        )
+        if !canAccess {
+            return try await presenter.renderDenied(permissions: permissions)
+        }
+        let range =
+            AdminAnalyticsNotFoundRange(
+                rawValue: request.queryString("range") ?? ""
+            ) ?? .last7Days
+        let now = Date()
+        let from = now.addingTimeInterval(-range.duration).timeIntervalSince1970
+        let to = now.timeIntervalSince1970
+        do {
+            let overview = try await interactor.getOverview(from: from, to: to)
+            return try await presenter.render(
+                model: .init(
+                    title: "404s",
+                    description: "404 trends and missing routes.",
+                    selectedRange: range,
+                    overview: overview
+                ),
+                permissions: permissions
+            )
+        }
+        catch let error as OpenAPIRepositoryError {
+            return try await presenter.renderError(
+                info: error.errorTitle,
+                message: error.errorDescription,
+                permissions: permissions
+            )
+        }
+    }
+}

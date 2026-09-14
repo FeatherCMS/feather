@@ -1,134 +1,114 @@
 import BlogAdminAPI
-import BlogAppAPI
+import BlogContracts
 import FeatherAdmin
-import FeatherValidation
+import FeatherContracts
 import HTML
 import Hummingbird
-import MediaFrontend
-import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
-import WebFrontend
 
 struct BlogAuthorLinkTable: Component {
-
     struct State {
-        let menuId: String
-        let isAdded: Bool
-        let isEdited: Bool
-        let isRemoved: Bool
+        let authorId: String
         let canAccess: Bool
-        let permissions: Set<String>
         let canAdd: Bool
         let items:
             [BlogAdminAPI.Components.Schemas.BlogAuthorLinkListItemSchema]
-        let page: Int
-        let pageSize: Int
-        let total: Int
+        let pageState: NewAdminListPageState
         let search: String
-        let deniedInfo: String
-        let deniedMessage: String
-        let breadcrumb: AdminBreadcrumb.State
+        let permissions: NewAdminListActions
+        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let error: String?
     }
-
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
+            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
             if !state.canAccess {
-                H1(state.deniedInfo)
-                P(state.deniedMessage)
+                context.render(
+                    NewAdminStatusView(
+                        state: .init(
+                            title: "Forbidden",
+                            message:
+                                "Your account cannot access blog author links."
+                        ),
+                        icon: FeatherIcons.alertCircle()
+                    )
+                )
             }
             else {
-                context.render(AdminBreadcrumb(state: state.breadcrumb))
-                H1("Blog author links")
-
-                if state.isAdded {
-                    P("Blog author link added successfully.")
-                }
-                if state.isEdited {
-                    P("Blog author link edited successfully.")
-                }
-                if state.isRemoved {
-                    P("Blog author link removed successfully.")
-                }
-                if state.canAdd {
-                    Div {
-                        context.render(
-                            AdminNavigationButton(
-                                "Add link",
-                                href:
-                                    "/admin/blog/authors/\(state.menuId)/links/add/"
-                            )
-                        )
-                    }
-                    .class("button-row")
-                    Br()
-                    Br()
-                }
                 context.render(
-                    ListTableSearchForm(
+                    NewAdminPageHeader(
                         state: .init(
-                            action:
-                                "/admin/blog/authors/\(state.menuId)/links/",
-                            placeholder: "Quick search blog author links",
-                            search: state.search
+                            title: "Blog author links",
+                            description: "Manage links shown for this author."
                         )
                     )
                 )
+                if let error = state.error {
+                    P(error).class("new-admin-form__error")
+                }
+                context.render(BlogAuthorLinkTableContent(state: state))
+            }
+        }
+        .class("cms-section")
+    }
+}
 
+struct BlogAuthorLinkTableContent: Component {
+    let state: BlogAuthorLinkTable.State
+    func html(context: inout RenderContext) -> Div {
+        let canDelete = state.permissions.allows(
+            BlogPermissions.AuthorLinks.delete
+        )
+        let links = BlogAdminRoutes.authorLinks(RouterPath(state.authorId))
+        return NewAdminList(
+            table: {
                 if state.items.isEmpty {
-                    let totalPages = max(
-                        1,
-                        (state.total + state.pageSize - 1) / state.pageSize
-                    )
-                    if state.total > 0 && state.page > totalPages {
-                        P("Page \(state.page) does not exist.")
-                        P {
-                            Span("Go to ")
-                            A("page 1")
-                                .href(
-                                    "/admin/blog/authors/\(state.menuId)/links/?page=1"
-                                )
-                            Span(" or ")
-                            A("page \(totalPages)")
-                                .href(
-                                    "/admin/blog/authors/\(state.menuId)/links/?page=\(totalPages)"
-                                )
-                            Span(".")
-                        }
-                    }
-                    else {
-                        P(
-                            state.search.isEmpty
+                    context.render(
+                        NewAdminListNoResultsState(
+                            message: state.search.isEmpty
                                 ? "No blog author links yet."
                                 : "No blog author links match your search."
                         )
-                    }
+                    )
                 }
                 else {
-                    let canRemove = state.permissions.contains(
-                        "blog:author-links:delete"
-                    )
                     context.render(
-                        ListTableRemoveForm(
+                        NewAdminListSelectionForm(
                             state: .init(
                                 action:
-                                    "/admin/blog/authors/\(state.menuId)/links/remove/",
-                                page: state.page,
+                                    BlogAdminRoutes.authorLinkRemove(
+                                        RouterPath(state.authorId)
+                                    )
+                                    .description,
+                                pageState: state.pageState,
                                 search: state.search,
-                                canRemove: canRemove,
-                                buttonTitle: "Remove selected"
+                                button: .init(
+                                    "Remove selected",
+                                    style: .destructive
+                                ),
+                                isEnabled: canDelete
                             ),
                             table: context.render(
-                                ListTableShell(
+                                NewAdminListShell(
+                                    layout: .init(
+                                        name: "blog-author-links",
+                                        columns: [
+                                            .fraction(2), .fraction(2),
+                                            .fixed(100), .fixed(110),
+                                            .fraction(1), .fixed(220),
+                                        ]
+                                    ),
+                                    hasSelection: canDelete,
                                     table: Table {
                                         Thead {
                                             Tr {
-                                                if canRemove {
+                                                if canDelete {
                                                     context.render(
-                                                        ListTableSelectAllCheckbox()
+                                                        NewAdminListSelectAllCheckbox()
                                                     )
                                                 }
                                                 Th("Label")
@@ -142,84 +122,115 @@ struct BlogAuthorLinkTable: Component {
                                         Tbody {
                                             for item in state.items {
                                                 Tr {
-                                                    if canRemove {
+                                                    if canDelete {
                                                         context.render(
-                                                            ListTableRowSelectCheckbox(
-                                                                state: .init(
-                                                                    id: item.id
-                                                                )
+                                                            NewAdminListRowCheckbox(
+                                                                id: item.id
                                                             )
                                                         )
                                                     }
                                                     Td(item.label)
-                                                        .data(
-                                                            "label",
-                                                            "Label"
-                                                        )
+                                                        .data("label", "Label")
                                                     Td(item.url)
-                                                        .data(
-                                                            "label",
-                                                            "URL"
-                                                        )
+                                                        .data("label", "URL")
                                                     Td("\(item.priority)")
                                                         .data(
                                                             "label",
                                                             "Priority"
                                                         )
-                                                    Td(
-                                                        item.isBlank
-                                                            ? "Yes" : "No"
-                                                    )
-                                                    .data(
-                                                        "label",
-                                                        "Blank"
-                                                    )
+                                                    Td {
+                                                        context.render(
+                                                            blankChip(
+                                                                item.isBlank
+                                                            )
+                                                        )
+                                                    }
+                                                    .data("label", "Blank")
                                                     Td(item.permission)
                                                         .data(
                                                             "label",
                                                             "Permission"
                                                         )
                                                     context.render(
-                                                        ListTableRowActions(
-                                                            state: .init(
-                                                                label:
-                                                                    "Actions",
-                                                                actions: [
-                                                                    .init(
-                                                                        title:
-                                                                            "Details",
-                                                                        href:
-                                                                            "/admin/blog/authors/\(state.menuId)/links/\(item.id)/",
-                                                                        className:
-                                                                            nil,
-                                                                        permission:
-                                                                            "blog:author-links:read"
-                                                                    ),
-                                                                    .init(
-                                                                        title:
-                                                                            "Edit",
-                                                                        href:
-                                                                            "/admin/blog/authors/\(state.menuId)/links/\(item.id)/edit/",
-                                                                        className:
-                                                                            "edit",
-                                                                        permission:
-                                                                            "blog:author-links:update"
-                                                                    ),
-                                                                    .init(
-                                                                        title:
-                                                                            "Remove",
-                                                                        href:
-                                                                            "/admin/blog/authors/\(state.menuId)/links/\(item.id)/remove/",
-                                                                        className:
-                                                                            "delete",
-                                                                        permission:
-                                                                            "blog:author-links:delete"
-                                                                    ),
-                                                                ],
-                                                                permissions:
-                                                                    state
-                                                                    .permissions
-                                                            )
+                                                        NewAdminListRowActions(
+                                                            label: "Actions",
+                                                            actions: [
+                                                                .init(
+                                                                    "Details",
+                                                                    href:
+                                                                        BlogAdminRoutes
+                                                                        .authorLink(
+                                                                            RouterPath(
+                                                                                state
+                                                                                    .authorId
+                                                                            ),
+                                                                            RouterPath(
+                                                                                item
+                                                                                    .id
+                                                                            )
+                                                                        )
+                                                                        .description,
+                                                                    permission:
+                                                                        BlogPermissions
+                                                                        .AuthorLinks
+                                                                        .read
+                                                                ),
+                                                                .init(
+                                                                    "Edit",
+                                                                    href:
+                                                                        BlogAdminRoutes
+                                                                        .authorLinkEdit(
+                                                                            RouterPath(
+                                                                                state
+                                                                                    .authorId
+                                                                            ),
+                                                                            RouterPath(
+                                                                                item
+                                                                                    .id
+                                                                            )
+                                                                        )
+                                                                        .description,
+                                                                    style:
+                                                                        .ghost(
+                                                                            .secondary
+                                                                        ),
+                                                                    permission:
+                                                                        BlogPermissions
+                                                                        .AuthorLinks
+                                                                        .update
+                                                                ),
+                                                                .init(
+                                                                    "Remove",
+                                                                    href:
+                                                                        NewAdminLocation
+                                                                        .remove(
+                                                                            path:
+                                                                                BlogAdminRoutes
+                                                                                .authorLinkRemove(
+                                                                                    RouterPath(
+                                                                                        state
+                                                                                            .authorId
+                                                                                    )
+                                                                                )
+                                                                                .description,
+                                                                            ids: [
+                                                                                item
+                                                                                    .id
+                                                                            ],
+                                                                            returnTo:
+                                                                                links
+                                                                                .description
+                                                                        ),
+                                                                    style:
+                                                                        .destructive,
+                                                                    permission:
+                                                                        BlogPermissions
+                                                                        .AuthorLinks
+                                                                        .delete
+                                                                ),
+                                                            ],
+                                                            permissions: state
+                                                                .permissions
                                                         )
                                                     )
                                                 }
@@ -227,26 +238,58 @@ struct BlogAuthorLinkTable: Component {
                                         }
                                     }
                                     .class("cms-table", "action-table")
-                                    .if(canRemove) { $0.class("select-table") }
+                                    .if(canDelete) { $0.class("select-table") }
                                 )
                             )
                         )
                     )
-                    context.render(
-                        ListTablePagination(
-                            state: .init(
-                                path:
-                                    "/admin/blog/authors/\(state.menuId)/links/",
-                                page: state.page,
-                                pageSize: state.pageSize,
-                                total: state.total,
-                                search: state.search
-                            )
+                }
+            },
+            search: {
+                context.render(
+                    NewAdminListSearch(
+                        state: .init(
+                            action: links.description,
+                            placeholder: "Search author links",
+                            search: state.search
                         )
                     )
+                )
+            },
+            toolbar: {
+                if state.canAdd {
+                    context.render(
+                        NewAdminListToolbar {
+                            context.render(
+                                NewAdminButton(
+                                    "Add link",
+                                    href:
+                                        BlogAdminRoutes.authorLinkAdd(
+                                            RouterPath(state.authorId)
+                                        )
+                                        .description
+                                )
+                            )
+                        }
+                    )
                 }
+            },
+            pagination: {
+                context.render(
+                    NewAdminListPagination(
+                        state: .init(
+                            path: links.description,
+                            pageState: state.pageState,
+                            search: state.search
+                        )
+                    )
+                )
             }
-        }
-        .class("cms-section")
+        )
+        .html(context: &context)
+    }
+
+    private func blankChip(_ value: Bool) -> NewAdminChip {
+        .init(label: value ? "Yes" : "No", color: value ? .blue : .purple)
     }
 }

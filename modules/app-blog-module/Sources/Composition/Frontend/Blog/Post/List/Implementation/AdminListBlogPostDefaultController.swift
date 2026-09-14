@@ -57,13 +57,8 @@ struct AdminListBlogPostDefaultController:
             model = emptyModel
             error = nil
         }
-        return presenter.renderListPage(
+        return try await presenter.renderListPage(
             model: model,
-            isAdded: request.hasQueryFlag("added"),
-            isEdited: request.hasQueryFlag("edited"),
-            isRemoved: request.hasQueryFlag("removed"),
-            isPublished: request.hasQueryFlag("published"),
-            isUnpublished: request.hasQueryFlag("unpublished"),
             permissions: permissions,
             search: search,
             error: error
@@ -82,18 +77,16 @@ struct AdminListBlogPostDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListRemoveRedirect.location(
-                        path: "/admin/blog/posts/",
+                    .location: NewAdminLocation.url(
+                        path: BlogAdminRoutes.posts.description + "/",
                         page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
+                        search: search
                     )
                 ]
             )
         }
         return
-            try presenter.renderRemoveConfirmation(
+            try await presenter.renderRemoveConfirmation(
                 page: page,
                 search: search,
                 selectedIds: selectedIds,
@@ -114,19 +107,20 @@ struct AdminListBlogPostDefaultController:
         if !payload.normalizedSelectedIds.isEmpty {
             try await interactor.remove(ids: payload.normalizedSelectedIds)
         }
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: ListRemoveRedirect.location(
-                    path: "/admin/blog/posts/",
-                    page: payload.normalizedPage,
-                    search: payload.normalizedSearch,
-                    title: !payload.normalizedSelectedIds.isEmpty
-                        ? "Removed" : nil,
-                    message: !payload.normalizedSelectedIds.isEmpty
-                        ? "Blog post removed successfully." : nil
-                )
-            ]
+        let location = NewAdminLocation.url(
+            path: BlogAdminRoutes.posts.description + "/",
+            page: payload.normalizedPage,
+            search: payload.normalizedSearch
+        )
+        guard !payload.normalizedSelectedIds.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
+        return AdminNotificationFlash.redirect(
+            to: location,
+            notification: .init(
+                title: "Removed",
+                message: "Blog posts removed successfully."
+            )
         )
     }
 
@@ -156,16 +150,10 @@ struct AdminListBlogPostDefaultController:
             status: targetStatus
         )
         let toast = statusToastContent(for: targetStatus)
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminStatusActionRedirect.location(
-                    defaultPath: "/admin/blog/posts/",
-                    returnTo: payload.normalizedReturnTo,
-                    title: toast.title,
-                    message: toast.message
-                )
-            ]
+        return AdminNotificationFlash.redirect(
+            to: payload.normalizedReturnTo ?? BlogAdminRoutes.posts.description
+                + "/",
+            notification: .init(title: toast.title, message: toast.message)
         )
     }
 

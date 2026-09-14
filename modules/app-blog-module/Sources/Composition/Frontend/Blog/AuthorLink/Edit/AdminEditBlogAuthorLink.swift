@@ -25,6 +25,7 @@ struct AdminEditBlogAuthorLink {
                     ),
                     presenter: AdminEditBlogAuthorLinkDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

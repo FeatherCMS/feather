@@ -5,5 +5,5 @@ protocol AdminViewDashboardPresenter: Sendable {
 
     func renderPage(
         model: AdminViewDashboardModel
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

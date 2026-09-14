@@ -18,19 +18,19 @@ public struct AdminAnalytics {
         )
         .controller.route(on: router)
 
-        AdminGetAnalyticsInsights(
+        AdminViewAnalyticsInsights(
             source: .web,
             renderingEngine: renderingEngine
         )
         .route(on: router)
 
-        AdminGetAnalyticsInsights(
+        AdminViewAnalyticsInsights(
             source: .api,
             renderingEngine: renderingEngine
         )
         .route(on: router)
 
-        AdminGetAnalyticsNotFound(
+        AdminViewAnalyticsNotFound(
             renderingEngine: renderingEngine
         )
         .route(on: router)
@@ -40,7 +40,7 @@ public struct AdminAnalytics {
         )
         .controller.route(on: router)
 
-        AdminGetAnalyticsLog(
+        AdminViewAnalyticsLog(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)

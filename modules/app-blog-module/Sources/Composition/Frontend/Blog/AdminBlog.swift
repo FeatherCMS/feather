@@ -42,7 +42,7 @@ public struct AdminBlog {
         )
         .controller.route(on: router)
 
-        AdminGetBlogPost(
+        AdminViewBlogPost(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -67,7 +67,7 @@ public struct AdminBlog {
         )
         .controller.route(on: router)
 
-        AdminGetBlogAuthor(
+        AdminViewBlogAuthor(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -92,7 +92,7 @@ public struct AdminBlog {
         )
         .controller.route(on: router)
 
-        AdminGetBlogAuthorLink(
+        AdminViewBlogAuthorLink(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -117,7 +117,7 @@ public struct AdminBlog {
         )
         .controller.route(on: router)
 
-        AdminGetBlogTag(
+        AdminViewBlogTag(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)

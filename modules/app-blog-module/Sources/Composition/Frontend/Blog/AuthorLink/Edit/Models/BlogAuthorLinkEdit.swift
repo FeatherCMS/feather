@@ -16,19 +16,23 @@ struct BlogAuthorLinkEdit: Component {
     struct State {
         let menuId: String
         let id: String
-        let isEdited: Bool
         let form: BlogAuthorLinkForm.State
-        let breadcrumb: AdminBreadcrumb.State
+        let breadcrumb: [NewAdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminBreadcrumb(state: state.breadcrumb))
-
-            H1("Edit blog author link")
-            if state.isEdited { P("Blog author link edited successfully.") }
+            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Edit blog author link",
+                        description: "Update this author link."
+                    )
+                )
+            )
             Div {
                 context.render(
                     BlogAuthorLinkForm(

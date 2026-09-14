@@ -25,6 +25,7 @@ struct AdminRemoveBlogAuthor {
                     ),
                     presenter: AdminRemoveBlogAuthorDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

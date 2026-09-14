@@ -13,27 +13,21 @@ import WebFrontend
 
 struct AdminEditBlogPostDefaultPresenter: AdminEditBlogPostPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderEditPage(
         id: String,
         state: BlogPostForm.State,
-        isEdited: Bool,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit post",
-            description: "Edit a management post",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: BlogPostEdit(
                 state: .init(
                     id: id,
-                    isEdited: isEdited,
                     form: state,
                     breadcrumb: breadcrumb(id: id)
                 )
@@ -46,16 +40,11 @@ struct AdminEditBlogPostDefaultPresenter: AdminEditBlogPostPresenter {
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit post",
-            description: "Edit a management post",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: BlogPostError(
                 state: .init(
                     info: info,
@@ -68,13 +57,7 @@ struct AdminEditBlogPostDefaultPresenter: AdminEditBlogPostPresenter {
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Posts", link: "/admin/blog/posts/"),
-            ]
-        )
+    ) -> [NewAdminBreadcrumb.Link] {
+        BlogAdminRoutes.postsBreadcrumb
     }
 }

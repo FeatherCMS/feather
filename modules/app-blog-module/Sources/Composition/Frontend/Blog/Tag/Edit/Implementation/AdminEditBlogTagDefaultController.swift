@@ -29,7 +29,7 @@ struct AdminEditBlogTagDefaultController:
         let permissions = context.currentUserPermissions
         do {
             let page = try await runtime.interactor.load(id: id)
-            return runtime.presenter.renderEditPage(
+            return try await runtime.presenter.renderEditPage(
                 id: id,
                 state: formState(
                     title: page.title,
@@ -39,12 +39,11 @@ struct AdminEditBlogTagDefaultController:
                     imageAsset: page.imageAsset,
                     metadata: page.metadata
                 ),
-                isEdited: request.hasQueryFlag("edited"),
                 permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
+            return try await runtime.presenter.renderErrorPage(
                 id: id,
                 info: error.errorTitle,
                 message: error.errorDescription,
@@ -71,15 +70,12 @@ struct AdminEditBlogTagDefaultController:
             try await payload.validate()
             try await runtime.interactor.update(id: id, input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/blog/tags/\(id)/edit/",
-                        title: "Saved",
-                        message: "Tag edited successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/blog/tags/\(id)/edit/",
+                notification: .init(
+                    title: "Saved",
+                    message: "Tag edited successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -94,11 +90,10 @@ struct AdminEditBlogTagDefaultController:
                 imageAssetId: lastPayload?.normalizedImageAssetId,
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -111,11 +106,10 @@ struct AdminEditBlogTagDefaultController:
                 imageAssetId: lastPayload?.normalizedImageAssetId,
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -128,11 +122,10 @@ struct AdminEditBlogTagDefaultController:
                 imageAssetId: lastPayload?.normalizedImageAssetId,
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -175,7 +168,6 @@ struct AdminEditBlogTagDefaultController:
             selectedImageAsset: imageAsset,
             metadata: AdminMetadataFieldStateFactory.make(metadata),
             error: nil,
-            success: nil
         )
     }
 }
