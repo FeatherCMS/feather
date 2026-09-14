@@ -1,16 +1,13 @@
 import AccountContracts
 import FeatherAdmin
 import FeatherContracts
-import HTML
 import Hummingbird
-import SGML
-import WebBuilders
-import WebComponents
 
 struct AdminListAccountInvitationDefaultPresenter:
     AdminListAccountInvitationPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderListPage(
@@ -21,57 +18,44 @@ struct AdminListAccountInvitationDefaultPresenter:
         permissions: Set<String>,
         search: String?,
         error: String?
-    ) -> HTMLResponse {
-        let canAccess = permissions.contains(
-            AccountPermissions.Invitations.list.rawValue
-        )
+    ) async throws -> HTMLResponse {
         if let error {
-            return renderEngine.renderAdminPage(
+            let page = try await renderEngine.renderNewAdminPage(
                 request: request,
-                title: "Manage user invitations",
-                description: "Management user invitation list",
-                imagePath: "images/logos/logo.png",
-                sidebarState: renderEngine.adminSidebarState(
-                    request: request,
-                    permissions: permissions
-                ),
-                content: AccountInvitationError(
+                context: context,
+                title: "User invitations",
+                content: NewAdminStatusView(
                     state: .init(
-                        info: "Unable to load user invitations.",
-                        message: error,
-                        breadcrumb: breadcrumb()
-                    )
+                        title: "Unable to load user invitations",
+                        message: error
+                    ),
+                    icon: FeatherIcons.alertCircle()
                 )
             )
+            return HTMLResponse(content: page.content, status: .internalServerError)
         }
-        return renderEngine.renderAdminPage(
+
+        let granted = NewAdminListActions(
+            Set(permissions.map { PermissionKey($0) })
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
-            title: "Manage user invitations",
-            description: "Management user invitation list",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
+            context: context,
+            title: "User invitations",
             content: AccountInvitationTable(
                 state: .init(
                     isAdded: isAdded,
                     isEdited: isEdited,
                     isRemoved: isRemoved,
-                    canAccess: canAccess,
-                    permissions: permissions,
-                    canAdd: permissions.contains(
-                        AccountPermissions.Invitations.create.rawValue
-                    ),
+                    canAccess: granted.allows(AccountPermissions.Invitations.list),
+                    permissions: granted,
                     invitations: model.items,
-                    page: model.page,
-                    pageSize: model.pageSize,
-                    total: model.total,
-                    search: search ?? "",
-                    deniedInfo: "Forbidden",
-                    deniedMessage:
-                        "Your identity cannot access user invitations.",
-                    breadcrumb: breadcrumb()
+                    pageState: .init(
+                        page: model.page,
+                        pageSize: model.pageSize,
+                        total: model.total
+                    ),
+                    search: search ?? ""
                 )
             )
         )
@@ -82,50 +66,40 @@ struct AdminListAccountInvitationDefaultPresenter:
         search: String?,
         selectedIds: [String],
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        let hiddenFields = selectedIds.map {
+            NewAdminConfirmation.HiddenField(name: "ids", value: $0)
+        } + [
+            .init(name: "page", value: "\(page)"),
+            .init(name: "search", value: search ?? ""),
+        ]
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove selected invitations",
-            description: "Confirm remove",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ListRemoveConfirmation(
-                state: .init(
-                    breadcrumb: breadcrumb(),
+            content: NewAdminConfirmation(
+                breadcrumb: AccountAdminRoutes.invitationBreadcrumb + [
+                    .init(label: "Remove", link: AccountAdminRoutes.invitationRemoveBulk.description)
+                ],
+                pageHeader: .init(
                     title: "Remove selected invitations",
-                    message:
-                        "Are you sure you want to remove these selected invitations? This action cannot be undone.",
-                    action: "/admin/account/invitations/remove/",
-                    cancelLink: ListRemoveRedirect.location(
-                        path: "/admin/account/invitations/",
-                        page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
-                    ),
-                    selectedIds: selectedIds
-                )
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: selectedIds,
+                action: AccountAdminRoutes.invitationRemoveBulk.description,
+                cancel: NewAdminLocation.url(
+                    path: AccountAdminRoutes.invitations.description,
+                    page: page,
+                    search: search
+                ),
+                submitLabel: "Remove invitations",
+                nonceToken: nonceToken,
+                hiddenFields: hiddenFields
             )
         )
     }
 
-    func errorState(
-        error: OpenAPIRepositoryError
-    ) -> AccountInvitationError.State {
-        .init(
-            info: error.errorTitle,
-            message: error.errorDescription,
-            breadcrumb: breadcrumb()
-        )
-    }
-
-    func breadcrumb() -> AdminBreadcrumb.State {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "User", link: "/admin/user/"),
-        ])
-    }
 }

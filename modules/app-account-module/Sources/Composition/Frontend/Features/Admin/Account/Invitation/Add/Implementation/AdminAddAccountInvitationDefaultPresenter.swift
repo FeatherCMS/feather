@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import Hummingbird
 
@@ -6,21 +7,21 @@ struct AdminAddAccountInvitationDefaultPresenter:
     AdminAddAccountInvitationPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderPage(
         form: AccountInvitationForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        var form = form
+        form.nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add user invitation",
-            description: "Add a user invitation in management",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AccountInvitationAdd(
                 state: .init(
                     form: form,
@@ -44,7 +45,7 @@ struct AdminAddAccountInvitationDefaultPresenter:
             ),
             roleIds: .init(
                 key: "roleIds",
-                label: "Role IDs (comma-separated)",
+                label: "Roles",
                 value: roleIDs.joined(separator: ", "),
                 error: nil
             ),
@@ -54,12 +55,8 @@ struct AdminAddAccountInvitationDefaultPresenter:
         )
     }
 
-    func breadcrumb() -> AdminBreadcrumb.State {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "User", link: "/admin/user/"),
-            .init(label: "Invitations", link: "/admin/account/invitations/"),
-        ])
+    func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        AccountAdminRoutes.invitationBreadcrumb
     }
 
     func format(

@@ -1,35 +1,26 @@
 import FeatherAdmin
+import FeatherContracts
 import HTML
 import Hummingbird
-import SGML
-import WebBuilders
-import WebComponents
 
 struct AdminViewAccountInvitationDefaultPresenter:
     AdminViewAccountInvitationPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderDetailsPage(
         invitation: AccountInvitationDetailsModel,
-        breadcrumb: AdminBreadcrumb.State,
+        breadcrumb: [NewAdminBreadcrumb.Link],
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "User invitation details",
-            description: "Management user invitation details",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AccountInvitationDetails(
-                state: .init(
-                    invitation: invitation,
-                    breadcrumb: breadcrumb
-                )
+                state: .init(invitation: invitation, breadcrumb: breadcrumb)
             )
         )
     }
@@ -37,35 +28,26 @@ struct AdminViewAccountInvitationDefaultPresenter:
     func renderErrorPage(
         info: String,
         message: String,
-        breadcrumb: AdminBreadcrumb.State,
+        breadcrumb: [NewAdminBreadcrumb.Link],
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "User invitation details",
-            description: "Management user invitation details",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: AccountInvitationError(
-                state: .init(
-                    info: info,
-                    message: message,
-                    breadcrumb: breadcrumb
-                )
+            content: NewAdminStatusView(
+                state: .init(title: info, message: message),
+                icon: FeatherIcons.alertCircle()
             )
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "User", link: "/admin/user/"),
-            .init(label: "Invitations", link: "/admin/account/invitations/"),
-        ])
+    func breadcrumb(id: String) -> [NewAdminBreadcrumb.Link] {
+        AccountAdminRoutes.invitationBreadcrumb + [
+            .init(
+                label: "Details",
+                link: AccountAdminRoutes.invitationDetails(RouterPath(id)).description
+            )
+        ]
     }
 }

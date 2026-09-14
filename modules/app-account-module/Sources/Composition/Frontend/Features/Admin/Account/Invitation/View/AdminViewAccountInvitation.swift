@@ -54,6 +54,7 @@ struct AdminViewAccountInvitation {
                     ),
                     presenter: AdminViewAccountInvitationDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     ),
                 )

@@ -7,7 +7,7 @@ protocol AdminAddAccountInvitationPresenter: Sendable {
     func renderPage(
         form: AccountInvitationForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func formState(
         email: String,
@@ -15,7 +15,7 @@ protocol AdminAddAccountInvitationPresenter: Sendable {
         roleOptions: [AccountInvitationForm.RoleOptionState]
     ) -> AccountInvitationForm.State
 
-    func breadcrumb() -> AdminBreadcrumb.State
+    func breadcrumb() -> [NewAdminBreadcrumb.Link]
 
     func format(
         error: OpenAPIRepositoryError

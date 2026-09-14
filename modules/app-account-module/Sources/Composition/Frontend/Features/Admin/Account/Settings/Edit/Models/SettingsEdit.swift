@@ -11,21 +11,27 @@ struct SettingsEdit: Component {
         let userID: String?
         let isEdited: Bool
         let canEdit: Bool
-        let form: SettingsForm.State
-        let breadcrumb: AdminBreadcrumb.State
+        var form: SettingsForm.State
+        let breadcrumb: [NewAdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminBreadcrumb(state: state.breadcrumb))
-
-            H1("Settings")
+            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Settings",
+                        description: "Manage application preferences for this account."
+                    )
+                )
+            )
 
             if let userID = state.userID {
                 context.render(
-                    AdminPillTabs(links: [
+                    NewAdminPillTab(links: [
                         .init(
                             label: "Details",
                             href: "/admin/user/identities/\(userID)/",

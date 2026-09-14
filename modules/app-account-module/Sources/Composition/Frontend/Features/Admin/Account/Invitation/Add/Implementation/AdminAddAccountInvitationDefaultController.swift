@@ -20,7 +20,7 @@ struct AdminAddAccountInvitationDefaultController:
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
-        return presenter.renderPage(
+        return try await presenter.renderPage(
             form: presenter.formState(
                 email: "",
                 roleIDs: [],
@@ -38,10 +38,30 @@ struct AdminAddAccountInvitationDefaultController:
         var lastPayload: AdminAddAccountInvitationFormInput?
         let availableRoleOptions = await roleOptions(context)
         do {
-            let payload = try await request.decode(
-                as: AdminAddAccountInvitationFormInput.self,
+            let nonceRequest = try await request.decode(
+                as: NonceRequest<AdminAddAccountInvitationFormInput>.self,
                 context: context
             )
+            guard
+                await AdminNonceStore.shared.consume(
+                    nonceRequest.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                var state = runtime.presenter.formState(
+                    email: "",
+                    roleIDs: [],
+                    roleOptions: availableRoleOptions
+                )
+                state.error = "This form has expired. Please reload the page."
+                return try await createResponse(
+                    request: request,
+                    context: context,
+                    presenter: runtime.presenter,
+                    state: state
+                )
+            }
+            let payload = nonceRequest.input
             lastPayload = payload
             try await payload.validate()
             let (interactor, _) = runtime
@@ -71,7 +91,7 @@ struct AdminAddAccountInvitationDefaultController:
                 roleOptions: availableRoleOptions
             )
             state.apply(errors: errs)
-            return try createResponse(
+            return try await createResponse(
                 request: request,
                 context: context,
                 presenter: runtime.presenter,
@@ -85,7 +105,7 @@ struct AdminAddAccountInvitationDefaultController:
                 roleOptions: availableRoleOptions
             )
             state.error = runtime.presenter.format(error: error)
-            return try createResponse(
+            return try await createResponse(
                 request: request,
                 context: context,
                 presenter: runtime.presenter,
@@ -99,7 +119,7 @@ struct AdminAddAccountInvitationDefaultController:
                 roleOptions: availableRoleOptions
             )
             state.error = error.displayMessage
-            return try createResponse(
+            return try await createResponse(
                 request: request,
                 context: context,
                 presenter: runtime.presenter,
@@ -143,8 +163,8 @@ struct AdminAddAccountInvitationDefaultController:
         context: DefaultRequestContext,
         presenter: any AdminAddAccountInvitationPresenter,
         state: AccountInvitationForm.State
-    ) throws -> Response {
-        try presenter.renderPage(
+    ) async throws -> Response {
+        try await presenter.renderPage(
             form: state,
             permissions: context.currentUserPermissions
         )

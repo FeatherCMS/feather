@@ -22,6 +22,7 @@ public struct NewAdminFormFieldSelect: Component {
         public var options: [SelectOption]
         public var error: String?
         public var isRequired: Bool
+        public var isDisabled: Bool
 
         public init(
             name: String,
@@ -29,7 +30,8 @@ public struct NewAdminFormFieldSelect: Component {
             value: String? = nil,
             options: [SelectOption],
             error: String? = nil,
-            isRequired: Bool = false
+            isRequired: Bool = false,
+            isDisabled: Bool = false
         ) {
             self.name = name
             self.label = label
@@ -37,6 +39,7 @@ public struct NewAdminFormFieldSelect: Component {
             self.options = options
             self.error = error
             self.isRequired = isRequired
+            self.isDisabled = isDisabled
         }
     }
 
@@ -48,6 +51,19 @@ public struct NewAdminFormFieldSelect: Component {
 
     public func selectors() -> [any Selector] {
         [
+            Custom(".new-admin-form-field") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(6.px)
+            },
+            Custom(".new-admin-form-field label") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(5.px)
+                FontWeight(.normal)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                Opacity(0.8)
+            },
             Custom(".new-admin-form-field select") {
                 Width(100.percent)
                 BoxSizing(.borderBox)
@@ -124,6 +140,7 @@ public struct NewAdminFormFieldSelect: Component {
                 .ariaInvalid(state.error == nil ? .false : .true)
                 .if(state.error != nil) { $0.ariaErrorMessage(errorID) }
                 .if(state.isRequired) { $0.required() }
+                .if(state.isDisabled) { $0.disabled() }
             }
             .for(state.name)
             if let error = state.error {

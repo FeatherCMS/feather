@@ -1,6 +1,7 @@
 import AccountContracts
 import FeatherAdmin
 import Hummingbird
+import OpenAPIRuntime
 
 struct AdminEditSettingsDefaultController:
     AdminEditSettingsController
@@ -31,7 +32,7 @@ struct AdminEditSettingsDefaultController:
         )
 
         guard canRead else {
-            return presenter.renderDeniedPage(
+            return try await presenter.renderDeniedPage(
                 info: "No permission",
                 message: "Your account cannot view the settings.",
                 permissions: permissions
@@ -39,7 +40,7 @@ struct AdminEditSettingsDefaultController:
         }
 
         let settings = try await interactor.loadSettings()
-        return presenter.renderPage(
+        return try await presenter.renderPage(
             state: .init(
                 userID: targetUserID,
                 isEdited: request.hasQueryFlag("edited"),
@@ -89,7 +90,7 @@ struct AdminEditSettingsDefaultController:
 
         guard canEdit else {
             return
-                try presenter.renderDeniedPage(
+                try await presenter.renderDeniedPage(
                     info: "No permission",
                     message: "Your account cannot edit the settings.",
                     permissions: permissions
@@ -97,11 +98,28 @@ struct AdminEditSettingsDefaultController:
                 .response(from: request, context: context)
         }
 
-        let input = try await request.decode(
-            as: AdminEditSettingsFormInput.self,
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<AdminEditSettingsFormInput>.self,
             context: context
         )
-        try await interactor.saveSettings(input: input)
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else {
+            return Response(
+                status: .seeOther,
+                headers: [
+                    .location: AdminToastRedirect.location(
+                        defaultPath: request.uri.path,
+                        title: "Expired",
+                        message: "This form has expired. Please reload the page."
+                    )
+                ]
+            )
+        }
+        try await interactor.saveSettings(input: nonceRequest.input)
         return Response(
             status: .seeOther,
             headers: [
@@ -114,12 +132,11 @@ struct AdminEditSettingsDefaultController:
         )
     }
 
-    private func breadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Account", link: "/admin/account/"),
-            ]
-        )
+    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Account", link: "/admin/account/"),
+            .init(label: "Settings", link: "/admin/account/settings/"),
+        ]
     }
 }

@@ -13,16 +13,22 @@ struct AccountInvitationEdit: Component {
         let id: String
         let isEdited: Bool
         let form: AccountInvitationForm.State
-        let breadcrumb: AdminBreadcrumb.State
+        let breadcrumb: [NewAdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminBreadcrumb(state: state.breadcrumb))
-
-            H1("Edit user invitation")
+            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Edit user invitation",
+                        description: "Update the invited user and assigned roles."
+                    )
+                )
+            )
             if state.isEdited { P("User invitation edited successfully.") }
             context.render(
                 AccountInvitationForm(

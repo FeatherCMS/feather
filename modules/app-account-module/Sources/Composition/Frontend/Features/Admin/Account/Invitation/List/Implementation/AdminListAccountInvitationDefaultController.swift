@@ -1,6 +1,7 @@
 import AccountContracts
 import FeatherAdmin
 import Hummingbird
+import OpenAPIRuntime
 
 struct AdminListAccountInvitationDefaultController:
     AdminListAccountInvitationController
@@ -38,7 +39,7 @@ struct AdminListAccountInvitationDefaultController:
                     page: page,
                     size: pageSize
                 )
-            return runtime.presenter.renderListPage(
+            return try await runtime.presenter.renderListPage(
                 model: .init(
                     items: result.items,
                     total: result.total,
@@ -54,7 +55,7 @@ struct AdminListAccountInvitationDefaultController:
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderListPage(
+            return try await runtime.presenter.renderListPage(
                 model: .init(
                     items: [],
                     total: 0,
@@ -66,7 +67,7 @@ struct AdminListAccountInvitationDefaultController:
                 isRemoved: request.hasQueryFlag("removed"),
                 permissions: permissions,
                 search: request.querySearch(),
-                error: runtime.presenter.errorState(error: error).message
+                error: error.errorDescription
             )
         }
     }
@@ -76,7 +77,7 @@ struct AdminListAccountInvitationDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
-        let selectedIds = request.queryStrings("selectedIds")
+        let selectedIds = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
         guard !selectedIds.isEmpty else {
@@ -93,7 +94,7 @@ struct AdminListAccountInvitationDefaultController:
                 ]
             )
         }
-        return try runtime.presenter
+        return try await runtime.presenter
             .renderRemoveConfirmation(
                 page: page,
                 search: search,
@@ -107,26 +108,44 @@ struct AdminListAccountInvitationDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let payload = try await request.decode(
-            as: ListRemoveFormInput.self,
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else {
+            return Response(
+                status: .seeOther,
+                headers: [
+                    .location: AdminToastRedirect.location(
+                        defaultPath: AccountAdminRoutes.invitations.description,
+                        title: "Expired",
+                        message: "This form has expired. Please reload the page."
+                    )
+                ]
+            )
+        }
+        let payload = nonceRequest.input
         let runtime = buildRuntime(request, context)
-        if !payload.normalizedSelectedIds.isEmpty {
+        if !payload.normalizedIds.isEmpty {
             try await runtime.interactor.remove(
-                ids: payload.normalizedSelectedIds
+                ids: payload.normalizedIds
             )
         }
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListRemoveRedirect.location(
-                    path: "/admin/account/invitations/",
+                    .location: ListRemoveRedirect.location(
+                    path: AccountAdminRoutes.invitations.description,
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,
-                    title: !payload.normalizedSelectedIds.isEmpty
+                    title: !payload.normalizedIds.isEmpty
                         ? "Removed" : nil,
-                    message: !payload.normalizedSelectedIds.isEmpty
+                    message: !payload.normalizedIds.isEmpty
                         ? "User invitation removed successfully." : nil
                 )
             ]

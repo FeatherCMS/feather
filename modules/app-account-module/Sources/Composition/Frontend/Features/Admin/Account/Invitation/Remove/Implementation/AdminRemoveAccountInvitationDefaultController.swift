@@ -1,6 +1,7 @@
 import FeatherAdmin
 import HTML
 import Hummingbird
+import OpenAPIRuntime
 
 struct AdminRemoveAccountInvitationDefaultController:
     AdminRemoveAccountInvitationController
@@ -20,14 +21,14 @@ struct AdminRemoveAccountInvitationDefaultController:
         let permissions = context.currentUserPermissions
         do {
             let invitation = try await interactor.get(id: id)
-            return presenter.renderRemovePage(
+            return try await presenter.renderRemovePage(
                 id: id,
                 email: invitation.email,
                 permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return presenter.renderErrorPage(
+            return try await presenter.renderErrorPage(
                 id: id,
                 info: error.errorTitle,
                 message: error.errorDescription,
@@ -43,6 +44,27 @@ struct AdminRemoveAccountInvitationDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            context: context
+        )
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else {
+            return Response(
+                status: .seeOther,
+                headers: [
+                    .location: AdminToastRedirect.location(
+                        defaultPath: AccountAdminRoutes.invitationRemove(RouterPath(id)).description,
+                        title: "Expired",
+                        message: "This form has expired. Please reload the page."
+                    )
+                ]
+            )
+        }
         do {
             try await interactor.execute(
                 entity: .init(id: id)
@@ -60,7 +82,7 @@ struct AdminRemoveAccountInvitationDefaultController:
         }
         catch let error as OpenAPIRepositoryError {
             return
-                try presenter.renderErrorPage(
+                try await presenter.renderErrorPage(
                     id: id,
                     info: error.errorTitle,
                     message: error.errorDescription,

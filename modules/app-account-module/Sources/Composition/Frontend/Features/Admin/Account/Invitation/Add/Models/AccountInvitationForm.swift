@@ -1,4 +1,3 @@
-import CSS
 import FeatherAdmin
 import HTML
 import SGML
@@ -20,6 +19,7 @@ struct AccountInvitationForm: Component {
         var roleOptions: [RoleOptionState]
         var error: String?
         var success: String?
+        var nonceToken: String? = nil
 
         mutating func apply(
             errors: [String: String]
@@ -42,71 +42,62 @@ struct AccountInvitationForm: Component {
     var removeLabel: String = "Remove"
 
     func html(context: inout RenderContext) -> Form {
-        Form {
+        let form = NewAdminForm(action: action, nonceToken: state.nonceToken) {
             if let success = state.success {
                 P(success).class("success")
             }
             if let error = state.error {
-                P(error).class("error")
+                P(error).class("new-admin-form__error")
             }
 
             context.render(
-                FormInputField(
-                    name: state.email.key,
-                    label: state.email.label,
-                    value: state.email.value,
-                    error: state.email.error,
-                    isRequired: true
+                NewAdminFormFieldInput(
+                    state: .init(
+                        name: state.email.key,
+                        label: state.email.label,
+                        value: state.email.value,
+                        error: state.email.error,
+                        isRequired: true
+                    )
                 )
             )
-            Section {
-                if state.roleOptions.isEmpty {
-                    P("No roles available.")
-                }
-                else {
-                    context.render(
-                        AdminFieldLabel(label: "Roles", required: false)
+            if state.roleOptions.isEmpty {
+                P("No roles available.")
+            }
+            else {
+                context.render(
+                    NewAdminFormFieldCheckboxGroup(
+                        name: "roleIds[]",
+                        label: "Roles",
+                        options: state.roleOptions.map {
+                            .init(
+                                label: $0.label,
+                                value: $0.value,
+                                isSelected: $0.isSelected
+                            )
+                        },
+                        error: state.roleIds.error
                     )
-                    Div {
-                        for option in state.roleOptions {
-                            Label {
-                                Input()
-                                    .type(.checkbox)
-                                    .name("roleIds[]")
-                                    .value(option.value)
-                                    .if(option.isSelected) { $0.checked() }
-                                InlineText(option.label)
-                            }
-                            .class("multi-option")
-                        }
-                    }
-                    .class("checkbox-multiselect")
-                    if let error = state.roleIds.error {
-                        Span(error).class("field-error")
-                    }
-                }
+                )
             }
 
             Section {
                 Div {
-                    Button(submitLabel)
-                        .type(.submit)
+                        context.render(NewAdminSubmitButton(submitLabel))
                     if let removeHref {
                         context.render(
-                            AdminNavigationButton(
+                            NewAdminButton(
                                 removeLabel,
                                 href: removeHref,
-                                classes: ["danger"]
+                                style: .destructive
                             )
                         )
                     }
                 }
-                .class("button-row")
+                .class("new-admin-form__actions")
             }
         }
-        .encType(.urlencoded)
-        .method(.post)
-        .action(action)
-        .class("cms-form")
+        context.register(form)
+        return form.html(context: &context)
     }
 }

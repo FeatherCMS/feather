@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import Hummingbird
 
@@ -6,6 +7,7 @@ struct AdminEditAccountInvitationDefaultPresenter:
     AdminEditAccountInvitationPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderEditPage(
@@ -13,16 +15,15 @@ struct AdminEditAccountInvitationDefaultPresenter:
         state: AccountInvitationForm.State,
         isEdited: Bool,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        var state = state
+        state.nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit user invitation",
-            description: "Edit a management user invitation",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AccountInvitationEdit(
                 state: .init(
                     id: id,
@@ -39,22 +40,14 @@ struct AdminEditAccountInvitationDefaultPresenter:
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit user invitation",
-            description: "Edit a management user invitation",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: AccountInvitationError(
-                state: .init(
-                    info: info,
-                    message: message,
-                    breadcrumb: breadcrumb(id: id)
-                )
+            content: NewAdminStatusView(
+                state: .init(title: info, message: message),
+                icon: FeatherIcons.alertCircle()
             )
         )
     }
@@ -73,7 +66,7 @@ struct AdminEditAccountInvitationDefaultPresenter:
             ),
             roleIds: .init(
                 key: "roleIds",
-                label: "Role IDs (comma-separated)",
+                label: "Roles",
                 value: roleIDs.joined(separator: ", "),
                 error: nil
             ),
@@ -85,12 +78,10 @@ struct AdminEditAccountInvitationDefaultPresenter:
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "User", link: "/admin/user/"),
-            .init(label: "Invitations", link: "/admin/account/invitations/"),
-        ])
+    ) -> [NewAdminBreadcrumb.Link] {
+        AccountAdminRoutes.invitationBreadcrumb + [
+            .init(label: "Edit", link: AccountAdminRoutes.invitationEdit(RouterPath(id)).description)
+        ]
     }
 
     func format(

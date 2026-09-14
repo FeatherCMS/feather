@@ -1,4 +1,3 @@
-import CSS
 import FeatherAdmin
 import HTML
 import SGML
@@ -21,6 +20,7 @@ struct SettingsForm: Component {
         var canEdit: Bool
         var error: String?
         var success: String?
+        var nonceToken: String? = nil
     }
 
     var state: State
@@ -28,70 +28,63 @@ struct SettingsForm: Component {
     var submitLabel: String = "Save settings"
 
     func html(context: inout RenderContext) -> Form {
-        Form {
+        let form = NewAdminForm(action: action, nonceToken: state.nonceToken) {
             if let success = state.success {
                 P(success).class("success")
             }
             if let error = state.error {
-                P(error).class("error")
+                P(error).class("new-admin-form__error")
             }
 
             context.render(
-                FormInputField(
-                    name: state.language.key,
-                    label: state.language.label,
-                    value: state.language.value,
-                    error: state.language.error,
-                    placeholder: "Language code, e.g. en",
-                    isRequired: true,
-                    isDisabled: !state.canEdit,
-                    inputClass: "text-input"
+                NewAdminFormFieldLanguage(
+                    state: .init(
+                        name: state.language.key,
+                        label: state.language.label,
+                        value: state.language.value,
+                        error: state.language.error,
+                        isRequired: true,
+                        isDisabled: !state.canEdit
+                    )
                 )
             )
 
             context.render(
-                FormInputField(
-                    name: state.timezone.key,
-                    label: state.timezone.label,
-                    value: state.timezone.value,
-                    error: state.timezone.error,
-                    placeholder: "Timezone, e.g. Europe/Budapest",
-                    isRequired: true,
-                    isDisabled: !state.canEdit,
-                    inputClass: "text-input"
+                NewAdminFormFieldTimezone(
+                    state: .init(
+                        name: state.timezone.key,
+                        label: state.timezone.label,
+                        value: state.timezone.value,
+                        error: state.timezone.error,
+                        isRequired: true,
+                        isDisabled: !state.canEdit
+                    )
                 )
             )
 
             context.render(
-                FormSelectField(
-                    name: state.pageSize.key,
-                    label: state.pageSize.label,
-                    options: [10, 20, 50, 100]
-                        .map {
-                            let value = "\($0)"
-                            return .init(label: value, value: value)
-                        },
-                    selectedValue: state.pageSize.value,
-                    error: state.pageSize.error,
-                    isRequired: true,
-                    isDisabled: !state.canEdit,
-                    selectClass: "text-input page-size-select"
+                NewAdminFormFieldPaginationLimit(
+                    state: .init(
+                        name: state.pageSize.key,
+                        label: state.pageSize.label,
+                        value: state.pageSize.value,
+                        error: state.pageSize.error,
+                        isRequired: true,
+                        isDisabled: !state.canEdit
+                    )
                 )
             )
 
             if state.canEdit {
                 Section {
                     Div {
-                        Button(submitLabel)
-                            .type(.submit)
+                        context.render(NewAdminSubmitButton(submitLabel))
                     }
-                    .class("button-row")
+                    .class("new-admin-form__actions")
                 }
             }
         }
-        .encType(.urlencoded)
-        .method(.post)
-        .action(action)
-        .class("cms-form")
+        context.register(form)
+        return form.html(context: &context)
     }
 }

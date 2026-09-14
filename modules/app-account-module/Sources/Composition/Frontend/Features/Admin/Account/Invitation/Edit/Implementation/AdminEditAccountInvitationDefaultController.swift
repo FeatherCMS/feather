@@ -25,7 +25,7 @@ struct AdminEditAccountInvitationDefaultController:
         let permissions = context.currentUserPermissions
         do {
             let invitation = try await interactor.get(id: id)
-            return presenter.renderEditPage(
+            return try await presenter.renderEditPage(
                 id: id,
                 state: presenter.formState(
                     email: invitation.email,
@@ -40,7 +40,7 @@ struct AdminEditAccountInvitationDefaultController:
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return presenter.renderErrorPage(
+            return try await presenter.renderErrorPage(
                 id: id,
                 info: error.errorTitle,
                 message: error.errorDescription,
@@ -58,10 +58,31 @@ struct AdminEditAccountInvitationDefaultController:
         let availableRoleOptions = await roleOptions(context, selected: [])
         var lastPayload: AdminEditAccountInvitationFormInput?
         do {
-            let payload = try await request.decode(
-                as: AdminEditAccountInvitationFormInput.self,
+            let nonceRequest = try await request.decode(
+                as: NonceRequest<AdminEditAccountInvitationFormInput>.self,
                 context: context
             )
+            guard
+                await AdminNonceStore.shared.consume(
+                    nonceRequest.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                var state = presenter.formState(
+                    email: "",
+                    roleIDs: [],
+                    roleOptions: availableRoleOptions
+                )
+                state.error = "This form has expired. Please reload the page."
+                return try await updateResponse(
+                    request: request,
+                    context: context,
+                    id: id,
+                    presenter: presenter,
+                    state: state
+                )
+            }
+            let payload = nonceRequest.input
             lastPayload = payload
             try await payload.validate()
             try await interactor.execute(
@@ -91,7 +112,7 @@ struct AdminEditAccountInvitationDefaultController:
                 roleOptions: availableRoleOptions
             )
             state.apply(errors: errs)
-            return try updateResponse(
+            return try await updateResponse(
                 request: request,
                 context: context,
                 id: id,
@@ -106,7 +127,7 @@ struct AdminEditAccountInvitationDefaultController:
                 roleOptions: availableRoleOptions
             )
             state.error = presenter.format(error: error)
-            return try updateResponse(
+            return try await updateResponse(
                 request: request,
                 context: context,
                 id: id,
@@ -121,7 +142,7 @@ struct AdminEditAccountInvitationDefaultController:
                 roleOptions: availableRoleOptions
             )
             state.error = error.displayMessage
-            return try updateResponse(
+            return try await updateResponse(
                 request: request,
                 context: context,
                 id: id,
@@ -172,8 +193,8 @@ struct AdminEditAccountInvitationDefaultController:
         id: String,
         presenter: any AdminEditAccountInvitationPresenter,
         state: AccountInvitationForm.State
-    ) throws -> Response {
-        try presenter.renderEditPage(
+    ) async throws -> Response {
+        try await presenter.renderEditPage(
             id: id,
             state: state,
             isEdited: false,

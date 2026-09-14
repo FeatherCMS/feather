@@ -25,7 +25,7 @@ struct AdminViewAccountInvitationDefaultController:
             let roleNames = await runtime.interactor.roleNames(
                 for: invitation.roleIds
             )
-            return runtime.presenter.renderDetailsPage(
+            return try await runtime.presenter.renderDetailsPage(
                 invitation: .init(
                     id: invitation.id,
                     email: invitation.email,
@@ -37,7 +37,7 @@ struct AdminViewAccountInvitationDefaultController:
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
+            return try await runtime.presenter.renderErrorPage(
                 info: error.errorTitle,
                 message: error.errorDescription,
                 breadcrumb: runtime.presenter.breadcrumb(id: id),
