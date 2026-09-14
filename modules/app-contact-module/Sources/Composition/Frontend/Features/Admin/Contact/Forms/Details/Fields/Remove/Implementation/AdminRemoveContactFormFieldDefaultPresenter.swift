@@ -16,59 +16,43 @@ struct AdminRemoveContactFormFieldDefaultPresenter:
     func renderConfirmation(
         formId: String,
         fieldId: String,
-        label: String,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        label: String
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove contact form field",
-            description: "Remove contact form field",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ContactFormFieldRemoveView(
-                formId: formId,
-                fieldId: fieldId,
-                label: label,
-                breadcrumb: .init(links: [
-                    .init(label: "Admin", link: "/admin/"),
-                    .init(label: "Contact", link: "/admin/contact/"),
-                    .init(label: "Fields", link: ""),
-                    .init(label: "Remove", link: ""),
-                ])
+            content: NewAdminConfirmation(
+                breadcrumb: ContactAdminRoutes.breadcrumb,
+                pageHeader: .init(
+                    title: "Remove contact form field",
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: [label],
+                action: ContactAdminRoutes.formFieldRemove(
+                    formID: RouterPath(formId),
+                    fieldID: RouterPath(fieldId)
+                ).description,
+                cancel: ContactAdminRoutes.formFields(RouterPath(formId)).description,
+                submitLabel: "Remove field"
             )
         )
     }
     func renderConfirmation(
         formId: String,
-        selectedIds: [String],
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        selectedIds: [String]
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove contact form fields",
-            description: "Remove contact form fields",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ListRemoveConfirmation(
-                state: .init(
-                    breadcrumb: .init(links: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(label: "Contact", link: "/admin/contact/"),
-                        .init(label: "Remove", link: ""),
-                    ]),
-                    title: "Remove contact form fields",
-                    message:
-                        "Are you sure you want to remove the selected contact form fields? This action cannot be undone.",
-                    action: "/admin/contact/forms/\(formId)/fields/remove/",
-                    cancelLink: "/admin/contact/forms/\(formId)/fields/",
-                    selectedIds: selectedIds
-                )
+            content: NewAdminConfirmation(
+                breadcrumb: ContactAdminRoutes.breadcrumb,
+                pageHeader: .init(title: "Remove contact form fields", description: "This action cannot be undone."),
+                selectedItems: selectedIds,
+                action: ContactAdminRoutes.formFieldRemove(RouterPath(formId)).description,
+                cancel: ContactAdminRoutes.formFields(RouterPath(formId)).description,
+                hiddenFields: selectedIds.map { .init(name: "selectedIds[]", value: $0) }
             )
         )
     }

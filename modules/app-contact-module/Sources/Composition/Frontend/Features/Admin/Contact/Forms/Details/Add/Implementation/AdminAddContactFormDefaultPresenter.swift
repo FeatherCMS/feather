@@ -17,16 +17,11 @@ struct AdminAddContactFormDefaultPresenter: AdminAddContactFormPresenter {
         error: String?,
         permissions: Set<String>
     ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        renderingEngine.renderNewAdminPage(
             request: request,
             title: "Add contact form",
-            description: "Add contact form",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ContactFormAdd(
+            permissions: permissions,
+            content: ContactFormAddPage(
                 state: .init(
                     form: .init(
                         name: item.name,
@@ -39,12 +34,7 @@ struct AdminAddContactFormDefaultPresenter: AdminAddContactFormPresenter {
                         error: error,
                         success: nil
                     ),
-                    breadcrumb: .init(links: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(label: "Contact", link: "/admin/contact/"),
-                        .init(label: "Forms", link: "/admin/contact/forms/"),
-                        .init(label: "Add", link: "/admin/contact/forms/add/"),
-                    ])
+                    breadcrumb: ContactAdminRoutes.formsBreadcrumb
                 )
             )
         )

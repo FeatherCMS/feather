@@ -16,32 +16,17 @@ struct AdminRemoveContactSubmissionsDefaultPresenter:
     func renderConfirmation(selectedIds: [String], permissions: Set<String>)
         -> HTMLResponse
     {
-        renderingEngine.renderAdminPage(
+        renderingEngine.renderNewAdminPage(
             request: request,
             title: "Remove contact submissions",
-            description: "Remove contact submissions",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ListRemoveConfirmation(
-                state: .init(
-                    breadcrumb: .init(links: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(label: "Contact", link: "/admin/contact/"),
-                        .init(
-                            label: "Submissions",
-                            link: "/admin/contact/submissions/"
-                        ), .init(label: "Remove", link: ""),
-                    ]),
-                    title: "Remove contact submissions",
-                    message:
-                        "Are you sure you want to remove the selected contact submissions? This action cannot be undone.",
-                    action: "/admin/contact/submissions/remove/",
-                    cancelLink: "/admin/contact/submissions/",
-                    selectedIds: selectedIds
-                )
+            permissions: permissions,
+            content: NewAdminConfirmation(
+                breadcrumb: ContactAdminRoutes.breadcrumb,
+                pageHeader: .init(title: "Remove contact submissions", description: "This action cannot be undone."),
+                selectedItems: selectedIds,
+                action: ContactAdminRoutes.submissionRemove.description,
+                cancel: ContactAdminRoutes.submissions.description,
+                hiddenFields: selectedIds.map { .init(name: "selectedIds[]", value: $0) }
             )
         )
     }

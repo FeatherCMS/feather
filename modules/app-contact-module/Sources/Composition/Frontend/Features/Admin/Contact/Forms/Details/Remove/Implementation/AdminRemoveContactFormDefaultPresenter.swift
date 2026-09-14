@@ -15,22 +15,21 @@ struct AdminRemoveContactFormDefaultPresenter: AdminRemoveContactFormPresenter {
     func renderConfirmation(id: String, name: String, permissions: Set<String>)
         -> HTMLResponse
     {
-        renderingEngine.renderAdminPage(
+        renderingEngine.renderNewAdminPage(
             request: request,
             title: "Remove contact form",
-            description: "Remove contact form",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ContactFormRemoveView(
-                id: id,
-                name: name,
-                breadcrumb: breadcrumb(
-                    label: "Remove",
-                    path: "/admin/contact/forms/remove/?selectedIds[]=\(id)"
-                )
+            permissions: permissions,
+            content: NewAdminConfirmation(
+                breadcrumb: ContactAdminRoutes.breadcrumb,
+                pageHeader: .init(
+                    title: "Remove contact form",
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: [name],
+                action: ContactAdminRoutes.formRemove.description,
+                cancel: ContactAdminRoutes.forms.description,
+                submitLabel: "Remove form",
+                hiddenFields: [.init(name: "selectedIds[]", value: id)]
             )
         )
     }
@@ -39,36 +38,19 @@ struct AdminRemoveContactFormDefaultPresenter: AdminRemoveContactFormPresenter {
         selectedIds: [String],
         permissions: Set<String>
     ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        renderingEngine.renderNewAdminPage(
             request: request,
             title: "Remove contact forms",
-            description: "Remove contact forms",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ListRemoveConfirmation(
-                state: .init(
-                    breadcrumb: breadcrumb(label: "Remove", path: ""),
-                    title: "Remove contact forms",
-                    message:
-                        "Are you sure you want to remove the selected contact forms? This action cannot be undone.",
-                    action: "/admin/contact/forms/remove/",
-                    cancelLink: "/admin/contact/forms/",
-                    selectedIds: selectedIds
-                )
+            permissions: permissions,
+            content: NewAdminConfirmation(
+                breadcrumb: ContactAdminRoutes.breadcrumb,
+                pageHeader: .init(title: "Remove contact forms", description: "This action cannot be undone."),
+                selectedItems: selectedIds,
+                action: ContactAdminRoutes.formRemove.description,
+                cancel: ContactAdminRoutes.forms.description,
+                hiddenFields: selectedIds.map { .init(name: "selectedIds[]", value: $0) }
             )
         )
     }
 
-    private func breadcrumb(label: String, path: String)
-        -> AdminBreadcrumb.State
-    {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Contact", link: "/admin/contact/"),
-            .init(label: "Forms", link: "/admin/contact/forms/"),
-        ])
-    }
 }

@@ -18,7 +18,7 @@ public struct AdminContact {
             .controller.route(on: router)
         AdminEditContactForm(renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminGetContactForm(renderingEngine: renderingEngine)
+        AdminViewContactForm(renderingEngine: renderingEngine)
             .controller.route(on: router)
         AdminRemoveContactForm(renderingEngine: renderingEngine)
             .controller.route(on: router)
@@ -51,7 +51,7 @@ public struct AdminContact {
 
         AdminListContactFormSubmissions(renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminGetContactFormSubmission(renderingEngine: renderingEngine)
+        AdminViewContactFormSubmission(renderingEngine: renderingEngine)
             .controller.route(on: router)
         AdminEditContactFormSubmission(renderingEngine: renderingEngine)
             .controller.route(on: router)

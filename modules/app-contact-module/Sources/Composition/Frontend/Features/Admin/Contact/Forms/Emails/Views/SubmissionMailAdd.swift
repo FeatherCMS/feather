@@ -11,7 +11,7 @@ struct SubmissionMailAdd: Component {
     let formId: String
     let mail: AdminContactFormEmail
     let availableFields: [AdminContactFormFieldOption]
-    let breadcrumb: AdminBreadcrumb.State
+    let breadcrumb: [NewAdminBreadcrumb.Link]
     let error: String?
 
     func html(context: inout RenderContext) -> some BasicTag {
@@ -19,8 +19,8 @@ struct SubmissionMailAdd: Component {
             context.render(
                 AdminContactFormTabs(formId: formId, active: .emails)
             )
-            context.render(AdminBreadcrumb(state: breadcrumb))
-            H1("Add contact form email")
+            context.render(NewAdminBreadcrumb(links: breadcrumb))
+            context.render(NewAdminPageHeader(state: .init(title: "Add contact form email", description: "Define the notification email sent by this contact form.")))
             replacementVariables
             context.render(
                 SubmissionMailForm(

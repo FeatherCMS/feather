@@ -19,28 +19,18 @@ struct AdminEditContactFormFieldDefaultPresenter:
         error: String?,
         permissions: Set<String>
     ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        renderingEngine.renderNewAdminPage(
             request: request,
             title: "Edit contact form field",
-            description: "Edit contact form field",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ContactFormFieldEditView(
+            permissions: permissions,
+            content: ContactFormFieldEditPage(
                 state: .init(
                     formId: formId,
                     field: field,
                     error: error,
-                    breadcrumb: .init(links: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(label: "Contact", link: "/admin/contact/"),
-                        .init(
-                            label: "Fields",
-                            link: "/admin/contact/forms/\(formId)/fields/"
-                        ), .init(label: "Edit", link: ""),
-                    ])
+                    breadcrumb: ContactAdminRoutes.formFieldsBreadcrumb(
+                        RouterPath(formId)
+                    )
                 )
             )
         )

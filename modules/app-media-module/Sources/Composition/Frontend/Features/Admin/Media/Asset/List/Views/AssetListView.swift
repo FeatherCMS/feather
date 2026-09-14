@@ -183,7 +183,13 @@ struct AssetListView: Component {
     }
 
     func rules() -> [any CSS.Rule] {
-        Media(selectors: selectors())
+        NewAdminListSearch(
+            state: .init(
+                action: "",
+                placeholder: "",
+                search: ""
+            )
+        ).rules() + [Media(selectors: selectors())]
     }
 
     func html(context: inout RenderContext) -> some BasicTag {
@@ -562,25 +568,19 @@ extension AssetListView {
     fileprivate func pickerSearchControls(
         context: inout RenderContext
     ) -> some FlowContent {
-        Div {
-            Input()
-                .type(.search)
-                .value(state.search)
-                .placeholder("Quick search assets")
-                .data(
-                    "admin-media-picker-search-input",
-                    "1"
+        context.render(
+            NewAdminListSearch(
+                state: .init(
+                    action: browsePath(parentId: state.parentId),
+                    placeholder: "Quick search assets",
+                    search: state.search,
+                    resetPath: browsePath(parentId: state.parentId),
+                    queryItems: queryItems().map {
+                        .init(name: $0.name, value: $0.value)
+                    }
                 )
-            context.render(NewAdminControlButton("Search", style: .secondary))
-                .data(
-                    "admin-media-picker-search-submit",
-                    "1"
-                )
-            A("Reset")
-                .href(browsePath(parentId: state.parentId))
-                .class("table-search-reset")
-        }
-        .class("table-search-form")
+            )
+        )
         .data(
             "admin-media-picker-search-path",
             browsePath(parentId: state.parentId)
@@ -865,6 +865,10 @@ extension AssetListView {
                 .data("picker-select", item.asset.id)
                 .data("picker-field", field)
                 .data("picker-storage-key", item.asset.storageKey)
+                .data(
+                    "picker-preview-storage-key",
+                    item.preview?.storageKey ?? ""
+                )
                 .data("picker-base-name", item.asset.baseName)
                 .data("picker-type", item.asset._type)
                 .data("picker-title", item.asset.title ?? "")
@@ -902,7 +906,7 @@ extension AssetListView {
             Div {
                 if state.picker.isEnabled, let field = state.picker.field {
                     context.render(
-                        NewAdminControlButton(
+                        NewAdminRowButton(
                             "Select",
                             style: .ghost(.primary)
                         )
@@ -910,6 +914,10 @@ extension AssetListView {
                     .data("picker-select", item.asset.id)
                     .data("picker-field", field)
                     .data("picker-storage-key", item.asset.storageKey)
+                    .data(
+                        "picker-preview-storage-key",
+                        item.preview?.storageKey ?? ""
+                    )
                     .data("picker-base-name", item.asset.baseName)
                     .data("picker-type", item.asset._type)
                     .data("picker-title", item.asset.title ?? "")
@@ -1092,7 +1100,7 @@ extension AssetListView {
             if state.picker.isEnabled, let field = state.picker.field {
                 Td {
                     context.render(
-                        NewAdminControlButton(
+                        NewAdminRowButton(
                             "Select",
                             style: .ghost(.primary)
                         )
@@ -1105,6 +1113,10 @@ extension AssetListView {
                     .data(
                         "picker-storage-key",
                         item.asset.storageKey
+                    )
+                    .data(
+                        "picker-preview-storage-key",
+                        item.preview?.storageKey ?? ""
                     )
                     .data(
                         "picker-base-name",

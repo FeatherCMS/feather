@@ -21,21 +21,28 @@ struct AdminListContactFieldsDefaultPresenter:
         error: String?,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        let page = request.queryPage()
+        let pageSize = 20
+        let pageState = NewAdminListPageState(page: page, pageSize: pageSize, total: fields.count)
+        let start = (page - 1) * pageSize
+        let end = min(start + pageSize, fields.count)
+        let pageItems = start < fields.count ? Array(fields[start..<end]) : []
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Contact form fields",
             content: ContactFieldsTable(
                 state: .init(
-                    fields: fields,
+                    fields: pageItems,
+                    pageState: pageState,
                     search: search,
                     error: error,
                     isEdited: request.hasQueryFlag("edited"),
                     isRemoved: request.hasQueryFlag("removed"),
-                    canRemove: permissions.contains(
-                        ContactPermissions.Fields.delete.rawValue
+                    permissions: .init(
+                        Set(permissions.map(PermissionKey.init))
                     ),
-                    breadcrumb: breadcrumb
+                    breadcrumb: ContactAdminRoutes.breadcrumb
                 )
             )
         )

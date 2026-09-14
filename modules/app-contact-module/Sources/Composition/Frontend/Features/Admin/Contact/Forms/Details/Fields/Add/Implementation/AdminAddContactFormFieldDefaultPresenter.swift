@@ -17,21 +17,11 @@ struct AdminAddContactFormFieldDefaultPresenter:
         model: AdminAddContactFormFieldModel,
         permissions: Set<String>
     ) -> HTMLResponse {
-        let breadcrumb = AdminBreadcrumb.State(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Contact", link: "/admin/contact/"),
-            .init(label: "Forms", link: "/admin/contact/forms/"),
-        ])
-        return renderingEngine.renderAdminPage(
+        return renderingEngine.renderNewAdminPage(
             request: request,
             title: "Add contact form field",
-            description: "Add contact form field",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ContactFormFieldAddView(
+            permissions: permissions,
+            content: ContactFormFieldAddPage(
                 state: .init(
                     formId: model.formId,
                     key: model.key,
@@ -41,7 +31,9 @@ struct AdminAddContactFormFieldDefaultPresenter:
                     isRequired: model.isRequired,
                     position: model.position,
                     error: model.error,
-                    breadcrumb: breadcrumb
+                    breadcrumb: ContactAdminRoutes.formFieldsBreadcrumb(
+                        RouterPath(model.formId)
+                    )
                 )
             )
         )

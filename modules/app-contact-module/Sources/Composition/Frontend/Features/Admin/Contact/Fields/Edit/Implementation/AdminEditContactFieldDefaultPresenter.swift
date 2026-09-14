@@ -23,18 +23,11 @@ struct AdminEditContactFieldDefaultPresenter:
             request: request,
             context: context,
             title: "Edit contact form field",
-            content: ContactFieldEditView(
+            content: ContactFieldEditPage(
                 state: .init(
                     field: field,
                     error: error,
-                    breadcrumb: .init(links: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(label: "Contact", link: "/admin/contact/"),
-                        .init(
-                            label: "Fields",
-                            link: "/admin/contact/fields/"
-                        ), .init(label: "Edit", link: ""),
-                    ])
+                    breadcrumb: ContactAdminRoutes.fieldsBreadcrumb
                 )
             )
         )

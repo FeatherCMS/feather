@@ -13,7 +13,7 @@ struct AdminRemoveContactFormSubmissionsOpenAPIRepository {
     func get(formId: String, id: String) async throws
         -> AdminContactFormSubmissionItem
     {
-        try await AdminGetContactFormSubmissionOpenAPIRepository(api: api)
+        try await AdminViewContactFormSubmissionOpenAPIRepository(api: api)
             .get(formId: formId, id: id)
     }
     func remove(formId: String, id: String) async throws {

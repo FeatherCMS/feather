@@ -1,9 +1,5 @@
 import FeatherAdmin
-import FeatherValidation
-import Foundation
 import HTML
-import Hummingbird
-import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
@@ -14,43 +10,21 @@ struct ContactFormFieldForm: Component {
     let submitLabel: String
 
     func html(context: inout RenderContext) -> Form {
-        Form {
-            Label {
-                context.render(AdminFieldLabel(label: "Type", required: true))
-                Select {
-                    for type in [
-                        "text", "textarea", "select", "radio", "toggle",
-                    ] {
-                        Option(type.capitalized).value(type)
-                            .if(field.type == type) { $0.selected() }
-                    }
-                }
-                .name("type").class("text-input")
-            }
-            Label {
-                context.render(AdminFieldLabel(label: "Key", required: true))
-                Input().type(.text).class("text-input").name("key")
-                    .value(field.key).required()
-            }
-            Label {
-                context.render(AdminFieldLabel(label: "Label", required: true))
-                Input().type(.text).class("text-input").name("label")
-                    .value(field.label).required()
-            }
-            Label {
-                context.render(
-                    AdminFieldLabel(label: "Allowed values", required: false)
-                )
-                Textarea(field.allowedValues).class("text-input")
-                    .name("allowedValues")
-            }
-            Label {
-                Input().type(.checkbox).name("isRequired")
-                    .if(field.isRequired) { $0.checked() }
-                Span(" Required")
-            }
-            Div { Button(submitLabel).type(.submit) }.class("button-row")
+        let form = NewAdminForm(action: action) {
+            context.render(NewAdminFormFieldSelect(state: .init(name: "type", label: "Type", value: field.type, options: [
+                .init(label: "Text", value: "text"),
+                .init(label: "Textarea", value: "textarea"),
+                .init(label: "Select", value: "select"),
+                .init(label: "Radio", value: "radio"),
+                .init(label: "Toggle", value: "toggle"),
+            ], isRequired: true)))
+            context.render(NewAdminFormFieldInput(state: .init(name: "key", label: "Key", value: field.key, isRequired: true)))
+            context.render(NewAdminFormFieldInput(state: .init(name: "label", label: "Label", value: field.label, isRequired: true)))
+            context.render(NewAdminFormFieldTextArea(state: .init(name: "allowedValues", label: "Allowed values", value: field.allowedValues, help: "One value per line.", style: .small)))
+            context.render(NewAdminFormFieldCheckbox(state: .init(name: "isRequired", label: "Required", isChecked: field.isRequired)))
+            Div { context.render(NewAdminSubmitButton(submitLabel)) }.class("new-admin-form__actions")
         }
-        .method(.post).action(action).class("cms-form")
+        context.register(form)
+        return form.html(context: &context)
     }
 }

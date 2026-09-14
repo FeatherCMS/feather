@@ -23,15 +23,16 @@ struct AdminRemoveContactFieldDefaultPresenter:
             request: request,
             context: context,
             title: "Remove contact form field",
-            content: ContactFieldRemoveView(
-                fieldId: fieldId,
-                label: label,
-                breadcrumb: .init(links: [
-                    .init(label: "Admin", link: "/admin/"),
-                    .init(label: "Contact", link: "/admin/contact/"),
-                    .init(label: "Fields", link: ""),
-                    .init(label: "Remove", link: ""),
-                ])
+            content: NewAdminConfirmation(
+                breadcrumb: ContactAdminRoutes.breadcrumb,
+                pageHeader: .init(
+                    title: "Remove contact form field",
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: [label],
+                action: ContactAdminRoutes.fieldRemove(RouterPath(fieldId)).description,
+                cancel: ContactAdminRoutes.fields.description,
+                submitLabel: "Remove field"
             )
         )
     }
@@ -44,21 +45,16 @@ struct AdminRemoveContactFieldDefaultPresenter:
             request: request,
             context: context,
             title: "Remove contact fields",
-            content: ListRemoveConfirmation(
-                state: .init(
-                    breadcrumb: .init(links: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(label: "Contact", link: "/admin/contact/"),
-                        .init(label: "Fields", link: "/admin/contact/fields/"),
-                        .init(label: "Remove", link: ""),
-                    ]),
+            content: NewAdminConfirmation(
+                breadcrumb: ContactAdminRoutes.breadcrumb,
+                pageHeader: .init(
                     title: "Remove contact fields",
-                    message:
-                        "Are you sure you want to remove the selected contact fields? This action cannot be undone.",
-                    action: "/admin/contact/fields/remove/",
-                    cancelLink: "/admin/contact/fields/",
-                    selectedIds: selectedIds
-                )
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: selectedIds,
+                action: ContactAdminRoutes.fieldRemove.description,
+                cancel: ContactAdminRoutes.fields.description,
+                hiddenFields: selectedIds.map { .init(name: "selectedIds[]", value: $0) }
             )
         )
     }

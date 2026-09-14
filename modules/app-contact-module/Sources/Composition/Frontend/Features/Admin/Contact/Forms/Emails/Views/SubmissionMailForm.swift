@@ -1,8 +1,5 @@
 import FeatherAdmin
-import FeatherValidation
 import HTML
-import Hummingbird
-import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
@@ -14,61 +11,16 @@ struct SubmissionMailForm: Component {
     let error: String?
 
     func html(context: inout RenderContext) -> Form {
-        Form {
-            if let error { P(error).class("error") }
-            Section {
-                Label {
-                    context.render(
-                        AdminFieldLabel(label: "Mail from", required: true)
-                    )
-                    Input().type(.text).name("mailFrom").value(mail.mailFrom)
-                        .required()
-                }
-            }
-            Section {
-                Label {
-                    context.render(
-                        AdminFieldLabel(
-                            label: "Mail to address",
-                            required: true
-                        )
-                    )
-                    Input().type(.text).name("mailTo").value(mail.mailTo)
-                        .required()
-                }
-            }
-            Section {
-                Label {
-                    context.render(
-                        AdminFieldLabel(label: "Subject", required: true)
-                    )
-                    Input().type(.text).name("subject").value(mail.subject)
-                        .required()
-                }
-            }
-            Section {
-                Label {
-                    context.render(
-                        AdminFieldLabel(
-                            label: "Additional headers",
-                            required: false
-                        )
-                    )
-                    Textarea(mail.additionalHeaders).class("text-input")
-                        .name("additionalHeaders").rows(4)
-                }
-            }
-            Section {
-                Label {
-                    context.render(
-                        AdminFieldLabel(label: "Message body", required: true)
-                    )
-                    Textarea(mail.messageBody).class("text-input")
-                        .name("messageBody").rows(12).required()
-                }
-            }
-            Div { Button(submitLabel).type(.submit) }.class("button-row")
+        let form = NewAdminForm(action: action) {
+            if let error { P(error).class("new-admin-form__error") }
+            context.render(NewAdminFormFieldInput(state: .init(name: "mailFrom", label: "Mail from", value: mail.mailFrom, isRequired: true)))
+            context.render(NewAdminFormFieldInput(state: .init(name: "mailTo", label: "Mail to address", value: mail.mailTo, isRequired: true)))
+            context.render(NewAdminFormFieldInput(state: .init(name: "subject", label: "Subject", value: mail.subject, isRequired: true)))
+            context.render(NewAdminFormFieldTextArea(state: .init(name: "additionalHeaders", label: "Additional headers", value: mail.additionalHeaders, style: .small)))
+            context.render(NewAdminFormFieldTextArea(state: .init(name: "messageBody", label: "Message body", value: mail.messageBody, style: .large, isRequired: true)))
+            Div { context.render(NewAdminSubmitButton(submitLabel)) }.class("new-admin-form__actions")
         }
-        .encType(.urlencoded).method(.post).action(action).class("cms-form")
+        context.register(form)
+        return form.html(context: &context)
     }
 }

@@ -6,8 +6,6 @@ import WebComponents
 
 import struct Foundation.CharacterSet
 
-private typealias HTMLButton = HTML.Button
-
 public struct NewAdminFormFieldMediaPicker: Component {
     public enum OutputMode: String, Sendable {
         case assetId
@@ -68,7 +66,13 @@ public struct NewAdminFormFieldMediaPicker: Component {
     public func rules() -> [any Rule] {
         let root = ".new-admin-media-picker"
 
-        return [
+        return NewAdminListSearch(
+            state: .init(
+                action: "",
+                placeholder: "",
+                search: ""
+            )
+        ).rules() + [
             Media {
                 Custom(root) {
                     Display(.flex)
@@ -144,31 +148,6 @@ public struct NewAdminFormFieldMediaPicker: Component {
                     AlignItems(.center)
                     Gap(8.px)
                 }
-                Custom("\(root)__actions button") {
-                    Padding(vertical: 8.px, horizontal: 12.px)
-                    BorderRadius(8.px)
-                    Cursor(.pointer)
-                }
-                Custom("\(root)__choose") {
-                    Border(
-                        1.px,
-                        .solid,
-                        .variable(TokenKey.Colors.Accents.Primary.border)
-                    )
-                    Background(.variable(TokenKey.Colors.Accents.Primary.tint))
-                    Color(.variable(TokenKey.Colors.Accents.Primary.text))
-                }
-                Custom("\(root)__clear") {
-                    Border(
-                        1.px,
-                        .solid,
-                        .variable(TokenKey.Colors.Materials.Tertiary.border)
-                    )
-                    Background(
-                        .variable(TokenKey.Colors.Materials.Tertiary.tint)
-                    )
-                    Color(.variable(TokenKey.Colors.Materials.Secondary.text))
-                }
                 Custom("\(root)__modal") {
                     Position(.fixed)
                     UnsafeRawProperty(name: "inset", value: "0")
@@ -176,15 +155,24 @@ public struct NewAdminFormFieldMediaPicker: Component {
                     AlignItems(.center)
                     JustifyContent(.center)
                     Padding(24.px)
+                    Background(color: .transparent)
+                    ZIndex(.number(2000))
+                }
+                Custom("\(root)__modal::before") {
+                    Content(.string("\"\""))
+                    Position(.absolute)
+                    UnsafeRawProperty(name: "inset", value: "0")
                     Background(
                         .variable(TokenKey.Colors.Materials.Primary.tint)
                     )
-                    ZIndex(.number(2000))
+                    Opacity(0.5)
                 }
                 Custom("\(root)__modal.is-visible") {
                     Display(.flex)
                 }
                 Custom("\(root)__dialog") {
+                    Position(.relative)
+                    ZIndex(.number(1))
                     Width(100.percent)
                     Height(100.percent)
                     MaxWidth(1200.px)
@@ -211,26 +199,8 @@ public struct NewAdminFormFieldMediaPicker: Component {
                     JustifyContent(.spaceBetween)
                     Gap(12.px)
                 }
-                Custom("\(root)__dialog-header h3, \(root)__dialog-header p") {
-                    Margin(0)
-                }
-                Custom("\(root)__dialog-header p") {
-                    MarginTop(6.px)
-                    Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                }
-                Custom("\(root)__close") {
-                    Border(
-                        1.px,
-                        .solid,
-                        .variable(TokenKey.Colors.Materials.Tertiary.border)
-                    )
-                    BorderRadius(8.px)
-                    Background(
-                        .variable(TokenKey.Colors.Materials.Tertiary.tint)
-                    )
-                    Color(.variable(TokenKey.Colors.Materials.Secondary.text))
-                    Padding(vertical: 8.px, horizontal: 12.px)
-                    Cursor(.pointer)
+                Custom("\(root)__dialog-header .admin-page-header") {
+                    MarginBottom(0.px)
                 }
                 Custom("\(root)__tabs") {
                     Display(.flex)
@@ -246,25 +216,73 @@ public struct NewAdminFormFieldMediaPicker: Component {
                         .variable(TokenKey.Colors.Materials.Secondary.tint)
                     )
                 }
-                Custom("\(root)__tabs button") {
+                Custom("\(root)__tabs > .button") {
                     Flex(1)
-                    Border(0)
-                    BorderRadius(999.px)
-                    Padding(vertical: 8.px, horizontal: 12.px)
-                    Background(.transparent)
-                    Color(.variable(TokenKey.Colors.Materials.Primary.text))
-                    Cursor(.pointer)
-                }
-                Custom("\(root)__tabs button:hover:not(.is-current)") {
-                    Color(.variable(TokenKey.Colors.Link.hover))
-                }
-                Custom("\(root)__tabs button.is-current") {
-                    Background(.variable(TokenKey.Colors.Accents.Primary.tint))
-                    Color(.variable(TokenKey.Colors.Accents.Primary.text))
                 }
                 Custom("\(root)__panel") {
                     MinHeight(0.px)
                     Overflow(.auto)
+                }
+                Custom("\(root)__panel .table-search-form") {
+                    Display(.flex)
+                    AlignItems(.center)
+                    FlexWrap(.nowrap)
+                    Gap(8.px)
+                    MarginBottom(0.px)
+                    Width(100.percent)
+                    MaxWidth(640.px)
+                }
+                Custom(
+                    "\(root)__panel .table-search-form .table-search-input"
+                ) {
+                    Position(.relative)
+                    Flex(1, .number(1), .auto)
+                    MinWidth(0.px)
+                    Width(100.percent)
+                }
+                Custom(
+                    "\(root)__panel .table-search-form input[type='search']"
+                ) {
+                    BoxSizing(.borderBox)
+                    MinWidth(0.px)
+                    Width(100.percent)
+                    Padding(vertical: 8.px, horizontal: 10.px)
+                    PaddingRight(34.px)
+                    Border(
+                        1.px,
+                        .solid,
+                        .variable(TokenKey.Colors.Materials.Tertiary.border)
+                    )
+                    BorderRadius(9.px)
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Tertiary.tint)
+                    )
+                    Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+                    FontSize(0.9.rem)
+                }
+                Custom(
+                    "\(root)__panel .table-search-form :is(button, input[type='submit'])"
+                ) {
+                    Flex(0, .number(0), .auto)
+                }
+                Custom(
+                    "\(root)__panel .table-search-form .table-search-reset"
+                ) {
+                    Position(.absolute)
+                    Top(50.percent)
+                    Right(9.px)
+                    Transform(.translateY((-50).percent))
+                    Display(.inlineFlex)
+                    AlignItems(.center)
+                    JustifyContent(.center)
+                    Width(24.px)
+                    Height(24.px)
+                    Padding(0.px)
+                    BorderRadius(999.px)
+                    Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                    FontSize(1.15.rem)
+                    LineHeight(1)
+                    TextDecoration(.none)
                 }
                 Custom("\(root)__loading") {
                     Display(.grid)
@@ -299,15 +317,16 @@ public struct NewAdminFormFieldMediaPicker: Component {
                 currentCard(context: &context)
             }
             else {
-                HTMLButton("")
-                    .type(.button)
+                context.render(
+                    NewAdminControlButton("Choose asset")
+                )
                     .data("media-picker-open", state.field.key)
                     .hidden()
             }
             if let error = state.field.error {
                 Span(error).class("field-error")
             }
-            modal()
+            modal(context: &context)
         }
         .if(state.field.error != nil) { $0.class("has-error") }
         .class("new-admin-media-picker")
@@ -325,12 +344,17 @@ extension NewAdminFormFieldMediaPicker {
                     .data("media-picker-title", state.field.key)
                     .data("empty-title", "No asset selected")
                 Div {
-                    HTMLButton("Choose asset")
-                        .type(.button)
+                    context.render(
+                        NewAdminControlButton("Choose asset")
+                    )
                         .class("new-admin-media-picker__choose")
                         .data("media-picker-open", state.field.key)
-                    HTMLButton("Clear")
-                        .type(.button)
+                    context.render(
+                        NewAdminControlButton(
+                            "Clear",
+                            style: .ghost(.secondary)
+                        )
+                    )
                         .class("new-admin-media-picker__clear")
                         .data("media-picker-clear", state.field.key)
                         .if(state.field.value?.isEmpty != false) { $0.hidden() }
@@ -362,7 +386,7 @@ extension NewAdminFormFieldMediaPicker {
         .data("media-picker-preview", state.field.key)
     }
 
-    fileprivate func modal() -> some FlowContent {
+    fileprivate func modal(context: inout RenderContext) -> some FlowContent {
         let helperText =
             state.allowedExtensions.isEmpty
             ? "Browse folders, search assets, or upload a new item."
@@ -371,25 +395,37 @@ extension NewAdminFormFieldMediaPicker {
         return Div {
             Div {
                 Div {
-                    Div {
-                        H3(state.field.label)
-                        P(helperText)
-                    }
-                    .class("new-admin-media-picker__dialog-header")
-                    HTMLButton("Close")
-                        .type(.button)
+                    context.render(
+                        NewAdminPageHeader(
+                            state: .init(
+                                title: state.field.label,
+                                description: helperText
+                            )
+                        )
+                    )
+                    context.render(
+                        NewAdminControlButton(
+                            "Close",
+                            style: .ghost(.secondary)
+                        )
+                    )
                         .class("new-admin-media-picker__close")
                         .data("media-picker-close", state.field.key)
                 }
                 .class("new-admin-media-picker__dialog-header")
                 Div {
-                    HTMLButton("Gallery")
-                        .type(.button)
+                    context.render(
+                        NewAdminControlButton("Gallery")
+                    )
                         .class("is-current")
                         .data("media-picker-tab", "gallery")
                         .data("media-picker-field", state.field.key)
-                    HTMLButton("Upload")
-                        .type(.button)
+                    context.render(
+                        NewAdminControlButton(
+                            "Upload",
+                            style: .ghost(.primary)
+                        )
+                    )
                         .data("media-picker-tab", "upload")
                         .data("media-picker-field", state.field.key)
                 }
@@ -457,7 +493,14 @@ extension NewAdminFormFieldMediaPicker {
           }
 
           function mediaURL(asset) {
-            return "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)/media/assets/" + encodedStorageKey(asset.storageKey);
+            return "\#(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)/media/assets/" + encodedStorageKey(asset.storageKey);
+          }
+
+          function previewURL(asset) {
+            var previewStorageKey = String(asset && asset.previewStorageKey || "");
+            var storageKey = previewStorageKey || String(asset && asset.storageKey || "");
+            var prefix = previewStorageKey ? "/media/variants/" : "/media/assets/";
+            return "\#(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)" + prefix + encodedStorageKey(storageKey);
           }
 
           function fileName(asset) {
@@ -479,7 +522,7 @@ extension NewAdminFormFieldMediaPicker {
               return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="8.5" cy="10.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg>';
             }
             return isImage(asset)
-              ? '<img src="' + escapeHTML(mediaURL(asset)) + '" alt="' + escapeHTML(fileName(asset)) + '">'
+              ? '<img src="' + escapeHTML(previewURL(asset)) + '" alt="' + escapeHTML(fileName(asset)) + '">'
               : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>';
           }
 
@@ -502,7 +545,10 @@ extension NewAdminFormFieldMediaPicker {
           function setTab(modal, tab) {
             modal.setAttribute("data-media-picker-active-tab", tab);
             modal.querySelectorAll("[data-media-picker-tab]").forEach(function(button) {
-              button.classList.toggle("is-current", button.getAttribute("data-media-picker-tab") === tab);
+              var isCurrent = button.getAttribute("data-media-picker-tab") === tab;
+              button.classList.toggle("is-current", isCurrent);
+              button.classList.toggle("primary", isCurrent);
+              button.classList.toggle("primary-ghost", !isCurrent);
             });
           }
 
@@ -524,6 +570,7 @@ extension NewAdminFormFieldMediaPicker {
             update(field, {
               id: marker.getAttribute("data-media-picker-selected-id"),
               storageKey: marker.getAttribute("data-media-picker-selected-storage-key"),
+              previewStorageKey: marker.getAttribute("data-media-picker-selected-preview-storage-key"),
               baseName: marker.getAttribute("data-media-picker-selected-base-name"),
               type: marker.getAttribute("data-media-picker-selected-type")
             });
@@ -581,7 +628,7 @@ extension NewAdminFormFieldMediaPicker {
           async function load(field, tab, url, options) {
             var modal = modalFor(field);
             var panel = modal && modal.querySelector('[data-media-picker-panel="' + field + '"]');
-            var style = modal && modal.querySelector('[data-media-picker-style="' + field + '"]');
+            var style = document.querySelector('style[data-media-picker-style="' + field + '"]');
             if (!modal || !panel || !style) { return; }
             setTab(modal, tab);
             modal.setAttribute("data-media-picker-browse-path", deriveBrowsePath(url));
@@ -592,6 +639,7 @@ extension NewAdminFormFieldMediaPicker {
             var section = extractSection(doc);
             if (!section) { panel.textContent = "Unable to load media picker."; return; }
             style.textContent = Array.from(doc.querySelectorAll("head style")).map(function(node) { return node.textContent || ""; }).join("\n");
+            if (style.parentNode !== document.head) { document.head.appendChild(style); }
             panel.innerHTML = section.outerHTML;
             executeScripts(panel, section);
             applyMarker(field, panel);
@@ -603,9 +651,18 @@ extension NewAdminFormFieldMediaPicker {
             var modal = field && modalFor(field);
             if (!modal) { return; }
             var url = new URL(container.getAttribute("data-admin-media-picker-search-path") || browsePath(modal), window.location.origin);
-            var input = container.querySelector("[data-admin-media-picker-search-input]");
+            var input = container.querySelector("input[name='search']");
             var search = input ? String(input.value || "").trim() : "";
             if (search) { url.searchParams.set("search", search); } else { url.searchParams.delete("search"); }
+            load(field, modal.getAttribute("data-media-picker-active-tab") || "gallery", url.pathname + url.search);
+          }
+
+          function loadLayout(field, link) {
+            var modal = modalFor(field);
+            if (!modal) { return; }
+            var url = new URL(link.getAttribute("href") || browsePath(modal), window.location.origin);
+            var view = url.searchParams.get("view") === "list" ? "list" : "grid";
+            url.searchParams.set("view", view);
             load(field, modal.getAttribute("data-media-picker-active-tab") || "gallery", url.pathname + url.search);
           }
 
@@ -628,7 +685,7 @@ extension NewAdminFormFieldMediaPicker {
               load(field, tab.getAttribute("data-media-picker-tab"), tab.getAttribute("data-media-picker-tab") === "upload" ? uploadPath(modal) : browsePath(modal));
               return;
             }
-            var search = event.target.closest("[data-admin-media-picker-search-submit]");
+            var search = event.target.closest("[data-admin-media-picker-search-path] button[type='submit']");
             if (search) { event.preventDefault(); submitSearch(search.closest("[data-admin-media-picker-search-path]")); return; }
             var select = event.target.closest("[data-picker-select]");
             if (select) {
@@ -637,6 +694,7 @@ extension NewAdminFormFieldMediaPicker {
               update(field, {
                 id: select.getAttribute("data-picker-select"),
                 storageKey: select.getAttribute("data-picker-storage-key"),
+                previewStorageKey: select.getAttribute("data-picker-preview-storage-key"),
                 baseName: select.getAttribute("data-picker-base-name"),
                 type: select.getAttribute("data-picker-type")
               });
@@ -666,6 +724,7 @@ extension NewAdminFormFieldMediaPicker {
                   update(field, {
                     id: marker.getAttribute("data-media-picker-selected-id"),
                     storageKey: marker.getAttribute("data-media-picker-selected-storage-key"),
+                    previewStorageKey: marker.getAttribute("data-media-picker-selected-preview-storage-key"),
                     baseName: marker.getAttribute("data-media-picker-selected-base-name"),
                     type: marker.getAttribute("data-media-picker-selected-type")
                   });
@@ -683,6 +742,14 @@ extension NewAdminFormFieldMediaPicker {
               }
               return;
             }
+            var layout = event.target.closest(".new-admin-media-picker__panel .pill-tabs a");
+            if (layout) {
+              event.preventDefault();
+              var layoutPanel = layout.closest("[data-media-picker-panel]");
+              var layoutField = layoutPanel && layoutPanel.getAttribute("data-media-picker-panel");
+              if (layoutField) { loadLayout(layoutField, layout); }
+              return;
+            }
             var link = event.target.closest(".new-admin-media-picker__panel a");
             if (link && link.getAttribute("target") !== "_blank") {
               event.preventDefault();
@@ -694,7 +761,7 @@ extension NewAdminFormFieldMediaPicker {
           });
 
           document.addEventListener("keydown", function(event) {
-            if (event.key === "Enter" && event.target.closest("[data-admin-media-picker-search-input]")) {
+            if (event.key === "Enter" && event.target.closest("[data-media-picker-panel] input[name='search']")) {
               event.preventDefault(); submitSearch(event.target.closest("[data-admin-media-picker-search-path]"));
             }
             if (event.key === "Escape") {

@@ -1,0 +1,38 @@
+import FeatherAdmin
+import FeatherContracts
+import ContactContracts
+import HTML
+import Hummingbird
+import SGML
+import WebBuilders
+import WebComponents
+
+struct ContactSubmissionsTable: Component {
+    struct State {
+        let items: [AdminContactSubmissionDirectoryItem]
+        let pageState: NewAdminListPageState
+        let search: String
+        let permissions: NewAdminListActions
+        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let error: String?
+    }
+
+    let state: State
+
+    func html(context: inout RenderContext) -> some BasicTag {
+        Section {
+            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
+                        context.render(NewAdminPageHeader(state: .init(title: "Submissions", description: "Review contact form submissions.")))
+                        if let error = state.error { P(error).class("new-admin-form__error") }
+            context.render(
+                ContactSubmissionsTableContent(
+                items: state.items,
+                pageState: state.pageState,
+                search: state.search,
+                permissions: state.permissions
+                )
+            )
+        }
+        .class("cms-section")
+    }
+}

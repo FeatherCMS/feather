@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -21,35 +22,30 @@ struct AdminListContactFormSubmissionsDefaultPresenter:
         error: String?,
         permissions: Set<String>
     ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        let page = request.queryPage()
+        let pageSize = 20
+        let pageState = NewAdminListPageState(page: page, pageSize: pageSize, total: items.count)
+        let start = (page - 1) * pageSize
+        let end = min(start + pageSize, items.count)
+        let pageItems = start < items.count ? Array(items[start..<end]) : []
+        return renderingEngine.renderNewAdminPage(
             request: request,
             title: "Contact form submissions",
-            description: "Track contact form submissions",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
+            permissions: permissions,
             content: ContactFormSubmissionsTable(
                 state: .init(
                     formId: formId,
-                    items: items,
+                    items: pageItems,
+                    pageState: pageState,
                     search: search,
                     error: error,
-                    breadcrumb: breadcrumb(formId: formId),
-                    canRemove: permissions.contains(
-                        "contact:form-submissions:delete"
-                    )
+                    breadcrumb: ContactAdminRoutes.formSubmissionsBreadcrumb(
+                        RouterPath(formId)
+                    ),
+                    permissions: .init(Set(permissions.map(PermissionKey.init)))
                 )
             )
         )
     }
 
-    private func breadcrumb(formId: String) -> AdminBreadcrumb.State {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Contact", link: "/admin/contact/"),
-            .init(label: "Forms", link: "/admin/contact/forms/"),
-        ])
-    }
 }

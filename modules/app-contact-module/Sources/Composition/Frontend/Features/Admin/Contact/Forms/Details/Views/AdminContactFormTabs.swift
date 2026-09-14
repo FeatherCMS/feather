@@ -1,8 +1,5 @@
 import FeatherAdmin
-import FeatherValidation
 import HTML
-import Hummingbird
-import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
@@ -15,7 +12,7 @@ struct AdminContactFormTabs: Component {
 
     func html(context: inout RenderContext) -> Div {
         context.render(
-            AdminPillTabs(links: [
+            NewAdminPillTab(links: [
                 .init(
                     label: "Details",
                     href: "/admin/contact/forms/\(formId)/details/",

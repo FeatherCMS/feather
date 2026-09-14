@@ -11,13 +11,10 @@ protocol AdminRemoveContactFormFieldPresenter: Sendable {
     func renderConfirmation(
         formId: String,
         fieldId: String,
-        label: String,
-        permissions: Set<String>
-    ) -> HTMLResponse
+        label: String
+    ) async throws -> HTMLResponse
     func renderConfirmation(
         formId: String,
-        selectedIds: [String],
-        permissions: Set<String>
-    )
-        -> HTMLResponse
+        selectedIds: [String]
+    ) async throws -> HTMLResponse
 }

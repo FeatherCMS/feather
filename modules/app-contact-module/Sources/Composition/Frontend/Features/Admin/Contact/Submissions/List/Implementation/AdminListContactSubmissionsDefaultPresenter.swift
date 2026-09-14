@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -19,27 +20,25 @@ struct AdminListContactSubmissionsDefaultPresenter:
         error: String?,
         permissions: Set<String>
     ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        let page = request.queryPage()
+        let pageSize = 20
+        let pageState = NewAdminListPageState(page: page, pageSize: pageSize, total: items.count)
+        let start = (page - 1) * pageSize
+        let end = min(start + pageSize, items.count)
+        let pageItems = start < items.count ? Array(items[start..<end]) : []
+        return renderingEngine.renderNewAdminPage(
             request: request,
             title: "Contact submissions",
-            description: "View all contact form submissions",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: AdminContactSubmissionsDirectoryView(
-                items: items,
-                search: search,
-                canRemove: permissions.contains(
-                    "contact:form-submissions:delete"
-                ),
-                breadcrumb: .init(links: [
-                    .init(label: "Admin", link: "/admin/"),
-                    .init(label: "Contact", link: "/admin/contact/"),
-                    .init(label: "Submissions", link: ""),
-                ]),
-                error: error
+            permissions: permissions,
+            content: ContactSubmissionsTable(
+                state: .init(
+                    items: pageItems,
+                    pageState: pageState,
+                    search: search,
+                    permissions: .init(Set(permissions.map(PermissionKey.init))),
+                    breadcrumb: ContactAdminRoutes.breadcrumb,
+                    error: error
+                )
             )
         )
     }

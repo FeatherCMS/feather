@@ -7,8 +7,10 @@ import WebComponents
 public struct NewAdminListSearch: Component {
 
     public func rules() -> [any Rule] {
+        let root = ".table-search-form.new-admin-list-search"
+
         Media {
-            Custom(".table-search-form") {
+            Custom(root) {
                 Display(.flex)
                 AlignItems(.center)
                 Gap(8.px)
@@ -18,7 +20,7 @@ public struct NewAdminListSearch: Component {
                 MaxWidth(640.px)
             }
             Custom(
-                ".table-search-form input[type='search'], .table-search-form select"
+                "\(root) input[type='search'], \(root) select"
             ) {
                 Border(
                     1.px,
@@ -31,7 +33,7 @@ public struct NewAdminListSearch: Component {
                 Padding(vertical: 8.px, horizontal: 10.px)
                 FontSize(0.9.rem)
             }
-            Custom(".table-search-form select") {
+            Custom("\(root) select") {
                 Width(190.px)
                 Flex(0, .number(0), .auto)
                 PaddingRight(34.px)
@@ -52,28 +54,28 @@ public struct NewAdminListSearch: Component {
                     value: "no-repeat"
                 )
             }
-            Custom(".table-search-form input[type='search']") {
+            Custom("\(root) input[type='search']") {
                 MinWidth(0.px)
                 Width(100.percent)
                 PaddingRight(34.px)
             }
             Custom(
-                ".table-search-form input[type='search']::-webkit-search-cancel-button"
+                "\(root) input[type='search']::-webkit-search-cancel-button"
             ) {
                 Display(.none)
             }
-            Custom(".table-search-form .table-search-input") {
+            Custom("\(root) .table-search-input") {
                 Position(.relative)
                 Flex(1, .number(1), .auto)
                 MinWidth(0.px)
                 Width(100.percent)
             }
-            Custom(".table-search-form :is(button, input[type='submit'])") {
+            Custom("\(root) :is(button, input[type='submit'])") {
                 Flex(0, .number(0), .auto)
                 Cursor(.pointer)
             }
             Custom(
-                ".table-search-form input[type='search']:focus, .table-search-form input[type='search']:focus-visible, .table-search-form select:focus, .table-search-form select:focus-visible"
+                "\(root) input[type='search']:focus, \(root) input[type='search']:focus-visible, \(root) select:focus, \(root) select:focus-visible"
             ) {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Tertiary.border)
@@ -85,7 +87,7 @@ public struct NewAdminListSearch: Component {
                 )
                 OutlineOffset(2.px)
             }
-            Custom(".table-search-form .table-search-reset") {
+            Custom("\(root) .table-search-reset") {
                 Position(.absolute)
                 Top(50.percent)
                 Right(9.px)
@@ -102,11 +104,11 @@ public struct NewAdminListSearch: Component {
                 LineHeight(1)
                 TextDecoration(.none)
             }
-            Custom(".table-search-form .table-search-reset.is-hidden") {
+            Custom("\(root) .table-search-reset.is-hidden") {
                 Display(.none)
             }
             Custom(
-                ".table-search-form .table-search-reset:hover, .table-search-form .table-search-reset:focus-visible"
+                "\(root) .table-search-reset:hover, \(root) .table-search-reset:focus-visible"
             ) {
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.hover))
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
@@ -114,15 +116,15 @@ public struct NewAdminListSearch: Component {
             }
         }
         Media(.maxWidth(768.px)) {
-            Class("table-search-form") {
+            Custom(root) {
                 FlexWrap(.wrap)
                 Width(100.percent)
                 MaxWidth(100.percent)
             }
-            Custom(".table-search-form select") {
+            Custom("\(root) select") {
                 Width(100.percent)
             }
-            Custom(".table-search-form .table-search-input") {
+            Custom("\(root) .table-search-input") {
                 Width(100.percent)
             }
         }
@@ -207,7 +209,7 @@ public struct NewAdminListSearch: Component {
         }
         .method(.get)
         .action(state.action)
-        .class("table-search-form")
+        .class("table-search-form", "new-admin-list-search")
     }
 
     private func searchScript() -> String {

@@ -11,7 +11,7 @@ import WebComponents
 struct AdminAddContactFormEmailOpenAPIRepository {
     let api: ContactAdminAPIClient
     func get(id: String) async throws -> AdminContactFormDetailsItem {
-        try await AdminGetContactFormOpenAPIRepository(api: api).get(id: id)
+        try await AdminViewContactFormOpenAPIRepository(api: api).get(id: id)
     }
     func update(
         id: String,

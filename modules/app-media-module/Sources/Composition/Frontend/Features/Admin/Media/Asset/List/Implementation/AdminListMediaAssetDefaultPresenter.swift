@@ -21,7 +21,6 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         search: String?,
         permissions: NewAdminListActions
     ) async throws -> HTMLResponse {
-        var renderContext = RenderContext()
         let content = AssetListView(
             state: .init(
                 entries: model.entries,
@@ -36,14 +35,11 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
             )
         )
         if model.picker.isEnabled {
-            return renderEngine.renderPage(
+            return try await renderEngine.renderNewAdminPage(
                 request: request,
+                context: context,
                 title: "Select media asset",
-                description: "Select media asset",
-                imagePath: "images/logos/logo.png",
-                content: Div {
-                    renderContext.render(content)
-                }
+                content: content
             )
         }
         return try await renderEngine.renderNewAdminPage(
@@ -58,21 +54,15 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         message: String,
         picker: Bool
     ) async throws -> HTMLResponse {
-        var renderContext = RenderContext()
         if picker {
-            return renderEngine.renderPage(
+            return try await renderEngine.renderNewAdminPage(
                 request: request,
+                context: context,
                 title: "Select media asset",
-                description: "Select media asset",
-                imagePath: "images/logos/logo.png",
-                content: Div {
-                    renderContext.render(
-                        MediaAssetErrorView(
-                            info: "Unable to load media assets.",
-                            message: message
-                        )
-                    )
-                }
+                content: MediaAssetErrorView(
+                    info: "Unable to load media assets.",
+                    message: message
+                )
             )
         }
         return try await renderEngine.renderNewAdminPage(

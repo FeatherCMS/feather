@@ -22,11 +22,10 @@ struct AdminRemoveContactFormFieldDefaultController:
         let formId = context.parameters.get("formId", as: String.self) ?? ""
         let id = try context.requiredParameter("fieldId")
         let field = try? await interactor.get(formId: formId, id: id)
-        return presenter.renderConfirmation(
+        return try await presenter.renderConfirmation(
             formId: formId,
             fieldId: id,
-            label: field?.label ?? id,
-            permissions: context.currentUserPermissions
+            label: field?.label ?? id
         )
     }
     func remove(request: Request, context: DefaultRequestContext) async throws
@@ -55,10 +54,9 @@ struct AdminRemoveContactFormFieldDefaultController:
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
-        return presenter.renderConfirmation(
+        return try await presenter.renderConfirmation(
             formId: try context.requiredParameter("formId"),
-            selectedIds: request.queryStrings("selectedIds"),
-            permissions: context.currentUserPermissions
+            selectedIds: request.queryStrings("selectedIds")
         )
     }
     func removeSelected(request: Request, context: DefaultRequestContext)

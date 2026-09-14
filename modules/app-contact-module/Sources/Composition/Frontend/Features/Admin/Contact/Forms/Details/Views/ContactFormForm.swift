@@ -1,9 +1,6 @@
 import CSS
 import FeatherAdmin
-import FeatherValidation
 import HTML
-import Hummingbird
-import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
@@ -24,191 +21,63 @@ struct ContactFormForm: Component {
     var state: State
     var action: String
     var submitLabel: String
+    var isReadOnly: Bool = false
 
     func selectors() -> [any Selector] {
-        Class("contact-form-field-picker") {
-            Display(.grid)
-            Gap(16.px)
-            MarginTop(8.px)
-        }
-        Class("contact-form-field-group") {
-            Display(.grid)
-            Gap(8.px)
-        }
-        Class("contact-form-field-group-title") {
-            Margin(0)
-            FontSize(0.95.rem)
-            FontWeight(.number(600))
-            // Color(.variable("cms-strong-font"))
-        }
-        Class("contact-form-field-group-help") {
-            Margin(0)
-            // Color(.variable("cms-light-font"))
-            FontSize(0.9.rem)
-        }
-        Class("contact-form-field-list") {
-            Display(.grid)
-            Gap(8.px)
-        }
-        Class("contact-form-field-row") {
-            Display(.flex)
-            AlignItems(.center)
-            Gap(10.px)
-            Padding(vertical: 10.px, horizontal: 12.px)
-            // Border(1.px, .solid, .variable("cms-gray-3"))
-            BorderRadius(10.px)
-            //            Background(.variable(TokenKey.Background.primary))
-        }
-        Custom(".contact-form-field-row.is-available") {
-            //            Background(.variable(TokenKey.Background.primary))
-        }
-        Class("contact-form-field-drag") {
-            // Color(.variable("cms-light-font"))
-            FontSize(18.px)
-            Width(18.px)
-            TextAlign(.center)
-        }
-        Class("contact-form-field-content") {
-            Flex(1)
-            MinWidth(0.px)
-        }
-        Class("contact-form-field-actions") {
-            Display(.flex)
-            Gap(4.px)
-            AlignItems(.center)
-        }
-        Custom(
-            ".contact-form-field-row.is-available .contact-form-field-actions"
-        ) {
-            Display(.none)
-        }
-        Custom(".contact-form-field-row.is-selected") {
-            UnsafeRawProperty(name: "cursor", value: "grab")
-        }
-        Custom(".contact-form-field-row.is-available") {
-            UnsafeRawProperty(name: "cursor", value: "grab")
-        }
-        Custom(".contact-form-field-row.is-dragging") {
-            Opacity(0.55)
-        }
-        Custom(".contact-form-field-row.is-drop-before") {
-            UnsafeRawProperty(
-                name: "box-shadow",
-                value: "inset 0 3px 0 var(--cms-link-hover)"
-            )
-        }
-        Custom(".contact-form-field-row.is-drop-after") {
-            UnsafeRawProperty(
-                name: "box-shadow",
-                value: "inset 0 -3px 0 var(--cms-link-hover)"
-            )
-        }
-        Custom(".contact-form-field-list.is-drop-zone") {
-            UnsafeRawProperty(
-                name: "outline",
-                value: "2px dashed var(--cms-link-hover)"
-            )
-            UnsafeRawProperty(name: "outline-offset", value: "4px")
-        }
+        [
+            Class("contact-form-field-picker") { Display(.grid); Gap(16.px); MarginTop(8.px) },
+            Class("contact-form-field-group") { Display(.grid); Gap(8.px) },
+            Custom(".contact-form-field-group-title") { Margin(0); FontSize(0.95.rem); FontWeight(.number(600)) },
+            Custom(".contact-form-field-group-help") { Margin(0); FontSize(0.9.rem); Color(.variable(TokenKey.Colors.Materials.Tertiary.text)) },
+            Class("contact-form-field-list") { Display(.grid); Gap(8.px) },
+            Class("contact-form-field-row") { Display(.flex); AlignItems(.center); Gap(10.px); Padding(vertical: 10.px, horizontal: 12.px); Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Tertiary.border)); BorderRadius(10.px); Background(.variable(TokenKey.Colors.Materials.Tertiary.tint)) },
+            Class("contact-form-field-drag") { FontSize(18.px); Width(18.px); TextAlign(.center); Color(.variable(TokenKey.Colors.Materials.Tertiary.text)) },
+            Class("contact-form-field-content") { Flex(1); MinWidth(0.px) },
+            Class("contact-form-field-actions") { Display(.flex); Gap(4.px); AlignItems(.center) },
+            Custom(".contact-form-field-row.is-available .contact-form-field-actions") { Display(.none) },
+            Custom(".contact-form-field-row.is-selected, .contact-form-field-row.is-available") { UnsafeRawProperty(name: "cursor", value: "grab") },
+            Custom(".contact-form-field-row.is-dragging") { Opacity(0.55) },
+            Custom(".contact-form-field-row.is-drop-before") { UnsafeRawProperty(name: "box-shadow", value: "inset 0 3px 0 var(--link-color-hover)") },
+            Custom(".contact-form-field-row.is-drop-after") { UnsafeRawProperty(name: "box-shadow", value: "inset 0 -3px 0 var(--link-color-hover)") },
+            Custom(".contact-form-field-list.is-drop-zone") { UnsafeRawProperty(name: "outline", value: "2px dashed var(--link-color-hover)"); UnsafeRawProperty(name: "outline-offset", value: "4px") },
+        ]
     }
 
     func html(context: inout RenderContext) -> Form {
-        Form {
-            if let success = state.success { P(success).class("success") }
-            if let error = state.error { P(error).class("error") }
-            Section {
-                Label {
-                    context.render(
-                        AdminFieldLabel(label: "Name", required: true)
-                    )
-                    Input().type(.text).id("name").name("name")
-                        .value(state.name).required()
-                }
-            }
-            .if(state.error != nil) { $0.class("has-error") }
-            Section {
-                Label {
-                    context.render(
-                        AdminFieldLabel(
-                            label: "Success message",
-                            required: false
-                        )
-                    )
-                    Input().type(.text).id("successMessage")
-                        .name("successMessage").value(state.successMessage)
-                }
-                Label {
-                    context.render(
-                        AdminFieldLabel(
-                            label: "Failure message",
-                            required: false
-                        )
-                    )
-                    Input().type(.text).id("failureMessage")
-                        .name("failureMessage").value(state.failureMessage)
-                }
-                Label {
-                    context.render(
-                        AdminFieldLabel(label: "Redirect URL", required: false)
-                    )
-                    Input().type(.text).id("redirectUrl").name("redirectUrl")
-                        .value(state.redirectUrl ?? "")
-                }
-            }
+        let form = NewAdminForm(action: action) {
+            if let success = state.success { P(success).class("new-admin-form__success") }
+            if let error = state.error { P(error).class("new-admin-form__error") }
+            context.render(NewAdminFormFieldInput(state: .init(name: "name", label: "Name", value: state.name, isRequired: true, isReadOnly: isReadOnly)))
+            context.render(NewAdminFormFieldInput(state: .init(name: "successMessage", label: "Success message", value: state.successMessage, help: "Shown after a successful submission.", isReadOnly: isReadOnly)))
+            context.render(NewAdminFormFieldInput(state: .init(name: "failureMessage", label: "Failure message", value: state.failureMessage, help: "Shown when a submission cannot be processed.", isReadOnly: isReadOnly)))
+            context.render(NewAdminFormFieldInput(state: .init(name: "redirectUrl", label: "Redirect URL", value: state.redirectUrl ?? "", help: "Optional URL to use after submission.", isReadOnly: isReadOnly)))
             if !state.availableFields.isEmpty {
                 Section {
-                    context.render(
-                        AdminFieldLabel(label: "Fields", required: false)
-                    )
+                    H3("Fields").class("contact-form-field-group-title")
+                    P("Choose fields and drag selected fields to set their order.").class("contact-form-field-group-help")
                     Div {
                         Div {
-                            H3("Selected fields")
-                                .class("contact-form-field-group-title")
-                            P("These fields will appear in this order.")
-                                .class("contact-form-field-group-help")
-                            Div {
-                                for field in selectedFields {
-                                    fieldRow(field: field, isSelected: true)
-                                }
-                            }
-                            .class(
-                                "contact-form-field-list",
-                                "contact-form-selected-fields"
-                            )
-                        }
-                        .class("contact-form-field-group")
+                            H4("Selected fields").class("contact-form-field-group-title")
+                            Div { for field in selectedFields { fieldRow(field: field, isSelected: true, context: &context) } }.class("contact-form-field-list", "contact-form-selected-fields")
+                        }.class("contact-form-field-group")
                         Div {
-                            H3("Available fields")
-                                .class("contact-form-field-group-title")
-                            P("Select a field to add it to the form.")
-                                .class("contact-form-field-group-help")
-                            Div {
-                                for field in availableUnselectedFields {
-                                    fieldRow(field: field, isSelected: false)
-                                }
-                            }
-                            .class(
-                                "contact-form-field-list",
-                                "contact-form-available-fields"
-                            )
-                        }
-                        .class("contact-form-field-group")
-                    }
-                    .class("contact-form-field-picker")
+                            H4("Available fields").class("contact-form-field-group-title")
+                            Div { for field in availableUnselectedFields { fieldRow(field: field, isSelected: false, context: &context) } }.class("contact-form-field-list", "contact-form-available-fields")
+                        }.class("contact-form-field-group")
+                    }.class("contact-form-field-picker")
                 }
             }
-            Section {
-                Div { Button(submitLabel).type(.submit) }.class("button-row")
+            if !isReadOnly {
+                Div { context.render(NewAdminSubmitButton(submitLabel)) }.class("new-admin-form__actions")
+                Script(reorderScript())
             }
-            Script(reorderScript())
         }
-        .encType(.urlencoded).method(.post).action(action).class("cms-form")
+        context.register(form)
+        return form.html(context: &context)
     }
 
     private var selectedFields: [AdminContactFormFieldOption] {
-        let fieldsByID = Dictionary(
-            uniqueKeysWithValues: state.availableFields.map { ($0.id, $0) }
-        )
+        let fieldsByID = Dictionary(uniqueKeysWithValues: state.availableFields.map { ($0.id, $0) })
         return state.fieldIDs.compactMap { fieldsByID[$0] }
     }
 
@@ -217,40 +86,29 @@ struct ContactFormForm: Component {
         return state.availableFields.filter { !selectedIDs.contains($0.id) }
     }
 
-    private func fieldRow(
-        field: AdminContactFormFieldOption,
-        isSelected: Bool
-    ) -> some FlowContent {
+    private func fieldRow(field: AdminContactFormFieldOption, isSelected: Bool, context: inout RenderContext) -> some FlowContent {
         Div {
             Span("⠿").class("contact-form-field-drag")
-            Input()
-                .type(.checkbox)
-                .id("contact-form-field-\(field.id)")
-                .name("fieldIds[]")
-                .value(field.id)
-                .if(isSelected) { $0.checked() }
-            Label(field.label)
-                .for("contact-form-field-\(field.id)")
-                .class("contact-form-field-content")
+            context.render(fieldCheckbox(field: field, isSelected: isSelected))
+            Label(field.label).for("contact-form-field-\(field.id)").class("contact-form-field-content")
             Div {
-                Button("↑")
-                    .type(.button)
-                    .class("row-btn", "edit")
-                    .data("contact-form-field-move", "up")
-                    .ariaLabel("Move \(field.label) up")
-                Button("↓")
-                    .type(.button)
-                    .class("row-btn", "edit")
-                    .data("contact-form-field-move", "down")
-                    .ariaLabel("Move \(field.label) down")
-            }
-            .class("contact-form-field-actions")
-        }
-        .class(
-            "contact-form-field-row",
-            isSelected ? "is-selected" : "is-available"
+                if !isReadOnly {
+                    Button("↑").type(.button).class("button", "ghost-secondary").data("contact-form-field-move", "up").ariaLabel("Move \(field.label) up")
+                    Button("↓").type(.button).class("button", "ghost-secondary").data("contact-form-field-move", "down").ariaLabel("Move \(field.label) down")
+                }
+            }.class("contact-form-field-actions")
+        }.class("contact-form-field-row", isSelected ? "is-selected" : "is-available").data("contact-form-field", field.id)
+    }
+
+    private func fieldCheckbox(field: AdminContactFormFieldOption, isSelected: Bool) -> NewAdminCheckbox {
+        .init(
+            name: "fieldIds[]",
+            value: field.id,
+            id: "contact-form-field-\(field.id)",
+            ariaLabel: "Select \(field.label)",
+            isChecked: isSelected,
+            isDisabled: isReadOnly
         )
-        .data("contact-form-field", field.id)
     }
 
     private func reorderScript() -> String {
@@ -260,122 +118,20 @@ struct ContactFormForm: Component {
                 var selected = document.querySelector('.contact-form-selected-fields');
                 var available = document.querySelector('.contact-form-available-fields');
                 var draggedField = null;
-
                 if (!selected || !available) { return; }
-
-                function updateDraggableState(field) {
-                    field.setAttribute("draggable", "true");
-                }
-
-                selected.querySelectorAll('[data-contact-form-field]').forEach(updateDraggableState);
-                available.querySelectorAll('[data-contact-form-field]').forEach(updateDraggableState);
-
-                function dragStart(event) {
-                    var field = event.target.closest('[data-contact-form-field]');
-                    if (!field || field.getAttribute("draggable") !== "true") { return; }
-                    draggedField = field;
-                    field.classList.add("is-dragging");
-                    if (event.dataTransfer) { event.dataTransfer.effectAllowed = "move"; }
-                }
-
-                function dragEnd() {
-                    if (draggedField) { draggedField.classList.remove("is-dragging"); }
-                    clearDropIndicators();
-                    draggedField = null;
-                }
-
-                function clearDropIndicators() {
-                    document.querySelectorAll('.contact-form-field-row.is-drop-before, .contact-form-field-row.is-drop-after').forEach(function (field) {
-                        field.classList.remove("is-drop-before", "is-drop-after");
-                    });
-                    selected.classList.remove("is-drop-zone");
-                    available.classList.remove("is-drop-zone");
-                }
-
-                function dragOver(event) {
-                    if (!draggedField) { return; }
-                    event.preventDefault();
-                    clearDropIndicators();
-                    var target = event.target.closest('[data-contact-form-field]');
-                    if (target && target !== draggedField && target.parentNode === event.currentTarget) {
-                        var bounds = target.getBoundingClientRect();
-                        target.classList.add(event.clientY < bounds.top + bounds.height / 2 ? "is-drop-before" : "is-drop-after");
-                    } else {
-                        event.currentTarget.classList.add("is-drop-zone");
-                    }
-                    if (event.dataTransfer) { event.dataTransfer.dropEffect = "move"; }
-                }
-
-                function drop(event) {
-                    event.preventDefault();
-                    if (!draggedField) { return; }
-                    var list = event.currentTarget;
-                    var target = event.target.closest('[data-contact-form-field]');
-                    var isSelectedList = list === selected;
-                    var dropBefore = target && event.clientY < target.getBoundingClientRect().top + target.getBoundingClientRect().height / 2;
-                    var checkbox = draggedField.querySelector('input[type="checkbox"]');
-                    if (checkbox) { checkbox.checked = isSelectedList; }
-                    draggedField.classList.toggle("is-selected", isSelectedList);
-                    draggedField.classList.toggle("is-available", !isSelectedList);
-                    if (target && target !== draggedField && target.parentNode === list) {
-                        list.insertBefore(draggedField, dropBefore ? target : target.nextElementSibling);
-                    } else {
-                        list.appendChild(draggedField);
-                    }
-                    clearDropIndicators();
-                }
-
-                [selected, available].forEach(function (list) {
-                    list.addEventListener("dragstart", dragStart);
-                    list.addEventListener("dragend", dragEnd);
-                    list.addEventListener("dragover", dragOver);
-                    list.addEventListener("drop", drop);
-                });
-
-                document.querySelectorAll('[data-contact-form-field-move]').forEach(function (button) {
-                    if (button.dataset.bound === "1") { return; }
-                    button.dataset.bound = "1";
-                    button.addEventListener("click", function () {
-                        var field = button.closest('[data-contact-form-field]');
-                        if (!field) { return; }
-                        var direction = button.getAttribute("data-contact-form-field-move");
-                        var list = field.parentNode;
-                        var sibling = direction === "up" ? field.previousElementSibling : field.nextElementSibling;
-                        if (!sibling || sibling.parentNode !== list) { return; }
-                        if (direction === "up") {
-                            field.parentNode.insertBefore(field, sibling);
-                        } else {
-                            field.parentNode.insertBefore(sibling, field);
-                        }
-                    });
-                });
-
-                document.querySelectorAll('[data-contact-form-field] input[type="checkbox"]').forEach(function (input) {
-                    if (input.dataset.bound === "1") { return; }
-                    input.dataset.bound = "1";
-                    input.addEventListener("change", function () {
-                        var field = input.closest('[data-contact-form-field]');
-                        var selected = document.querySelector('.contact-form-selected-fields');
-                        var available = document.querySelector('.contact-form-available-fields');
-                        if (!field || !selected || !available) { return; }
-                        if (input.checked) {
-                            selected.appendChild(field);
-                            field.classList.remove("is-available");
-                            field.classList.add("is-selected");
-                        } else {
-                            available.appendChild(field);
-                            field.classList.remove("is-selected");
-                            field.classList.add("is-available");
-                        }
-                        updateDraggableState(field);
-                    });
-                });
+                function update(field) { field.setAttribute('draggable', 'true'); }
+                selected.querySelectorAll('[data-contact-form-field]').forEach(update);
+                available.querySelectorAll('[data-contact-form-field]').forEach(update);
+                function clear() { document.querySelectorAll('.is-drop-before,.is-drop-after').forEach(function (f) { f.classList.remove('is-drop-before','is-drop-after'); }); selected.classList.remove('is-drop-zone'); available.classList.remove('is-drop-zone'); }
+                function start(e) { var field = e.target.closest('[data-contact-form-field]'); if (!field) { return; } draggedField = field; field.classList.add('is-dragging'); }
+                function end() { if (draggedField) { draggedField.classList.remove('is-dragging'); } clear(); draggedField = null; }
+                function over(e) { if (!draggedField) { return; } e.preventDefault(); clear(); var target = e.target.closest('[data-contact-form-field]'); if (target && target !== draggedField && target.parentNode === e.currentTarget) { target.classList.add(e.clientY < target.getBoundingClientRect().top + target.offsetHeight / 2 ? 'is-drop-before' : 'is-drop-after'); } else { e.currentTarget.classList.add('is-drop-zone'); } }
+                function drop(e) { e.preventDefault(); if (!draggedField) { return; } var list = e.currentTarget; var target = e.target.closest('[data-contact-form-field]'); var selectedList = list === selected; var checkbox = draggedField.querySelector('input[type=checkbox]'); if (checkbox) { checkbox.checked = selectedList; } draggedField.classList.toggle('is-selected', selectedList); draggedField.classList.toggle('is-available', !selectedList); if (target && target !== draggedField && target.parentNode === list) { list.insertBefore(draggedField, e.clientY < target.getBoundingClientRect().top + target.offsetHeight / 2 ? target : target.nextElementSibling); } else { list.appendChild(draggedField); } clear(); }
+                [selected, available].forEach(function (list) { list.addEventListener('dragstart', start); list.addEventListener('dragend', end); list.addEventListener('dragover', over); list.addEventListener('drop', drop); });
+                document.querySelectorAll('[data-contact-form-field-move]').forEach(function (button) { button.addEventListener('click', function () { var field = button.closest('[data-contact-form-field]'); var sibling = button.dataset.contactFormFieldMove === 'up' ? field.previousElementSibling : field.nextElementSibling; if (sibling) { field.parentNode.insertBefore(button.dataset.contactFormFieldMove === 'up' ? field : sibling, button.dataset.contactFormFieldMove === 'up' ? sibling : field); } }); });
+                document.querySelectorAll('[data-contact-form-field] input[type=checkbox]').forEach(function (input) { input.addEventListener('change', function () { var field = input.closest('[data-contact-form-field]'); var list = input.checked ? selected : available; list.appendChild(field); field.classList.toggle('is-selected', input.checked); field.classList.toggle('is-available', !input.checked); update(field); }); });
             }
-            if (document.readyState === "loading") {
-                document.addEventListener("DOMContentLoaded", bind, { once: true });
-            } else {
-                bind();
-            }
+            if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', bind, { once: true }); } else { bind(); }
         })();
         """#
     }

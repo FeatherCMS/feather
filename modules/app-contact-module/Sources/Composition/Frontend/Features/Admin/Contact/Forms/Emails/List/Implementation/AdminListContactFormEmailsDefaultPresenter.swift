@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -19,30 +20,22 @@ struct AdminListContactFormEmailsDefaultPresenter:
         error: String?,
         permissions: Set<String>
     ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        renderingEngine.renderNewAdminPage(
             request: request,
             title: "Contact form emails",
-            description: "Manage contact form emails",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ContactFormEmails(
-                id: item.id,
-                mails: item.mails,
-                canRemove: permissions.contains("contact:forms:update"),
-                breadcrumb: breadcrumb(formId: item.id),
-                error: error
+            permissions: permissions,
+            content: ContactFormEmailsTable(
+                state: .init(
+                    id: item.id,
+                    mails: item.mails,
+                    permissions: .init(Set(permissions.map(PermissionKey.init))),
+                    breadcrumb: ContactAdminRoutes.formEmailsBreadcrumb(
+                        RouterPath(item.id)
+                    ),
+                    error: error
+                )
             )
         )
     }
 
-    private func breadcrumb(formId: String) -> AdminBreadcrumb.State {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Contact", link: "/admin/contact/"),
-            .init(label: "Forms", link: "/admin/contact/forms/"),
-        ])
-    }
 }

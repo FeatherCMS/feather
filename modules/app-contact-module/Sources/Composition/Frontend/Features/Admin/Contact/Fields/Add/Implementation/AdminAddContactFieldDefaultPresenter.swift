@@ -17,15 +17,11 @@ struct AdminAddContactFieldDefaultPresenter:
         model: AdminAddContactFieldModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        let breadcrumb = AdminBreadcrumb.State(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Contact", link: "/admin/contact/"),
-        ])
         return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Add contact form field",
-            content: ContactFieldAddView(
+            content: ContactFieldAddPage(
                 state: .init(
                     key: model.key,
                     type: model.type,
@@ -34,7 +30,7 @@ struct AdminAddContactFieldDefaultPresenter:
                     isRequired: model.isRequired,
                     position: model.position,
                     error: model.error,
-                    breadcrumb: breadcrumb
+                    breadcrumb: ContactAdminRoutes.fieldsBreadcrumb
                 )
             )
         )

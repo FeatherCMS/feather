@@ -17,19 +17,15 @@ struct AdminEditContactFormDefaultPresenter: AdminEditContactFormPresenter {
         error: String?,
         permissions: Set<String>
     ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+        renderingEngine.renderNewAdminPage(
             request: request,
             title: "Edit contact form",
-            description: "Edit contact form",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ContactFormEdit(
+            permissions: permissions,
+            content: ContactFormEditPage(
                 state: .init(
                     id: item.id,
                     isEdited: request.hasQueryFlag("edited"),
+                    isReadOnly: !permissions.contains("contact:forms:update"),
                     form: .init(
                         name: item.name,
                         successMessage: item.successMessage,
@@ -41,15 +37,7 @@ struct AdminEditContactFormDefaultPresenter: AdminEditContactFormPresenter {
                         error: error,
                         success: nil
                     ),
-                    breadcrumb: .init(links: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(label: "Contact", link: "/admin/contact/"),
-                        .init(label: "Forms", link: "/admin/contact/forms/"),
-                        .init(
-                            label: "Edit",
-                            link: "/admin/contact/forms/\(item.id)/edit/"
-                        ),
-                    ])
+                    breadcrumb: ContactAdminRoutes.formsBreadcrumb
                 )
             )
         )

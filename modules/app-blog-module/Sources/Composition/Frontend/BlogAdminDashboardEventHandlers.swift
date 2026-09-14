@@ -15,7 +15,7 @@ public enum BlogAdminDashboardEventHandlers {
                 apiBaseURL: context.apiBaseURL,
                 sessionToken: context.sessionToken
             )
-            var contentStats: [AdminGetDashboardModel.ContentStat] = []
+            var contentStats: [AdminViewDashboardModel.ContentStat] = []
 
             await appendCount(
                 label: "Blog posts",
@@ -152,7 +152,7 @@ public enum BlogAdminDashboardEventHandlers {
         permission: String,
         permissions: Set<String>,
         operation: @escaping @Sendable () async throws -> Int,
-        to contentStats: inout [AdminGetDashboardModel.ContentStat]
+        to contentStats: inout [AdminViewDashboardModel.ContentStat]
     ) async {
         guard permissions.contains(permission),
             let count = try? await operation()

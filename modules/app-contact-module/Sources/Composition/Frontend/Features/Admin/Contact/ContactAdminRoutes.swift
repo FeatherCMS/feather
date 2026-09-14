@@ -20,6 +20,43 @@ enum ContactAdminRoutes {
         .init(label: "Contact", link: contact.description + "/"),
     ]
 
+    static let fieldsBreadcrumb = breadcrumb + [
+        .init(label: "Fields", link: fields.description + "/")
+    ]
+    static let formsBreadcrumb = breadcrumb + [
+        .init(label: "Forms", link: forms.description + "/")
+    ]
+    static let submissionsBreadcrumb = breadcrumb + [
+        .init(label: "Submissions", link: submissions.description + "/")
+    ]
+
+    static func formFieldsBreadcrumb(_ id: RouterPath)
+        -> [NewAdminBreadcrumb.Link]
+    {
+        formsBreadcrumb + [
+            .init(label: "Fields", link: formFields(id).description + "/")
+        ]
+    }
+
+    static func formEmailsBreadcrumb(_ id: RouterPath)
+        -> [NewAdminBreadcrumb.Link]
+    {
+        formsBreadcrumb + [
+            .init(label: "Emails", link: formEmails(id).description + "/")
+        ]
+    }
+
+    static func formSubmissionsBreadcrumb(_ id: RouterPath)
+        -> [NewAdminBreadcrumb.Link]
+    {
+        formsBreadcrumb + [
+            .init(
+                label: "Submissions",
+                link: formSubmissions(id).description + "/"
+            )
+        ]
+    }
+
     private static let formID = RouterPath(":formId")
     private static let fieldID = RouterPath(":fieldId")
     private static let mailID = RouterPath(":mailId")
@@ -72,6 +109,10 @@ enum ContactAdminRoutes {
         forms.appendingPath(id).appendingPath(RouterPath("edit"))
     }
 
+    static func fieldRemove(_ id: RouterPath) -> RouterPath {
+        fields.appendingPath(id).appendingPath(RouterPath("remove"))
+    }
+
     static func formFields(_ id: RouterPath) -> RouterPath {
         forms.appendingPath(id).appendingPath(RouterPath("fields"))
     }
@@ -90,6 +131,14 @@ enum ContactAdminRoutes {
     ) -> RouterPath {
         formFields(formID).appendingPath(fieldID)
             .appendingPath(RouterPath("remove"))
+    }
+
+    static func formFieldEdit(
+        formID: RouterPath,
+        fieldID: RouterPath
+    ) -> RouterPath {
+        formFields(formID).appendingPath(fieldID)
+            .appendingPath(RouterPath("edit"))
     }
 
     static func formEmails(_ id: RouterPath) -> RouterPath {
