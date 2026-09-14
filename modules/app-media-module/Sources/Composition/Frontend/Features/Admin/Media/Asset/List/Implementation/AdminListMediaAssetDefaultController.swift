@@ -167,7 +167,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
             as: MediaFolderDeleteForm.self,
             context: context
         )
-        _ = try await interactor.deleteFolder(id: id)
+        try await interactor.remove(ids: [id])
         let location = redirectLocation(
             page: payload.page,
             search: payload.search.emptyToNil,

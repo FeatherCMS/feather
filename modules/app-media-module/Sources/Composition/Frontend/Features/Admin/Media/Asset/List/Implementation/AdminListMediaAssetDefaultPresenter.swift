@@ -24,8 +24,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         var renderContext = RenderContext()
         let content = AssetListView(
             state: .init(
-                folders: model.folders,
-                items: model.items,
+                entries: model.entries,
                 pageState: model.pageState,
                 search: search ?? "",
                 parentId: model.parentId,

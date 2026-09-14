@@ -7,7 +7,7 @@ extension AdminAPIGateway {
     public func mediaAssetSearch(
         _ input: Operations.MediaAssetSearch.Input
     ) async throws -> Operations.MediaAssetSearch.Output {
-        let query: Components.Schemas.MediaAssetListItemSearchQuerySchema
+        let query: Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema
         switch input.body {
         case .json(let value):
             query = value

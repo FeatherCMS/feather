@@ -39,7 +39,7 @@ struct AdminListMediaAssetOpenAPIRepository {
                 )
             }
 
-            let filteredItems = try await loadFilteredAssets(
+            let filteredItems = try await loadFilteredItems(
                 search: search,
                 parentId: parentId,
                 allowedExtensions: normalizedExtensions
@@ -148,21 +148,11 @@ struct AdminListMediaAssetOpenAPIRepository {
         }
     }
 
-    func deleteFolder(
-        id: String
-    ) async throws {
-        try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.mediaFolderDelete(
-                body: .json(.init(ids: [id], results: false, summary: true))
-            )
-        }
-    }
-
     func delete(
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.mediaAssetDelete(
+            _ = try await client.mediaAssetNodeDelete(
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }
@@ -213,36 +203,31 @@ extension AdminListMediaAssetOpenAPIRepository {
         }
     }
 
-    fileprivate func loadFilteredAssets(
+    fileprivate func loadFilteredItems(
         search: String?,
         parentId: String?,
         allowedExtensions: Set<String>
-    ) async throws -> [Components.Schemas.MediaAssetListItemSchema] {
+    ) async throws -> [Components.Schemas.MediaAssetNodeSearchItemSchema] {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let items = try await loadAllAssets(
+            let items = try await loadAllItems(
                 search: search,
                 parentId: parentId
             )
-            let filteredItems =
-                allowedExtensions.isEmpty
-                ? items
-                : items.filter {
-                    allowedExtensions.contains($0._type.lowercased())
-                }
-            return filteredItems.sorted {
-                $0.createdAt > $1.createdAt
+            return items.filter { item in
+                guard let asset = item.file else { return true }
+                return allowedExtensions.contains(asset._type.lowercased())
             }
         }
     }
 
-    fileprivate func loadAllAssets(
+    fileprivate func loadAllItems(
         search: String?,
         parentId: String?
-    ) async throws -> [Components.Schemas.MediaAssetListItemSchema] {
+    ) async throws -> [Components.Schemas.MediaAssetNodeSearchItemSchema] {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let backendPageSize = 200
             var backendPage = 1
-            var items: [Components.Schemas.MediaAssetListItemSchema] = []
+            var items: [Components.Schemas.MediaAssetNodeSearchItemSchema] = []
             var total = 0
 
             while true {
@@ -254,8 +239,9 @@ extension AdminListMediaAssetOpenAPIRepository {
                 )
                 total = response.pageState.total
                 items.append(contentsOf: response.items)
-                if items.count >= total
-                    || response.items.count < response.pageState.pageSize
+                if response.items.count < response.pageState.pageSize
+                    || response.pageState.page * response.pageState.pageSize
+                        >= total
                 {
                     break
                 }

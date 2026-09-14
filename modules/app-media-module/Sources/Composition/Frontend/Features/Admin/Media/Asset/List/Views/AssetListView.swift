@@ -17,8 +17,7 @@ import struct Foundation.CharacterSet
 
 struct AssetListView: Component {
     struct State {
-        let folders: [Components.Schemas.MediaFolderListItemSchema]
-        let items: [AdminListMediaAssetModel.AssetItem]
+        let entries: [AdminListMediaAssetModel.EntryItem]
         let pageState: NewAdminListPageState
         let search: String
         let parentId: String?
@@ -284,8 +283,7 @@ struct AssetListView: Component {
 
 extension AssetListView {
     fileprivate var hasAnyResults: Bool {
-        !state.folders.isEmpty || !state.items.isEmpty
-            || state.currentFolder != nil
+        !state.entries.isEmpty || state.currentFolder != nil
     }
 
     fileprivate func queryItems() -> [NewAdminListPagination.QueryItem] {
@@ -645,11 +643,13 @@ extension AssetListView {
             if let currentFolder = state.currentFolder {
                 upCard(parentId: currentFolder.parentId, context: &context)
             }
-            for folder in state.folders {
-                folderCard(folder, context: &context)
-            }
-            for item in state.items {
-                assetCard(item, context: &context)
+            for entry in state.entries {
+                switch entry {
+                case .folder(let folder):
+                    folderCard(folder, context: &context)
+                case .asset(let item):
+                    assetCard(item, context: &context)
+                }
             }
         }
         .class("media-assets-grid")
@@ -715,19 +715,21 @@ extension AssetListView {
                                         context: &context
                                     )
                                 }
-                                for folder in state.folders {
-                                    folderRow(
-                                        folder,
-                                        canRemove: canRemove,
-                                        context: &context
-                                    )
-                                }
-                                for item in state.items {
-                                    assetRow(
-                                        item,
-                                        canRemove: canRemove,
-                                        context: &context
-                                    )
+                                for entry in state.entries {
+                                    switch entry {
+                                    case .folder(let folder):
+                                        folderRow(
+                                            folder,
+                                            canRemove: canRemove,
+                                            context: &context
+                                        )
+                                    case .asset(let item):
+                                        assetRow(
+                                            item,
+                                            canRemove: canRemove,
+                                            context: &context
+                                        )
+                                    }
                                 }
                             }
                         }

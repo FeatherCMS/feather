@@ -68,7 +68,7 @@ struct AdminAddNewsletterSubscriberView: Component {
                 context.render(
                     NewAdminAutocompleteField(
                         state: .init(
-                            name: "campaignIds",
+                            name: "campaignIds[]",
                             label: "Campaigns",
                             placeholder: "Select campaigns",
                             options: model.campaigns.map {

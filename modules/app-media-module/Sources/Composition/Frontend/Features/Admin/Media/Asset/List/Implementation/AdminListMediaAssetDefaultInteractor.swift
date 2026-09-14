@@ -30,14 +30,11 @@ struct AdminListMediaAssetDefaultInteractor: AdminListMediaAssetInteractor {
         else {
             effectiveParentId = parentId
         }
-        async let assetsResult = repository.listAssets(
+        let result = try await repository.listAssets(
             page: page,
             search: search,
             parentId: effectiveParentId,
             allowedExtensions: picker.allowedExtensions
-        )
-        async let foldersResult = repository.listFolders(
-            parentId: effectiveParentId
         )
 
         let currentFolder: Components.Schemas.MediaFolderDetailSchema?
@@ -50,12 +47,9 @@ struct AdminListMediaAssetDefaultInteractor: AdminListMediaAssetInteractor {
             currentFolder = nil
         }
         let ancestors = try await loadAncestors(for: currentFolder)
-        let result = try await assetsResult
-        let folders = try await foldersResult
-        let items = try await loadAssetItems(result.items)
+        let entries = try await loadEntries(result.items)
         return .init(
-            folders: folders,
-            items: items,
+            entries: entries,
             pageState: result.pageState,
             parentId: effectiveParentId,
             currentFolder: currentFolder,
@@ -73,11 +67,6 @@ struct AdminListMediaAssetDefaultInteractor: AdminListMediaAssetInteractor {
         }
     }
 
-    func deleteFolder(
-        id: String
-    ) async throws {
-        try await repository.deleteFolder(id: id)
-    }
 }
 
 extension AdminListMediaAssetDefaultInteractor {
@@ -119,19 +108,26 @@ extension AdminListMediaAssetDefaultInteractor {
         return result
     }
 
-    fileprivate func loadAssetItems(
-        _ items: [Components.Schemas.MediaAssetListItemSchema]
-    ) async throws -> [AdminListMediaAssetModel.AssetItem] {
-        var result: [AdminListMediaAssetModel.AssetItem] = []
+    fileprivate func loadEntries(
+        _ items: [Components.Schemas.MediaAssetNodeSearchItemSchema]
+    ) async throws -> [AdminListMediaAssetModel.EntryItem] {
+        var result: [AdminListMediaAssetModel.EntryItem] = []
         result.reserveCapacity(items.count)
-        for asset in items {
-            let variants = try await repository.getVariants(id: asset.id)
-            result.append(
-                .init(
-                    asset: asset,
-                    preview: variants.first
+        for item in items {
+            if let asset = item.file {
+                let variants = try await repository.getVariants(id: asset.id)
+                result.append(
+                    .asset(
+                        .init(
+                            asset: asset,
+                            preview: variants.first
+                        )
+                    )
                 )
-            )
+            }
+            else if let folder = item.folder {
+                result.append(.folder(folder))
+            }
         }
         return result
     }

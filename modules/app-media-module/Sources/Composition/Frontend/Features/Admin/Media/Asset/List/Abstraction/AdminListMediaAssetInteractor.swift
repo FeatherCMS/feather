@@ -23,7 +23,4 @@ protocol AdminListMediaAssetInteractor: Sendable {
         ids: [String]
     ) async throws
 
-    func deleteFolder(
-        id: String
-    ) async throws
 }

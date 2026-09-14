@@ -86,10 +86,10 @@ struct NewsletterCampaignRow: Component {
                     .type(.button)
                     .ariaLabel("Copy campaign identifier \(item.id)")
                     .onClick(
-                        "navigator.clipboard.writeText('@NewsletterCampaign(id: \(item.id))')"
+                        "navigator.clipboard.writeText('@NewsletterCampaign(id: \(item.id))').then(()=>window.toast&&window.toast.success('Copied','Newsletter identifier copied to clipboard'))"
                     )
                     .style(
-                        "display:inline-flex;align-items:center;justify-content:center;width:0.95rem;height:0.95rem;flex:0 0 auto;padding:0;border:0;background:transparent;color:inherit;cursor:pointer;"
+                        "display:inline-flex;align-items:center;justify-content:center;width:0.95rem;height:0.95rem;flex:0 0 auto;padding:0;border:0;background:transparent;color:var(--cms-link);cursor:pointer;"
                     )
                 }
             }

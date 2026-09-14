@@ -189,27 +189,10 @@ extension UseCases {
         return updatedResult
     }
 
-    public func deleteAssetAndFiles(
+    public func deleteAssetNodesAndFiles(
         subject: Subject,
         assetIds: [String]
     ) async throws -> [String] {
-        for assetId in assetIds {
-            let detail = try? await makeGetAssetDetails()
-                .execute(
-                    subject: subject,
-                    input: .init(id: assetId)
-                )
-            let variants =
-                (try? await listAssociatedVariantFiles(assetId: assetId)) ?? []
-            for variant in variants {
-                _ = try? await storage().delete(key: variant.storageKey)
-            }
-            if let detail {
-                for key in originalStorageKeys(for: detail) {
-                    _ = try? await storage().delete(key: key)
-                }
-            }
-        }
         return try await makeDeleteAsset()
             .execute(
                 subject: subject,
@@ -456,17 +439,6 @@ extension UseCases {
         return ext.isEmpty ? safeBase : "\(safeBase).\(ext.lowercased())"
     }
 
-    fileprivate func originalStorageKeys(
-        for asset: MediaAssetDetail
-    ) -> [String] {
-        var keys = [asset.storageKey]
-        if let expanded = expandedOriginalStorageKey(asset: asset),
-            expanded != asset.storageKey
-        {
-            keys.append(expanded)
-        }
-        return keys
-    }
 }
 
 extension String {

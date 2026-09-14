@@ -16,7 +16,7 @@ struct AdminRemoveMediaAssetOpenAPIRepository {
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.mediaAssetDelete(
+            _ = try await client.mediaAssetNodeDelete(
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }

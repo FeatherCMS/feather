@@ -26,6 +26,10 @@ struct MediaAssetStatusField: StringSchemaRepresentable {
     var example: String? = "ready"
 }
 
+struct MediaAssetSearchItemKindField: StringSchemaRepresentable {
+    var enumValues: [String]? = ["file", "folder"]
+}
+
 struct MediaAssetDataField: StringSchemaRepresentable {
     var example: String? = "AQID"
 }
@@ -142,6 +146,16 @@ struct MediaAssetListItemSchema: ObjectSchemaRepresentable {
             "altText": MediaAssetNullableTextField(required: false),
             "createdAt": MediaAssetTimestampField(),
             "updatedAt": MediaAssetTimestampField(),
+        ]
+    }
+}
+
+struct MediaAssetNodeSearchItemSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "kind": MediaAssetSearchItemKindField(),
+            "file": MediaAssetListItemSchema().reference(required: false),
+            "folder": MediaFolderListItemSchema().reference(required: false),
         ]
     }
 }

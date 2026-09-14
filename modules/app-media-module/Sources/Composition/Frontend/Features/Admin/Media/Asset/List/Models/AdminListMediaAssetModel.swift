@@ -28,8 +28,12 @@ struct AdminListMediaAssetModel: Sendable {
         let preview: Components.Schemas.MediaAssetVariantListItemSchema?
     }
 
-    let folders: [Components.Schemas.MediaFolderListItemSchema]
-    let items: [AssetItem]
+    enum EntryItem: Sendable {
+        case asset(AssetItem)
+        case folder(Components.Schemas.MediaFolderListItemSchema)
+    }
+
+    let entries: [EntryItem]
     let pageState: NewAdminListPageState
     let parentId: String?
     let currentFolder: Components.Schemas.MediaFolderDetailSchema?

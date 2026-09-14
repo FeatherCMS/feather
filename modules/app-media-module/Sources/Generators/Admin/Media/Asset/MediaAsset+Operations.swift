@@ -31,7 +31,7 @@ struct MediaAssetCreateOperation: MediaAssetOperation {
 struct MediaAssetSearchOperation: MediaAssetOperation {
     var searchQuery: SearchQuerySchema {
         .init(
-            items: MediaAssetListItemSchema(),
+            items: MediaAssetNodeSearchItemSchema(),
             sortFieldKeys: [
                 "id",
                 "storageKey",
@@ -79,7 +79,7 @@ struct MediaAssetUpdateOperation: MediaAssetIDOperation {
     }
 }
 
-struct MediaAssetDeleteOperation: MediaAssetOperation,
+struct MediaAssetNodeDeleteOperation: MediaAssetOperation,
     DeleteOperation
 {
 }
