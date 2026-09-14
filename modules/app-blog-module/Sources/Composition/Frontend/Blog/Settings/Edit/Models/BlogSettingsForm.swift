@@ -54,8 +54,7 @@ struct BlogSettingsForm: Component {
                 )
             }
         }
-        context.register(form)
-        return form.html(context: &context)
+        return context.render(form)
     }
 
     private func field(_ value: FieldState) -> NewAdminFormFieldInput {

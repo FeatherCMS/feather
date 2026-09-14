@@ -65,7 +65,8 @@ private struct BlogPostTableContent: Component {
 
     func html(context: inout RenderContext) -> Div {
         let canDelete = state.permissions.allows(BlogPermissions.Posts.delete)
-        return NewAdminList(
+        return context.render(
+            NewAdminList(
             table: {
                 if state.items.isEmpty {
                     context.render(
@@ -317,8 +318,8 @@ private struct BlogPostTableContent: Component {
                     )
                 )
             }
+            )
         )
-        .html(context: &context)
     }
 
     private func statusFormID(_ id: String) -> String {

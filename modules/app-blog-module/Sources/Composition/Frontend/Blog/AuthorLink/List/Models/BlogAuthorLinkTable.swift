@@ -64,7 +64,8 @@ struct BlogAuthorLinkTableContent: Component {
             BlogPermissions.AuthorLinks.delete
         )
         let links = BlogAdminRoutes.authorLinks(RouterPath(state.authorId))
-        return NewAdminList(
+        return context.render(
+            NewAdminList(
             table: {
                 if state.items.isEmpty {
                     context.render(
@@ -285,8 +286,8 @@ struct BlogAuthorLinkTableContent: Component {
                     )
                 )
             }
+            )
         )
-        .html(context: &context)
     }
 
     private func blankChip(_ value: Bool) -> NewAdminChip {

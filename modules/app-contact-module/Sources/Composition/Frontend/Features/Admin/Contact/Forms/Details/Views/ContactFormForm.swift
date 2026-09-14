@@ -211,8 +211,7 @@ struct ContactFormForm: Component {
                 Script(reorderScript())
             }
         }
-        context.register(form)
-        return form.html(context: &context)
+        return context.render(form)
     }
 
     private var selectedFields: [AdminContactFormFieldOption] {

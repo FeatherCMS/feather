@@ -71,7 +71,6 @@ struct ContactFieldForm: Component {
             Div { context.render(NewAdminSubmitButton(submitLabel)) }
                 .class("new-admin-form__actions")
         }
-        context.register(form)
-        return form.html(context: &context)
+        return context.render(form)
     }
 }

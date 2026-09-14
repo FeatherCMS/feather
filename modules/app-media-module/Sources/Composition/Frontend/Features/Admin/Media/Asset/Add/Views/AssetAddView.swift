@@ -229,8 +229,7 @@ struct AssetAddView: Component {
             }
             .class("new-admin-form__actions")
         }
-        context.register(form)
-        return form.html(context: &context).id("mediaAssetAddForm")
+        return context.render(form).id("mediaAssetAddForm")
     }
 
     func pickerUploadContainer(

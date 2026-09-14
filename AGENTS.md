@@ -91,6 +91,18 @@ Dependency direction must stay inward:
   - `Presentation/Views`
 - Keep reusable cross-feature code in `Core`, `Platform`, `Shared`, or `Views` only when it is genuinely shared.
 
+### 2.5 Component rendering
+
+- Never call `.html(context: ...)` at a component call site. Use
+  `context.render(component)` instead.
+- Avoid `context.register(...)` when the component HTML is rendered with
+  `context.render(...)`, because rendering already registers the component's
+  styles and scripts.
+- Use `context.register(...)` only when the component HTML is explicitly
+  omitted and its styles or scripts still need to be registered.
+- The `Component` protocol's required `html(context:)` implementation is not
+  a call site and remains required.
+
 ## 3) Core implementation rules
 
 ### 3.1 One object per file

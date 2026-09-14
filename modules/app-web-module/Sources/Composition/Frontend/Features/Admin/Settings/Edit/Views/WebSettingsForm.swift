@@ -207,8 +207,7 @@ struct WebSettingsForm: Component {
                 }
             }
         }
-        context.register(form)
-        return form.html(context: &context)
+        return context.render(form)
     }
 
     private func homePagePicker(
