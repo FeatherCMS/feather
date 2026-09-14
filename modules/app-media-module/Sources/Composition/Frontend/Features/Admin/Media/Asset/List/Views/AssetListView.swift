@@ -1277,14 +1277,11 @@ extension AssetListView {
         Td {
             Span {
                 Span(fileName(for: item.asset))
-                A {
-                    FeatherIcons.externalLink()
-                }
-                .href(originalURL)
-                .target(.blank)
-                .ariaLabel("Preview \(displayTitle(for: item.asset))")
-                .style(
-                    "display:inline-flex;align-items:center;justify-content:center;width:0.95rem;height:0.95rem;flex:0 0 auto;"
+                context.render(
+                    NewAdminPreviewLink(
+                        href: originalURL,
+                        label: "Preview \(displayTitle(for: item.asset))"
+                    )
                 )
             }
             .style(
