@@ -35,7 +35,8 @@ struct WebMenuItemAdd: Component {
             context.render(
                 WebMenuItemForm(
                     state: state.form,
-                    action: WebMenuItemRoutes.add(RouterPath(state.menuId)).description,
+                    action: WebMenuItemRoutes.add(RouterPath(state.menuId))
+                        .description,
                     submitLabel: "Add item"
                 )
             )

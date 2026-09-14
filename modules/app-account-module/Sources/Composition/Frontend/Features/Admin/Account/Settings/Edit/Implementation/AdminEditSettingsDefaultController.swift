@@ -114,7 +114,8 @@ struct AdminEditSettingsDefaultController:
                     .location: AdminToastRedirect.location(
                         defaultPath: request.uri.path,
                         title: "Expired",
-                        message: "This form has expired. Please reload the page."
+                        message:
+                            "This form has expired. Please reload the page."
                     )
                 ]
             )

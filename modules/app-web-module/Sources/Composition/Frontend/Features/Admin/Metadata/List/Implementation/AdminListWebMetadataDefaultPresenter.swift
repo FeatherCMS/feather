@@ -25,9 +25,10 @@ struct AdminListWebMetadataDefaultPresenter:
     ) async throws -> HTMLResponse {
         let actions = NewAdminListActions(
             Set(
-                WebPermissions.Metadata.allPermissions().filter {
-                    permissions.contains($0.rawValue)
-                }
+                WebPermissions.Metadata.allPermissions()
+                    .filter {
+                        permissions.contains($0.rawValue)
+                    }
             )
         )
         if let error {
@@ -82,8 +83,8 @@ struct AdminListWebMetadataDefaultPresenter:
 
     private func webMetadataBreadcrumbState() -> [NewAdminBreadcrumb.Link] {
         [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-            ]
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Web", link: "/admin/web/"),
+        ]
     }
 }

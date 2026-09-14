@@ -22,7 +22,8 @@ struct WebPageTable: Component {
                 NewAdminPageHeader(
                     state: .init(
                         title: "Web pages",
-                        description: "Manage the pages published on the website."
+                        description:
+                            "Manage the pages published on the website."
                     )
                 )
             )

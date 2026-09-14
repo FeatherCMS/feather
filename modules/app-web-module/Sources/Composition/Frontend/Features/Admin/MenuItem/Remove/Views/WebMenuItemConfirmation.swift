@@ -28,10 +28,12 @@ struct WebMenuItemConfirmation: Component {
                     description: "This action cannot be undone."
                 ),
                 selectedItems: [state.label],
-                action: WebMenuItemRoutes.details(
-                    RouterPath(state.menuId),
-                    RouterPath(state.id)
-                ).appendingPath(RouterPath("remove")).description,
+                action:
+                    WebMenuItemRoutes.details(
+                        RouterPath(state.menuId),
+                        RouterPath(state.id)
+                    )
+                    .appendingPath(RouterPath("remove")).description,
                 cancel: WebMenuItemRoutes.list(RouterPath(state.menuId))
                     .description,
                 submitLabel: "Remove item"

@@ -47,22 +47,22 @@ struct WebMenuForm: Component {
             context.render(
                 NewAdminFormFieldInput(
                     state: .init(
-                    name: state.key.key,
-                    label: state.key.label,
-                    value: state.key.value,
-                    error: state.key.error,
-                    isRequired: true
+                        name: state.key.key,
+                        label: state.key.label,
+                        value: state.key.value,
+                        error: state.key.error,
+                        isRequired: true
                     )
                 )
             )
             context.render(
                 NewAdminFormFieldInput(
                     state: .init(
-                    name: state.name.key,
-                    label: state.name.label,
-                    value: state.name.value,
-                    error: state.name.error,
-                    isRequired: true
+                        name: state.name.key,
+                        label: state.name.label,
+                        value: state.name.value,
+                        error: state.name.error,
+                        isRequired: true
                     )
                 )
             )

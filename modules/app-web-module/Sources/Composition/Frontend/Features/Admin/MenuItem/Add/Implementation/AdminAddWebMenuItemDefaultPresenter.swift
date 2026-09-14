@@ -34,14 +34,14 @@ struct AdminAddWebMenuItemDefaultPresenter: AdminAddWebMenuItemPresenter {
         menuId: String
     ) -> [NewAdminBreadcrumb.Link] {
         [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Menus", link: "/admin/web/menus/"),
-                .init(label: "Menu", link: "/admin/web/menus/\(menuId)/"),
-                .init(
-                    label: "Items",
-                    link: "/admin/web/menus/\(menuId)/items/"
-                ),
-            ]
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Web", link: "/admin/web/"),
+            .init(label: "Menus", link: "/admin/web/menus/"),
+            .init(label: "Menu", link: "/admin/web/menus/\(menuId)/"),
+            .init(
+                label: "Items",
+                link: "/admin/web/menus/\(menuId)/items/"
+            ),
+        ]
     }
 }

@@ -24,9 +24,10 @@ struct AdminListWebMenuItemDefaultPresenter:
     ) async throws -> HTMLResponse {
         let actions = NewAdminListActions(
             Set(
-                WebPermissions.MenuItems.allPermissions().filter {
-                    permissions.contains($0.rawValue)
-                }
+                WebPermissions.MenuItems.allPermissions()
+                    .filter {
+                        permissions.contains($0.rawValue)
+                    }
             )
         )
         if let error {
@@ -96,9 +97,11 @@ struct AdminListWebMenuItemDefaultPresenter:
                     description: "This action cannot be undone."
                 ),
                 selectedItems: selectedIds,
-                action: WebMenuItemRoutes.remove(RouterPath(menuId)).description,
+                action: WebMenuItemRoutes.remove(RouterPath(menuId))
+                    .description,
                 cancel: NewAdminLocation.url(
-                    path: WebMenuItemRoutes.list(RouterPath(menuId)).description,
+                    path: WebMenuItemRoutes.list(RouterPath(menuId))
+                        .description,
                     page: page,
                     search: search
                 ),
@@ -113,10 +116,10 @@ struct AdminListWebMenuItemDefaultPresenter:
         menuId: String
     ) -> [NewAdminBreadcrumb.Link] {
         [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Menus", link: "/admin/web/menus/"),
-                .init(label: "Menu", link: "/admin/web/menus/\(menuId)/"),
-            ]
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Web", link: "/admin/web/"),
+            .init(label: "Menus", link: "/admin/web/menus/"),
+            .init(label: "Menu", link: "/admin/web/menus/\(menuId)/"),
+        ]
     }
 }

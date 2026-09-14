@@ -25,24 +25,71 @@ struct WebMetadataDetails: Component {
                     ),
                     fields: [
                         .init(label: "ID", value: state.rule.id),
-                        .init(label: "Reference type", value: state.rule.referenceType.isEmpty ? "—" : state.rule.referenceType),
-                        .init(label: "Reference ID", value: state.rule.referenceId.isEmpty ? "—" : state.rule.referenceId),
+                        .init(
+                            label: "Reference type",
+                            value: state.rule.referenceType.isEmpty
+                                ? "—" : state.rule.referenceType
+                        ),
+                        .init(
+                            label: "Reference ID",
+                            value: state.rule.referenceId.isEmpty
+                                ? "—" : state.rule.referenceId
+                        ),
                         .init(label: "Slug", value: state.rule.slug),
-                        .init(label: "Status", value: state.rule.status.isEmpty ? "—" : state.rule.status),
+                        .init(
+                            label: "Status",
+                            value: state.rule.status.isEmpty
+                                ? "—" : state.rule.status
+                        ),
                         .init(label: "Title", value: state.rule.title),
-                        .init(label: "Publication date", value: state.rule.publicationDate.isEmpty ? "—" : state.rule.publicationDate),
-                        .init(label: "Expiration date", value: state.rule.expirationDate.isEmpty ? "—" : state.rule.expirationDate),
-                        .init(label: "Image URL", value: state.rule.imageUrl.isEmpty ? "—" : state.rule.imageUrl),
-                        .init(label: "Canonical URL", value: state.rule.canonicalUrl.isEmpty ? "—" : state.rule.canonicalUrl),
-                        .init(label: "No index", value: state.rule.noIndex ? "Yes" : "No"),
-                        .init(label: "Primary keyword", value: state.rule.primaryKeyword.isEmpty ? "—" : state.rule.primaryKeyword),
-                        .init(label: "Created", value: state.rule.createdAt.isEmpty ? "—" : state.rule.createdAt),
-                        .init(label: "Updated", value: state.rule.updatedAt.isEmpty ? "—" : state.rule.updatedAt),
+                        .init(
+                            label: "Publication date",
+                            value: state.rule.publicationDate.isEmpty
+                                ? "—" : state.rule.publicationDate
+                        ),
+                        .init(
+                            label: "Expiration date",
+                            value: state.rule.expirationDate.isEmpty
+                                ? "—" : state.rule.expirationDate
+                        ),
+                        .init(
+                            label: "Image URL",
+                            value: state.rule.imageUrl.isEmpty
+                                ? "—" : state.rule.imageUrl
+                        ),
+                        .init(
+                            label: "Canonical URL",
+                            value: state.rule.canonicalUrl.isEmpty
+                                ? "—" : state.rule.canonicalUrl
+                        ),
+                        .init(
+                            label: "No index",
+                            value: state.rule.noIndex ? "Yes" : "No"
+                        ),
+                        .init(
+                            label: "Primary keyword",
+                            value: state.rule.primaryKeyword.isEmpty
+                                ? "—" : state.rule.primaryKeyword
+                        ),
+                        .init(
+                            label: "Created",
+                            value: state.rule.createdAt.isEmpty
+                                ? "—" : state.rule.createdAt
+                        ),
+                        .init(
+                            label: "Updated",
+                            value: state.rule.updatedAt.isEmpty
+                                ? "—" : state.rule.updatedAt
+                        ),
                     ],
                     actions: [
                         .init(
                             label: "Edit web metadata",
-                            href: WebMetadataRoutes.edit(RouterPath(state.rule.id)).description,
+                            href:
+                                WebMetadataRoutes.edit(
+                                    RouterPath(state.rule.id)
+                                )
+                                .description,
                             style: .primary
                         )
                     ]

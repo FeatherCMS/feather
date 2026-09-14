@@ -21,7 +21,8 @@ struct AdminViewWebOverviewComponent: Component {
                 NewAdminPageHeader(
                     state: .init(
                         title: "Web module",
-                        description: "Manage pages, menus, metadata, and web settings."
+                        description:
+                            "Manage pages, menus, metadata, and web settings."
                     )
                 )
             )

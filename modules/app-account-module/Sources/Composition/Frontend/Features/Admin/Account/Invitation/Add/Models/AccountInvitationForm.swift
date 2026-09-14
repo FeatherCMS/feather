@@ -83,7 +83,7 @@ struct AccountInvitationForm: Component {
 
             Section {
                 Div {
-                        context.render(NewAdminSubmitButton(submitLabel))
+                    context.render(NewAdminSubmitButton(submitLabel))
                     if let removeHref {
                         context.render(
                             NewAdminButton(

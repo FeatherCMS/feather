@@ -24,11 +24,14 @@ struct WebMenuItemTable: Component {
                 NewAdminPageHeader(
                     state: .init(
                         title: "Menu items",
-                        description: "Manage the links and order in this navigation menu."
+                        description:
+                            "Manage the links and order in this navigation menu."
                     )
                 )
             )
-            context.render(AdminWebMenuTabs(menuID: state.menuId, active: .items))
+            context.render(
+                AdminWebMenuTabs(menuID: state.menuId, active: .items)
+            )
             context.render(
                 WebMenuItemTableContent(
                     state: .init(

@@ -54,9 +54,9 @@ struct AdminEditWebMenuDefaultPresenter: AdminEditWebMenuPresenter {
         id: String
     ) -> [NewAdminBreadcrumb.Link] {
         [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Menus", link: "/admin/web/menus/"),
-            ]
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Web", link: "/admin/web/"),
+            .init(label: "Menus", link: "/admin/web/menus/"),
+        ]
     }
 }

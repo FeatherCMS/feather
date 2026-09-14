@@ -25,10 +25,16 @@ struct WebMenuItemRow: Component {
                     Div {
                         Span("⠿").class("web-menu-item-drag")
                         Div {
-                            Button("↑").type(.button).class("row-btn", "edit").data("web-menu-item-move", "up").ariaLabel("Move \(item.label) up")
-                            Button("↓").type(.button).class("row-btn", "edit").data("web-menu-item-move", "down").ariaLabel("Move \(item.label) down")
-                        }.class("web-menu-item-actions")
-                    }.class("web-menu-item-reorder-cell")
+                            Button("↑").type(.button).class("row-btn", "edit")
+                                .data("web-menu-item-move", "up")
+                                .ariaLabel("Move \(item.label) up")
+                            Button("↓").type(.button).class("row-btn", "edit")
+                                .data("web-menu-item-move", "down")
+                                .ariaLabel("Move \(item.label) down")
+                        }
+                        .class("web-menu-item-actions")
+                    }
+                    .class("web-menu-item-reorder-cell")
                 }
             }
             Td(item.label).data("label", "Label")
@@ -39,9 +45,40 @@ struct WebMenuItemRow: Component {
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: [
-                        .init("View", href: WebMenuItemRoutes.details(RouterPath(menuId), RouterPath(item.id)).description, style: .ghost(.primary), permission: WebPermissions.MenuItems.read),
-                        .init("Edit", href: WebMenuItemRoutes.edit(RouterPath(menuId), RouterPath(item.id)).description, style: .ghost(.secondary), permission: WebPermissions.MenuItems.update),
-                        .init("Remove", href: NewAdminLocation.remove(path: WebMenuItemRoutes.remove(RouterPath(menuId)).description, ids: [item.id], returnTo: returnTo), style: .destructive, permission: WebPermissions.MenuItems.delete),
+                        .init(
+                            "View",
+                            href:
+                                WebMenuItemRoutes.details(
+                                    RouterPath(menuId),
+                                    RouterPath(item.id)
+                                )
+                                .description,
+                            style: .ghost(.primary),
+                            permission: WebPermissions.MenuItems.read
+                        ),
+                        .init(
+                            "Edit",
+                            href:
+                                WebMenuItemRoutes.edit(
+                                    RouterPath(menuId),
+                                    RouterPath(item.id)
+                                )
+                                .description,
+                            style: .ghost(.secondary),
+                            permission: WebPermissions.MenuItems.update
+                        ),
+                        .init(
+                            "Remove",
+                            href: NewAdminLocation.remove(
+                                path:
+                                    WebMenuItemRoutes.remove(RouterPath(menuId))
+                                    .description,
+                                ids: [item.id],
+                                returnTo: returnTo
+                            ),
+                            style: .destructive,
+                            permission: WebPermissions.MenuItems.delete
+                        ),
                     ],
                     permissions: permissions
                 )
@@ -49,6 +86,10 @@ struct WebMenuItemRow: Component {
         }
         .class("web-menu-item-row")
         .data("web-menu-item", item.id)
-        .data("web-menu-item-move-url", WebMenuItemRoutes.move(RouterPath(menuId), RouterPath(item.id)).description)
+        .data(
+            "web-menu-item-move-url",
+            WebMenuItemRoutes.move(RouterPath(menuId), RouterPath(item.id))
+                .description
+        )
     }
 }

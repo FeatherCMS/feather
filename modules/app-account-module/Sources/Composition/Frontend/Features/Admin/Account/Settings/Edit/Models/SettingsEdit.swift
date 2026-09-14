@@ -24,7 +24,8 @@ struct SettingsEdit: Component {
                 NewAdminPageHeader(
                     state: .init(
                         title: "Settings",
-                        description: "Manage application preferences for this account."
+                        description:
+                            "Manage application preferences for this account."
                     )
                 )
             )

@@ -29,7 +29,8 @@ struct WebMetadataEdit: Component {
                 NewAdminPageHeader(
                     state: .init(
                         title: state.title,
-                        description: "Edit the metadata used when this page is rendered and shared.",
+                        description:
+                            "Edit the metadata used when this page is rendered and shared.",
                         previewHref: previewPath
                     )
                 )
@@ -48,7 +49,9 @@ struct WebMetadataEdit: Component {
 
     private var previewPath: String? {
         guard let slug = state.form.slug.value else { return nil }
-        let normalizedSlug = slug.trimmingCharacters(in: .whitespacesAndNewlines)
+        let normalizedSlug = slug.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
         return normalizedSlug.isEmpty ? nil : "/\(normalizedSlug)/"
     }
 }

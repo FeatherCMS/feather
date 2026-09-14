@@ -25,7 +25,8 @@ struct AccountInvitationEdit: Component {
                 NewAdminPageHeader(
                     state: .init(
                         title: "Edit user invitation",
-                        description: "Update the invited user and assigned roles."
+                        description:
+                            "Update the invited user and assigned roles."
                     )
                 )
             )

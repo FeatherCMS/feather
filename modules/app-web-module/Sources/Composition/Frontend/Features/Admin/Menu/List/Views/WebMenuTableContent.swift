@@ -49,7 +49,8 @@ struct WebMenuTableContent: Component {
                                         context.render(
                                             NewAdminButton(
                                                 "Reset search",
-                                                href: WebMenuRoutes.list.description,
+                                                href: WebMenuRoutes.list
+                                                    .description,
                                                 style: .secondary
                                             )
                                         )
@@ -63,11 +64,14 @@ struct WebMenuTableContent: Component {
                                     message: "No menus yet.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
-                                        if permissions.allows(WebPermissions.Menus.create) {
+                                        if permissions.allows(
+                                            WebPermissions.Menus.create
+                                        ) {
                                             context.render(
                                                 NewAdminButton(
                                                     "Add new",
-                                                    href: WebMenuRoutes.add.description
+                                                    href: WebMenuRoutes.add
+                                                        .description
                                                 )
                                             )
                                         }
@@ -83,20 +87,30 @@ struct WebMenuTableContent: Component {
                                     action: WebMenuRoutes.remove.description,
                                     pageState: pageState,
                                     search: searchValue,
-                                    button: .init("Remove selected", style: .destructive),
+                                    button: .init(
+                                        "Remove selected",
+                                        style: .destructive
+                                    ),
                                     isEnabled: canDelete
                                 ),
                                 table: context.render(
                                     NewAdminListShell(
                                         layout: .init(
                                             name: "web-menus",
-                                            columns: [.fraction(1), .fraction(2), .fixed(220)]
+                                            columns: [
+                                                .fraction(1), .fraction(2),
+                                                .fixed(220),
+                                            ]
                                         ),
                                         hasSelection: canDelete,
                                         table: Table {
                                             Thead {
                                                 Tr {
-                                                    if canDelete { context.render(NewAdminListSelectAllCheckbox()) }
+                                                    if canDelete {
+                                                        context.render(
+                                                            NewAdminListSelectAllCheckbox()
+                                                        )
+                                                    }
                                                     Th("Key")
                                                     Th("Name")
                                                     Th("Actions")
@@ -107,7 +121,8 @@ struct WebMenuTableContent: Component {
                                                     context.render(
                                                         WebMenuRow(
                                                             menu: menu,
-                                                            permissions: permissions,
+                                                            permissions:
+                                                                permissions,
                                                             returnTo: returnTo
                                                         )
                                                     )
@@ -115,7 +130,9 @@ struct WebMenuTableContent: Component {
                                             }
                                         }
                                         .class("cms-table", "action-table")
-                                        .if(canDelete) { $0.class("select-table") }
+                                        .if(canDelete) {
+                                            $0.class("select-table")
+                                        }
                                     )
                                 )
                             )
@@ -137,7 +154,12 @@ struct WebMenuTableContent: Component {
                     if permissions.allows(WebPermissions.Menus.create) {
                         context.render(
                             NewAdminListToolbar {
-                                context.render(NewAdminButton("Add new", href: WebMenuRoutes.add.description))
+                                context.render(
+                                    NewAdminButton(
+                                        "Add new",
+                                        href: WebMenuRoutes.add.description
+                                    )
+                                )
                             }
                         )
                     }

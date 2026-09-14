@@ -1,6 +1,6 @@
 import FeatherAdmin
-import Hummingbird
 import HTML
+import Hummingbird
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
@@ -34,12 +34,16 @@ struct WebMenuDetails: Component {
                     actions: [
                         .init(
                             label: "Edit menu",
-                            href: WebMenuRoutes.edit(RouterPath(state.menu.id)).description,
+                            href: WebMenuRoutes.edit(RouterPath(state.menu.id))
+                                .description,
                             style: .primary
                         ),
                         .init(
                             label: "Remove menu",
-                            href: WebMenuRoutes.details(RouterPath(state.menu.id)).appendingPath(RouterPath("remove")).description,
+                            href:
+                                WebMenuRoutes.details(RouterPath(state.menu.id))
+                                .appendingPath(RouterPath("remove"))
+                                .description,
                             style: .destructive
                         ),
                     ]

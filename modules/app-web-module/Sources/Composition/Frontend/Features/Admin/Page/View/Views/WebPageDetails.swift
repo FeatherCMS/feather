@@ -25,14 +25,18 @@ struct WebPageDetails: Component {
                 NewAdminPageHeader(
                     state: .init(
                         title: "Web page details",
-                        description: "Review the page content and publication state."
+                        description:
+                            "Review the page content and publication state."
                     )
                 )
             )
             Div {
                 detailField(label: "ID", value: state.rule.id)
                 detailField(label: "Title", value: state.rule.title)
-                detailField(label: "Status", value: state.rule.metadata.status.capitalized)
+                detailField(
+                    label: "Status",
+                    value: state.rule.metadata.status.capitalized
+                )
                 detailField(
                     label: "Published date",
                     value: format(state.rule.metadata.publicationDate)
@@ -67,7 +71,8 @@ struct WebPageDetails: Component {
                     context.render(
                         NewAdminButton(
                             "Edit page",
-                            href: WebPageRoutes.edit(RouterPath(state.rule.id)).description
+                            href: WebPageRoutes.edit(RouterPath(state.rule.id))
+                                .description
                         )
                     )
                 }
@@ -77,7 +82,10 @@ struct WebPageDetails: Component {
                     context.render(
                         NewAdminButton(
                             "Remove page",
-                            href: WebPageRoutes.details(RouterPath(state.rule.id)).appendingPath(RouterPath("remove")).description,
+                            href:
+                                WebPageRoutes.details(RouterPath(state.rule.id))
+                                .appendingPath(RouterPath("remove"))
+                                .description,
                             style: .destructive
                         )
                     )

@@ -54,7 +54,8 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
         AccountAdminRoutes.invitationBreadcrumb + [
             .init(
                 label: "Remove",
-                link: AccountAdminRoutes.invitationRemove(RouterPath(id)).description
+                link: AccountAdminRoutes.invitationRemove(RouterPath(id))
+                    .description
             )
         ]
     }

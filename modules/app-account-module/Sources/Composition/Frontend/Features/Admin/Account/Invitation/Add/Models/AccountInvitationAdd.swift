@@ -23,7 +23,8 @@ struct AccountInvitationAdd: Component {
                 NewAdminPageHeader(
                     state: .init(
                         title: "Add user invitation",
-                        description: "Invite a user and assign their initial roles."
+                        description:
+                            "Invite a user and assign their initial roles."
                     )
                 )
             )

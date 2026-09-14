@@ -19,7 +19,8 @@ struct AccountInvitationDetails: Component {
                     breadcrumb: state.breadcrumb,
                     pageHeader: .init(
                         title: "User invitation details",
-                        description: "Review invitation status and assigned roles."
+                        description:
+                            "Review invitation status and assigned roles."
                     ),
                     fields: [
                         .init(label: "ID", value: state.invitation.id),
@@ -28,23 +29,28 @@ struct AccountInvitationDetails: Component {
                             label: "Roles",
                             value: state.invitation.roleNames.isEmpty
                                 ? "No roles assigned"
-                                : state.invitation.roleNames.joined(separator: ", ")
+                                : state.invitation.roleNames.joined(
+                                    separator: ", "
+                                )
                         ),
                     ],
                     actions: [
                         .init(
                             label: "Resend invitation",
-                            href: "/admin/account/invitations/\(state.invitation.id)/resend/",
+                            href:
+                                "/admin/account/invitations/\(state.invitation.id)/resend/",
                             style: .secondary
                         ),
                         .init(
                             label: "Edit invitation",
-                            href: "/admin/account/invitations/\(state.invitation.id)/edit/",
+                            href:
+                                "/admin/account/invitations/\(state.invitation.id)/edit/",
                             style: .primary
                         ),
                         .init(
                             label: "Remove invitation",
-                            href: "/admin/account/invitations/\(state.invitation.id)/remove/",
+                            href:
+                                "/admin/account/invitations/\(state.invitation.id)/remove/",
                             style: .destructive
                         ),
                     ]

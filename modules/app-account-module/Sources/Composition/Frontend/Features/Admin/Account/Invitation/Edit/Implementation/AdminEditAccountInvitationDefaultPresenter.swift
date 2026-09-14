@@ -80,7 +80,11 @@ struct AdminEditAccountInvitationDefaultPresenter:
         id: String
     ) -> [NewAdminBreadcrumb.Link] {
         AccountAdminRoutes.invitationBreadcrumb + [
-            .init(label: "Edit", link: AccountAdminRoutes.invitationEdit(RouterPath(id)).description)
+            .init(
+                label: "Edit",
+                link: AccountAdminRoutes.invitationEdit(RouterPath(id))
+                    .description
+            )
         ]
     }
 

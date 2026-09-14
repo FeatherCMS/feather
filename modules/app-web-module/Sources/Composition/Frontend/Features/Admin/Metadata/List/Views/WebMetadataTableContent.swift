@@ -37,13 +37,15 @@ struct WebMetadataTableContent: Component {
                         if hasActiveQuery {
                             context.render(
                                 NewAdminListNoResultsState(
-                                    message: "No metadata matches the selected filters.",
+                                    message:
+                                        "No metadata matches the selected filters.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         context.render(
                                             NewAdminButton(
                                                 "Reset filters",
-                                                href: WebMetadataRoutes.list.description,
+                                                href: WebMetadataRoutes.list
+                                                    .description,
                                                 style: .secondary
                                             )
                                         )
@@ -65,7 +67,10 @@ struct WebMetadataTableContent: Component {
                             NewAdminListShell(
                                 layout: .init(
                                     name: "web-metadata",
-                                    columns: [.fraction(2), .fraction(1), .fixed(120), .fixed(140), .fixed(140), .fixed(220)]
+                                    columns: [
+                                        .fraction(2), .fraction(1), .fixed(120),
+                                        .fixed(140), .fixed(140), .fixed(220),
+                                    ]
                                 ),
                                 table: Table {
                                     Thead {
@@ -106,11 +111,14 @@ struct WebMetadataTableContent: Component {
                             Select {
                                 Option("All reference types")
                                     .value("")
-                                    .if(referenceTypeValue.isEmpty) { $0.selected() }
+                                    .if(referenceTypeValue.isEmpty) {
+                                        $0.selected()
+                                    }
                                 for option in referenceTypeOptions {
                                     Option(option.title)
                                         .value(option.value)
-                                        .if(referenceTypeValue == option.value) { $0.selected() }
+                                        .if(referenceTypeValue == option.value)
+                                    { $0.selected() }
                                 }
                             }
                             .name("referenceType")
@@ -125,7 +133,12 @@ struct WebMetadataTableContent: Component {
                                 path: WebMetadataRoutes.list.description,
                                 pageState: pageState,
                                 search: searchValue,
-                                queryItems: [.init(name: "referenceType", value: referenceTypeValue)]
+                                queryItems: [
+                                    .init(
+                                        name: "referenceType",
+                                        value: referenceTypeValue
+                                    )
+                                ]
                             )
                         )
                     )

@@ -24,7 +24,8 @@ struct WebPageAdd: Component {
                 NewAdminPageHeader(
                     state: .init(
                         title: "Add page",
-                        description: "Create and publish a page for the public website."
+                        description:
+                            "Create and publish a page for the public website."
                     )
                 )
             )

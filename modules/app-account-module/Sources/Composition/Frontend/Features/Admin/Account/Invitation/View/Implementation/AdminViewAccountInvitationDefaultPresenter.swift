@@ -46,7 +46,8 @@ struct AdminViewAccountInvitationDefaultPresenter:
         AccountAdminRoutes.invitationBreadcrumb + [
             .init(
                 label: "Details",
-                link: AccountAdminRoutes.invitationDetails(RouterPath(id)).description
+                link: AccountAdminRoutes.invitationDetails(RouterPath(id))
+                    .description
             )
         ]
     }

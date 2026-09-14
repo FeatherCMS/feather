@@ -32,7 +32,10 @@ struct AdminListAccountInvitationDefaultPresenter:
                     icon: FeatherIcons.alertCircle()
                 )
             )
-            return HTMLResponse(content: page.content, status: .internalServerError)
+            return HTMLResponse(
+                content: page.content,
+                status: .internalServerError
+            )
         }
 
         let granted = NewAdminListActions(
@@ -47,7 +50,9 @@ struct AdminListAccountInvitationDefaultPresenter:
                     isAdded: isAdded,
                     isEdited: isEdited,
                     isRemoved: isRemoved,
-                    canAccess: granted.allows(AccountPermissions.Invitations.list),
+                    canAccess: granted.allows(
+                        AccountPermissions.Invitations.list
+                    ),
                     permissions: granted,
                     invitations: model.items,
                     pageState: .init(
@@ -67,12 +72,13 @@ struct AdminListAccountInvitationDefaultPresenter:
         selectedIds: [String],
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        let hiddenFields = selectedIds.map {
-            NewAdminConfirmation.HiddenField(name: "ids", value: $0)
-        } + [
-            .init(name: "page", value: "\(page)"),
-            .init(name: "search", value: search ?? ""),
-        ]
+        let hiddenFields =
+            selectedIds.map {
+                NewAdminConfirmation.HiddenField(name: "ids", value: $0)
+            } + [
+                .init(name: "page", value: "\(page)"),
+                .init(name: "search", value: search ?? ""),
+            ]
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
@@ -82,7 +88,11 @@ struct AdminListAccountInvitationDefaultPresenter:
             title: "Remove selected invitations",
             content: NewAdminConfirmation(
                 breadcrumb: AccountAdminRoutes.invitationBreadcrumb + [
-                    .init(label: "Remove", link: AccountAdminRoutes.invitationRemoveBulk.description)
+                    .init(
+                        label: "Remove",
+                        link: AccountAdminRoutes.invitationRemoveBulk
+                            .description
+                    )
                 ],
                 pageHeader: .init(
                     title: "Remove selected invitations",

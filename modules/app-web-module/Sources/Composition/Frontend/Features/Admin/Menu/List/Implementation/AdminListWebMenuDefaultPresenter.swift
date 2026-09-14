@@ -23,9 +23,10 @@ struct AdminListWebMenuDefaultPresenter:
     ) async throws -> HTMLResponse {
         let actions = NewAdminListActions(
             Set(
-                WebPermissions.Menus.allPermissions().filter {
-                    permissions.contains($0.rawValue)
-                }
+                WebPermissions.Menus.allPermissions()
+                    .filter {
+                        permissions.contains($0.rawValue)
+                    }
             )
         )
         let canAccess = actions.allows(WebPermissions.Menus.list)
@@ -109,8 +110,8 @@ struct AdminListWebMenuDefaultPresenter:
 
     private func webMenuBreadcrumbState() -> [NewAdminBreadcrumb.Link] {
         [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-            ]
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Web", link: "/admin/web/"),
+        ]
     }
 }

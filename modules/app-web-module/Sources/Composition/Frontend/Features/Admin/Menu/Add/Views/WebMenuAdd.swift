@@ -24,7 +24,8 @@ struct WebMenuAdd: Component {
                 NewAdminPageHeader(
                     state: .init(
                         title: "Add menu",
-                        description: "Create a navigation menu for the public website."
+                        description:
+                            "Create a navigation menu for the public website."
                     )
                 )
             )

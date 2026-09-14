@@ -66,14 +66,14 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
         if let marker = path.range(of: "/edit/metadata/") {
             let detailsPath = String(path[..<marker.lowerBound]) + "/edit/"
             return [
-                    .init(label: "Admin", link: "/admin/"),
-                    .init(label: "Details", link: detailsPath),
-                ]
+                .init(label: "Admin", link: "/admin/"),
+                .init(label: "Details", link: detailsPath),
+            ]
         }
         return [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Metadata", link: "/admin/web/metadata/"),
-            ]
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Web", link: "/admin/web/"),
+            .init(label: "Metadata", link: "/admin/web/metadata/"),
+        ]
     }
 }

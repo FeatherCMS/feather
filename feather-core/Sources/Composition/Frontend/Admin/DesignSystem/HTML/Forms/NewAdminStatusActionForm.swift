@@ -45,9 +45,12 @@ public struct NewAdminStatusActionForm: Component {
                 .value(status)
             Button(label)
                 .type(.submit)
-                .class(([
-                    "button", "secondary"
-                ] + classes).joined(separator: " "))
+                .class(
+                    ([
+                        "button", "secondary",
+                    ] + classes)
+                    .joined(separator: " ")
+                )
         }
         .method(.post)
         .action(action)

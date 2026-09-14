@@ -21,15 +21,37 @@ struct WebPageRow: Component {
             }
             titleCell()
             statusCell(context: &context)
-            Td(format(page.metadata.publicationDate)).data("label", "Publication")
+            Td(format(page.metadata.publicationDate))
+                .data("label", "Publication")
             Td(format(page.metadata.expirationDate)).data("label", "Expiration")
             context.render(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: [
-                        .init("View", href: WebPageRoutes.details(RouterPath(page.id)).description, style: .ghost(.primary), permission: WebPermissions.Pages.read),
-                        .init("Edit", href: WebPageRoutes.edit(RouterPath(page.id)).description, style: .ghost(.secondary), permission: WebPermissions.Pages.update),
-                        .init("Remove", href: NewAdminLocation.remove(path: WebPageRoutes.remove.description, ids: [page.id], returnTo: returnTo), style: .destructive, permission: WebPermissions.Pages.delete),
+                        .init(
+                            "View",
+                            href: WebPageRoutes.details(RouterPath(page.id))
+                                .description,
+                            style: .ghost(.primary),
+                            permission: WebPermissions.Pages.read
+                        ),
+                        .init(
+                            "Edit",
+                            href: WebPageRoutes.edit(RouterPath(page.id))
+                                .description,
+                            style: .ghost(.secondary),
+                            permission: WebPermissions.Pages.update
+                        ),
+                        .init(
+                            "Remove",
+                            href: NewAdminLocation.remove(
+                                path: WebPageRoutes.remove.description,
+                                ids: [page.id],
+                                returnTo: returnTo
+                            ),
+                            style: .destructive,
+                            permission: WebPermissions.Pages.delete
+                        ),
                     ],
                     permissions: permissions
                 )
@@ -75,7 +97,8 @@ struct WebPageRow: Component {
     }
 
     private func format(_ value: String) -> String {
-        guard let timestamp = AdminMetadataSchemaBuilder.parseTimestamp(value) else { return "-" }
+        guard let timestamp = AdminMetadataSchemaBuilder.parseTimestamp(value)
+        else { return "-" }
         return DateFormatting.formatUnixTimestamp(timestamp)
     }
 }

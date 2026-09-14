@@ -56,9 +56,9 @@ struct AdminRemoveWebPageDefaultPresenter:
         id: String
     ) -> [NewAdminBreadcrumb.Link] {
         [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Pages", link: "/admin/web/pages/"),
-            ]
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Web", link: "/admin/web/"),
+            .init(label: "Pages", link: "/admin/web/pages/"),
+        ]
     }
 }

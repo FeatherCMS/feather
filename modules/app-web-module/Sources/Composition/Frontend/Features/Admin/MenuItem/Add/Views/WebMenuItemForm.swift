@@ -63,34 +63,34 @@ struct WebMenuItemForm: Component {
             context.render(
                 NewAdminFormFieldInput(
                     state: .init(
-                    name: state.label.key,
-                    label: state.label.label,
-                    value: state.label.value,
-                    error: state.label.error,
-                    isRequired: true
+                        name: state.label.key,
+                        label: state.label.label,
+                        value: state.label.value,
+                        error: state.label.error,
+                        isRequired: true
                     )
                 )
             )
             context.render(
                 NewAdminFormFieldInput(
                     state: .init(
-                    name: state.url.key,
-                    label: state.url.label,
-                    value: state.url.value,
-                    error: state.url.error,
-                    isRequired: true
+                        name: state.url.key,
+                        label: state.url.label,
+                        value: state.url.value,
+                        error: state.url.error,
+                        isRequired: true
                     )
                 )
             )
             context.render(
                 NewAdminFormFieldInput(
                     state: .init(
-                    name: state.priority.key,
-                    label: state.priority.label,
-                    value: state.priority.value,
-                    error: state.priority.error,
-                    type: .number,
-                    isRequired: true
+                        name: state.priority.key,
+                        label: state.priority.label,
+                        value: state.priority.value,
+                        error: state.priority.error,
+                        type: .number,
+                        isRequired: true
                     )
                 )
             )
@@ -124,7 +124,10 @@ struct WebMenuItemForm: Component {
                         options: [
                             .init(label: "Everyone", value: "any"),
                             .init(label: "Anonymous users", value: "anonymous"),
-                            .init(label: "Signed-in users", value: "authenticated"),
+                            .init(
+                                label: "Signed-in users",
+                                value: "authenticated"
+                            ),
                         ],
                         error: state.authentication.error,
                         isRequired: true

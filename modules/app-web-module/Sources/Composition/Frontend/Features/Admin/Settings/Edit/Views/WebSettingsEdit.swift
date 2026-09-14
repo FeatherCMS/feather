@@ -22,7 +22,8 @@ struct WebSettingsEdit: Component {
                 NewAdminPageHeader(
                     state: .init(
                         title: "Settings",
-                        description: "Configure website branding, metadata, and code injection."
+                        description:
+                            "Configure website branding, metadata, and code injection."
                     )
                 )
             )

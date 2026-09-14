@@ -27,27 +27,44 @@ struct WebMenuItemDetails: Component {
                         .init(label: "ID", value: state.item.id),
                         .init(label: "Label", value: state.item.label),
                         .init(label: "URL", value: state.item.url),
-                        .init(label: "Priority", value: "\(state.item.priority)"),
-                        .init(label: "Blank target", value: state.item.isBlank ? "Yes" : "No"),
-                        .init(label: "Permission", value: state.item.permission),
-                        .init(label: "Authentication", value: state.item.authentication),
+                        .init(
+                            label: "Priority",
+                            value: "\(state.item.priority)"
+                        ),
+                        .init(
+                            label: "Blank target",
+                            value: state.item.isBlank ? "Yes" : "No"
+                        ),
+                        .init(
+                            label: "Permission",
+                            value: state.item.permission
+                        ),
+                        .init(
+                            label: "Authentication",
+                            value: state.item.authentication
+                        ),
                         .init(label: "Notes", value: state.item.notes ?? "—"),
                     ],
                     actions: [
                         .init(
                             label: "Edit item",
-                            href: WebMenuItemRoutes.edit(
-                                RouterPath(state.item.menuId),
-                                RouterPath(state.item.id)
-                            ).description,
+                            href:
+                                WebMenuItemRoutes.edit(
+                                    RouterPath(state.item.menuId),
+                                    RouterPath(state.item.id)
+                                )
+                                .description,
                             style: .primary
                         ),
                         .init(
                             label: "Remove item",
-                            href: WebMenuItemRoutes.details(
-                                RouterPath(state.item.menuId),
-                                RouterPath(state.item.id)
-                            ).appendingPath(RouterPath("remove")).description,
+                            href:
+                                WebMenuItemRoutes.details(
+                                    RouterPath(state.item.menuId),
+                                    RouterPath(state.item.id)
+                                )
+                                .appendingPath(RouterPath("remove"))
+                                .description,
                             style: .destructive
                         ),
                     ]

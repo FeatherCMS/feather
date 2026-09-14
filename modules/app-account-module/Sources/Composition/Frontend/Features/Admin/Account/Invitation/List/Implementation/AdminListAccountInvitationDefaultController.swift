@@ -124,7 +124,8 @@ struct AdminListAccountInvitationDefaultController:
                     .location: AdminToastRedirect.location(
                         defaultPath: AccountAdminRoutes.invitations.description,
                         title: "Expired",
-                        message: "This form has expired. Please reload the page."
+                        message:
+                            "This form has expired. Please reload the page."
                     )
                 ]
             )
@@ -139,7 +140,7 @@ struct AdminListAccountInvitationDefaultController:
         return Response(
             status: .seeOther,
             headers: [
-                    .location: ListRemoveRedirect.location(
+                .location: ListRemoveRedirect.location(
                     path: AccountAdminRoutes.invitations.description,
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

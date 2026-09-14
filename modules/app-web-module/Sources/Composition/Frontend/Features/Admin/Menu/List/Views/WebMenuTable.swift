@@ -1,7 +1,7 @@
 import FeatherAdmin
 import HTML
-import WebAdminAPI
 import SGML
+import WebAdminAPI
 import WebBuilders
 import WebComponents
 
@@ -23,7 +23,8 @@ struct WebMenuTable: Component {
                 NewAdminPageHeader(
                     state: .init(
                         title: "Menus",
-                        description: "Manage navigation menus for the public website."
+                        description:
+                            "Manage navigation menus for the public website."
                     )
                 )
             )

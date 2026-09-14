@@ -359,9 +359,9 @@ struct AdminEditWebSettingsDefaultController:
 
     private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
         [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-            ]
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Web", link: "/admin/web/"),
+        ]
     }
 
     private func loadHomePageOptions(

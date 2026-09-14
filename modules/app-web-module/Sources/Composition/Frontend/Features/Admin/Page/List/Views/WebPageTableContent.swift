@@ -49,13 +49,15 @@ struct WebPageTableContent: Component {
                             if hasActiveQuery {
                                 context.render(
                                     NewAdminListNoResultsState(
-                                        message: "No web pages match your search.",
+                                        message:
+                                            "No web pages match your search.",
                                         icon: FeatherIcons.inbox(),
                                         action: {
                                             context.render(
                                                 NewAdminButton(
                                                     "Reset search",
-                                                    href: WebPageRoutes.list.description,
+                                                    href: WebPageRoutes.list
+                                                        .description,
                                                     style: .secondary
                                                 )
                                             )
@@ -69,8 +71,16 @@ struct WebPageTableContent: Component {
                                         message: "No web pages yet.",
                                         icon: FeatherIcons.inbox(),
                                         action: {
-                                            if permissions.allows(WebPermissions.Pages.create) {
-                                                context.render(NewAdminButton("Add new", href: WebPageRoutes.add.description))
+                                            if permissions.allows(
+                                                WebPermissions.Pages.create
+                                            ) {
+                                                context.render(
+                                                    NewAdminButton(
+                                                        "Add new",
+                                                        href: WebPageRoutes.add
+                                                            .description
+                                                    )
+                                                )
                                             }
                                         }
                                     )
@@ -81,23 +91,35 @@ struct WebPageTableContent: Component {
                             context.render(
                                 NewAdminListSelectionForm(
                                     state: .init(
-                                        action: WebPageRoutes.remove.description,
+                                        action: WebPageRoutes.remove
+                                            .description,
                                         pageState: pageState,
                                         search: searchValue,
-                                        button: .init("Remove selected", style: .destructive),
+                                        button: .init(
+                                            "Remove selected",
+                                            style: .destructive
+                                        ),
                                         isEnabled: canDelete
                                     ),
                                     table: context.render(
                                         NewAdminListShell(
                                             layout: .init(
                                                 name: "web-pages",
-                                                columns: [.fraction(2), .fixed(140), .fixed(140), .fixed(140), .fixed(250)]
+                                                columns: [
+                                                    .fraction(2), .fixed(140),
+                                                    .fixed(140), .fixed(140),
+                                                    .fixed(250),
+                                                ]
                                             ),
                                             hasSelection: canDelete,
                                             table: Table {
                                                 Thead {
                                                     Tr {
-                                                        if canDelete { context.render(NewAdminListSelectAllCheckbox()) }
+                                                        if canDelete {
+                                                            context.render(
+                                                                NewAdminListSelectAllCheckbox()
+                                                            )
+                                                        }
                                                         Th("Title")
                                                         Th("Status")
                                                         Th("Publication")
@@ -110,16 +132,21 @@ struct WebPageTableContent: Component {
                                                         context.render(
                                                             WebPageRow(
                                                                 page: page,
-                                                                permissions: permissions,
-                                                                canEdit: canEdit,
-                                                                returnTo: returnTo
+                                                                permissions:
+                                                                    permissions,
+                                                                canEdit:
+                                                                    canEdit,
+                                                                returnTo:
+                                                                    returnTo
                                                             )
                                                         )
                                                     }
                                                 }
                                             }
                                             .class("cms-table", "action-table")
-                                            .if(canDelete) { $0.class("select-table") }
+                                            .if(canDelete) {
+                                                $0.class("select-table")
+                                            }
                                         )
                                     )
                                 )
@@ -141,7 +168,12 @@ struct WebPageTableContent: Component {
                         if permissions.allows(WebPermissions.Pages.create) {
                             context.render(
                                 NewAdminListToolbar {
-                                    context.render(NewAdminButton("Add new", href: WebPageRoutes.add.description))
+                                    context.render(
+                                        NewAdminButton(
+                                            "Add new",
+                                            href: WebPageRoutes.add.description
+                                        )
+                                    )
                                 }
                             )
                         }
@@ -162,13 +194,16 @@ struct WebPageTableContent: Component {
         }
     }
 
-    private func statusFormDefinitions(context: inout RenderContext) -> some FlowContent {
+    private func statusFormDefinitions(context: inout RenderContext)
+        -> some FlowContent
+    {
         Div {
             for page in pages {
                 context.render(
                     NewAdminStatusSelectFormDefinition(
                         id: statusFormID(for: page.id),
-                        action: WebPageRoutes.status(RouterPath(page.id)).description,
+                        action: WebPageRoutes.status(RouterPath(page.id))
+                            .description,
                         returnTo: WebPageRoutes.list.description
                     )
                 )
@@ -177,5 +212,7 @@ struct WebPageTableContent: Component {
         .class("web-page-status-forms")
     }
 
-    private func statusFormID(for id: String) -> String { "web-page-status-\(id)" }
+    private func statusFormID(for id: String) -> String {
+        "web-page-status-\(id)"
+    }
 }

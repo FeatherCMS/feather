@@ -66,8 +66,12 @@ struct WebMenuItemTableContent: Component {
     }
 
     func html(context: inout RenderContext) -> Div {
-        let canDelete = state.permissions.allows(WebPermissions.MenuItems.delete)
-        let canReorder = state.permissions.allows(WebPermissions.MenuItems.update)
+        let canDelete = state.permissions.allows(
+            WebPermissions.MenuItems.delete
+        )
+        let canReorder = state.permissions.allows(
+            WebPermissions.MenuItems.update
+        )
         let searchValue = state.search ?? ""
         let hasActiveQuery = !(state.search?.isEmpty ?? true)
 
@@ -79,7 +83,11 @@ struct WebMenuItemTableContent: Component {
                             context.render(
                                 NewAdminListInvalidPageState(
                                     pageState: state.pageState,
-                                    path: WebMenuItemRoutes.list(RouterPath(state.menuId)).description
+                                    path:
+                                        WebMenuItemRoutes.list(
+                                            RouterPath(state.menuId)
+                                        )
+                                        .description
                                 )
                             )
                         }
@@ -93,7 +101,13 @@ struct WebMenuItemTableContent: Component {
                                             context.render(
                                                 NewAdminButton(
                                                     "Reset search",
-                                                    href: WebMenuItemRoutes.list(RouterPath(state.menuId)).description,
+                                                    href:
+                                                        WebMenuItemRoutes.list(
+                                                            RouterPath(
+                                                                state.menuId
+                                                            )
+                                                        )
+                                                        .description,
                                                     style: .secondary
                                                 )
                                             )
@@ -107,11 +121,20 @@ struct WebMenuItemTableContent: Component {
                                         message: "No items yet.",
                                         icon: FeatherIcons.inbox(),
                                         action: {
-                                            if state.permissions.allows(WebPermissions.MenuItems.create) {
+                                            if state.permissions.allows(
+                                                WebPermissions.MenuItems.create
+                                            ) {
                                                 context.render(
                                                     NewAdminButton(
                                                         "Add new",
-                                                        href: WebMenuItemRoutes.add(RouterPath(state.menuId)).description
+                                                        href:
+                                                            WebMenuItemRoutes
+                                                            .add(
+                                                                RouterPath(
+                                                                    state.menuId
+                                                                )
+                                                            )
+                                                            .description
                                                     )
                                                 )
                                             }
@@ -124,10 +147,17 @@ struct WebMenuItemTableContent: Component {
                             context.render(
                                 NewAdminListSelectionForm(
                                     state: .init(
-                                        action: WebMenuItemRoutes.remove(RouterPath(state.menuId)).description,
+                                        action:
+                                            WebMenuItemRoutes.remove(
+                                                RouterPath(state.menuId)
+                                            )
+                                            .description,
                                         pageState: state.pageState,
                                         search: searchValue,
-                                        button: .init("Remove selected", style: .destructive),
+                                        button: .init(
+                                            "Remove selected",
+                                            style: .destructive
+                                        ),
                                         isEnabled: canDelete
                                     ),
                                     table: context.render(
@@ -135,15 +165,34 @@ struct WebMenuItemTableContent: Component {
                                             layout: .init(
                                                 name: "web-menu-items",
                                                 columns: canReorder
-                                                    ? [.fixed(100), .fraction(2), .fraction(2), .fixed(100), .fraction(2), .fixed(250)]
-                                                    : [.fraction(2), .fraction(2), .fixed(100), .fraction(2), .fixed(250)]
+                                                    ? [
+                                                        .fixed(100),
+                                                        .fraction(2),
+                                                        .fraction(2),
+                                                        .fixed(100),
+                                                        .fraction(2),
+                                                        .fixed(250),
+                                                    ]
+                                                    : [
+                                                        .fraction(2),
+                                                        .fraction(2),
+                                                        .fixed(100),
+                                                        .fraction(2),
+                                                        .fixed(250),
+                                                    ]
                                             ),
                                             hasSelection: canDelete,
                                             table: Table {
                                                 Thead {
                                                     Tr {
-                                                        if canDelete { context.render(NewAdminListSelectAllCheckbox()) }
-                                                        if canReorder { Th("Order") }
+                                                        if canDelete {
+                                                            context.render(
+                                                                NewAdminListSelectAllCheckbox()
+                                                            )
+                                                        }
+                                                        if canReorder {
+                                                            Th("Order")
+                                                        }
                                                         Th("Label")
                                                         Th("URL")
                                                         Th("Blank")
@@ -155,18 +204,25 @@ struct WebMenuItemTableContent: Component {
                                                     for item in state.items {
                                                         context.render(
                                                             WebMenuItemRow(
-                                                                menuId: state.menuId,
+                                                                menuId: state
+                                                                    .menuId,
                                                                 item: item,
-                                                                permissions: state.permissions,
-                                                                canReorder: canReorder,
-                                                                returnTo: returnTo
+                                                                permissions:
+                                                                    state
+                                                                    .permissions,
+                                                                canReorder:
+                                                                    canReorder,
+                                                                returnTo:
+                                                                    returnTo
                                                             )
                                                         )
                                                     }
                                                 }
                                             }
                                             .class("cms-table", "action-table")
-                                            .if(canDelete) { $0.class("select-table") }
+                                            .if(canDelete) {
+                                                $0.class("select-table")
+                                            }
                                         )
                                     )
                                 )
@@ -177,7 +233,11 @@ struct WebMenuItemTableContent: Component {
                         context.render(
                             NewAdminListSearch(
                                 state: .init(
-                                    action: WebMenuItemRoutes.list(RouterPath(state.menuId)).description,
+                                    action:
+                                        WebMenuItemRoutes.list(
+                                            RouterPath(state.menuId)
+                                        )
+                                        .description,
                                     placeholder: "Quick search items",
                                     search: searchValue
                                 )
@@ -185,13 +245,19 @@ struct WebMenuItemTableContent: Component {
                         )
                     },
                     toolbar: {
-                        if state.permissions.allows(WebPermissions.MenuItems.create) {
+                        if state.permissions.allows(
+                            WebPermissions.MenuItems.create
+                        ) {
                             context.render(
                                 NewAdminListToolbar {
                                     context.render(
                                         NewAdminButton(
                                             "Add new",
-                                            href: WebMenuItemRoutes.add(RouterPath(state.menuId)).description
+                                            href:
+                                                WebMenuItemRoutes.add(
+                                                    RouterPath(state.menuId)
+                                                )
+                                                .description
                                         )
                                     )
                                 }
@@ -202,7 +268,11 @@ struct WebMenuItemTableContent: Component {
                         context.render(
                             NewAdminListPagination(
                                 state: .init(
-                                    path: WebMenuItemRoutes.list(RouterPath(state.menuId)).description,
+                                    path:
+                                        WebMenuItemRoutes.list(
+                                            RouterPath(state.menuId)
+                                        )
+                                        .description,
                                     pageState: state.pageState,
                                     search: searchValue
                                 )

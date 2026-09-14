@@ -27,7 +27,8 @@ struct WebPageEdit: Component {
                 NewAdminPageHeader(
                     state: .init(
                         title: "Edit page",
-                        description: "Update the page content and publication settings.",
+                        description:
+                            "Update the page content and publication settings.",
                         previewHref: previewPath
                     )
                 )
@@ -49,7 +50,9 @@ struct WebPageEdit: Component {
 
     private var previewPath: String? {
         guard let slug = state.form.metadata.slug.value else { return nil }
-        let normalizedSlug = slug.trimmingCharacters(in: .whitespacesAndNewlines)
+        let normalizedSlug = slug.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
         return normalizedSlug.isEmpty ? nil : "/\(normalizedSlug)/"
     }
 }

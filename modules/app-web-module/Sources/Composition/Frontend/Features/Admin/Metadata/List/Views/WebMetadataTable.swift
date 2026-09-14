@@ -3,8 +3,8 @@ import HTML
 import SGML
 import WebAdminAPI
 import WebBuilders
-import WebContracts
 import WebComponents
+import WebContracts
 
 struct WebMetadataTable: Component {
     struct State {
@@ -26,7 +26,8 @@ struct WebMetadataTable: Component {
                 NewAdminPageHeader(
                     state: .init(
                         title: "Metadata",
-                        description: "Manage search and sharing metadata for web pages."
+                        description:
+                            "Manage search and sharing metadata for web pages."
                     )
                 )
             )

@@ -24,8 +24,24 @@ struct WebMetadataRow: Component {
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: [
-                        .init("View", href: WebMetadataRoutes.details(RouterPath(metadata.id)).description, style: .ghost(.primary), permission: WebPermissions.Metadata.read),
-                        .init("Edit", href: WebMetadataRoutes.edit(RouterPath(metadata.id)).description, style: .ghost(.secondary), permission: WebPermissions.Metadata.update),
+                        .init(
+                            "View",
+                            href:
+                                WebMetadataRoutes.details(
+                                    RouterPath(metadata.id)
+                                )
+                                .description,
+                            style: .ghost(.primary),
+                            permission: WebPermissions.Metadata.read
+                        ),
+                        .init(
+                            "Edit",
+                            href:
+                                WebMetadataRoutes.edit(RouterPath(metadata.id))
+                                .description,
+                            style: .ghost(.secondary),
+                            permission: WebPermissions.Metadata.update
+                        ),
                     ],
                     permissions: permissions
                 )

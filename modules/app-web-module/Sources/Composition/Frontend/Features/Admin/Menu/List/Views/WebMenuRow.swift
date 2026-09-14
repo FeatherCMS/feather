@@ -20,9 +20,29 @@ struct WebMenuRow: Component {
             self.key = menu.key
             self.name = menu.name
             self.actions = [
-                .init("View", href: WebMenuRoutes.details(RouterPath(menu.id)).description, style: .ghost(.primary), permission: WebPermissions.Menus.read),
-                .init("Edit", href: WebMenuRoutes.edit(RouterPath(menu.id)).description, style: .ghost(.secondary), permission: WebPermissions.Menus.update),
-                .init("Remove", href: NewAdminLocation.remove(path: WebMenuRoutes.remove.description, ids: [menu.id], returnTo: returnTo), style: .destructive, permission: WebPermissions.Menus.delete),
+                .init(
+                    "View",
+                    href: WebMenuRoutes.details(RouterPath(menu.id))
+                        .description,
+                    style: .ghost(.primary),
+                    permission: WebPermissions.Menus.read
+                ),
+                .init(
+                    "Edit",
+                    href: WebMenuRoutes.edit(RouterPath(menu.id)).description,
+                    style: .ghost(.secondary),
+                    permission: WebPermissions.Menus.update
+                ),
+                .init(
+                    "Remove",
+                    href: NewAdminLocation.remove(
+                        path: WebMenuRoutes.remove.description,
+                        ids: [menu.id],
+                        returnTo: returnTo
+                    ),
+                    style: .destructive,
+                    permission: WebPermissions.Menus.delete
+                ),
             ]
         }
     }
@@ -30,7 +50,11 @@ struct WebMenuRow: Component {
     let state: State
     let permissions: NewAdminListActions
 
-    init(menu: Components.Schemas.WebMenuListItemSchema, permissions: NewAdminListActions, returnTo: String) {
+    init(
+        menu: Components.Schemas.WebMenuListItemSchema,
+        permissions: NewAdminListActions,
+        returnTo: String
+    ) {
         self.state = .init(menu: menu, returnTo: returnTo)
         self.permissions = permissions
     }
@@ -42,7 +66,13 @@ struct WebMenuRow: Component {
             }
             Td(state.key).data("label", "Key")
             Td(state.name).data("label", "Name")
-            context.render(NewAdminListRowActions(label: "Actions", actions: state.actions, permissions: permissions))
+            context.render(
+                NewAdminListRowActions(
+                    label: "Actions",
+                    actions: state.actions,
+                    permissions: permissions
+                )
+            )
         }
     }
 }

@@ -23,9 +23,10 @@ struct AdminListWebPageDefaultPresenter:
     ) async throws -> HTMLResponse {
         let actions = NewAdminListActions(
             Set(
-                WebPermissions.Pages.allPermissions().filter {
-                    permissions.contains($0.rawValue)
-                }
+                WebPermissions.Pages.allPermissions()
+                    .filter {
+                        permissions.contains($0.rawValue)
+                    }
             )
         )
         if let error {
@@ -108,8 +109,8 @@ struct AdminListWebPageDefaultPresenter:
 
     private func webPageBreadcrumbState() -> [NewAdminBreadcrumb.Link] {
         [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-            ]
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Web", link: "/admin/web/"),
+        ]
     }
 }

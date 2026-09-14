@@ -33,9 +33,11 @@ struct WebMenuEdit: Component {
             context.render(
                 WebMenuForm(
                     state: state.form,
-                    action: WebMenuRoutes.edit(RouterPath(state.id)).description,
+                    action: WebMenuRoutes.edit(RouterPath(state.id))
+                        .description,
                     submitLabel: "Edit menu",
-                    removeHref: WebMenuRoutes.details(RouterPath(state.id)).appendingPath(RouterPath("remove")).description,
+                    removeHref: WebMenuRoutes.details(RouterPath(state.id))
+                        .appendingPath(RouterPath("remove")).description,
                     removeLabel: "Remove menu"
                 )
             )
