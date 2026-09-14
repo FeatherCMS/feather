@@ -224,10 +224,13 @@ public struct DefaultRenderingEngine: RenderingEngine {
         }
         let notification =
             AdminNotificationFlash.notification(from: request)
-            ?? AdminToastRedirect.payload(from: request).flatMap { payload in
-                guard let kind = AdminNotification.Kind(
-                    rawValue: payload.type
-                ) else { return nil }
+            ?? AdminToastRedirect.payload(from: request)
+            .flatMap { payload in
+                guard
+                    let kind = AdminNotification.Kind(
+                        rawValue: payload.type
+                    )
+                else { return nil }
                 return AdminNotification(
                     kind: kind,
                     title: payload.title,

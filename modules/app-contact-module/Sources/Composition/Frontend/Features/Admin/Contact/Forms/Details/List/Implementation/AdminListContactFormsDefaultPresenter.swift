@@ -25,7 +25,11 @@ struct AdminListContactFormsDefaultPresenter: AdminListContactFormsPresenter {
     ) -> HTMLResponse {
         let page = request.queryPage()
         let pageSize = 20
-        let pageState = NewAdminListPageState(page: page, pageSize: pageSize, total: items.count)
+        let pageState = NewAdminListPageState(
+            page: page,
+            pageSize: pageSize,
+            total: items.count
+        )
         let start = (page - 1) * pageSize
         let end = min(start + pageSize, items.count)
         let pageItems = start < items.count ? Array(items[start..<end]) : []
@@ -41,7 +45,9 @@ struct AdminListContactFormsDefaultPresenter: AdminListContactFormsPresenter {
                     items: pageItems,
                     pageState: pageState,
                     search: search,
-                    permissions: .init(Set(permissions.map(PermissionKey.init))),
+                    permissions: .init(
+                        Set(permissions.map(PermissionKey.init))
+                    ),
                     isPicker: isPicker,
                     breadcrumb: ContactAdminRoutes.formsBreadcrumb
                 )

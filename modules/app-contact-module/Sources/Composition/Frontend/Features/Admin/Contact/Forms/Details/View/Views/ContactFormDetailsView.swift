@@ -1,6 +1,6 @@
+import ContactContracts
 import FeatherAdmin
 import FeatherContracts
-import ContactContracts
 import HTML
 import Hummingbird
 import SGML
@@ -27,11 +27,23 @@ struct ContactFormDetailsView: Component {
                     ),
                     fields: [
                         .init(label: "Name", value: item.name),
-                        .init(label: "Success message", value: item.successMessage.emptyToNil ?? "—"),
-                        .init(label: "Failure message", value: item.failureMessage.emptyToNil ?? "—"),
-                        .init(label: "Redirect URL", value: item.redirectUrl?.emptyToNil ?? "—"),
+                        .init(
+                            label: "Success message",
+                            value: item.successMessage.emptyToNil ?? "—"
+                        ),
+                        .init(
+                            label: "Failure message",
+                            value: item.failureMessage.emptyToNil ?? "—"
+                        ),
+                        .init(
+                            label: "Redirect URL",
+                            value: item.redirectUrl?.emptyToNil ?? "—"
+                        ),
                         .init(label: "Fields", value: selectedFieldLabels),
-                        .init(label: "Email definitions", value: "\(item.mails.count)"),
+                        .init(
+                            label: "Email definitions",
+                            value: "\(item.mails.count)"
+                        ),
                     ],
                     actions: actions
                 )
@@ -41,7 +53,9 @@ struct ContactFormDetailsView: Component {
     }
 
     private var selectedFieldLabels: String {
-        let labels = Dictionary(uniqueKeysWithValues: item.availableFields.map { ($0.id, $0.label) })
+        let labels = Dictionary(
+            uniqueKeysWithValues: item.availableFields.map { ($0.id, $0.label) }
+        )
         let selected = item.selectedFieldIDs.compactMap { labels[$0] }
         return selected.isEmpty ? "—" : selected.joined(separator: ", ")
     }
@@ -49,10 +63,29 @@ struct ContactFormDetailsView: Component {
     private var actions: [NewAdminDetailView.Action] {
         var result: [NewAdminDetailView.Action] = []
         if permissions.allows(ContactPermissions.Forms.update) {
-            result.append(.init(label: "Edit", href: ContactAdminRoutes.formEdit(RouterPath(item.id)).description, style: .primary))
+            result.append(
+                .init(
+                    label: "Edit",
+                    href: ContactAdminRoutes.formEdit(RouterPath(item.id))
+                        .description,
+                    style: .primary
+                )
+            )
         }
         if permissions.allows(ContactPermissions.Forms.delete) {
-            result.append(.init(label: "Remove", href: NewAdminLocation.remove(path: ContactAdminRoutes.formRemove.description, ids: [item.id], returnTo: ContactAdminRoutes.formDetails(RouterPath(item.id)).description), style: .destructive))
+            result.append(
+                .init(
+                    label: "Remove",
+                    href: NewAdminLocation.remove(
+                        path: ContactAdminRoutes.formRemove.description,
+                        ids: [item.id],
+                        returnTo:
+                            ContactAdminRoutes.formDetails(RouterPath(item.id))
+                            .description
+                    ),
+                    style: .destructive
+                )
+            )
         }
         return result
     }

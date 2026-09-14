@@ -17,7 +17,7 @@ struct AdminAddContactFieldDefaultPresenter:
         model: AdminAddContactFieldModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        return try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Add contact form field",

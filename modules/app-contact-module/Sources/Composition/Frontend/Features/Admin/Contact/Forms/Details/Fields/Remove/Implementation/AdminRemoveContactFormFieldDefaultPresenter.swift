@@ -29,11 +29,14 @@ struct AdminRemoveContactFormFieldDefaultPresenter:
                     description: "This action cannot be undone."
                 ),
                 selectedItems: [label],
-                action: ContactAdminRoutes.formFieldRemove(
-                    formID: RouterPath(formId),
-                    fieldID: RouterPath(fieldId)
-                ).description,
-                cancel: ContactAdminRoutes.formFields(RouterPath(formId)).description,
+                action:
+                    ContactAdminRoutes.formFieldRemove(
+                        formID: RouterPath(formId),
+                        fieldID: RouterPath(fieldId)
+                    )
+                    .description,
+                cancel: ContactAdminRoutes.formFields(RouterPath(formId))
+                    .description,
                 submitLabel: "Remove field"
             )
         )
@@ -48,11 +51,18 @@ struct AdminRemoveContactFormFieldDefaultPresenter:
             title: "Remove contact form fields",
             content: NewAdminConfirmation(
                 breadcrumb: ContactAdminRoutes.breadcrumb,
-                pageHeader: .init(title: "Remove contact form fields", description: "This action cannot be undone."),
+                pageHeader: .init(
+                    title: "Remove contact form fields",
+                    description: "This action cannot be undone."
+                ),
                 selectedItems: selectedIds,
-                action: ContactAdminRoutes.formFieldRemove(RouterPath(formId)).description,
-                cancel: ContactAdminRoutes.formFields(RouterPath(formId)).description,
-                hiddenFields: selectedIds.map { .init(name: "selectedIds[]", value: $0) }
+                action: ContactAdminRoutes.formFieldRemove(RouterPath(formId))
+                    .description,
+                cancel: ContactAdminRoutes.formFields(RouterPath(formId))
+                    .description,
+                hiddenFields: selectedIds.map {
+                    .init(name: "selectedIds[]", value: $0)
+                }
             )
         )
     }

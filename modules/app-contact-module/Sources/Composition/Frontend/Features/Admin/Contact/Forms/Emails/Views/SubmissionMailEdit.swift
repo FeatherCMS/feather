@@ -20,7 +20,15 @@ struct SubmissionMailEdit: Component {
                 AdminContactFormTabs(formId: formId, active: .emails)
             )
             context.render(NewAdminBreadcrumb(links: breadcrumb))
-            context.render(NewAdminPageHeader(state: .init(title: "Edit contact form email", description: "Update the notification email for this contact form.")))
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Edit contact form email",
+                        description:
+                            "Update the notification email for this contact form."
+                    )
+                )
+            )
             replacementVariables
             context.render(
                 SubmissionMailForm(

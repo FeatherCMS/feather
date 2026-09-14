@@ -22,11 +22,29 @@ struct ContactFieldAddPage: Component {
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
             context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(NewAdminPageHeader(state: .init(title: "Add contact form field", description: "Create a reusable field for contact forms.")))
-            if let error = state.error { P(error).class("new-admin-form__error") }
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Add contact form field",
+                        description:
+                            "Create a reusable field for contact forms."
+                    )
+                )
+            )
+            if let error = state.error {
+                P(error).class("new-admin-form__error")
+            }
             context.render(
                 ContactFieldForm(
-                    field: .init(id: "", key: state.key, type: state.type, label: state.label, allowedValues: state.allowedValues, isRequired: state.isRequired, position: state.position),
+                    field: .init(
+                        id: "",
+                        key: state.key,
+                        type: state.type,
+                        label: state.label,
+                        allowedValues: state.allowedValues,
+                        isRequired: state.isRequired,
+                        position: state.position
+                    ),
                     action: ContactAdminRoutes.fieldAdd.description,
                     submitLabel: "Add field"
                 )

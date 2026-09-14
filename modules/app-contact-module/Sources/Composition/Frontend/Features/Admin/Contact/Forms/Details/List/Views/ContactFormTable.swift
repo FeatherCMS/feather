@@ -1,6 +1,6 @@
+import ContactContracts
 import FeatherAdmin
 import FeatherContracts
-import ContactContracts
 import HTML
 import Hummingbird
 import SGML
@@ -25,14 +25,22 @@ struct ContactFormTable: Component {
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
             context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-                        context.render(NewAdminPageHeader(state: .init(title: state.isPicker ? "Select contact form" : "Contact forms", description: "Create and manage reusable contact forms.")))
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: state.isPicker
+                            ? "Select contact form" : "Contact forms",
+                        description: "Create and manage reusable contact forms."
+                    )
+                )
+            )
             context.render(
                 ContactFormTableContent(
-                items: state.items,
-                pageState: state.pageState,
-                search: state.search,
-                permissions: state.permissions,
-                isPicker: state.isPicker
+                    items: state.items,
+                    pageState: state.pageState,
+                    search: state.search,
+                    permissions: state.permissions,
+                    isPicker: state.isPicker
                 )
             )
         }

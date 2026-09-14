@@ -23,7 +23,11 @@ struct AdminListContactFormFieldsDefaultPresenter:
     ) -> HTMLResponse {
         let page = request.queryPage()
         let pageSize = 20
-        let pageState = NewAdminListPageState(page: page, pageSize: pageSize, total: fields.count)
+        let pageState = NewAdminListPageState(
+            page: page,
+            pageSize: pageSize,
+            total: fields.count
+        )
         let start = (page - 1) * pageSize
         let end = min(start + pageSize, fields.count)
         let pageItems = start < fields.count ? Array(fields[start..<end]) : []
@@ -40,7 +44,9 @@ struct AdminListContactFormFieldsDefaultPresenter:
                     error: error,
                     isEdited: request.hasQueryFlag("edited"),
                     isRemoved: request.hasQueryFlag("removed"),
-                    permissions: .init(Set(permissions.map(PermissionKey.init))),
+                    permissions: .init(
+                        Set(permissions.map(PermissionKey.init))
+                    ),
                     breadcrumb: ContactAdminRoutes.formFieldsBreadcrumb(
                         RouterPath(formId)
                     )

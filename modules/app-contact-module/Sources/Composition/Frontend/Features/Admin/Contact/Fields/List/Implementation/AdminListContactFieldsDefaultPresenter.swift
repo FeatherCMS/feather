@@ -23,7 +23,11 @@ struct AdminListContactFieldsDefaultPresenter:
     ) async throws -> HTMLResponse {
         let page = request.queryPage()
         let pageSize = 20
-        let pageState = NewAdminListPageState(page: page, pageSize: pageSize, total: fields.count)
+        let pageState = NewAdminListPageState(
+            page: page,
+            pageSize: pageSize,
+            total: fields.count
+        )
         let start = (page - 1) * pageSize
         let end = min(start + pageSize, fields.count)
         let pageItems = start < fields.count ? Array(fields[start..<end]) : []

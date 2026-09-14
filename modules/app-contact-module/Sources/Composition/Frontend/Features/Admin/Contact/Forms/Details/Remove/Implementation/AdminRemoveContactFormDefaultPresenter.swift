@@ -44,11 +44,16 @@ struct AdminRemoveContactFormDefaultPresenter: AdminRemoveContactFormPresenter {
             permissions: permissions,
             content: NewAdminConfirmation(
                 breadcrumb: ContactAdminRoutes.breadcrumb,
-                pageHeader: .init(title: "Remove contact forms", description: "This action cannot be undone."),
+                pageHeader: .init(
+                    title: "Remove contact forms",
+                    description: "This action cannot be undone."
+                ),
                 selectedItems: selectedIds,
                 action: ContactAdminRoutes.formRemove.description,
                 cancel: ContactAdminRoutes.forms.description,
-                hiddenFields: selectedIds.map { .init(name: "selectedIds[]", value: $0) }
+                hiddenFields: selectedIds.map {
+                    .init(name: "selectedIds[]", value: $0)
+                }
             )
         )
     }

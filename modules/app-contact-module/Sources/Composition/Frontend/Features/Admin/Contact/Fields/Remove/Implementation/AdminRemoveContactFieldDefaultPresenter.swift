@@ -30,7 +30,8 @@ struct AdminRemoveContactFieldDefaultPresenter:
                     description: "This action cannot be undone."
                 ),
                 selectedItems: [label],
-                action: ContactAdminRoutes.fieldRemove(RouterPath(fieldId)).description,
+                action: ContactAdminRoutes.fieldRemove(RouterPath(fieldId))
+                    .description,
                 cancel: ContactAdminRoutes.fields.description,
                 submitLabel: "Remove field"
             )
@@ -54,7 +55,9 @@ struct AdminRemoveContactFieldDefaultPresenter:
                 selectedItems: selectedIds,
                 action: ContactAdminRoutes.fieldRemove.description,
                 cancel: ContactAdminRoutes.fields.description,
-                hiddenFields: selectedIds.map { .init(name: "selectedIds[]", value: $0) }
+                hiddenFields: selectedIds.map {
+                    .init(name: "selectedIds[]", value: $0)
+                }
             )
         )
     }

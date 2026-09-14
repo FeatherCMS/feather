@@ -189,7 +189,8 @@ struct AssetListView: Component {
                 placeholder: "",
                 search: ""
             )
-        ).rules() + [Media(selectors: selectors())]
+        )
+        .rules() + [Media(selectors: selectors())]
     }
 
     func html(context: inout RenderContext) -> some BasicTag {
@@ -575,9 +576,10 @@ extension AssetListView {
                     placeholder: "Quick search assets",
                     search: state.search,
                     resetPath: browsePath(parentId: state.parentId),
-                    queryItems: queryItems().map {
-                        .init(name: $0.name, value: $0.value)
-                    }
+                    queryItems: queryItems()
+                        .map {
+                            .init(name: $0.name, value: $0.value)
+                        }
                 )
             )
         )

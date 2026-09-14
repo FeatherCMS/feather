@@ -1,6 +1,6 @@
+import ContactContracts
 import FeatherAdmin
 import FeatherContracts
-import ContactContracts
 import HTML
 import Hummingbird
 import SGML
@@ -15,63 +15,269 @@ struct ContactFormTableContent: Component {
     let isPicker: Bool
 
     func html(context: inout RenderContext) -> Div {
-        let returnTo = NewAdminLocation.url(path: ContactAdminRoutes.forms.description, page: pageState.page, search: search)
+        let returnTo = NewAdminLocation.url(
+            path: ContactAdminRoutes.forms.description,
+            page: pageState.page,
+            search: search
+        )
         return context.render(
             NewAdminList(
                 table: {
                     if pageState.isPageOutOfRange {
-                        context.render(NewAdminListInvalidPageState(pageState: pageState, path: ContactAdminRoutes.forms.description))
+                        context.render(
+                            NewAdminListInvalidPageState(
+                                pageState: pageState,
+                                path: ContactAdminRoutes.forms.description
+                            )
+                        )
                     }
                     else if items.isEmpty {
-                        context.render(NewAdminListEmptyState(message: search.isEmpty ? "No contact forms yet." : "No contact forms match your search.", icon: FeatherIcons.inbox(), action: {
-                            if search.isEmpty {
-                                if permissions.allows(ContactPermissions.Forms.create) { context.render(NewAdminButton("Add form", href: ContactAdminRoutes.formAdd.description)) }
-                            }
-                            else { context.render(NewAdminButton("Reset search", href: ContactAdminRoutes.forms.description, style: .secondary)) }
-                        }))
-                    }
-                    else {
-                        let canDelete = permissions.allows(ContactPermissions.Forms.delete)
-                        context.render(NewAdminListSelectionForm(
-                            state: .init(action: NewAdminLocation.remove(path: ContactAdminRoutes.formRemove.description, ids: [], returnTo: returnTo), pageState: pageState, search: search, button: .init("Remove selected", style: .destructive), isEnabled: canDelete),
-                            table: context.render(NewAdminListShell(
-                                layout: .init(name: "contact-forms", columns: [.fraction(1), .fraction(2), .fixed(250)]),
-                                hasSelection: canDelete,
-                                table: Table {
-                                    Thead { Tr { if canDelete { context.render(NewAdminListSelectAllCheckbox()) }; Th("ID"); Th("Name"); Th("Actions") } }
-                                    Tbody {
-                                        for item in items {
-                                            Tr {
-                                                if canDelete { context.render(NewAdminListRowCheckbox(id: item.id)) }
-                                                identifierCell(item: item)
-                                                if isPicker {
-                                                    Td { Button(item.name).type(.button).data("mce-picker-item", item.id).data("mce-picker-label", item.name).class("button", "ghost-primary") }.data("label", "Name")
-                                                }
-                                                else { Td(item.name).data("label", "Name") }
-                                                context.render(NewAdminListRowActions(
-                                                    label: "Actions",
-                                                    actions: [
-                                                        .init("View", href: ContactAdminRoutes.formDetails(RouterPath(item.id)).description, style: .ghost(.primary), permission: ContactPermissions.Forms.read),
-                                                        .init("Edit", href: ContactAdminRoutes.formEdit(RouterPath(item.id)).description, style: .ghost(.secondary), permission: ContactPermissions.Forms.update),
-                                                        .init("Remove", href: NewAdminLocation.remove(path: ContactAdminRoutes.formRemove.description, ids: [item.id], returnTo: returnTo), style: .destructive, permission: ContactPermissions.Forms.delete),
-                                                    ],
-                                                    permissions: permissions
-                                                ))
-                                            }
+                        context.render(
+                            NewAdminListEmptyState(
+                                message: search.isEmpty
+                                    ? "No contact forms yet."
+                                    : "No contact forms match your search.",
+                                icon: FeatherIcons.inbox(),
+                                action: {
+                                    if search.isEmpty {
+                                        if permissions.allows(
+                                            ContactPermissions.Forms.create
+                                        ) {
+                                            context.render(
+                                                NewAdminButton(
+                                                    "Add form",
+                                                    href: ContactAdminRoutes
+                                                        .formAdd.description
+                                                )
+                                            )
                                         }
                                     }
-                                }.class("cms-table", "action-table").if(canDelete) { $0.class("select-table") }
-                            ))
-                        ))
+                                    else {
+                                        context.render(
+                                            NewAdminButton(
+                                                "Reset search",
+                                                href: ContactAdminRoutes.forms
+                                                    .description,
+                                                style: .secondary
+                                            )
+                                        )
+                                    }
+                                }
+                            )
+                        )
+                    }
+                    else {
+                        let canDelete = permissions.allows(
+                            ContactPermissions.Forms.delete
+                        )
+                        context.render(
+                            NewAdminListSelectionForm(
+                                state: .init(
+                                    action: NewAdminLocation.remove(
+                                        path: ContactAdminRoutes.formRemove
+                                            .description,
+                                        ids: [],
+                                        returnTo: returnTo
+                                    ),
+                                    pageState: pageState,
+                                    search: search,
+                                    button: .init(
+                                        "Remove selected",
+                                        style: .destructive
+                                    ),
+                                    isEnabled: canDelete
+                                ),
+                                table: context.render(
+                                    NewAdminListShell(
+                                        layout: .init(
+                                            name: "contact-forms",
+                                            columns: [
+                                                .fraction(1), .fraction(2),
+                                                .fixed(250),
+                                            ]
+                                        ),
+                                        hasSelection: canDelete,
+                                        table: Table {
+                                            Thead {
+                                                Tr {
+                                                    if canDelete {
+                                                        context.render(
+                                                            NewAdminListSelectAllCheckbox()
+                                                        )
+                                                    }
+                                                    Th("ID")
+                                                    Th("Name")
+                                                    Th("Actions")
+                                                }
+                                            }
+                                            Tbody {
+                                                for item in items {
+                                                    Tr {
+                                                        if canDelete {
+                                                            context.render(
+                                                                NewAdminListRowCheckbox(
+                                                                    id: item.id
+                                                                )
+                                                            )
+                                                        }
+                                                        identifierCell(
+                                                            item: item
+                                                        )
+                                                        if isPicker {
+                                                            Td {
+                                                                Button(
+                                                                    item.name
+                                                                )
+                                                                .type(.button)
+                                                                .data(
+                                                                    "mce-picker-item",
+                                                                    item.id
+                                                                )
+                                                                .data(
+                                                                    "mce-picker-label",
+                                                                    item.name
+                                                                )
+                                                                .class(
+                                                                    "button",
+                                                                    "ghost-primary"
+                                                                )
+                                                            }
+                                                            .data(
+                                                                "label",
+                                                                "Name"
+                                                            )
+                                                        }
+                                                        else {
+                                                            Td(item.name)
+                                                                .data(
+                                                                    "label",
+                                                                    "Name"
+                                                                )
+                                                        }
+                                                        context.render(
+                                                            NewAdminListRowActions(
+                                                                label:
+                                                                    "Actions",
+                                                                actions: [
+                                                                    .init(
+                                                                        "View",
+                                                                        href:
+                                                                            ContactAdminRoutes
+                                                                            .formDetails(
+                                                                                RouterPath(
+                                                                                    item
+                                                                                        .id
+                                                                                )
+                                                                            )
+                                                                            .description,
+                                                                        style:
+                                                                            .ghost(
+                                                                                .primary
+                                                                            ),
+                                                                        permission:
+                                                                            ContactPermissions
+                                                                            .Forms
+                                                                            .read
+                                                                    ),
+                                                                    .init(
+                                                                        "Edit",
+                                                                        href:
+                                                                            ContactAdminRoutes
+                                                                            .formEdit(
+                                                                                RouterPath(
+                                                                                    item
+                                                                                        .id
+                                                                                )
+                                                                            )
+                                                                            .description,
+                                                                        style:
+                                                                            .ghost(
+                                                                                .secondary
+                                                                            ),
+                                                                        permission:
+                                                                            ContactPermissions
+                                                                            .Forms
+                                                                            .update
+                                                                    ),
+                                                                    .init(
+                                                                        "Remove",
+                                                                        href:
+                                                                            NewAdminLocation
+                                                                            .remove(
+                                                                                path:
+                                                                                    ContactAdminRoutes
+                                                                                    .formRemove
+                                                                                    .description,
+                                                                                ids: [
+                                                                                    item
+                                                                                        .id
+                                                                                ],
+                                                                                returnTo:
+                                                                                    returnTo
+                                                                            ),
+                                                                        style:
+                                                                            .destructive,
+                                                                        permission:
+                                                                            ContactPermissions
+                                                                            .Forms
+                                                                            .delete
+                                                                    ),
+                                                                ],
+                                                                permissions:
+                                                                    permissions
+                                                            )
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        .class("cms-table", "action-table")
+                                        .if(canDelete) {
+                                            $0.class("select-table")
+                                        }
+                                    )
+                                )
+                            )
+                        )
                     }
                 },
-                search: { context.render(NewAdminListSearch(state: .init(action: ContactAdminRoutes.forms.description, placeholder: "Quick search contact forms", search: search))) },
+                search: {
+                    context.render(
+                        NewAdminListSearch(
+                            state: .init(
+                                action: ContactAdminRoutes.forms.description,
+                                placeholder: "Quick search contact forms",
+                                search: search
+                            )
+                        )
+                    )
+                },
                 toolbar: {
                     if permissions.allows(ContactPermissions.Forms.create) {
-                        context.render(NewAdminListToolbar { context.render(NewAdminButton("Add form", href: ContactAdminRoutes.formAdd.description)) })
+                        context.render(
+                            NewAdminListToolbar {
+                                context.render(
+                                    NewAdminButton(
+                                        "Add form",
+                                        href: ContactAdminRoutes.formAdd
+                                            .description
+                                    )
+                                )
+                            }
+                        )
                     }
                 },
-                pagination: { context.render(NewAdminListPagination(state: .init(path: ContactAdminRoutes.forms.description, pageState: pageState, search: search))) }
+                pagination: {
+                    context.render(
+                        NewAdminListPagination(
+                            state: .init(
+                                path: ContactAdminRoutes.forms.description,
+                                pageState: pageState,
+                                search: search
+                            )
+                        )
+                    )
+                }
             )
         )
     }

@@ -72,7 +72,8 @@ public struct NewAdminFormFieldMediaPicker: Component {
                 placeholder: "",
                 search: ""
             )
-        ).rules() + [
+        )
+        .rules() + [
             Media {
                 Custom(root) {
                     Display(.flex)
@@ -320,8 +321,8 @@ public struct NewAdminFormFieldMediaPicker: Component {
                 context.render(
                     NewAdminControlButton("Choose asset")
                 )
-                    .data("media-picker-open", state.field.key)
-                    .hidden()
+                .data("media-picker-open", state.field.key)
+                .hidden()
             }
             if let error = state.field.error {
                 Span(error).class("field-error")
@@ -347,17 +348,17 @@ extension NewAdminFormFieldMediaPicker {
                     context.render(
                         NewAdminControlButton("Choose asset")
                     )
-                        .class("new-admin-media-picker__choose")
-                        .data("media-picker-open", state.field.key)
+                    .class("new-admin-media-picker__choose")
+                    .data("media-picker-open", state.field.key)
                     context.render(
                         NewAdminControlButton(
                             "Clear",
                             style: .ghost(.secondary)
                         )
                     )
-                        .class("new-admin-media-picker__clear")
-                        .data("media-picker-clear", state.field.key)
-                        .if(state.field.value?.isEmpty != false) { $0.hidden() }
+                    .class("new-admin-media-picker__clear")
+                    .data("media-picker-clear", state.field.key)
+                    .if(state.field.value?.isEmpty != false) { $0.hidden() }
                 }
                 .class("new-admin-media-picker__actions")
             }
@@ -409,25 +410,25 @@ extension NewAdminFormFieldMediaPicker {
                             style: .ghost(.secondary)
                         )
                     )
-                        .class("new-admin-media-picker__close")
-                        .data("media-picker-close", state.field.key)
+                    .class("new-admin-media-picker__close")
+                    .data("media-picker-close", state.field.key)
                 }
                 .class("new-admin-media-picker__dialog-header")
                 Div {
                     context.render(
                         NewAdminControlButton("Gallery")
                     )
-                        .class("is-current")
-                        .data("media-picker-tab", "gallery")
-                        .data("media-picker-field", state.field.key)
+                    .class("is-current")
+                    .data("media-picker-tab", "gallery")
+                    .data("media-picker-field", state.field.key)
                     context.render(
                         NewAdminControlButton(
                             "Upload",
                             style: .ghost(.primary)
                         )
                     )
-                        .data("media-picker-tab", "upload")
-                        .data("media-picker-field", state.field.key)
+                    .data("media-picker-tab", "upload")
+                    .data("media-picker-field", state.field.key)
                 }
                 .class("new-admin-media-picker__tabs")
                 Style("")

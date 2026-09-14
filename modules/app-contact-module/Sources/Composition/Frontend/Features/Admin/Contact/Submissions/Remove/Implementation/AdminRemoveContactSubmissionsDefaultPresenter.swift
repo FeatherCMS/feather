@@ -22,11 +22,16 @@ struct AdminRemoveContactSubmissionsDefaultPresenter:
             permissions: permissions,
             content: NewAdminConfirmation(
                 breadcrumb: ContactAdminRoutes.breadcrumb,
-                pageHeader: .init(title: "Remove contact submissions", description: "This action cannot be undone."),
+                pageHeader: .init(
+                    title: "Remove contact submissions",
+                    description: "This action cannot be undone."
+                ),
                 selectedItems: selectedIds,
                 action: ContactAdminRoutes.submissionRemove.description,
                 cancel: ContactAdminRoutes.submissions.description,
-                hiddenFields: selectedIds.map { .init(name: "selectedIds[]", value: $0) }
+                hiddenFields: selectedIds.map {
+                    .init(name: "selectedIds[]", value: $0)
+                }
             )
         )
     }

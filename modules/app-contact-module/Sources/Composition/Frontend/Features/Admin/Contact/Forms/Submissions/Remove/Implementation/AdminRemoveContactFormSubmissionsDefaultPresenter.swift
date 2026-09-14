@@ -25,10 +25,19 @@ struct AdminRemoveContactFormSubmissionsDefaultPresenter:
             permissions: permissions,
             content: NewAdminConfirmation(
                 breadcrumb: ContactAdminRoutes.breadcrumb,
-                pageHeader: .init(title: "Remove contact form submission", description: "This action cannot be undone."),
+                pageHeader: .init(
+                    title: "Remove contact form submission",
+                    description: "This action cannot be undone."
+                ),
                 selectedItems: [item.createdAt],
-                action: ContactAdminRoutes.formSubmissionRemove(formID: RouterPath(formId), submissionID: RouterPath(item.id)).description,
-                cancel: ContactAdminRoutes.formSubmissions(RouterPath(formId)).description,
+                action:
+                    ContactAdminRoutes.formSubmissionRemove(
+                        formID: RouterPath(formId),
+                        submissionID: RouterPath(item.id)
+                    )
+                    .description,
+                cancel: ContactAdminRoutes.formSubmissions(RouterPath(formId))
+                    .description,
                 submitLabel: "Remove submission"
             )
         )
@@ -45,11 +54,19 @@ struct AdminRemoveContactFormSubmissionsDefaultPresenter:
             permissions: permissions,
             content: NewAdminConfirmation(
                 breadcrumb: ContactAdminRoutes.breadcrumb,
-                pageHeader: .init(title: "Remove contact form submissions", description: "This action cannot be undone."),
+                pageHeader: .init(
+                    title: "Remove contact form submissions",
+                    description: "This action cannot be undone."
+                ),
                 selectedItems: selectedIds,
-                action: ContactAdminRoutes.formSubmissionRemove(RouterPath(formId)).description,
-                cancel: ContactAdminRoutes.formSubmissions(RouterPath(formId)).description,
-                hiddenFields: selectedIds.map { .init(name: "selectedIds[]", value: $0) }
+                action:
+                    ContactAdminRoutes.formSubmissionRemove(RouterPath(formId))
+                    .description,
+                cancel: ContactAdminRoutes.formSubmissions(RouterPath(formId))
+                    .description,
+                hiddenFields: selectedIds.map {
+                    .init(name: "selectedIds[]", value: $0)
+                }
             )
         )
     }

@@ -1,6 +1,6 @@
+import ContactContracts
 import FeatherAdmin
 import FeatherContracts
-import ContactContracts
 import HTML
 import Hummingbird
 import SGML
@@ -20,15 +20,27 @@ struct ContactFormEmailsTable: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminContactFormTabs(formId: state.id, active: .emails))
-                        context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-                        context.render(NewAdminPageHeader(state: .init(title: "Contact form emails", description: "Configure delivery messages for this contact form.")))
-                        if let error = state.error { P(error).class("new-admin-form__error") }
+            context.render(
+                AdminContactFormTabs(formId: state.id, active: .emails)
+            )
+            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Contact form emails",
+                        description:
+                            "Configure delivery messages for this contact form."
+                    )
+                )
+            )
+            if let error = state.error {
+                P(error).class("new-admin-form__error")
+            }
             context.render(
                 ContactFormEmailsTableContent(
-                id: state.id,
-                mails: state.mails,
-                permissions: state.permissions
+                    id: state.id,
+                    mails: state.mails,
+                    permissions: state.permissions
                 )
             )
         }

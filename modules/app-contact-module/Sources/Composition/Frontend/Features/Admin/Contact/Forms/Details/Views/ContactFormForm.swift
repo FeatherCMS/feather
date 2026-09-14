@@ -25,50 +25,189 @@ struct ContactFormForm: Component {
 
     func selectors() -> [any Selector] {
         [
-            Class("contact-form-field-picker") { Display(.grid); Gap(16.px); MarginTop(8.px) },
-            Class("contact-form-field-group") { Display(.grid); Gap(8.px) },
-            Custom(".contact-form-field-group-title") { Margin(0); FontSize(0.95.rem); FontWeight(.number(600)) },
-            Custom(".contact-form-field-group-help") { Margin(0); FontSize(0.9.rem); Color(.variable(TokenKey.Colors.Materials.Tertiary.text)) },
-            Class("contact-form-field-list") { Display(.grid); Gap(8.px) },
-            Class("contact-form-field-row") { Display(.flex); AlignItems(.center); Gap(10.px); Padding(vertical: 10.px, horizontal: 12.px); Border(1.px, .solid, .variable(TokenKey.Colors.Materials.Tertiary.border)); BorderRadius(10.px); Background(.variable(TokenKey.Colors.Materials.Tertiary.tint)) },
-            Class("contact-form-field-drag") { FontSize(18.px); Width(18.px); TextAlign(.center); Color(.variable(TokenKey.Colors.Materials.Tertiary.text)) },
-            Class("contact-form-field-content") { Flex(1); MinWidth(0.px) },
-            Class("contact-form-field-actions") { Display(.flex); Gap(4.px); AlignItems(.center) },
-            Custom(".contact-form-field-row.is-available .contact-form-field-actions") { Display(.none) },
-            Custom(".contact-form-field-row.is-selected, .contact-form-field-row.is-available") { UnsafeRawProperty(name: "cursor", value: "grab") },
+            Class("contact-form-field-picker") {
+                Display(.grid)
+                Gap(16.px)
+                MarginTop(8.px)
+            },
+            Class("contact-form-field-group") {
+                Display(.grid)
+                Gap(8.px)
+            },
+            Custom(".contact-form-field-group-title") {
+                Margin(0)
+                FontSize(0.95.rem)
+                FontWeight(.number(600))
+            },
+            Custom(".contact-form-field-group-help") {
+                Margin(0)
+                FontSize(0.9.rem)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+            },
+            Class("contact-form-field-list") {
+                Display(.grid)
+                Gap(8.px)
+            },
+            Class("contact-form-field-row") {
+                Display(.flex)
+                AlignItems(.center)
+                Gap(10.px)
+                Padding(vertical: 10.px, horizontal: 12.px)
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
+                BorderRadius(10.px)
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
+            },
+            Class("contact-form-field-drag") {
+                FontSize(18.px)
+                Width(18.px)
+                TextAlign(.center)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+            },
+            Class("contact-form-field-content") {
+                Flex(1)
+                MinWidth(0.px)
+            },
+            Class("contact-form-field-actions") {
+                Display(.flex)
+                Gap(4.px)
+                AlignItems(.center)
+            },
+            Custom(
+                ".contact-form-field-row.is-available .contact-form-field-actions"
+            ) { Display(.none) },
+            Custom(
+                ".contact-form-field-row.is-selected, .contact-form-field-row.is-available"
+            ) { UnsafeRawProperty(name: "cursor", value: "grab") },
             Custom(".contact-form-field-row.is-dragging") { Opacity(0.55) },
-            Custom(".contact-form-field-row.is-drop-before") { UnsafeRawProperty(name: "box-shadow", value: "inset 0 3px 0 var(--link-color-hover)") },
-            Custom(".contact-form-field-row.is-drop-after") { UnsafeRawProperty(name: "box-shadow", value: "inset 0 -3px 0 var(--link-color-hover)") },
-            Custom(".contact-form-field-list.is-drop-zone") { UnsafeRawProperty(name: "outline", value: "2px dashed var(--link-color-hover)"); UnsafeRawProperty(name: "outline-offset", value: "4px") },
+            Custom(".contact-form-field-row.is-drop-before") {
+                UnsafeRawProperty(
+                    name: "box-shadow",
+                    value: "inset 0 3px 0 var(--link-color-hover)"
+                )
+            },
+            Custom(".contact-form-field-row.is-drop-after") {
+                UnsafeRawProperty(
+                    name: "box-shadow",
+                    value: "inset 0 -3px 0 var(--link-color-hover)"
+                )
+            },
+            Custom(".contact-form-field-list.is-drop-zone") {
+                UnsafeRawProperty(
+                    name: "outline",
+                    value: "2px dashed var(--link-color-hover)"
+                )
+                UnsafeRawProperty(name: "outline-offset", value: "4px")
+            },
         ]
     }
 
     func html(context: inout RenderContext) -> Form {
         let form = NewAdminForm(action: action) {
-            if let success = state.success { P(success).class("new-admin-form__success") }
-            if let error = state.error { P(error).class("new-admin-form__error") }
-            context.render(NewAdminFormFieldInput(state: .init(name: "name", label: "Name", value: state.name, isRequired: true, isReadOnly: isReadOnly)))
-            context.render(NewAdminFormFieldInput(state: .init(name: "successMessage", label: "Success message", value: state.successMessage, help: "Shown after a successful submission.", isReadOnly: isReadOnly)))
-            context.render(NewAdminFormFieldInput(state: .init(name: "failureMessage", label: "Failure message", value: state.failureMessage, help: "Shown when a submission cannot be processed.", isReadOnly: isReadOnly)))
-            context.render(NewAdminFormFieldInput(state: .init(name: "redirectUrl", label: "Redirect URL", value: state.redirectUrl ?? "", help: "Optional URL to use after submission.", isReadOnly: isReadOnly)))
+            if let success = state.success {
+                P(success).class("new-admin-form__success")
+            }
+            if let error = state.error {
+                P(error).class("new-admin-form__error")
+            }
+            context.render(
+                NewAdminFormFieldInput(
+                    state: .init(
+                        name: "name",
+                        label: "Name",
+                        value: state.name,
+                        isRequired: true,
+                        isReadOnly: isReadOnly
+                    )
+                )
+            )
+            context.render(
+                NewAdminFormFieldInput(
+                    state: .init(
+                        name: "successMessage",
+                        label: "Success message",
+                        value: state.successMessage,
+                        help: "Shown after a successful submission.",
+                        isReadOnly: isReadOnly
+                    )
+                )
+            )
+            context.render(
+                NewAdminFormFieldInput(
+                    state: .init(
+                        name: "failureMessage",
+                        label: "Failure message",
+                        value: state.failureMessage,
+                        help: "Shown when a submission cannot be processed.",
+                        isReadOnly: isReadOnly
+                    )
+                )
+            )
+            context.render(
+                NewAdminFormFieldInput(
+                    state: .init(
+                        name: "redirectUrl",
+                        label: "Redirect URL",
+                        value: state.redirectUrl ?? "",
+                        help: "Optional URL to use after submission.",
+                        isReadOnly: isReadOnly
+                    )
+                )
+            )
             if !state.availableFields.isEmpty {
                 Section {
                     H3("Fields").class("contact-form-field-group-title")
-                    P("Choose fields and drag selected fields to set their order.").class("contact-form-field-group-help")
+                    P(
+                        "Choose fields and drag selected fields to set their order."
+                    )
+                    .class("contact-form-field-group-help")
                     Div {
                         Div {
-                            H4("Selected fields").class("contact-form-field-group-title")
-                            Div { for field in selectedFields { fieldRow(field: field, isSelected: true, context: &context) } }.class("contact-form-field-list", "contact-form-selected-fields")
-                        }.class("contact-form-field-group")
+                            H4("Selected fields")
+                                .class("contact-form-field-group-title")
+                            Div {
+                                for field in selectedFields {
+                                    fieldRow(
+                                        field: field,
+                                        isSelected: true,
+                                        context: &context
+                                    )
+                                }
+                            }
+                            .class(
+                                "contact-form-field-list",
+                                "contact-form-selected-fields"
+                            )
+                        }
+                        .class("contact-form-field-group")
                         Div {
-                            H4("Available fields").class("contact-form-field-group-title")
-                            Div { for field in availableUnselectedFields { fieldRow(field: field, isSelected: false, context: &context) } }.class("contact-form-field-list", "contact-form-available-fields")
-                        }.class("contact-form-field-group")
-                    }.class("contact-form-field-picker")
+                            H4("Available fields")
+                                .class("contact-form-field-group-title")
+                            Div {
+                                for field in availableUnselectedFields {
+                                    fieldRow(
+                                        field: field,
+                                        isSelected: false,
+                                        context: &context
+                                    )
+                                }
+                            }
+                            .class(
+                                "contact-form-field-list",
+                                "contact-form-available-fields"
+                            )
+                        }
+                        .class("contact-form-field-group")
+                    }
+                    .class("contact-form-field-picker")
                 }
             }
             if !isReadOnly {
-                Div { context.render(NewAdminSubmitButton(submitLabel)) }.class("new-admin-form__actions")
+                Div { context.render(NewAdminSubmitButton(submitLabel)) }
+                    .class("new-admin-form__actions")
                 Script(reorderScript())
             }
         }
@@ -77,7 +216,9 @@ struct ContactFormForm: Component {
     }
 
     private var selectedFields: [AdminContactFormFieldOption] {
-        let fieldsByID = Dictionary(uniqueKeysWithValues: state.availableFields.map { ($0.id, $0) })
+        let fieldsByID = Dictionary(
+            uniqueKeysWithValues: state.availableFields.map { ($0.id, $0) }
+        )
         return state.fieldIDs.compactMap { fieldsByID[$0] }
     }
 
@@ -86,21 +227,39 @@ struct ContactFormForm: Component {
         return state.availableFields.filter { !selectedIDs.contains($0.id) }
     }
 
-    private func fieldRow(field: AdminContactFormFieldOption, isSelected: Bool, context: inout RenderContext) -> some FlowContent {
+    private func fieldRow(
+        field: AdminContactFormFieldOption,
+        isSelected: Bool,
+        context: inout RenderContext
+    ) -> some FlowContent {
         Div {
             Span("⠿").class("contact-form-field-drag")
             context.render(fieldCheckbox(field: field, isSelected: isSelected))
-            Label(field.label).for("contact-form-field-\(field.id)").class("contact-form-field-content")
+            Label(field.label).for("contact-form-field-\(field.id)")
+                .class("contact-form-field-content")
             Div {
                 if !isReadOnly {
-                    Button("↑").type(.button).class("button", "ghost-secondary").data("contact-form-field-move", "up").ariaLabel("Move \(field.label) up")
-                    Button("↓").type(.button).class("button", "ghost-secondary").data("contact-form-field-move", "down").ariaLabel("Move \(field.label) down")
+                    Button("↑").type(.button).class("button", "ghost-secondary")
+                        .data("contact-form-field-move", "up")
+                        .ariaLabel("Move \(field.label) up")
+                    Button("↓").type(.button).class("button", "ghost-secondary")
+                        .data("contact-form-field-move", "down")
+                        .ariaLabel("Move \(field.label) down")
                 }
-            }.class("contact-form-field-actions")
-        }.class("contact-form-field-row", isSelected ? "is-selected" : "is-available").data("contact-form-field", field.id)
+            }
+            .class("contact-form-field-actions")
+        }
+        .class(
+            "contact-form-field-row",
+            isSelected ? "is-selected" : "is-available"
+        )
+        .data("contact-form-field", field.id)
     }
 
-    private func fieldCheckbox(field: AdminContactFormFieldOption, isSelected: Bool) -> NewAdminCheckbox {
+    private func fieldCheckbox(
+        field: AdminContactFormFieldOption,
+        isSelected: Bool
+    ) -> NewAdminCheckbox {
         .init(
             name: "fieldIds[]",
             value: field.id,

@@ -28,7 +28,9 @@ struct AdminListContactFormEmailsDefaultPresenter:
                 state: .init(
                     id: item.id,
                     mails: item.mails,
-                    permissions: .init(Set(permissions.map(PermissionKey.init))),
+                    permissions: .init(
+                        Set(permissions.map(PermissionKey.init))
+                    ),
                     breadcrumb: ContactAdminRoutes.formEmailsBreadcrumb(
                         RouterPath(item.id)
                     ),

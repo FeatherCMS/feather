@@ -1,6 +1,6 @@
+import ContactContracts
 import FeatherAdmin
 import FeatherContracts
-import ContactContracts
 import HTML
 import Hummingbird
 import SGML
@@ -24,17 +24,29 @@ struct ContactFormFieldsTable: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
-            context.render(AdminContactFormTabs(formId: state.formId, active: .details))
-                        context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-                        context.render(NewAdminPageHeader(state: .init(title: "Contact form fields", description: "Choose and configure the fields for this contact form.")))
-                        if let error = state.error { P(error).class("new-admin-form__error") }
+            context.render(
+                AdminContactFormTabs(formId: state.formId, active: .details)
+            )
+            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.render(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Contact form fields",
+                        description:
+                            "Choose and configure the fields for this contact form."
+                    )
+                )
+            )
+            if let error = state.error {
+                P(error).class("new-admin-form__error")
+            }
             context.render(
                 ContactFormFieldsTableContent(
-                formId: state.formId,
-                fields: state.fields,
-                pageState: state.pageState,
-                search: state.search,
-                permissions: state.permissions
+                    formId: state.formId,
+                    fields: state.fields,
+                    pageState: state.pageState,
+                    search: state.search,
+                    permissions: state.permissions
                 )
             )
         }

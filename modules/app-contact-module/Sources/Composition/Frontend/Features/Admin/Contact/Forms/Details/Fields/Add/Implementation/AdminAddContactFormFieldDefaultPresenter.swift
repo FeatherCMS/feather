@@ -17,7 +17,7 @@ struct AdminAddContactFormFieldDefaultPresenter:
         model: AdminAddContactFormFieldModel,
         permissions: Set<String>
     ) -> HTMLResponse {
-        return renderingEngine.renderNewAdminPage(
+        renderingEngine.renderNewAdminPage(
             request: request,
             title: "Add contact form field",
             permissions: permissions,

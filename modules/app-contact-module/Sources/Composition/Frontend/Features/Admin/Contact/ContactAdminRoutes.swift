@@ -20,15 +20,18 @@ enum ContactAdminRoutes {
         .init(label: "Contact", link: contact.description + "/"),
     ]
 
-    static let fieldsBreadcrumb = breadcrumb + [
-        .init(label: "Fields", link: fields.description + "/")
-    ]
-    static let formsBreadcrumb = breadcrumb + [
-        .init(label: "Forms", link: forms.description + "/")
-    ]
-    static let submissionsBreadcrumb = breadcrumb + [
-        .init(label: "Submissions", link: submissions.description + "/")
-    ]
+    static let fieldsBreadcrumb =
+        breadcrumb + [
+            .init(label: "Fields", link: fields.description + "/")
+        ]
+    static let formsBreadcrumb =
+        breadcrumb + [
+            .init(label: "Forms", link: forms.description + "/")
+        ]
+    static let submissionsBreadcrumb =
+        breadcrumb + [
+            .init(label: "Submissions", link: submissions.description + "/")
+        ]
 
     static func formFieldsBreadcrumb(_ id: RouterPath)
         -> [NewAdminBreadcrumb.Link]
