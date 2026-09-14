@@ -41,7 +41,8 @@ struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
     func formState(
         email: String = "mail.tib@gmail.com",
         password: String = "root",
-        isPersistent: Bool = true
+        isPersistent: Bool = true,
+        redirectPath: String = "/"
     ) -> LoginForm.State {
         .init(
             email: .init(
@@ -61,7 +62,8 @@ struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
                 label: "Keep me signed in",
                 value: isPersistent,
                 error: nil
-            )
+            ),
+            redirectPath: redirectPath
         )
     }
 }
