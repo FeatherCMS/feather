@@ -62,7 +62,6 @@ struct MediaFolderAddView: Component {
                 }
                 .class("new-admin-form__actions")
             }
-            context.register(form)
             context.render(form)
         }
         .class("cms-section")

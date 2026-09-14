@@ -511,7 +511,7 @@ extension AssetListView {
     ) -> some FlowContent {
         Div {
             if state.picker.isEnabled {
-                pickerSearchControls()
+                pickerSearchControls(context: &context)
             }
             else {
                 context.render(
@@ -561,7 +561,9 @@ extension AssetListView {
         .class("media-assets-search-row")
     }
 
-    fileprivate func pickerSearchControls() -> some FlowContent {
+    fileprivate func pickerSearchControls(
+        context: inout RenderContext
+    ) -> some FlowContent {
         Div {
             Input()
                 .type(.search)

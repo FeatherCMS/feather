@@ -65,197 +65,217 @@ public struct NewAdminFormFieldMediaPicker: Component {
         self.state = state
     }
 
-    public func selectors() -> [any CSS.Selector] {
+    public func rules() -> [any Rule] {
         let root = ".new-admin-media-picker"
 
         return [
-            Custom(root) {
-                Display(.flex)
-                FlexDirection(.column)
-                Gap(8.px)
-            },
-            Custom("\(root) label") {
-                Display(.flex)
-                FlexDirection(.column)
-                Gap(5.px)
-                FontWeight(.normal)
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                Opacity(0.8)
-            },
-            Custom("\(root) input[type='hidden']") {
-                Position(.absolute)
-                Width(1.px)
-                Height(1.px)
-                Overflow(.hidden)
-                UnsafeRawProperty(name: "clip", value: "rect(0 0 0 0)")
-                WhiteSpace(.nowrap)
-            },
-            Custom("\(root)__current") {
-                Display(.grid)
-                GridTemplateColumns(.fixed(136.px), .fraction(1.fr))
-                AlignItems(.center)
-                Gap(16.px)
-                Padding(14.px)
-                Border(
-                    1.px,
-                    .solid,
-                    .variable(TokenKey.Colors.Materials.Tertiary.border)
-                )
-                BorderRadius(12.px)
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
-            },
-            Custom("\(root)__preview") {
-                Width(120.px)
-                Height(120.px)
-                Display(.grid)
-                UnsafeRawProperty(name: "place-items", value: "center")
-                Overflow(.hidden)
-                BorderRadius(10.px)
-                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
-                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
-            },
-            Custom("\(root)__preview img") {
-                Width(100.percent)
-                Height(100.percent)
-                ObjectFit(.cover)
-                Display(.block)
-                Margin(0)
-            },
-            Custom("\(root)__preview svg") {
-                Width(44.px)
-                Height(44.px)
-            },
-            Custom("\(root)__current h3") {
-                Margin(0)
-                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
-                FontSize(1.rem)
-                WordBreak(.breakWord)
-            },
-            Custom("\(root)__actions") {
-                Display(.flex)
-                FlexWrap(.wrap)
-                AlignItems(.center)
-                Gap(8.px)
-            },
-            Custom("\(root)__actions button") {
-                Padding(vertical: 8.px, horizontal: 12.px)
-                BorderRadius(8.px)
-                Cursor(.pointer)
-            },
-            Custom("\(root)__choose") {
-                Border(
-                    1.px,
-                    .solid,
-                    .variable(TokenKey.Colors.Accents.Primary.border)
-                )
-                Background(.variable(TokenKey.Colors.Accents.Primary.tint))
-                Color(.variable(TokenKey.Colors.Accents.Primary.text))
-            },
-            Custom("\(root)__clear") {
-                Border(
-                    1.px,
-                    .solid,
-                    .variable(TokenKey.Colors.Materials.Tertiary.border)
-                )
-                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
-                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
-            },
-            Custom("\(root)__modal") {
-                Position(.fixed)
-                UnsafeRawProperty(name: "inset", value: "0")
-                Display(.none)
-                AlignItems(.center)
-                JustifyContent(.center)
-                Padding(24.px)
-                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
-                ZIndex(.number(2000))
-            },
-            Custom("\(root)__modal.is-visible") {
-                Display(.flex)
-            },
-            Custom("\(root)__dialog") {
-                Width(100.percent)
-                Height(100.percent)
-                MaxWidth(1200.px)
-                MaxHeight(820.px)
-                Display(.grid)
-                GridTemplateRows(.auto, .auto, .fraction(1.fr))
-                Gap(12.px)
-                Padding(18.px)
-                Border(
-                    1.px,
-                    .solid,
-                    .variable(TokenKey.Colors.Materials.Primary.border)
-                )
-                BorderRadius(16.px)
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
-            },
-            Custom("\(root)__dialog-header") {
-                Display(.flex)
-                AlignItems(.flexStart)
-                JustifyContent(.spaceBetween)
-                Gap(12.px)
-            },
-            Custom("\(root)__dialog-header h3, \(root)__dialog-header p") {
-                Margin(0)
-            },
-            Custom("\(root)__dialog-header p") {
-                MarginTop(6.px)
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-            },
-            Custom("\(root)__close") {
-                Border(
-                    1.px,
-                    .solid,
-                    .variable(TokenKey.Colors.Materials.Tertiary.border)
-                )
-                BorderRadius(8.px)
-                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
-                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
-                Padding(vertical: 8.px, horizontal: 12.px)
-                Cursor(.pointer)
-            },
-            Custom("\(root)__tabs") {
-                Display(.flex)
-                Gap(4.px)
-                Padding(4.px)
-                Border(
-                    1.px,
-                    .solid,
-                    .variable(TokenKey.Colors.Materials.Secondary.border)
-                )
-                BorderRadius(999.px)
-                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
-            },
-            Custom("\(root)__tabs button") {
-                Flex(1)
-                Border(0)
-                BorderRadius(999.px)
-                Padding(vertical: 8.px, horizontal: 12.px)
-                Background(.transparent)
-                Color(.variable(TokenKey.Colors.Materials.Primary.text))
-                Cursor(.pointer)
-            },
-            Custom("\(root)__tabs button:hover:not(.is-current)") {
-                Color(.variable(TokenKey.Colors.Link.hover))
-            },
-            Custom("\(root)__tabs button.is-current") {
-                Background(.variable(TokenKey.Colors.Accents.Primary.tint))
-                Color(.variable(TokenKey.Colors.Accents.Primary.text))
-            },
-            Custom("\(root)__panel") {
-                MinHeight(0.px)
-                Overflow(.auto)
-            },
-            Custom("\(root)__loading") {
-                Display(.grid)
-                UnsafeRawProperty(name: "place-items", value: "center")
-                MinHeight(12.rem)
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-            },
-            Custom("\(root) .field-error") {
-                Color(.variable(TokenKey.Colors.Palette.Red.text))
-                FontSize(0.86.rem)
+            Media {
+                Custom(root) {
+                    Display(.flex)
+                    FlexDirection(.column)
+                    Gap(8.px)
+                }
+                Custom("\(root) label") {
+                    Display(.flex)
+                    FlexDirection(.column)
+                    Gap(5.px)
+                    FontWeight(.normal)
+                    Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                    Opacity(0.8)
+                }
+                Custom("\(root) input[type='hidden']") {
+                    Position(.absolute)
+                    Width(1.px)
+                    Height(1.px)
+                    Overflow(.hidden)
+                    UnsafeRawProperty(name: "clip", value: "rect(0 0 0 0)")
+                    WhiteSpace(.nowrap)
+                }
+                Custom("\(root)__current") {
+                    Display(.grid)
+                    GridTemplateColumns(
+                        .tracks([.length(136.px), .fraction(1.fr)])
+                    )
+                    AlignItems(.center)
+                    Gap(16.px)
+                    Padding(14.px)
+                    Border(
+                        1.px,
+                        .solid,
+                        .variable(TokenKey.Colors.Materials.Tertiary.border)
+                    )
+                    BorderRadius(12.px)
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Primary.tint)
+                    )
+                }
+                Custom("\(root)__preview") {
+                    Width(120.px)
+                    Height(120.px)
+                    Display(.grid)
+                    UnsafeRawProperty(name: "place-items", value: "center")
+                    Overflow(.hidden)
+                    BorderRadius(10.px)
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Secondary.tint)
+                    )
+                    Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+                }
+                Custom("\(root)__preview img") {
+                    Width(100.percent)
+                    Height(100.percent)
+                    ObjectFit(.cover)
+                    Display(.block)
+                    Margin(0)
+                }
+                Custom("\(root)__preview svg") {
+                    Width(44.px)
+                    Height(44.px)
+                }
+                Custom("\(root)__current h3") {
+                    Margin(0)
+                    Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+                    FontSize(1.rem)
+                    WordBreak(.breakWord)
+                }
+                Custom("\(root)__actions") {
+                    Display(.flex)
+                    FlexWrap(.wrap)
+                    AlignItems(.center)
+                    Gap(8.px)
+                }
+                Custom("\(root)__actions button") {
+                    Padding(vertical: 8.px, horizontal: 12.px)
+                    BorderRadius(8.px)
+                    Cursor(.pointer)
+                }
+                Custom("\(root)__choose") {
+                    Border(
+                        1.px,
+                        .solid,
+                        .variable(TokenKey.Colors.Accents.Primary.border)
+                    )
+                    Background(.variable(TokenKey.Colors.Accents.Primary.tint))
+                    Color(.variable(TokenKey.Colors.Accents.Primary.text))
+                }
+                Custom("\(root)__clear") {
+                    Border(
+                        1.px,
+                        .solid,
+                        .variable(TokenKey.Colors.Materials.Tertiary.border)
+                    )
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Tertiary.tint)
+                    )
+                    Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+                }
+                Custom("\(root)__modal") {
+                    Position(.fixed)
+                    UnsafeRawProperty(name: "inset", value: "0")
+                    Display(.none)
+                    AlignItems(.center)
+                    JustifyContent(.center)
+                    Padding(24.px)
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Secondary.tint)
+                    )
+                    ZIndex(.number(2000))
+                }
+                Custom("\(root)__modal.is-visible") {
+                    Display(.flex)
+                }
+                Custom("\(root)__dialog") {
+                    Width(100.percent)
+                    Height(100.percent)
+                    MaxWidth(1200.px)
+                    MaxHeight(820.px)
+                    Display(.grid)
+                    GridTemplateRows(
+                        .tracks([.auto, .auto, .fraction(1.fr)])
+                    )
+                    Gap(12.px)
+                    Padding(18.px)
+                    Border(
+                        1.px,
+                        .solid,
+                        .variable(TokenKey.Colors.Materials.Primary.border)
+                    )
+                    BorderRadius(16.px)
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Primary.tint)
+                    )
+                }
+                Custom("\(root)__dialog-header") {
+                    Display(.flex)
+                    AlignItems(.flexStart)
+                    JustifyContent(.spaceBetween)
+                    Gap(12.px)
+                }
+                Custom("\(root)__dialog-header h3, \(root)__dialog-header p") {
+                    Margin(0)
+                }
+                Custom("\(root)__dialog-header p") {
+                    MarginTop(6.px)
+                    Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                }
+                Custom("\(root)__close") {
+                    Border(
+                        1.px,
+                        .solid,
+                        .variable(TokenKey.Colors.Materials.Tertiary.border)
+                    )
+                    BorderRadius(8.px)
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Tertiary.tint)
+                    )
+                    Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+                    Padding(vertical: 8.px, horizontal: 12.px)
+                    Cursor(.pointer)
+                }
+                Custom("\(root)__tabs") {
+                    Display(.flex)
+                    Gap(4.px)
+                    Padding(4.px)
+                    Border(
+                        1.px,
+                        .solid,
+                        .variable(TokenKey.Colors.Materials.Secondary.border)
+                    )
+                    BorderRadius(999.px)
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Secondary.tint)
+                    )
+                }
+                Custom("\(root)__tabs button") {
+                    Flex(1)
+                    Border(0)
+                    BorderRadius(999.px)
+                    Padding(vertical: 8.px, horizontal: 12.px)
+                    Background(.transparent)
+                    Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                    Cursor(.pointer)
+                }
+                Custom("\(root)__tabs button:hover:not(.is-current)") {
+                    Color(.variable(TokenKey.Colors.Link.hover))
+                }
+                Custom("\(root)__tabs button.is-current") {
+                    Background(.variable(TokenKey.Colors.Accents.Primary.tint))
+                    Color(.variable(TokenKey.Colors.Accents.Primary.text))
+                }
+                Custom("\(root)__panel") {
+                    MinHeight(0.px)
+                    Overflow(.auto)
+                }
+                Custom("\(root)__loading") {
+                    Display(.grid)
+                    UnsafeRawProperty(name: "place-items", value: "center")
+                    MinHeight(12.rem)
+                    Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                }
+                Custom("\(root) .field-error") {
+                    Color(.variable(TokenKey.Colors.Palette.Red.text))
+                    FontSize(0.86.rem)
+                }
             },
             Media(.screen && .maxWidth(600.px)) {
                 Custom("\(root)__current") {
@@ -377,7 +397,10 @@ extension NewAdminFormFieldMediaPicker {
                 Style("")
                     .data("media-picker-style", state.field.key)
                 Div {
-                    Div("Loading...").class("new-admin-media-picker__loading")
+                    Div {
+                        "Loading..."
+                    }
+                    .class("new-admin-media-picker__loading")
                 }
                 .class("new-admin-media-picker__panel")
                 .data("media-picker-panel", state.field.key)

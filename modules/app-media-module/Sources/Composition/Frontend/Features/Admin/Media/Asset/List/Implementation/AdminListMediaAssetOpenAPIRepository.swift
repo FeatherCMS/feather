@@ -32,9 +32,9 @@ struct AdminListMediaAssetOpenAPIRepository {
                 return .init(
                     items: response.items,
                     pageState: .init(
-                        page: response.page,
-                        pageSize: response.pageSize,
-                        total: response.total
+                        page: response.pageState.page,
+                        pageSize: response.pageState.pageSize,
+                        total: response.pageState.total
                     )
                 )
             }

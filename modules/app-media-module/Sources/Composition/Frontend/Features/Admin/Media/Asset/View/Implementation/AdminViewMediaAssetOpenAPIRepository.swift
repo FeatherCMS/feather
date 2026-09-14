@@ -9,7 +9,7 @@ import SGML
 import WebBuilders
 import WebComponents
 
-public struct AdminViewMediaAssetOpenAPIRepository {
+public struct AdminViewMediaAssetOpenAPIRepository: Sendable {
     let api: MediaAdminAPIClient
 
     public init(api: MediaAdminAPIClient) {
