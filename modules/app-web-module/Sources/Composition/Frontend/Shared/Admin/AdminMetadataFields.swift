@@ -148,19 +148,23 @@ struct AdminMetadataFields: Component {
                 H3("Publishing")
                 context.render(statusField(state.status))
                 context.render(
-                    FormDateTimeField(
-                        name: state.publicationDate.key,
-                        label: state.publicationDate.label,
-                        value: state.publicationDate.value,
-                        error: state.publicationDate.error
+                    NewAdminDatePicker(
+                        state: .init(
+                            name: state.publicationDate.key,
+                            label: state.publicationDate.label,
+                            value: state.publicationDate.value,
+                            error: state.publicationDate.error
+                        )
                     )
                 )
                 context.render(
-                    FormDateTimeField(
-                        name: state.expirationDate.key,
-                        label: state.expirationDate.label,
-                        value: state.expirationDate.value,
-                        error: state.expirationDate.error
+                    NewAdminDatePicker(
+                        state: .init(
+                            name: state.expirationDate.key,
+                            label: state.expirationDate.label,
+                            value: state.expirationDate.value,
+                            error: state.expirationDate.error
+                        )
                     )
                 )
             }

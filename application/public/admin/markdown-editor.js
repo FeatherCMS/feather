@@ -50,7 +50,7 @@ if (document.querySelector('#markdownInput')) {
       if (!modal) {
         modal = document.createElement('div'); modal.id = 'mceEmbedPicker'; modal.className = 'mce-embed-picker';
         modal.innerHTML = '<div class="mce-embed-picker-dialog"><div class="mce-embed-picker-header"><strong></strong><button type="button" data-embed-picker-close>×</button></div><div class="mce-embed-picker-search"><input type="search" placeholder="Search…"><button type="button">Search</button></div><div class="mce-embed-picker-list"></div></div>';
-        document.body.append(modal);
+        editorRoot.append(modal);
         modal.querySelector('[data-embed-picker-close]').addEventListener('click', () => modal.classList.remove('is-visible'));
         modal.querySelector('.mce-embed-picker-search button').addEventListener('click', () => loadEmbedPicker(modal));
         modal.querySelector('.mce-embed-picker-search input').addEventListener('keydown', event => { if (event.key === 'Enter') loadEmbedPicker(modal); });

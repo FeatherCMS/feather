@@ -94,7 +94,7 @@ struct WebMetadataForm: Component {
             )
             context.render(templateField(state.template))
             context.render(
-                NewAdminFormFieldInput(
+                NewAdminDatePicker(
                     state: .init(
                         name: state.publicationDate.key,
                         label: state.publicationDate.label,
@@ -104,7 +104,7 @@ struct WebMetadataForm: Component {
                 )
             )
             context.render(
-                NewAdminFormFieldInput(
+                NewAdminDatePicker(
                     state: .init(
                         name: state.expirationDate.key,
                         label: state.expirationDate.label,

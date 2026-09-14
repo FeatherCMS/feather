@@ -66,11 +66,6 @@ public struct AdminBody<T: Component>: Component {
                     "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/navigation.js"
                 )
                 .defer()
-            Script()
-                .src(
-                    "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/markdown-editor.js"
-                )
-                .defer()
         }
     }
 
