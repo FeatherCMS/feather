@@ -60,13 +60,6 @@ enum MediaFolderRoutes {
             .appendingPath(RouterPath("edit"))
     }
 
-    static func remove(_ id: RouterPath) -> RouterPath {
-        MediaAdminRoutes.media
-            .appendingPath(RouterPath("assets"))
-            .appendingPath(RouterPath("folders"))
-            .appendingPath(id)
-            .appendingPath(RouterPath("remove"))
-    }
 }
 
 enum MediaProcessorRoutes {

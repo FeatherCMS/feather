@@ -26,10 +26,6 @@ protocol AdminListMediaAssetController: Sendable {
         context: DefaultRequestContext
     ) async throws -> Response
 
-    func deleteFolder(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> Response
 }
 
 extension AdminListMediaAssetController {
@@ -48,10 +44,6 @@ extension AdminListMediaAssetController {
         router.post(
             "/admin/media/assets/remove/",
             use: remove
-        )
-        router.post(
-            "/admin/media/assets/folders/{id}/remove/",
-            use: deleteFolder
         )
     }
 }

@@ -40,7 +40,7 @@ struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
                 to: MediaAssetRoutes.list.description,
                 notification: .init(
                     title: "Removed",
-                    message: "Media asset removed successfully."
+                    message: "Media item removed successfully."
                 )
             )
         }

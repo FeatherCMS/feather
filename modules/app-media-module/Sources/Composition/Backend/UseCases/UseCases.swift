@@ -193,7 +193,7 @@ extension UseCases {
         subject: Subject,
         assetIds: [String]
     ) async throws -> [String] {
-        return try await makeDeleteAsset()
+        try await makeDeleteAsset()
             .execute(
                 subject: subject,
                 input: .init(ids: assetIds)

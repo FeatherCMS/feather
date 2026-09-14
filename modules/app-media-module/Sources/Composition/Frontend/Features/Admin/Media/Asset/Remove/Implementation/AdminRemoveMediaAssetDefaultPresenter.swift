@@ -20,7 +20,7 @@ struct AdminRemoveMediaAssetDefaultPresenter: AdminRemoveMediaAssetPresenter {
         try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
-            title: "Remove media asset",
+            title: "Remove media item",
             content: AssetRemoveView(
                 id: model.id
             )

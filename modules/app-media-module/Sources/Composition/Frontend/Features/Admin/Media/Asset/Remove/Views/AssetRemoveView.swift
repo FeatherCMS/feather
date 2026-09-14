@@ -17,13 +17,13 @@ struct AssetRemoveView: Component {
             NewAdminConfirmation(
                 breadcrumb: MediaAssetRoutes.breadcrumb,
                 pageHeader: .init(
-                    title: "Remove media asset",
-                    description: "Confirm removal of this media asset."
+                    title: "Remove media item",
+                    description: "Confirm removal of this media item."
                 ),
                 selectedItems: [id],
                 action: MediaAssetRoutes.remove(RouterPath(id)).description,
                 cancel: MediaAssetRoutes.list.description,
-                submitLabel: "Remove asset"
+                submitLabel: "Remove item"
             )
         )
     }

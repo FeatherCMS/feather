@@ -174,7 +174,6 @@ extension AdminListMediaAssetOpenAPIRepository {
                     body: .json(
                         .init(
                             page: .init(size: size, number: page),
-                            sort: [.init(field: .createdAt, direction: .desc)],
                             filters: .init(search: search, parentId: parentId)
                         )
                     )

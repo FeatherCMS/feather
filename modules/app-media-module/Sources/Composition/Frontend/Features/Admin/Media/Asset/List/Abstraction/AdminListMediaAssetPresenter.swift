@@ -26,8 +26,11 @@ protocol AdminListMediaAssetPresenter: Sendable {
     func renderRemoveConfirmation(
         pageState: NewAdminListPageState,
         search: String?,
-        parentId: String?,
-        view: AdminListMediaAssetModel.ViewMode,
-        selectedIds: [String]
+        selectedIds: [String],
+        returnTo: String?
+    ) async throws -> HTMLResponse
+
+    func renderInvalidNoncePage(
+        cancel: String
     ) async throws -> HTMLResponse
 }

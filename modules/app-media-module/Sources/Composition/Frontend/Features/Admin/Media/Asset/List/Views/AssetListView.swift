@@ -52,8 +52,8 @@ struct AssetListView: Component {
         }
         Class("media-assets-grid") {
             Display(.grid)
-            Gap(16.px)
-            AlignItems(.stretch)
+            Gap(24.px)
+            UnsafeRawProperty(name: "align-items", value: "start")
             UnsafeRawProperty(
                 name: "grid-template-columns",
                 value: "repeat(auto-fill, minmax(220px, 1fr))"
@@ -66,7 +66,6 @@ struct AssetListView: Component {
             Display(.flex)
             FlexDirection(.column)
             Gap(8.px)
-            Height(100.percent)
             Padding(12.px)
             Border(
                 1.px,
@@ -116,9 +115,6 @@ struct AssetListView: Component {
             FontSize(1.rem)
             LineHeight(1.3)
         }
-        Custom(".media-assets-card-body h3 a") {
-            TextDecoration(.none)
-        }
         Custom(".media-assets-card-body p") {
             Margin(0)
             Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
@@ -131,13 +127,6 @@ struct AssetListView: Component {
             Gap(6.px)
             MarginTop(0.px)
             AlignItems(.center)
-        }
-        Custom(".media-assets-card-actions .media-assets-inline-form") {
-            Display(.inlineFlex)
-            FlexDirection(.row)
-            Gap(0.px)
-            Margin(0)
-            UnsafeRawProperty(name: "width", value: "auto")
         }
         Class("media-assets-table-preview") {
             Width(72.px)
@@ -176,6 +165,11 @@ struct AssetListView: Component {
         Class("media-assets-folder-icon") {
             Color(.variable(TokenKey.Colors.Link.default))
         }
+        Custom(".admin-list > .table-pagination") {
+            MarginTop(8.px)
+            Gap(20.px)
+            Padding(vertical: 20.px, horizontal: 14.px)
+        }
         Custom(".media-assets-folder-icon svg") {
             Width(2.5.rem)
             Height(2.5.rem)
@@ -185,9 +179,6 @@ struct AssetListView: Component {
         ) {
             Width(5.rem)
             Height(5.rem)
-        }
-        Class("media-assets-inline-form") {
-            Display(.inline)
         }
     }
 
@@ -721,12 +712,14 @@ extension AssetListView {
                                         folderRow(
                                             folder,
                                             canRemove: canRemove,
+                                            returnTo: returnTo,
                                             context: &context
                                         )
                                     case .asset(let item):
                                         assetRow(
                                             item,
                                             canRemove: canRemove,
+                                            returnTo: returnTo,
                                             context: &context
                                         )
                                     }
@@ -779,8 +772,9 @@ extension AssetListView {
         _ folder: Components.Schemas.MediaFolderListItemSchema,
         context: inout RenderContext
     ) -> some FlowContent {
+        let actionSuffix = assetActionSuffix()
 
-        Div {
+        return Div {
             A {
                 Div {
                     FeatherIcons.folder()
@@ -791,7 +785,7 @@ extension AssetListView {
 
             Div {
                 H3 {
-                    A(folder.name).href(browsePath(parentId: folder.id))
+                    folder.name
                 }
                 P(folderItemCountLabel(for: folder))
             }
@@ -819,7 +813,14 @@ extension AssetListView {
                 if state.permissions.allows(MediaPermissions.Assets.delete)
                     && !state.picker.isEnabled
                 {
-                    folderDeleteForm(folder, context: &context)
+                    context.render(
+                        NewAdminRowButton(
+                            "Remove",
+                            href:
+                                "\(MediaAssetRoutes.remove(RouterPath(folder.id)).description)\(actionSuffix)",
+                            style: .destructive
+                        )
+                    )
                 }
             }
             .class("media-assets-card-actions")
@@ -992,11 +993,48 @@ extension AssetListView {
     fileprivate func folderRow(
         _ folder: Components.Schemas.MediaFolderListItemSchema,
         canRemove: Bool,
+        returnTo: String,
         context: inout RenderContext
     ) -> some BasicTag {
         Tr {
+            let actions: [NewAdminListRowActions.Action] =
+                state.picker.isEnabled
+                ? [
+                    .init(
+                        "View",
+                        href: browsePath(parentId: folder.id),
+                        style: .ghost(.primary),
+                        permission: MediaPermissions.Assets.read
+                    )
+                ]
+                : [
+                    .init(
+                        "View",
+                        href: browsePath(parentId: folder.id),
+                        style: .ghost(.primary),
+                        permission: MediaPermissions.Assets.read
+                    ),
+                    .init(
+                        "Edit",
+                        href: folderEditPath(folder),
+                        style: .ghost(.secondary),
+                        permission: MediaPermissions.Assets.update
+                    ),
+                    .init(
+                        "Remove",
+                        href: NewAdminLocation.remove(
+                            path: MediaAssetRoutes.remove.description,
+                            ids: [folder.id],
+                            returnTo: returnTo
+                        ),
+                        style: .destructive,
+                        permission: MediaPermissions.Assets.delete
+                    ),
+                ]
             if canRemove {
-                Td("")
+                context.render(
+                    NewAdminListRowCheckbox(id: folder.id)
+                )
             }
             folderPreviewCell(
                 label: folder.name,
@@ -1008,44 +1046,23 @@ extension AssetListView {
                 .data("label", "Type")
             Td(folderItemCountLabel(for: folder))
                 .data("label", "Size")
-            Td {
-                context.render(
-                    NewAdminRowButton(
-                        "View",
-                        href: browsePath(parentId: folder.id),
-                        style: .ghost(.secondary)
-                    )
+            context.render(
+                NewAdminListRowActions(
+                    label: "Actions",
+                    actions: actions,
+                    permissions: state.permissions
                 )
-                if state.permissions.allows(MediaPermissions.Assets.update)
-                    && !state.picker.isEnabled
-                {
-                    context.render(
-                        NewAdminRowButton(
-                            "Edit",
-                            href: folderEditPath(folder),
-                            style: .ghost(.primary)
-                        )
-                    )
-                }
-                if state.permissions.allows(MediaPermissions.Assets.delete)
-                    && !state.picker.isEnabled
-                {
-                    Span(" ")
-                    folderDeleteForm(folder, context: &context)
-                }
-            }
-            .data("label", "Actions")
-            .class("action-cell")
+            )
         }
     }
 
     fileprivate func assetRow(
         _ item: AdminListMediaAssetModel.AssetItem,
         canRemove: Bool,
+        returnTo: String,
         context: inout RenderContext
     ) -> some BasicTag {
 
-        let actionSuffix = assetActionSuffix()
         let previewURL = previewLink(
             for: item.preview?.storageKey ?? item.asset.storageKey,
             isVariant: item.preview != nil
@@ -1072,8 +1089,8 @@ extension AssetListView {
                 .data("label", "Type")
             Td(fileSizeLabel(bytes: item.asset.sizeBytes))
                 .data("label", "Size")
-            Td {
-                if state.picker.isEnabled, let field = state.picker.field {
+            if state.picker.isEnabled, let field = state.picker.field {
+                Td {
                     context.render(
                         NewAdminControlButton(
                             "Select",
@@ -1110,69 +1127,44 @@ extension AssetListView {
                         item.asset.status
                     )
                 }
-                else {
-                    context.render(
-                        NewAdminRowButton(
-                            "View",
-                            href:
-                                "\(MediaAssetRoutes.details(RouterPath(item.asset.id)).description)\(actionSuffix)",
-                            style: .ghost(.primary)
-                        )
-                    )
-                }
-                if state.permissions.allows(MediaPermissions.Assets.update)
-                    && !state.picker.isEnabled
-                {
-                    context.render(
-                        NewAdminRowButton(
-                            "Edit",
-                            href:
-                                "\(MediaAssetRoutes.edit(RouterPath(item.asset.id)).description)\(actionSuffix)",
-                            style: .ghost(.secondary)
-                        )
-                    )
-                }
-                if state.permissions.allows(MediaPermissions.Assets.delete)
-                    && !state.picker.isEnabled
-                {
-                    context.render(
-                        NewAdminRowButton(
-                            "Remove",
-                            href:
-                                "\(MediaAssetRoutes.remove(RouterPath(item.asset.id)).description)\(actionSuffix)",
-                            style: .destructive
-                        )
-                    )
-                }
+                .data("label", "Actions")
+                .class("action-cell")
             }
-            .data("label", "Actions")
-            .class("action-cell")
-        }
-    }
-
-    fileprivate func folderDeleteForm(
-        _ folder: Components.Schemas.MediaFolderListItemSchema,
-        context: inout RenderContext
-    ) -> some FlowContent {
-        let form = NewAdminForm(
-            action: MediaFolderRoutes.remove(RouterPath(folder.id)).description,
-            hiddenFields: [
-                .init(name: "parentId", value: state.parentId ?? ""),
-                .init(name: "search", value: state.search),
-                .init(name: "view", value: state.view.rawValue),
-                .init(name: "page", value: "\(state.pageState.page)"),
-            ]
-        ) {
-            context.render(
-                NewAdminSubmitButton(
-                    "Remove",
-                    style: .destructive,
-                    isRowButton: true
+            else {
+                context.render(
+                    NewAdminListRowActions(
+                        label: "Actions",
+                        actions: [
+                            .init(
+                                "View",
+                                href:
+                                    "\(MediaAssetRoutes.details(RouterPath(item.asset.id)).description)\(assetActionSuffix())",
+                                style: .ghost(.primary),
+                                permission: MediaPermissions.Assets.read
+                            ),
+                            .init(
+                                "Edit",
+                                href:
+                                    "\(MediaAssetRoutes.edit(RouterPath(item.asset.id)).description)\(assetActionSuffix())",
+                                style: .ghost(.secondary),
+                                permission: MediaPermissions.Assets.update
+                            ),
+                            .init(
+                                "Remove",
+                                href: NewAdminLocation.remove(
+                                    path: MediaAssetRoutes.remove.description,
+                                    ids: [item.asset.id],
+                                    returnTo: returnTo
+                                ),
+                                style: .destructive,
+                                permission: MediaPermissions.Assets.delete
+                            ),
+                        ],
+                        permissions: state.permissions
+                    )
                 )
-            )
+            }
         }
-        context.register(form)
-        return form.html(context: &context).class("media-assets-inline-form")
     }
 
     fileprivate func folderItemCountLabel(
@@ -1258,11 +1250,8 @@ extension AssetListView {
     fileprivate func folderTitleCell(
         for folder: Components.Schemas.MediaFolderListItemSchema
     ) -> some BasicTag {
-        Td {
-            A(folder.name)
-                .href(browsePath(parentId: folder.id))
-        }
-        .data("label", "Name")
+        Td(folder.name)
+            .data("label", "Name")
     }
 
     fileprivate func assetTitleCell(

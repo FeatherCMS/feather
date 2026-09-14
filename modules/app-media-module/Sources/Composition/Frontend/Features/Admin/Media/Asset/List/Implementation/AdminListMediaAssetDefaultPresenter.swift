@@ -89,11 +89,17 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
     func renderRemoveConfirmation(
         pageState: NewAdminListPageState,
         search: String?,
-        parentId: String?,
-        view: AdminListMediaAssetModel.ViewMode,
-        selectedIds: [String]
+        selectedIds: [String],
+        returnTo: String?
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        let cancel = NewAdminLocation.removeCancel(
+            path: MediaAssetRoutes.list.description,
+            returnTo: returnTo
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove selected assets",
@@ -105,39 +111,37 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 ),
                 selectedItems: selectedIds,
                 action: MediaAssetRoutes.remove.description,
-                cancel: mediaAssetsPath(
-                    pageState: pageState,
-                    search: search,
-                    parentId: parentId,
-                    view: view
-                ),
-                submitLabel: "Remove selected"
+                cancel: cancel,
+                submitLabel: "Remove selected",
+                nonceToken: nonceToken,
+                hiddenFields: selectedIds.map {
+                    .init(name: "ids", value: $0)
+                } + [
+                    .init(name: "page", value: String(pageState.page)),
+                    .init(name: "search", value: search ?? ""),
+                    .init(name: "returnTo", value: cancel),
+                ]
             )
         )
     }
 
-    private func mediaAssetsPath(
-        pageState: NewAdminListPageState,
-        search: String?,
-        parentId: String?,
-        view: AdminListMediaAssetModel.ViewMode
-    ) -> String {
-        var items: [String] = []
-        if pageState.page > 1 {
-            items.append("page=\(pageState.page)")
-        }
-        if let search, !search.isEmpty {
-            items.append("search=\(search.queryEncoded())")
-        }
-        if let parentId, !parentId.isEmpty {
-            items.append("parent_id=\(parentId.queryEncoded())")
-        }
-        if view != .grid {
-            items.append("view=\(view.rawValue)")
-        }
-        let path = MediaAssetRoutes.list.description
-        return items.isEmpty
-            ? path
-            : "\(path)?\(items.joined(separator: "&"))"
+    func renderInvalidNoncePage(
+        cancel: String
+    ) async throws -> HTMLResponse {
+        let page = try await renderEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Remove media assets",
+            content: NewAdminStatusView(
+                state: .init(
+                    title: "Confirmation expired",
+                    message:
+                        "This confirmation is no longer valid. Please try again."
+                ),
+                icon: FeatherIcons.alertCircle(),
+                action: NewAdminButton("Back", href: cancel, style: .secondary)
+            )
+        )
+        return HTMLResponse(content: page.content, status: .badRequest)
     }
 }

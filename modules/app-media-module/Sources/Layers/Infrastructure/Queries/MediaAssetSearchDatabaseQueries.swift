@@ -100,13 +100,12 @@ public struct MediaAssetSearchDatabaseQueries: MediaAssetSearchQueries {
             return
                 "CASE WHEN kind = 'file' THEN \(column) END \(sortDirectionSQL(rule.direction))"
         }
-        return (
-            [
+        return
+            ([
                 "kind_rank ASC",
-            "CASE WHEN kind = 'folder' THEN LOWER(name) END ASC",
-            ] + sortParts + ["id ASC"]
-        )
-        .joined(separator: ", ")
+                "LOWER(name) ASC",
+            ] + sortParts + ["id ASC"])
+            .joined(separator: ", ")
     }
 
     public func list(
