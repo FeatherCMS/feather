@@ -37,7 +37,8 @@ struct AdminAddMediaProcessorDefaultPresenter:
                     error: model.error
                 ),
                 permissions: permissions,
-                requiredPermission: MediaPermissions.Processors.create
+                requiredPermission: MediaPermissions.Processors.create,
+                removeHref: nil
             )
         )
     }

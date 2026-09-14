@@ -36,7 +36,17 @@ struct AdminEditMediaProcessorDefaultPresenter: AdminEditMediaProcessorPresenter
                     error: model.error
                 ),
                 permissions: permissions,
-                requiredPermission: MediaPermissions.Processors.update
+                requiredPermission: MediaPermissions.Processors.update,
+                removeHref: permissions.allows(
+                    MediaPermissions.Processors.delete
+                )
+                    ? NewAdminLocation.remove(
+                        path: MediaProcessorRoutes.remove.description,
+                        ids: [model.id],
+                        returnTo: MediaProcessorRoutes.edit(
+                            RouterPath(model.id)
+                        ).description
+                    ) : nil
             )
         )
     }

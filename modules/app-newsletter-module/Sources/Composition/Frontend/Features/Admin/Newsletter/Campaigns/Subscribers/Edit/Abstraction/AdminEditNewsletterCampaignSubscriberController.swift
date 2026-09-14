@@ -1,0 +1,27 @@
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+protocol AdminEditNewsletterCampaignSubscriberController: Sendable {
+    func edit(request: Request, context: DefaultRequestContext) async throws
+        -> HTMLResponse
+    func update(request: Request, context: DefaultRequestContext) async throws
+        -> Response
+}
+extension AdminEditNewsletterCampaignSubscriberController {
+    func route(on router: Router<DefaultRequestContext>) {
+        router.get(
+            NewsletterAdminRoutes.campaignSubscriberEditRoute,
+            use: edit
+        )
+        router.post(
+            NewsletterAdminRoutes.campaignSubscriberEditRoute,
+            use: update
+        )
+    }
+}

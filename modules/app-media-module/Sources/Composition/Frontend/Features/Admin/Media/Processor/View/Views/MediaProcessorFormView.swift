@@ -24,6 +24,7 @@ struct MediaProcessorFormView: Component {
     let form: FormState
     let permissions: NewAdminListActions
     let requiredPermission: PermissionKey
+    let removeHref: String?
 
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
@@ -109,6 +110,15 @@ struct MediaProcessorFormView: Component {
 
                     Div {
                         context.render(NewAdminSubmitButton(submitLabel))
+                        if let removeHref {
+                            context.render(
+                                NewAdminButton(
+                                    "Remove",
+                                    href: removeHref,
+                                    style: .destructive
+                                )
+                            )
+                        }
                     }
                     .class("new-admin-form__actions")
                 }

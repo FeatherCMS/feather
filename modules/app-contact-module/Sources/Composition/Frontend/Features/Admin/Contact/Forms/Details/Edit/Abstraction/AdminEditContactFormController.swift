@@ -1,0 +1,22 @@
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+protocol AdminEditContactFormController: Sendable {
+    func edit(request: Request, context: DefaultRequestContext) async throws
+        -> HTMLResponse
+    func update(request: Request, context: DefaultRequestContext) async throws
+        -> Response
+}
+
+extension AdminEditContactFormController {
+    func route(on router: Router<DefaultRequestContext>) {
+        router.get(ContactAdminRoutes.formEditRoute, use: edit)
+        router.post(ContactAdminRoutes.formEditRoute, use: update)
+    }
+}

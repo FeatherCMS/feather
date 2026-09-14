@@ -54,6 +54,7 @@ struct AssetListView: Component {
         Class("media-assets-grid") {
             Display(.grid)
             Gap(16.px)
+            AlignItems(.stretch)
             UnsafeRawProperty(
                 name: "grid-template-columns",
                 value: "repeat(auto-fill, minmax(220px, 1fr))"
@@ -65,9 +66,9 @@ struct AssetListView: Component {
         Class("media-assets-card") {
             Display(.flex)
             FlexDirection(.column)
-            Gap(12.px)
+            Gap(8.px)
             Height(100.percent)
-            Padding(14.px)
+            Padding(12.px)
             Border(
                 1.px,
                 .solid,
@@ -109,8 +110,7 @@ struct AssetListView: Component {
         }
         Class("media-assets-card-body") {
             Display(.grid)
-            Gap(8.px)
-            Flex(1)
+            Gap(4.px)
         }
         Custom(".media-assets-card-body h3") {
             Margin(0)
@@ -129,9 +129,16 @@ struct AssetListView: Component {
         Class("media-assets-card-actions") {
             Display(.flex)
             FlexWrap(.wrap)
-            Gap(8.px)
-            MarginTop(4.px)
+            Gap(6.px)
+            MarginTop(0.px)
             AlignItems(.center)
+        }
+        Custom(".media-assets-card-actions .media-assets-inline-form") {
+            Display(.inlineFlex)
+            FlexDirection(.row)
+            Gap(0.px)
+            Margin(0)
+            UnsafeRawProperty(name: "width", value: "auto")
         }
         Class("media-assets-table-preview") {
             Width(72.px)
@@ -510,25 +517,6 @@ extension AssetListView {
         context: inout RenderContext
     ) -> some FlowContent {
         Div {
-            if state.picker.isEnabled {
-                pickerSearchControls(context: &context)
-            }
-            else {
-                context.render(
-                    NewAdminListSearch(
-                        state: .init(
-                            action: MediaAssetRoutes.list.description,
-                            placeholder: "Quick search assets",
-                            search: state.search,
-                            resetPath: browsePath(parentId: state.parentId),
-                            queryItems: queryItems()
-                                .map {
-                                    .init(name: $0.name, value: $0.value)
-                                }
-                        )
-                    )
-                )
-            }
             context.render(
                 NewAdminPillTab(
                     links: [
@@ -557,6 +545,25 @@ extension AssetListView {
                     ]
                 )
             )
+            if state.picker.isEnabled {
+                pickerSearchControls(context: &context)
+            }
+            else {
+                context.render(
+                    NewAdminListSearch(
+                        state: .init(
+                            action: MediaAssetRoutes.list.description,
+                            placeholder: "Quick search assets",
+                            search: state.search,
+                            resetPath: browsePath(parentId: state.parentId),
+                            queryItems: queryItems()
+                                .map {
+                                    .init(name: $0.name, value: $0.value)
+                                }
+                        )
+                    )
+                )
+            }
         }
         .class("media-assets-search-row")
     }
@@ -789,9 +796,9 @@ extension AssetListView {
             Div {
                 context.render(
                     NewAdminRowButton(
-                        "Open",
+                        "View",
                         href: browsePath(parentId: folder.id),
-                        style: .ghost(.secondary)
+                        style: .ghost(.primary)
                     )
                 )
                 if state.permissions.allows(MediaPermissions.Assets.update)
@@ -801,7 +808,7 @@ extension AssetListView {
                         NewAdminRowButton(
                             "Edit",
                             href: folderEditPath(folder),
-                            style: .ghost(.primary)
+                            style: .ghost(.secondary)
                         )
                     )
                 }
@@ -907,7 +914,7 @@ extension AssetListView {
                 else if state.permissions.allows(MediaPermissions.Assets.read) {
                     context.render(
                         NewAdminRowButton(
-                            "Details",
+                            "View",
                             href: detailsURL,
                             style: .ghost(.primary)
                         )
@@ -1102,7 +1109,7 @@ extension AssetListView {
                 else {
                     context.render(
                         NewAdminRowButton(
-                            "Details",
+                            "View",
                             href:
                                 "\(MediaAssetRoutes.details(RouterPath(item.asset.id)).description)\(actionSuffix)",
                             style: .ghost(.primary)

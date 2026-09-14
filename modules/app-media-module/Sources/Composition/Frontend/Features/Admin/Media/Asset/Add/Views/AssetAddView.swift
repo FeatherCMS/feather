@@ -182,8 +182,6 @@ struct AssetAddView: Component {
             action: state.form.action,
             hiddenFields: [
                 .init(name: "parentId", value: state.form.parentId),
-                .init(name: "fileName", value: state.form.fileName),
-                .init(name: "type", value: state.form.type),
                 .init(name: "view", value: state.form.view),
             ]
         ) {
@@ -215,6 +213,16 @@ struct AssetAddView: Component {
                     )
                 )
             )
+            Input()
+                .type(.hidden)
+                .name("fileName")
+                .id("fileName")
+                .value(state.form.fileName)
+            Input()
+                .type(.hidden)
+                .name("type")
+                .id("type")
+                .value(state.form.type)
             Input().type(.hidden).name("data").id("data").value(state.form.data)
             Div {
                 context.render(NewAdminSubmitButton("Add asset"))

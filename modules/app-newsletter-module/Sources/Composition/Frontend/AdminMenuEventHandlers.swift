@@ -28,14 +28,14 @@ public enum NewsletterAdminMenuEventHandlers {
                     menuKey: "newsletter",
                     label: "Campaigns",
                     icon: "send",
-                    link: "/admin/newsletters/campaigns/",
+                    link: "/admin/newsletter/campaigns/",
                     permission: "newsletter:campaigns:list"
                 ),
                 .init(
                     menuKey: "newsletter",
                     label: "Subscribers",
                     icon: "users",
-                    link: "/admin/newsletters/subscribers/",
+                    link: "/admin/newsletter/subscribers/",
                     permission: "newsletter:subscribers:list"
                 ),
             ]

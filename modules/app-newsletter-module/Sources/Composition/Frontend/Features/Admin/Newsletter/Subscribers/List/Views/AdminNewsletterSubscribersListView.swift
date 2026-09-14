@@ -1,0 +1,181 @@
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+struct AdminNewsletterSubscribersListView: Component {
+    let model: AdminNewsletterSubscribersListModel
+    let breadcrumb: AdminBreadcrumb.State
+    let error: String?
+    let canRemove: Bool
+
+    func html(context: inout RenderContext) -> some BasicTag {
+        Section {
+            context.render(AdminBreadcrumb(state: breadcrumb))
+            H1("Subscribers")
+            Div {
+                context.render(
+                    AdminNavigationButton(
+                        "Add subscriber",
+                        href: "/admin/newsletter/subscribers/add/"
+                    )
+                )
+            }
+            .class("button-row")
+            Br()
+            Br()
+            Form {
+                Div {
+                    Input().type(.search).name("search").value(model.search)
+                        .placeholder("Quick search subscribers")
+                    Select {
+                        Option("All campaigns").value("")
+                            .if(model.campaignId.isEmpty) { $0.selected() }
+                        for campaign in model.campaigns {
+                            Option(campaign.name).value(campaign.id)
+                                .if(model.campaignId == campaign.id) {
+                                    $0.selected()
+                                }
+                        }
+                    }
+                    .name("campaignId").style("min-width:20rem;")
+                    Button("Search").type(.submit)
+                    A("Reset").href("/admin/newsletter/subscribers/")
+                }
+                .class("table-search-form")
+            }
+            .method(.get).action("/admin/newsletter/subscribers/")
+            if let error { P(error).class("error") }
+            if model.items.isEmpty {
+                P(
+                    model.search.isEmpty && model.campaignId.isEmpty
+                        ? "No subscribers found."
+                        : "No subscribers match your search."
+                )
+            }
+            else {
+                context.render(
+                    ListTableRemoveForm(
+                        state: .init(
+                            action: "/admin/newsletter/subscribers/remove/",
+                            page: 1,
+                            search: model.search,
+                            canRemove: canRemove,
+                            buttonTitle: "Remove selected",
+                            queryItems: model.campaignId.isEmpty
+                                ? [] : [("campaignId", model.campaignId)]
+                        ),
+                        table: context.render(
+                            ListTableShell(
+                                table: Table {
+                                    Thead {
+                                        Tr {
+                                            if canRemove {
+                                                context.render(
+                                                    ListTableSelectAllCheckbox()
+                                                )
+                                            }
+                                            Th("Email")
+                                            Th("Name")
+                                            Th("Newsletters")
+                                            Th("Actions")
+                                        }
+                                    }
+                                    Tbody {
+                                        for item in model.items {
+                                            Tr {
+                                                if canRemove {
+                                                    context.render(
+                                                        ListTableRowSelectCheckbox(
+                                                            state: .init(
+                                                                id: item.id
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                                Td(item.email)
+                                                    .data("label", "Email")
+                                                Td(item.name)
+                                                    .data("label", "Name")
+                                                Td {
+                                                    for newsletter in item
+                                                        .newsletters
+                                                    {
+                                                        A(
+                                                            "\(newsletter.name) (\(newsletter.status))"
+                                                        )
+                                                        .href(
+                                                            "/admin/newsletter/\(newsletter.id)/subscribers/"
+                                                        )
+                                                        Br()
+                                                    }
+                                                }
+                                                .data("label", "Newsletters")
+                                                if let newsletter = item
+                                                    .newsletters
+                                                    .first
+                                                {
+                                                    context.render(
+                                                        ListTableRowActions(
+                                                            state: .init(
+                                                                label:
+                                                                    "Actions",
+                                                                actions: [
+                                                                    .init(
+                                                                        title:
+                                                                            "Details",
+                                                                        href:
+                                                                            "/admin/newsletter/subscribers/\(item.id)/",
+                                                                        className:
+                                                                            nil,
+                                                                        permission:
+                                                                            "newsletter:subscribers:read"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Edit",
+                                                                        href:
+                                                                            "/admin/newsletter/\(newsletter.id)/subscribers/\(item.id)/edit/",
+                                                                        className:
+                                                                            "edit",
+                                                                        permission:
+                                                                            "newsletter:subscribers:update"
+                                                                    ),
+                                                                    .init(
+                                                                        title:
+                                                                            "Remove",
+                                                                        href:
+                                                                            "/admin/newsletter/subscribers/remove/?selectedIds=\(item.id)",
+                                                                        className:
+                                                                            "delete",
+                                                                        permission:
+                                                                            "newsletter:subscribers:delete"
+                                                                    ),
+                                                                ],
+                                                                permissions: [
+                                                                    "newsletter:subscribers:update",
+                                                                    "newsletter:subscribers:delete",
+                                                                ]
+                                                            )
+                                                        )
+                                                    )
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                .class("cms-table", "action-table")
+                                .if(canRemove) { $0.class("select-table") }
+                            )
+                        )
+                    )
+                )
+            }
+        }
+        .class("cms-section")
+    }
+}

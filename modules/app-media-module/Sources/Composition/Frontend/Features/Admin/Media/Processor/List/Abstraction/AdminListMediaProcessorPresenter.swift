@@ -27,6 +27,11 @@ protocol AdminListMediaProcessorPresenter: Sendable {
     func renderRemoveConfirmation(
         pageState: NewAdminListPageState,
         search: String?,
-        selectedIds: [String]
+        selectedIds: [String],
+        returnTo: String?
+    ) async throws -> HTMLResponse
+
+    func renderInvalidNoncePage(
+        cancel: String
     ) async throws -> HTMLResponse
 }

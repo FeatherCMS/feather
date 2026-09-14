@@ -53,9 +53,17 @@ struct AdminListMediaProcessorDefaultPresenter: AdminListMediaProcessorPresenter
     func renderRemoveConfirmation(
         pageState: NewAdminListPageState,
         search: String?,
-        selectedIds: [String]
+        selectedIds: [String],
+        returnTo: String?
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        let cancel = NewAdminLocation.removeCancel(
+            path: MediaProcessorRoutes.list.description,
+            returnTo: returnTo
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove selected processors",
@@ -67,14 +75,38 @@ struct AdminListMediaProcessorDefaultPresenter: AdminListMediaProcessorPresenter
                 ),
                 selectedItems: selectedIds,
                 action: MediaProcessorRoutes.remove.description,
-                cancel: NewAdminLocation.url(
-                    path: MediaProcessorRoutes.list.description,
-                    page: pageState.page,
-                    search: search
-                ),
-                submitLabel: "Remove selected"
+                cancel: cancel,
+                submitLabel: "Remove selected",
+                nonceToken: nonceToken,
+                hiddenFields: selectedIds.map {
+                    .init(name: "ids", value: $0)
+                } + [
+                    .init(name: "page", value: String(pageState.page)),
+                    .init(name: "search", value: search ?? ""),
+                    .init(name: "returnTo", value: cancel),
+                ]
             )
         )
+    }
+
+    func renderInvalidNoncePage(
+        cancel: String
+    ) async throws -> HTMLResponse {
+        let page = try await renderEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Remove media processors",
+            content: NewAdminStatusView(
+                state: .init(
+                    title: "Confirmation expired",
+                    message:
+                        "This confirmation is no longer valid. Please try again."
+                ),
+                icon: FeatherIcons.alertCircle(),
+                action: NewAdminButton("Back", href: cancel, style: .secondary)
+            )
+        )
+        return HTMLResponse(content: page.content, status: .badRequest)
     }
 
 }
