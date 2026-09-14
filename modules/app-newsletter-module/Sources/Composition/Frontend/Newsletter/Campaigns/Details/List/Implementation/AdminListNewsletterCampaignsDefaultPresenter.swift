@@ -43,7 +43,10 @@ struct AdminListNewsletterCampaignsDefaultPresenter:
                     isPicker: isPicker,
                     breadcrumb: .init(links: [
                         .init(label: "Admin", link: "/admin/"),
-                        .init(label: "Campaigns", link: "/admin/newsletters/"),
+                        .init(
+                            label: "Campaigns",
+                            link: "/admin/newsletters/campaigns/"
+                        ),
                     ])
                 )
             )

@@ -686,7 +686,7 @@ struct WebPageRichContentEditor: Component {
                     .absoluteString
             )
             context.render(
-                AdminMediaAssetPicker(
+                NewAdminFormFieldMediaPicker(
                     state: .init(
                         field: .init(
                             key: "markdown-image-url",
@@ -706,7 +706,7 @@ struct WebPageRichContentEditor: Component {
                 )
             )
             context.render(
-                AdminMediaAssetPicker(
+                NewAdminFormFieldMediaPicker(
                     state: .init(
                         field: .init(
                             key: "markdown-video-url",

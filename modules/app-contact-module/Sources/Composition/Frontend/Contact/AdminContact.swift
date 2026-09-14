@@ -15,6 +15,9 @@ public struct AdminContact {
     }
 
     public func route(on router: Router<DefaultRequestContext>) {
+        AdminViewContactOverview(renderingEngine: renderingEngine)
+            .controller.route(on: router)
+
         let details = AdminContactFormDetails(renderingEngine: renderingEngine)
         AdminListContactForms(details: details).route(on: router)
         AdminAddContactForm(details: details).route(on: router)

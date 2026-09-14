@@ -6,11 +6,12 @@ struct AdminViewAccountOverview {
 
     init(renderingEngine: any RenderingEngine) {
         self.controller = AdminViewAccountOverviewDefaultController(
-            buildRuntime: { request, _ in
+            buildRuntime: { request, context in
                 (
                     interactor: AdminViewAccountOverviewDefaultInteractor(),
                     presenter: AdminViewAccountOverviewDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

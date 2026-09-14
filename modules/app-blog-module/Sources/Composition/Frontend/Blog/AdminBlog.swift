@@ -27,7 +27,7 @@ public struct AdminBlog {
     public func route(
         on router: Router<DefaultRequestContext>
     ) {
-        AdminGetBlogHome(
+        AdminViewBlogOverview(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)

@@ -35,7 +35,7 @@ struct AdminRemoveNewsletterCampaignDefaultController:
             status: .seeOther,
             headers: [
                 .location: AdminToastRedirect.location(
-                    defaultPath: "/admin/newsletters/",
+                    defaultPath: "/admin/newsletters/campaigns/",
                     title: "Removed",
                     message: "Campaign removed successfully."
                 )
@@ -55,7 +55,7 @@ struct AdminRemoveNewsletterCampaignDefaultController:
             status: .seeOther,
             headers: [
                 .location: AdminToastRedirect.location(
-                    defaultPath: "/admin/newsletters/",
+                    defaultPath: "/admin/newsletters/campaigns/",
                     title: "Removed",
                     message: "Campaigns removed successfully."
                 )

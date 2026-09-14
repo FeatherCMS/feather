@@ -1,0 +1,33 @@
+import FeatherAdmin
+import FeatherContracts
+import FeatherValidation
+import Foundation
+import HTML
+import Hummingbird
+import MediaAdminAPI
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+protocol AdminListMediaAssetPresenter: Sendable {
+
+    func renderListPage(
+        model: AdminListMediaAssetModel,
+        search: String?,
+        permissions: NewAdminListActions,
+    ) async throws -> HTMLResponse
+
+    func renderErrorPage(
+        message: String,
+        picker: Bool
+    ) async throws -> HTMLResponse
+
+    func renderRemoveConfirmation(
+        pageState: NewAdminListPageState,
+        search: String?,
+        parentId: String?,
+        view: AdminListMediaAssetModel.ViewMode,
+        selectedIds: [String]
+    ) async throws -> HTMLResponse
+}

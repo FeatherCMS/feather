@@ -29,7 +29,10 @@ struct AdminGetNewsletterCampaignSubscriberDefaultPresenter:
                 error: nil,
                 breadcrumb: .init(links: [
                     .init(label: "Admin", link: "/admin/"),
-                    .init(label: "Campaigns", link: "/admin/newsletters/"),
+                    .init(
+                        label: "Campaigns",
+                        link: "/admin/newsletters/campaigns/"
+                    ),
                     .init(label: "Subscriber", link: ""),
                 ]),
                 editAction: nil

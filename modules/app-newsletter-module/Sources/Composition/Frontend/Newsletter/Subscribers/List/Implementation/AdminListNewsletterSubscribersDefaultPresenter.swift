@@ -31,7 +31,10 @@ struct AdminListNewsletterSubscribersDefaultPresenter:
                 model: model,
                 breadcrumb: .init(links: [
                     .init(label: "Admin", link: "/admin/"),
-                    .init(label: "Campaigns", link: "/admin/newsletters/"),
+                    .init(
+                        label: "Campaigns",
+                        link: "/admin/newsletters/campaigns/"
+                    ),
                     .init(label: "Subscribers", link: ""),
                 ]),
                 error: error,

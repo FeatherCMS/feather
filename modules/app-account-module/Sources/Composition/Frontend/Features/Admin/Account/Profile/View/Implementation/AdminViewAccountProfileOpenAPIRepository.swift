@@ -42,7 +42,7 @@ struct AdminViewAccountProfileOpenAPIRepository:
         assetId: String?
     ) async throws -> AdminMediaAssetReferenceModel? {
         guard let assetId, !assetId.isEmpty else { return nil }
-        let asset = try? await AdminMediaAssetOpenAPIRepository(
+        let asset = try? await AdminViewMediaAssetOpenAPIRepository(
             api: mediaAPI
         )
         .getAsset(id: assetId)

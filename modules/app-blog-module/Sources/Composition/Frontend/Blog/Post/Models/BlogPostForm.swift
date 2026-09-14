@@ -92,7 +92,7 @@ struct BlogPostForm: Component {
             Div {
 
                 context.render(
-                    AdminMediaAssetPicker(
+                    NewAdminFormFieldMediaPicker(
                         state: .init(
                             field: .init(
                                 key: state.imageAssetId.key,

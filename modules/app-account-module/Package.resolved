@@ -1,5 +1,5 @@
 {
-  "originHash" : "99e6e3f78ca1cc1456f2f83293f33746dfca927ebf39389f351e64a37fbae4ea",
+  "originHash" : "c1bc48d7f7fc1c8476681f015f443cbb0a730c7294c54cc3a32487b562793e95",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -38,6 +38,24 @@
       }
     },
     {
+      "identity" : "feather-storage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-storage",
+      "state" : {
+        "revision" : "d9cf9f07b3b270d34b5ac34fcbbbe765a85b17b8",
+        "version" : "1.0.0-beta.2"
+      }
+    },
+    {
+      "identity" : "feather-storage-fs",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-storage-fs",
+      "state" : {
+        "revision" : "d8ba920af6e6d02740f978ae2f3997a996827125",
+        "version" : "1.0.0-beta.1"
+      }
+    },
+    {
       "identity" : "feather-validation",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-validation",
@@ -60,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hummingbird-project/hummingbird-auth",
       "state" : {
-        "revision" : "eb06dff87b6a158565ab0aea854bcfee80e24f5a",
-        "version" : "2.2.0"
+        "revision" : "c457024e55cd69c1dbb332f3d4aed067a9364dbd",
+        "version" : "2.3.0"
       }
     },
     {
@@ -137,6 +155,15 @@
       }
     },
     {
+      "identity" : "swift-cmark",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-cmark.git",
+      "state" : {
+        "revision" : "924936d0427cb25a61169739a7660230bffa6ea6",
+        "version" : "0.8.0"
+      }
+    },
+    {
       "identity" : "swift-collections",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-collections.git",
@@ -209,12 +236,30 @@
       }
     },
     {
+      "identity" : "swift-markdown",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-markdown",
+      "state" : {
+        "revision" : "3c6f9523da3a1ec2fd829673e472d95b8097a3b8",
+        "version" : "0.8.0"
+      }
+    },
+    {
       "identity" : "swift-metrics",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-metrics.git",
       "state" : {
         "revision" : "087e8074afa97040c3b870c8664fe5482fb87cc4",
         "version" : "2.11.0"
+      }
+    },
+    {
+      "identity" : "swift-mustache",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hummingbird-project/swift-mustache",
+      "state" : {
+        "revision" : "0b91b3127baee1d97c45a7390a49779256b4295d",
+        "version" : "2.1.0"
       }
     },
     {
@@ -317,21 +362,21 @@
       }
     },
     {
+      "identity" : "swift-subprocess",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-subprocess",
+      "state" : {
+        "revision" : "13d087685b95d64d6aac9b94500d347bbe84c39b",
+        "version" : "0.4.0"
+      }
+    },
+    {
       "identity" : "swift-system",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-system.git",
       "state" : {
         "revision" : "b5544ba79a70a0cb3563e75bf26dc198d6b40ed3",
         "version" : "1.7.4"
-      }
-    },
-    {
-      "identity" : "swift-web-standards",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/BinaryBirds/swift-web-standards",
-      "state" : {
-        "revision" : "5368fba24e9b470c9f8f807682c26ca209c4be9f",
-        "version" : "1.0.0-beta.3"
       }
     },
     {

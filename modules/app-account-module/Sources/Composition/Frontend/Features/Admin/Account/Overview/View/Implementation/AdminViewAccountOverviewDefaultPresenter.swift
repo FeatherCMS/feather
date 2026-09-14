@@ -1,27 +1,21 @@
 import FeatherAdmin
-import HTML
 import Hummingbird
-import SGML
 
 struct AdminViewAccountOverviewDefaultPresenter:
     AdminViewAccountOverviewPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderOverview(
         model: AdminViewAccountOverviewModel,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: model.title,
-            description: "This is the admin home interface",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AdminViewAccountOverviewComponent()
         )
     }

@@ -14,6 +14,6 @@ protocol AdminListNewsletterCampaignsController: Sendable {
 
 extension AdminListNewsletterCampaignsController {
     func route(on router: Router<DefaultRequestContext>) {
-        router.get("/admin/newsletters/", use: list)
+        router.get("/admin/newsletters/campaigns/", use: list)
     }
 }

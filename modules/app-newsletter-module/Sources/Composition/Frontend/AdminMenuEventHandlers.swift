@@ -28,7 +28,7 @@ public enum NewsletterAdminMenuEventHandlers {
                     menuKey: "newsletter",
                     label: "Campaigns",
                     icon: "send",
-                    link: "/admin/newsletters/",
+                    link: "/admin/newsletters/campaigns/",
                     permission: "newsletter:campaigns:list"
                 ),
                 .init(

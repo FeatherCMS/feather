@@ -42,7 +42,7 @@ struct NewsletterTable: Component {
             context.render(
                 ListTableSearchForm(
                     state: .init(
-                        action: "/admin/newsletters/",
+                        action: "/admin/newsletters/campaigns/",
                         placeholder: "Quick search campaigns",
                         search: state.search
                     )

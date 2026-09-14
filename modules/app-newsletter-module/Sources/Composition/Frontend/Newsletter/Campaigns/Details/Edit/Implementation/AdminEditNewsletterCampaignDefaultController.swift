@@ -54,7 +54,7 @@ struct AdminEditNewsletterCampaignDefaultController:
                 status: .seeOther,
                 headers: [
                     .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/newsletters/",
+                        defaultPath: "/admin/newsletters/campaigns/",
                         title: "Updated",
                         message: "Campaign updated successfully."
                     )

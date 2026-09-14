@@ -16,7 +16,7 @@ struct AdminViewAccountOverviewDefaultController:
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let model = try await interactor.getOverview()
-        return presenter.renderOverview(
+        return try await presenter.renderOverview(
             model: model,
             permissions: context.currentUserPermissions
         )

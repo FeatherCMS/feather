@@ -258,7 +258,7 @@ struct WebMetadataForm: Component {
         let browsePath =
             "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=png,jpg,jpeg,webp"
         return context.render(
-            AdminMediaAssetPicker(
+            NewAdminFormFieldMediaPicker(
                 state: .init(
                     field: .init(
                         key: field.key,

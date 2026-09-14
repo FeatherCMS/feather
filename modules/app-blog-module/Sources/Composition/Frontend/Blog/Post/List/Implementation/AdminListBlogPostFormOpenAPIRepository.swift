@@ -104,7 +104,7 @@ struct AdminListBlogPostFormOpenAPIRepository {
                 return nil as AdminMediaAssetReferenceModel?
             }
             guard
-                let asset = try? await AdminMediaAssetOpenAPIRepository(
+                let asset = try? await AdminViewMediaAssetOpenAPIRepository(
                     api: api
                 )
                 .getAsset(id: assetId)

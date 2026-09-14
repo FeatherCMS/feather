@@ -26,14 +26,17 @@ struct AdminRemoveNewsletterCampaignDefaultPresenter:
                 state: .init(
                     breadcrumb: .init(links: [
                         .init(label: "Admin", link: "/admin/"),
-                        .init(label: "Campaigns", link: "/admin/newsletters/"),
+                        .init(
+                            label: "Campaigns",
+                            link: "/admin/newsletters/campaigns/"
+                        ),
                     ]),
                     title: "Remove campaign",
                     message:
                         "Are you sure you want to remove this campaign? This action cannot be undone.",
                     submitLabel: "Remove campaign",
                     actionURL: "/admin/newsletters/\(id)/remove/",
-                    cancelURL: "/admin/newsletters/"
+                    cancelURL: "/admin/newsletters/campaigns/"
                 )
             )
         )

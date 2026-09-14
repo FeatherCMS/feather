@@ -15,6 +15,9 @@ public struct AdminNewsletter {
     }
 
     public func route(on router: Router<DefaultRequestContext>) {
+        AdminViewNewsletterOverview(renderingEngine: renderingEngine)
+            .controller.route(on: router)
+
         AdminListNewsletterCampaigns(renderingEngine: renderingEngine)
             .route(on: router)
         AdminGetNewsletterCampaign(renderingEngine: renderingEngine)

@@ -14,7 +14,7 @@ import WebBuilders
 import WebComponents
 import WebFrontend
 
-extension AdminMediaAssetOpenAPIRepository {
+extension AdminViewMediaAssetOpenAPIRepository {
     init(api: BlogAdminAPIClient) {
         self.init(
             api: MediaAdminAPIClient(
@@ -164,7 +164,7 @@ struct AdminMetadataFields: Component {
                         )
                     )
                     context.render(
-                        AdminMediaAssetPicker(
+                        NewAdminFormFieldMediaPicker(
                             state: .init(
                                 field: .init(
                                     key: state.imageUrl.key,
