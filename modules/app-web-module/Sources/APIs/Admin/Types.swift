@@ -28,6 +28,10 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/search/post(webMetadataSearch)`.
     func webMetadataSearch(_ input: Operations.WebMetadataSearch.Input)
         async throws -> Operations.WebMetadataSearch.Output
+    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/lookup`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)`.
+    func webMetadataLookup(_ input: Operations.WebMetadataLookup.Input)
+        async throws -> Operations.WebMetadataLookup.Output
     /// - Remark: HTTP `GET /api/v1/admin/web/metadata/{webMetadataId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/get(webMetadataGet)`.
     func webMetadataGet(_ input: Operations.WebMetadataGet.Input) async throws
@@ -183,6 +187,19 @@ extension APIProtocol {
     ) async throws -> Operations.WebMetadataSearch.Output {
         try await webMetadataSearch(
             Operations.WebMetadataSearch.Input(
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/lookup`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)`.
+    public func webMetadataLookup(
+        headers: Operations.WebMetadataLookup.Input.Headers = .init(),
+        body: Components.RequestBodies.WebMetadataLookupRequestBody
+    ) async throws -> Operations.WebMetadataLookup.Output {
+        try await webMetadataLookup(
+            Operations.WebMetadataLookup.Input(
                 headers: headers,
                 body: body
             )
@@ -709,6 +726,9 @@ public enum Components {
             public var expirationDate: Swift.Double?
             /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/status`.
             public var status: Swift.String
+            /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/availability`.
+            public var availability:
+                Components.Schemas.WebMetadataAvailabilityField
             /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/title`.
             public var title: Swift.String?
             /// - Remark: Generated from `#/components/schemas/WebMetadataDetailSchema/excerpt`.
@@ -742,6 +762,7 @@ public enum Components {
             ///   - publicationDate:
             ///   - expirationDate:
             ///   - status:
+            ///   - availability:
             ///   - title:
             ///   - excerpt:
             ///   - imageUrl:
@@ -764,6 +785,7 @@ public enum Components {
                 publicationDate: Swift.Double? = nil,
                 expirationDate: Swift.Double? = nil,
                 status: Swift.String,
+                availability: Components.Schemas.WebMetadataAvailabilityField,
                 title: Swift.String? = nil,
                 excerpt: Swift.String? = nil,
                 imageUrl: Swift.String? = nil,
@@ -784,6 +806,7 @@ public enum Components {
                 self.publicationDate = publicationDate
                 self.expirationDate = expirationDate
                 self.status = status
+                self.availability = availability
                 self.title = title
                 self.excerpt = excerpt
                 self.imageUrl = imageUrl
@@ -805,6 +828,7 @@ public enum Components {
                 case publicationDate
                 case expirationDate
                 case status
+                case availability
                 case title
                 case excerpt
                 case imageUrl
@@ -817,6 +841,17 @@ public enum Components {
                 case createdAt
                 case updatedAt
             }
+        }
+        /// - Remark: Generated from `#/components/schemas/WebMetadataAvailabilityField`.
+        @frozen
+        public enum WebMetadataAvailabilityField: String, Codable, Hashable,
+            Sendable, CaseIterable
+        {
+            case draft = "draft"
+            case scheduled = "scheduled"
+            case live = "live"
+            case expired = "expired"
+            case archived = "archived"
         }
         /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
         public struct DeleteRequestSchema: Codable, Hashable, Sendable {
@@ -958,6 +993,9 @@ public enum Components {
             public var expirationDate: Swift.Double?
             /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/status`.
             public var status: Components.Schemas.WebMetadataStatusField
+            /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/availability`.
+            public var availability:
+                Components.Schemas.WebMetadataAvailabilityField
             /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/title`.
             public var title: Components.Schemas.WebMetadataTitleField
             /// - Remark: Generated from `#/components/schemas/WebMetadataListItemSchema/createdAt`.
@@ -974,6 +1012,7 @@ public enum Components {
             ///   - publicationDate:
             ///   - expirationDate:
             ///   - status:
+            ///   - availability:
             ///   - title:
             ///   - createdAt:
             ///   - updatedAt:
@@ -987,6 +1026,7 @@ public enum Components {
                 publicationDate: Swift.Double? = nil,
                 expirationDate: Swift.Double? = nil,
                 status: Components.Schemas.WebMetadataStatusField,
+                availability: Components.Schemas.WebMetadataAvailabilityField,
                 title: Components.Schemas.WebMetadataTitleField,
                 createdAt: Components.Schemas.WebMetadataTimestampField,
                 updatedAt: Components.Schemas.WebMetadataTimestampField
@@ -998,6 +1038,7 @@ public enum Components {
                 self.publicationDate = publicationDate
                 self.expirationDate = expirationDate
                 self.status = status
+                self.availability = availability
                 self.title = title
                 self.createdAt = createdAt
                 self.updatedAt = updatedAt
@@ -1010,6 +1051,7 @@ public enum Components {
                 case publicationDate
                 case expirationDate
                 case status
+                case availability
                 case title
                 case createdAt
                 case updatedAt
@@ -1217,6 +1259,82 @@ public enum Components {
             public enum CodingKeys: String, CodingKey {
                 case query
                 case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/WebMetadataLookupRequestSchema`.
+        public struct WebMetadataLookupRequestSchema: Codable, Hashable,
+            Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupRequestSchema/referenceType`.
+            public var referenceType: Swift.String
+            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupRequestSchema/referenceIds`.
+            public var referenceIds: [Swift.String]
+            /// Creates a new `WebMetadataLookupRequestSchema`.
+            ///
+            /// - Parameters:
+            ///   - referenceType:
+            ///   - referenceIds:
+            public init(
+                referenceType: Swift.String,
+                referenceIds: [Swift.String]
+            ) {
+                self.referenceType = referenceType
+                self.referenceIds = referenceIds
+            }
+            public enum CodingKeys: String, CodingKey {
+                case referenceType
+                case referenceIds
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/WebMetadataLookupSchema`.
+        public typealias WebMetadataLookupSchema = [Components.Schemas
+            .WebMetadataLookupItemSchema]
+        /// - Remark: Generated from `#/components/schemas/WebMetadataLookupItemSchema`.
+        public struct WebMetadataLookupItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupItemSchema/referenceId`.
+            public var referenceId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupItemSchema/slug`.
+            public var slug: Swift.String
+            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupItemSchema/publicationDate`.
+            public var publicationDate: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupItemSchema/expirationDate`.
+            public var expirationDate: Swift.Double?
+            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupItemSchema/status`.
+            public var status: Swift.String
+            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupItemSchema/availability`.
+            public var availability:
+                Components.Schemas.WebMetadataAvailabilityField
+            /// Creates a new `WebMetadataLookupItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - referenceId:
+            ///   - slug:
+            ///   - publicationDate:
+            ///   - expirationDate:
+            ///   - status:
+            ///   - availability:
+            public init(
+                referenceId: Swift.String,
+                slug: Swift.String,
+                publicationDate: Swift.Double,
+                expirationDate: Swift.Double? = nil,
+                status: Swift.String,
+                availability: Components.Schemas.WebMetadataAvailabilityField
+            ) {
+                self.referenceId = referenceId
+                self.slug = slug
+                self.publicationDate = publicationDate
+                self.expirationDate = expirationDate
+                self.status = status
+                self.availability = availability
+            }
+            public enum CodingKeys: String, CodingKey {
+                case referenceId
+                case slug
+                case publicationDate
+                case expirationDate
+                case status
+                case availability
             }
         }
         /// - Remark: Generated from `#/components/schemas/WebMetadataPatchSchema`.
@@ -2681,6 +2799,11 @@ public enum Components {
             /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody/content/application\/json`.
             case json(Components.Schemas.DeleteRequestSchema)
         }
+        /// - Remark: Generated from `#/components/requestBodies/WebMetadataLookupRequestBody`.
+        @frozen public enum WebMetadataLookupRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/WebMetadataLookupRequestBody/content/application\/json`.
+            case json(Components.Schemas.WebMetadataLookupRequestSchema)
+        }
         /// - Remark: Generated from `#/components/requestBodies/WebMetadataUpdateRequestBody`.
         @frozen public enum WebMetadataUpdateRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/WebMetadataUpdateRequestBody/content/application\/json`.
@@ -2869,6 +2992,36 @@ public enum Components {
             public init(
                 body: Components.Responses
                     .WebMetadataListItemSearchSchemaSearchResponse.Body
+            ) {
+                self.body = body
+            }
+        }
+        public struct WebMetadataLookupResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/WebMetadataLookupResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/WebMetadataLookupResponse/content/application\/json`.
+                case json(Components.Schemas.WebMetadataLookupSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.WebMetadataLookupSchema {
+                    get throws {
+                        switch self {
+                        case .json(let body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.WebMetadataLookupResponse.Body
+            /// Creates a new `WebMetadataLookupResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(
+                body: Components.Responses.WebMetadataLookupResponse.Body
             ) {
                 self.body = body
             }
@@ -3827,6 +3980,176 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden: Operations.WebMetadataSearch.Output.Forbidden
+            {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/lookup`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)`.
+    public enum WebMetadataLookup {
+        public static let id: Swift.String = "webMetadataLookup"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/lookup/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.WebMetadataLookup.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.WebMetadataLookup.AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.WebMetadataLookup.Input.Headers
+            public var body:
+                Components.RequestBodies.WebMetadataLookupRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.WebMetadataLookup.Input.Headers = .init(),
+                body: Components.RequestBodies.WebMetadataLookupRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// WebMetadata lookup response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.WebMetadataLookupResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.WebMetadataLookupResponse {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.WebMetadataLookup.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.WebMetadataLookup.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.WebMetadataLookup.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.WebMetadataLookup.Output.Forbidden
             {
                 get throws {
                     switch self {

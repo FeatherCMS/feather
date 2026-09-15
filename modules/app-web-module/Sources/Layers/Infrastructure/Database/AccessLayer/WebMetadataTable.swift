@@ -209,6 +209,32 @@ struct WebMetadataTable {
         }
     }
 
+    func lookup(
+        referenceType: String,
+        referenceIDs: [String]
+    ) async throws -> [Row] {
+        guard !referenceIDs.isEmpty else { return [] }
+
+        let values =
+            referenceIDs
+            .map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
+
+        return try await connection.run(
+            query: #"""
+                SELECT *
+                FROM web_metadata
+                WHERE reference_type=\#(referenceType)
+                    AND reference_id IN (\#(unescaped: values))
+                ORDER BY reference_id ASC;
+                """#
+        ) { sequence in
+            try await sequence.collect().map { try Row(from: $0) }
+        }
+    }
+
     func count(
         search: String?,
         referenceType: String?

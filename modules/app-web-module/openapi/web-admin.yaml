@@ -3,8 +3,8 @@ info:
   title: Admin API
   version: 0.1.0
 tags:
-- name: MetadataEntries
-  description: Manage metadata entries.
+- name: WebMetadata
+  description: Manage web metadata.
 - name: WebPages
   description: Manage web pages.
 - name: WebMenus
@@ -21,7 +21,7 @@ paths:
   /api/v1/admin/web/metadata:
     post:
       tags:
-      - MetadataEntries
+      - WebMetadata
       operationId: webMetadataCreate
       requestBody:
         $ref: '#/components/requestBodies/WebMetadataRequestBody'
@@ -36,7 +36,7 @@ paths:
       - bearerAuth: []
     delete:
       tags:
-      - MetadataEntries
+      - WebMetadata
       operationId: webMetadataDelete
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
@@ -52,7 +52,7 @@ paths:
   /api/v1/admin/web/metadata/:
     get:
       tags:
-      - MetadataEntries
+      - WebMetadata
       operationId: webMetadataList
       responses:
         200:
@@ -66,7 +66,7 @@ paths:
   /api/v1/admin/web/metadata/search:
     post:
       tags:
-      - MetadataEntries
+      - WebMetadata
       operationId: webMetadataSearch
       requestBody:
         content:
@@ -83,10 +83,26 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+  /api/v1/admin/web/metadata/lookup:
+    post:
+      tags:
+      - WebMetadata
+      operationId: webMetadataLookup
+      requestBody:
+        $ref: '#/components/requestBodies/WebMetadataLookupRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/WebMetadataLookupResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/web/metadata/{webMetadataId}:
     get:
       tags:
-      - MetadataEntries
+      - WebMetadata
       operationId: webMetadataGet
       parameters:
       - $ref: '#/components/parameters/WebMetadataIdParameter'
@@ -103,7 +119,7 @@ paths:
       - bearerAuth: []
     put:
       tags:
-      - MetadataEntries
+      - WebMetadata
       operationId: webMetadataUpdate
       parameters:
       - $ref: '#/components/parameters/WebMetadataIdParameter'
@@ -122,7 +138,7 @@ paths:
       - bearerAuth: []
     patch:
       tags:
-      - MetadataEntries
+      - WebMetadata
       operationId: webMetadataPatch
       parameters:
       - $ref: '#/components/parameters/WebMetadataIdParameter'
@@ -652,6 +668,8 @@ components:
         status:
           type: string
           example: published
+        availability:
+          $ref: '#/components/schemas/WebMetadataAvailabilityField'
         title:
           type: string
           nullable: true
@@ -692,10 +710,20 @@ components:
       - slug
       - template
       - status
+      - availability
       - noIndex
       - primaryKeyword
       - createdAt
       - updatedAt
+    WebMetadataAvailabilityField:
+      type: string
+      enum:
+      - draft
+      - scheduled
+      - live
+      - expired
+      - archived
+      example: live
     DeleteRequestSchema:
       type: object
       properties:
@@ -778,6 +806,8 @@ components:
           nullable: true
         status:
           $ref: '#/components/schemas/WebMetadataStatusField'
+        availability:
+          $ref: '#/components/schemas/WebMetadataAvailabilityField'
         title:
           $ref: '#/components/schemas/WebMetadataTitleField'
         createdAt:
@@ -788,6 +818,7 @@ components:
       - id
       - slug
       - status
+      - availability
       - title
       - createdAt
       - updatedAt
@@ -892,6 +923,51 @@ components:
       required:
       - query
       - data
+    WebMetadataLookupRequestSchema:
+      type: object
+      properties:
+        referenceType:
+          type: string
+          example: web.page
+        referenceIds:
+          type: array
+          items:
+            type: string
+            example: wp_home
+      required:
+      - referenceType
+      - referenceIds
+    WebMetadataLookupSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebMetadataLookupItemSchema'
+    WebMetadataLookupItemSchema:
+      type: object
+      properties:
+        referenceId:
+          type: string
+          example: wp_home
+        slug:
+          type: string
+          example: homepage
+        publicationDate:
+          type: number
+          format: double
+          example: 1.76e+9
+        expirationDate:
+          type: number
+          nullable: true
+        status:
+          type: string
+          example: draft
+        availability:
+          $ref: '#/components/schemas/WebMetadataAvailabilityField'
+      required:
+      - referenceId
+      - slug
+      - publicationDate
+      - status
+      - availability
     WebMetadataPatchSchema:
       type: object
       properties:
@@ -1644,6 +1720,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/WebMetadataListItemSearchSchema'
+    WebMetadataLookupResponse:
+      description: WebMetadata lookup response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMetadataLookupSchema'
     WebPageDetailResponse:
       description: WebPage response
       content:
@@ -1752,6 +1834,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DeleteRequestSchema'
+      required: true
+    WebMetadataLookupRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMetadataLookupRequestSchema'
       required: true
     WebMetadataUpdateRequestBody:
       content:

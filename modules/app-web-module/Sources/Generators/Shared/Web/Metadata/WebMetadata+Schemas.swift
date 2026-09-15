@@ -45,6 +45,15 @@ public struct WebMetadataStatusField: StringSchemaRepresentable {
     public init() {}
 }
 
+public struct WebMetadataAvailabilityField: StringSchemaRepresentable {
+    public var allowedValues: [String]? = [
+        "draft", "scheduled", "live", "expired", "archived",
+    ]
+    public var example: String? = "live"
+
+    public init() {}
+}
+
 public struct WebMetadataTitleField: StringSchemaRepresentable {
     public var example: String? = "Hello world"
 

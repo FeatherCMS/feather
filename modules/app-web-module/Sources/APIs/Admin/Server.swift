@@ -85,6 +85,19 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.webMetadataLookup(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix(
+                "/api/v1/admin/web/metadata/lookup"
+            )
+        )
+        try transport.register(
+            {
                 try await server.webMetadataGet(
                     request: $0,
                     body: $1,
@@ -716,6 +729,92 @@ extension UniversalServer where APIHandler: APIProtocol {
                     )
                 }
                 return Operations.WebMetadataSearch.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case .ok(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case .json(let value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case .unauthorized(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .forbidden(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .undocumented(let statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/lookup`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)`.
+    fileprivate func webMetadataLookup(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.WebMetadataLookup.id,
+            using: {
+                APIHandler.webMetadataLookup($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.WebMetadataLookup.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
+                    )
+                )
+                let contentType = converter.extractContentTypeIfPresent(
+                    in: request.headerFields
+                )
+                let body: Components.RequestBodies.WebMetadataLookupRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.WebMetadataLookupRequestSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure(
+                        "bestContentType chose an invalid content type."
+                    )
+                }
+                return Operations.WebMetadataLookup.Input(
                     headers: headers,
                     body: body
                 )

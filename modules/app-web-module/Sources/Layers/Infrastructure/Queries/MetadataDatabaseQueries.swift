@@ -171,6 +171,19 @@ public struct MetadataDatabaseQueries: MetadataQueries {
         return .init(items: items)
     }
 
+    public func lookup(
+        referenceType: String,
+        referenceIDs: [String]
+    ) async throws -> [MetadataList.Item] {
+        let table = WebMetadataTable(connection: context.connection)
+        return
+            try await table.lookup(
+                referenceType: referenceType,
+                referenceIDs: referenceIDs
+            )
+            .map(\.asQueryListItem)
+    }
+
     public func count(
         query: MetadataList.Query
     ) async throws -> Int {

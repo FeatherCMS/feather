@@ -9,6 +9,10 @@ struct WebMetadataSearchPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { WebMetadataSearchOperation() }
 }
 
+struct WebMetadataLookupPathItems: PathItemRepresentable {
+    var post: OperationRepresentable? { WebMetadataLookupOperation() }
+}
+
 struct WebMetadataListPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { WebMetadataListOperation() }
 }

@@ -341,6 +341,84 @@ public struct Client: APIProtocol {
             }
         )
     }
+    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/lookup`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)`.
+    public func webMetadataLookup(_ input: Operations.WebMetadataLookup.Input)
+        async throws -> Operations.WebMetadataLookup.Output
+    {
+        try await client.send(
+            input: input,
+            forOperation: Operations.WebMetadataLookup.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/api/v1/admin/web/metadata/lookup",
+                    parameters: []
+                )
+                var request: HTTPTypes.HTTPRequest = .init(
+                    soar_path: path,
+                    method: .post
+                )
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(
+                    in: &request.headerFields,
+                    contentTypes: input.headers.accept
+                )
+                let body: OpenAPIRuntime.HTTPBody?
+                switch input.body {
+                case .json(let value):
+                    body = try converter.setRequiredRequestBodyAsJSON(
+                        value,
+                        headerFields: &request.headerFields,
+                        contentType: "application/json; charset=utf-8"
+                    )
+                }
+                return (request, body)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(
+                        in: response.headerFields
+                    )
+                    let body:
+                        Components.Responses.WebMetadataLookupResponse.Body
+                    let chosenContentType = try converter.bestContentType(
+                        received: contentType,
+                        options: [
+                            "application/json"
+                        ]
+                    )
+                    switch chosenContentType {
+                    case "application/json":
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.WebMetadataLookupSchema.self,
+                            from: responseBody,
+                            transforming: { value in
+                                .json(value)
+                            }
+                        )
+                    default:
+                        preconditionFailure(
+                            "bestContentType chose an invalid content type."
+                        )
+                    }
+                    return .ok(.init(body: body))
+                case 401:
+                    return .unauthorized(.init())
+                case 403:
+                    return .forbidden(.init())
+                default:
+                    return .undocumented(
+                        statusCode: response.status.code,
+                        .init(
+                            headerFields: response.headerFields,
+                            body: responseBody
+                        )
+                    )
+                }
+            }
+        )
+    }
     /// - Remark: HTTP `GET /api/v1/admin/web/metadata/{webMetadataId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/get(webMetadataGet)`.
     public func webMetadataGet(_ input: Operations.WebMetadataGet.Input)

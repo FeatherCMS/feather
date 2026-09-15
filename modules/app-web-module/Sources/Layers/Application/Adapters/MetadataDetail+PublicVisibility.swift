@@ -9,6 +9,17 @@ import WebDomain
 
 extension MetadataDetail {
 
+    public func availability(
+        at date: Date
+    ) -> Metadata.Availability {
+        .init(
+            status: status,
+            publicationDate: publicationDate,
+            expirationDate: expirationDate,
+            at: date
+        )
+    }
+
     public func isPublic(
         at date: Date
     ) -> Bool {

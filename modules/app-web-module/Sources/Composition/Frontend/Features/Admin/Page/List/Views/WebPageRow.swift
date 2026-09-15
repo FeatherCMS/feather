@@ -1,5 +1,4 @@
 import FeatherAdmin
-import FeatherContracts
 import Foundation
 import HTML
 import Hummingbird
@@ -20,6 +19,13 @@ struct WebPageRow: Component {
                 context.build(NewAdminListRowCheckbox(id: page.id))
             }
             titleCell(context: &context)
+            statusCell(context: &context)
+            Td(
+                page.metadata.publicationDate.map {
+                    DateFormatting.formatUnixTimestamp($0)
+                } ?? "-"
+            )
+            .data("label", "Publication")
             Td {
                 context.build(
                     NewAdminChip(
@@ -29,9 +35,6 @@ struct WebPageRow: Component {
                 )
             }
             .data("label", "Availability")
-            statusCell(context: &context)
-            Td(format(page.metadata.publicationDate))
-                .data("label", "Publication")
             context.build(
                 NewAdminListRowActions(
                     label: "Actions",
@@ -106,9 +109,4 @@ struct WebPageRow: Component {
         return slug.isEmpty ? nil : "/\(slug)/"
     }
 
-    private func format(_ value: String) -> String {
-        guard let timestamp = AdminMetadataSchemaBuilder.parseTimestamp(value)
-        else { return "-" }
-        return DateFormatting.formatUnixTimestamp(timestamp)
-    }
 }
