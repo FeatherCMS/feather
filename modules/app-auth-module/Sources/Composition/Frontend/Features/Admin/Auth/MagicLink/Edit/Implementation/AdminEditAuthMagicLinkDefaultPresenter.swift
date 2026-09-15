@@ -52,15 +52,6 @@ struct AdminEditAuthMagicLinkDefaultPresenter: AdminEditAuthMagicLinkPresenter {
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Magic links", link: "/admin/auth/magic-links/"),
-        ]
-    }
 
     func renderPage(
         id: String,
@@ -81,7 +72,7 @@ struct AdminEditAuthMagicLinkDefaultPresenter: AdminEditAuthMagicLinkPresenter {
                     id: id,
                     isEdited: isEdited,
                     form: form,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: AuthMagicLinkRoutes.breadcrumb
                 )
             )
         )
@@ -100,7 +91,7 @@ struct AdminEditAuthMagicLinkDefaultPresenter: AdminEditAuthMagicLinkPresenter {
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: AuthMagicLinkRoutes.breadcrumb
                 )
             )
         )

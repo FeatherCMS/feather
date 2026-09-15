@@ -39,7 +39,9 @@ struct AdminListWebMenuItemDefaultPresenter:
                     state: .init(
                         info: "Unable to load web menu items.",
                         message: error,
-                        breadcrumb: webMenuItemBreadcrumbState(menuId: menuId)
+                        breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
+                            RouterPath(menuId)
+                        )
                     )
                 )
             )
@@ -53,7 +55,9 @@ struct AdminListWebMenuItemDefaultPresenter:
                     state: .init(
                         info: "Forbidden",
                         message: "Your account cannot access web menu items.",
-                        breadcrumb: webMenuItemBreadcrumbState(menuId: menuId)
+                        breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
+                            RouterPath(menuId)
+                        )
                     )
                 )
             )
@@ -73,7 +77,9 @@ struct AdminListWebMenuItemDefaultPresenter:
                         total: model.total
                     ),
                     search: search,
-                    breadcrumb: webMenuItemBreadcrumbState(menuId: menuId)
+                    breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
+                        RouterPath(menuId)
+                    )
                 )
             )
         )
@@ -93,7 +99,9 @@ struct AdminListWebMenuItemDefaultPresenter:
             context: context,
             title: "Remove selected items",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: webMenuItemBreadcrumbState(menuId: menuId),
+                breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
+                    RouterPath(menuId)
+                ),
                 pageHeader: .init(
                     title: "Remove selected items",
                     description: "This action cannot be undone."
@@ -115,14 +123,4 @@ struct AdminListWebMenuItemDefaultPresenter:
         )
     }
 
-    private func webMenuItemBreadcrumbState(
-        menuId: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Web", link: "/admin/web/"),
-            .init(label: "Menus", link: "/admin/web/menus/"),
-            .init(label: "Menu", link: "/admin/web/menus/\(menuId)/"),
-        ]
-    }
 }

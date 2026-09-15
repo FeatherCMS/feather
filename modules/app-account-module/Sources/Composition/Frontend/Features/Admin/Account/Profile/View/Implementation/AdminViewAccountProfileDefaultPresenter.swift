@@ -50,11 +50,4 @@ struct AdminViewAccountProfileDefaultPresenter:
         )
     }
 
-    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Account", link: "/admin/account/"),
-            .init(label: "Profile", link: "/admin/account/profile/"),
-        ]
-    }
 }

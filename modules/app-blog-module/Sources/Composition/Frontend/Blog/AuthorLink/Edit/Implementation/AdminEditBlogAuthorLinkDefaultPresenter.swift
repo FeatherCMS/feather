@@ -32,7 +32,7 @@ struct AdminEditBlogAuthorLinkDefaultPresenter: AdminEditBlogAuthorLinkPresenter
                     menuId: menuId,
                     id: id,
                     form: state,
-                    breadcrumb: breadcrumb(menuId: menuId, id: id)
+                    breadcrumb: BlogAdminRoutes.authorLinksBreadcrumb(RouterPath(menuId))
                 )
             )
         )
@@ -53,16 +53,10 @@ struct AdminEditBlogAuthorLinkDefaultPresenter: AdminEditBlogAuthorLinkPresenter
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: breadcrumb(menuId: menuId, id: id)
+                    breadcrumb: BlogAdminRoutes.authorLinksBreadcrumb(RouterPath(menuId))
                 )
             )
         )
     }
 
-    func breadcrumb(
-        menuId: String,
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        BlogAdminRoutes.authorLinksBreadcrumb(RouterPath(menuId))
-    }
 }

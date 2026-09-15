@@ -53,7 +53,7 @@ struct AdminEditBlogSettingsDefaultController:
                         canEdit: canEdit,
                         error: error.displayMessage
                     ),
-                    breadcrumb: breadcrumb()
+                    breadcrumb: BlogAdminRoutes.breadcrumb
                 ),
                 permissions: permissions
             )
@@ -63,7 +63,7 @@ struct AdminEditBlogSettingsDefaultController:
             state: .init(
                 canEdit: canEdit,
                 form: makeFormState(from: settings, canEdit: canEdit),
-                breadcrumb: breadcrumb()
+                breadcrumb: BlogAdminRoutes.breadcrumb
             ),
             permissions: permissions
         )
@@ -109,7 +109,7 @@ struct AdminEditBlogSettingsDefaultController:
                     state: .init(
                         canEdit: canEdit,
                         form: form,
-                        breadcrumb: breadcrumb()
+                        breadcrumb: BlogAdminRoutes.breadcrumb
                     ),
                     permissions: permissions
                 )
@@ -136,7 +136,7 @@ struct AdminEditBlogSettingsDefaultController:
                     state: .init(
                         canEdit: canEdit,
                         form: form,
-                        breadcrumb: breadcrumb()
+                        breadcrumb: BlogAdminRoutes.breadcrumb
                     ),
                     permissions: permissions
                 )
@@ -241,7 +241,4 @@ struct AdminEditBlogSettingsDefaultController:
         )
     }
 
-    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        BlogAdminRoutes.breadcrumb
-    }
 }

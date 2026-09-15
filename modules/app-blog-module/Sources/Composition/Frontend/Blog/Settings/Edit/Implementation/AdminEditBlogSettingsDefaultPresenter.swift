@@ -46,7 +46,4 @@ struct AdminEditBlogSettingsDefaultPresenter:
         )
     }
 
-    func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        BlogAdminRoutes.breadcrumb
-    }
 }

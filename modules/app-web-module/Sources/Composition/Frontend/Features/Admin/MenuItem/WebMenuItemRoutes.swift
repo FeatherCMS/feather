@@ -27,15 +27,23 @@ enum WebMenuItemRoutes {
     }
 
     static func breadcrumb(_ menuID: RouterPath) -> [NewAdminBreadcrumb.Link] {
+        menuBreadcrumb(menuID) + [
+            .init(
+                label: "Items",
+                link: list(menuID).description
+            ),
+        ]
+    }
+
+    static func menuBreadcrumb(
+        _ menuID: RouterPath
+    ) -> [NewAdminBreadcrumb.Link] {
         WebAdminRoutes.breadcrumb + [
             .init(
                 label: "Menus",
                 link: WebMenuRoutes.list.description
             ),
-            .init(
-                label: "Items",
-                link: list(menuID).description
-            ),
+            .init(label: "Menu", link: WebMenuRoutes.details(menuID).description),
         ]
     }
 }

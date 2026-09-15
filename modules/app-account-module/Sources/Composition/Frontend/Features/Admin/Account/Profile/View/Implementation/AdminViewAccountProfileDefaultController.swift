@@ -58,17 +58,10 @@ struct AdminViewAccountProfileDefaultController:
                 canEdit: permissions.contains(
                     AccountPermissions.Profile.update.rawValue
                 ),
-                breadcrumb: breadcrumb()
+                breadcrumb: AccountAdminRoutes.profileBreadcrumb
             ),
             permissions: permissions
         )
     }
 
-    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Account", link: "/admin/account/"),
-            .init(label: "Profile", link: "/admin/account/profile/"),
-        ]
-    }
 }

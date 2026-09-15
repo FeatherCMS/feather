@@ -20,7 +20,4 @@ protocol AdminEditWebMetadataPresenter: Sendable {
         configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> HTMLResponse
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link]
 }

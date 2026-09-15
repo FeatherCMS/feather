@@ -19,7 +19,6 @@ struct AdminViewBlogAuthorLinkDefaultPresenter: AdminViewBlogAuthorLinkPresenter
 
     func renderDetailsPage(
         rule: BlogAuthorLinkDetailsModel,
-        breadcrumb: [NewAdminBreadcrumb.Link],
         permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
@@ -29,7 +28,9 @@ struct AdminViewBlogAuthorLinkDefaultPresenter: AdminViewBlogAuthorLinkPresenter
             content: BlogAuthorLinkDetails(
                 state: .init(
                     rule: rule,
-                    breadcrumb: breadcrumb,
+                    breadcrumb: BlogAdminRoutes.authorLinksBreadcrumb(
+                        RouterPath(rule.menuId)
+                    ),
                     permissions: permissions
                 )
             )
@@ -37,9 +38,9 @@ struct AdminViewBlogAuthorLinkDefaultPresenter: AdminViewBlogAuthorLinkPresenter
     }
 
     func renderErrorPage(
+        menuId: String,
         info: String,
         message: String,
-        breadcrumb: [NewAdminBreadcrumb.Link],
         permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
@@ -50,16 +51,12 @@ struct AdminViewBlogAuthorLinkDefaultPresenter: AdminViewBlogAuthorLinkPresenter
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: breadcrumb
+                    breadcrumb: BlogAdminRoutes.authorLinksBreadcrumb(
+                        RouterPath(menuId)
+                    )
                 )
             )
         )
     }
 
-    func breadcrumb(
-        menuId: String,
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        BlogAdminRoutes.authorLinksBreadcrumb(RouterPath(menuId))
-    }
 }

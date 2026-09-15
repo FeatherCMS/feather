@@ -24,16 +24,6 @@ struct AdminRemoveAuthEmailDefaultPresenter:
     let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Emails", link: "/admin/auth/emails/"),
-        ]
-    }
-
     func renderPage(
         item: NewAdminRemoveItemContext,
         identityId: String
@@ -49,7 +39,7 @@ struct AdminRemoveAuthEmailDefaultPresenter:
                 state: .init(
                     item: item,
                     identityId: identityId,
-                    breadcrumb: breadcrumb(id: item.id),
+                    breadcrumb: AuthEmailRoutes.breadcrumb,
                     nonceToken: nonceToken
                 )
             )
@@ -84,7 +74,7 @@ struct AdminRemoveAuthEmailDefaultPresenter:
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: breadcrumb(id: item.id)
+                    breadcrumb: AuthEmailRoutes.breadcrumb
                 )
             )
         )

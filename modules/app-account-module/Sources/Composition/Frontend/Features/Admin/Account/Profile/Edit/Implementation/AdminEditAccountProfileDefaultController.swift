@@ -55,7 +55,7 @@ struct AdminEditAccountProfileDefaultController:
                     profileImageAssetId: profile.profileImageAssetId,
                     selectedImageAsset: profile.profileImageAsset
                 ),
-                breadcrumb: breadcrumb()
+                breadcrumb: AccountAdminRoutes.profileBreadcrumb
             ),
             permissions: permissions
         )
@@ -109,7 +109,7 @@ struct AdminEditAccountProfileDefaultController:
                     id: profile.id,
                     isEdited: false,
                     form: state,
-                    breadcrumb: breadcrumb()
+                    breadcrumb: AccountAdminRoutes.profileBreadcrumb
                 )
             )
         }
@@ -225,7 +225,7 @@ struct AdminEditAccountProfileDefaultController:
                 lastName: lastName,
                 profileImageAssetId: profileImageAssetId
             ),
-            breadcrumb: breadcrumb()
+            breadcrumb: AccountAdminRoutes.profileBreadcrumb
         )
         var errors: [String: String] = [:]
         for failure in failures {
@@ -250,7 +250,7 @@ struct AdminEditAccountProfileDefaultController:
                 lastName: lastName,
                 profileImageAssetId: profileImageAssetId
             ),
-            breadcrumb: breadcrumb()
+            breadcrumb: AccountAdminRoutes.profileBreadcrumb
         )
         state.form.error = format(error: error)
         return state
@@ -271,7 +271,7 @@ struct AdminEditAccountProfileDefaultController:
                 lastName: lastName,
                 profileImageAssetId: profileImageAssetId
             ),
-            breadcrumb: breadcrumb()
+            breadcrumb: AccountAdminRoutes.profileBreadcrumb
         )
         state.form.error = message
         return state
@@ -297,11 +297,4 @@ struct AdminEditAccountProfileDefaultController:
         .response(from: request, context: context)
     }
 
-    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Account", link: "/admin/account/"),
-            .init(label: "Profile", link: "/admin/account/profile/"),
-        ]
-    }
 }

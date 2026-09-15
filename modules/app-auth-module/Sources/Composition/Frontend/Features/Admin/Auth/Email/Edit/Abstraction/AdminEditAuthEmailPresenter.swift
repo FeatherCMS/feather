@@ -25,9 +25,6 @@ protocol AdminEditAuthEmailPresenter: Sendable {
         email: String
     ) -> AuthEmailForm.State
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link]
 
     func renderPage(
         id: String,

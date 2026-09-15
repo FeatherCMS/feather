@@ -78,10 +78,7 @@ struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
                 total: result.total,
                 search: search ?? "",
                 userID: userID,
-                breadcrumb: [
-                    .init(label: "Admin", link: "/admin/"),
-                    .init(label: "Auth", link: "/admin/auth/"),
-                ]
+                breadcrumb: AuthEmailRoutes.listBreadcrumb
             )
             return try await presenter.renderPage(state: state)
         }

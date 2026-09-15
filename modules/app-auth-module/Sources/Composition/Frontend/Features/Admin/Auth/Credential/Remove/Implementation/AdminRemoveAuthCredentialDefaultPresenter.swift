@@ -37,7 +37,9 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
                 state: .init(
                     item: item,
                     identityId: model.userId,
-                    breadcrumb: breadcrumb(model: model),
+                    breadcrumb: AuthCredentialRoutes.detailsBreadcrumb(
+                        RouterPath(model.userId)
+                    ),
                     nonceToken: nonceToken
                 )
             )
@@ -72,34 +74,12 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(label: "Auth", link: "/admin/auth/"),
-                        .init(
-                            label: "Credentials",
-                            link: "/admin/auth/credentials/"
-                        ),
-                        .init(
-                            label: "Remove",
-                            link: "/admin/auth/credentials/\(item.id)/remove/"
-                        ),
-                    ]
+                    breadcrumb: AuthCredentialRoutes.removeBreadcrumb(
+                        RouterPath(item.id)
+                    )
                 )
             )
         )
     }
 
-    private func breadcrumb(model: AuthCredentialDetailsModel)
-        -> [NewAdminBreadcrumb.Link]
-    {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Credentials", link: "/admin/auth/credentials/"),
-            .init(
-                label: "User",
-                link: "/admin/auth/credentials/\(model.userId)/"
-            ),
-        ]
-    }
 }

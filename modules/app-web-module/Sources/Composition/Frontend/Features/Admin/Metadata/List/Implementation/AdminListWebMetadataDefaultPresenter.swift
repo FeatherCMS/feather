@@ -40,7 +40,7 @@ struct AdminListWebMetadataDefaultPresenter:
                     state: .init(
                         info: "Unable to load web metadata.",
                         message: error,
-                        breadcrumb: webMetadataBreadcrumbState()
+                        breadcrumb: WebAdminRoutes.breadcrumb
                     )
                 )
             )
@@ -54,7 +54,7 @@ struct AdminListWebMetadataDefaultPresenter:
                     state: .init(
                         info: "Forbidden",
                         message: "Your account cannot access web metadata.",
-                        breadcrumb: webMetadataBreadcrumbState()
+                        breadcrumb: WebAdminRoutes.breadcrumb
                     )
                 )
             )
@@ -75,16 +75,10 @@ struct AdminListWebMetadataDefaultPresenter:
                     search: search,
                     referenceType: referenceType,
                     referenceTypeOptions: referenceTypeOptions,
-                    breadcrumb: webMetadataBreadcrumbState()
+                    breadcrumb: WebAdminRoutes.breadcrumb
                 )
             )
         )
     }
 
-    private func webMetadataBreadcrumbState() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Web", link: "/admin/web/"),
-        ]
-    }
 }

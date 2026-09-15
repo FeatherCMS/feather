@@ -46,7 +46,7 @@ struct AdminListAuthMagicLinkDefaultPresenter:
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: breadcrumb()
+                    breadcrumb: AuthMagicLinkRoutes.listBreadcrumb
                 )
             )
         )
@@ -66,7 +66,7 @@ struct AdminListAuthMagicLinkDefaultPresenter:
             context: context,
             title: "Remove selected magic links",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: breadcrumb(),
+                breadcrumb: AuthMagicLinkRoutes.listBreadcrumb,
                 pageHeader: .init(
                     title: "Remove selected magic links",
                     description: "Review the selected links before removal."
@@ -107,12 +107,6 @@ struct AdminListAuthMagicLinkDefaultPresenter:
         )
     }
 
-    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-        ]
-    }
 
     private func listLocation(page: Int, search: String?, userID: String?)
         -> String

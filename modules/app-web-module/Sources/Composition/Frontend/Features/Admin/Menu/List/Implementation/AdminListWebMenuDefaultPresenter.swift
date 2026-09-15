@@ -39,7 +39,7 @@ struct AdminListWebMenuDefaultPresenter:
                     state: .init(
                         info: "Unable to load web menus.",
                         message: error,
-                        breadcrumb: webMenuBreadcrumbState()
+                        breadcrumb: WebMenuRoutes.listBreadcrumb
                     )
                 )
             )
@@ -53,7 +53,7 @@ struct AdminListWebMenuDefaultPresenter:
                     state: .init(
                         info: "Forbidden",
                         message: "Your account cannot access web menus.",
-                        breadcrumb: webMenuBreadcrumbState()
+                        breadcrumb: WebMenuRoutes.listBreadcrumb
                     )
                 )
             )
@@ -72,7 +72,7 @@ struct AdminListWebMenuDefaultPresenter:
                         total: model.total
                     ),
                     search: search ?? "",
-                    breadcrumb: webMenuBreadcrumbState()
+                    breadcrumb: WebMenuRoutes.listBreadcrumb
                 )
             )
         )
@@ -91,7 +91,7 @@ struct AdminListWebMenuDefaultPresenter:
             context: context,
             title: "Remove selected menus",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: webMenuBreadcrumbState(),
+                breadcrumb: WebMenuRoutes.listBreadcrumb,
                 pageHeader: .init(
                     title: "Remove selected menus",
                     description: "This action cannot be undone."
@@ -111,10 +111,4 @@ struct AdminListWebMenuDefaultPresenter:
         )
     }
 
-    private func webMenuBreadcrumbState() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Web", link: "/admin/web/"),
-        ]
-    }
 }

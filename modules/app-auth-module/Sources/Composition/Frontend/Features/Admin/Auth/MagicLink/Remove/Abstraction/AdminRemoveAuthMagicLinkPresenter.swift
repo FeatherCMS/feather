@@ -19,10 +19,6 @@ import WebComponents
 
 protocol AdminRemoveAuthMagicLinkPresenter: Sendable {
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link]
-
     func renderPage(
         item: NewAdminRemoveItemContext,
         credentialId: String,

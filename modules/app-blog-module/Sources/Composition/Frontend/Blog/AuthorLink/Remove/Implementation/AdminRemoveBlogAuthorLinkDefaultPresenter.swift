@@ -34,7 +34,9 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
                     menuId: menuId,
                     id: item.id,
                     label: item.label,
-                    breadcrumb: breadcrumb(menuId: menuId, id: item.id),
+                    breadcrumb: BlogAdminRoutes.authorLinksBreadcrumb(
+                        RouterPath(menuId)
+                    ),
                     nonceToken: nonceToken
                 )
             )
@@ -55,16 +57,12 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: breadcrumb(menuId: menuId, id: id)
+                    breadcrumb: BlogAdminRoutes.authorLinksBreadcrumb(
+                        RouterPath(menuId)
+                    )
                 )
             )
         )
     }
 
-    func breadcrumb(
-        menuId: String,
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        BlogAdminRoutes.authorLinksBreadcrumb(RouterPath(menuId))
-    }
 }

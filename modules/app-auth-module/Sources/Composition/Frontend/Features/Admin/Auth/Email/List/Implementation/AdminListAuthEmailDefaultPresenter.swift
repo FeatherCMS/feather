@@ -46,7 +46,7 @@ struct AdminListAuthEmailDefaultPresenter:
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: breadcrumb()
+                    breadcrumb: AuthEmailRoutes.listBreadcrumb
                 )
             )
         )
@@ -66,7 +66,7 @@ struct AdminListAuthEmailDefaultPresenter:
             context: context,
             title: "Remove selected emails",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: breadcrumb(),
+                breadcrumb: AuthEmailRoutes.listBreadcrumb,
                 pageHeader: .init(
                     title: "Remove selected emails",
                     description:
@@ -108,12 +108,6 @@ struct AdminListAuthEmailDefaultPresenter:
         )
     }
 
-    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-        ]
-    }
 
     private func listLocation(page: Int, search: String?, userID: String?)
         -> String

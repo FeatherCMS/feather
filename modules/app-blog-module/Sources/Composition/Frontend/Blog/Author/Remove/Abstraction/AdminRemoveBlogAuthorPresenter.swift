@@ -23,7 +23,4 @@ protocol AdminRemoveBlogAuthorPresenter: Sendable {
         message: String
     ) async throws -> HTMLResponse
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link]
 }

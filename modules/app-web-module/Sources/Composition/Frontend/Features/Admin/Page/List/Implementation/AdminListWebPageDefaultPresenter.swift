@@ -38,7 +38,7 @@ struct AdminListWebPageDefaultPresenter:
                     state: .init(
                         info: "Unable to load web pages.",
                         message: error,
-                        breadcrumb: webPageBreadcrumbState()
+                        breadcrumb: WebPageRoutes.listBreadcrumb
                     )
                 )
             )
@@ -52,7 +52,7 @@ struct AdminListWebPageDefaultPresenter:
                     state: .init(
                         info: "Forbidden",
                         message: "Your account cannot access web pages.",
-                        breadcrumb: webPageBreadcrumbState()
+                        breadcrumb: WebPageRoutes.listBreadcrumb
                     )
                 )
             )
@@ -71,7 +71,7 @@ struct AdminListWebPageDefaultPresenter:
                         total: model.total
                     ),
                     search: search,
-                    breadcrumb: webPageBreadcrumbState()
+                    breadcrumb: WebPageRoutes.listBreadcrumb
                 )
             )
         )
@@ -90,7 +90,7 @@ struct AdminListWebPageDefaultPresenter:
             context: context,
             title: "Remove selected pages",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: webPageBreadcrumbState(),
+                breadcrumb: WebPageRoutes.listBreadcrumb,
                 pageHeader: .init(
                     title: "Remove selected pages",
                     description: "This action cannot be undone."
@@ -110,10 +110,4 @@ struct AdminListWebPageDefaultPresenter:
         )
     }
 
-    private func webPageBreadcrumbState() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Web", link: "/admin/web/"),
-        ]
-    }
 }

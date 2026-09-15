@@ -25,9 +25,8 @@ struct AdminRemoveAuthSessionDefaultPresenter:
                 state: .init(
                     item: item,
                     identityId: identityId,
-                    breadcrumb: breadcrumb(
-                        identityId: identityId,
-                        sessionId: item.id
+                    breadcrumb: AuthSessionRoutes.detailsBreadcrumb(
+                        RouterPath(identityId)
                     ),
                     nonceToken: nonceToken
                 )
@@ -64,27 +63,12 @@ struct AdminRemoveAuthSessionDefaultPresenter:
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: breadcrumb(
-                        identityId: identityId,
-                        sessionId: item.id
+                    breadcrumb: AuthSessionRoutes.detailsBreadcrumb(
+                        RouterPath(identityId)
                     )
                 )
             )
         )
     }
 
-    func breadcrumb(
-        identityId: String,
-        sessionId: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "User", link: "/admin/user/"),
-            .init(label: "Identities", link: "/admin/user/identities/"),
-            .init(
-                label: "Details",
-                link: "/admin/user/identities/\(identityId)/"
-            ),
-        ]
-    }
 }

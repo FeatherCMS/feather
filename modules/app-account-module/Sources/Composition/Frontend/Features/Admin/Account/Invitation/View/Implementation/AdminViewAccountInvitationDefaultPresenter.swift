@@ -12,7 +12,6 @@ struct AdminViewAccountInvitationDefaultPresenter:
 
     func renderDetailsPage(
         invitation: AccountInvitationDetailsModel,
-        breadcrumb: [NewAdminBreadcrumb.Link],
         permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
@@ -20,7 +19,12 @@ struct AdminViewAccountInvitationDefaultPresenter:
             context: context,
             title: "User invitation details",
             content: AccountInvitationDetails(
-                state: .init(invitation: invitation, breadcrumb: breadcrumb)
+                state: .init(
+                    invitation: invitation,
+                    breadcrumb: AccountAdminRoutes.invitationDetailsBreadcrumb(
+                        RouterPath(invitation.id)
+                    )
+                )
             )
         )
     }
@@ -28,7 +32,6 @@ struct AdminViewAccountInvitationDefaultPresenter:
     func renderErrorPage(
         info: String,
         message: String,
-        breadcrumb: [NewAdminBreadcrumb.Link],
         permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
@@ -42,13 +45,4 @@ struct AdminViewAccountInvitationDefaultPresenter:
         )
     }
 
-    func breadcrumb(id: String) -> [NewAdminBreadcrumb.Link] {
-        AccountAdminRoutes.invitationBreadcrumb + [
-            .init(
-                label: "Details",
-                link: AccountAdminRoutes.invitationDetails(RouterPath(id))
-                    .description
-            )
-        ]
-    }
 }

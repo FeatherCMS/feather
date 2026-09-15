@@ -13,7 +13,6 @@ struct AdminViewWebMenuDefaultPresenter: AdminViewWebMenuPresenter {
 
     func renderDetailsPage(
         rule: WebMenuDetailsModel,
-        breadcrumb: [NewAdminBreadcrumb.Link],
         permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
@@ -23,7 +22,7 @@ struct AdminViewWebMenuDefaultPresenter: AdminViewWebMenuPresenter {
             content: WebMenuDetails(
                 state: .init(
                     menu: rule,
-                    breadcrumb: breadcrumb,
+                    breadcrumb: WebMenuRoutes.breadcrumb,
                     permissions: permissions
                 )
             )
@@ -33,7 +32,6 @@ struct AdminViewWebMenuDefaultPresenter: AdminViewWebMenuPresenter {
     func renderErrorPage(
         info: String,
         message: String,
-        breadcrumb: [NewAdminBreadcrumb.Link],
         permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
@@ -44,19 +42,10 @@ struct AdminViewWebMenuDefaultPresenter: AdminViewWebMenuPresenter {
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: breadcrumb
+                    breadcrumb: WebMenuRoutes.breadcrumb
                 )
             )
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Web", link: "/admin/web/"),
-            .init(label: "Menus", link: "/admin/web/menus/"),
-        ]
-    }
 }

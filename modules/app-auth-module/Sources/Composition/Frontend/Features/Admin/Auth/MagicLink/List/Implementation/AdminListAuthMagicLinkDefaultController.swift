@@ -82,10 +82,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
                 deniedInfo: "Forbidden",
                 deniedMessage:
                     "Your identity cannot access user magic links.",
-                breadcrumb: [
-                    .init(label: "Admin", link: "/admin/"),
-                    .init(label: "Auth", link: "/admin/auth/"),
-                ]
+                breadcrumb: AuthMagicLinkRoutes.listBreadcrumb
             )
             return try await presenter.renderPage(state: state)
         }

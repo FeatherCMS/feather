@@ -36,7 +36,7 @@ struct AdminAddAuthCredentialDefaultPresenter: AdminAddAuthCredentialPresenter {
             content: AuthCredentialAdd(
                 state: .init(
                     form: form,
-                    breadcrumb: breadcrumb()
+                    breadcrumb: AuthCredentialRoutes.breadcrumb
                 )
             )
         )
@@ -101,11 +101,4 @@ struct AdminAddAuthCredentialDefaultPresenter: AdminAddAuthCredentialPresenter {
         error.errorDescription
     }
 
-    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Credentials", link: "/admin/auth/credentials/"),
-        ]
-    }
 }

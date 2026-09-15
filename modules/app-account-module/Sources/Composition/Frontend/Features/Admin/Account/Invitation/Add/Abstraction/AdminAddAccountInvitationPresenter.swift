@@ -15,7 +15,6 @@ protocol AdminAddAccountInvitationPresenter: Sendable {
         roleOptions: [AccountInvitationForm.RoleOptionState]
     ) -> AccountInvitationForm.State
 
-    func breadcrumb() -> [NewAdminBreadcrumb.Link]
 
     func format(
         error: OpenAPIRepositoryError

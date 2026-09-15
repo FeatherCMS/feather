@@ -22,17 +22,10 @@ struct AdminAddWebPageDefaultPresenter: AdminAddWebPagePresenter {
             content: WebPageAdd(
                 state: .init(
                     form: state,
-                    breadcrumb: breadcrumb()
+                    breadcrumb: WebPageRoutes.breadcrumb
                 )
             )
         )
     }
 
-    func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Web", link: "/admin/web/"),
-            .init(label: "Pages", link: "/admin/web/pages/"),
-        ]
-    }
 }

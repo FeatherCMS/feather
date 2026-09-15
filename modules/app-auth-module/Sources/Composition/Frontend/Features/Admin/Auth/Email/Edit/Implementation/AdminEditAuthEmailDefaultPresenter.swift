@@ -52,15 +52,6 @@ struct AdminEditAuthEmailDefaultPresenter: AdminEditAuthEmailPresenter {
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Emails", link: "/admin/auth/emails/"),
-        ]
-    }
 
     func renderPage(
         id: String,
@@ -81,7 +72,7 @@ struct AdminEditAuthEmailDefaultPresenter: AdminEditAuthEmailPresenter {
                     id: id,
                     isEdited: isEdited,
                     form: form,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: AuthEmailRoutes.breadcrumb
                 )
             )
         )
@@ -100,7 +91,7 @@ struct AdminEditAuthEmailDefaultPresenter: AdminEditAuthEmailPresenter {
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: AuthEmailRoutes.breadcrumb
                 )
             )
         )

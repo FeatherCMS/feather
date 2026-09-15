@@ -15,8 +15,4 @@ protocol AdminRemoveAuthSessionPresenter: Sendable {
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse
 
-    func breadcrumb(
-        identityId: String,
-        sessionId: String
-    ) -> [NewAdminBreadcrumb.Link]
 }

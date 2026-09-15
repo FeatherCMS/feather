@@ -29,7 +29,7 @@ struct AdminEditAccountInvitationDefaultPresenter:
                     id: id,
                     isEdited: isEdited,
                     form: state,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: AccountAdminRoutes.invitationEditBreadcrumb(RouterPath(id))
                 )
             )
         )
@@ -76,17 +76,6 @@ struct AdminEditAccountInvitationDefaultPresenter:
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        AccountAdminRoutes.invitationBreadcrumb + [
-            .init(
-                label: "Edit",
-                link: AccountAdminRoutes.invitationEdit(RouterPath(id))
-                    .description
-            )
-        ]
-    }
 
     func format(
         error: OpenAPIRepositoryError

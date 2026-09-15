@@ -65,5 +65,4 @@ struct AdminListContactFieldsDefaultPresenter:
         )
         return HTMLResponse(content: page.content, status: .forbidden)
     }
-    private let breadcrumb = ContactAdminRoutes.breadcrumb
 }

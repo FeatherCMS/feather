@@ -37,7 +37,7 @@ struct AdminAddAuthMagicLinkDefaultPresenter: AdminAddAuthMagicLinkPresenter {
             content: AuthMagicLinkAdd(
                 state: .init(
                     form: form,
-                    breadcrumb: breadcrumb()
+                    breadcrumb: AuthMagicLinkRoutes.breadcrumb
                 )
             )
         )
@@ -88,13 +88,6 @@ struct AdminAddAuthMagicLinkDefaultPresenter: AdminAddAuthMagicLinkPresenter {
         )
     }
 
-    func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Magic links", link: "/admin/auth/magic-links/"),
-        ]
-    }
 
     func format(
         error: OpenAPIRepositoryError

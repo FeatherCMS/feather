@@ -32,7 +32,7 @@ struct AdminRemoveBlogPostDefaultPresenter:
                 state: .init(
                     id: item.id,
                     source: item.label,
-                    breadcrumb: breadcrumb(id: item.id),
+                    breadcrumb: BlogAdminRoutes.postsBreadcrumb,
                     nonceToken: nonceToken
                 )
             )
@@ -52,15 +52,10 @@ struct AdminRemoveBlogPostDefaultPresenter:
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: BlogAdminRoutes.postsBreadcrumb
                 )
             )
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        BlogAdminRoutes.postsBreadcrumb
-    }
 }

@@ -24,7 +24,9 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
                 state: .init(
                     id: item.id,
                     email: item.label,
-                    breadcrumb: breadcrumb(id: item.id),
+                    breadcrumb: AccountAdminRoutes.invitationRemoveBreadcrumb(
+                        RouterPath(item.id)
+                    ),
                     nonceToken: nonceToken
                 )
             )
@@ -47,13 +49,4 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
         )
     }
 
-    func breadcrumb(id: String) -> [NewAdminBreadcrumb.Link] {
-        AccountAdminRoutes.invitationBreadcrumb + [
-            .init(
-                label: "Remove",
-                link: AccountAdminRoutes.invitationRemove(RouterPath(id))
-                    .description
-            )
-        ]
-    }
 }
