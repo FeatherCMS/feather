@@ -90,12 +90,9 @@ let package = Package(
             url: "https://github.com/hummingbird-project/hummingbird-auth",
             from: "2.3.0"
         ),
-        // .package(
-        //     url: "https://github.com/BinaryBirds/swift-web-standards",
-        //     exact: "1.0.0-beta.3"
-        // ),
         .package(
-            path: "../../../Developer/bb/swift-web-standards"
+            url: "https://github.com/BinaryBirds/swift-web-standards",
+            exact: "1.0.0-beta.4"
         ),
         .package(
             url: "https://github.com/feather-framework/feather-validation",
