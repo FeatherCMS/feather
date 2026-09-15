@@ -487,7 +487,8 @@ extension AssetListView {
         MediaFolderRoutes.edit(RouterPath(folder.id)).description
     }
 
-    fileprivate func toolbar(context: inout BuilderContext) -> some FlowContent {
+    fileprivate func toolbar(context: inout BuilderContext) -> some FlowContent
+    {
         Div {
             if state.permissions.allows(MediaPermissions.Assets.create)
                 && !state.picker.isEnabled

@@ -27,7 +27,8 @@ struct AppBlogPostPage: Component {
 }
 
 extension AppBlogPostPage {
-    fileprivate func articlePanel(context: inout BuilderContext) -> some BasicTag
+    fileprivate func articlePanel(context: inout BuilderContext)
+        -> some BasicTag
     {
         Article {
             Div {
