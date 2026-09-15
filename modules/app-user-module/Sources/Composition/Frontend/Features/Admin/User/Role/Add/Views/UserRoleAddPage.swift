@@ -8,10 +8,10 @@ struct UserRoleAddPage: Component {
     let form: UserRoleAddForm.State
     let nonceToken: String?
 
-    func html(context: inout RenderContext) -> Section {
+    func html(context: inout BuilderContext) -> Section {
         Section {
-            context.render(NewAdminBreadcrumb(links: UserRoleRoutes.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: UserRoleRoutes.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Add user role",
@@ -19,7 +19,7 @@ struct UserRoleAddPage: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 UserRoleAddForm(
                     state: form,
                     action: UserRoleRoutes.add.description,

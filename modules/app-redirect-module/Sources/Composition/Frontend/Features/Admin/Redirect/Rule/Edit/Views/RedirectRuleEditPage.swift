@@ -11,12 +11,12 @@ struct RedirectRuleEditPage: Component {
     let nonceToken: String
     let permissions: NewAdminListActions
 
-    func html(context: inout RenderContext) -> Section {
+    func html(context: inout BuilderContext) -> Section {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: RedirectRuleRoutes.breadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Edit redirect rule",
@@ -24,7 +24,7 @@ struct RedirectRuleEditPage: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 RedirectRuleEditForm(
                     state: form,
                     action: RedirectRuleRoutes.edit(RouterPath(id)).description,

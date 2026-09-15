@@ -51,7 +51,7 @@ struct WebMenuItemForm: Component {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action) {
             if let success = state.success {
                 P(success).class("new-admin-form__success")
@@ -60,7 +60,7 @@ struct WebMenuItemForm: Component {
                 P(error).class("new-admin-form__error")
             }
 
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.label.key,
@@ -71,7 +71,7 @@ struct WebMenuItemForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.url.key,
@@ -82,7 +82,7 @@ struct WebMenuItemForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.priority.key,
@@ -94,7 +94,7 @@ struct WebMenuItemForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldCheckbox(
                     state: .init(
                         name: state.isBlank.key,
@@ -105,7 +105,7 @@ struct WebMenuItemForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: state.permission.key,
@@ -116,7 +116,7 @@ struct WebMenuItemForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldSelect(
                     state: .init(
                         name: state.authentication.key,
@@ -135,7 +135,7 @@ struct WebMenuItemForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldTextArea(
                     state: .init(
                         name: state.notes.key,
@@ -149,9 +149,9 @@ struct WebMenuItemForm: Component {
 
             Div {
                 Div {
-                    context.render(NewAdminSubmitButton(submitLabel))
+                    context.build(NewAdminSubmitButton(submitLabel))
                     if let removeHref {
-                        context.render(
+                        context.build(
                             NewAdminButton(
                                 removeLabel,
                                 href: removeHref,
@@ -163,7 +163,7 @@ struct WebMenuItemForm: Component {
                 .class("new-admin-form__actions")
             }
         }
-        return context.render(form)
+        return context.build(form)
     }
 
     private var permissionOptions: [NewAdminFormFieldSelectAutocomplete.Option]

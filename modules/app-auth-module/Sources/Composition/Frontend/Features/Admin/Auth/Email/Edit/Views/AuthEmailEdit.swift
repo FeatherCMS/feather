@@ -27,11 +27,11 @@ struct AuthEmailEdit: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
 
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Edit user email",
@@ -40,7 +40,7 @@ struct AuthEmailEdit: Component {
                 )
             )
             if state.isEdited { P("User email edited successfully.") }
-            context.render(
+            context.build(
                 AuthEmailForm(
                     state: state.form,
                     action: "/admin/auth/emails/\(state.id)/edit/",

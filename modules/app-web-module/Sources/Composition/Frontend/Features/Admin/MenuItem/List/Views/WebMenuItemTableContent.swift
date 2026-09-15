@@ -65,7 +65,7 @@ struct WebMenuItemTableContent: Component {
         ]
     }
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let canDelete = state.permissions.allows(
             WebPermissions.MenuItems.delete
         )
@@ -76,11 +76,11 @@ struct WebMenuItemTableContent: Component {
         let hasActiveQuery = !(state.search?.isEmpty ?? true)
 
         return Div {
-            context.render(
+            context.build(
                 NewAdminList(
                     table: {
                         if state.pageState.isPageOutOfRange {
-                            context.render(
+                            context.build(
                                 NewAdminListInvalidPageState(
                                     pageState: state.pageState,
                                     path:
@@ -93,12 +93,12 @@ struct WebMenuItemTableContent: Component {
                         }
                         else if state.items.isEmpty {
                             if hasActiveQuery {
-                                context.render(
+                                context.build(
                                     NewAdminListNoResultsState(
                                         message: "No items match your search.",
                                         icon: FeatherIcons.inbox(),
                                         action: {
-                                            context.render(
+                                            context.build(
                                                 NewAdminButton(
                                                     "Reset search",
                                                     href:
@@ -116,7 +116,7 @@ struct WebMenuItemTableContent: Component {
                                 )
                             }
                             else {
-                                context.render(
+                                context.build(
                                     NewAdminListEmptyState(
                                         message: "No items yet.",
                                         icon: FeatherIcons.inbox(),
@@ -124,7 +124,7 @@ struct WebMenuItemTableContent: Component {
                                             if state.permissions.allows(
                                                 WebPermissions.MenuItems.create
                                             ) {
-                                                context.render(
+                                                context.build(
                                                     NewAdminButton(
                                                         "Add new",
                                                         href:
@@ -144,7 +144,7 @@ struct WebMenuItemTableContent: Component {
                             }
                         }
                         else {
-                            context.render(
+                            context.build(
                                 NewAdminListSelectionForm(
                                     state: .init(
                                         action:
@@ -160,7 +160,7 @@ struct WebMenuItemTableContent: Component {
                                         ),
                                         isEnabled: canDelete
                                     ),
-                                    table: context.render(
+                                    table: context.build(
                                         NewAdminListShell(
                                             layout: .init(
                                                 name: "web-menu-items",
@@ -186,7 +186,7 @@ struct WebMenuItemTableContent: Component {
                                                 Thead {
                                                     Tr {
                                                         if canDelete {
-                                                            context.render(
+                                                            context.build(
                                                                 NewAdminListSelectAllCheckbox()
                                                             )
                                                         }
@@ -202,7 +202,7 @@ struct WebMenuItemTableContent: Component {
                                                 }
                                                 Tbody {
                                                     for item in state.items {
-                                                        context.render(
+                                                        context.build(
                                                             WebMenuItemRow(
                                                                 menuId: state
                                                                     .menuId,
@@ -230,7 +230,7 @@ struct WebMenuItemTableContent: Component {
                         }
                     },
                     search: {
-                        context.render(
+                        context.build(
                             NewAdminListSearch(
                                 state: .init(
                                     action:
@@ -248,9 +248,9 @@ struct WebMenuItemTableContent: Component {
                         if state.permissions.allows(
                             WebPermissions.MenuItems.create
                         ) {
-                            context.render(
+                            context.build(
                                 NewAdminListToolbar {
-                                    context.render(
+                                    context.build(
                                         NewAdminButton(
                                             "Add new",
                                             href:
@@ -265,7 +265,7 @@ struct WebMenuItemTableContent: Component {
                         }
                     },
                     pagination: {
-                        context.render(
+                        context.build(
                             NewAdminListPagination(
                                 state: .init(
                                     path:

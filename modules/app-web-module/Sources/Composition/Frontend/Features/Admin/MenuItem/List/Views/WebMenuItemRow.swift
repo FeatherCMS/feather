@@ -15,10 +15,10 @@ struct WebMenuItemRow: Component {
     let canReorder: Bool
     let returnTo: String
 
-    func html(context: inout RenderContext) -> Tr {
+    func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(WebPermissions.MenuItems.delete) {
-                context.render(NewAdminListRowCheckbox(id: item.id))
+                context.build(NewAdminListRowCheckbox(id: item.id))
             }
             if canReorder {
                 Td {
@@ -41,7 +41,7 @@ struct WebMenuItemRow: Component {
             Td(item.url).data("label", "URL")
             Td(item.isBlank ? "Yes" : "No").data("label", "Blank")
             Td(item.permission).data("label", "Permission")
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: [

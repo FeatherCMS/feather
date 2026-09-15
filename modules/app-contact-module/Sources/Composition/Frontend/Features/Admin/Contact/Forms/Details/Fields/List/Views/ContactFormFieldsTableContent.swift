@@ -15,18 +15,18 @@ struct ContactFormFieldsTableContent: Component {
     let search: String
     let permissions: NewAdminListActions
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let path = ContactAdminRoutes.formFields(RouterPath(formId)).description
         let returnTo = NewAdminLocation.url(
             path: path,
             page: pageState.page,
             search: search
         )
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if pageState.isPageOutOfRange {
-                        context.render(
+                        context.build(
                             NewAdminListInvalidPageState(
                                 pageState: pageState,
                                 path: path
@@ -34,7 +34,7 @@ struct ContactFormFieldsTableContent: Component {
                         )
                     }
                     else if fields.isEmpty {
-                        context.render(
+                        context.build(
                             NewAdminListEmptyState(
                                 message: search.isEmpty
                                     ? "No fields in this form yet."
@@ -45,7 +45,7 @@ struct ContactFormFieldsTableContent: Component {
                                         if permissions.allows(
                                             ContactPermissions.Fields.create
                                         ) {
-                                            context.render(
+                                            context.build(
                                                 NewAdminButton(
                                                     "Add field",
                                                     href:
@@ -59,7 +59,7 @@ struct ContactFormFieldsTableContent: Component {
                                         }
                                     }
                                     else {
-                                        context.render(
+                                        context.build(
                                             NewAdminButton(
                                                 "Reset search",
                                                 href: path,
@@ -75,7 +75,7 @@ struct ContactFormFieldsTableContent: Component {
                         let canDelete = permissions.allows(
                             ContactPermissions.Fields.delete
                         )
-                        context.render(
+                        context.build(
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action: NewAdminLocation.remove(
@@ -95,7 +95,7 @@ struct ContactFormFieldsTableContent: Component {
                                     ),
                                     isEnabled: canDelete
                                 ),
-                                table: context.render(
+                                table: context.build(
                                     NewAdminListShell(
                                         layout: .init(
                                             name: "contact-form-fields",
@@ -110,7 +110,7 @@ struct ContactFormFieldsTableContent: Component {
                                             Thead {
                                                 Tr {
                                                     if canDelete {
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
@@ -125,7 +125,7 @@ struct ContactFormFieldsTableContent: Component {
                                                 for field in fields {
                                                     Tr {
                                                         if canDelete {
-                                                            context.render(
+                                                            context.build(
                                                                 NewAdminListRowCheckbox(
                                                                     id: field.id
                                                                 )
@@ -142,7 +142,7 @@ struct ContactFormFieldsTableContent: Component {
                                                                 "Label"
                                                             )
                                                         Td {
-                                                            context.render(
+                                                            context.build(
                                                                 typeChip(
                                                                     field.type
                                                                 )
@@ -157,7 +157,7 @@ struct ContactFormFieldsTableContent: Component {
                                                             "label",
                                                             "Required"
                                                         )
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListRowActions(
                                                                 label:
                                                                     "Actions",
@@ -240,7 +240,7 @@ struct ContactFormFieldsTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: path,
@@ -252,9 +252,9 @@ struct ContactFormFieldsTableContent: Component {
                 },
                 toolbar: {
                     if permissions.allows(ContactPermissions.Fields.create) {
-                        context.render(
+                        context.build(
                             NewAdminListToolbar {
-                                context.render(
+                                context.build(
                                     NewAdminButton(
                                         "Add field",
                                         href:
@@ -269,7 +269,7 @@ struct ContactFormFieldsTableContent: Component {
                     }
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: path,

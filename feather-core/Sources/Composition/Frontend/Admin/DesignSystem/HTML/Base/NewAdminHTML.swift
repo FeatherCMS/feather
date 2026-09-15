@@ -34,13 +34,13 @@ public struct NewAdminHTML<T: Component>: Component where T.HTML: FlowContent {
         #endif
     }
 
-    public func html(context: inout RenderContext) -> Html {
+    public func html(context: inout BuilderContext) -> Html {
 
-        let renderedBody = context.render(body)
+        let renderedBody = context.build(body)
         let style = context.stylesheet()
         let css = cssRenderer.render(style)
         let scripts = context.scripts()
-        let renderedHead: Head = context.render(
+        let renderedHead: Head = context.build(
             NewAdminHead(
                 title: title,
                 stylesheet: css,

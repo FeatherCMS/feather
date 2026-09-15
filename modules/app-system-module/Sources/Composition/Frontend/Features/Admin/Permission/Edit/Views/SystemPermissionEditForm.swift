@@ -56,22 +56,22 @@ struct SystemPermissionEditForm: Component {
     let removeHref: String
     let nonceToken: String?
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action, nonceToken: nonceToken) {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
-            context.render(NewAdminFormFieldInput(state: state.key))
-            context.render(NewAdminFormFieldInput(state: state.name))
-            context.render(NewAdminFormFieldTextArea(state: state.notes))
+            context.build(NewAdminFormFieldInput(state: state.key))
+            context.build(NewAdminFormFieldInput(state: state.name))
+            context.build(NewAdminFormFieldTextArea(state: state.notes))
             Div {
-                context.render(
+                context.build(
                     NewAdminSubmitButton("Save changes", style: .primary)
                 )
-                context.render(
+                context.build(
                     NewAdminButton("View", href: viewHref, style: .secondary)
                 )
-                context.render(
+                context.build(
                     NewAdminButton(
                         "Remove",
                         href: removeHref,
@@ -81,6 +81,6 @@ struct SystemPermissionEditForm: Component {
             }
             .class("new-admin-form__actions")
         }
-        return context.render(form)
+        return context.build(form)
     }
 }

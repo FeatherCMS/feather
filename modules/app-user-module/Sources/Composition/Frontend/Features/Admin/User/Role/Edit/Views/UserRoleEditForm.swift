@@ -58,19 +58,19 @@ struct UserRoleEditForm: Component {
     let removeHref: String?
     let nonceToken: String?
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action, nonceToken: nonceToken) {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
-            context.render(NewAdminFormFieldInput(state: state.name))
-            context.render(NewAdminFormFieldTextArea(state: state.notes))
+            context.build(NewAdminFormFieldInput(state: state.name))
+            context.build(NewAdminFormFieldTextArea(state: state.notes))
             Div {
-                context.render(
+                context.build(
                     NewAdminSubmitButton(submitLabel, style: .primary)
                 )
                 if let viewHref {
-                    context.render(
+                    context.build(
                         NewAdminButton(
                             "View",
                             href: viewHref,
@@ -79,7 +79,7 @@ struct UserRoleEditForm: Component {
                     )
                 }
                 if let removeHref {
-                    context.render(
+                    context.build(
                         NewAdminButton(
                             "Remove",
                             href: removeHref,
@@ -90,6 +90,6 @@ struct UserRoleEditForm: Component {
             }
             .class("new-admin-form__actions")
         }
-        return context.render(form)
+        return context.build(form)
     }
 }

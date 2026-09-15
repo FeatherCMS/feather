@@ -14,9 +14,9 @@ struct WebMenuItemDetails: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminDetailView(
                     breadcrumb: state.breadcrumb,
                     pageHeader: .init(

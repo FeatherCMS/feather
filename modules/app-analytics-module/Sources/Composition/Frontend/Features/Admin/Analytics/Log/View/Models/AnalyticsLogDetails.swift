@@ -9,9 +9,9 @@ struct AnalyticsLogDetails: Component {
     let log: Components.Schemas.AnalyticsLogDetailSchema
     let breadcrumb: [NewAdminBreadcrumb.Link]
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminDetailView(
                     breadcrumb: breadcrumb,
                     pageHeader: .init(

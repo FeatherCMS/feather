@@ -42,13 +42,13 @@ struct BlogAuthorForm: Component {
     var removeHref: String?
     var removeLabel: String = "Remove"
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action) {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
-            context.render(NewAdminTabBar(links: tabLinks()))
-            context.render(
+            context.build(NewAdminTabBar(links: tabLinks()))
+            context.build(
                 NewAdminFormFieldMediaPicker(
                     state: .init(
                         field: .init(
@@ -74,7 +74,7 @@ struct BlogAuthorForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.name.key,
@@ -85,7 +85,7 @@ struct BlogAuthorForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldTextArea(
                     state: .init(
                         name: state.excerpt.key,
@@ -97,7 +97,7 @@ struct BlogAuthorForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldTextArea(
                     state: .init(
                         name: state.content.key,
@@ -110,7 +110,7 @@ struct BlogAuthorForm: Component {
                 )
             )
             Div {
-                context.render(
+                context.build(
                     NewAdminSubmitButton(submitLabel, style: .primary)
                 )
                 if let publishLabel {
@@ -118,7 +118,7 @@ struct BlogAuthorForm: Component {
                         .value("publish").class("button", "secondary")
                 }
                 if let removeHref {
-                    context.render(
+                    context.build(
                         NewAdminButton(
                             removeLabel,
                             href: removeHref,
@@ -129,7 +129,7 @@ struct BlogAuthorForm: Component {
             }
             .class("new-admin-form__actions")
         }
-        return context.render(form)
+        return context.build(form)
     }
 
     private func tabLinks() -> [NewAdminTabBar.Link] {

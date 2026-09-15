@@ -15,10 +15,10 @@ struct WebSettingsEdit: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Settings",
@@ -33,7 +33,7 @@ struct WebSettingsEdit: Component {
                 )
             }
 
-            context.render(WebSettingsForm(state: state.form))
+            context.build(WebSettingsForm(state: state.form))
         }
         .class("cms-section")
     }

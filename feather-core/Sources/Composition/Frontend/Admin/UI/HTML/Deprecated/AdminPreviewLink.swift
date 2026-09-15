@@ -29,7 +29,7 @@ public struct AdminPreviewLink: Component {
         ]
     }
 
-    public func html(context: inout RenderContext) -> A {
+    public func html(context: inout BuilderContext) -> A {
         var link = A {
             FeatherIcons.externalLink()
         }

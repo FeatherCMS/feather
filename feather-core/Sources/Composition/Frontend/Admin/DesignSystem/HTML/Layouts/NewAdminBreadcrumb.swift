@@ -27,7 +27,7 @@ public struct NewAdminBreadcrumb: Component {
         self.links = links
     }
 
-    public func html(context: inout RenderContext) -> Nav {
+    public func html(context: inout BuilderContext) -> Nav {
         Nav {
             if !links.isEmpty {
                 Ol {

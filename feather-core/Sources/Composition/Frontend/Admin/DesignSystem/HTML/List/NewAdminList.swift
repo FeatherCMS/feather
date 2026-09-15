@@ -44,7 +44,7 @@ public struct NewAdminList: Component {
         self.pagination = pagination()
     }
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         Div {
             for item in toolbar {
                 item

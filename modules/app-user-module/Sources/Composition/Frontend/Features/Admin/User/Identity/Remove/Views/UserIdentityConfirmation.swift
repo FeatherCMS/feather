@@ -11,8 +11,8 @@ struct UserIdentityConfirmation: Component {
     let name: String
     let nonceToken: String?
 
-    func html(context: inout RenderContext) -> some BasicTag {
-        context.render(
+    func html(context: inout BuilderContext) -> some BasicTag {
+        context.build(
             NewAdminRemoveConfirmation(
                 breadcrumb: UserIdentityRoutes.breadcrumb,
                 pageHeader: .init(

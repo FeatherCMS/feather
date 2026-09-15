@@ -7,7 +7,7 @@ import WebComponents
 public struct AdminToastBootstrap: Component {
     let payload: AdminNotificationRedirect.Payload
 
-    public func html(context: inout RenderContext) -> some BasicTag {
+    public func html(context: inout BuilderContext) -> some BasicTag {
         Div {
             // empty
         }

@@ -13,11 +13,11 @@ struct NewsletterCampaignEditPage: Component {
     }
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         let editPath = NewsletterAdminRoutes.campaignEdit(RouterPath(state.id))
             .description
         return Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(
                     links: NewsletterAdminRoutes.breadcrumb + [
                         .init(
@@ -27,7 +27,7 @@ struct NewsletterCampaignEditPage: Component {
                     ]
                 )
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: state.isDetails
@@ -38,7 +38,7 @@ struct NewsletterCampaignEditPage: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminTabBar(links: [
                     .init(
                         label: "Details",
@@ -84,14 +84,14 @@ struct NewsletterCampaignEditPage: Component {
                 }
                 .class("admin-detail-view-fields")
                 Div {
-                    context.render(
+                    context.build(
                         NewAdminButton("Edit", href: editPath, style: .primary)
                     )
                 }
                 .class("new-admin-detail-actions")
             }
             else {
-                context.render(
+                context.build(
                     NewsletterCampaignForm(
                         state: state.form,
                         action: editPath,

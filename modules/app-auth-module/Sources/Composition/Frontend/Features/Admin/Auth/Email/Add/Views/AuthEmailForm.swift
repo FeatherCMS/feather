@@ -66,7 +66,7 @@ struct AuthEmailForm: Component {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action, nonceToken: state.nonceToken) {
             if let success = state.success {
                 P(success).class("success")
@@ -75,7 +75,7 @@ struct AuthEmailForm: Component {
                 P(error).class("error")
             }
 
-            context.render(
+            context.build(
                 NewAdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: state.identityId.key,
@@ -88,7 +88,7 @@ struct AuthEmailForm: Component {
                 )
             )
 
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.email.key,
@@ -103,9 +103,9 @@ struct AuthEmailForm: Component {
 
             Section {
                 Div {
-                    context.render(NewAdminSubmitButton(submitLabel))
+                    context.build(NewAdminSubmitButton(submitLabel))
                     if let removeHref {
-                        context.render(
+                        context.build(
                             NewAdminButton(
                                 removeLabel,
                                 href: removeHref,
@@ -117,6 +117,6 @@ struct AuthEmailForm: Component {
                 .class("new-admin-form__actions")
             }
         }
-        return context.render(form)
+        return context.build(form)
     }
 }

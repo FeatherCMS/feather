@@ -13,8 +13,8 @@ struct MediaAssetErrorView: Component {
     let info: String
     let message: String
 
-    func html(context: inout RenderContext) -> some BasicTag {
-        context.render(
+    func html(context: inout BuilderContext) -> some BasicTag {
+        context.build(
             NewAdminStatusView(
                 state: .init(title: info, message: message),
                 icon: FeatherIcons.alertCircle()

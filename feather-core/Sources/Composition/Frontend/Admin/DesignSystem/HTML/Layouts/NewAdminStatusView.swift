@@ -104,7 +104,7 @@ public struct NewAdminStatusView: Component {
         ]
     }
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         Div {
             if let icon {
                 icon.class("admin-status-view-icon")
@@ -114,7 +114,7 @@ public struct NewAdminStatusView: Component {
                 P(state.message)
             }
             .class("admin-status-view-content")
-            if let action { context.render(action) }
+            if let action { context.build(action) }
         }
         .class("admin-status-view")
     }

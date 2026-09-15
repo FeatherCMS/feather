@@ -16,7 +16,7 @@ import WebComponents
 @available(*, deprecated, message: "Use the new admin design system instead.")
 public struct AdminTopBar: Component {
 
-    public func html(context: inout RenderContext) -> some BasicTag {
+    public func html(context: inout BuilderContext) -> some BasicTag {
         let fallbackProfileImageURL =
             "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/images/tiborbodecs-2026-512.png"
 

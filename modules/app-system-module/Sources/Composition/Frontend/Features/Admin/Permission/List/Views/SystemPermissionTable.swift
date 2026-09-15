@@ -17,12 +17,12 @@ struct SystemPermissionTable: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: SystemPermissionRoutes.listBreadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Permissions",
@@ -30,7 +30,7 @@ struct SystemPermissionTable: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 SystemPermissionTableContent(
                     permissions: state.permissionsList,
                     actions: state.permissions,

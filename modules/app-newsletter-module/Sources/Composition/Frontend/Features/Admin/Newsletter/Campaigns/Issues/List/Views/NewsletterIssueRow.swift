@@ -11,13 +11,13 @@ struct NewsletterIssueRow: Component {
     let item: AdminNewsletterIssueItem
     let permissions: NewAdminListActions
 
-    func html(context: inout RenderContext) -> Tr {
+    func html(context: inout BuilderContext) -> Tr {
         Tr {
             Td(item.subject).data("label", "Subject")
             Td(item.status).data("label", "Status")
             Td(item.scheduledAt).data("label", "Scheduled")
             Td(item.createdAt).data("label", "Created")
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: [

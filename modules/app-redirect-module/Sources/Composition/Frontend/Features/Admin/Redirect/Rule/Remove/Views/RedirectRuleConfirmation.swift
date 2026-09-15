@@ -11,8 +11,8 @@ struct RedirectRuleConfirmation: Component {
     let nonceToken: String
     let returnTo: String?
 
-    func html(context: inout RenderContext) -> some BasicTag {
-        context.render(
+    func html(context: inout BuilderContext) -> some BasicTag {
+        context.build(
             NewAdminRemoveConfirmation(
                 breadcrumb: RedirectRuleRoutes.breadcrumb,
                 pageHeader: .init(

@@ -66,14 +66,14 @@ public struct NewAdminFormFieldCheckboxGroup: Component {
         ]
     }
 
-    public func html(context: inout RenderContext) -> Section {
+    public func html(context: inout BuilderContext) -> Section {
         let errorID = "\(name)-error"
         return Section {
-            context.render(NewAdminFormFieldLabel(text: label))
+            context.build(NewAdminFormFieldLabel(text: label))
             Div {
                 for option in options {
                     Label {
-                        context.render(
+                        context.build(
                             NewAdminCheckbox(
                                 name: name,
                                 value: option.value,

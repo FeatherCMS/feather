@@ -119,9 +119,9 @@ struct AdminViewDesignSystemComponent: Component {
         }
     }
 
-    func html(context: inout RenderContext) -> Section {
+    func html(context: inout BuilderContext) -> Section {
         Section {
-            context.render(breadcrumb)
+            context.build(breadcrumb)
 
             H1("Design System")
             P("Available design-system materials, colors, and components.")
@@ -195,12 +195,12 @@ struct AdminViewDesignSystemComponent: Component {
                 Div {
                     H3("Buttons")
                     Div {
-                        context.render(primaryLink)
-                        context.render(secondaryLink)
-                        context.render(ghostPrimaryLink)
-                        context.render(ghostSecondaryLink)
-                        context.render(destructiveLink)
-                        context.render(disabledLink)
+                        context.build(primaryLink)
+                        context.build(secondaryLink)
+                        context.build(ghostPrimaryLink)
+                        context.build(ghostSecondaryLink)
+                        context.build(destructiveLink)
+                        context.build(disabledLink)
                     }
                     .class("design-system-component-row")
                     A("Sample link")
@@ -212,12 +212,12 @@ struct AdminViewDesignSystemComponent: Component {
                 Div {
                     H3("Row buttons")
                     Div {
-                        context.render(primaryRowLink)
-                        context.render(secondaryRowLink)
-                        context.render(ghostPrimaryRowLink)
-                        context.render(ghostSecondaryRowLink)
-                        context.render(destructiveRowLink)
-                        context.render(disabledRowLink)
+                        context.build(primaryRowLink)
+                        context.build(secondaryRowLink)
+                        context.build(ghostPrimaryRowLink)
+                        context.build(ghostSecondaryRowLink)
+                        context.build(destructiveRowLink)
+                        context.build(disabledRowLink)
                     }
                     .class("design-system-component-row")
                 }

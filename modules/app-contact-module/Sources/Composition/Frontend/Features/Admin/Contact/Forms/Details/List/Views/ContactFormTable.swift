@@ -19,10 +19,10 @@ struct ContactFormTable: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: state.isPicker
@@ -31,7 +31,7 @@ struct ContactFormTable: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 ContactFormTableContent(
                     items: state.items,
                     pageState: state.pageState,

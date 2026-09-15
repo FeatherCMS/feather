@@ -14,9 +14,9 @@ import WebFrontend
 struct AppBlogAuthorListPage: Component {
     let state: AppGetBlogAuthorListModel
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Main {
-            context.render(AppPublicStyleAnchor())
+            context.build(AppPublicStyleAnchor())
             Div {
                 Div {
                     P("Blog").class("public-eyebrow")

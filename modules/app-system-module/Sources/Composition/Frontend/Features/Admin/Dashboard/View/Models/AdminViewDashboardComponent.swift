@@ -8,10 +8,10 @@ import WebComponents
 struct AdminViewDashboardComponent: Component {
     let model: AdminViewDashboardModel
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: []))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: []))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Dashboard",
@@ -21,14 +21,14 @@ struct AdminViewDashboardComponent: Component {
             )
             Div {
                 for item in model.contentStats {
-                    context.render(
+                    context.build(
                         NewAdminStatCard(label: item.label, value: item.value)
                     )
                 }
             }
             .class("grid", "grid-321")
             if let dailyTraffic = model.dailyTraffic {
-                context.render(
+                context.build(
                     NewAdminChartCard(
                         title: "Daily traffic",
                         chart: NewAdminLineChart(
@@ -45,7 +45,7 @@ struct AdminViewDashboardComponent: Component {
             if !model.webInsightCards.isEmpty {
                 Div {
                     for card in model.webInsightCards {
-                        context.render(
+                        context.build(
                             NewAdminChartCard(
                                 title: card.title,
                                 chart: NewAdminBarChart(

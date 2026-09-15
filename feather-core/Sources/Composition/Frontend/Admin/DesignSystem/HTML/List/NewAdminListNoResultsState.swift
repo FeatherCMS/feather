@@ -20,8 +20,8 @@ public struct NewAdminListNoResultsState: Component {
         self.action = action()
     }
 
-    public func html(context: inout RenderContext) -> Div {
-        context.render(
+    public func html(context: inout BuilderContext) -> Div {
+        context.build(
             NewAdminListEmptyState(
                 message: message,
                 icon: icon,

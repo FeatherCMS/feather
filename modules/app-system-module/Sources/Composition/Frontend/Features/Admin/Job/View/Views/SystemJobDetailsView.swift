@@ -14,10 +14,10 @@ struct SystemJobDetailsView: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         let job = state.job.job
         let payload = SystemJobPayload(job: job)
-        return context.render(
+        return context.build(
             NewAdminDetailView(
                 breadcrumb: SystemJobRoutes.breadcrumb,
                 pageHeader: .init(

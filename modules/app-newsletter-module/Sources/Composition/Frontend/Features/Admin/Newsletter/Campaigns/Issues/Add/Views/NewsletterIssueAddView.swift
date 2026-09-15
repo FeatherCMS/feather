@@ -16,7 +16,7 @@ struct NewsletterIssueAddView: Component {
     }
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         let action =
             state.issueId.map {
                 NewsletterAdminRoutes.issueEdit(
@@ -28,7 +28,7 @@ struct NewsletterIssueAddView: Component {
             ?? NewsletterAdminRoutes.issueAdd(RouterPath(state.newsletterId))
             .description
         return Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(
                     links: NewsletterAdminRoutes.breadcrumb + [
                         .init(
@@ -46,7 +46,7 @@ struct NewsletterIssueAddView: Component {
                     ]
                 )
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: state.issueId == nil
@@ -56,7 +56,7 @@ struct NewsletterIssueAddView: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminTabBar(links: [
                     .init(
                         label: "Details",
@@ -91,7 +91,7 @@ struct NewsletterIssueAddView: Component {
                 if let error = state.error {
                     P(error).class("new-admin-form__error")
                 }
-                context.render(
+                context.build(
                     NewAdminFormFieldInput(
                         state: .init(
                             name: "subject",
@@ -101,7 +101,7 @@ struct NewsletterIssueAddView: Component {
                         )
                     )
                 )
-                context.render(
+                context.build(
                     NewAdminFormFieldTextArea(
                         state: .init(
                             name: "content",
@@ -112,7 +112,7 @@ struct NewsletterIssueAddView: Component {
                         )
                     )
                 )
-                context.render(
+                context.build(
                     NewAdminFormFieldInput(
                         state: .init(
                             name: "scheduledAt",
@@ -123,7 +123,7 @@ struct NewsletterIssueAddView: Component {
                     )
                 )
                 Div {
-                    context.render(
+                    context.build(
                         NewAdminSubmitButton(
                             state.issueId == nil ? "Add issue" : "Save issue",
                             style: .primary
@@ -132,9 +132,9 @@ struct NewsletterIssueAddView: Component {
                 }
                 .class("new-admin-form__actions")
             }
-            context.render(form)
+            context.build(form)
             Div {
-                context.render(
+                context.build(
                     NewAdminControlButton("Send test email", style: .secondary)
                 )
                 .data("newsletter-test-email-open", "newsletterTestEmailModal")
@@ -144,7 +144,7 @@ struct NewsletterIssueAddView: Component {
                 Div {
                     Div {
                         H3("Send test email")
-                        context.render(
+                        context.build(
                             NewAdminControlButton(
                                 "Close",
                                 style: .ghost(.primary)
@@ -156,7 +156,7 @@ struct NewsletterIssueAddView: Component {
                         )
                     }
                     .class("newsletter-test-email-lightbox-header")
-                    context.render(
+                    context.build(
                         NewAdminForm(
                             action: state.issueId.map {
                                 NewsletterAdminRoutes.issueTestEmail(
@@ -174,7 +174,7 @@ struct NewsletterIssueAddView: Component {
                                 .init(name: "content", value: state.content),
                             ]
                         ) {
-                            context.render(
+                            context.build(
                                 NewAdminFormFieldInput(
                                     state: .init(
                                         name: "email",
@@ -185,7 +185,7 @@ struct NewsletterIssueAddView: Component {
                                 )
                             )
                             Div {
-                                context.render(
+                                context.build(
                                     NewAdminSubmitButton(
                                         "Send",
                                         style: .primary

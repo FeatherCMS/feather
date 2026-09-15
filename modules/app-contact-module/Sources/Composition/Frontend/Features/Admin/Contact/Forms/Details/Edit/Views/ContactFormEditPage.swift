@@ -15,13 +15,13 @@ struct ContactFormEditPage: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 AdminContactFormTabs(formId: state.id, active: .details)
             )
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: state.isReadOnly
@@ -32,7 +32,7 @@ struct ContactFormEditPage: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 ContactFormForm(
                     state: state.form,
                     action: ContactAdminRoutes.formEdit(RouterPath(state.id))

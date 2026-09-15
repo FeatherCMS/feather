@@ -54,10 +54,10 @@ struct MediaProcessorRow: Component {
     let state: State
     let permissions: NewAdminListActions
 
-    func html(context: inout RenderContext) -> Tr {
+    func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(MediaPermissions.Processors.delete) {
-                context.render(NewAdminListRowCheckbox(id: state.id))
+                context.build(NewAdminListRowCheckbox(id: state.id))
             }
             Td(state.fileSuffix)
                 .data("label", "File suffix")
@@ -66,7 +66,7 @@ struct MediaProcessorRow: Component {
                     ? "—" : state.matchExtensions
             )
             .data("label", "Match extensions")
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: state.actions,

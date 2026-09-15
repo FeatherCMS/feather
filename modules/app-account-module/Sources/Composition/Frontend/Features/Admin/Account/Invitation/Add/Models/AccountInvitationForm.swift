@@ -41,7 +41,7 @@ struct AccountInvitationForm: Component {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action, nonceToken: state.nonceToken) {
             if let success = state.success {
                 P(success).class("success")
@@ -50,7 +50,7 @@ struct AccountInvitationForm: Component {
                 P(error).class("new-admin-form__error")
             }
 
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.email.key,
@@ -65,7 +65,7 @@ struct AccountInvitationForm: Component {
                 P("No roles available.")
             }
             else {
-                context.render(
+                context.build(
                     NewAdminFormFieldCheckboxGroup(
                         name: "roleIds[]",
                         label: "Roles",
@@ -83,9 +83,9 @@ struct AccountInvitationForm: Component {
 
             Section {
                 Div {
-                    context.render(NewAdminSubmitButton(submitLabel))
+                    context.build(NewAdminSubmitButton(submitLabel))
                     if let removeHref {
-                        context.render(
+                        context.build(
                             NewAdminButton(
                                 removeLabel,
                                 href: removeHref,
@@ -97,6 +97,6 @@ struct AccountInvitationForm: Component {
                 .class("new-admin-form__actions")
             }
         }
-        return context.render(form)
+        return context.build(form)
     }
 }

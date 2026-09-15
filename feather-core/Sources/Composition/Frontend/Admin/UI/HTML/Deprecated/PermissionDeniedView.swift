@@ -32,9 +32,9 @@ public struct PermissionDeniedView: Component {
         self.state = state
     }
 
-    public func html(context: inout RenderContext) -> some BasicTag {
+    public func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(AdminBreadcrumb(state: state.breadcrumb))
+            context.build(AdminBreadcrumb(state: state.breadcrumb))
 
             H1("No permission")
             P(state.info).class("error")

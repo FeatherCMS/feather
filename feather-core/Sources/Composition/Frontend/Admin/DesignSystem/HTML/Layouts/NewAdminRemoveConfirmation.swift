@@ -72,10 +72,10 @@ public struct NewAdminRemoveConfirmation: Component {
         }
     }
 
-    public func html(context: inout RenderContext) -> some BasicTag {
+    public func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: breadcrumb))
-            context.render(NewAdminPageHeader(state: pageHeader))
+            context.build(NewAdminBreadcrumb(links: breadcrumb))
+            context.build(NewAdminPageHeader(state: pageHeader))
             if !selectedItems.isEmpty {
                 Div {
                     Ul {
@@ -97,10 +97,10 @@ public struct NewAdminRemoveConfirmation: Component {
                         .name(field.name)
                         .value(field.value)
                 }
-                context.render(
+                context.build(
                     NewAdminSubmitButton(submitLabel, style: .destructive)
                 )
-                context.render(
+                context.build(
                     NewAdminButton(
                         cancelLabel,
                         href: cancel,

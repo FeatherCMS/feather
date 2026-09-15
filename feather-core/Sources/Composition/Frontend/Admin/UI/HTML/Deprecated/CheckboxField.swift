@@ -139,7 +139,7 @@ public struct CheckboxField: Component {
         }
     }
 
-    public func html(context: inout RenderContext) -> Section {
+    public func html(context: inout BuilderContext) -> Section {
         Section {
             Label {
                 if state.labelPosition == .before {

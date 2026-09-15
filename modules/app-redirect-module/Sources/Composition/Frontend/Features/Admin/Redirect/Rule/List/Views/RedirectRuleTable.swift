@@ -18,12 +18,12 @@ struct RedirectRuleTable: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: RedirectRuleRoutes.redirectBreadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Redirect rules",
@@ -32,7 +32,7 @@ struct RedirectRuleTable: Component {
                     )
                 )
             )
-            context.render(RedirectRuleTableContent(state: state))
+            context.build(RedirectRuleTableContent(state: state))
         }
         .class("cms-section")
     }

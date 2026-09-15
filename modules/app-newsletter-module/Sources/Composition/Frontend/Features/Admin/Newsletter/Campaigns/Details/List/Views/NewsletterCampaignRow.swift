@@ -13,12 +13,12 @@ struct NewsletterCampaignRow: Component {
     let returnTo: String
     let isPicker: Bool
 
-    func html(context: inout RenderContext) -> Tr {
+    func html(context: inout BuilderContext) -> Tr {
         let canDelete = actions.allows(Permissions.Campaigns.delete)
 
         return Tr {
             if canDelete {
-                context.render(NewAdminListRowCheckbox(id: item.id))
+                context.build(NewAdminListRowCheckbox(id: item.id))
             }
             identifierCell()
             if isPicker {
@@ -33,7 +33,7 @@ struct NewsletterCampaignRow: Component {
             else {
                 Td(item.name).data("label", "Name")
             }
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: [

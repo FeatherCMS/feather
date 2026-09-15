@@ -15,8 +15,8 @@ struct SystemPermissionDetailsView: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
-        context.render(
+    func html(context: inout BuilderContext) -> some BasicTag {
+        context.build(
             NewAdminDetailView(
                 breadcrumb: SystemPermissionRoutes.breadcrumb,
                 pageHeader: .init(

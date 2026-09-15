@@ -22,14 +22,14 @@ public struct AdminHtml<T: Component>: Component {
 
     let state: State
 
-    public func html(context: inout RenderContext) -> some BasicTag {
+    public func html(context: inout BuilderContext) -> some BasicTag {
         Html {
-            let renderedHead: Head = context.render(
+            let renderedHead: Head = context.build(
                 AdminHeadElements(state: state.head)
             )
             renderedHead
             Body {
-                context.render(AdminBody<T>(state: state.body))
+                context.build(AdminBody<T>(state: state.body))
             }
         }
         .lang("en-US")

@@ -17,7 +17,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
     func renderPage(
         model: AdminAddMediaAssetModel
     ) async throws -> HTMLResponse {
-        var renderContext = RenderContext()
+        var buildContext = BuilderContext()
         let content = AssetAddView(
             state: .init(
                 form: .init(
@@ -42,7 +42,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
                 description: "Upload media asset",
                 imagePath: "images/logos/logo.png",
                 content: Div {
-                    renderContext.render(content)
+                    buildContext.build(content)
                 }
             )
         }

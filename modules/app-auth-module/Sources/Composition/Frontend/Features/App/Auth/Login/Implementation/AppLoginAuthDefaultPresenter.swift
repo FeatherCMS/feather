@@ -25,13 +25,13 @@ struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
         form: LoginForm.State,
         message: String?
     ) -> HTMLResponse {
-        var renderContext = RenderContext()
+        var buildContext = BuilderContext()
         return renderEngine.renderPublicPage(
             request: request,
             title: "Login",
             description: "This is the login page for the Feather CMS app",
             imagePath: "images/logos/logo.png",
-            content: renderContext.render(
+            content: buildContext.build(
                 LoginPage(
                     state: .init(
                         form: form,

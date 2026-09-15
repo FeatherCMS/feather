@@ -41,12 +41,12 @@ struct AssetDetailsView: Component {
             "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)\(prefix)\(encoded)"
     }
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: MediaAssetRoutes.breadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Media asset details",
@@ -55,38 +55,38 @@ struct AssetDetailsView: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminDetailField(label: "ID", value: item.id)
             )
-            context.render(
+            context.build(
                 NewAdminDetailField(
                     label: "Storage key",
                     value: item.storageKey
                 )
             )
-            context.render(
+            context.build(
                 NewAdminDetailField(label: "Type", value: item._type)
             )
-            context.render(
+            context.build(
                 NewAdminDetailField(label: "Status", value: item.status)
             )
-            context.render(
+            context.build(
                 NewAdminDetailField(
                     label: "Size bytes",
                     value: "\(item.sizeBytes)"
                 )
             )
             if let title = item.title {
-                context.render(
+                context.build(
                     NewAdminDetailField(label: "Title", value: title)
                 )
             }
             if let altText = item.altText {
-                context.render(
+                context.build(
                     NewAdminDetailField(label: "Alt text", value: altText)
                 )
             }
-            context.render(
+            context.build(
                 NewAdminButton(
                     "Open original",
                     href: previewLink(for: item.storageKey, isVariant: false),
@@ -98,7 +98,7 @@ struct AssetDetailsView: Component {
             }
             else {
                 H2("Associated variants")
-                context.render(
+                context.build(
                     NewAdminListShell(
                         layout: .init(
                             name: "media-asset-variants",
@@ -126,7 +126,7 @@ struct AssetDetailsView: Component {
                                         Td(variant._type)
                                         Td(variant.storageKey)
                                         Td {
-                                            context.render(
+                                            context.build(
                                                 NewAdminRowButton(
                                                     "Preview",
                                                     href: previewLink(
@@ -148,7 +148,7 @@ struct AssetDetailsView: Component {
             }
             Div {
                 if permissions.allows(MediaPermissions.Assets.update) {
-                    context.render(
+                    context.build(
                         NewAdminButton(
                             "Edit",
                             href:
@@ -160,7 +160,7 @@ struct AssetDetailsView: Component {
                     )
                 }
                 if permissions.allows(MediaPermissions.Assets.delete) {
-                    context.render(
+                    context.build(
                         NewAdminButton(
                             "Remove",
                             href:

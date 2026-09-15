@@ -297,7 +297,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
         ]
     }
 
-    public func html(context: inout RenderContext) -> Section {
+    public func html(context: inout BuilderContext) -> Section {
         let errorID = "\(state.name)-error"
         let listID = "\(state.name)-options"
         let selectedOptions = state.options.filter(\.isSelected)
@@ -305,7 +305,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
 
         return Section {
             Label {
-                context.render(
+                context.build(
                     NewAdminFormFieldLabel(
                         text: state.label,
                         isRequired: state.isRequired

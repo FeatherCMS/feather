@@ -122,7 +122,7 @@ public struct NewAdminSideBar: Component {
 
     private func renderListItem(
         item: Group.Menu.Item,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> Li {
 
         Li {
@@ -145,7 +145,7 @@ public struct NewAdminSideBar: Component {
 
     private func renderMenuParent(
         item: Group.Menu.Item,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> [any FlowContent] {
 
         guard let link = item.link else {
@@ -166,7 +166,7 @@ public struct NewAdminSideBar: Component {
 
     private func renderSubmenuItem(
         item: Group.Menu.Item,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> Li {
 
         Li {
@@ -183,7 +183,7 @@ public struct NewAdminSideBar: Component {
 
     private func renderSubmenu(
         items: [Group.Menu.Item],
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> Ul {
         Ul {
             for item in items {
@@ -196,7 +196,7 @@ public struct NewAdminSideBar: Component {
     private func renderSubmenuMenu(
         menu: Group.Menu,
         index: Int,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> Li {
         let hasCurrentChild = menu.children.contains(where: { $0.isCurrent })
 
@@ -221,7 +221,7 @@ public struct NewAdminSideBar: Component {
     private func renderMenu(
         menu: Group.Menu,
         index: Int,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> [any Element] {
         guard menu.children.isEmpty else {
             return [
@@ -233,7 +233,7 @@ public struct NewAdminSideBar: Component {
 
     private func renderGroup(
         group: Group,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> Li {
         Li {
             Span(group.label)
@@ -248,7 +248,7 @@ public struct NewAdminSideBar: Component {
         .class("plain")
     }
 
-    private func renderNavigation(context: inout RenderContext) -> Nav {
+    private func renderNavigation(context: inout BuilderContext) -> Nav {
         Nav {
             Ul {
                 for group in groups {
@@ -261,7 +261,7 @@ public struct NewAdminSideBar: Component {
     }
 
     public func html(
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some BasicTag {
         Div {
             Input()

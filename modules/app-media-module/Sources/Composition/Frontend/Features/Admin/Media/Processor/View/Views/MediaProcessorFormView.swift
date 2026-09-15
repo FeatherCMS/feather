@@ -26,12 +26,12 @@ struct MediaProcessorFormView: Component {
     let requiredPermission: PermissionKey
     let removeHref: String?
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: MediaProcessorRoutes.breadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: title,
@@ -41,7 +41,7 @@ struct MediaProcessorFormView: Component {
                 )
             )
             if !permissions.allows(requiredPermission) {
-                context.render(
+                context.build(
                     NewAdminStatusView(
                         state: .init(
                             title: "Forbidden",
@@ -57,7 +57,7 @@ struct MediaProcessorFormView: Component {
                     if let error = form.error {
                         P(error).class("new-admin-form__error")
                     }
-                    context.render(
+                    context.build(
                         NewAdminFormFieldInput(
                             state: .init(
                                 name: "fileSuffix",
@@ -67,7 +67,7 @@ struct MediaProcessorFormView: Component {
                             )
                         )
                     )
-                    context.render(
+                    context.build(
                         NewAdminFormFieldInput(
                             state: .init(
                                 name: "matchExtensions",
@@ -77,7 +77,7 @@ struct MediaProcessorFormView: Component {
                             )
                         )
                     )
-                    context.render(
+                    context.build(
                         NewAdminFormFieldTextArea(
                             state: .init(
                                 name: "commandTemplate",
@@ -109,9 +109,9 @@ struct MediaProcessorFormView: Component {
                     .class("form-help")
 
                     Div {
-                        context.render(NewAdminSubmitButton(submitLabel))
+                        context.build(NewAdminSubmitButton(submitLabel))
                         if let removeHref {
-                            context.render(
+                            context.build(
                                 NewAdminButton(
                                     "Remove",
                                     href: removeHref,
@@ -122,7 +122,7 @@ struct MediaProcessorFormView: Component {
                     }
                     .class("new-admin-form__actions")
                 }
-                context.render(adminForm)
+                context.build(adminForm)
             }
         }
         .class("cms-section")

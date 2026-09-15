@@ -9,10 +9,10 @@ struct AnalyticsAdminStatusView: Component {
     let title: String
     let message: String
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: breadcrumb))
+            context.build(
                 NewAdminStatusView(
                     state: .init(title: title, message: message),
                     icon: FeatherIcons.alertCircle()

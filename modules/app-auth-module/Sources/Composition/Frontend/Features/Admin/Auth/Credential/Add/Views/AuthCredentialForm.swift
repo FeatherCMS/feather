@@ -46,7 +46,7 @@ struct AuthCredentialForm: Component {
     var submitLabel: String
     var removeHref: String?
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         var password = state.password
         password.isRequired = state.passwordRequired
         password.type = .password
@@ -60,7 +60,7 @@ struct AuthCredentialForm: Component {
                 .type(.hidden)
                 .name("userId")
                 .value(state.identity.value)
-            context.render(
+            context.build(
                 NewAdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: state.email.name,
@@ -72,14 +72,14 @@ struct AuthCredentialForm: Component {
                     )
                 )
             )
-            context.render(NewAdminFormFieldInput(state: password))
+            context.build(NewAdminFormFieldInput(state: password))
             Div {
                 Div {
-                    context.render(
+                    context.build(
                         NewAdminSubmitButton(submitLabel, style: .primary)
                     )
                     if let removeHref {
-                        context.render(
+                        context.build(
                             NewAdminButton(
                                 "Remove credential",
                                 href: removeHref,
@@ -91,6 +91,6 @@ struct AuthCredentialForm: Component {
                 .class("new-admin-form__actions")
             }
         }
-        return context.render(form)
+        return context.build(form)
     }
 }

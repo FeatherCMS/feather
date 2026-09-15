@@ -19,9 +19,9 @@ struct BlogTagDetails: Component {
     }
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminDetailView(
                     breadcrumb: state.breadcrumb,
                     pageHeader: .init(
@@ -52,7 +52,7 @@ struct BlogTagDetails: Component {
             {
                 let formID = "blog-tag-status-\(state.rule.id)"
                 Div {
-                    context.render(
+                    context.build(
                         NewAdminStatusSelectFormDefinition(
                             id: formID,
                             action:
@@ -65,7 +65,7 @@ struct BlogTagDetails: Component {
                                 .description
                         )
                     )
-                    context.render(
+                    context.build(
                         NewAdminStatusSelectField(
                             formID: formID,
                             selectedStatus: state.rule.metadata.normalizedStatus

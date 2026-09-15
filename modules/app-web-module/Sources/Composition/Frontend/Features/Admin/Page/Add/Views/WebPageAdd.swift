@@ -17,10 +17,10 @@ struct WebPageAdd: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Add page",
@@ -29,7 +29,7 @@ struct WebPageAdd: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 WebPageForm(
                     state: state.form,
                     action: WebPageRoutes.add.description,

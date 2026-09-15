@@ -54,15 +54,15 @@ struct SystemVariableRow: Component {
     let state: State
     let permissions: NewAdminListActions
 
-    func html(context: inout RenderContext) -> Tr {
+    func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(SystemPermissions.Variables.delete) {
-                context.render(NewAdminListRowCheckbox(id: state.id))
+                context.build(NewAdminListRowCheckbox(id: state.id))
             }
             Td(state.key).data("label", "Key")
             Td(state.value.emptyToNil == nil ? "—" : state.value)
                 .data("label", "Value")
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: state.actions,

@@ -14,13 +14,13 @@ struct SubmissionMailEdit: Component {
     let breadcrumb: [NewAdminBreadcrumb.Link]
     let error: String?
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 AdminContactFormTabs(formId: formId, active: .emails)
             )
-            context.render(NewAdminBreadcrumb(links: breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Edit contact form email",
@@ -30,7 +30,7 @@ struct SubmissionMailEdit: Component {
                 )
             )
             replacementVariables
-            context.render(
+            context.build(
                 SubmissionMailForm(
                     mail: mail,
                     action:

@@ -24,15 +24,15 @@ struct WebMenuTableContent: Component {
         )
     }
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let canDelete = permissions.allows(WebPermissions.Menus.delete)
         let hasActiveQuery = !(search?.isEmpty ?? true)
 
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if pageState.isPageOutOfRange {
-                        context.render(
+                        context.build(
                             NewAdminListInvalidPageState(
                                 pageState: pageState,
                                 path: WebMenuRoutes.list.description
@@ -41,12 +41,12 @@ struct WebMenuTableContent: Component {
                     }
                     else if menus.isEmpty {
                         if hasActiveQuery {
-                            context.render(
+                            context.build(
                                 NewAdminListNoResultsState(
                                     message: "No menus match your search.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
-                                        context.render(
+                                        context.build(
                                             NewAdminButton(
                                                 "Reset search",
                                                 href: WebMenuRoutes.list
@@ -59,7 +59,7 @@ struct WebMenuTableContent: Component {
                             )
                         }
                         else {
-                            context.render(
+                            context.build(
                                 NewAdminListEmptyState(
                                     message: "No menus yet.",
                                     icon: FeatherIcons.inbox(),
@@ -67,7 +67,7 @@ struct WebMenuTableContent: Component {
                                         if permissions.allows(
                                             WebPermissions.Menus.create
                                         ) {
-                                            context.render(
+                                            context.build(
                                                 NewAdminButton(
                                                     "Add new",
                                                     href: WebMenuRoutes.add
@@ -81,7 +81,7 @@ struct WebMenuTableContent: Component {
                         }
                     }
                     else {
-                        context.render(
+                        context.build(
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action: WebMenuRoutes.remove.description,
@@ -93,7 +93,7 @@ struct WebMenuTableContent: Component {
                                     ),
                                     isEnabled: canDelete
                                 ),
-                                table: context.render(
+                                table: context.build(
                                     NewAdminListShell(
                                         layout: .init(
                                             name: "web-menus",
@@ -107,7 +107,7 @@ struct WebMenuTableContent: Component {
                                             Thead {
                                                 Tr {
                                                     if canDelete {
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
@@ -118,7 +118,7 @@ struct WebMenuTableContent: Component {
                                             }
                                             Tbody {
                                                 for menu in menus {
-                                                    context.render(
+                                                    context.build(
                                                         WebMenuRow(
                                                             menu: menu,
                                                             permissions:
@@ -140,7 +140,7 @@ struct WebMenuTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: WebMenuRoutes.list.description,
@@ -152,9 +152,9 @@ struct WebMenuTableContent: Component {
                 },
                 toolbar: {
                     if permissions.allows(WebPermissions.Menus.create) {
-                        context.render(
+                        context.build(
                             NewAdminListToolbar {
-                                context.render(
+                                context.build(
                                     NewAdminButton(
                                         "Add new",
                                         href: WebMenuRoutes.add.description
@@ -165,7 +165,7 @@ struct WebMenuTableContent: Component {
                     }
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: WebMenuRoutes.list.description,

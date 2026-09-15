@@ -14,9 +14,9 @@ struct NewsletterCampaignAddView: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(
                     links: NewsletterAdminRoutes.breadcrumb + [
                         .init(
@@ -30,7 +30,7 @@ struct NewsletterCampaignAddView: Component {
                     ]
                 )
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Add campaign",
@@ -38,7 +38,7 @@ struct NewsletterCampaignAddView: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewsletterCampaignForm(
                     state: .init(
                         name: state.name,

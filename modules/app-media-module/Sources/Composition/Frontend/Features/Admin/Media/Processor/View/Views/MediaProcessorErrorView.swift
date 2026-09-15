@@ -12,8 +12,8 @@ import WebComponents
 struct MediaProcessorErrorView: Component {
     let info: String
 
-    func html(context: inout RenderContext) -> some BasicTag {
-        context.render(
+    func html(context: inout BuilderContext) -> some BasicTag {
+        context.build(
             NewAdminStatusView(
                 state: .init(title: "Media processor error", message: info),
                 icon: FeatherIcons.alertCircle()

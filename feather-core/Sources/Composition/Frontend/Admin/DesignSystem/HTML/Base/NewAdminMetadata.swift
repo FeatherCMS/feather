@@ -24,7 +24,7 @@ public struct NewAdminMetadata: Component {
         self.noIndex = noIndex
     }
 
-    public func html(context: inout RenderContext) -> Head {
+    public func html(context: inout BuilderContext) -> Head {
         Head {
             Meta().charset("utf-8")
             Meta().name(.viewport)

@@ -18,12 +18,12 @@ struct NewsletterCampaignsTable: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: NewsletterAdminRoutes.breadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: state.isPicker
@@ -34,7 +34,7 @@ struct NewsletterCampaignsTable: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewsletterCampaignsTableContent(
                     items: state.items,
                     pageState: state.pageState,

@@ -8,7 +8,7 @@ import WebComponents
 struct AppPublicTextBlock: Component {
     let text: String
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         Div {
             text
         }

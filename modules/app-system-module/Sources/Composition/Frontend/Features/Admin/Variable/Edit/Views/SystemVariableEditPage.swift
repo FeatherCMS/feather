@@ -7,12 +7,12 @@ import WebComponents
 struct SystemVariableEditPage: Component {
     let form: SystemVariableEditForm
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: SystemVariableRoutes.breadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Edit system variable",
@@ -21,7 +21,7 @@ struct SystemVariableEditPage: Component {
                     )
                 )
             )
-            context.render(form)
+            context.build(form)
         }
         .class("cms-section")
     }

@@ -9,10 +9,10 @@ import WebComponents
 struct AnalyticsInsightsView: Component {
     let page: AdminAnalyticsInsightsPage
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: page.source.pageTitle,
@@ -22,7 +22,7 @@ struct AnalyticsInsightsView: Component {
             )
             let form = NewAdminForm(action: page.source.pagePath, method: .get)
             {
-                context.render(
+                context.build(
                     NewAdminFormFieldSelect(
                         state: .init(
                             name: "range",
@@ -37,8 +37,8 @@ struct AnalyticsInsightsView: Component {
                     )
                 )
                 Div {
-                    context.render(NewAdminSubmitButton("Update"))
-                    context.render(
+                    context.build(NewAdminSubmitButton("Update"))
+                    context.build(
                         NewAdminButton(
                             "View logs",
                             href: page.source.logsPath,
@@ -48,16 +48,16 @@ struct AnalyticsInsightsView: Component {
                 }
                 .class("new-admin-form__actions")
             }
-            context.render(form)
+            context.build(form)
             Div {
                 for item in metrics {
-                    context.render(
+                    context.build(
                         NewAdminStatCard(label: item.0, value: item.1)
                     )
                 }
             }
             .class("grid", "grid-321")
-            context.render(
+            context.build(
                 NewAdminChartCard(
                     title: "Daily traffic",
                     chart: NewAdminLineChart(
@@ -72,7 +72,7 @@ struct AnalyticsInsightsView: Component {
             )
             Div {
                 for card in breakdowns {
-                    context.render(card)
+                    context.build(card)
                 }
             }
             .class("grid", "grid-321")

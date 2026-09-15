@@ -15,8 +15,8 @@ struct MediaProcessorDetailsView: Component {
     let item: Components.Schemas.MediaProcessorDetailSchema
     let permissions: NewAdminListActions
 
-    func html(context: inout RenderContext) -> some BasicTag {
-        context.render(
+    func html(context: inout BuilderContext) -> some BasicTag {
+        context.build(
             NewAdminDetailView(
                 breadcrumb: MediaProcessorRoutes.breadcrumb,
                 pageHeader: .init(

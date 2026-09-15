@@ -28,10 +28,10 @@ struct AuthMagicLinkTable: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "User magic links",
@@ -39,7 +39,7 @@ struct AuthMagicLinkTable: Component {
                     )
                 )
             )
-            context.render(AuthMagicLinkTableContent(state: state))
+            context.build(AuthMagicLinkTableContent(state: state))
         }
         .class("cms-section")
     }

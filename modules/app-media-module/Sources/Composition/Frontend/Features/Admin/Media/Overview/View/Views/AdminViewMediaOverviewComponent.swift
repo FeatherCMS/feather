@@ -65,12 +65,12 @@ struct AdminViewMediaOverviewComponent: Component {
         }
     }
 
-    func html(context: inout RenderContext) -> Section {
+    func html(context: inout BuilderContext) -> Section {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: MediaAdminRoutes.breadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Media",
@@ -88,7 +88,7 @@ struct AdminViewMediaOverviewComponent: Component {
                         }
                         H2(destination.title)
                         P(destination.description)
-                        context.render(
+                        context.build(
                             NewAdminButton(
                                 "Open",
                                 href: destination.href,

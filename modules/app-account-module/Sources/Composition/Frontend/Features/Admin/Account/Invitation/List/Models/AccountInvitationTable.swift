@@ -22,18 +22,18 @@ struct AccountInvitationTable: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         let canDelete = state.permissions.allows(
             AccountPermissions.Invitations.delete
         )
 
         return Div {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(
                     links: AccountAdminRoutes.invitationBreadcrumb
                 )
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "User invitations",
@@ -42,11 +42,11 @@ struct AccountInvitationTable: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminList(
                     table: {
                         if !state.canAccess {
-                            context.render(
+                            context.build(
                                 NewAdminStatusView(
                                     state: .init(
                                         title: "Forbidden",
@@ -58,7 +58,7 @@ struct AccountInvitationTable: Component {
                             )
                         }
                         else if state.pageState.isPageOutOfRange {
-                            context.render(
+                            context.build(
                                 NewAdminListInvalidPageState(
                                     pageState: state.pageState,
                                     path: AccountAdminRoutes.invitations
@@ -67,7 +67,7 @@ struct AccountInvitationTable: Component {
                             )
                         }
                         else if state.invitations.isEmpty {
-                            context.render(
+                            context.build(
                                 NewAdminListEmptyState(
                                     message: state.search.isEmpty
                                         ? "No user invitations yet."
@@ -75,7 +75,7 @@ struct AccountInvitationTable: Component {
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         if !state.search.isEmpty {
-                                            context.render(
+                                            context.build(
                                                 NewAdminButton(
                                                     "Reset search",
                                                     href: AccountAdminRoutes
@@ -89,7 +89,7 @@ struct AccountInvitationTable: Component {
                                             AccountPermissions.Invitations
                                                 .create
                                         ) {
-                                            context.render(
+                                            context.build(
                                                 NewAdminButton(
                                                     "Add new",
                                                     href: AccountAdminRoutes
@@ -103,7 +103,7 @@ struct AccountInvitationTable: Component {
                             )
                         }
                         else {
-                            context.render(
+                            context.build(
                                 NewAdminListSelectionForm(
                                     state: .init(
                                         action: AccountAdminRoutes
@@ -116,7 +116,7 @@ struct AccountInvitationTable: Component {
                                         ),
                                         isEnabled: canDelete
                                     ),
-                                    table: context.render(
+                                    table: context.build(
                                         NewAdminListShell(
                                             layout: .init(
                                                 name: "account-invitations",
@@ -131,7 +131,7 @@ struct AccountInvitationTable: Component {
                                                 Thead {
                                                     Tr {
                                                         if canDelete {
-                                                            context.render(
+                                                            context.build(
                                                                 NewAdminListSelectAllCheckbox()
                                                             )
                                                         }
@@ -146,7 +146,7 @@ struct AccountInvitationTable: Component {
                                                     {
                                                         Tr {
                                                             if canDelete {
-                                                                context.render(
+                                                                context.build(
                                                                     NewAdminListRowCheckbox(
                                                                         id:
                                                                             invitation
@@ -170,7 +170,7 @@ struct AccountInvitationTable: Component {
                                                                 "label",
                                                                 "Expires at"
                                                             )
-                                                            context.render(
+                                                            context.build(
                                                                 NewAdminListRowActions(
                                                                     label:
                                                                         "Actions",
@@ -254,7 +254,7 @@ struct AccountInvitationTable: Component {
                         }
                     },
                     search: {
-                        context.render(
+                        context.build(
                             NewAdminListSearch(
                                 state: .init(
                                     action: AccountAdminRoutes.invitations
@@ -269,9 +269,9 @@ struct AccountInvitationTable: Component {
                         if state.permissions.allows(
                             AccountPermissions.Invitations.create
                         ) {
-                            context.render(
+                            context.build(
                                 NewAdminListToolbar {
-                                    context.render(
+                                    context.build(
                                         NewAdminButton(
                                             "Add new",
                                             href: AccountAdminRoutes
@@ -283,7 +283,7 @@ struct AccountInvitationTable: Component {
                         }
                     },
                     pagination: {
-                        context.render(
+                        context.build(
                             NewAdminListPagination(
                                 state: .init(
                                     path: AccountAdminRoutes.invitations

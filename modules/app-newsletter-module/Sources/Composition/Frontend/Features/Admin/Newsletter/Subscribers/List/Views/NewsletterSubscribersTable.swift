@@ -9,9 +9,9 @@ struct NewsletterSubscribersTable: Component {
     let model: AdminNewsletterSubscribersListModel
     let permissions: NewAdminListActions
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(
                     links: NewsletterAdminRoutes.breadcrumb + [
                         .init(
@@ -21,7 +21,7 @@ struct NewsletterSubscribersTable: Component {
                     ]
                 )
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Subscribers",
@@ -29,7 +29,7 @@ struct NewsletterSubscribersTable: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewsletterSubscribersTableContent(
                     model: model,
                     permissions: permissions

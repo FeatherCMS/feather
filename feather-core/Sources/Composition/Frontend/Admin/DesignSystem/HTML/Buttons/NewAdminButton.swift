@@ -19,7 +19,7 @@ public struct NewAdminButton: Component {
         self.style = style
     }
 
-    public func html(context: inout RenderContext) -> A {
+    public func html(context: inout BuilderContext) -> A {
         var link = A(label)
         if let href, style != .disabled {
             link = link.href(href)

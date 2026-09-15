@@ -27,7 +27,7 @@ public struct NewAdminLineChart: Component {
         self.color = color
     }
 
-    public func html(context: inout RenderContext) -> SVG {
+    public func html(context: inout BuilderContext) -> SVG {
         let width = 720
         let height = 220
         let leftInset = 44.0

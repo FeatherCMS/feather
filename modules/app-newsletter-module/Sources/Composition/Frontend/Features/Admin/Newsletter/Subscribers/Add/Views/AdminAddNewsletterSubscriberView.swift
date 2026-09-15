@@ -8,9 +8,9 @@ import WebComponents
 struct AdminAddNewsletterSubscriberView: Component {
     let model: AdminAddNewsletterSubscriberModel
     let isAdded: Bool
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(
                     links: NewsletterAdminRoutes.breadcrumb + [
                         .init(
@@ -20,7 +20,7 @@ struct AdminAddNewsletterSubscriberView: Component {
                     ]
                 )
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Add subscriber",
@@ -34,7 +34,7 @@ struct AdminAddNewsletterSubscriberView: Component {
                 if let error = model.error {
                     P(error).class("new-admin-form__error")
                 }
-                context.render(
+                context.build(
                     NewAdminFormFieldInput(
                         state: .init(
                             name: "email",
@@ -45,7 +45,7 @@ struct AdminAddNewsletterSubscriberView: Component {
                         )
                     )
                 )
-                context.render(
+                context.build(
                     NewAdminFormFieldInput(
                         state: .init(
                             name: "firstName",
@@ -54,7 +54,7 @@ struct AdminAddNewsletterSubscriberView: Component {
                         )
                     )
                 )
-                context.render(
+                context.build(
                     NewAdminFormFieldInput(
                         state: .init(
                             name: "lastName",
@@ -63,7 +63,7 @@ struct AdminAddNewsletterSubscriberView: Component {
                         )
                     )
                 )
-                context.render(
+                context.build(
                     NewAdminFormFieldSelectAutocomplete(
                         state: .init(
                             name: "campaignIds[]",
@@ -82,13 +82,13 @@ struct AdminAddNewsletterSubscriberView: Component {
                     )
                 )
                 Div {
-                    context.render(
+                    context.build(
                         NewAdminSubmitButton("Add subscriber", style: .primary)
                     )
                 }
                 .class("new-admin-form__actions")
             }
-            context.render(form)
+            context.build(form)
         }
         .class("cms-section")
     }

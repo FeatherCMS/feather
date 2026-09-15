@@ -14,8 +14,8 @@ struct SystemVariableDetails: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
-        context.render(
+    func html(context: inout BuilderContext) -> some BasicTag {
+        context.build(
             NewAdminDetailView(
                 breadcrumb: SystemVariableRoutes.breadcrumb,
                 pageHeader: .init(

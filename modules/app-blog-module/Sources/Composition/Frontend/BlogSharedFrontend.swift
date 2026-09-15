@@ -107,13 +107,13 @@ public struct AppPublicTagSummaryModel: Sendable {
 }
 
 public struct AppPublicStyleAnchor: Component {
-    public func html(context: inout RenderContext) -> Div { Div {} }
+    public func html(context: inout BuilderContext) -> Div { Div {} }
 }
 
 public struct AppPublicTextBlock: Component {
     public let text: String
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         Div { text }.class("public-body")
     }
 }

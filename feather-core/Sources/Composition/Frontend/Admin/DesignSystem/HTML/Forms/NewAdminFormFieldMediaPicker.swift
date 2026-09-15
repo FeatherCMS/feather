@@ -307,10 +307,10 @@ public struct NewAdminFormFieldMediaPicker: Component {
         ]
     }
 
-    public func html(context: inout RenderContext) -> Section {
+    public func html(context: inout BuilderContext) -> Section {
         Section {
             Label {
-                context.render(
+                context.build(
                     NewAdminFormFieldLabel(
                         text: state.field.label,
                         isRequired: state.field.isRequired
@@ -327,7 +327,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
                 currentCard(context: &context)
             }
             else {
-                context.render(
+                context.build(
                     NewAdminControlButton("Choose asset")
                 )
                 .data("media-picker-open", state.field.key)
@@ -344,7 +344,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
 }
 
 extension NewAdminFormFieldMediaPicker {
-    fileprivate func currentCard(context: inout RenderContext)
+    fileprivate func currentCard(context: inout BuilderContext)
         -> some FlowContent
     {
         let hasSelectedAsset = state.field.value?.isEmpty == false
@@ -357,7 +357,7 @@ extension NewAdminFormFieldMediaPicker {
                     .data("media-picker-title", state.field.key)
                     .data("empty-title", "No asset selected")
                 Div {
-                    context.render(
+                    context.build(
                         NewAdminControlButton(
                             "Choose asset",
                             style: .ghost(.primary)
@@ -365,7 +365,7 @@ extension NewAdminFormFieldMediaPicker {
                     )
                     .class("new-admin-media-picker__choose", "row-button")
                     .data("media-picker-open", state.field.key)
-                    context.render(
+                    context.build(
                         NewAdminControlButton(
                             "Clear",
                             style: hasSelectedAsset ? .destructive : .disabled
@@ -401,7 +401,7 @@ extension NewAdminFormFieldMediaPicker {
         .data("media-picker-preview", state.field.key)
     }
 
-    fileprivate func modal(context: inout RenderContext) -> some FlowContent {
+    fileprivate func modal(context: inout BuilderContext) -> some FlowContent {
         let helperText =
             state.allowedExtensions.isEmpty
             ? "Browse folders, search assets, or upload a new item."
@@ -410,7 +410,7 @@ extension NewAdminFormFieldMediaPicker {
         return Div {
             Div {
                 Div {
-                    context.render(
+                    context.build(
                         NewAdminPageHeader(
                             state: .init(
                                 title: state.field.label,
@@ -418,7 +418,7 @@ extension NewAdminFormFieldMediaPicker {
                             )
                         )
                     )
-                    context.render(
+                    context.build(
                         NewAdminControlButton(
                             "Close",
                             style: .ghost(.secondary)
@@ -429,13 +429,13 @@ extension NewAdminFormFieldMediaPicker {
                 }
                 .class("new-admin-media-picker__dialog-header")
                 Div {
-                    context.render(
+                    context.build(
                         NewAdminControlButton("Gallery")
                     )
                     .class("is-current")
                     .data("media-picker-tab", "gallery")
                     .data("media-picker-field", state.field.key)
-                    context.render(
+                    context.build(
                         NewAdminControlButton(
                             "Upload",
                             style: .ghost(.primary)

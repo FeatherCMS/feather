@@ -26,11 +26,11 @@ struct BlogPostTable: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             if !state.canAccess {
-                context.render(
+                context.build(
                     NewAdminStatusView(
                         state: .init(
                             title: "Forbidden",
@@ -41,7 +41,7 @@ struct BlogPostTable: Component {
                 )
             }
             else {
-                context.render(
+                context.build(
                     NewAdminPageHeader(
                         state: .init(
                             title: "Blog posts",
@@ -53,7 +53,7 @@ struct BlogPostTable: Component {
                 if let error = state.error {
                     P(error).class("new-admin-form__error")
                 }
-                context.render(BlogPostTableContent(state: state))
+                context.build(BlogPostTableContent(state: state))
             }
         }
         .class("cms-section")
@@ -63,13 +63,13 @@ struct BlogPostTable: Component {
 private struct BlogPostTableContent: Component {
     let state: BlogPostTable.State
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let canDelete = state.permissions.allows(BlogPermissions.Posts.delete)
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if state.items.isEmpty {
-                        context.render(
+                        context.build(
                             NewAdminListNoResultsState(
                                 message: state.search.isEmpty
                                     ? "No blog posts yet."
@@ -80,7 +80,7 @@ private struct BlogPostTableContent: Component {
                     else {
                         if state.canEdit {
                             for item in state.items {
-                                context.render(
+                                context.build(
                                     NewAdminStatusSelectFormDefinition(
                                         id: statusFormID(item.id),
                                         action:
@@ -94,7 +94,7 @@ private struct BlogPostTableContent: Component {
                                 )
                             }
                         }
-                        context.render(
+                        context.build(
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action: BlogAdminRoutes.postRemove()
@@ -107,7 +107,7 @@ private struct BlogPostTableContent: Component {
                                     ),
                                     isEnabled: canDelete
                                 ),
-                                table: context.render(
+                                table: context.build(
                                     NewAdminListShell(
                                         layout: .init(
                                             name: "blog-posts",
@@ -122,7 +122,7 @@ private struct BlogPostTableContent: Component {
                                             Thead {
                                                 Tr {
                                                     if canDelete {
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
@@ -137,7 +137,7 @@ private struct BlogPostTableContent: Component {
                                                 for item in state.items {
                                                     Tr {
                                                         if canDelete {
-                                                            context.render(
+                                                            context.build(
                                                                 NewAdminListRowCheckbox(
                                                                     id: item.id
                                                                 )
@@ -159,7 +159,7 @@ private struct BlogPostTableContent: Component {
                                                         .data("label", "Title")
                                                         Td {
                                                             if state.canEdit {
-                                                                context.render(
+                                                                context.build(
                                                                     NewAdminStatusSelectField(
                                                                         formID:
                                                                             statusFormID(
@@ -174,7 +174,7 @@ private struct BlogPostTableContent: Component {
                                                                 )
                                                             }
                                                             else {
-                                                                context.render(
+                                                                context.build(
                                                                     statusChip(
                                                                         item
                                                                             .metadata
@@ -204,7 +204,7 @@ private struct BlogPostTableContent: Component {
                                                             "label",
                                                             "Expiration"
                                                         )
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListRowActions(
                                                                 label:
                                                                     "Actions",
@@ -291,7 +291,7 @@ private struct BlogPostTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: BlogAdminRoutes.posts.description,
@@ -303,9 +303,9 @@ private struct BlogPostTableContent: Component {
                 },
                 toolbar: {
                     if state.canAdd {
-                        context.render(
+                        context.build(
                             NewAdminListToolbar {
-                                context.render(
+                                context.build(
                                     NewAdminButton(
                                         "Add post",
                                         href: BlogAdminRoutes.postAdd()
@@ -317,7 +317,7 @@ private struct BlogPostTableContent: Component {
                     }
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: BlogAdminRoutes.posts.description,

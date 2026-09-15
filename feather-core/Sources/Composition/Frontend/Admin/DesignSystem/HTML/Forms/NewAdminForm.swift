@@ -75,7 +75,7 @@ public struct NewAdminForm: Component {
         ]
     }
 
-    public func html(context: inout RenderContext) -> Form {
+    public func html(context: inout BuilderContext) -> Form {
         form
     }
 }

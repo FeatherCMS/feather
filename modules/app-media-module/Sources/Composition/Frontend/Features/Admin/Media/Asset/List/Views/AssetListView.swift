@@ -193,10 +193,10 @@ struct AssetListView: Component {
         .rules() + [Media(selectors: selectors())]
     }
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             if !state.permissions.allows(MediaPermissions.Assets.list) {
-                context.render(
+                context.build(
                     NewAdminStatusView(
                         state: .init(
                             title: "Forbidden",
@@ -208,12 +208,12 @@ struct AssetListView: Component {
             }
             else {
                 if !state.picker.isEnabled {
-                    context.render(
+                    context.build(
                         NewAdminBreadcrumb(
                             links: MediaAssetRoutes.listBreadcrumb
                         )
                     )
-                    context.render(
+                    context.build(
                         NewAdminPageHeader(
                             state: .init(
                                 title: "Media assets",
@@ -224,11 +224,11 @@ struct AssetListView: Component {
                     )
                 }
 
-                context.render(
+                context.build(
                     NewAdminList(
                         table: {
                             if state.pageState.isPageOutOfRange {
-                                context.render(
+                                context.build(
                                     NewAdminListInvalidPageState(
                                         pageState: state.pageState,
                                         path: MediaAssetRoutes.list.description
@@ -254,7 +254,7 @@ struct AssetListView: Component {
                             toolbar(context: &context)
                         },
                         pagination: {
-                            context.render(
+                            context.build(
                                 NewAdminListPagination(
                                     state: .init(
                                         path: MediaAssetRoutes.list.description,
@@ -487,19 +487,19 @@ extension AssetListView {
         MediaFolderRoutes.edit(RouterPath(folder.id)).description
     }
 
-    fileprivate func toolbar(context: inout RenderContext) -> some FlowContent {
+    fileprivate func toolbar(context: inout BuilderContext) -> some FlowContent {
         Div {
             if state.permissions.allows(MediaPermissions.Assets.create)
                 && !state.picker.isEnabled
             {
-                context.render(
+                context.build(
                     NewAdminButton("Add asset", href: addAssetPath())
                 )
             }
             if state.permissions.allows(MediaPermissions.Assets.create)
                 && !state.picker.isEnabled
             {
-                context.render(
+                context.build(
                     NewAdminButton(
                         "Add folder",
                         href: addFolderPath(),
@@ -512,10 +512,10 @@ extension AssetListView {
     }
 
     fileprivate func searchControls(
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some FlowContent {
         Div {
-            context.render(
+            context.build(
                 NewAdminTabBar(
                     links: [
                         .init(
@@ -547,7 +547,7 @@ extension AssetListView {
                 pickerSearchControls(context: &context)
             }
             else {
-                context.render(
+                context.build(
                     NewAdminListSearch(
                         state: .init(
                             action: MediaAssetRoutes.list.description,
@@ -567,9 +567,9 @@ extension AssetListView {
     }
 
     fileprivate func pickerSearchControls(
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some FlowContent {
-        context.render(
+        context.build(
             NewAdminListSearch(
                 state: .init(
                     action: browsePath(parentId: state.parentId),
@@ -590,10 +590,10 @@ extension AssetListView {
     }
 
     fileprivate func emptyState(
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some FlowContent {
         if state.search.isEmpty {
-            return context.render(
+            return context.build(
                 NewAdminListEmptyState(
                     message: "No media assets or folders yet.",
                     icon: FeatherIcons.image(),
@@ -601,7 +601,7 @@ extension AssetListView {
                         if state.permissions.allows(
                             MediaPermissions.Assets.create
                         ) && !state.picker.isEnabled {
-                            context.render(
+                            context.build(
                                 NewAdminButton(
                                     "Add asset",
                                     href: addAssetPath()
@@ -612,12 +612,12 @@ extension AssetListView {
                 )
             )
         }
-        return context.render(
+        return context.build(
             NewAdminListNoResultsState(
                 message: "No media assets or folders match your search.",
                 icon: FeatherIcons.image(),
                 action: {
-                    context.render(
+                    context.build(
                         NewAdminButton(
                             "Reset search",
                             href: browsePath(parentId: state.parentId),
@@ -629,7 +629,7 @@ extension AssetListView {
         )
     }
 
-    fileprivate func gridContent(context: inout RenderContext)
+    fileprivate func gridContent(context: inout BuilderContext)
         -> some FlowContent
     {
         Div {
@@ -648,7 +648,7 @@ extension AssetListView {
         .class("media-assets-grid")
     }
 
-    fileprivate func listContent(context: inout RenderContext)
+    fileprivate func listContent(context: inout BuilderContext)
         -> some FlowContent
     {
         let canRemove =
@@ -659,7 +659,7 @@ extension AssetListView {
             search: state.search.isEmpty ? nil : state.search,
             page: state.pageState.page
         )
-        return context.render(
+        return context.build(
             NewAdminListSelectionForm(
                 state: .init(
                     action: NewAdminLocation.remove(
@@ -672,7 +672,7 @@ extension AssetListView {
                     button: .init("Remove selected", style: .destructive),
                     isEnabled: canRemove
                 ),
-                table: context.render(
+                table: context.build(
                     NewAdminListShell(
                         layout: .init(
                             name: "media-assets",
@@ -689,7 +689,7 @@ extension AssetListView {
                             Thead {
                                 Tr {
                                     if canRemove {
-                                        context.render(
+                                        context.build(
                                             NewAdminListSelectAllCheckbox()
                                         )
                                     }
@@ -738,7 +738,7 @@ extension AssetListView {
 
     fileprivate func upCard(
         parentId: String?,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some FlowContent {
 
         Div {
@@ -757,7 +757,7 @@ extension AssetListView {
             .class("media-assets-card-body")
 
             Div {
-                context.render(
+                context.build(
                     NewAdminRowButton(
                         "Open",
                         href: browsePath(parentId: parentId),
@@ -772,7 +772,7 @@ extension AssetListView {
 
     fileprivate func folderCard(
         _ folder: Components.Schemas.MediaFolderListItemSchema,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some FlowContent {
         let actionSuffix = assetActionSuffix()
 
@@ -794,7 +794,7 @@ extension AssetListView {
             .class("media-assets-card-body")
 
             Div {
-                context.render(
+                context.build(
                     NewAdminRowButton(
                         "View",
                         href: browsePath(parentId: folder.id),
@@ -804,7 +804,7 @@ extension AssetListView {
                 if state.permissions.allows(MediaPermissions.Assets.update)
                     && !state.picker.isEnabled
                 {
-                    context.render(
+                    context.build(
                         NewAdminRowButton(
                             "Edit",
                             href: folderEditPath(folder),
@@ -815,7 +815,7 @@ extension AssetListView {
                 if state.permissions.allows(MediaPermissions.Assets.delete)
                     && !state.picker.isEnabled
                 {
-                    context.render(
+                    context.build(
                         NewAdminRowButton(
                             "Remove",
                             href:
@@ -832,7 +832,7 @@ extension AssetListView {
 
     fileprivate func assetCard(
         _ item: AdminListMediaAssetModel.AssetItem,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some FlowContent {
 
         let actionSuffix = assetActionSuffix()
@@ -907,7 +907,7 @@ extension AssetListView {
 
             Div {
                 if state.picker.isEnabled, let field = state.picker.field {
-                    context.render(
+                    context.build(
                         NewAdminRowButton(
                             "Select",
                             style: .ghost(.primary)
@@ -927,7 +927,7 @@ extension AssetListView {
                     .data("picker-status", item.asset.status)
                 }
                 else if state.permissions.allows(MediaPermissions.Assets.read) {
-                    context.render(
+                    context.build(
                         NewAdminRowButton(
                             "View",
                             href: detailsURL,
@@ -938,7 +938,7 @@ extension AssetListView {
                 if state.permissions.allows(MediaPermissions.Assets.update)
                     && !state.picker.isEnabled
                 {
-                    context.render(
+                    context.build(
                         NewAdminRowButton(
                             "Edit",
                             href:
@@ -950,7 +950,7 @@ extension AssetListView {
                 if state.permissions.allows(MediaPermissions.Assets.delete)
                     && !state.picker.isEnabled
                 {
-                    context.render(
+                    context.build(
                         NewAdminRowButton(
                             "Remove",
                             href:
@@ -968,7 +968,7 @@ extension AssetListView {
     fileprivate func upRow(
         parentId: String?,
         canRemove: Bool,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some BasicTag {
         Tr {
             if canRemove {
@@ -987,7 +987,7 @@ extension AssetListView {
             Td("-")
                 .data("label", "Size")
             Td {
-                context.render(
+                context.build(
                     NewAdminRowButton(
                         "Open",
                         href: browsePath(parentId: parentId),
@@ -1004,7 +1004,7 @@ extension AssetListView {
         _ folder: Components.Schemas.MediaFolderListItemSchema,
         canRemove: Bool,
         returnTo: String,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some BasicTag {
         Tr {
             let actions: [NewAdminListRowActions.Action] =
@@ -1042,7 +1042,7 @@ extension AssetListView {
                     ),
                 ]
             if canRemove {
-                context.render(
+                context.build(
                     NewAdminListRowCheckbox(id: folder.id)
                 )
             }
@@ -1056,7 +1056,7 @@ extension AssetListView {
                 .data("label", "Type")
             Td(folderItemCountLabel(for: folder))
                 .data("label", "Size")
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: actions,
@@ -1070,7 +1070,7 @@ extension AssetListView {
         _ item: AdminListMediaAssetModel.AssetItem,
         canRemove: Bool,
         returnTo: String,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some BasicTag {
 
         let previewURL = previewLink(
@@ -1080,7 +1080,7 @@ extension AssetListView {
         let originalURL = assetOriginalLink(for: item.asset)
         return Tr {
             if canRemove {
-                context.render(
+                context.build(
                     NewAdminListRowCheckbox(id: item.asset.id)
                 )
             }
@@ -1101,7 +1101,7 @@ extension AssetListView {
                 .data("label", "Size")
             if state.picker.isEnabled, let field = state.picker.field {
                 Td {
-                    context.render(
+                    context.build(
                         NewAdminRowButton(
                             "Select",
                             style: .ghost(.primary)
@@ -1145,7 +1145,7 @@ extension AssetListView {
                 .class("action-cell")
             }
             else {
-                context.render(
+                context.build(
                     NewAdminListRowActions(
                         label: "Actions",
                         actions: [
@@ -1195,7 +1195,7 @@ extension AssetListView {
 
     fileprivate func parentPreviewCell(
         href: String,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some BasicTag {
 
         Td {
@@ -1216,7 +1216,7 @@ extension AssetListView {
     fileprivate func folderPreviewCell(
         label: String,
         href: String,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some BasicTag {
 
         Td {
@@ -1238,7 +1238,7 @@ extension AssetListView {
         for item: AdminListMediaAssetModel.AssetItem,
         previewURL: String,
         originalURL: String,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some BasicTag {
 
         Td {
@@ -1271,13 +1271,13 @@ extension AssetListView {
     fileprivate func assetTitleCell(
         for item: AdminListMediaAssetModel.AssetItem,
         originalURL: String,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some BasicTag {
 
         Td {
             Span {
                 Span(fileName(for: item.asset))
-                context.render(
+                context.build(
                     NewAdminPreviewLink(
                         href: originalURL,
                         label: "Preview \(displayTitle(for: item.asset))"

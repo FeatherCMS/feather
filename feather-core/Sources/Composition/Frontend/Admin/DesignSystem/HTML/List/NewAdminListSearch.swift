@@ -176,7 +176,7 @@ public struct NewAdminListSearch: Component {
         self.additionalFields = additionalFields()
     }
 
-    public func html(context: inout RenderContext) -> Form {
+    public func html(context: inout BuilderContext) -> Form {
         Form {
             for item in state.queryItems {
                 Input().type(.hidden).name(item.name).value(item.value)
@@ -198,7 +198,7 @@ public struct NewAdminListSearch: Component {
                     .if(state.search.isEmpty) { $0.class("is-hidden") }
             }
             .class("table-search-input")
-            context.render(
+            context.build(
                 NewAdminSubmitButton(
                     "Search",
                     style: .ghost(.primary),

@@ -21,14 +21,14 @@ struct WebMetadataEdit: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(state: state.pageHeader)
             )
-            context.render(NewAdminTabBar(links: state.navigationTabs))
-            context.render(
+            context.build(NewAdminTabBar(links: state.navigationTabs))
+            context.build(
                 WebMetadataForm(
                     state: state.form,
                     action: state.action,

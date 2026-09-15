@@ -13,7 +13,7 @@ struct AdminViewDesignSystemDefaultPresenter: AdminViewDesignSystemPresenter {
     func renderPage(
         model: AdminViewDesignSystemModel
     ) async throws -> HTMLResponse {
-        var renderContext = RenderContext()
+        var buildContext = BuilderContext()
         let menuGroups = try await context.adminMenuGroups(
             request: request,
             events: events
@@ -26,6 +26,6 @@ struct AdminViewDesignSystemDefaultPresenter: AdminViewDesignSystemPresenter {
             title: model.title,
             body: .init(content: layout)
         )
-        return .init(renderContext.render(component))
+        return .init(buildContext.build(component))
     }
 }

@@ -18,10 +18,10 @@ struct WebPageDetails: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Web page details",
@@ -59,7 +59,7 @@ struct WebPageDetails: Component {
                 if state.permissions.contains(
                     WebPermissions.Pages.update.rawValue
                 ) {
-                    context.render(
+                    context.build(
                         NewAdminStatusActionForm(
                             action: "/admin/web/pages/\(state.rule.id)/status/",
                             returnTo: "/admin/web/pages/\(state.rule.id)/",
@@ -68,7 +68,7 @@ struct WebPageDetails: Component {
                             classes: ["secondary"]
                         )
                     )
-                    context.render(
+                    context.build(
                         NewAdminButton(
                             "Edit page",
                             href: WebPageRoutes.edit(RouterPath(state.rule.id))
@@ -79,7 +79,7 @@ struct WebPageDetails: Component {
                 if state.permissions.contains(
                     WebPermissions.Pages.delete.rawValue
                 ) {
-                    context.render(
+                    context.build(
                         NewAdminButton(
                             "Remove page",
                             href:

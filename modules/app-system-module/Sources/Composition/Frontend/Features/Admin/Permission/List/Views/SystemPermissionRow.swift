@@ -41,16 +41,16 @@ struct SystemPermissionRow: Component {
         ]
     }
 
-    func html(context: inout RenderContext) -> Tr {
+    func html(context: inout BuilderContext) -> Tr {
         Tr {
             if actions.allows(SystemPermissions.Permissions.delete) {
-                context.render(NewAdminListRowCheckbox(id: permission.id))
+                context.build(NewAdminListRowCheckbox(id: permission.id))
             }
             Td(permission.key)
                 .data("label", "Key")
             Td(permission.name?.emptyToNil ?? "—")
                 .data("label", "Name")
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: rowActions,

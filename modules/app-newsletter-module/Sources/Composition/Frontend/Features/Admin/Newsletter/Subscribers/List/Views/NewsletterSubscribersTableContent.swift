@@ -34,16 +34,16 @@ struct NewsletterSubscribersTableContent: Component {
         )
     }
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let canDelete = permissions.allows(Permissions.Subscribers.delete)
         let canCreate = permissions.allows(Permissions.Subscribers.create)
         let hasActiveQuery = !searchValue.isEmpty || !model.campaignId.isEmpty
 
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if model.pageState.isPageOutOfRange {
-                        context.render(
+                        context.build(
                             NewAdminListInvalidPageState(
                                 pageState: model.pageState,
                                 path: path
@@ -52,13 +52,13 @@ struct NewsletterSubscribersTableContent: Component {
                     }
                     else if model.items.isEmpty {
                         if hasActiveQuery {
-                            context.render(
+                            context.build(
                                 NewAdminListNoResultsState(
                                     message:
                                         "No subscribers match your filters.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
-                                        context.render(
+                                        context.build(
                                             NewAdminButton(
                                                 "Reset filters",
                                                 href: path,
@@ -70,13 +70,13 @@ struct NewsletterSubscribersTableContent: Component {
                             )
                         }
                         else {
-                            context.render(
+                            context.build(
                                 NewAdminListEmptyState(
                                     message: "No subscribers yet.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         if canCreate {
-                                            context.render(
+                                            context.build(
                                                 NewAdminButton(
                                                     "Add new",
                                                     href: NewsletterAdminRoutes
@@ -91,7 +91,7 @@ struct NewsletterSubscribersTableContent: Component {
                         }
                     }
                     else {
-                        context.render(
+                        context.build(
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action: NewAdminLocation.remove(
@@ -108,7 +108,7 @@ struct NewsletterSubscribersTableContent: Component {
                                     ),
                                     isEnabled: canDelete
                                 ),
-                                table: context.render(
+                                table: context.build(
                                     NewAdminListShell(
                                         layout: .init(
                                             name: "newsletter-subscribers",
@@ -122,7 +122,7 @@ struct NewsletterSubscribersTableContent: Component {
                                             Thead {
                                                 Tr {
                                                     if canDelete {
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
@@ -134,7 +134,7 @@ struct NewsletterSubscribersTableContent: Component {
                                             }
                                             Tbody {
                                                 for item in model.items {
-                                                    context.render(
+                                                    context.build(
                                                         NewsletterSubscriberRow(
                                                             item: item,
                                                             permissions:
@@ -156,7 +156,7 @@ struct NewsletterSubscribersTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: path,
@@ -169,9 +169,9 @@ struct NewsletterSubscribersTableContent: Component {
                 },
                 toolbar: {
                     if canCreate {
-                        context.render(
+                        context.build(
                             NewAdminListToolbar {
-                                context.render(
+                                context.build(
                                     NewAdminButton(
                                         "Add new",
                                         href: NewsletterAdminRoutes
@@ -183,7 +183,7 @@ struct NewsletterSubscribersTableContent: Component {
                     }
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: path,

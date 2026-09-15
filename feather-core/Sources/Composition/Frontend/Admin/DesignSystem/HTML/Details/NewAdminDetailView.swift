@@ -38,10 +38,10 @@ public struct NewAdminDetailView: Component {
         self.fields = fields
         self.actions = actions
     }
-    public func html(context: inout RenderContext) -> Section {
+    public func html(context: inout BuilderContext) -> Section {
         Section {
-            context.render(NewAdminBreadcrumb(links: breadcrumb))
-            context.render(NewAdminPageHeader(state: pageHeader))
+            context.build(NewAdminBreadcrumb(links: breadcrumb))
+            context.build(NewAdminPageHeader(state: pageHeader))
             Div {
                 for field in fields {
                     Div {
@@ -55,7 +55,7 @@ public struct NewAdminDetailView: Component {
             if !actions.isEmpty {
                 Div {
                     for action in actions {
-                        context.render(
+                        context.build(
                             NewAdminButton(
                                 action.label,
                                 href: action.href,

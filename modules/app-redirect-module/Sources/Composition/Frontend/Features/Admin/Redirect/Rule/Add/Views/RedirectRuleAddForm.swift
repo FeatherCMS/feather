@@ -76,22 +76,22 @@ struct RedirectRuleAddForm: Component {
     let action: String
     let nonceToken: String?
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action, nonceToken: nonceToken) {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
-            context.render(NewAdminFormFieldInput(state: state.source))
-            context.render(NewAdminFormFieldInput(state: state.destination))
-            context.render(NewAdminFormFieldSelect(state: state.statusCode))
-            context.render(NewAdminFormFieldTextArea(state: state.notes))
+            context.build(NewAdminFormFieldInput(state: state.source))
+            context.build(NewAdminFormFieldInput(state: state.destination))
+            context.build(NewAdminFormFieldSelect(state: state.statusCode))
+            context.build(NewAdminFormFieldTextArea(state: state.notes))
             Div {
-                context.render(
+                context.build(
                     NewAdminSubmitButton("Add rule", style: .primary)
                 )
             }
             .class("new-admin-form__actions")
         }
-        return context.render(form)
+        return context.build(form)
     }
 }

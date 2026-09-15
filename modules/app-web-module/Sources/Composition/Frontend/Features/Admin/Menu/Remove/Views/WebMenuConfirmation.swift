@@ -18,8 +18,8 @@ struct WebMenuConfirmation: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
-        context.render(
+    func html(context: inout BuilderContext) -> some BasicTag {
+        context.build(
             NewAdminRemoveConfirmation(
                 breadcrumb: state.breadcrumb,
                 pageHeader: .init(

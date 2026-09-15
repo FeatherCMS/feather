@@ -15,15 +15,15 @@ struct UserIdentityTableContent: Component {
     let search: String?
     let role: String?
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let hasActiveQuery =
             !(search?.isEmpty ?? true) || !(role?.isEmpty ?? true)
 
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if pageState.isPageOutOfRange {
-                        context.render(
+                        context.build(
                             NewAdminListInvalidPageState(
                                 pageState: pageState,
                                 path: UserIdentityRoutes.list.description
@@ -32,13 +32,13 @@ struct UserIdentityTableContent: Component {
                     }
                     else if identities.isEmpty {
                         if hasActiveQuery {
-                            context.render(
+                            context.build(
                                 NewAdminListNoResultsState(
                                     message:
                                         "No user identities match your search or filters.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
-                                        context.render(
+                                        context.build(
                                             NewAdminButton(
                                                 "Reset filters",
                                                 href: UserIdentityRoutes.list
@@ -51,7 +51,7 @@ struct UserIdentityTableContent: Component {
                             )
                         }
                         else {
-                            context.render(
+                            context.build(
                                 NewAdminListEmptyState(
                                     message: "No user identities yet.",
                                     icon: FeatherIcons.inbox(),
@@ -59,7 +59,7 @@ struct UserIdentityTableContent: Component {
                                         if permissions.allows(
                                             UserPermissions.Identities.create
                                         ) {
-                                            context.render(
+                                            context.build(
                                                 NewAdminButton(
                                                     "Add new",
                                                     href: UserIdentityRoutes.add
@@ -76,7 +76,7 @@ struct UserIdentityTableContent: Component {
                         let canDelete = permissions.allows(
                             UserPermissions.Identities.delete
                         )
-                        context.render(
+                        context.build(
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action: UserIdentityRoutes.remove
@@ -89,7 +89,7 @@ struct UserIdentityTableContent: Component {
                                     ),
                                     isEnabled: canDelete
                                 ),
-                                table: context.render(
+                                table: context.build(
                                     NewAdminListShell(
                                         layout: .init(
                                             name: "user-identities",
@@ -107,7 +107,7 @@ struct UserIdentityTableContent: Component {
                                             Thead {
                                                 Tr {
                                                     if canDelete {
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
@@ -120,7 +120,7 @@ struct UserIdentityTableContent: Component {
                                             }
                                             Tbody {
                                                 for identity in identities {
-                                                    context.render(
+                                                    context.build(
                                                         UserIdentityRow(
                                                             identity: identity,
                                                             permissions:
@@ -141,7 +141,7 @@ struct UserIdentityTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: UserIdentityRoutes.list.description,
@@ -153,9 +153,9 @@ struct UserIdentityTableContent: Component {
                 },
                 toolbar: {
                     if permissions.allows(UserPermissions.Identities.create) {
-                        context.render(
+                        context.build(
                             NewAdminListToolbar {
-                                context.render(
+                                context.build(
                                     NewAdminButton(
                                         "Add new",
                                         href: UserIdentityRoutes.add.description
@@ -166,7 +166,7 @@ struct UserIdentityTableContent: Component {
                     }
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: UserIdentityRoutes.list.description,

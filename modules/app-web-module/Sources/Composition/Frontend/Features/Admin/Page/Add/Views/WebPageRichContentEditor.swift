@@ -597,9 +597,9 @@ struct WebPageRichContentEditor: Component {
         ]
     }
 
-    func html(context: inout RenderContext) -> Section {
+    func html(context: inout BuilderContext) -> Section {
         Section {
-            context.render(NewAdminFormFieldLabel(text: state.label))
+            context.build(NewAdminFormFieldLabel(text: state.label))
             Div {
                 Div {
                     P("Add component").class("eyebrow")
@@ -721,7 +721,7 @@ struct WebPageRichContentEditor: Component {
                 AppEnvironmentStore.current.publicOrigins.mediaBaseURL
                     .absoluteString
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldMediaPicker(
                     state: .init(
                         field: .init(
@@ -741,7 +741,7 @@ struct WebPageRichContentEditor: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldMediaPicker(
                     state: .init(
                         field: .init(

@@ -11,12 +11,12 @@ struct UserIdentityEditPage: Component {
     let permissions: NewAdminListActions
     let nonceToken: String?
 
-    func html(context: inout RenderContext) -> Section {
+    func html(context: inout BuilderContext) -> Section {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: UserIdentityRoutes.breadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Edit user identity",
@@ -24,7 +24,7 @@ struct UserIdentityEditPage: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 UserIdentityEditForm(
                     state: form,
                     action: UserIdentityRoutes.edit(RouterPath(id)).description,

@@ -49,11 +49,11 @@ public struct ListRemoveConfirmation: Component {
         self.state = state
     }
 
-    public func html(context: inout RenderContext) -> some BasicTag {
+    public func html(context: inout BuilderContext) -> some BasicTag {
         let previewIds = state.selectedIds.prefix(10)
         let remainingIds = state.selectedIds.count - previewIds.count
 
-        return context.render(
+        return context.build(
             AdminConfirmationDialog(
                 state: .init(
                     breadcrumb: state.breadcrumb,

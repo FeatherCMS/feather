@@ -14,8 +14,8 @@ struct MediaProcessorRemoveView: Component {
     let cancelURL: String
     let formURL: String
 
-    func html(context: inout RenderContext) -> some BasicTag {
-        context.render(
+    func html(context: inout BuilderContext) -> some BasicTag {
+        context.build(
             NewAdminRemoveConfirmation(
                 breadcrumb: MediaProcessorRoutes.breadcrumb,
                 pageHeader: .init(

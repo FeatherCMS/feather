@@ -19,9 +19,9 @@ struct BlogAuthorDetails: Component {
     }
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminDetailView(
                     breadcrumb: state.breadcrumb,
                     pageHeader: .init(
@@ -54,7 +54,7 @@ struct BlogAuthorDetails: Component {
             ) {
                 let formID = "blog-author-status-\(state.author.id)"
                 Div {
-                    context.render(
+                    context.build(
                         NewAdminStatusSelectFormDefinition(
                             id: formID,
                             action:
@@ -69,7 +69,7 @@ struct BlogAuthorDetails: Component {
                                 .description
                         )
                     )
-                    context.render(
+                    context.build(
                         NewAdminStatusSelectField(
                             formID: formID,
                             selectedStatus: state.author.metadata
@@ -79,7 +79,7 @@ struct BlogAuthorDetails: Component {
                 }
                 .class("new-admin-detail-actions")
             }
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Author links",
@@ -90,7 +90,7 @@ struct BlogAuthorDetails: Component {
             if state.permissions.contains(
                 BlogPermissions.AuthorLinks.create.rawValue
             ) {
-                context.render(
+                context.build(
                     NewAdminButton(
                         "Add link",
                         href:
@@ -101,7 +101,7 @@ struct BlogAuthorDetails: Component {
                     )
                 )
             }
-            context.render(
+            context.build(
                 BlogAuthorLinkTableContent(
                     state: .init(
                         authorId: state.author.id,

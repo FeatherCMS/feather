@@ -29,7 +29,7 @@ public struct AdminFieldLabel: Component {
         }
     }
 
-    public func html(context: inout RenderContext) -> Span {
+    public func html(context: inout BuilderContext) -> Span {
         Span {
             InlineText(label)
             if required {

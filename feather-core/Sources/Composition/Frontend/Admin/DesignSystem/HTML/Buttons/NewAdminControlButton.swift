@@ -16,7 +16,7 @@ public struct NewAdminControlButton: Component {
         self.style = style
     }
 
-    public func html(context: inout RenderContext) -> Button {
+    public func html(context: inout BuilderContext) -> Button {
         var button = Button(label)
             .type(.button)
             .class("button", style.className)

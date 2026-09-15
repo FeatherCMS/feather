@@ -13,14 +13,14 @@ struct UserRoleTableContent: Component {
     let pageState: NewAdminListPageState
     let search: String?
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let hasActiveQuery = !(search?.isEmpty ?? true)
 
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if pageState.isPageOutOfRange {
-                        context.render(
+                        context.build(
                             NewAdminListInvalidPageState(
                                 pageState: pageState,
                                 path: UserRoleRoutes.list.description
@@ -29,12 +29,12 @@ struct UserRoleTableContent: Component {
                     }
                     else if roles.isEmpty {
                         if hasActiveQuery {
-                            context.render(
+                            context.build(
                                 NewAdminListNoResultsState(
                                     message: "No user roles match your search.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
-                                        context.render(
+                                        context.build(
                                             NewAdminButton(
                                                 "Reset search",
                                                 href: UserRoleRoutes.list
@@ -47,7 +47,7 @@ struct UserRoleTableContent: Component {
                             )
                         }
                         else {
-                            context.render(
+                            context.build(
                                 NewAdminListEmptyState(
                                     message: "No user roles yet.",
                                     icon: FeatherIcons.inbox(),
@@ -55,7 +55,7 @@ struct UserRoleTableContent: Component {
                                         if permissions.allows(
                                             UserPermissions.Roles.create
                                         ) {
-                                            context.render(
+                                            context.build(
                                                 NewAdminButton(
                                                     "Add new",
                                                     href: UserRoleRoutes.add
@@ -72,7 +72,7 @@ struct UserRoleTableContent: Component {
                         let canDelete = permissions.allows(
                             UserPermissions.Roles.delete
                         )
-                        context.render(
+                        context.build(
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action: UserRoleRoutes.remove.description,
@@ -84,7 +84,7 @@ struct UserRoleTableContent: Component {
                                     ),
                                     isEnabled: canDelete
                                 ),
-                                table: context.render(
+                                table: context.build(
                                     NewAdminListShell(
                                         layout: .init(
                                             name: "user-roles",
@@ -98,7 +98,7 @@ struct UserRoleTableContent: Component {
                                             Thead {
                                                 Tr {
                                                     if canDelete {
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
@@ -108,7 +108,7 @@ struct UserRoleTableContent: Component {
                                             }
                                             Tbody {
                                                 for role in roles {
-                                                    context.render(
+                                                    context.build(
                                                         UserRoleRow(
                                                             role: role,
                                                             permissions:
@@ -129,7 +129,7 @@ struct UserRoleTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: UserRoleRoutes.list.description,
@@ -141,9 +141,9 @@ struct UserRoleTableContent: Component {
                 },
                 toolbar: {
                     if permissions.allows(UserPermissions.Roles.create) {
-                        context.render(
+                        context.build(
                             NewAdminListToolbar {
-                                context.render(
+                                context.build(
                                     NewAdminButton(
                                         "Add new",
                                         href: UserRoleRoutes.add.description
@@ -154,7 +154,7 @@ struct UserRoleTableContent: Component {
                     }
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: UserRoleRoutes.list.description,

@@ -136,7 +136,7 @@ public struct NewAdminListPagination: Component {
         self.state = state
     }
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         let extraQuerySuffix =
             state.queryItems
             .filter { !$0.value.isEmpty }
@@ -158,7 +158,7 @@ public struct NewAdminListPagination: Component {
         return Div {
             Div {
                 if state.pageState.page > 1 {
-                    context.render(
+                    context.build(
                         NewAdminRowButton(
                             "First",
                             href: "\(state.path)?page=1\(filterSuffix)",
@@ -167,10 +167,10 @@ public struct NewAdminListPagination: Component {
                     )
                 }
                 else {
-                    context.render(NewAdminRowButton("First", style: .disabled))
+                    context.build(NewAdminRowButton("First", style: .disabled))
                 }
                 if state.pageState.page > 1 {
-                    context.render(
+                    context.build(
                         NewAdminRowButton(
                             "Prev",
                             href:
@@ -180,7 +180,7 @@ public struct NewAdminListPagination: Component {
                     )
                 }
                 else {
-                    context.render(NewAdminRowButton("Prev", style: .disabled))
+                    context.build(NewAdminRowButton("Prev", style: .disabled))
                 }
 
                 Form {
@@ -220,7 +220,7 @@ public struct NewAdminListPagination: Component {
                 .class("pagination-page-form")
 
                 if state.pageState.page < totalPages {
-                    context.render(
+                    context.build(
                         NewAdminRowButton(
                             "Next",
                             href:
@@ -230,10 +230,10 @@ public struct NewAdminListPagination: Component {
                     )
                 }
                 else {
-                    context.render(NewAdminRowButton("Next", style: .disabled))
+                    context.build(NewAdminRowButton("Next", style: .disabled))
                 }
                 if state.pageState.page < totalPages {
-                    context.render(
+                    context.build(
                         NewAdminRowButton(
                             "Last",
                             href:
@@ -243,7 +243,7 @@ public struct NewAdminListPagination: Component {
                     )
                 }
                 else {
-                    context.render(NewAdminRowButton("Last", style: .disabled))
+                    context.build(NewAdminRowButton("Last", style: .disabled))
                 }
             }
             .class("page-controls")

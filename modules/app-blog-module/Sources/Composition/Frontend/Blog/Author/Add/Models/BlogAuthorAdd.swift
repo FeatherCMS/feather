@@ -20,10 +20,10 @@ struct BlogAuthorAdd: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Add author",
@@ -31,7 +31,7 @@ struct BlogAuthorAdd: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 BlogAuthorForm(
                     state: state.form,
                     action: "/admin/blog/authors/add/",

@@ -18,14 +18,14 @@ struct SystemJobTableContent: Component {
         search ?? ""
     }
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let hasActiveQuery = !(search?.isEmpty ?? true)
 
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if pageState.isPageOutOfRange {
-                        context.render(
+                        context.build(
                             NewAdminListInvalidPageState(
                                 pageState: pageState,
                                 path: SystemJobRoutes.list.description
@@ -34,13 +34,13 @@ struct SystemJobTableContent: Component {
                     }
                     else if jobs.isEmpty {
                         if hasActiveQuery {
-                            context.render(
+                            context.build(
                                 NewAdminListNoResultsState(
                                     message:
                                         "No worker jobs match your search.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
-                                        context.render(
+                                        context.build(
                                             NewAdminButton(
                                                 "Reset search",
                                                 href: SystemJobRoutes.list
@@ -53,7 +53,7 @@ struct SystemJobTableContent: Component {
                             )
                         }
                         else {
-                            context.render(
+                            context.build(
                                 NewAdminListEmptyState(
                                     message: "No worker jobs yet.",
                                     icon: FeatherIcons.inbox()
@@ -62,7 +62,7 @@ struct SystemJobTableContent: Component {
                         }
                     }
                     else {
-                        context.render(
+                        context.build(
                             NewAdminListShell(
                                 layout: .init(
                                     name: "system-jobs",
@@ -84,7 +84,7 @@ struct SystemJobTableContent: Component {
                                     }
                                     Tbody {
                                         for job in jobs {
-                                            context.render(
+                                            context.build(
                                                 SystemJobRow(
                                                     job: job,
                                                     permissions: permissions
@@ -99,7 +99,7 @@ struct SystemJobTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: SystemJobRoutes.list.description,
@@ -110,7 +110,7 @@ struct SystemJobTableContent: Component {
                     )
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: SystemJobRoutes.list.description,

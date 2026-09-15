@@ -23,13 +23,13 @@ struct AnalyticsLogTable: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: AnalyticsAdminRoutes.breadcrumb)
             )
             if !state.canAccess {
-                context.render(
+                context.build(
                     NewAdminStatusView(
                         state: .init(
                             title: "Forbidden",
@@ -41,7 +41,7 @@ struct AnalyticsLogTable: Component {
                 )
             }
             else {
-                context.render(
+                context.build(
                     NewAdminPageHeader(
                         state: .init(
                             title: "Analytics logs",
@@ -52,20 +52,20 @@ struct AnalyticsLogTable: Component {
                 if let error = state.error {
                     P(error).class("new-admin-form__error")
                 }
-                context.render(content(context: &context))
+                context.build(content(context: &context))
             }
         }
         .class("cms-section")
     }
 
-    private func content(context: inout RenderContext) -> NewAdminList {
+    private func content(context: inout BuilderContext) -> NewAdminList {
         let hasActiveQuery =
             !state.search.isEmpty || !state.source.isEmpty
             || !state.method.isEmpty || !state.responseCode.isEmpty
         return NewAdminList(
             table: {
                 if state.pageState.isPageOutOfRange {
-                    context.render(
+                    context.build(
                         NewAdminListInvalidPageState(
                             pageState: state.pageState,
                             path: AnalyticsAdminRoutes.logs.description
@@ -73,7 +73,7 @@ struct AnalyticsLogTable: Component {
                     )
                 }
                 else if state.logs.isEmpty {
-                    context.render(
+                    context.build(
                         NewAdminListNoResultsState(
                             message: hasActiveQuery
                                 ? "No analytics logs match your search."
@@ -81,7 +81,7 @@ struct AnalyticsLogTable: Component {
                             icon: FeatherIcons.activity(),
                             action: {
                                 if hasActiveQuery {
-                                    context.render(
+                                    context.build(
                                         NewAdminButton(
                                             "Reset search",
                                             href: AnalyticsAdminRoutes.logs
@@ -95,7 +95,7 @@ struct AnalyticsLogTable: Component {
                     )
                 }
                 else {
-                    context.render(
+                    context.build(
                         NewAdminListShell(
                             layout: .init(
                                 name: "analytics-logs",
@@ -119,7 +119,7 @@ struct AnalyticsLogTable: Component {
                                     for log in state.logs {
                                         Tr {
                                             Td {
-                                                context.render(
+                                                context.build(
                                                     NewAdminChip(
                                                         label: log.method,
                                                         color: .blue
@@ -128,13 +128,13 @@ struct AnalyticsLogTable: Component {
                                             }
                                             .data("label", "Method")
                                             Td {
-                                                context.render(
+                                                context.build(
                                                     statusChip(log.responseCode)
                                                 )
                                             }
                                             .data("label", "Status")
                                             Td {
-                                                context.render(
+                                                context.build(
                                                     sourceChip(log.source)
                                                 )
                                             }
@@ -147,7 +147,7 @@ struct AnalyticsLogTable: Component {
                                                     )
                                             )
                                             .data("label", "Created")
-                                            context.render(
+                                            context.build(
                                                 NewAdminListRowActions(
                                                     label: "Actions",
                                                     actions: [
@@ -180,7 +180,7 @@ struct AnalyticsLogTable: Component {
                 }
             },
             search: {
-                context.render(
+                context.build(
                     NewAdminListSearch(
                         state: .init(
                             action: AnalyticsAdminRoutes.logs.description,
@@ -200,7 +200,7 @@ struct AnalyticsLogTable: Component {
                 )
             },
             pagination: {
-                context.render(
+                context.build(
                     NewAdminListPagination(
                         state: .init(
                             path: AnalyticsAdminRoutes.logs.description,

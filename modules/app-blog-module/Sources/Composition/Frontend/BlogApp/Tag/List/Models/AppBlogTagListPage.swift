@@ -14,9 +14,9 @@ import WebFrontend
 struct AppBlogTagListPage: Component {
     let state: AppGetBlogTagListModel
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Main {
-            context.render(AppPublicStyleAnchor())
+            context.build(AppPublicStyleAnchor())
             Div {
                 Div {
                     P("Blog").class("public-eyebrow")

@@ -196,7 +196,7 @@ public struct NewAdminListShell<Table: FlowContent>: Component {
         self.hasSelection = hasSelection
     }
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         let content = Div {
             Div {
                 table

@@ -85,7 +85,7 @@ public struct NewAdminCheckbox: Component {
         ]
     }
 
-    public func html(context: inout RenderContext) -> Input {
+    public func html(context: inout BuilderContext) -> Input {
         var input = Input()
             .type(.checkbox)
             .class(

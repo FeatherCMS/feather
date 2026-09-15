@@ -25,15 +25,15 @@ struct UserIdentityRow: Component {
         }
     }
 
-    func html(context: inout RenderContext) -> Tr {
+    func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(UserPermissions.Identities.delete) {
-                context.render(NewAdminListRowCheckbox(id: identity.id))
+                context.build(NewAdminListRowCheckbox(id: identity.id))
             }
             Td(identity.id).data("label", "ID")
             Td(identity.name).data("label", "Name")
             Td {
-                context.render(statusChip)
+                context.build(statusChip)
             }
             .data("label", "Status")
             Td(
@@ -42,7 +42,7 @@ struct UserIdentityRow: Component {
                     : identity.roles.joined(separator: ", ")
             )
             .data("label", "Roles")
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: [

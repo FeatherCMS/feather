@@ -11,15 +11,15 @@ struct NewsletterCampaignSubscriberRow: Component {
     let item: AdminNewsletterCampaignSubscriberItem
     let permissions: NewAdminListActions
 
-    func html(context: inout RenderContext) -> Tr {
+    func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(Permissions.Subscribers.delete) {
-                context.render(NewAdminListRowCheckbox(id: item.id))
+                context.build(NewAdminListRowCheckbox(id: item.id))
             }
             Td(item.email).data("label", "Email")
             Td("\(item.firstName) \(item.lastName)").data("label", "Name")
             Td(item.status).data("label", "Status")
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: [

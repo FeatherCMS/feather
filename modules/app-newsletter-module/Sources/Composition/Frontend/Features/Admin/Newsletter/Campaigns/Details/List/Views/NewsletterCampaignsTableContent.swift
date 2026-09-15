@@ -24,15 +24,15 @@ struct NewsletterCampaignsTableContent: Component {
         )
     }
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let canDelete = actions.allows(Permissions.Campaigns.delete)
         let hasActiveQuery = !searchValue.isEmpty
 
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if pageState.isPageOutOfRange {
-                        context.render(
+                        context.build(
                             NewAdminListInvalidPageState(
                                 pageState: pageState,
                                 path: NewsletterAdminRoutes.campaigns
@@ -42,12 +42,12 @@ struct NewsletterCampaignsTableContent: Component {
                     }
                     else if items.isEmpty {
                         if hasActiveQuery {
-                            context.render(
+                            context.build(
                                 NewAdminListNoResultsState(
                                     message: "No campaigns match your search.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
-                                        context.render(
+                                        context.build(
                                             NewAdminButton(
                                                 "Reset search",
                                                 href: NewsletterAdminRoutes
@@ -60,7 +60,7 @@ struct NewsletterCampaignsTableContent: Component {
                             )
                         }
                         else {
-                            context.render(
+                            context.build(
                                 NewAdminListEmptyState(
                                     message: "No campaigns yet.",
                                     icon: FeatherIcons.inbox(),
@@ -68,7 +68,7 @@ struct NewsletterCampaignsTableContent: Component {
                                         if actions.allows(
                                             Permissions.Campaigns.create
                                         ) && !isPicker {
-                                            context.render(
+                                            context.build(
                                                 NewAdminButton(
                                                     "Add new",
                                                     href: NewsletterAdminRoutes
@@ -82,7 +82,7 @@ struct NewsletterCampaignsTableContent: Component {
                         }
                     }
                     else {
-                        context.render(
+                        context.build(
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action: NewAdminLocation.remove(
@@ -99,7 +99,7 @@ struct NewsletterCampaignsTableContent: Component {
                                     ),
                                     isEnabled: canDelete
                                 ),
-                                table: context.render(
+                                table: context.build(
                                     NewAdminListShell(
                                         layout: .init(
                                             name: "newsletter-campaigns",
@@ -114,7 +114,7 @@ struct NewsletterCampaignsTableContent: Component {
                                             Thead {
                                                 Tr {
                                                     if canDelete {
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
@@ -125,7 +125,7 @@ struct NewsletterCampaignsTableContent: Component {
                                             }
                                             Tbody {
                                                 for item in items {
-                                                    context.render(
+                                                    context.build(
                                                         NewsletterCampaignRow(
                                                             item: item,
                                                             actions: actions,
@@ -147,7 +147,7 @@ struct NewsletterCampaignsTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: NewsletterAdminRoutes.campaigns
@@ -161,9 +161,9 @@ struct NewsletterCampaignsTableContent: Component {
                 toolbar: {
                     if actions.allows(Permissions.Campaigns.create) && !isPicker
                     {
-                        context.render(
+                        context.build(
                             NewAdminListToolbar {
-                                context.render(
+                                context.build(
                                     NewAdminButton(
                                         "Add new",
                                         href: NewsletterAdminRoutes.campaignAdd
@@ -175,7 +175,7 @@ struct NewsletterCampaignsTableContent: Component {
                     }
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: NewsletterAdminRoutes.campaigns

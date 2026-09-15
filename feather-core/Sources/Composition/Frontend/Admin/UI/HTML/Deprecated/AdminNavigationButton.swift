@@ -25,7 +25,7 @@ public struct AdminNavigationButton: Component {
         self.className = classes.isEmpty ? nil : classes.joined(separator: " ")
     }
 
-    public func html(context: inout RenderContext)
+    public func html(context: inout BuilderContext)
         -> AdminNavigationRenderedButton
     {
         var button = AdminNavigationRenderedButton(label)

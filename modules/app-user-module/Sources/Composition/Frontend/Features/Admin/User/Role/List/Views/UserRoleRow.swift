@@ -10,13 +10,13 @@ struct UserRoleRow: Component {
     let role: Components.Schemas.UserRoleListItemSchema
     let permissions: NewAdminListActions
 
-    func html(context: inout RenderContext) -> Tr {
+    func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(UserPermissions.Roles.delete) {
-                context.render(NewAdminListRowCheckbox(id: role.id))
+                context.build(NewAdminListRowCheckbox(id: role.id))
             }
             Td(role.name ?? "—").data("label", "Name")
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: [

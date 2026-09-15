@@ -71,14 +71,14 @@ struct AdminViewAccountOverviewComponent: Component {
         }
     }
 
-    func html(context: inout RenderContext) -> Section {
+    func html(context: inout BuilderContext) -> Section {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: [
                     .init(label: "Admin", link: "/admin/")
                 ])
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Account",
@@ -96,7 +96,7 @@ struct AdminViewAccountOverviewComponent: Component {
                         }
                         H2(destination.title)
                         P(destination.description)
-                        context.render(
+                        context.build(
                             NewAdminButton(
                                 "Open",
                                 href: destination.href,

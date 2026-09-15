@@ -21,10 +21,10 @@ struct MediaFolderEditView: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             if !state.permissions.allows(MediaPermissions.Assets.update) {
-                context.render(
+                context.build(
                     NewAdminStatusView(
                         state: .init(
                             title: "Forbidden",
@@ -35,10 +35,10 @@ struct MediaFolderEditView: Component {
                 )
             }
             else {
-                context.render(
+                context.build(
                     NewAdminBreadcrumb(links: MediaFolderRoutes.breadcrumb)
                 )
-                context.render(
+                context.build(
                     NewAdminPageHeader(
                         state: .init(
                             title: "Edit media folder",
@@ -50,10 +50,10 @@ struct MediaFolderEditView: Component {
                     P(error).class("new-admin-form__error")
                 }
 
-                context.render(
+                context.build(
                     NewAdminDetailField(label: "Path", value: state.model.path)
                 )
-                context.render(
+                context.build(
                     NewAdminDetailField(
                         label: "Items",
                         value: state.model.assetCount == 1
@@ -61,7 +61,7 @@ struct MediaFolderEditView: Component {
                             : "\(state.model.assetCount) items"
                     )
                 )
-                context.render(
+                context.build(
                     NewAdminDetailField(
                         label: "Total size",
                         value: ByteCountFormatter.string(
@@ -78,7 +78,7 @@ struct MediaFolderEditView: Component {
                         )
                         .description
                 ) {
-                    context.render(
+                    context.build(
                         NewAdminFormFieldInput(
                             state: .init(
                                 name: "name",
@@ -89,11 +89,11 @@ struct MediaFolderEditView: Component {
                         )
                     )
                     Div {
-                        context.render(NewAdminSubmitButton("Save changes"))
+                        context.build(NewAdminSubmitButton("Save changes"))
                     }
                     .class("new-admin-form__actions")
                 }
-                context.render(form)
+                context.build(form)
             }
         }
         .class("cms-section")

@@ -25,11 +25,11 @@ struct AuthMagicLinkAdd: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
 
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Add user magic link",
@@ -37,7 +37,7 @@ struct AuthMagicLinkAdd: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 AuthMagicLinkForm(
                     state: state.form,
                     action: "/admin/auth/magic-links/add/",

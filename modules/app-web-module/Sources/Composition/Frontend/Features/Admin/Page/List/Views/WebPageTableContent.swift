@@ -27,18 +27,18 @@ struct WebPageTableContent: Component {
         [Class("web-page-status-forms") { Display(.none) }]
     }
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let canDelete = permissions.allows(WebPermissions.Pages.delete)
         let canEdit = permissions.allows(WebPermissions.Pages.update)
         let hasActiveQuery = !searchValue.isEmpty
 
         return Div {
             if canEdit { statusFormDefinitions(context: &context) }
-            context.render(
+            context.build(
                 NewAdminList(
                     table: {
                         if pageState.isPageOutOfRange {
-                            context.render(
+                            context.build(
                                 NewAdminListInvalidPageState(
                                     pageState: pageState,
                                     path: WebPageRoutes.list.description
@@ -47,13 +47,13 @@ struct WebPageTableContent: Component {
                         }
                         else if pages.isEmpty {
                             if hasActiveQuery {
-                                context.render(
+                                context.build(
                                     NewAdminListNoResultsState(
                                         message:
                                             "No web pages match your search.",
                                         icon: FeatherIcons.inbox(),
                                         action: {
-                                            context.render(
+                                            context.build(
                                                 NewAdminButton(
                                                     "Reset search",
                                                     href: WebPageRoutes.list
@@ -66,7 +66,7 @@ struct WebPageTableContent: Component {
                                 )
                             }
                             else {
-                                context.render(
+                                context.build(
                                     NewAdminListEmptyState(
                                         message: "No web pages yet.",
                                         icon: FeatherIcons.inbox(),
@@ -74,7 +74,7 @@ struct WebPageTableContent: Component {
                                             if permissions.allows(
                                                 WebPermissions.Pages.create
                                             ) {
-                                                context.render(
+                                                context.build(
                                                     NewAdminButton(
                                                         "Add new",
                                                         href: WebPageRoutes.add
@@ -88,7 +88,7 @@ struct WebPageTableContent: Component {
                             }
                         }
                         else {
-                            context.render(
+                            context.build(
                                 NewAdminListSelectionForm(
                                     state: .init(
                                         action: WebPageRoutes.remove
@@ -101,7 +101,7 @@ struct WebPageTableContent: Component {
                                         ),
                                         isEnabled: canDelete
                                     ),
-                                    table: context.render(
+                                    table: context.build(
                                         NewAdminListShell(
                                             layout: .init(
                                                 name: "web-pages",
@@ -115,7 +115,7 @@ struct WebPageTableContent: Component {
                                                 Thead {
                                                     Tr {
                                                         if canDelete {
-                                                            context.render(
+                                                            context.build(
                                                                 NewAdminListSelectAllCheckbox()
                                                             )
                                                         }
@@ -127,7 +127,7 @@ struct WebPageTableContent: Component {
                                                 }
                                                 Tbody {
                                                     for page in pages {
-                                                        context.render(
+                                                        context.build(
                                                             WebPageRow(
                                                                 page: page,
                                                                 permissions:
@@ -152,7 +152,7 @@ struct WebPageTableContent: Component {
                         }
                     },
                     search: {
-                        context.render(
+                        context.build(
                             NewAdminListSearch(
                                 state: .init(
                                     action: WebPageRoutes.list.description,
@@ -164,9 +164,9 @@ struct WebPageTableContent: Component {
                     },
                     toolbar: {
                         if permissions.allows(WebPermissions.Pages.create) {
-                            context.render(
+                            context.build(
                                 NewAdminListToolbar {
-                                    context.render(
+                                    context.build(
                                         NewAdminButton(
                                             "Add new",
                                             href: WebPageRoutes.add.description
@@ -177,7 +177,7 @@ struct WebPageTableContent: Component {
                         }
                     },
                     pagination: {
-                        context.render(
+                        context.build(
                             NewAdminListPagination(
                                 state: .init(
                                     path: WebPageRoutes.list.description,
@@ -192,12 +192,12 @@ struct WebPageTableContent: Component {
         }
     }
 
-    private func statusFormDefinitions(context: inout RenderContext)
+    private func statusFormDefinitions(context: inout BuilderContext)
         -> some FlowContent
     {
         Div {
             for page in pages {
-                context.render(
+                context.build(
                     NewAdminStatusSelectFormDefinition(
                         id: statusFormID(for: page.id),
                         action: WebPageRoutes.status(RouterPath(page.id))

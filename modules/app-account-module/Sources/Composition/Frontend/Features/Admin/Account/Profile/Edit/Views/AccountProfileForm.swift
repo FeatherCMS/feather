@@ -45,7 +45,7 @@ struct AccountProfileForm: Component {
     var action: String = "/admin/account/profile/edit/"
     var submitLabel: String = "Edit profile"
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action, nonceToken: state.nonceToken) {
             if let success = state.success {
                 P(success).class("success")
@@ -54,7 +54,7 @@ struct AccountProfileForm: Component {
                 P(error).class("error")
             }
 
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.profileImageAssetId.key,
@@ -66,7 +66,7 @@ struct AccountProfileForm: Component {
                 )
             )
 
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.firstName.key,
@@ -76,7 +76,7 @@ struct AccountProfileForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.lastName.key,
@@ -89,11 +89,11 @@ struct AccountProfileForm: Component {
 
             Section {
                 Div {
-                    context.render(NewAdminSubmitButton(submitLabel))
+                    context.build(NewAdminSubmitButton(submitLabel))
                 }
                 .class("new-admin-form__actions")
             }
         }
-        return context.render(form)
+        return context.build(form)
     }
 }

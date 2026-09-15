@@ -98,7 +98,7 @@ public struct NewAdminFormGroup: Component {
         ]
     }
 
-    public func html(context: inout RenderContext) -> Details {
+    public func html(context: inout BuilderContext) -> Details {
         Details {
             Summary {
                 H2(title)

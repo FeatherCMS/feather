@@ -40,12 +40,12 @@ struct BlogAuthorLinkForm: Component {
     var removeHref: String?
     var removeLabel: String = "Remove"
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action) {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.label.key,
@@ -56,7 +56,7 @@ struct BlogAuthorLinkForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.url.key,
@@ -67,7 +67,7 @@ struct BlogAuthorLinkForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.priority.key,
@@ -79,7 +79,7 @@ struct BlogAuthorLinkForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldCheckbox(
                     state: .init(
                         name: state.isBlank.key,
@@ -90,7 +90,7 @@ struct BlogAuthorLinkForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.permission.key,
@@ -100,7 +100,7 @@ struct BlogAuthorLinkForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldTextArea(
                     state: .init(
                         name: state.notes.key,
@@ -112,11 +112,11 @@ struct BlogAuthorLinkForm: Component {
                 )
             )
             Div {
-                context.render(
+                context.build(
                     NewAdminSubmitButton(submitLabel, style: .primary)
                 )
                 if let removeHref {
-                    context.render(
+                    context.build(
                         NewAdminButton(
                             removeLabel,
                             href: removeHref,
@@ -127,6 +127,6 @@ struct BlogAuthorLinkForm: Component {
             }
             .class("new-admin-form__actions")
         }
-        return context.render(form)
+        return context.build(form)
     }
 }

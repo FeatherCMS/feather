@@ -19,7 +19,7 @@ public struct AdminStatusSelectFormDefinition: Component {
         self.returnTo = returnTo
     }
 
-    public func html(context: inout RenderContext) -> Form {
+    public func html(context: inout BuilderContext) -> Form {
         Form {
             Input()
                 .type(.hidden)

@@ -249,10 +249,10 @@ public struct NewAdminFormFieldDatePicker: Component {
         ]
     }
 
-    public func html(context: inout RenderContext) -> Section {
+    public func html(context: inout BuilderContext) -> Section {
         Section {
             Label {
-                context.render(
+                context.build(
                     NewAdminFormFieldLabel(
                         text: state.label,
                         isRequired: state.isRequired

@@ -14,12 +14,12 @@ struct UserRoleTable: Component {
     let pageState: NewAdminListPageState
     let search: String?
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: UserRoleRoutes.listBreadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "User roles",
@@ -27,7 +27,7 @@ struct UserRoleTable: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 UserRoleTableContent(
                     roles: roles,
                     permissions: permissions,

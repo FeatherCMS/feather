@@ -14,9 +14,9 @@ import WebFrontend
 struct AppBlogAuthorPage: Component {
     let state: AppGetBlogAuthorModel
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Main {
-            context.render(AppPublicStyleAnchor())
+            context.build(AppPublicStyleAnchor())
             Div {
                 Article {
                     Div {
@@ -35,7 +35,7 @@ struct AppBlogAuthorPage: Component {
                         .class("public-image")
                     }
 
-                    context.render(AppPublicTextBlock(text: state.content))
+                    context.build(AppPublicTextBlock(text: state.content))
 
                     if !state.links.isEmpty {
                         Section {

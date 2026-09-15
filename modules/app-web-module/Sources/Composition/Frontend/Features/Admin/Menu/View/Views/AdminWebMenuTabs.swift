@@ -30,7 +30,7 @@ struct AdminWebMenuTabs: Component {
         ]
     }
 
-    func html(context: inout RenderContext) -> Div {
-        context.render(NewAdminTabBar(links: links))
+    func html(context: inout BuilderContext) -> Div {
+        context.build(NewAdminTabBar(links: links))
     }
 }

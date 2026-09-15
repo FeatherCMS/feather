@@ -10,12 +10,12 @@ import WebComponents
 struct AnalyticsNotFoundView: Component {
     let model: AdminViewAnalyticsNotFoundModel
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: AnalyticsAdminRoutes.breadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "404s",
@@ -27,7 +27,7 @@ struct AnalyticsNotFoundView: Component {
                 action: AnalyticsAdminRoutes.notFound.description,
                 method: .get
             ) {
-                context.render(
+                context.build(
                     NewAdminFormFieldSelect(
                         state: .init(
                             name: "range",
@@ -41,11 +41,11 @@ struct AnalyticsNotFoundView: Component {
                         )
                     )
                 )
-                Div { context.render(NewAdminSubmitButton("Update")) }
+                Div { context.build(NewAdminSubmitButton("Update")) }
                     .class("new-admin-form__actions")
             }
-            context.render(form)
-            context.render(
+            context.build(form)
+            context.build(
                 NewAdminChartCard(
                     title: "Daily traffic",
                     chart: NewAdminLineChart(
@@ -58,7 +58,7 @@ struct AnalyticsNotFoundView: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminChartCard(
                     title: "404 pages",
                     chart: NewAdminBarChart(

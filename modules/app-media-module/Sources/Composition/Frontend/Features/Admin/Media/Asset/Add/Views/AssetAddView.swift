@@ -30,13 +30,13 @@ struct AssetAddView: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             if !state.form.isPicker {
-                context.render(
+                context.build(
                     NewAdminBreadcrumb(links: MediaAssetRoutes.breadcrumb)
                 )
-                context.render(
+                context.build(
                     NewAdminPageHeader(
                         state: .init(
                             title: "Add media asset",
@@ -176,7 +176,7 @@ struct AssetAddView: Component {
     }
 
     func uploadForm(
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some FlowContent {
         let form = NewAdminForm(
             action: state.form.action,
@@ -185,7 +185,7 @@ struct AssetAddView: Component {
                 .init(name: "view", value: state.form.view),
             ]
         ) {
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "title",
@@ -194,7 +194,7 @@ struct AssetAddView: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "altText",
@@ -203,7 +203,7 @@ struct AssetAddView: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "file",
@@ -225,15 +225,15 @@ struct AssetAddView: Component {
                 .value(state.form.type)
             Input().type(.hidden).name("data").id("data").value(state.form.data)
             Div {
-                context.render(NewAdminSubmitButton("Add asset"))
+                context.build(NewAdminSubmitButton("Add asset"))
             }
             .class("new-admin-form__actions")
         }
-        return context.render(form).id("mediaAssetAddForm")
+        return context.build(form).id("mediaAssetAddForm")
     }
 
     func pickerUploadContainer(
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some FlowContent {
         Div {
             Input().type(.hidden).name("parentId")
@@ -244,7 +244,7 @@ struct AssetAddView: Component {
                 .id("type")
             Input().type(.hidden).name("view").value(state.form.view)
                 .id("view")
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "title",
@@ -254,7 +254,7 @@ struct AssetAddView: Component {
                 )
             )
 
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "altText",
@@ -264,7 +264,7 @@ struct AssetAddView: Component {
                 )
             )
 
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "file",
@@ -279,7 +279,7 @@ struct AssetAddView: Component {
 
             Section {
                 Div {
-                    context.render(NewAdminControlButton("Add asset"))
+                    context.build(NewAdminControlButton("Add asset"))
                         .data(
                             "admin-media-picker-upload-submit",
                             "1"

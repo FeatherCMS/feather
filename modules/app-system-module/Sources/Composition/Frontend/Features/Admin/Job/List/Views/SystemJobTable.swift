@@ -18,12 +18,12 @@ struct SystemJobTable: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: SystemJobRoutes.listBreadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Worker jobs",
@@ -31,7 +31,7 @@ struct SystemJobTable: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 SystemJobTableContent(
                     jobs: state.jobs,
                     permissions: state.permissions,

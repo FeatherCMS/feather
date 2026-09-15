@@ -13,10 +13,10 @@ struct BlogSettingsEdit: Component {
     }
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Blog settings",
@@ -26,7 +26,7 @@ struct BlogSettingsEdit: Component {
                 )
             )
             if !state.canEdit {
-                context.render(
+                context.build(
                     NewAdminStatusView(
                         state: .init(
                             title: "Read-only",
@@ -37,7 +37,7 @@ struct BlogSettingsEdit: Component {
                     )
                 )
             }
-            context.render(BlogSettingsForm(state: state.form))
+            context.build(BlogSettingsForm(state: state.form))
         }
         .class("cms-section")
     }

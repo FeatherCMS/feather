@@ -19,10 +19,10 @@ struct ContactSubmissionsTable: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Submissions",
@@ -33,7 +33,7 @@ struct ContactSubmissionsTable: Component {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
-            context.render(
+            context.build(
                 ContactSubmissionsTableContent(
                     items: state.items,
                     pageState: state.pageState,

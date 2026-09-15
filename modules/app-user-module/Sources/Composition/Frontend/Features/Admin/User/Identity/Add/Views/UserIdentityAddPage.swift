@@ -8,12 +8,12 @@ struct UserIdentityAddPage: Component {
     let form: UserIdentityAddForm.State
     let nonceToken: String?
 
-    func html(context: inout RenderContext) -> Section {
+    func html(context: inout BuilderContext) -> Section {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: UserIdentityRoutes.breadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Add user identity",
@@ -21,7 +21,7 @@ struct UserIdentityAddPage: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 UserIdentityAddForm(
                     state: form,
                     action: UserIdentityRoutes.add.description,

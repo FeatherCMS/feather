@@ -105,7 +105,7 @@ struct ContactFormForm: Component {
         ]
     }
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action) {
             if let success = state.success {
                 P(success).class("new-admin-form__success")
@@ -113,7 +113,7 @@ struct ContactFormForm: Component {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "name",
@@ -124,7 +124,7 @@ struct ContactFormForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "successMessage",
@@ -135,7 +135,7 @@ struct ContactFormForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "failureMessage",
@@ -146,7 +146,7 @@ struct ContactFormForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "redirectUrl",
@@ -206,12 +206,12 @@ struct ContactFormForm: Component {
                 }
             }
             if !isReadOnly {
-                Div { context.render(NewAdminSubmitButton(submitLabel)) }
+                Div { context.build(NewAdminSubmitButton(submitLabel)) }
                     .class("new-admin-form__actions")
                 Script(reorderScript())
             }
         }
-        return context.render(form)
+        return context.build(form)
     }
 
     private var selectedFields: [AdminContactFormFieldOption] {
@@ -229,11 +229,11 @@ struct ContactFormForm: Component {
     private func fieldRow(
         field: AdminContactFormFieldOption,
         isSelected: Bool,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> some FlowContent {
         Div {
             Span("⠿").class("contact-form-field-drag")
-            context.render(fieldCheckbox(field: field, isSelected: isSelected))
+            context.build(fieldCheckbox(field: field, isSelected: isSelected))
             Label(field.label).for("contact-form-field-\(field.id)")
                 .class("contact-form-field-content")
             Div {

@@ -32,18 +32,18 @@ struct RedirectRuleRow: Component {
         }
     }
 
-    func html(context: inout RenderContext) -> Tr {
+    func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(RedirectPermissions.Rules.delete) {
-                context.render(NewAdminListRowCheckbox(id: rule.id))
+                context.build(NewAdminListRowCheckbox(id: rule.id))
             }
             Td(rule.source).data("label", "Source")
             Td(rule.destination).data("label", "Destination")
             Td {
-                context.render(statusChip)
+                context.build(statusChip)
             }
             .data("label", "Status")
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: [

@@ -26,15 +26,15 @@ struct MediaProcessorTableContent: Component {
         )
     }
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let canDelete = permissions.allows(MediaPermissions.Processors.delete)
         let hasActiveQuery = !(search?.isEmpty ?? true)
 
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if pageState.isPageOutOfRange {
-                        context.render(
+                        context.build(
                             NewAdminListInvalidPageState(
                                 pageState: pageState,
                                 path: MediaProcessorRoutes.list.description
@@ -43,13 +43,13 @@ struct MediaProcessorTableContent: Component {
                     }
                     else if items.isEmpty {
                         if hasActiveQuery {
-                            context.render(
+                            context.build(
                                 NewAdminListNoResultsState(
                                     message:
                                         "No media processors match your search.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
-                                        context.render(
+                                        context.build(
                                             NewAdminButton(
                                                 "Reset search",
                                                 href: MediaProcessorRoutes.list
@@ -62,7 +62,7 @@ struct MediaProcessorTableContent: Component {
                             )
                         }
                         else {
-                            context.render(
+                            context.build(
                                 NewAdminListEmptyState(
                                     message: "No media processors yet.",
                                     icon: FeatherIcons.settings(),
@@ -70,7 +70,7 @@ struct MediaProcessorTableContent: Component {
                                         if permissions.allows(
                                             MediaPermissions.Processors.create
                                         ) {
-                                            context.render(
+                                            context.build(
                                                 NewAdminButton(
                                                     "Add new",
                                                     href: MediaProcessorRoutes
@@ -85,7 +85,7 @@ struct MediaProcessorTableContent: Component {
                         }
                     }
                     else {
-                        context.render(
+                        context.build(
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action: NewAdminLocation.remove(
@@ -102,7 +102,7 @@ struct MediaProcessorTableContent: Component {
                                     ),
                                     isEnabled: canDelete
                                 ),
-                                table: context.render(
+                                table: context.build(
                                     NewAdminListShell(
                                         layout: .init(
                                             name: "media-processors",
@@ -117,7 +117,7 @@ struct MediaProcessorTableContent: Component {
                                             Thead {
                                                 Tr {
                                                     if canDelete {
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
@@ -128,7 +128,7 @@ struct MediaProcessorTableContent: Component {
                                             }
                                             Tbody {
                                                 for item in items {
-                                                    context.render(
+                                                    context.build(
                                                         MediaProcessorRow(
                                                             state: .init(
                                                                 item: item,
@@ -153,7 +153,7 @@ struct MediaProcessorTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: MediaProcessorRoutes.list.description,
@@ -165,9 +165,9 @@ struct MediaProcessorTableContent: Component {
                 },
                 toolbar: {
                     if permissions.allows(MediaPermissions.Processors.create) {
-                        context.render(
+                        context.build(
                             NewAdminListToolbar {
-                                context.render(
+                                context.build(
                                     NewAdminButton(
                                         "Add new",
                                         href: MediaProcessorRoutes.add
@@ -179,7 +179,7 @@ struct MediaProcessorTableContent: Component {
                     }
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: MediaProcessorRoutes.list.description,

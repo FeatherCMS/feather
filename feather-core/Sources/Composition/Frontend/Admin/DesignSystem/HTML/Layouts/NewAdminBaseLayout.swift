@@ -31,15 +31,15 @@ public struct NewAdminBaseLayout<T: Component>: Component {
         self.content = content
     }
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         Div {
-            context.render(topbar)
+            context.build(topbar)
             Div {
-                context.render(sidebar)
+                context.build(sidebar)
 
                 Main {
                     Div {
-                        context.render(content)
+                        context.build(content)
                     }
                 }
             }

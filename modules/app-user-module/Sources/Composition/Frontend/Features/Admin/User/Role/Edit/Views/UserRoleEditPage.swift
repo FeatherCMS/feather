@@ -11,10 +11,10 @@ struct UserRoleEditPage: Component {
     let permissions: NewAdminListActions
     let nonceToken: String?
 
-    func html(context: inout RenderContext) -> Section {
+    func html(context: inout BuilderContext) -> Section {
         Section {
-            context.render(NewAdminBreadcrumb(links: UserRoleRoutes.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: UserRoleRoutes.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Edit user role",
@@ -22,7 +22,7 @@ struct UserRoleEditPage: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 UserRoleEditForm(
                     state: form,
                     action: UserRoleRoutes.edit(RouterPath(id)).description,

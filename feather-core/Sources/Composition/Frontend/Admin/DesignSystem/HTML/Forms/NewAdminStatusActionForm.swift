@@ -33,7 +33,7 @@ public struct NewAdminStatusActionForm: Component {
         ]
     }
 
-    public func html(context: inout RenderContext) -> Form {
+    public func html(context: inout BuilderContext) -> Form {
         Form {
             Input()
                 .type(.hidden)

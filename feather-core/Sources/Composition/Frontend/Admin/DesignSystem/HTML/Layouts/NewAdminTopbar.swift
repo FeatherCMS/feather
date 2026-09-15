@@ -20,7 +20,7 @@ public struct NewAdminTopBar: Component {
         self.notification = notification
     }
 
-    private func renderMenuTrigger(context: inout RenderContext) -> Div {
+    private func renderMenuTrigger(context: inout BuilderContext) -> Div {
 
         Div {
             Label {
@@ -37,7 +37,7 @@ public struct NewAdminTopBar: Component {
         .class("top-bar-brand")
     }
 
-    private func renderTitle(context: inout RenderContext) -> Div {
+    private func renderTitle(context: inout BuilderContext) -> Div {
         Div {
             Div {
                 H1 {
@@ -48,13 +48,13 @@ public struct NewAdminTopBar: Component {
             }
             .class("top-bar-title-copy")
             if let notification {
-                context.render(notification)
+                context.build(notification)
             }
         }
         .class("top-bar-title")
     }
 
-    private func renderAccountActions(context: inout RenderContext) -> Div {
+    private func renderAccountActions(context: inout BuilderContext) -> Div {
 
         Div {
             Input()
@@ -80,7 +80,7 @@ public struct NewAdminTopBar: Component {
         .class("top-bar-actions")
     }
 
-    public func html(context: inout RenderContext) -> some BasicTag {
+    public func html(context: inout BuilderContext) -> some BasicTag {
         Div {
             renderMenuTrigger(context: &context)
             renderTitle(context: &context)

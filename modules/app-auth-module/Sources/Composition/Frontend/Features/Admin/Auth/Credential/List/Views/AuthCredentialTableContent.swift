@@ -11,7 +11,7 @@ import WebComponents
 struct AuthCredentialTableContent: Component {
     let state: AuthCredentialTable.State
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let actions = NewAdminListActions(
             Set(state.permissions.map(PermissionKey.init))
         )
@@ -21,11 +21,11 @@ struct AuthCredentialTableContent: Component {
             total: state.total
         )
 
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if !state.canAccess {
-                        context.render(
+                        context.build(
                             NewAdminStatusView(
                                 state: .init(
                                     title: "Forbidden",
@@ -37,7 +37,7 @@ struct AuthCredentialTableContent: Component {
                         )
                     }
                     else if state.credentials.isEmpty {
-                        context.render(
+                        context.build(
                             NewAdminListEmptyState(
                                 message: state.search.isEmpty
                                     ? "No credentials yet."
@@ -47,7 +47,7 @@ struct AuthCredentialTableContent: Component {
                                     if actions.allows(
                                         AuthPermissions.Credential.create
                                     ) {
-                                        context.render(
+                                        context.build(
                                             NewAdminButton(
                                                 "Add new",
                                                 href:
@@ -60,7 +60,7 @@ struct AuthCredentialTableContent: Component {
                         )
                     }
                     else {
-                        context.render(
+                        context.build(
                             NewAdminListShell(
                                 layout: .init(
                                     name: "auth-credentials",
@@ -80,7 +80,7 @@ struct AuthCredentialTableContent: Component {
                                     }
                                     Tbody {
                                         for credential in state.credentials {
-                                            context.render(
+                                            context.build(
                                                 AuthCredentialRow(
                                                     credential: credential,
                                                     actions: actions
@@ -95,7 +95,7 @@ struct AuthCredentialTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: "/admin/auth/credentials/",
@@ -107,9 +107,9 @@ struct AuthCredentialTableContent: Component {
                 },
                 toolbar: {
                     if actions.allows(AuthPermissions.Credential.create) {
-                        context.render(
+                        context.build(
                             NewAdminListToolbar {
-                                context.render(
+                                context.build(
                                     NewAdminButton(
                                         "Add new",
                                         href:
@@ -121,7 +121,7 @@ struct AuthCredentialTableContent: Component {
                     }
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: "/admin/auth/credentials/",

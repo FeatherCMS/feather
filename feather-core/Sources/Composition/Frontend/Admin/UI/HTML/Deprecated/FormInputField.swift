@@ -116,7 +116,7 @@ public struct FormInputField: Component {
         }
     }
 
-    public func html(context: inout RenderContext) -> some BasicTag {
+    public func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             Label {
                 fieldLabel()

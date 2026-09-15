@@ -9,9 +9,9 @@ struct RedirectRuleDetails: Component {
     let rule: RedirectRuleDetailsModel
     let permissions: NewAdminListActions
 
-    func html(context: inout RenderContext) -> Section {
+    func html(context: inout BuilderContext) -> Section {
         Section {
-            context.render(
+            context.build(
                 NewAdminDetailView(
                     breadcrumb: RedirectRuleRoutes.breadcrumb,
                     pageHeader: .init(

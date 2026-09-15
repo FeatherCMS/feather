@@ -35,10 +35,10 @@ public struct NewAdminChartCard<Chart: Component>: Component {
         }
     }
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         Div {
             H2(title)
-            context.render(chart)
+            context.build(chart)
         }
         .class("new-admin-chart-card")
     }

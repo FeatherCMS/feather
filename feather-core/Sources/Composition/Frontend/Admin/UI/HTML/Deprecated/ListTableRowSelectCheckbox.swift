@@ -20,7 +20,7 @@ public struct ListTableRowSelectCheckbox: Component {
         self.state = state
     }
 
-    public func html(context: inout RenderContext) -> some BasicTag {
+    public func html(context: inout BuilderContext) -> some BasicTag {
         Td {
             Input()
                 .type(.checkbox)

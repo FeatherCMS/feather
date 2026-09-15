@@ -11,11 +11,11 @@ struct AuthCredentialRow: Component {
     let credential: AuthAdminAPI.Components.Schemas.AuthCredentialListItemSchema
     let actions: NewAdminListActions
 
-    func html(context: inout RenderContext) -> Tr {
+    func html(context: inout BuilderContext) -> Tr {
         Tr {
             Td(credential.identityName).data("label", "User")
             Td(credential.email.emptyToNil ?? "—").data("label", "Email")
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: [

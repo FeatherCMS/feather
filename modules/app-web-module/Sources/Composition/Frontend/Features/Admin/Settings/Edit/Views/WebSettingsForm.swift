@@ -76,7 +76,7 @@ struct WebSettingsForm: Component {
     var action: String = "/admin/web/settings/"
     var submitLabel: String = "Save settings"
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action) {
             if let success = state.success {
                 P(success).class("new-admin-form__success")
@@ -85,7 +85,7 @@ struct WebSettingsForm: Component {
                 P(error).class("new-admin-form__error")
             }
 
-            context.render(
+            context.build(
                 NewAdminFormGroup(
                     id: "web-settings-branding",
                     title: "Branding",
@@ -96,13 +96,13 @@ struct WebSettingsForm: Component {
                 }
             )
 
-            context.render(
+            context.build(
                 NewAdminFormGroup(
                     id: "web-settings-seo",
                     title: "SEO",
                     persistsState: false
                 ) {
-                    context.render(
+                    context.build(
                         NewAdminFormFieldCheckbox(
                             state: .init(
                                 name: state.noIndex.key,
@@ -113,7 +113,7 @@ struct WebSettingsForm: Component {
                             )
                         )
                     )
-                    context.render(
+                    context.build(
                         NewAdminFormFieldInput(
                             state: .init(
                                 name: state.title.key,
@@ -124,19 +124,19 @@ struct WebSettingsForm: Component {
                             )
                         )
                     )
-                    context.render(textarea(state.excerpt, rows: 4))
+                    context.build(textarea(state.excerpt, rows: 4))
                     imagePicker(state.metaImage, context: &context)
                 }
             )
 
-            context.render(
+            context.build(
                 NewAdminFormGroup(
                     id: "web-settings-site-defaults",
                     title: "Site defaults",
                     persistsState: false
                 ) {
                     homePagePicker(state.homePage, context: &context)
-                    context.render(
+                    context.build(
                         NewAdminFormFieldLanguage(
                             state: .init(
                                 name: state.locale.key,
@@ -147,7 +147,7 @@ struct WebSettingsForm: Component {
                             )
                         )
                     )
-                    context.render(
+                    context.build(
                         NewAdminFormFieldTimezone(
                             state: .init(
                                 name: state.timezone.key,
@@ -161,13 +161,13 @@ struct WebSettingsForm: Component {
                 }
             )
 
-            context.render(
+            context.build(
                 NewAdminFormGroup(
                     id: "web-settings-theme",
                     title: "Theme",
                     persistsState: false
                 ) {
-                    context.render(
+                    context.build(
                         NewAdminFormFieldInput(
                             state: .init(
                                 name: state.primaryColor.key,
@@ -178,7 +178,7 @@ struct WebSettingsForm: Component {
                             )
                         )
                     )
-                    context.render(
+                    context.build(
                         NewAdminFormFieldInput(
                             state: .init(
                                 name: state.secondaryColor.key,
@@ -189,7 +189,7 @@ struct WebSettingsForm: Component {
                             )
                         )
                     )
-                    context.render(
+                    context.build(
                         NewAdminFormFieldInput(
                             state: .init(
                                 name: state.tertiaryColor.key,
@@ -200,7 +200,7 @@ struct WebSettingsForm: Component {
                             )
                         )
                     )
-                    context.render(
+                    context.build(
                         NewAdminFormFieldInput(
                             state: .init(
                                 name: state.primaryFont.key,
@@ -211,7 +211,7 @@ struct WebSettingsForm: Component {
                             )
                         )
                     )
-                    context.render(
+                    context.build(
                         NewAdminFormFieldInput(
                             state: .init(
                                 name: state.secondaryFont.key,
@@ -225,35 +225,35 @@ struct WebSettingsForm: Component {
                 }
             )
 
-            context.render(
+            context.build(
                 NewAdminFormGroup(
                     id: "web-settings-code-injection",
                     title: "Code injection",
                     persistsState: false
                 ) {
-                    context.render(textarea(state.css, rows: 10))
-                    context.render(textarea(state.js, rows: 10))
+                    context.build(textarea(state.css, rows: 10))
+                    context.build(textarea(state.js, rows: 10))
                 }
             )
 
             if state.canEdit {
                 Div {
                     Div {
-                        context.render(NewAdminSubmitButton(submitLabel))
+                        context.build(NewAdminSubmitButton(submitLabel))
                     }
                     .class("new-admin-form__actions")
                 }
             }
         }
-        return context.render(form)
+        return context.build(form)
     }
 
     private func homePagePicker(
         _ field: HomePageState,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> Section {
 
-        context.render(
+        context.build(
             NewAdminFormFieldSelectAutocomplete(
                 state: .init(
                     name: field.key,
@@ -269,12 +269,12 @@ struct WebSettingsForm: Component {
 
     private func imagePicker(
         _ field: FieldState,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> Section {
 
         let browsePath =
             "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=png,jpg,jpeg,webp"
-        return context.render(
+        return context.build(
             NewAdminFormFieldMediaPicker(
                 state: .init(
                     field: .init(

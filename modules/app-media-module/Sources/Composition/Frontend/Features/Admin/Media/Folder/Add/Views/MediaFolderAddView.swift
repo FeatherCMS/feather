@@ -23,12 +23,12 @@ struct MediaFolderAddView: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: MediaFolderRoutes.breadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Add media folder",
@@ -47,7 +47,7 @@ struct MediaFolderAddView: Component {
                     .init(name: "view", value: state.form.view),
                 ]
             ) {
-                context.render(
+                context.build(
                     NewAdminFormFieldInput(
                         state: .init(
                             name: "name",
@@ -58,11 +58,11 @@ struct MediaFolderAddView: Component {
                     )
                 )
                 Div {
-                    context.render(NewAdminSubmitButton("Add folder"))
+                    context.build(NewAdminSubmitButton("Add folder"))
                 }
                 .class("new-admin-form__actions")
             }
-            context.render(form)
+            context.build(form)
         }
         .class("cms-section")
     }

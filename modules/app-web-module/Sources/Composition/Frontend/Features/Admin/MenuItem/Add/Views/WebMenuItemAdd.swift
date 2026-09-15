@@ -18,10 +18,10 @@ struct WebMenuItemAdd: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Add item",
@@ -29,10 +29,10 @@ struct WebMenuItemAdd: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 AdminWebMenuTabs(menuID: state.menuId, active: .items)
             )
-            context.render(
+            context.build(
                 WebMenuItemForm(
                     state: state.form,
                     action: WebMenuItemRoutes.add(RouterPath(state.menuId))

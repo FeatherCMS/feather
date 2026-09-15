@@ -70,7 +70,7 @@ public struct AdminSidebar: Component {
         self.state = state
     }
 
-    public func html(context: inout RenderContext) -> some BasicTag {
+    public func html(context: inout BuilderContext) -> some BasicTag {
         Div {
             Input()
                 .id("menuToggle")

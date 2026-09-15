@@ -12,7 +12,7 @@ public struct ListTableShell<Table: FlowContent>: Component {
         self.table = table
     }
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         Div {
             Div {
                 table

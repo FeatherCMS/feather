@@ -20,13 +20,13 @@ struct ContactFormFieldsTable: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 AdminContactFormTabs(formId: state.formId, active: .details)
             )
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Contact form fields",
@@ -38,7 +38,7 @@ struct ContactFormFieldsTable: Component {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
-            context.render(
+            context.build(
                 ContactFormFieldsTableContent(
                     formId: state.formId,
                     fields: state.fields,

@@ -27,11 +27,11 @@ struct AuthMagicLinkEdit: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
 
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Edit user magic link",
@@ -40,7 +40,7 @@ struct AuthMagicLinkEdit: Component {
                 )
             )
             if state.isEdited { P("User magic link edited successfully.") }
-            context.render(
+            context.build(
                 AuthMagicLinkForm(
                     state: state.form,
                     action: "/admin/auth/magic-links/\(state.id)/edit/",

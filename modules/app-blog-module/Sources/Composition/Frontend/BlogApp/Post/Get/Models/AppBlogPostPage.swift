@@ -14,9 +14,9 @@ import WebFrontend
 struct AppBlogPostPage: Component {
     let state: AppGetBlogPostModel
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Main {
-            context.render(AppPublicStyleAnchor())
+            context.build(AppPublicStyleAnchor())
             Div {
                 articlePanel(context: &context)
             }
@@ -27,7 +27,7 @@ struct AppBlogPostPage: Component {
 }
 
 extension AppBlogPostPage {
-    fileprivate func articlePanel(context: inout RenderContext) -> some BasicTag
+    fileprivate func articlePanel(context: inout BuilderContext) -> some BasicTag
     {
         Article {
             Div {
@@ -53,7 +53,7 @@ extension AppBlogPostPage {
                 .class("public-image")
             }
 
-            context.render(AppPublicTextBlock(text: state.content))
+            context.build(AppPublicTextBlock(text: state.content))
 
             if !state.authors.isEmpty {
                 Section {

@@ -13,10 +13,10 @@ struct MediaProcessorsListView: Component {
     let search: String?
     let permissions: NewAdminListActions
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             if !permissions.allows(MediaPermissions.Processors.list) {
-                context.render(
+                context.build(
                     NewAdminStatusView(
                         state: .init(
                             title: "Forbidden",
@@ -28,12 +28,12 @@ struct MediaProcessorsListView: Component {
                 )
             }
             else {
-                context.render(
+                context.build(
                     NewAdminBreadcrumb(
                         links: MediaProcessorRoutes.listBreadcrumb
                     )
                 )
-                context.render(
+                context.build(
                     NewAdminPageHeader(
                         state: .init(
                             title: "Media processors",
@@ -42,7 +42,7 @@ struct MediaProcessorsListView: Component {
                         )
                     )
                 )
-                context.render(
+                context.build(
                     MediaProcessorTableContent(
                         items: items,
                         permissions: permissions,

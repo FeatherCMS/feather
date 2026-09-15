@@ -17,16 +17,16 @@ struct ContactFormSubmissionDetailsView: Component {
     }
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         let canUpdate = state.permissions.allows(
             ContactPermissions.Submissions.update
         )
         return Section {
-            context.render(
+            context.build(
                 AdminContactFormTabs(formId: state.formId, active: .submissions)
             )
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Contact form submission",
@@ -38,14 +38,14 @@ struct ContactFormSubmissionDetailsView: Component {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
-            context.render(
+            context.build(
                 NewAdminDetailField(
                     label: "Submitted",
                     value: state.item.createdAt.isEmpty
                         ? "—" : state.item.createdAt
                 )
             )
-            context.render(
+            context.build(
                 NewAdminDetailField(
                     label: "Email",
                     value: state.item.email ?? "—"
@@ -53,7 +53,7 @@ struct ContactFormSubmissionDetailsView: Component {
             )
             H2("Values")
             if state.item.values.isEmpty {
-                context.render(
+                context.build(
                     NewAdminListEmptyState(
                         message: "No values recorded.",
                         icon: FeatherIcons.inbox()
@@ -84,7 +84,7 @@ struct ContactFormSubmissionDetailsView: Component {
                         )
                         .description
                 ) {
-                    context.render(
+                    context.build(
                         NewAdminFormFieldSelect(
                             state: .init(
                                 name: "status",
@@ -103,10 +103,10 @@ struct ContactFormSubmissionDetailsView: Component {
                             )
                         )
                     )
-                    Div { context.render(NewAdminSubmitButton("Save status")) }
+                    Div { context.build(NewAdminSubmitButton("Save status")) }
                         .class("new-admin-form__actions")
                 }
-                context.render(form)
+                context.build(form)
             }
         }
         .class("cms-section")

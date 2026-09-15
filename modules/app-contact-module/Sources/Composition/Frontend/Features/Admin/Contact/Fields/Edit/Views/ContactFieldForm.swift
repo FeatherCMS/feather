@@ -9,9 +9,9 @@ struct ContactFieldForm: Component {
     let action: String
     let submitLabel: String
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action) {
-            context.render(
+            context.build(
                 NewAdminFormFieldSelect(
                     state: .init(
                         name: "type",
@@ -28,7 +28,7 @@ struct ContactFieldForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "key",
@@ -38,7 +38,7 @@ struct ContactFieldForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "label",
@@ -48,7 +48,7 @@ struct ContactFieldForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldTextArea(
                     state: .init(
                         name: "allowedValues",
@@ -59,7 +59,7 @@ struct ContactFieldForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldCheckbox(
                     state: .init(
                         name: "isRequired",
@@ -69,9 +69,9 @@ struct ContactFieldForm: Component {
                     )
                 )
             )
-            Div { context.render(NewAdminSubmitButton(submitLabel)) }
+            Div { context.build(NewAdminSubmitButton(submitLabel)) }
                 .class("new-admin-form__actions")
         }
-        return context.render(form)
+        return context.build(form)
     }
 }

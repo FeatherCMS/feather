@@ -16,9 +16,9 @@ struct NewsletterCampaignSubscribersTable: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(
                     links: NewsletterAdminRoutes.breadcrumb + [
                         .init(
@@ -28,7 +28,7 @@ struct NewsletterCampaignSubscribersTable: Component {
                     ]
                 )
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Campaign subscribers",
@@ -36,7 +36,7 @@ struct NewsletterCampaignSubscribersTable: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminTabBar(links: [
                     .init(
                         label: "Details",
@@ -67,7 +67,7 @@ struct NewsletterCampaignSubscribersTable: Component {
                     ),
                 ])
             )
-            context.render(
+            context.build(
                 NewsletterCampaignSubscribersTableContent(
                     newsletterId: state.newsletterId,
                     items: state.items,

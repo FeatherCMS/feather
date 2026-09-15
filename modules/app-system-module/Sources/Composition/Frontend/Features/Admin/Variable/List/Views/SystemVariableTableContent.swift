@@ -25,15 +25,15 @@ struct SystemVariableTableContent: Component {
         )
     }
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let canDelete = permissions.allows(SystemPermissions.Variables.delete)
         let hasActiveQuery = !(search?.isEmpty ?? true)
 
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if pageState.isPageOutOfRange {
-                        context.render(
+                        context.build(
                             NewAdminListInvalidPageState(
                                 pageState: pageState,
                                 path: SystemVariableRoutes.list.description
@@ -42,13 +42,13 @@ struct SystemVariableTableContent: Component {
                     }
                     else if variables.isEmpty {
                         if hasActiveQuery {
-                            context.render(
+                            context.build(
                                 NewAdminListNoResultsState(
                                     message:
                                         "No system variables match your search.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
-                                        context.render(
+                                        context.build(
                                             NewAdminButton(
                                                 "Reset search",
                                                 href: SystemVariableRoutes.list
@@ -61,7 +61,7 @@ struct SystemVariableTableContent: Component {
                             )
                         }
                         else {
-                            context.render(
+                            context.build(
                                 NewAdminListEmptyState(
                                     message: "No system variables yet.",
                                     icon: FeatherIcons.inbox(),
@@ -69,7 +69,7 @@ struct SystemVariableTableContent: Component {
                                         if permissions.allows(
                                             SystemPermissions.Variables.create
                                         ) {
-                                            context.render(
+                                            context.build(
                                                 NewAdminButton(
                                                     "Add new",
                                                     href: SystemVariableRoutes
@@ -84,7 +84,7 @@ struct SystemVariableTableContent: Component {
                         }
                     }
                     else {
-                        context.render(
+                        context.build(
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action: NewAdminLocation.remove(
@@ -101,7 +101,7 @@ struct SystemVariableTableContent: Component {
                                     ),
                                     isEnabled: canDelete
                                 ),
-                                table: context.render(
+                                table: context.build(
                                     NewAdminListShell(
                                         layout: .init(
                                             name: "system-variables",
@@ -116,7 +116,7 @@ struct SystemVariableTableContent: Component {
                                             Thead {
                                                 Tr {
                                                     if canDelete {
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
@@ -127,7 +127,7 @@ struct SystemVariableTableContent: Component {
                                             }
                                             Tbody {
                                                 for variable in variables {
-                                                    context.render(
+                                                    context.build(
                                                         SystemVariableRow(
                                                             state: .init(
                                                                 variable:
@@ -153,7 +153,7 @@ struct SystemVariableTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: SystemVariableRoutes.list.description,
@@ -165,9 +165,9 @@ struct SystemVariableTableContent: Component {
                 },
                 toolbar: {
                     if permissions.allows(SystemPermissions.Variables.create) {
-                        context.render(
+                        context.build(
                             NewAdminListToolbar {
-                                context.render(
+                                context.build(
                                     NewAdminButton(
                                         "Add new",
                                         href: SystemVariableRoutes.add
@@ -179,7 +179,7 @@ struct SystemVariableTableContent: Component {
                     }
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: SystemVariableRoutes.list.description,

@@ -19,7 +19,7 @@ public struct NewAdminSubmitButton: Component {
         self.isRowButton = isRowButton
     }
 
-    public func html(context: inout RenderContext) -> Button {
+    public func html(context: inout BuilderContext) -> Button {
         var button = Button(label)
             .type(.submit)
             .class("button", style.className)

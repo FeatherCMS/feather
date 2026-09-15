@@ -19,14 +19,14 @@ struct WebMetadataTableContent: Component {
     private var searchValue: String { search ?? "" }
     private var referenceTypeValue: String { referenceType ?? "" }
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let hasActiveQuery = !searchValue.isEmpty || !referenceTypeValue.isEmpty
 
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if pageState.isPageOutOfRange {
-                        context.render(
+                        context.build(
                             NewAdminListInvalidPageState(
                                 pageState: pageState,
                                 path: WebMetadataRoutes.list.description
@@ -35,13 +35,13 @@ struct WebMetadataTableContent: Component {
                     }
                     else if metadata.isEmpty {
                         if hasActiveQuery {
-                            context.render(
+                            context.build(
                                 NewAdminListNoResultsState(
                                     message:
                                         "No metadata matches the selected filters.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
-                                        context.render(
+                                        context.build(
                                             NewAdminButton(
                                                 "Reset filters",
                                                 href: WebMetadataRoutes.list
@@ -54,7 +54,7 @@ struct WebMetadataTableContent: Component {
                             )
                         }
                         else {
-                            context.render(
+                            context.build(
                                 NewAdminListEmptyState(
                                     message: "No metadata yet.",
                                     icon: FeatherIcons.inbox()
@@ -63,7 +63,7 @@ struct WebMetadataTableContent: Component {
                         }
                     }
                     else {
-                        context.render(
+                        context.build(
                             NewAdminListShell(
                                 layout: .init(
                                     name: "web-metadata",
@@ -85,7 +85,7 @@ struct WebMetadataTableContent: Component {
                                     }
                                     Tbody {
                                         for item in metadata {
-                                            context.render(
+                                            context.build(
                                                 WebMetadataRow(
                                                     metadata: item,
                                                     permissions: permissions
@@ -100,7 +100,7 @@ struct WebMetadataTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: WebMetadataRoutes.list.description,
@@ -127,7 +127,7 @@ struct WebMetadataTableContent: Component {
                     )
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: WebMetadataRoutes.list.description,

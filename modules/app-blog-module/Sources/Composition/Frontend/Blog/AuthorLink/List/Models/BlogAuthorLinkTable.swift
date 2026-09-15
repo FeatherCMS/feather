@@ -23,11 +23,11 @@ struct BlogAuthorLinkTable: Component {
     }
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             if !state.canAccess {
-                context.render(
+                context.build(
                     NewAdminStatusView(
                         state: .init(
                             title: "Forbidden",
@@ -39,7 +39,7 @@ struct BlogAuthorLinkTable: Component {
                 )
             }
             else {
-                context.render(
+                context.build(
                     NewAdminPageHeader(
                         state: .init(
                             title: "Blog author links",
@@ -50,7 +50,7 @@ struct BlogAuthorLinkTable: Component {
                 if let error = state.error {
                     P(error).class("new-admin-form__error")
                 }
-                context.render(BlogAuthorLinkTableContent(state: state))
+                context.build(BlogAuthorLinkTableContent(state: state))
             }
         }
         .class("cms-section")
@@ -59,16 +59,16 @@ struct BlogAuthorLinkTable: Component {
 
 struct BlogAuthorLinkTableContent: Component {
     let state: BlogAuthorLinkTable.State
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let canDelete = state.permissions.allows(
             BlogPermissions.AuthorLinks.delete
         )
         let links = BlogAdminRoutes.authorLinks(RouterPath(state.authorId))
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if state.items.isEmpty {
-                        context.render(
+                        context.build(
                             NewAdminListNoResultsState(
                                 message: state.search.isEmpty
                                     ? "No blog author links yet."
@@ -77,7 +77,7 @@ struct BlogAuthorLinkTableContent: Component {
                         )
                     }
                     else {
-                        context.render(
+                        context.build(
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action:
@@ -93,7 +93,7 @@ struct BlogAuthorLinkTableContent: Component {
                                     ),
                                     isEnabled: canDelete
                                 ),
-                                table: context.render(
+                                table: context.build(
                                     NewAdminListShell(
                                         layout: .init(
                                             name: "blog-author-links",
@@ -108,7 +108,7 @@ struct BlogAuthorLinkTableContent: Component {
                                             Thead {
                                                 Tr {
                                                     if canDelete {
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
@@ -124,7 +124,7 @@ struct BlogAuthorLinkTableContent: Component {
                                                 for item in state.items {
                                                     Tr {
                                                         if canDelete {
-                                                            context.render(
+                                                            context.build(
                                                                 NewAdminListRowCheckbox(
                                                                     id: item.id
                                                                 )
@@ -146,7 +146,7 @@ struct BlogAuthorLinkTableContent: Component {
                                                                 "Priority"
                                                             )
                                                         Td {
-                                                            context.render(
+                                                            context.build(
                                                                 blankChip(
                                                                     item.isBlank
                                                                 )
@@ -158,7 +158,7 @@ struct BlogAuthorLinkTableContent: Component {
                                                                 "label",
                                                                 "Permission"
                                                             )
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListRowActions(
                                                                 label:
                                                                     "Actions",
@@ -257,7 +257,7 @@ struct BlogAuthorLinkTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: links.description,
@@ -269,9 +269,9 @@ struct BlogAuthorLinkTableContent: Component {
                 },
                 toolbar: {
                     if state.canAdd {
-                        context.render(
+                        context.build(
                             NewAdminListToolbar {
-                                context.render(
+                                context.build(
                                     NewAdminButton(
                                         "Add link",
                                         href:
@@ -286,7 +286,7 @@ struct BlogAuthorLinkTableContent: Component {
                     }
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: links.description,

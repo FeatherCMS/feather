@@ -79,12 +79,12 @@ struct AdminViewAnalyticsOverviewComponent: Component {
         }
     }
 
-    func html(context: inout RenderContext) -> Section {
+    func html(context: inout BuilderContext) -> Section {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: AnalyticsAdminRoutes.adminBreadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Analytics",
@@ -102,7 +102,7 @@ struct AdminViewAnalyticsOverviewComponent: Component {
                         }
                         H2(destination.title)
                         P(destination.description)
-                        context.render(
+                        context.build(
                             NewAdminButton(
                                 "Open",
                                 href: destination.href,

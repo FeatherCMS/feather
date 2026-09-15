@@ -13,12 +13,12 @@ struct ContactFormDetailsView: Component {
     let breadcrumb: [NewAdminBreadcrumb.Link]
     let error: String?
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             if let error {
                 P(error).class("new-admin-form__error")
             }
-            context.render(
+            context.build(
                 NewAdminDetailView(
                     breadcrumb: breadcrumb,
                     pageHeader: .init(

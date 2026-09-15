@@ -7,12 +7,12 @@ import WebComponents
 struct SystemVariableAddPage: Component {
     let form: SystemVariableAddForm
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: SystemVariableRoutes.breadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Add system variable",
@@ -21,7 +21,7 @@ struct SystemVariableAddPage: Component {
                     )
                 )
             )
-            context.render(form)
+            context.build(form)
         }
         .class("cms-section")
     }

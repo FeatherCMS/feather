@@ -56,12 +56,12 @@ public struct DefaultRenderingEngine: RenderingEngine {
         imagePath: String,
         content: T
     ) -> HTMLResponse {
-        var context = RenderContext()
+        var context = BuilderContext()
         let body = Body {
             content
         }
 
-        let metadata = context.render(
+        let metadata = context.build(
             NewAdminMetadata(
                 canonicalUrl: normalizedURL(
                     base: publicOrigins.siteBaseURL,
@@ -133,7 +133,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
         sidebarState: AdminSidebar.State,
         content: T
     ) -> HTMLResponse {
-        var context = RenderContext()
+        var context = BuilderContext()
         let toast =
             AdminNotificationFlash.notification(from: request)
             .map { notification in
@@ -145,7 +145,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
                 )
             } ?? AdminNotificationRedirect.payload(from: request)
         let body = Body {
-            context.render(
+            context.build(
                 AdminBody(
                     state: .init(
                         sidebar: sidebarState,
@@ -156,7 +156,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
             )
         }
 
-        let metadata = context.render(
+        let metadata = context.build(
             NewAdminMetadata(
                 canonicalUrl: normalizedURL(
                     base: publicOrigins.siteBaseURL,
@@ -203,14 +203,14 @@ public struct DefaultRenderingEngine: RenderingEngine {
             events: adminEvents
         )
         let notification = AdminNotificationFlash.notification(from: request)
-        var context = RenderContext()
+        var context = BuilderContext()
         let layout = NewAdminBaseLayout(
             content: content,
             menuGroups: menuGroups,
             notification: notification
         )
         return .init(
-            context.render(
+            context.build(
                 NewAdminHTML(title: title, body: .init(content: layout))
             )
         )

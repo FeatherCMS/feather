@@ -49,7 +49,7 @@ public struct EmailField: Component {
         }
     }
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         Div {
             Span(state.label)
 

@@ -10,8 +10,8 @@ struct AdminContactFormTabs: Component {
     let formId: String
     let active: Tab
 
-    func html(context: inout RenderContext) -> Div {
-        context.render(
+    func html(context: inout BuilderContext) -> Div {
+        context.build(
             NewAdminTabBar(links: [
                 .init(
                     label: "Details",

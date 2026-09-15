@@ -53,13 +53,13 @@ struct BlogPostForm: Component {
     var removeHref: String?
     var removeLabel: String = "Remove"
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action) {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
-            context.render(NewAdminTabBar(links: tabLinks()))
-            context.render(
+            context.build(NewAdminTabBar(links: tabLinks()))
+            context.build(
                 NewAdminFormFieldMediaPicker(
                     state: .init(
                         field: .init(
@@ -85,7 +85,7 @@ struct BlogPostForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.title.key,
@@ -96,7 +96,7 @@ struct BlogPostForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldTextArea(
                     state: .init(
                         name: state.excerpt.key,
@@ -108,7 +108,7 @@ struct BlogPostForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldTextArea(
                     state: .init(
                         name: state.content.key,
@@ -120,7 +120,7 @@ struct BlogPostForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: "authorIds[]",
@@ -138,7 +138,7 @@ struct BlogPostForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: "tagIds[]",
@@ -157,7 +157,7 @@ struct BlogPostForm: Component {
                 )
             )
             Div {
-                context.render(
+                context.build(
                     NewAdminSubmitButton(submitLabel, style: .primary)
                 )
                 if let publishLabel {
@@ -165,7 +165,7 @@ struct BlogPostForm: Component {
                         .value("publish").class("button", "secondary")
                 }
                 if let removeHref {
-                    context.render(
+                    context.build(
                         NewAdminButton(
                             removeLabel,
                             href: removeHref,
@@ -176,7 +176,7 @@ struct BlogPostForm: Component {
             }
             .class("new-admin-form__actions")
         }
-        return context.render(form)
+        return context.build(form)
     }
 
     private func tabLinks() -> [NewAdminTabBar.Link] {

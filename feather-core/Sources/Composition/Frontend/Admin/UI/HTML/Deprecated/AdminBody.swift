@@ -38,19 +38,19 @@ public struct AdminBody<T: Component>: Component {
         self.state = state
     }
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         Div {
-            context.render(AdminTopBar())
+            context.build(AdminTopBar())
             if let toast = state.toast {
-                context.render(AdminToastBootstrap(payload: toast))
+                context.build(AdminToastBootstrap(payload: toast))
             }
 
             Div {
-                context.render(AdminSidebar(state: state.sidebar))
+                context.build(AdminSidebar(state: state.sidebar))
 
                 Main {
                     Div {
-                        context.render(state.content)
+                        context.build(state.content)
                     }
                     .class("panel", "cms-content")
                 }

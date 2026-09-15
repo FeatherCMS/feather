@@ -35,26 +35,26 @@ struct BlogSettingsForm: Component {
     var state: State
     var action: String = BlogAdminRoutes.blog.description + "/settings/"
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action) {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
             H2("List paths")
-            context.render(field(state.postListPath))
-            context.render(field(state.authorListPath))
-            context.render(field(state.tagListPath))
+            context.build(field(state.postListPath))
+            context.build(field(state.authorListPath))
+            context.build(field(state.tagListPath))
             H2("Prefixes")
-            context.render(field(state.postPathPrefix))
-            context.render(field(state.authorPathPrefix))
-            context.render(field(state.tagPathPrefix))
+            context.build(field(state.postPathPrefix))
+            context.build(field(state.authorPathPrefix))
+            context.build(field(state.tagPathPrefix))
             if state.canEdit {
-                context.render(
+                context.build(
                     NewAdminSubmitButton("Save settings", style: .primary)
                 )
             }
         }
-        return context.render(form)
+        return context.build(form)
     }
 
     private func field(_ value: FieldState) -> NewAdminFormFieldInput {

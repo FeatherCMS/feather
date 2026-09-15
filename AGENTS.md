@@ -94,9 +94,9 @@ Dependency direction must stay inward:
 ### 2.5 Component rendering
 
 - Never call `.html(context: ...)` at a component call site. Use
-  `context.render(component)` instead.
+  `context.build(component)` instead.
 - Avoid `context.register(...)` when the component HTML is rendered with
-  `context.render(...)`, because rendering already registers the component's
+  `context.build(...)`, because rendering already registers the component's
   styles and scripts.
 - Use `context.register(...)` only when the component HTML is explicitly
   omitted and its styles or scripts still need to be registered.

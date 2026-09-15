@@ -15,12 +15,12 @@ struct NewsletterCampaignForm: Component {
     let action: String
     let submitLabel: String
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action) {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "name",
@@ -30,7 +30,7 @@ struct NewsletterCampaignForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "fromEmail",
@@ -42,12 +42,12 @@ struct NewsletterCampaignForm: Component {
                 )
             )
             Div {
-                context.render(
+                context.build(
                     NewAdminSubmitButton(submitLabel, style: .primary)
                 )
             }
             .class("new-admin-form__actions")
         }
-        return context.render(form)
+        return context.build(form)
     }
 }

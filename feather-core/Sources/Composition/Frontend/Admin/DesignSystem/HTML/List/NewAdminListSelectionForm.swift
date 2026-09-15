@@ -35,14 +35,14 @@ public struct NewAdminListSelectionForm<Table: FlowContent>: Component {
         self.table = table
     }
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         Div {
             if state.isEnabled {
                 Form {
                     table
 
                     Div {
-                        context.render(state.button)
+                        context.build(state.button)
                             .disabled()
                             .class("remove-submit")
                     }

@@ -93,12 +93,12 @@ public struct NewAdminFormFieldCheckbox: Component {
         ]
     }
 
-    public func html(context: inout RenderContext) -> Section {
+    public func html(context: inout BuilderContext) -> Section {
         let errorID = "\(state.name)-error"
         return Section {
-            context.render(NewAdminFormFieldLabel(text: state.label))
+            context.build(NewAdminFormFieldLabel(text: state.label))
             Label {
-                context.render(
+                context.build(
                     NewAdminCheckbox(
                         name: state.name,
                         value: "true",

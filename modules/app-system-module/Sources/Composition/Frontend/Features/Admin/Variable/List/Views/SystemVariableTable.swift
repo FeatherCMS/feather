@@ -17,12 +17,12 @@ struct SystemVariableTable: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: SystemVariableRoutes.listBreadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Variables",
@@ -31,7 +31,7 @@ struct SystemVariableTable: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 SystemVariableTableContent(
                     variables: state.variables,
                     permissions: state.permissions,

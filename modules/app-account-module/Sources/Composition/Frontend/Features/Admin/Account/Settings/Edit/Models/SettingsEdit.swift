@@ -17,10 +17,10 @@ struct SettingsEdit: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Settings",
@@ -31,7 +31,7 @@ struct SettingsEdit: Component {
             )
 
             if let userID = state.userID {
-                context.render(
+                context.build(
                     NewAdminTabBar(links: [
                         .init(
                             label: "Details",
@@ -72,7 +72,7 @@ struct SettingsEdit: Component {
                     AccountAdminRoutes.userSettings(RouterPath($0)).description
                         + "/"
                 } ?? AccountAdminRoutes.settings.description + "/"
-            context.render(SettingsForm(state: state.form, action: action))
+            context.build(SettingsForm(state: state.form, action: action))
         }
         .class("cms-section")
     }

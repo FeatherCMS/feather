@@ -14,7 +14,7 @@ struct AccountProfileDetails: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> Section {
+    func html(context: inout BuilderContext) -> Section {
         var actions: [NewAdminDetailView.Action] = []
         if state.canEdit {
             actions.append(
@@ -25,7 +25,7 @@ struct AccountProfileDetails: Component {
                 )
             )
         }
-        return context.render(
+        return context.build(
             NewAdminDetailView(
                 breadcrumb: state.breadcrumb,
                 pageHeader: .init(

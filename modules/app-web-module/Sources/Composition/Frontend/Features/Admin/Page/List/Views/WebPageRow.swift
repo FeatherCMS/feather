@@ -14,16 +14,16 @@ struct WebPageRow: Component {
     let canEdit: Bool
     let returnTo: String
 
-    func html(context: inout RenderContext) -> Tr {
+    func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(WebPermissions.Pages.delete) {
-                context.render(NewAdminListRowCheckbox(id: page.id))
+                context.build(NewAdminListRowCheckbox(id: page.id))
             }
             titleCell(context: &context)
             statusCell(context: &context)
             Td(format(page.metadata.publicationDate))
                 .data("label", "Publication")
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: [
@@ -58,12 +58,12 @@ struct WebPageRow: Component {
         }
     }
 
-    private func titleCell(context: inout RenderContext) -> Td {
+    private func titleCell(context: inout BuilderContext) -> Td {
         Td {
             Span {
                 Span(page.title)
                 if let previewPath = previewPath {
-                    context.render(
+                    context.build(
                         NewAdminPreviewLink(
                             href: previewPath,
                             label: "Preview \(page.title)"
@@ -75,10 +75,10 @@ struct WebPageRow: Component {
         .data("label", "Title")
     }
 
-    private func statusCell(context: inout RenderContext) -> Td {
+    private func statusCell(context: inout BuilderContext) -> Td {
         Td {
             if canEdit {
-                context.render(
+                context.build(
                     NewAdminStatusSelectField(
                         formID: "web-page-status-\(page.id)",
                         selectedStatus: page.metadata.normalizedStatus

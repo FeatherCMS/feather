@@ -135,7 +135,7 @@ struct LoginPage: Component {
         }
     }
 
-    func html(context: inout RenderContext) -> Main {
+    func html(context: inout BuilderContext) -> Main {
         Main {
             Div {
                 Div {
@@ -145,7 +145,7 @@ struct LoginPage: Component {
                 }
                 .class("login-copy")
 
-                context.render(LoginForm(state: state.form))
+                context.build(LoginForm(state: state.form))
 
                 A("Sign in with a magic link")
                     .href("/magic-link/")

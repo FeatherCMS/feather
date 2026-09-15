@@ -116,7 +116,7 @@ public struct NewAdminTabBar: Component {
         }
     }
 
-    public func html(context _: inout RenderContext) -> Div {
+    public func html(context _: inout BuilderContext) -> Div {
         Div {
             Div {
                 Div {

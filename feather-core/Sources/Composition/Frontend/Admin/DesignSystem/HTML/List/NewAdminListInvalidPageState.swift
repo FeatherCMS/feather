@@ -16,13 +16,13 @@ public struct NewAdminListInvalidPageState: Component {
         self.path = path
     }
 
-    public func html(context: inout RenderContext) -> Div {
-        context.render(
+    public func html(context: inout BuilderContext) -> Div {
+        context.build(
             NewAdminListEmptyState(
                 message: "Page \(pageState.page) does not exist.",
                 icon: FeatherIcons.alertCircle(),
                 action: {
-                    context.render(
+                    context.build(
                         NewAdminButton(
                             "Back to list",
                             href: path,

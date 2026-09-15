@@ -42,7 +42,7 @@ public struct NewAdminStatCard: Component {
         }
     }
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         Div {
             P(label).class("new-admin-stat-card__label")
             Strong(value).class("new-admin-stat-card__value")

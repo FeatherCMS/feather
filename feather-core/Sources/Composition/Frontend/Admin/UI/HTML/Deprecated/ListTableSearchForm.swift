@@ -36,7 +36,7 @@ public struct ListTableSearchForm: Component {
         self.state = state
     }
 
-    public func html(context: inout RenderContext) -> Form {
+    public func html(context: inout BuilderContext) -> Form {
         Form {
             for item in state.queryItems {
                 Input().type(.hidden).name(item.0).value(item.1)

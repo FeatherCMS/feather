@@ -18,10 +18,10 @@ struct AccountInvitationEdit: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Edit user invitation",
@@ -31,7 +31,7 @@ struct AccountInvitationEdit: Component {
                 )
             )
             if state.isEdited { P("User invitation edited successfully.") }
-            context.render(
+            context.build(
                 AccountInvitationForm(
                     state: state.form,
                     action: "/admin/account/invitations/\(state.id)/edit/",

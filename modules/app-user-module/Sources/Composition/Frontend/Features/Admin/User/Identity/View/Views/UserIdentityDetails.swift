@@ -10,7 +10,7 @@ struct UserIdentityDetails: Component {
     let identity: AdminViewUserIdentityModel
     let permissions: NewAdminListActions
 
-    func html(context: inout RenderContext) -> Section {
+    func html(context: inout BuilderContext) -> Section {
         var actions: [NewAdminDetailView.Action] = []
         if permissions.allows(UserPermissions.Identities.update) {
             actions.append(
@@ -32,7 +32,7 @@ struct UserIdentityDetails: Component {
                 )
             )
         }
-        return context.render(
+        return context.build(
             NewAdminDetailView(
                 breadcrumb: UserIdentityRoutes.breadcrumb,
                 pageHeader: .init(

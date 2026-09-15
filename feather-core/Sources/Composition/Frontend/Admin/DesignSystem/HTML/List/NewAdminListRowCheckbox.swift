@@ -13,9 +13,9 @@ public struct NewAdminListRowCheckbox: Component {
         self.id = id
     }
 
-    public func html(context: inout RenderContext) -> Td {
+    public func html(context: inout BuilderContext) -> Td {
         Td {
-            context.render(
+            context.build(
                 NewAdminCheckbox(
                     name: "ids",
                     value: id,

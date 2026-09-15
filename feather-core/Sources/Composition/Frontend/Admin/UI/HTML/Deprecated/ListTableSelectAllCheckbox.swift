@@ -8,7 +8,7 @@ public struct ListTableSelectAllCheckbox: Component {
 
     public init() {}
 
-    public func html(context: inout RenderContext) -> some BasicTag {
+    public func html(context: inout BuilderContext) -> some BasicTag {
         Th {
             Input()
                 .type(.checkbox)

@@ -15,12 +15,12 @@ struct UserIdentityTable: Component {
     let search: String?
     let role: String?
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: UserIdentityRoutes.listBreadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "User identities",
@@ -29,7 +29,7 @@ struct UserIdentityTable: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 UserIdentityTableContent(
                     permissions: permissions,
                     identities: identities,

@@ -8,12 +8,12 @@ struct RedirectRuleAddPage: Component {
     let form: RedirectRuleAddForm.State
     let nonceToken: String
 
-    func html(context: inout RenderContext) -> Section {
+    func html(context: inout BuilderContext) -> Section {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(links: RedirectRuleRoutes.breadcrumb)
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Add redirect rule",
@@ -22,7 +22,7 @@ struct RedirectRuleAddPage: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 RedirectRuleAddForm(
                     state: form,
                     action: RedirectRuleRoutes.add.description,

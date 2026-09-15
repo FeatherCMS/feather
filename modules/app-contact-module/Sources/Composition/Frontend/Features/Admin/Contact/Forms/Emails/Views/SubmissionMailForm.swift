@@ -10,10 +10,10 @@ struct SubmissionMailForm: Component {
     let submitLabel: String
     let error: String?
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action) {
             if let error { P(error).class("new-admin-form__error") }
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "mailFrom",
@@ -23,7 +23,7 @@ struct SubmissionMailForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "mailTo",
@@ -33,7 +33,7 @@ struct SubmissionMailForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: "subject",
@@ -43,7 +43,7 @@ struct SubmissionMailForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldTextArea(
                     state: .init(
                         name: "additionalHeaders",
@@ -53,7 +53,7 @@ struct SubmissionMailForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldTextArea(
                     state: .init(
                         name: "messageBody",
@@ -64,9 +64,9 @@ struct SubmissionMailForm: Component {
                     )
                 )
             )
-            Div { context.render(NewAdminSubmitButton(submitLabel)) }
+            Div { context.build(NewAdminSubmitButton(submitLabel)) }
                 .class("new-admin-form__actions")
         }
-        return context.render(form)
+        return context.build(form)
     }
 }

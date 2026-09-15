@@ -115,11 +115,11 @@ public struct NewAdminFormFieldSelect: Component {
         ]
     }
 
-    public func html(context: inout RenderContext) -> Section {
+    public func html(context: inout BuilderContext) -> Section {
         let errorID = "\(state.name)-error"
         return Section {
             Label {
-                context.render(
+                context.build(
                     NewAdminFormFieldLabel(
                         text: state.label,
                         isRequired: state.isRequired

@@ -25,16 +25,16 @@ struct RedirectRuleTableContent: Component {
         )
     }
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let canDelete = state.permissions.allows(
             RedirectPermissions.Rules.delete
         )
 
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if state.pageState.isPageOutOfRange {
-                        context.render(
+                        context.build(
                             NewAdminListInvalidPageState(
                                 pageState: state.pageState,
                                 path: RedirectRuleRoutes.list.description
@@ -43,13 +43,13 @@ struct RedirectRuleTableContent: Component {
                     }
                     else if state.rules.isEmpty {
                         if hasActiveQuery {
-                            context.render(
+                            context.build(
                                 NewAdminListNoResultsState(
                                     message:
                                         "No redirect rules match your search or filters.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
-                                        context.render(
+                                        context.build(
                                             NewAdminButton(
                                                 "Reset filters",
                                                 href: RedirectRuleRoutes.list
@@ -62,7 +62,7 @@ struct RedirectRuleTableContent: Component {
                             )
                         }
                         else {
-                            context.render(
+                            context.build(
                                 NewAdminListEmptyState(
                                     message: "No redirect rules yet.",
                                     icon: FeatherIcons.inbox(),
@@ -70,7 +70,7 @@ struct RedirectRuleTableContent: Component {
                                         if state.permissions.allows(
                                             RedirectPermissions.Rules.create
                                         ) {
-                                            context.render(
+                                            context.build(
                                                 NewAdminButton(
                                                     "Add rule",
                                                     href: RedirectRuleRoutes.add
@@ -84,7 +84,7 @@ struct RedirectRuleTableContent: Component {
                         }
                     }
                     else {
-                        context.render(
+                        context.build(
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action: NewAdminLocation.remove(
@@ -101,7 +101,7 @@ struct RedirectRuleTableContent: Component {
                                     ),
                                     isEnabled: canDelete
                                 ),
-                                table: context.render(
+                                table: context.build(
                                     NewAdminListShell(
                                         layout: .init(
                                             name: "redirect-rules",
@@ -118,7 +118,7 @@ struct RedirectRuleTableContent: Component {
                                             Thead {
                                                 Tr {
                                                     if canDelete {
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
@@ -130,7 +130,7 @@ struct RedirectRuleTableContent: Component {
                                             }
                                             Tbody {
                                                 for rule in state.rules {
-                                                    context.render(
+                                                    context.build(
                                                         RedirectRuleRow(
                                                             rule: rule,
                                                             returnTo: returnTo,
@@ -152,7 +152,7 @@ struct RedirectRuleTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: RedirectRuleRoutes.list.description,
@@ -196,9 +196,9 @@ struct RedirectRuleTableContent: Component {
                     if state.permissions.allows(
                         RedirectPermissions.Rules.create
                     ) {
-                        context.render(
+                        context.build(
                             NewAdminListToolbar {
-                                context.render(
+                                context.build(
                                     NewAdminButton(
                                         "Add rule",
                                         href: RedirectRuleRoutes.add.description
@@ -209,7 +209,7 @@ struct RedirectRuleTableContent: Component {
                     }
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: RedirectRuleRoutes.list.description,

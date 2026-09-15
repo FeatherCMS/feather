@@ -41,8 +41,8 @@ public struct NewAdminFormFieldLanguage: Component {
         []
     }
 
-    public func html(context: inout RenderContext) -> Section {
-        context.render(
+    public func html(context: inout BuilderContext) -> Section {
+        context.build(
             NewAdminFormFieldSelect(
                 state: .init(
                     name: state.name,

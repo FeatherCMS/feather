@@ -85,7 +85,7 @@ public struct NewAdminChip: Component {
         ]
     }
 
-    public func html(context: inout RenderContext) -> Span {
+    public func html(context: inout BuilderContext) -> Span {
         Span(label).class("new-admin-chip", "new-admin-chip-\(color.rawValue)")
     }
 }

@@ -23,7 +23,7 @@ struct SystemJobRow: Component {
         ]
     }
 
-    func html(context: inout RenderContext) -> Tr {
+    func html(context: inout BuilderContext) -> Tr {
         let payload = SystemJobPayload(job: job)
         return Tr {
             Td(payload.name)
@@ -32,7 +32,7 @@ struct SystemJobRow: Component {
                 .data("label", "Parameters")
             Td(statusLabel(job.status))
                 .data("label", "Status")
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: rowActions,

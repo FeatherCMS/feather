@@ -15,9 +15,9 @@ struct AdminListAuthSessionView: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> Section {
+    func html(context: inout BuilderContext) -> Section {
         Section {
-            context.render(
+            context.build(
                 NewAdminBreadcrumb(
                     links: [
                         .init(label: "Admin", link: "/admin/"),
@@ -29,7 +29,7 @@ struct AdminListAuthSessionView: Component {
                     ]
                 )
             )
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Sessions",
@@ -37,7 +37,7 @@ struct AdminListAuthSessionView: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminTabBar(links: [
                     .init(
                         label: "Sessions",
@@ -54,7 +54,7 @@ struct AdminListAuthSessionView: Component {
                 ])
             )
             if state.items.isEmpty {
-                context.render(
+                context.build(
                     NewAdminListEmptyState(
                         message: "No active sessions.",
                         icon: FeatherIcons.inbox()
@@ -62,7 +62,7 @@ struct AdminListAuthSessionView: Component {
                 )
             }
             else {
-                context.render(
+                context.build(
                     NewAdminListShell(
                         layout: .init(
                             name: "auth-sessions",
@@ -88,7 +88,7 @@ struct AdminListAuthSessionView: Component {
                                         Td(item.isPersistent ? "Yes" : "No")
                                         Td {
                                             if state.canRemove {
-                                                context.render(
+                                                context.build(
                                                     NewAdminRowButton(
                                                         "Remove",
                                                         href:

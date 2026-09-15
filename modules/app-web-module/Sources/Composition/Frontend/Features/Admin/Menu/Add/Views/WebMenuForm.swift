@@ -35,7 +35,7 @@ struct WebMenuForm: Component {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action) {
             if let success = state.success {
                 P(success).class("new-admin-form__success")
@@ -44,7 +44,7 @@ struct WebMenuForm: Component {
                 P(error).class("new-admin-form__error")
             }
 
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.key.key,
@@ -55,7 +55,7 @@ struct WebMenuForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.name.key,
@@ -66,7 +66,7 @@ struct WebMenuForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldTextArea(
                     state: .init(
                         name: state.notes.key,
@@ -80,9 +80,9 @@ struct WebMenuForm: Component {
 
             Div {
                 Div {
-                    context.render(NewAdminSubmitButton(submitLabel))
+                    context.build(NewAdminSubmitButton(submitLabel))
                     if let removeHref {
-                        context.render(
+                        context.build(
                             NewAdminButton(
                                 removeLabel,
                                 href: removeHref,
@@ -94,6 +94,6 @@ struct WebMenuForm: Component {
                 .class("new-admin-form__actions")
             }
         }
-        return context.render(form)
+        return context.build(form)
     }
 }

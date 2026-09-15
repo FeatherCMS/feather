@@ -8,9 +8,9 @@ public struct NewAdminListSelectAllCheckbox: Component {
     public init() {
     }
 
-    public func html(context: inout RenderContext) -> Th {
+    public func html(context: inout BuilderContext) -> Th {
         Th {
-            context.render(
+            context.build(
                 NewAdminCheckbox(
                     ariaLabel: "Select all rows",
                     onChange:

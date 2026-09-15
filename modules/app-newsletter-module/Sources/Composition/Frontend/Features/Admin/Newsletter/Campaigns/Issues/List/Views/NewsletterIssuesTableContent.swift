@@ -19,15 +19,15 @@ struct NewsletterIssuesTableContent: Component {
 
     private var searchValue: String { search ?? "" }
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let canCreate = permissions.allows(Permissions.Issues.create)
         let hasActiveQuery = !searchValue.isEmpty
 
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if pageState.isPageOutOfRange {
-                        context.render(
+                        context.build(
                             NewAdminListInvalidPageState(
                                 pageState: pageState,
                                 path: path
@@ -36,12 +36,12 @@ struct NewsletterIssuesTableContent: Component {
                     }
                     else if items.isEmpty {
                         if hasActiveQuery {
-                            context.render(
+                            context.build(
                                 NewAdminListNoResultsState(
                                     message: "No issues match your search.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
-                                        context.render(
+                                        context.build(
                                             NewAdminButton(
                                                 "Reset search",
                                                 href: path,
@@ -53,13 +53,13 @@ struct NewsletterIssuesTableContent: Component {
                             )
                         }
                         else {
-                            context.render(
+                            context.build(
                                 NewAdminListEmptyState(
                                     message: "No issues yet.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         if canCreate {
-                                            context.render(
+                                            context.build(
                                                 NewAdminButton(
                                                     "Add new",
                                                     href:
@@ -79,7 +79,7 @@ struct NewsletterIssuesTableContent: Component {
                         }
                     }
                     else {
-                        context.render(
+                        context.build(
                             NewAdminListShell(
                                 layout: .init(
                                     name: "newsletter-issues",
@@ -101,7 +101,7 @@ struct NewsletterIssuesTableContent: Component {
                                     }
                                     Tbody {
                                         for item in items {
-                                            context.render(
+                                            context.build(
                                                 NewsletterIssueRow(
                                                     newsletterId: newsletterId,
                                                     item: item,
@@ -117,7 +117,7 @@ struct NewsletterIssuesTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: path,
@@ -129,9 +129,9 @@ struct NewsletterIssuesTableContent: Component {
                 },
                 toolbar: {
                     if canCreate {
-                        context.render(
+                        context.build(
                             NewAdminListToolbar {
-                                context.render(
+                                context.build(
                                     NewAdminButton(
                                         "Add new",
                                         href:
@@ -146,7 +146,7 @@ struct NewsletterIssuesTableContent: Component {
                     }
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: path,

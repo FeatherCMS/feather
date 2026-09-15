@@ -25,11 +25,11 @@ struct AccountProfileEdit: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
 
-            context.render(
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Edit profile",
@@ -41,7 +41,7 @@ struct AccountProfileEdit: Component {
                 P("Profile edited successfully.").class("success")
             }
 
-            context.render(
+            context.build(
                 AccountProfileForm(
                     state: state.form,
                     action: "/admin/account/profile/edit/",

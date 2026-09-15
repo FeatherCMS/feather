@@ -28,7 +28,7 @@ public struct NewAdminFormFieldLabel: Component {
         ]
     }
 
-    public func html(context: inout RenderContext) -> Span {
+    public func html(context: inout BuilderContext) -> Span {
         Span {
             Span(text)
             if !isRequired {

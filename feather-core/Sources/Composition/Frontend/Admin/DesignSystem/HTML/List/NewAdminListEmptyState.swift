@@ -55,7 +55,7 @@ public struct NewAdminListEmptyState: Component {
         }
     }
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         Div {
             if let icon {
                 icon.class("list-empty-state-icon")

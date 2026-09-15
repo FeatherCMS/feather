@@ -46,24 +46,24 @@ struct LoginForm: Component {
         }
     }
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         Form {
             Input()
                 .type(.hidden)
                 .name("redirect")
                 .value(state.redirectPath)
             Section {
-                context.render(NewAdminFormFieldInput(state: state.email))
+                context.build(NewAdminFormFieldInput(state: state.email))
             }
             .class("login-field")
 
             Section {
-                context.render(NewAdminFormFieldInput(state: state.password))
+                context.build(NewAdminFormFieldInput(state: state.password))
             }
             .class("login-field")
 
             Section {
-                context.render(
+                context.build(
                     NewAdminFormFieldCheckbox(state: state.isPersistent)
                 )
             }

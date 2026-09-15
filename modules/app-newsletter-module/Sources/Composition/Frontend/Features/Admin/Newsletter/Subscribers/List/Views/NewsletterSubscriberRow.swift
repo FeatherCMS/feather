@@ -11,10 +11,10 @@ struct NewsletterSubscriberRow: Component {
     let permissions: NewAdminListActions
     let returnTo: String
 
-    func html(context: inout RenderContext) -> Tr {
+    func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(Permissions.Subscribers.delete) {
-                context.render(NewAdminListRowCheckbox(id: item.id))
+                context.build(NewAdminListRowCheckbox(id: item.id))
             }
             Td(item.email).data("label", "Email")
             Td(item.name).data("label", "Name")
@@ -31,7 +31,7 @@ struct NewsletterSubscriberRow: Component {
                 }
             }
             .data("label", "Campaigns")
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: [

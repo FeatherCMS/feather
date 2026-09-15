@@ -52,7 +52,7 @@ public struct ListTableRowActions: Component {
         self.state = state
     }
 
-    public func html(context: inout RenderContext) -> some BasicTag {
+    public func html(context: inout BuilderContext) -> some BasicTag {
         Td {
             let visibleActions = state.actions.filter {
                 state.permissions.contains($0.permission)

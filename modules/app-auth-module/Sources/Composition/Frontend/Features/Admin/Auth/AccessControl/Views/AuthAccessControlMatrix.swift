@@ -41,7 +41,7 @@ struct AuthAccessControlMatrix: Component {
         )
     }
 
-    func html(context: inout RenderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         let visiblePermissions = state.permissions.filter {
             state.search.isEmpty
                 || ($0.name ?? "")
@@ -54,8 +54,8 @@ struct AuthAccessControlMatrix: Component {
         )
 
         return Section {
-            context.render(NewAdminBreadcrumb(links: state.breadcrumb))
-            context.render(
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
                 NewAdminPageHeader(
                     state: .init(
                         title: "Access control",
@@ -72,7 +72,7 @@ struct AuthAccessControlMatrix: Component {
             }
 
             Div {
-                context.render(
+                context.build(
                     NewAdminListSearch(
                         state: .init(
                             action: "/admin/auth/access-control/",
@@ -97,7 +97,7 @@ struct AuthAccessControlMatrix: Component {
                     action: "/admin/auth/access-control/",
                     nonceToken: state.nonceToken
                 ) {
-                    context.render(
+                    context.build(
                         NewAdminListShell(
                             layout: matrixLayout,
                             table: table
@@ -105,7 +105,7 @@ struct AuthAccessControlMatrix: Component {
                     )
 
                     Div {
-                        context.render(
+                        context.build(
                             NewAdminSubmitButton(
                                 "Save access control",
                                 style: .primary
@@ -121,13 +121,13 @@ struct AuthAccessControlMatrix: Component {
                             .value(state.search)
                     }
                 }
-                context.render(form)
+                context.build(form)
             }
             else {
                 P(
                     "You can view the access control matrix, but you need update permission to save changes."
                 )
-                context.render(
+                context.build(
                     NewAdminListShell(
                         layout: matrixLayout,
                         table: table
@@ -149,7 +149,7 @@ private struct PermissionGroup: Sendable {
 extension AuthAccessControlMatrix {
     fileprivate func matrixTable(
         groups: [PermissionGroup],
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> Table {
         Table {
             Thead {
@@ -183,7 +183,7 @@ extension AuthAccessControlMatrix {
                             }
 
                             Th {
-                                context.render(
+                                context.build(
                                     NewAdminCheckbox(
                                         ariaLabel:
                                             "Select all \(group.title) permissions for \(role.name ?? "")",
@@ -218,7 +218,7 @@ extension AuthAccessControlMatrix {
                                     "acl-select-row-\(groupToken)-\(roleToken)"
 
                                 Td {
-                                    context.render(
+                                    context.build(
                                         NewAdminCheckbox(
                                             name: "pairs",
                                             value: pair,

@@ -53,7 +53,7 @@ public struct NewAdminPageHeader: Component {
         }
     }
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         Div {
             H1 {
                 Span(state.title)

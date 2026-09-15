@@ -71,7 +71,7 @@ public struct NewAdminListRowActions: Component {
         self.permissions = permissions
     }
 
-    public func html(context: inout RenderContext) -> Td {
+    public func html(context: inout BuilderContext) -> Td {
         let visibleActions = actions.filter {
             permissions.allows($0.permission)
         }
@@ -79,7 +79,7 @@ public struct NewAdminListRowActions: Component {
         return Td {
             for action in visibleActions {
                 if let copyText = action.copyText {
-                    context.render(
+                    context.build(
                         NewAdminControlButton(
                             action.title,
                             style: action.style
@@ -90,7 +90,7 @@ public struct NewAdminListRowActions: Component {
                     )
                 }
                 else {
-                    context.render(
+                    context.build(
                         NewAdminRowButton(
                             action.title,
                             href: action.href,

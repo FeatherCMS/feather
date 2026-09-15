@@ -15,8 +15,8 @@ struct AuthMagicLinkDetails: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> Section {
-        context.render(
+    func html(context: inout BuilderContext) -> Section {
+        context.build(
             NewAdminDetailView(
                 breadcrumb: state.breadcrumb,
                 pageHeader: .init(

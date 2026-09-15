@@ -25,8 +25,8 @@ struct AuthCredentialError: Component {
 
     let state: State
 
-    func html(context: inout RenderContext) -> some BasicTag {
-        context.render(
+    func html(context: inout BuilderContext) -> some BasicTag {
+        context.build(
             NewAdminStatusView(
                 state: .init(title: state.info, message: state.message),
                 icon: FeatherIcons.alertCircle()

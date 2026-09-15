@@ -8,9 +8,9 @@ import WebComponents
 struct AppWebPagePage: Component {
     let state: AppGetWebPageModel
 
-    func html(context: inout RenderContext) -> Main {
+    func html(context: inout BuilderContext) -> Main {
         Main {
-            context.render(AppPublicStyleAnchor())
+            context.build(AppPublicStyleAnchor())
             Div {
                 Article {
                     Div {
@@ -29,7 +29,7 @@ struct AppWebPagePage: Component {
                         .class("public-image")
                     }
 
-                    context.render(AppPublicTextBlock(text: state.content))
+                    context.build(AppPublicTextBlock(text: state.content))
                 }
                 .class("public-panel")
             }

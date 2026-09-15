@@ -68,7 +68,7 @@ struct AuthMagicLinkForm: Component {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action, nonceToken: state.nonceToken) {
             if let success = state.success {
                 P(success).class("success")
@@ -77,7 +77,7 @@ struct AuthMagicLinkForm: Component {
                 P(error).class("error")
             }
 
-            context.render(
+            context.build(
                 NewAdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: state.credentialId.key,
@@ -90,7 +90,7 @@ struct AuthMagicLinkForm: Component {
                 )
             )
 
-            context.render(
+            context.build(
                 NewAdminFormFieldCheckbox(
                     state: .init(
                         name: state.isPersistent.key,
@@ -104,9 +104,9 @@ struct AuthMagicLinkForm: Component {
 
             Section {
                 Div {
-                    context.render(NewAdminSubmitButton(submitLabel))
+                    context.build(NewAdminSubmitButton(submitLabel))
                     if let removeHref {
-                        context.render(
+                        context.build(
                             NewAdminButton(
                                 removeLabel,
                                 href: removeHref,
@@ -118,6 +118,6 @@ struct AuthMagicLinkForm: Component {
                 .class("new-admin-form__actions")
             }
         }
-        return context.render(form)
+        return context.build(form)
     }
 }

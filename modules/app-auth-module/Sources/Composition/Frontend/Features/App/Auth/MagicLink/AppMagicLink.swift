@@ -26,14 +26,14 @@ struct AppMagicLink {
         let error: String?
         let message: String?
 
-        func html(context: inout RenderContext) -> Section {
+        func html(context: inout BuilderContext) -> Section {
             Section {
                 H1(token == nil ? "Request a magic link" : "Signing in")
                 if let message { P(message).class("success") }
                 if let error { P(error).class("error") }
                 if token == nil {
                     Form {
-                        context.render(
+                        context.build(
                             NewAdminFormFieldInput(
                                 state: .init(
                                     name: "email",
@@ -43,7 +43,7 @@ struct AppMagicLink {
                                 )
                             )
                         )
-                        context.render(
+                        context.build(
                             NewAdminFormFieldCheckbox(
                                 state: .init(
                                     name: "is_persistent",
@@ -71,14 +71,14 @@ struct AppMagicLink {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        var renderContext = RenderContext()
+        var buildContext = BuilderContext()
         return render(
             request: request,
             email: "",
             isPersistent: true,
             error: nil,
             message: nil,
-            context: &renderContext
+            context: &buildContext
         )
     }
 
@@ -86,7 +86,7 @@ struct AppMagicLink {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        var renderContext = RenderContext()
+        var buildContext = BuilderContext()
         let input = try await request.decode(
             as: RequestInput.self,
             context: context
@@ -112,7 +112,7 @@ struct AppMagicLink {
                     error: nil,
                     message:
                         "If the account exists, a magic link has been sent.",
-                    context: &renderContext
+                    context: &buildContext
                 )
             case .undocumented(let statusCode, let response):
                 throw try await context.authAppAPI()
@@ -129,7 +129,7 @@ struct AppMagicLink {
                 isPersistent: input.isPersistent.value,
                 error: error.errorDescription,
                 message: nil,
-                context: &renderContext
+                context: &buildContext
             )
         }
     }
@@ -138,7 +138,7 @@ struct AppMagicLink {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        var renderContext = RenderContext()
+        var buildContext = BuilderContext()
         let token = request.uri.queryParameters["token"].map(String.init) ?? ""
         do {
             let response = try await context.authAppAPI()
@@ -175,7 +175,7 @@ struct AppMagicLink {
                     error:
                         "This magic link is invalid, expired, or has already been used.",
                     message: nil,
-                    context: &renderContext
+                    context: &buildContext
                 )
                 .response(from: request, context: context)
             case .undocumented(let statusCode, let response):
@@ -193,7 +193,7 @@ struct AppMagicLink {
                 isPersistent: true,
                 error: error.errorDescription,
                 message: nil,
-                context: &renderContext
+                context: &buildContext
             )
             .response(from: request, context: context)
         }
@@ -205,7 +205,7 @@ struct AppMagicLink {
         isPersistent: Bool,
         error: String?,
         message: String?,
-        context: inout RenderContext
+        context: inout BuilderContext
     ) -> HTMLResponse {
 
         renderingEngine.renderPublicPage(
@@ -213,7 +213,7 @@ struct AppMagicLink {
             title: "Magic link",
             description: "Sign in without a password using a magic link.",
             imagePath: "images/puppy.png",
-            content: context.render(
+            content: context.build(
                 Page(
                     token: nil,
                     email: email,

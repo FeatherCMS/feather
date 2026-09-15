@@ -26,15 +26,15 @@ struct SystemPermissionTableContent: Component {
         )
     }
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let canDelete = actions.allows(SystemPermissions.Permissions.delete)
         let hasActiveQuery = !(search?.isEmpty ?? true)
 
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if pageState.isPageOutOfRange {
-                        context.render(
+                        context.build(
                             NewAdminListInvalidPageState(
                                 pageState: pageState,
                                 path: SystemPermissionRoutes.list.description
@@ -43,13 +43,13 @@ struct SystemPermissionTableContent: Component {
                     }
                     else if permissions.isEmpty {
                         if hasActiveQuery {
-                            context.render(
+                            context.build(
                                 NewAdminListNoResultsState(
                                     message:
                                         "No system permissions match your search.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
-                                        context.render(
+                                        context.build(
                                             NewAdminButton(
                                                 "Reset search",
                                                 href: SystemPermissionRoutes
@@ -63,7 +63,7 @@ struct SystemPermissionTableContent: Component {
                             )
                         }
                         else {
-                            context.render(
+                            context.build(
                                 NewAdminListEmptyState(
                                     message: "No system permissions yet.",
                                     icon: FeatherIcons.inbox(),
@@ -71,7 +71,7 @@ struct SystemPermissionTableContent: Component {
                                         if actions.allows(
                                             SystemPermissions.Permissions.create
                                         ) {
-                                            context.render(
+                                            context.build(
                                                 NewAdminButton(
                                                     "Add new",
                                                     href: SystemPermissionRoutes
@@ -85,7 +85,7 @@ struct SystemPermissionTableContent: Component {
                         }
                     }
                     else {
-                        context.render(
+                        context.build(
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action: NewAdminLocation.remove(
@@ -102,7 +102,7 @@ struct SystemPermissionTableContent: Component {
                                     ),
                                     isEnabled: canDelete
                                 ),
-                                table: context.render(
+                                table: context.build(
                                     NewAdminListShell(
                                         layout: .init(
                                             name: "system-permissions",
@@ -117,7 +117,7 @@ struct SystemPermissionTableContent: Component {
                                             Thead {
                                                 Tr {
                                                     if canDelete {
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
@@ -128,7 +128,7 @@ struct SystemPermissionTableContent: Component {
                                             }
                                             Tbody {
                                                 for permission in permissions {
-                                                    context.render(
+                                                    context.build(
                                                         SystemPermissionRow(
                                                             permission:
                                                                 permission,
@@ -150,7 +150,7 @@ struct SystemPermissionTableContent: Component {
                     }
                 },
                 search: {
-                    context.render(
+                    context.build(
                         NewAdminListSearch(
                             state: .init(
                                 action: SystemPermissionRoutes.list.description,
@@ -162,9 +162,9 @@ struct SystemPermissionTableContent: Component {
                 },
                 toolbar: {
                     if actions.allows(SystemPermissions.Permissions.create) {
-                        context.render(
+                        context.build(
                             NewAdminListToolbar {
-                                context.render(
+                                context.build(
                                     NewAdminButton(
                                         "Add new",
                                         href: SystemPermissionRoutes.add
@@ -176,7 +176,7 @@ struct SystemPermissionTableContent: Component {
                     }
                 },
                 pagination: {
-                    context.render(
+                    context.build(
                         NewAdminListPagination(
                             state: .init(
                                 path: SystemPermissionRoutes.list.description,

@@ -20,7 +20,7 @@ public struct AdminStatusSelectField: Component {
         self.options = options
     }
 
-    public func html(context: inout RenderContext) -> Select {
+    public func html(context: inout BuilderContext) -> Select {
         Select {
             for option in options {
                 Option(option.capitalized)

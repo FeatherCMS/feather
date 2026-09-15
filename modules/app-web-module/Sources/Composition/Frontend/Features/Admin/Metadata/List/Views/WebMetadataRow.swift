@@ -13,14 +13,14 @@ struct WebMetadataRow: Component {
     let metadata: Components.Schemas.WebMetadataListItemSchema
     let permissions: NewAdminListActions
 
-    func html(context: inout RenderContext) -> Tr {
+    func html(context: inout BuilderContext) -> Tr {
         Tr {
             Td(metadata.slug).data("label", "Slug")
             Td(metadata.referenceType ?? "—").data("label", "Reference type")
             Td(metadata.status.capitalized).data("label", "Status")
             Td(format(metadata.publicationDate)).data("label", "Publication")
             Td(format(metadata.expirationDate)).data("label", "Expiration")
-            context.render(
+            context.build(
                 NewAdminListRowActions(
                     label: "Actions",
                     actions: [

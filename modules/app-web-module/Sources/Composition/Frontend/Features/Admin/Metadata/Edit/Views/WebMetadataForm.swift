@@ -72,7 +72,7 @@ struct WebMetadataForm: Component {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action) {
             if let success = state.success {
                 P(success).class("new-admin-form__success")
@@ -81,7 +81,7 @@ struct WebMetadataForm: Component {
                 P(error).class("new-admin-form__error")
             }
 
-            context.render(
+            context.build(
                 AdminMetadataFields(
                     state: .init(
                         slug: .init(
@@ -180,9 +180,9 @@ struct WebMetadataForm: Component {
 
             Section {
                 Div {
-                    context.render(NewAdminSubmitButton(submitLabel))
+                    context.build(NewAdminSubmitButton(submitLabel))
                     if let removeHref {
-                        context.render(
+                        context.build(
                             NewAdminButton(
                                 removeLabel,
                                 href: removeHref,
@@ -194,7 +194,7 @@ struct WebMetadataForm: Component {
                 .class("new-admin-form__actions")
             }
         }
-        return context.render(form)
+        return context.build(form)
     }
 
 }

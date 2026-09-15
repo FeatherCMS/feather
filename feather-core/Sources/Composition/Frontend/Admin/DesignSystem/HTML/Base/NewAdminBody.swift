@@ -18,9 +18,9 @@ public struct NewAdminBody<T: Component>: Component where T.HTML: FlowContent {
         self.content = content
     }
 
-    public func html(context: inout RenderContext) -> Body {
+    public func html(context: inout BuilderContext) -> Body {
         Body {
-            context.render(content)
+            context.build(content)
 
             Div {
                 P("Powered by Feather CMS")

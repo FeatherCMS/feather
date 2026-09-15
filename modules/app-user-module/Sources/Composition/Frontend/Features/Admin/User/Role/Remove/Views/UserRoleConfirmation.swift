@@ -11,8 +11,8 @@ struct UserRoleConfirmation: Component {
     let name: String
     let nonceToken: String?
 
-    func html(context: inout RenderContext) -> some BasicTag {
-        context.render(
+    func html(context: inout BuilderContext) -> some BasicTag {
+        context.build(
             NewAdminRemoveConfirmation(
                 breadcrumb: UserRoleRoutes.breadcrumb,
                 pageHeader: .init(

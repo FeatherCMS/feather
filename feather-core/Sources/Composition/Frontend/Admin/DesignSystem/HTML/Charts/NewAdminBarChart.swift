@@ -75,7 +75,7 @@ public struct NewAdminBarChart: Component {
         }
     }
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         let visibleItems = Array(items.prefix(limit))
         let maxValue = Double(max(1, visibleItems.map(\.value).max() ?? 1))
         return Div {

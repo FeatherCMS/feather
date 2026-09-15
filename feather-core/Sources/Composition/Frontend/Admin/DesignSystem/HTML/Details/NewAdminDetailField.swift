@@ -37,7 +37,7 @@ public struct NewAdminDetailField: Component {
         ]
     }
 
-    public func html(context: inout RenderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         Div {
             P(label).class("new-admin-detail-field__label")
             P(value).class("new-admin-detail-field__value")

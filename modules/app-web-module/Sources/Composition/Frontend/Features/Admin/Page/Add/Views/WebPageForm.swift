@@ -60,7 +60,7 @@ struct WebPageForm: Component {
         return links
     }
 
-    func html(context: inout RenderContext) -> Form {
+    func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action) {
             if let success = state.success {
                 P(success).class("new-admin-form__success")
@@ -69,9 +69,9 @@ struct WebPageForm: Component {
                 P(error).class("new-admin-form__error")
             }
 
-            context.render(NewAdminTabBar(links: metadataTabLinks()))
+            context.build(NewAdminTabBar(links: metadataTabLinks()))
 
-            context.render(
+            context.build(
                 NewAdminFormFieldMediaPicker(
                     state: .init(
                         field: .init(
@@ -97,7 +97,7 @@ struct WebPageForm: Component {
                     )
                 )
             )
-            context.render(
+            context.build(
                 NewAdminFormFieldInput(
                     state: .init(
                         name: state.title.key,
@@ -108,8 +108,8 @@ struct WebPageForm: Component {
                     )
                 )
             )
-            context.render(textarea(state.excerpt, rows: 4))
-            context.render(
+            context.build(textarea(state.excerpt, rows: 4))
+            context.build(
                 WebPageRichContentEditor(
                     state: .init(
                         key: state.content.key,
@@ -120,7 +120,7 @@ struct WebPageForm: Component {
                 )
             )
             Div {
-                context.render(NewAdminSubmitButton(submitLabel))
+                context.build(NewAdminSubmitButton(submitLabel))
                 if let publishLabel {
                     Button(publishLabel)
                         .type(.submit)
@@ -129,7 +129,7 @@ struct WebPageForm: Component {
                         .class("button", "secondary")
                 }
                 if let removeHref {
-                    context.render(
+                    context.build(
                         NewAdminButton(
                             removeLabel,
                             href: removeHref,
@@ -140,7 +140,7 @@ struct WebPageForm: Component {
             }
             .class("new-admin-form__actions")
         }
-        return context.render(form)
+        return context.build(form)
     }
 
     private func textarea(

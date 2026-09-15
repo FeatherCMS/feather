@@ -229,7 +229,7 @@ public struct AdminAutocompleteField: Component {
         }
     }
 
-    public func html(context: inout RenderContext) -> Section {
+    public func html(context: inout BuilderContext) -> Section {
         let selectedOptions = state.options.filter(\.isSelected)
 
         return Section {
@@ -301,7 +301,7 @@ public struct AdminAutocompleteField: Component {
             }
             else {
                 Label {
-                    context.render(
+                    context.build(
                         AdminFieldLabel(label: state.label, required: false)
                     )
                     Input()

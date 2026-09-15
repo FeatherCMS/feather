@@ -12,18 +12,18 @@ struct ContactFormEmailsTableContent: Component {
     let mails: [AdminContactFormEmail]
     let permissions: NewAdminListActions
 
-    func html(context: inout RenderContext) -> Div {
+    func html(context: inout BuilderContext) -> Div {
         let path = ContactAdminRoutes.formEmails(RouterPath(id)).description
         let pageState = NewAdminListPageState(
             page: 1,
             pageSize: max(mails.count, 1),
             total: mails.count
         )
-        return context.render(
+        return context.build(
             NewAdminList(
                 table: {
                     if mails.isEmpty {
-                        context.render(
+                        context.build(
                             NewAdminListEmptyState(
                                 message: "No email definitions yet.",
                                 icon: FeatherIcons.mail(),
@@ -31,7 +31,7 @@ struct ContactFormEmailsTableContent: Component {
                                     if permissions.allows(
                                         ContactPermissions.Mails.create
                                     ) {
-                                        context.render(
+                                        context.build(
                                             NewAdminButton(
                                                 "Add email",
                                                 href:
@@ -51,7 +51,7 @@ struct ContactFormEmailsTableContent: Component {
                         let canDelete = permissions.allows(
                             ContactPermissions.Mails.delete
                         )
-                        context.render(
+                        context.build(
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action:
@@ -67,7 +67,7 @@ struct ContactFormEmailsTableContent: Component {
                                     ),
                                     isEnabled: canDelete
                                 ),
-                                table: context.render(
+                                table: context.build(
                                     NewAdminListShell(
                                         layout: .init(
                                             name: "contact-form-emails",
@@ -81,7 +81,7 @@ struct ContactFormEmailsTableContent: Component {
                                             Thead {
                                                 Tr {
                                                     if canDelete {
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
@@ -95,7 +95,7 @@ struct ContactFormEmailsTableContent: Component {
                                                 for mail in mails {
                                                     Tr {
                                                         if canDelete {
-                                                            context.render(
+                                                            context.build(
                                                                 NewAdminListRowCheckbox(
                                                                     id: mail.id
                                                                 )
@@ -113,7 +113,7 @@ struct ContactFormEmailsTableContent: Component {
                                                                 "label",
                                                                 "Subject"
                                                             )
-                                                        context.render(
+                                                        context.build(
                                                             NewAdminListRowActions(
                                                                 label:
                                                                     "Actions",
@@ -191,9 +191,9 @@ struct ContactFormEmailsTableContent: Component {
                 },
                 toolbar: {
                     if permissions.allows(ContactPermissions.Mails.create) {
-                        context.render(
+                        context.build(
                             NewAdminListToolbar {
-                                context.render(
+                                context.build(
                                     NewAdminButton(
                                         "Add email",
                                         href:

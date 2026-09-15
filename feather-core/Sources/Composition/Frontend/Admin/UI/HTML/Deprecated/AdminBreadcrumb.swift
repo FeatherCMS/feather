@@ -33,7 +33,7 @@ public struct AdminBreadcrumb: Component {
         self.state = state
     }
 
-    public func html(context: inout RenderContext) -> Nav {
+    public func html(context: inout BuilderContext) -> Nav {
         Nav {
             if !state.links.isEmpty {
                 Ol {
