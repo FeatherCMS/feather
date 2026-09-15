@@ -107,7 +107,8 @@ struct WebPageTableContent: Component {
                                                 name: "web-pages",
                                                 columns: [
                                                     .fraction(2), .fixed(140),
-                                                    .fixed(180), .fixed(250),
+                                                    .fixed(120), .fixed(180),
+                                                    .fixed(250),
                                                 ]
                                             ),
                                             hasSelection: canDelete,
@@ -120,6 +121,7 @@ struct WebPageTableContent: Component {
                                                             )
                                                         }
                                                         Th("Title")
+                                                        Th("Availability")
                                                         Th("Status")
                                                         Th("Publication")
                                                         Th("Actions")

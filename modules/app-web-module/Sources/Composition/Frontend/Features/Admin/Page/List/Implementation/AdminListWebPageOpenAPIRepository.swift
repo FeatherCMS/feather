@@ -1,4 +1,5 @@
 import FeatherAdmin
+import Foundation
 import Hummingbird
 import OpenAPIRuntime
 import WebAdminAPI
@@ -42,7 +43,7 @@ struct AdminListWebPageOpenAPIRepository:
             switch response {
             case .ok(let okResponse):
                 let body = try okResponse.body.json
-                let items = try await loadItems(body.data.items)
+                let items = try await loadItems(body.data.items, at: .now)
                 return .init(
                     items: items,
                     total: body.data.total,
@@ -63,7 +64,8 @@ struct AdminListWebPageOpenAPIRepository:
     }
 
     private func loadItems(
-        _ items: [Components.Schemas.WebPageListItemSchema]
+        _ items: [Components.Schemas.WebPageListItemSchema],
+        at date: Date
     ) async throws -> [AdminListWebPageItemModel] {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             try await withThrowingTaskGroup(
@@ -78,7 +80,11 @@ struct AdminListWebPageOpenAPIRepository:
                             .init(
                                 id: item.id,
                                 title: item.title,
-                                metadata: details.metadata
+                                metadata: details.metadata,
+                                availability: .init(
+                                    metadata: details.metadata,
+                                    at: date
+                                )
                             )
                         )
                     }

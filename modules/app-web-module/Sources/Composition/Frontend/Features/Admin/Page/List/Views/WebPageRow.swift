@@ -20,6 +20,15 @@ struct WebPageRow: Component {
                 context.build(NewAdminListRowCheckbox(id: page.id))
             }
             titleCell(context: &context)
+            Td {
+                context.build(
+                    NewAdminChip(
+                        label: page.availability.label,
+                        color: page.availability.color
+                    )
+                )
+            }
+            .data("label", "Availability")
             statusCell(context: &context)
             Td(format(page.metadata.publicationDate))
                 .data("label", "Publication")
