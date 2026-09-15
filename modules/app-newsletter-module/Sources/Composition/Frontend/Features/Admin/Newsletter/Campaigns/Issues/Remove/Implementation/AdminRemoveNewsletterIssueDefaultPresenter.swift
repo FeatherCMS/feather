@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherValidation
 import Hummingbird
 
 struct AdminRemoveNewsletterIssueDefaultPresenter:
@@ -8,10 +9,13 @@ struct AdminRemoveNewsletterIssueDefaultPresenter:
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
-    func render(newsletterId: String, issueId: String, permissions: Set<String>)
+    func render(newsletterId: String, item: NewAdminRemoveItemContext)
         async throws -> HTMLResponse
     {
-        try await renderingEngine.renderNewAdminPage(
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove campaign issue",
@@ -30,10 +34,11 @@ struct AdminRemoveNewsletterIssueDefaultPresenter:
                     title: "Remove campaign issue",
                     description: "This action cannot be undone."
                 ),
+                selectedItems: [item.label],
                 action:
                     NewsletterAdminRoutes.issueRemove(
                         newsletterID: RouterPath(newsletterId),
-                        issueID: RouterPath(issueId)
+                            issueID: RouterPath(item.id)
                     )
                     .description,
                 cancel:
@@ -41,7 +46,9 @@ struct AdminRemoveNewsletterIssueDefaultPresenter:
                         RouterPath(newsletterId)
                     )
                     .description,
-                submitLabel: "Remove issue"
+                submitLabel: "Remove issue",
+                nonceToken: nonceToken,
+                hiddenFields: [.init(name: "ids", value: item.id)]
             )
         )
     }

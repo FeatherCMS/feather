@@ -16,17 +16,21 @@ struct AdminRemoveMediaProcessorDefaultPresenter:
     let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
-    func renderPage(
+    func renderRemovePage(
         model: AdminRemoveMediaProcessorModel
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove media processor",
             content: MediaProcessorRemoveView(
-                id: model.id,
+                item: model.item,
+                nonceToken: nonceToken,
                 cancelURL: "/admin/media/processors/",
-                formURL: "/admin/media/processors/\(model.id)/remove/"
+                formURL: "/admin/media/processors/\(model.item.id)/remove/"
             )
         )
     }

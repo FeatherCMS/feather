@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherValidation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -14,19 +15,21 @@ struct AdminRemoveWebPageDefaultPresenter:
     let renderingEngine: any RenderingEngine
 
     func renderRemovePage(
-        id: String,
-        source: String,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove page",
             content: WebPageConfirmation(
                 state: .init(
-                    id: id,
-                    source: source,
-                    breadcrumb: breadcrumb(id: id)
+                    id: item.id,
+                    source: item.label,
+                    breadcrumb: breadcrumb(id: item.id),
+                    nonceToken: nonceToken
                 )
             )
         )
@@ -35,10 +38,9 @@ struct AdminRemoveWebPageDefaultPresenter:
     func renderErrorPage(
         id: String,
         info: String,
-        message: String,
-        permissions: Set<String>
+        message: String
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove page",

@@ -117,12 +117,11 @@ struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
             )
         }
         return
-            try await presenter.renderRemoveConfirmation(
-                selectedIds: selectedIds,
+            try await presenter.renderRemovePage(
+                items: selectedIds.map { .init(id: $0, label: $0) },
                 page: page,
                 search: search,
-                userID: userID,
-                permissions: context.currentUserPermissions
+                userID: userID
             )
             .response(from: request, context: context)
     }

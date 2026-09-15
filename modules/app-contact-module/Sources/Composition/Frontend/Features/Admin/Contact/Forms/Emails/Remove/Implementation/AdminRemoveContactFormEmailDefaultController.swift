@@ -27,16 +27,16 @@ struct AdminRemoveContactFormEmailDefaultController:
             guard let mail = form.mails.first(where: { $0.id == mailId }) else {
                 throw HTTPError(.notFound)
             }
-            return try await presenter.renderPage(
+            return try await presenter.renderRemovePage(
                 formId: formId,
-                mail: mail,
-                permissions: context.currentUserPermissions
+                items: [.init(id: mail.id, label: mail.subject)]
             )
         }
-        return try await presenter.renderConfirmation(
+        return try await presenter.renderRemovePage(
             formId: formId,
-            selectedIds: request.queryStrings("selectedIds"),
-            permissions: context.currentUserPermissions
+            items: request.queryStrings("selectedIds").map {
+                .init(id: $0, label: $0)
+            }
         )
     }
 
@@ -49,6 +49,10 @@ struct AdminRemoveContactFormEmailDefaultController:
         )
         let (interactor, _) = buildRuntime(request, context)
         let formId = try context.requiredParameter("formId")
+        guard await AdminNonceStore.shared.consume(
+            payload.nonce,
+            sessionToken: context.sessionToken
+        ) else { return Response(status: .badRequest) }
         try await interactor.remove(
             id: formId,
             emailIds: payload.normalizedSelectedIds

@@ -2,12 +2,8 @@ import FeatherAdmin
 import Hummingbird
 
 protocol AdminRemoveUserRolePresenter: Sendable {
-    func renderRemovePage(id: String, name: String) async throws -> HTMLResponse
-    func renderRemoveConfirmation(
-        page: Int,
-        search: String?,
-        ids: [String],
-        names: [String],
+    func renderRemovePage(
+        items: [NewAdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse
     func renderErrorPage(error: AdminRemoveUserRoleError, cancel: String)

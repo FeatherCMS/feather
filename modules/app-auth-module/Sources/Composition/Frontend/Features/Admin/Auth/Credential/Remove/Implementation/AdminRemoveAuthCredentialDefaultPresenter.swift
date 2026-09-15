@@ -23,7 +23,7 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
     let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
-    func renderPage(model: AuthCredentialDetailsModel, permissions: Set<String>)
+    func renderPage(item: NewAdminRemoveItemContext, model: AuthCredentialDetailsModel)
         async throws -> HTMLResponse
     {
         let nonceToken = await AdminNonceStore.shared.issue(
@@ -35,9 +35,8 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
             title: "Remove credential",
             content: AuthCredentialConfirmation(
                 state: .init(
-                    id: model.id,
+                    item: item,
                     identityId: model.userId,
-                    email: model.email,
                     breadcrumb: breadcrumb(model: model),
                     nonceToken: nonceToken
                 )
@@ -46,7 +45,7 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
     }
 
     func renderInvalidNoncePage() async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove credential",
@@ -62,11 +61,10 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
     }
 
     func renderError(
-        id: String,
-        error: OpenAPIRepositoryError,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext,
+        error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove credential",
@@ -83,7 +81,7 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
                         ),
                         .init(
                             label: "Remove",
-                            link: "/admin/auth/credentials/\(id)/remove/"
+                            link: "/admin/auth/credentials/\(item.id)/remove/"
                         ),
                     ]
                 )

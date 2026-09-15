@@ -76,10 +76,10 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         )
     }
 
-    func renderRemoveConfirmation(
+    func renderRemovePage(
         pageState: NewAdminListPageState,
         search: String?,
-        selectedIds: [String],
+        items: [NewAdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
@@ -99,13 +99,13 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                     title: "Remove selected assets",
                     description: "Confirm removal of the selected media assets."
                 ),
-                selectedItems: selectedIds,
+                selectedItems: items.map(\.label),
                 action: MediaAssetRoutes.remove.description,
                 cancel: cancel,
                 submitLabel: "Remove selected",
                 nonceToken: nonceToken,
-                hiddenFields: selectedIds.map {
-                    .init(name: "ids", value: $0)
+                hiddenFields: items.map {
+                    .init(name: "ids", value: $0.id)
                 } + [
                     .init(name: "page", value: String(pageState.page)),
                     .init(name: "search", value: search ?? ""),

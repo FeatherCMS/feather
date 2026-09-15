@@ -32,29 +32,25 @@ struct AdminRemoveAuthMagicLinkDefaultController:
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.delete)
         else {
             return try await presenter.renderError(
-                id: id,
-                error: .forbidden,
-                permissions: permissions
+                item: .init(id: id, label: id),
+                error: .forbidden
             )
         }
         do {
             let link = try await interactor.get(id: id)
             return try await presenter.renderPage(
-                id: id,
+                item: .init(id: id, label: link.credentialId),
                 credentialId: link.credentialId,
-                permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
             return try await presenter.renderError(
-                id: id,
-                error: error,
-                permissions: permissions
+                item: .init(id: id, label: id),
+                error: error
             )
         }
     }
@@ -70,9 +66,8 @@ struct AdminRemoveAuthMagicLinkDefaultController:
         else {
             return
                 try await presenter.renderError(
-                    id: id,
-                    error: .forbidden,
-                    permissions: context.currentUserPermissions
+                    item: .init(id: id, label: id),
+                    error: .forbidden
                 )
                 .response(from: request, context: context)
         }
@@ -104,9 +99,8 @@ struct AdminRemoveAuthMagicLinkDefaultController:
         catch let error as OpenAPIRepositoryError {
             return
                 try await presenter.renderError(
-                    id: id,
-                    error: error,
-                    permissions: context.currentUserPermissions
+                    item: .init(id: id, label: id),
+                    error: error
                 )
                 .response(from: request, context: context)
         }

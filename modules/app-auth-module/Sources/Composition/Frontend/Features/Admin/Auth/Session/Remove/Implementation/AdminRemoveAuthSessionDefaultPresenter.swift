@@ -11,8 +11,8 @@ struct AdminRemoveAuthSessionDefaultPresenter:
     let renderingEngine: any RenderingEngine
 
     func renderPage(
-        state: AuthSessionRemoveConfirmation.State,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext,
+        identityId: String
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -23,8 +23,12 @@ struct AdminRemoveAuthSessionDefaultPresenter:
             title: "Remove session",
             content: AuthSessionRemoveConfirmation(
                 state: .init(
-                    model: state.model,
-                    breadcrumb: state.breadcrumb,
+                    item: item,
+                    identityId: identityId,
+                    breadcrumb: breadcrumb(
+                        identityId: identityId,
+                        sessionId: item.id
+                    ),
                     nonceToken: nonceToken
                 )
             )
@@ -32,7 +36,7 @@ struct AdminRemoveAuthSessionDefaultPresenter:
     }
 
     func renderInvalidNoncePage() async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove session",
@@ -48,12 +52,11 @@ struct AdminRemoveAuthSessionDefaultPresenter:
     }
 
     func errorPage(
+        item: NewAdminRemoveItemContext,
         identityId: String,
-        sessionId: String,
-        error: OpenAPIRepositoryError,
-        permissions: Set<String>
+        error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove session",
@@ -63,7 +66,7 @@ struct AdminRemoveAuthSessionDefaultPresenter:
                     message: error.errorDescription,
                     breadcrumb: breadcrumb(
                         identityId: identityId,
-                        sessionId: sessionId
+                        sessionId: item.id
                     )
                 )
             )

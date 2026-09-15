@@ -13,12 +13,17 @@ struct AdminRemoveContactFormFieldDefaultPresenter:
     let request: Request
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
-    func renderConfirmation(
+    func renderRemovePage(
         formId: String,
-        fieldId: String,
-        label: String
+        items: [NewAdminRemoveItemContext]
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        guard items.count == 1, let item = items.first else {
+            return try await renderBulkRemovePage(formId: formId, items: items)
+        }
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove contact form field",
@@ -28,24 +33,29 @@ struct AdminRemoveContactFormFieldDefaultPresenter:
                     title: "Remove contact form field",
                     description: "This action cannot be undone."
                 ),
-                selectedItems: [label],
+                selectedItems: [item.label],
                 action:
                     ContactAdminRoutes.formFieldRemove(
                         formID: RouterPath(formId),
-                        fieldID: RouterPath(fieldId)
+                        fieldID: RouterPath(item.id)
                     )
                     .description,
                 cancel: ContactAdminRoutes.formFields(RouterPath(formId))
                     .description,
-                submitLabel: "Remove field"
+                submitLabel: "Remove field",
+                nonceToken: nonceToken,
+                hiddenFields: [.init(name: "ids", value: item.id)]
             )
         )
     }
-    func renderConfirmation(
+    private func renderBulkRemovePage(
         formId: String,
-        selectedIds: [String]
+        items: [NewAdminRemoveItemContext]
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove contact form fields",
@@ -55,13 +65,14 @@ struct AdminRemoveContactFormFieldDefaultPresenter:
                     title: "Remove contact form fields",
                     description: "This action cannot be undone."
                 ),
-                selectedItems: selectedIds,
+                selectedItems: items.map(\.label),
                 action: ContactAdminRoutes.formFieldRemove(RouterPath(formId))
                     .description,
                 cancel: ContactAdminRoutes.formFields(RouterPath(formId))
                     .description,
-                hiddenFields: selectedIds.map {
-                    .init(name: "selectedIds[]", value: $0)
+                nonceToken: nonceToken,
+                hiddenFields: items.map {
+                    .init(name: "ids", value: $0.id)
                 }
             )
         )

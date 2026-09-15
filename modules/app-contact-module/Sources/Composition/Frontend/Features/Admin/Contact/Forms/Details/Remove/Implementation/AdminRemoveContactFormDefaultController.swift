@@ -21,16 +21,13 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
         let (interactor, presenter) = buildRuntime(request, context)
         let selectedIds = request.queryStrings("selectedIds")
         guard selectedIds.count == 1, let formId = selectedIds.first else {
-            return try await presenter.renderConfirmation(
-                selectedIds: selectedIds,
-                permissions: context.currentUserPermissions
+            return try await presenter.renderRemovePage(
+                items: selectedIds.map { .init(id: $0, label: $0) }
             )
         }
         let item = try await interactor.get(id: formId)
-        return try await presenter.renderConfirmation(
-            id: formId,
-            name: item.name,
-            permissions: context.currentUserPermissions
+        return try await presenter.renderRemovePage(
+            items: [.init(id: formId, label: item.name)]
         )
     }
 
@@ -41,6 +38,10 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
             as: NewAdminListRemoveFormInput.self,
             context: context
         )
+        guard await AdminNonceStore.shared.consume(
+            payload.nonce,
+            sessionToken: context.sessionToken
+        ) else { return Response(status: .badRequest) }
         let (interactor, _) = buildRuntime(request, context)
         try await interactor.remove(ids: payload.normalizedSelectedIds)
         return Response(

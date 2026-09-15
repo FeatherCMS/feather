@@ -14,6 +14,7 @@ struct WebPageConfirmation: Component {
         let id: String
         let source: String
         let breadcrumb: [NewAdminBreadcrumb.Link]
+        let nonceToken: String
     }
 
     let state: State
@@ -30,7 +31,9 @@ struct WebPageConfirmation: Component {
                 action: WebPageRoutes.details(RouterPath(state.id))
                     .appendingPath(RouterPath("remove")).description,
                 cancel: WebPageRoutes.list.description,
-                submitLabel: "Remove page"
+                submitLabel: "Remove page",
+                nonceToken: state.nonceToken,
+                hiddenFields: [.init(name: "ids", value: state.id)]
             )
         )
     }

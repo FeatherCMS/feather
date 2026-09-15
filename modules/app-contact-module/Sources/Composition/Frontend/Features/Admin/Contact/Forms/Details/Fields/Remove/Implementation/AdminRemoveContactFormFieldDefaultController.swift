@@ -22,10 +22,9 @@ struct AdminRemoveContactFormFieldDefaultController:
         let formId = context.parameters.get("formId", as: String.self) ?? ""
         let id = try context.requiredParameter("fieldId")
         let field = try? await interactor.get(formId: formId, id: id)
-        return try await presenter.renderConfirmation(
+        return try await presenter.renderRemovePage(
             formId: formId,
-            fieldId: id,
-            label: field?.label ?? id
+            items: [.init(id: id, label: field?.label ?? id)]
         )
     }
     func remove(request: Request, context: DefaultRequestContext) async throws
@@ -33,6 +32,14 @@ struct AdminRemoveContactFormFieldDefaultController:
     {
         let (interactor, _) = buildRuntime(request, context)
         let formId = context.parameters.get("formId", as: String.self) ?? ""
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            context: context
+        )
+        guard await AdminNonceStore.shared.consume(
+            nonceRequest.nonce,
+            sessionToken: context.sessionToken
+        ) else { return Response(status: .badRequest) }
         try await interactor.remove(
             formId: formId,
             id: try context.requiredParameter("fieldId")
@@ -54,9 +61,11 @@ struct AdminRemoveContactFormFieldDefaultController:
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
-        return try await presenter.renderConfirmation(
+        return try await presenter.renderRemovePage(
             formId: try context.requiredParameter("formId"),
-            selectedIds: request.queryStrings("selectedIds")
+            items: request.queryStrings("selectedIds").map {
+                .init(id: $0, label: $0)
+            }
         )
     }
     func removeSelected(request: Request, context: DefaultRequestContext)
@@ -68,6 +77,10 @@ struct AdminRemoveContactFormFieldDefaultController:
             as: NewAdminListRemoveFormInput.self,
             context: context
         )
+        guard await AdminNonceStore.shared.consume(
+            payload.nonce,
+            sessionToken: context.sessionToken
+        ) else { return Response(status: .badRequest) }
         let (interactor, _) = buildRuntime(request, context)
         try await interactor.remove(
             formId: formId,

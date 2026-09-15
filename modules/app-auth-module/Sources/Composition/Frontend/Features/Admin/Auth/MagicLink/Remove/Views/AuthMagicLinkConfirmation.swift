@@ -7,7 +7,7 @@ import WebComponents
 
 struct AuthMagicLinkConfirmation: Component {
     struct State {
-        let id: String
+        let item: NewAdminRemoveItemContext
         let credentialId: String
         let breadcrumb: [NewAdminBreadcrumb.Link]
         let nonceToken: String?
@@ -23,8 +23,8 @@ struct AuthMagicLinkConfirmation: Component {
                     title: "Remove user magic link",
                     description: "This action cannot be undone."
                 ),
-                selectedItems: [state.credentialId],
-                action: "/admin/auth/magic-links/\(state.id)/remove/",
+                selectedItems: [state.item.label],
+                action: "/admin/auth/magic-links/\(state.item.id)/remove/",
                 cancel: "/admin/auth/magic-links/",
                 nonceToken: state.nonceToken
             )

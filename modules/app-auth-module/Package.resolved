@@ -380,6 +380,15 @@
       }
     },
     {
+      "identity" : "swift-web-standards",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BinaryBirds/swift-web-standards",
+      "state" : {
+        "revision" : "c5a7f7e7e4eb674e3ab63e99b757b774b96fbcaf",
+        "version" : "1.0.0-beta.4"
+      }
+    },
+    {
       "identity" : "yams",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/jpsim/Yams",

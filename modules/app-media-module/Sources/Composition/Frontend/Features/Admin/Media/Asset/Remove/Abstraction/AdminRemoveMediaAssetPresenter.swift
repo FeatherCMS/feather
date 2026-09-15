@@ -11,8 +11,7 @@ import WebComponents
 
 protocol AdminRemoveMediaAssetPresenter: Sendable {
 
-    func renderPage(
-        model: AdminRemoveMediaAssetModel
-    ) async throws -> HTMLResponse
+    func renderRemovePage(model: AdminRemoveMediaAssetModel)
+        async throws -> HTMLResponse
 
 }

@@ -14,15 +14,19 @@ struct AdminRemoveMediaAssetDefaultPresenter: AdminRemoveMediaAssetPresenter {
     let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
-    func renderPage(
+    func renderRemovePage(
         model: AdminRemoveMediaAssetModel
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove media item",
             content: AssetRemoveView(
-                id: model.id
+                item: model.item,
+                nonceToken: nonceToken
             )
         )
     }

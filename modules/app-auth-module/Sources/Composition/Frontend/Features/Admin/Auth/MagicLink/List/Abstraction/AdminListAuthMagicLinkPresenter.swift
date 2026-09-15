@@ -26,12 +26,11 @@ protocol AdminListAuthMagicLinkPresenter: Sendable {
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse
 
-    func renderRemoveConfirmation(
-        selectedIds: [String],
+    func renderRemovePage(
+        items: [NewAdminRemoveItemContext],
         page: Int,
         search: String?,
-        userID: String?,
-        permissions: Set<String>
+        userID: String?
     ) async throws -> HTMLResponse
     func renderInvalidNoncePage() async throws -> HTMLResponse
 }

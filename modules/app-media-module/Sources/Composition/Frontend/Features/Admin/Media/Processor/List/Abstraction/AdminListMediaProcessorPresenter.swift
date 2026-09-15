@@ -24,10 +24,10 @@ protocol AdminListMediaProcessorPresenter: Sendable {
         message: String
     ) async throws -> HTMLResponse
 
-    func renderRemoveConfirmation(
+    func renderRemovePage(
         pageState: NewAdminListPageState,
         search: String?,
-        selectedIds: [String],
+        items: [NewAdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse
 

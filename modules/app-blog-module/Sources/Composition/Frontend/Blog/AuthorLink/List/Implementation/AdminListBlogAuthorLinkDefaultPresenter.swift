@@ -60,14 +60,16 @@ struct AdminListBlogAuthorLinkDefaultPresenter:
         )
     }
 
-    func renderRemoveConfirmation(
+    func renderRemovePage(
         menuId: String,
         page: Int,
         search: String?,
-        selectedIds: [String],
-        permissions: Set<String>
+        items: [NewAdminRemoveItemContext]
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove blog author links",
@@ -79,13 +81,14 @@ struct AdminListBlogAuthorLinkDefaultPresenter:
                     title: "Remove blog author links",
                     description: "This action cannot be undone."
                 ),
-                selectedItems: selectedIds,
+                selectedItems: items.map(\.label),
                 action: BlogAdminRoutes.authorLinkRemove(RouterPath(menuId))
                     .description,
                 cancel: BlogAdminRoutes.authorLinks(RouterPath(menuId))
                     .description,
-                hiddenFields: selectedIds.map {
-                    .init(name: "selectedIds[]", value: $0)
+                nonceToken: nonceToken,
+                hiddenFields: items.map {
+                    .init(name: "ids", value: $0.id)
                 }
             )
         )

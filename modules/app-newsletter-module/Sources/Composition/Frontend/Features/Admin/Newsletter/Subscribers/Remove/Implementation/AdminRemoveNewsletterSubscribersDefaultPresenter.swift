@@ -1,5 +1,6 @@
 import FeatherAdmin
 import FeatherContracts
+import FeatherValidation
 import Hummingbird
 
 struct AdminRemoveNewsletterSubscribersDefaultPresenter:
@@ -9,12 +10,14 @@ struct AdminRemoveNewsletterSubscribersDefaultPresenter:
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
-    func render(
-        ids: [String],
+    func renderRemovePage(
+        items: [NewAdminRemoveItemContext],
         search: String?,
-        campaignId: String?,
-        permissions: Set<String>
+        campaignId: String?
     ) async throws -> HTMLResponse {
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
         let cancel = NewAdminLocation.url(
             path: NewsletterAdminRoutes.subscribers.description,
             search: search,
@@ -36,10 +39,11 @@ struct AdminRemoveNewsletterSubscribersDefaultPresenter:
                     title: "Remove selected subscribers",
                     description: "This action cannot be undone."
                 ),
-                selectedItems: ids,
+                selectedItems: items.map(\.label),
                 action: NewsletterAdminRoutes.subscriberRemove.description,
                 cancel: cancel,
-                hiddenFields: ids.map { .init(name: "selectedIds", value: $0) }
+                nonceToken: nonceToken,
+                hiddenFields: items.map { .init(name: "ids", value: $0.id) }
                     + (campaignId?.emptyToNil
                         .map { [.init(name: "campaignId", value: $0)] } ?? [])
             )

@@ -23,7 +23,7 @@ struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
         let model = try await interactor.getRemoveMediaAsset(id: id)
-        return try await presenter.renderPage(
+        return try await presenter.renderRemovePage(
             model: model
         )
     }
@@ -34,6 +34,16 @@ struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
+        let payload = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            context: context
+        )
+        guard await AdminNonceStore.shared.consume(
+            payload.nonce,
+            sessionToken: context.sessionToken
+        ) else {
+            return Response(status: .badRequest)
+        }
         let model = try await interactor.postRemoveMediaAsset(id: id)
         if model.error == nil {
             return AdminNotificationFlash.redirect(
@@ -45,7 +55,7 @@ struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
             )
         }
         return
-            try await presenter.renderPage(
+            try await presenter.renderRemovePage(
                 model: model
             )
             .response(from: request, context: context)

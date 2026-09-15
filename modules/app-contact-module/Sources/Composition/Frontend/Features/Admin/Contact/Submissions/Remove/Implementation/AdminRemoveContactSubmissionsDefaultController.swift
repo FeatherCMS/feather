@@ -20,9 +20,10 @@ struct AdminRemoveContactSubmissionsDefaultController:
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
-        return try await presenter.renderConfirmation(
-            selectedIds: request.queryStrings("selectedIds"),
-            permissions: context.currentUserPermissions
+        return try await presenter.renderRemovePage(
+            items: request.queryStrings("selectedIds").map {
+                .init(id: $0, label: $0)
+            }
         )
     }
     func remove(request: Request, context: DefaultRequestContext)
@@ -33,6 +34,10 @@ struct AdminRemoveContactSubmissionsDefaultController:
             as: NewAdminListRemoveFormInput.self,
             context: context
         )
+        guard await AdminNonceStore.shared.consume(
+            payload.nonce,
+            sessionToken: context.sessionToken
+        ) else { return Response(status: .badRequest) }
         let (interactor, _) = buildRuntime(request, context)
         try await interactor.remove(ids: payload.normalizedSelectedIds)
         return Response(

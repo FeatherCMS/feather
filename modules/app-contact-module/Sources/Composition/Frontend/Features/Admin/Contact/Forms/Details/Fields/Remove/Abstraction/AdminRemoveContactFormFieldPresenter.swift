@@ -8,13 +8,8 @@ import WebBuilders
 import WebComponents
 
 protocol AdminRemoveContactFormFieldPresenter: Sendable {
-    func renderConfirmation(
+    func renderRemovePage(
         formId: String,
-        fieldId: String,
-        label: String
-    ) async throws -> HTMLResponse
-    func renderConfirmation(
-        formId: String,
-        selectedIds: [String]
+        items: [NewAdminRemoveItemContext]
     ) async throws -> HTMLResponse
 }

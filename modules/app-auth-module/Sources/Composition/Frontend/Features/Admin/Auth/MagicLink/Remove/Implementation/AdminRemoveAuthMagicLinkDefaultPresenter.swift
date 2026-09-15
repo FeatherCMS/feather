@@ -35,9 +35,8 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
     }
 
     func renderPage(
-        id: String,
-        credentialId: String,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext,
+        credentialId: String
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -48,9 +47,9 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
             title: "Manage user magic links",
             content: AuthMagicLinkConfirmation(
                 state: .init(
-                    id: id,
+                    item: item,
                     credentialId: credentialId,
-                    breadcrumb: breadcrumb(id: id),
+                    breadcrumb: breadcrumb(id: item.id),
                     nonceToken: nonceToken
                 )
             )
@@ -58,7 +57,7 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
     }
 
     func renderInvalidNoncePage() async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove user magic link",
@@ -74,11 +73,10 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
     }
 
     func renderError(
-        id: String,
-        error: OpenAPIRepositoryError,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext,
+        error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove user magic link",
@@ -86,7 +84,7 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: breadcrumb(id: item.id)
                 )
             )
         )

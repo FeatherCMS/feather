@@ -18,21 +18,17 @@ struct AdminRemoveAccountInvitationDefaultController:
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
         do {
             let invitation = try await interactor.get(id: id)
             return try await presenter.renderRemovePage(
-                id: id,
-                email: invitation.email,
-                permissions: permissions
+                item: .init(id: id, label: invitation.email)
             )
         }
         catch let error as OpenAPIRepositoryError {
             return try await presenter.renderErrorPage(
                 id: id,
                 info: error.errorTitle,
-                message: error.errorDescription,
-                permissions: permissions
+                message: error.errorDescription
             )
         }
     }
@@ -43,7 +39,6 @@ struct AdminRemoveAccountInvitationDefaultController:
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
@@ -88,8 +83,7 @@ struct AdminRemoveAccountInvitationDefaultController:
                 try await presenter.renderErrorPage(
                     id: id,
                     info: error.errorTitle,
-                    message: error.errorDescription,
-                    permissions: permissions
+                    message: error.errorDescription
                 )
                 .response(from: request, context: context)
         }

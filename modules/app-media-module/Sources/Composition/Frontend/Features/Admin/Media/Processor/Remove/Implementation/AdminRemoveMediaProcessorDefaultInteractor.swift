@@ -17,7 +17,7 @@ struct AdminRemoveMediaProcessorDefaultInteractor:
     func getRemoveMediaProcessor(
         id: String
     ) async throws -> AdminRemoveMediaProcessorModel {
-        .init(id: id, error: nil)
+        .init(item: .init(id: id, label: id), error: nil)
     }
 
     func postRemoveMediaProcessor(
@@ -27,8 +27,8 @@ struct AdminRemoveMediaProcessorDefaultInteractor:
             try await repository.deleteProcessor(id: id)
         }
         catch let error as OpenAPIRepositoryError {
-            return .init(id: id, error: error.errorDescription)
+            return .init(item: .init(id: id, label: id), error: error.errorDescription)
         }
-        return .init(id: id, error: nil)
+        return .init(item: .init(id: id, label: id), error: nil)
     }
 }

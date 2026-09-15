@@ -20,20 +20,22 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
 
     func renderRemovePage(
         menuId: String,
-        id: String,
-        label: String,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove blog author link",
             content: BlogAuthorLinkConfirmation(
                 state: .init(
                     menuId: menuId,
-                    id: id,
-                    label: label,
-                    breadcrumb: breadcrumb(menuId: menuId, id: id)
+                    id: item.id,
+                    label: item.label,
+                    breadcrumb: breadcrumb(menuId: menuId, id: item.id),
+                    nonceToken: nonceToken
                 )
             )
         )
@@ -43,10 +45,9 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
         menuId: String,
         id: String,
         info: String,
-        message: String,
-        permissions: Set<String>
+        message: String
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove blog author link",

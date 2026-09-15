@@ -24,15 +24,13 @@ protocol AdminRemoveAuthMagicLinkPresenter: Sendable {
     ) -> [NewAdminBreadcrumb.Link]
 
     func renderPage(
-        id: String,
+        item: NewAdminRemoveItemContext,
         credentialId: String,
-        permissions: Set<String>
     ) async throws -> HTMLResponse
     func renderInvalidNoncePage() async throws -> HTMLResponse
 
     func renderError(
-        id: String,
-        error: OpenAPIRepositoryError,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext,
+        error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse
 }

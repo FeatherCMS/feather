@@ -35,9 +35,8 @@ struct AdminRemoveAuthEmailDefaultPresenter:
     }
 
     func renderPage(
-        id: String,
-        identityId: String,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext,
+        identityId: String
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -48,9 +47,9 @@ struct AdminRemoveAuthEmailDefaultPresenter:
             title: "Manage user emails",
             content: AuthEmailConfirmation(
                 state: .init(
-                    id: id,
+                    item: item,
                     identityId: identityId,
-                    breadcrumb: breadcrumb(id: id),
+                    breadcrumb: breadcrumb(id: item.id),
                     nonceToken: nonceToken
                 )
             )
@@ -58,7 +57,7 @@ struct AdminRemoveAuthEmailDefaultPresenter:
     }
 
     func renderInvalidNoncePage() async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove user email",
@@ -74,11 +73,10 @@ struct AdminRemoveAuthEmailDefaultPresenter:
     }
 
     func renderError(
-        id: String,
-        error: OpenAPIRepositoryError,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext,
+        error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove user email",
@@ -86,7 +84,7 @@ struct AdminRemoveAuthEmailDefaultPresenter:
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: breadcrumb(id: item.id)
                 )
             )
         )

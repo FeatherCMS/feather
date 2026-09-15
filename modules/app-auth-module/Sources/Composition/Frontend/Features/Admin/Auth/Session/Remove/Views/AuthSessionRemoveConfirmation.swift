@@ -7,7 +7,8 @@ import WebComponents
 
 struct AuthSessionRemoveConfirmation: Component {
     struct State {
-        let model: AdminRemoveAuthSessionModel
+        let item: NewAdminRemoveItemContext
+        let identityId: String
         let breadcrumb: [NewAdminBreadcrumb.Link]
         let nonceToken: String?
     }
@@ -23,12 +24,12 @@ struct AuthSessionRemoveConfirmation: Component {
                     description: "The session will be signed out immediately."
                 ),
                 selectedItems: [
-                    state.model.identityEmail,
-                    state.model.sessionId,
+                    state.item.label,
+                    state.item.id,
                 ],
                 action:
-                    "/admin/user/identities/\(state.model.identityId)/sessions/\(state.model.sessionId)/remove/",
-                cancel: "/admin/user/identities/\(state.model.identityId)/",
+                    "/admin/user/identities/\(state.identityId)/sessions/\(state.item.id)/remove/",
+                cancel: "/admin/user/identities/\(state.identityId)/",
                 nonceToken: state.nonceToken
             )
         )

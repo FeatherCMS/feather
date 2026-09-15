@@ -22,10 +22,10 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let formId = try context.requiredParameter("formId")
         let submissionId = try context.requiredParameter("submissionId")
-        return try await presenter.renderConfirmation(
+        let submission = try await interactor.get(formId: formId, id: submissionId)
+        return try await presenter.renderRemovePage(
             formId: formId,
-            item: try await interactor.get(formId: formId, id: submissionId),
-            permissions: context.currentUserPermissions
+            items: [.init(id: submission.id, label: submission.createdAt)]
         )
     }
 
@@ -35,6 +35,14 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         let (interactor, _) = buildRuntime(request, context)
         let formId = try context.requiredParameter("formId")
         let submissionId = try context.requiredParameter("submissionId")
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            context: context
+        )
+        guard await AdminNonceStore.shared.consume(
+            nonceRequest.nonce,
+            sessionToken: context.sessionToken
+        ) else { return Response(status: .badRequest) }
         try await interactor.remove(formId: formId, id: submissionId)
         return Response(
             status: .seeOther,
@@ -53,10 +61,11 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
-        return try await presenter.renderConfirmation(
+        return try await presenter.renderRemovePage(
             formId: try context.requiredParameter("formId"),
-            selectedIds: request.queryStrings("selectedIds"),
-            permissions: context.currentUserPermissions
+            items: request.queryStrings("selectedIds").map {
+                .init(id: $0, label: $0)
+            }
         )
     }
 
@@ -69,6 +78,10 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
             as: NewAdminListRemoveFormInput.self,
             context: context
         )
+        guard await AdminNonceStore.shared.consume(
+            payload.nonce,
+            sessionToken: context.sessionToken
+        ) else { return Response(status: .badRequest) }
         let (interactor, _) = buildRuntime(request, context)
         try await interactor.remove(
             formId: formId,

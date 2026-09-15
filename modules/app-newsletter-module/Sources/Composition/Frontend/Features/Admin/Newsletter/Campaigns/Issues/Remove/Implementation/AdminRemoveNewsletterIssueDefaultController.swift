@@ -19,10 +19,10 @@ struct AdminRemoveNewsletterIssueDefaultController:
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime(request, context)
+        let issueId = try context.requiredParameter("issueId")
         return try await presenter.render(
             newsletterId: try context.requiredParameter("newsletterId"),
-            issueId: try context.requiredParameter("issueId"),
-            permissions: context.currentUserPermissions
+            item: .init(id: issueId, label: issueId)
         )
     }
     func remove(request: Request, context: DefaultRequestContext) async throws
@@ -30,6 +30,14 @@ struct AdminRemoveNewsletterIssueDefaultController:
     {
         let (interactor, _) = buildRuntime(request, context)
         let newsletterId = try context.requiredParameter("newsletterId")
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            context: context
+        )
+        guard await AdminNonceStore.shared.consume(
+            nonceRequest.nonce,
+            sessionToken: context.sessionToken
+        ) else { return Response(status: .badRequest) }
         try await interactor.remove(
             newsletterId: newsletterId,
             issueId: try context.requiredParameter("issueId")

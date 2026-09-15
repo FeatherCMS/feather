@@ -10,7 +10,8 @@ import WebBuilders
 import WebComponents
 
 struct MediaProcessorRemoveView: Component {
-    let id: String
+    let item: NewAdminRemoveItemContext
+    let nonceToken: String
     let cancelURL: String
     let formURL: String
 
@@ -22,10 +23,12 @@ struct MediaProcessorRemoveView: Component {
                     title: "Remove processor",
                     description: "Confirm removal of this media processor."
                 ),
-                selectedItems: [id],
+                selectedItems: [item.label],
                 action: formURL,
                 cancel: cancelURL,
-                submitLabel: "Remove processor"
+                submitLabel: "Remove processor",
+                nonceToken: nonceToken,
+                hiddenFields: [.init(name: "ids", value: item.id)]
             )
         )
     }

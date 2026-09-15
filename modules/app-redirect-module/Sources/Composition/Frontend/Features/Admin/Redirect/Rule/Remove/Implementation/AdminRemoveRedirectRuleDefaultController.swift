@@ -21,8 +21,7 @@ struct AdminRemoveRedirectRuleDefaultController:
         do {
             let names = try await interactor.names(ids: [id])
             return try await presenter.renderRemovePage(
-                id: id,
-                source: names.first ?? id,
+                items: [.init(id: id, label: names.first ?? id)],
                 returnTo: request.queryString("returnTo")
             )
         }
@@ -114,11 +113,10 @@ struct AdminRemoveRedirectRuleDefaultController:
         }
         do {
             return
-                try await presenter.renderRemoveConfirmation(
-                    page: page,
-                    search: search,
-                    ids: ids,
-                    names: try await interactor.names(ids: ids),
+                try await presenter.renderRemovePage(
+                    items: zip(ids, try await interactor.names(ids: ids)).map {
+                        .init(id: $0.0, label: $0.1)
+                    },
                     returnTo: request.queryString("returnTo")
                 )
                 .response(from: request, context: context)

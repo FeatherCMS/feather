@@ -52,12 +52,11 @@ struct AdminListAuthEmailDefaultPresenter:
         )
     }
 
-    func renderRemoveConfirmation(
-        selectedIds: [String],
+    func renderRemovePage(
+        items: [NewAdminRemoveItemContext],
         page: Int,
         search: String?,
-        userID: String?,
-        permissions: Set<String>
+        userID: String?
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -73,7 +72,7 @@ struct AdminListAuthEmailDefaultPresenter:
                     description:
                         "Review the selected email addresses before removal."
                 ),
-                selectedItems: selectedIds,
+                selectedItems: items.map(\.label),
                 action: "/admin/auth/emails/remove/",
                 cancel: listLocation(
                     page: page,
@@ -86,8 +85,8 @@ struct AdminListAuthEmailDefaultPresenter:
                     .init(name: "search", value: search ?? ""),
                     .init(name: "userId", value: userID ?? ""),
                 ]
-                    + selectedIds.map {
-                        .init(name: "selectedIds", value: $0)
+                    + items.map {
+                        .init(name: "ids", value: $0.id)
                     }
             )
         )

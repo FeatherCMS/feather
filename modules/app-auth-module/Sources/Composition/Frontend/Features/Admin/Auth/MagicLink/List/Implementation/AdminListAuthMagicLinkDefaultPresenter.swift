@@ -52,12 +52,11 @@ struct AdminListAuthMagicLinkDefaultPresenter:
         )
     }
 
-    func renderRemoveConfirmation(
-        selectedIds: [String],
+    func renderRemovePage(
+        items: [NewAdminRemoveItemContext],
         page: Int,
         search: String?,
-        userID: String?,
-        permissions: Set<String>
+        userID: String?
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -72,7 +71,7 @@ struct AdminListAuthMagicLinkDefaultPresenter:
                     title: "Remove selected magic links",
                     description: "Review the selected links before removal."
                 ),
-                selectedItems: selectedIds,
+                selectedItems: items.map(\.label),
                 action: "/admin/auth/magic-links/remove/",
                 cancel: listLocation(
                     page: page,
@@ -85,8 +84,8 @@ struct AdminListAuthMagicLinkDefaultPresenter:
                     .init(name: "search", value: search ?? ""),
                     .init(name: "userId", value: userID ?? ""),
                 ]
-                    + selectedIds.map {
-                        .init(name: "selectedIds", value: $0)
+                    + items.map {
+                        .init(name: "ids", value: $0.id)
                     }
             )
         )

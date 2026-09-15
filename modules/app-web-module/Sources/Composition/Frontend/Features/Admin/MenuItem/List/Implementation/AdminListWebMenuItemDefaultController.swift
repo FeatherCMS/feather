@@ -81,12 +81,11 @@ struct AdminListWebMenuItemDefaultController:
             )
         }
         return
-            try await presenter.renderRemoveConfirmation(
+            try await presenter.renderRemovePage(
                 menuId: menuId,
                 page: page,
                 search: search,
-                selectedIds: selectedIds,
-                permissions: context.currentUserPermissions
+                items: selectedIds.map { .init(id: $0, label: $0) }
             )
             .response(from: request, context: context)
     }
@@ -97,10 +96,15 @@ struct AdminListWebMenuItemDefaultController:
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let menuId = try context.requiredID()
-        let payload = try await request.decode(
-            as: NewAdminListRemoveFormInput.self,
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
+        guard await AdminNonceStore.shared.consume(
+            nonceRequest.nonce,
+            sessionToken: context.sessionToken
+        ) else { return Response(status: .badRequest) }
+        let payload = nonceRequest.input
         if !payload.normalizedSelectedIds.isEmpty {
             try await interactor.remove(
                 menuId: menuId,

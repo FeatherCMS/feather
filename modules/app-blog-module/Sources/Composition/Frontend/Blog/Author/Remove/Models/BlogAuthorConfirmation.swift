@@ -17,6 +17,7 @@ struct BlogAuthorConfirmation: Component {
         let id: String
         let source: String
         let breadcrumb: [NewAdminBreadcrumb.Link]
+        let nonceToken: String
     }
 
     let state: State
@@ -32,7 +33,9 @@ struct BlogAuthorConfirmation: Component {
                 selectedItems: [state.source],
                 action: "/admin/blog/authors/\(state.id)/remove/",
                 cancel: "/admin/blog/authors/",
-                submitLabel: "Remove author"
+                submitLabel: "Remove author",
+                nonceToken: state.nonceToken,
+                hiddenFields: [.init(name: "ids", value: state.id)]
             )
         )
     }
