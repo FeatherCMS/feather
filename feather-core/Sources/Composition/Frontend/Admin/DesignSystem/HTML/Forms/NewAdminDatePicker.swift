@@ -58,10 +58,7 @@ public struct NewAdminDatePicker: Component {
             Custom("\(root) label") {
                 Display(.flex)
                 FlexDirection(.column)
-                Gap(5.px)
-                FontWeight(.normal)
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                Opacity(0.8)
+                Gap(8.px)
             },
             Custom("\(root) .new-admin-date-picker__display") {
                 Width(100.percent)
@@ -255,7 +252,12 @@ public struct NewAdminDatePicker: Component {
     public func html(context: inout RenderContext) -> Section {
         Section {
             Label {
-                fieldLabel()
+                context.render(
+                    NewAdminFormFieldLabel(
+                        text: state.label,
+                        isRequired: state.isRequired
+                    )
+                )
                 displayInput()
             }
 
@@ -361,16 +363,6 @@ public struct NewAdminDatePicker: Component {
         .class("new-admin-date-picker__picker")
         .role("dialog")
         .hidden()
-    }
-
-    private func fieldLabel() -> Span {
-        Span {
-            InlineText(state.label)
-            if !state.isRequired {
-                Span(" (Optional)").class("field-label__optional")
-            }
-        }
-        .class("field-label")
     }
 
     private var displayID: String { "\(state.id)-display" }

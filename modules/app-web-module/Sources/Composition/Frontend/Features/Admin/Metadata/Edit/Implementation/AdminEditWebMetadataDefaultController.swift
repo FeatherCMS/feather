@@ -342,7 +342,7 @@ struct AdminEditWebMetadataDefaultController:
             ),
             imageUrl: .init(
                 key: "imageUrl",
-                label: "Image URL",
+                label: "Image",
                 value: imageUrl,
                 error: nil
             ),

@@ -46,17 +46,9 @@ struct WebPageRichContentEditor: Component {
             Custom("\(root)") {
                 Display(.flex)
                 FlexDirection(.column)
-                Gap(6.px)
+                Gap(8.px)
                 Width(100.percent)
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
-            },
-            Custom("\(root) > .new-admin-form-field-label") {
-                Display(.flex)
-                FlexDirection(.column)
-                Gap(5.px)
-                FontWeight(.normal)
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                Opacity(0.8)
             },
             Custom("\(root) > .new-admin-media-picker > label") {
                 Display(.none)
@@ -607,8 +599,7 @@ struct WebPageRichContentEditor: Component {
 
     func html(context: inout RenderContext) -> Section {
         Section {
-            Label(state.label)
-                .class("new-admin-form-field-label")
+            context.render(NewAdminFormFieldLabel(text: state.label))
             Div {
                 Div {
                     P("Add component").class("eyebrow")

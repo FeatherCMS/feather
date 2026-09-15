@@ -18,17 +18,20 @@ public struct NewAdminFormFieldMediaPicker: Component {
         public let label: String
         public let value: String?
         public let error: String?
+        public let isRequired: Bool
 
         public init(
             key: String,
             label: String,
             value: String?,
-            error: String?
+            error: String?,
+            isRequired: Bool = false
         ) {
             self.key = key
             self.label = label
             self.value = value
             self.error = error
+            self.isRequired = isRequired
         }
     }
 
@@ -83,10 +86,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
                 Custom("\(root) label") {
                     Display(.flex)
                     FlexDirection(.column)
-                    Gap(5.px)
-                    FontWeight(.normal)
-                    Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                    Opacity(0.8)
+                    Gap(8.px)
                 }
                 Custom("\(root) input[type='hidden']") {
                     Position(.absolute)
@@ -142,6 +142,9 @@ public struct NewAdminFormFieldMediaPicker: Component {
                     Color(.variable(TokenKey.Colors.Materials.Secondary.text))
                     FontSize(1.rem)
                     WordBreak(.breakWord)
+                }
+                Custom("\(root)__current h3.is-empty") {
+                    Color(.variable(TokenKey.Colors.Materials.Primary.text))
                 }
                 Custom("\(root)__actions") {
                     Display(.flex)
@@ -307,12 +310,18 @@ public struct NewAdminFormFieldMediaPicker: Component {
     public func html(context: inout RenderContext) -> Section {
         Section {
             Label {
-                Span(state.field.label)
+                context.render(
+                    NewAdminFormFieldLabel(
+                        text: state.field.label,
+                        isRequired: state.field.isRequired
+                    )
+                )
                 Input()
                     .type(.hidden)
                     .id(state.field.key)
                     .name(state.field.key)
                     .value(state.field.value)
+                    .if(state.field.isRequired) { $0.required() }
             }
             if state.showsCurrentCard {
                 currentCard(context: &context)
@@ -344,6 +353,7 @@ extension NewAdminFormFieldMediaPicker {
             previewBlock()
             Div {
                 H3(state.selectedAsset.map(displayTitle) ?? "No asset selected")
+                    .if(!hasSelectedAsset) { $0.class("is-empty") }
                     .data("media-picker-title", state.field.key)
                     .data("empty-title", "No asset selected")
                 Div {

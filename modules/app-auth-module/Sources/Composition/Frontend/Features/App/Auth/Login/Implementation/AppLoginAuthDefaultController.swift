@@ -76,7 +76,8 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
                 sameSite: .lax
             )
 
-            let redirectPath = request.queryString("redirect")
+            let redirectPath =
+                request.queryString("redirect")
                 .flatMap { path in
                     guard path.hasPrefix("/"), !path.hasPrefix("//") else {
                         return nil

@@ -59,10 +59,7 @@ public struct NewAdminFormFieldSelect: Component {
             Custom(".new-admin-form-field label") {
                 Display(.flex)
                 FlexDirection(.column)
-                Gap(5.px)
-                FontWeight(.normal)
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                Opacity(0.8)
+                Gap(8.px)
             },
             Custom(".new-admin-form-field select") {
                 Width(100.percent)
@@ -122,12 +119,12 @@ public struct NewAdminFormFieldSelect: Component {
         let errorID = "\(state.name)-error"
         return Section {
             Label {
-                Span {
-                    Span(state.label)
-                    if !state.isRequired {
-                        Span("(optional)").class("field-optional")
-                    }
-                }
+                context.render(
+                    NewAdminFormFieldLabel(
+                        text: state.label,
+                        isRequired: state.isRequired
+                    )
+                )
                 Select {
                     for option in state.options {
                         Option(option.label)

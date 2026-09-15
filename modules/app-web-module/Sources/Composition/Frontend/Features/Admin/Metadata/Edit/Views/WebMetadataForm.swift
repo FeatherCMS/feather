@@ -82,89 +82,100 @@ struct WebMetadataForm: Component {
             }
 
             context.render(
-                NewAdminFormFieldInput(
+                AdminMetadataFields(
                     state: .init(
-                        name: state.slug.key,
-                        label: state.slug.label,
-                        value: state.slug.value,
-                        error: state.slug.error,
-                        isRequired: true
-                    )
+                        slug: .init(
+                            key: state.slug.key,
+                            label: state.slug.label,
+                            value: state.slug.value,
+                            error: state.slug.error
+                        ),
+                        template: .init(
+                            key: state.template.key,
+                            label: state.template.label,
+                            value: state.template.value,
+                            error: state.template.error
+                        ),
+                        publicationDate: .init(
+                            key: state.publicationDate.key,
+                            label: state.publicationDate.label,
+                            value: state.publicationDate.value,
+                            error: state.publicationDate.error
+                        ),
+                        expirationDate: .init(
+                            key: state.expirationDate.key,
+                            label: state.expirationDate.label,
+                            value: state.expirationDate.value,
+                            error: state.expirationDate.error
+                        ),
+                        status: .init(
+                            key: state.status.key,
+                            label: state.status.label,
+                            value: state.status.value,
+                            error: state.status.error
+                        ),
+                        title: .init(
+                            key: state.title.key,
+                            label: state.title.label,
+                            value: state.title.value,
+                            error: state.title.error
+                        ),
+                        excerpt: .init(
+                            key: state.excerpt.key,
+                            label: state.excerpt.label,
+                            value: state.excerpt.value,
+                            error: state.excerpt.error
+                        ),
+                        imageUrl: .init(
+                            key: state.imageUrl.key,
+                            label: state.imageUrl.label,
+                            value: state.imageUrl.value,
+                            error: state.imageUrl.error
+                        ),
+                        selectedImageAsset: state.selectedImageAsset,
+                        canonicalUrl: .init(
+                            key: state.canonicalUrl.key,
+                            label: state.canonicalUrl.label,
+                            value: state.canonicalUrl.value,
+                            error: state.canonicalUrl.error
+                        ),
+                        noIndex: .init(
+                            key: state.noIndex.key,
+                            label: state.noIndex.label,
+                            value: state.noIndex.value,
+                            error: state.noIndex.error
+                        ),
+                        primaryKeyword: .init(
+                            key: state.primaryKeyword.key,
+                            label: state.primaryKeyword.label,
+                            value: state.primaryKeyword.value,
+                            error: state.primaryKeyword.error
+                        ),
+                        cssCodeInjection: .init(
+                            key: state.cssCodeInjection.key,
+                            label: state.cssCodeInjection.label,
+                            value: state.cssCodeInjection.value,
+                            error: state.cssCodeInjection.error
+                        ),
+                        javascriptCodeInjection: .init(
+                            key: state.javascriptCodeInjection.key,
+                            label: state.javascriptCodeInjection.label,
+                            value: state.javascriptCodeInjection.value,
+                            error: state.javascriptCodeInjection.error
+                        ),
+                        structuredDataCodeInjection: .init(
+                            key: state.structuredDataCodeInjection.key,
+                            label: state.structuredDataCodeInjection.label,
+                            value: state.structuredDataCodeInjection.value,
+                            error: state.structuredDataCodeInjection.error
+                        )
+                    ),
+                    showTitle: true,
+                    showTemplate: true,
+                    templateOptions: state.templateOptions.map {
+                        .init(label: $0.title, value: $0.value)
+                    }
                 )
-            )
-            context.render(templateField(state.template))
-            context.render(
-                NewAdminDatePicker(
-                    state: .init(
-                        name: state.publicationDate.key,
-                        label: state.publicationDate.label,
-                        value: state.publicationDate.value,
-                        error: state.publicationDate.error
-                    )
-                )
-            )
-            context.render(
-                NewAdminDatePicker(
-                    state: .init(
-                        name: state.expirationDate.key,
-                        label: state.expirationDate.label,
-                        value: state.expirationDate.value,
-                        error: state.expirationDate.error
-                    )
-                )
-            )
-            context.render(statusField(state.status))
-            context.render(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: state.title.key,
-                        label: state.title.label,
-                        value: state.title.value,
-                        error: state.title.error
-                    )
-                )
-            )
-            context.render(textarea(state.excerpt, rows: 4))
-            imagePicker(
-                state.imageUrl,
-                selectedAsset: state.selectedImageAsset,
-                context: &context
-            )
-            context.render(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: state.canonicalUrl.key,
-                        label: state.canonicalUrl.label,
-                        value: state.canonicalUrl.value,
-                        error: state.canonicalUrl.error
-                    )
-                )
-            )
-            context.render(
-                NewAdminFormFieldCheckbox(
-                    state: .init(
-                        name: state.noIndex.key,
-                        label: "Search engine indexing",
-                        checkboxLabel: "Disallow indexing for this page",
-                        isChecked: state.noIndex.value,
-                        error: state.noIndex.error
-                    )
-                )
-            )
-            context.render(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: state.primaryKeyword.key,
-                        label: state.primaryKeyword.label,
-                        value: state.primaryKeyword.value,
-                        error: state.primaryKeyword.error
-                    )
-                )
-            )
-            context.render(textarea(state.cssCodeInjection, rows: 10))
-            context.render(textarea(state.javascriptCodeInjection, rows: 10))
-            context.render(
-                textarea(state.structuredDataCodeInjection, rows: 10)
             )
 
             Section {
@@ -186,107 +197,4 @@ struct WebMetadataForm: Component {
         return context.render(form)
     }
 
-    private func readonlyField(
-        _ field: FieldState,
-        context: inout RenderContext
-    ) -> some BasicTag {
-
-        Section {
-            Label {
-                Label(field.label).class("new-admin-form-field-label")
-                Input()
-                    .type(.text)
-                    .id(field.key)
-                    .value(field.value)
-                    .readOnly()
-                    .disabled()
-            }
-        }
-    }
-
-    private func statusField(
-        _ field: FieldState
-    ) -> NewAdminFormFieldSelect {
-        NewAdminFormFieldSelect(
-            state: .init(
-                name: field.key,
-                label: field.label,
-                value: field.value,
-                options: ["draft", "published", "archived"]
-                    .map {
-                        .init(label: $0.capitalized, value: $0)
-                    },
-                error: field.error,
-                isRequired: true
-            )
-        )
-    }
-
-    private func templateField(
-        _ field: FieldState
-    ) -> NewAdminFormFieldSelect {
-        NewAdminFormFieldSelect(
-            state: .init(
-                name: field.key,
-                label: field.label,
-                value: field.value,
-                options: [
-                    .init(label: "Default", value: "default")
-                ] + fieldOptions(field),
-                error: field.error,
-                isRequired: true
-            )
-        )
-    }
-
-    private func fieldOptions(
-        _ field: FieldState
-    ) -> [NewAdminFormFieldSelect.SelectOption] {
-        state.templateOptions
-            .map {
-                .init(label: $0.title, value: $0.value)
-            }
-            .filter { $0.value != "default" }
-    }
-
-    private func imagePicker(
-        _ field: FieldState,
-        selectedAsset: AdminMediaAssetReferenceModel?,
-        context: inout RenderContext
-    ) -> Section {
-
-        let browsePath =
-            "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=png,jpg,jpeg,webp"
-        return context.render(
-            NewAdminFormFieldMediaPicker(
-                state: .init(
-                    field: .init(
-                        key: field.key,
-                        label: field.label,
-                        value: field.value,
-                        error: field.error
-                    ),
-                    selectedAsset: selectedAsset,
-                    browsePath: browsePath,
-                    allowedExtensions: ["png", "jpg", "jpeg", "webp"],
-                    outputMode: .originalURL
-                )
-            )
-        )
-    }
-
-    private func textarea(
-        _ field: FieldState,
-        rows: Int
-    ) -> NewAdminFormFieldTextArea {
-        NewAdminFormFieldTextArea(
-            state: .init(
-                name: field.key,
-                label: field.label,
-                value: field.value,
-                error: field.error,
-                style: rows <= 4 ? .small : .large
-            )
-        )
-    }
 }

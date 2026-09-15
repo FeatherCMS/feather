@@ -68,285 +68,296 @@ private struct BlogAuthorTableContent: Component {
         let canDelete = state.permissions.allows(BlogPermissions.Authors.delete)
         return context.render(
             NewAdminList(
-            table: {
-                if state.items.isEmpty {
-                    context.render(
-                        NewAdminListNoResultsState(
-                            message: state.search.isEmpty
-                                ? "No blog authors yet."
-                                : "No blog authors match your search."
-                        )
-                    )
-                }
-                else {
-                    if state.canEdit {
-                        for item in state.items {
-                            context.render(
-                                NewAdminStatusSelectFormDefinition(
-                                    id: statusFormID(item.id),
-                                    action:
-                                        BlogAdminRoutes.authorStatus(
-                                            RouterPath(item.id)
-                                        )
-                                        .description,
-                                    returnTo: BlogAdminRoutes.authors
-                                        .description
-                                )
+                table: {
+                    if state.items.isEmpty {
+                        context.render(
+                            NewAdminListNoResultsState(
+                                message: state.search.isEmpty
+                                    ? "No blog authors yet."
+                                    : "No blog authors match your search."
                             )
-                        }
+                        )
                     }
-                    context.render(
-                        NewAdminListSelectionForm(
-                            state: .init(
-                                action: BlogAdminRoutes.authorRemove()
-                                    .description,
-                                pageState: state.pageState,
-                                search: state.search,
-                                button: .init(
-                                    "Remove selected",
-                                    style: .destructive
-                                ),
-                                isEnabled: canDelete
-                            ),
-                            table: context.render(
-                                NewAdminListShell(
-                                    layout: .init(
-                                        name: "blog-authors",
-                                        columns: [
-                                            .fixed(64), .fraction(2),
-                                            .fraction(1), .fraction(1),
-                                            .fraction(1), .fixed(220),
-                                        ]
+                    else {
+                        if state.canEdit {
+                            for item in state.items {
+                                context.render(
+                                    NewAdminStatusSelectFormDefinition(
+                                        id: statusFormID(item.id),
+                                        action:
+                                            BlogAdminRoutes.authorStatus(
+                                                RouterPath(item.id)
+                                            )
+                                            .description,
+                                        returnTo: BlogAdminRoutes.authors
+                                            .description
+                                    )
+                                )
+                            }
+                        }
+                        context.render(
+                            NewAdminListSelectionForm(
+                                state: .init(
+                                    action: BlogAdminRoutes.authorRemove()
+                                        .description,
+                                    pageState: state.pageState,
+                                    search: state.search,
+                                    button: .init(
+                                        "Remove selected",
+                                        style: .destructive
                                     ),
-                                    hasSelection: canDelete,
-                                    table: Table {
-                                        Thead {
-                                            Tr {
-                                                if canDelete {
-                                                    context.render(
-                                                        NewAdminListSelectAllCheckbox()
-                                                    )
-                                                }
-                                                Th("Profile")
-                                                Th("Name")
-                                                Th("Status")
-                                                Th("Publication")
-                                                Th("Expiration")
-                                                Th("Actions")
-                                            }
-                                        }
-                                        Tbody {
-                                            for item in state.items {
+                                    isEnabled: canDelete
+                                ),
+                                table: context.render(
+                                    NewAdminListShell(
+                                        layout: .init(
+                                            name: "blog-authors",
+                                            columns: [
+                                                .fixed(64), .fraction(2),
+                                                .fraction(1), .fraction(1),
+                                                .fraction(1), .fixed(220),
+                                            ]
+                                        ),
+                                        hasSelection: canDelete,
+                                        table: Table {
+                                            Thead {
                                                 Tr {
                                                     if canDelete {
                                                         context.render(
-                                                            NewAdminListRowCheckbox(
-                                                                id: item.id
-                                                            )
+                                                            NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
-                                                    Td {
-                                                        if let image = item
-                                                            .profileImage
-                                                        {
-                                                            Img(
-                                                                src:
-                                                                    "/media/\(image.storageKey)",
-                                                                alt: image
-                                                                    .altText
-                                                                    ?? image
-                                                                    .title
-                                                                    ?? item.name
-                                                            )
-                                                            .class(
-                                                                "blog-author-list-profile-image"
-                                                            )
-                                                        }
-                                                        else {
-                                                            Span("—")
-                                                        }
-                                                    }
-                                                    .data("label", "Profile")
-                                                    .class(
-                                                        "blog-author-list-profile-cell"
-                                                    )
-                                                    Td {
-                                                        A(item.name)
-                                                            .href(
-                                                                BlogAdminRoutes
-                                                                    .author(
-                                                                        RouterPath(
-                                                                            item
-                                                                                .id
-                                                                        )
-                                                                    )
-                                                                    .description
-                                                            )
-                                                    }
-                                                    .data("label", "Name")
-                                                    Td {
-                                                        if state.canEdit {
+                                                    Th("Profile")
+                                                    Th("Name")
+                                                    Th("Status")
+                                                    Th("Publication")
+                                                    Th("Expiration")
+                                                    Th("Actions")
+                                                }
+                                            }
+                                            Tbody {
+                                                for item in state.items {
+                                                    Tr {
+                                                        if canDelete {
                                                             context.render(
-                                                                NewAdminStatusSelectField(
-                                                                    formID:
-                                                                        statusFormID(
-                                                                            item
-                                                                                .id
-                                                                        ),
-                                                                    selectedStatus:
-                                                                        item
-                                                                        .metadata
-                                                                        .normalizedStatus
+                                                                NewAdminListRowCheckbox(
+                                                                    id: item.id
                                                                 )
                                                             )
                                                         }
-                                                        else {
-                                                            context.render(
-                                                                statusChip(
-                                                                    item
-                                                                        .metadata
-                                                                        .normalizedStatus
+                                                        Td {
+                                                            if let image = item
+                                                                .profileImage
+                                                            {
+                                                                Img(
+                                                                    src:
+                                                                        "/media/\(image.storageKey)",
+                                                                    alt: image
+                                                                        .altText
+                                                                        ?? image
+                                                                        .title
+                                                                        ?? item
+                                                                        .name
                                                                 )
-                                                            )
+                                                                .class(
+                                                                    "blog-author-list-profile-image"
+                                                                )
+                                                            }
+                                                            else {
+                                                                Span("—")
+                                                            }
                                                         }
-                                                    }
-                                                    .data("label", "Status")
-                                                    Td(
-                                                        format(
-                                                            item.metadata
-                                                                .publicationDate
+                                                        .data(
+                                                            "label",
+                                                            "Profile"
                                                         )
-                                                    )
-                                                    .data(
-                                                        "label",
-                                                        "Publication"
-                                                    )
-                                                    Td(
-                                                        format(
-                                                            item.metadata
-                                                                .expirationDate
+                                                        .class(
+                                                            "blog-author-list-profile-cell"
                                                         )
-                                                    )
-                                                    .data("label", "Expiration")
-                                                    context.render(
-                                                        NewAdminListRowActions(
-                                                            label: "Actions",
-                                                            actions: [
-                                                                .init(
-                                                                    "Details",
-                                                                    href:
-                                                                        BlogAdminRoutes
+                                                        Td {
+                                                            A(item.name)
+                                                                .href(
+                                                                    BlogAdminRoutes
                                                                         .author(
                                                                             RouterPath(
                                                                                 item
                                                                                     .id
                                                                             )
                                                                         )
-                                                                        .description,
-                                                                    permission:
-                                                                        BlogPermissions
-                                                                        .Authors
-                                                                        .read
-                                                                ),
-                                                                .init(
-                                                                    "Edit",
-                                                                    href:
-                                                                        BlogAdminRoutes
-                                                                        .authorEdit(
-                                                                            RouterPath(
+                                                                        .description
+                                                                )
+                                                        }
+                                                        .data("label", "Name")
+                                                        Td {
+                                                            if state.canEdit {
+                                                                context.render(
+                                                                    NewAdminStatusSelectField(
+                                                                        formID:
+                                                                            statusFormID(
                                                                                 item
                                                                                     .id
-                                                                            )
-                                                                        )
-                                                                        .description,
-                                                                    style:
-                                                                        .ghost(
-                                                                            .secondary
-                                                                        ),
-                                                                    permission:
-                                                                        BlogPermissions
-                                                                        .Authors
-                                                                        .update
-                                                                ),
-                                                                .init(
-                                                                    "Remove",
-                                                                    href:
-                                                                        NewAdminLocation
-                                                                        .remove(
-                                                                            path:
-                                                                                BlogAdminRoutes
-                                                                                .authorRemove()
-                                                                                .description,
-                                                                            ids: [
-                                                                                item
-                                                                                    .id
-                                                                            ],
-                                                                            returnTo:
-                                                                                BlogAdminRoutes
-                                                                                .authors
-                                                                                .description
-                                                                        ),
-                                                                    style:
-                                                                        .destructive,
-                                                                    permission:
-                                                                        BlogPermissions
-                                                                        .Authors
-                                                                        .delete
-                                                                ),
-                                                            ],
-                                                            permissions: state
-                                                                .permissions
+                                                                            ),
+                                                                        selectedStatus:
+                                                                            item
+                                                                            .metadata
+                                                                            .normalizedStatus
+                                                                    )
+                                                                )
+                                                            }
+                                                            else {
+                                                                context.render(
+                                                                    statusChip(
+                                                                        item
+                                                                            .metadata
+                                                                            .normalizedStatus
+                                                                    )
+                                                                )
+                                                            }
+                                                        }
+                                                        .data("label", "Status")
+                                                        Td(
+                                                            format(
+                                                                item.metadata
+                                                                    .publicationDate
+                                                            )
                                                         )
-                                                    )
+                                                        .data(
+                                                            "label",
+                                                            "Publication"
+                                                        )
+                                                        Td(
+                                                            format(
+                                                                item.metadata
+                                                                    .expirationDate
+                                                            )
+                                                        )
+                                                        .data(
+                                                            "label",
+                                                            "Expiration"
+                                                        )
+                                                        context.render(
+                                                            NewAdminListRowActions(
+                                                                label:
+                                                                    "Actions",
+                                                                actions: [
+                                                                    .init(
+                                                                        "Details",
+                                                                        href:
+                                                                            BlogAdminRoutes
+                                                                            .author(
+                                                                                RouterPath(
+                                                                                    item
+                                                                                        .id
+                                                                                )
+                                                                            )
+                                                                            .description,
+                                                                        permission:
+                                                                            BlogPermissions
+                                                                            .Authors
+                                                                            .read
+                                                                    ),
+                                                                    .init(
+                                                                        "Edit",
+                                                                        href:
+                                                                            BlogAdminRoutes
+                                                                            .authorEdit(
+                                                                                RouterPath(
+                                                                                    item
+                                                                                        .id
+                                                                                )
+                                                                            )
+                                                                            .description,
+                                                                        style:
+                                                                            .ghost(
+                                                                                .secondary
+                                                                            ),
+                                                                        permission:
+                                                                            BlogPermissions
+                                                                            .Authors
+                                                                            .update
+                                                                    ),
+                                                                    .init(
+                                                                        "Remove",
+                                                                        href:
+                                                                            NewAdminLocation
+                                                                            .remove(
+                                                                                path:
+                                                                                    BlogAdminRoutes
+                                                                                    .authorRemove()
+                                                                                    .description,
+                                                                                ids: [
+                                                                                    item
+                                                                                        .id
+                                                                                ],
+                                                                                returnTo:
+                                                                                    BlogAdminRoutes
+                                                                                    .authors
+                                                                                    .description
+                                                                            ),
+                                                                        style:
+                                                                            .destructive,
+                                                                        permission:
+                                                                            BlogPermissions
+                                                                            .Authors
+                                                                            .delete
+                                                                    ),
+                                                                ],
+                                                                permissions:
+                                                                    state
+                                                                    .permissions
+                                                            )
+                                                        )
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                    .class("cms-table", "action-table")
-                                    .if(canDelete) { $0.class("select-table") }
+                                        .class("cms-table", "action-table")
+                                        .if(canDelete) {
+                                            $0.class("select-table")
+                                        }
+                                    )
                                 )
                             )
                         )
-                    )
-                }
-            },
-            search: {
-                context.render(
-                    NewAdminListSearch(
-                        state: .init(
-                            action: BlogAdminRoutes.authors.description,
-                            placeholder: "Search blog authors",
-                            search: state.search
-                        )
-                    )
-                )
-            },
-            toolbar: {
-                if state.canAdd {
+                    }
+                },
+                search: {
                     context.render(
-                        NewAdminListToolbar {
-                            context.render(
-                                NewAdminButton(
-                                    "Add author",
-                                    href: BlogAdminRoutes.authorAdd()
-                                        .description
-                                )
+                        NewAdminListSearch(
+                            state: .init(
+                                action: BlogAdminRoutes.authors.description,
+                                placeholder: "Search blog authors",
+                                search: state.search
                             )
-                        }
-                    )
-                }
-            },
-            pagination: {
-                context.render(
-                    NewAdminListPagination(
-                        state: .init(
-                            path: BlogAdminRoutes.authors.description,
-                            pageState: state.pageState,
-                            search: state.search
                         )
                     )
-                )
-            }
+                },
+                toolbar: {
+                    if state.canAdd {
+                        context.render(
+                            NewAdminListToolbar {
+                                context.render(
+                                    NewAdminButton(
+                                        "Add author",
+                                        href: BlogAdminRoutes.authorAdd()
+                                            .description
+                                    )
+                                )
+                            }
+                        )
+                    }
+                },
+                pagination: {
+                    context.render(
+                        NewAdminListPagination(
+                            state: .init(
+                                path: BlogAdminRoutes.authors.description,
+                                pageState: state.pageState,
+                                search: state.search
+                            )
+                        )
+                    )
+                }
             )
         )
     }

@@ -8,7 +8,8 @@ public struct AdminWebMetadataEditConfiguration: Sendable {
     public init(
         title: String,
         breadcrumb: [NewAdminBreadcrumb.Link],
-        description: String = "Edit the metadata used when this page is rendered and shared."
+        description: String =
+            "Edit the metadata used when this page is rendered and shared."
     ) {
         self.title = title
         self.description = description

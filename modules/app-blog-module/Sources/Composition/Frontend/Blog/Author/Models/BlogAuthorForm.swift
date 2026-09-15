@@ -6,6 +6,7 @@ import Hummingbird
 import MediaFrontend
 import WebBuilders
 import WebComponents
+import WebFrontend
 
 struct BlogAuthorForm: Component {
     struct FieldState: FeatherAdmin.Object {

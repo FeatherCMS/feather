@@ -19,11 +19,10 @@ struct WebPageRow: Component {
             if permissions.allows(WebPermissions.Pages.delete) {
                 context.render(NewAdminListRowCheckbox(id: page.id))
             }
-            titleCell()
+            titleCell(context: &context)
             statusCell(context: &context)
             Td(format(page.metadata.publicationDate))
                 .data("label", "Publication")
-            Td(format(page.metadata.expirationDate)).data("label", "Expiration")
             context.render(
                 NewAdminListRowActions(
                     label: "Actions",
@@ -59,15 +58,17 @@ struct WebPageRow: Component {
         }
     }
 
-    private func titleCell() -> Td {
+    private func titleCell(context: inout RenderContext) -> Td {
         Td {
             Span {
                 Span(page.title)
                 if let previewPath = previewPath {
-                    A { FeatherIcons.externalLink() }
-                        .href(previewPath)
-                        .target(.blank)
-                        .ariaLabel("Preview \(page.title)")
+                    context.render(
+                        NewAdminPreviewLink(
+                            href: previewPath,
+                            label: "Preview \(page.title)"
+                        )
+                    )
                 }
             }
         }

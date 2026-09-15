@@ -44,19 +44,13 @@ public struct NewAdminFormFieldCheckbox: Component {
             Class("new-admin-form-checkbox") {
                 Display(.flex)
                 FlexDirection(.column)
-                Gap(6.px)
-            },
-            Custom(".new-admin-form-checkbox > .field-label") {
-                Display(.block)
-                FontWeight(.normal)
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                Opacity(0.8)
+                Gap(8.px)
             },
             Class("new-admin-form-checkbox__label") {
                 Display(.flex)
                 AlignItems(.center)
                 Gap(8.px)
-                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 Cursor(.pointer)
             },
             Custom(".new-admin-form-checkbox .field-help") {
@@ -73,8 +67,7 @@ public struct NewAdminFormFieldCheckbox: Component {
     public func html(context: inout RenderContext) -> Section {
         let errorID = "\(state.name)-error"
         return Section {
-            Span(state.label)
-                .class("field-label")
+            context.render(NewAdminFormFieldLabel(text: state.label))
             Label {
                 context.render(
                     NewAdminCheckbox(

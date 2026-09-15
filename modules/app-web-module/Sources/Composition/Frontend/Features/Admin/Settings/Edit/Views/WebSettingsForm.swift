@@ -85,119 +85,156 @@ struct WebSettingsForm: Component {
                 P(error).class("new-admin-form__error")
             }
 
-            H2("Branding")
-            imagePicker(state.logo, context: &context)
-            imagePicker(state.logoDark, context: &context)
-
-            H2("SEO")
             context.render(
-                NewAdminFormFieldCheckbox(
-                    state: .init(
-                        name: state.noIndex.key,
-                        label: "Search engine indexing",
-                        checkboxLabel: "Disallow site indexing",
-                        isChecked: state.noIndex.value,
-                        error: state.noIndex.error
-                    )
-                )
-            )
-            context.render(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: state.title.key,
-                        label: state.title.label,
-                        value: state.title.value,
-                        error: state.title.error,
-                        isDisabled: !state.canEdit
-                    )
-                )
-            )
-            context.render(textarea(state.excerpt, rows: 4))
-            imagePicker(state.metaImage, context: &context)
-            homePagePicker(state.homePage, context: &context)
-            context.render(
-                NewAdminFormFieldLanguage(
-                    state: .init(
-                        name: state.locale.key,
-                        label: state.locale.label,
-                        value: state.locale.value,
-                        error: state.locale.error,
-                        isDisabled: !state.canEdit
-                    )
-                )
-            )
-            context.render(
-                NewAdminFormFieldTimezone(
-                    state: .init(
-                        name: state.timezone.key,
-                        label: state.timezone.label,
-                        value: state.timezone.value,
-                        error: state.timezone.error,
-                        isDisabled: !state.canEdit
-                    )
-                )
+                NewAdminFormGroup(
+                    id: "web-settings-branding",
+                    title: "Branding",
+                    persistsState: false
+                ) {
+                    imagePicker(state.logo, context: &context)
+                    imagePicker(state.logoDark, context: &context)
+                }
             )
 
-            H2("Theme")
             context.render(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: state.primaryColor.key,
-                        label: state.primaryColor.label,
-                        value: state.primaryColor.value,
-                        error: state.primaryColor.error,
-                        isDisabled: !state.canEdit
+                NewAdminFormGroup(
+                    id: "web-settings-seo",
+                    title: "SEO",
+                    persistsState: false
+                ) {
+                    context.render(
+                        NewAdminFormFieldCheckbox(
+                            state: .init(
+                                name: state.noIndex.key,
+                                label: "Search engine indexing",
+                                checkboxLabel: "Disallow site indexing",
+                                isChecked: state.noIndex.value,
+                                error: state.noIndex.error
+                            )
+                        )
                     )
-                )
-            )
-            context.render(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: state.secondaryColor.key,
-                        label: state.secondaryColor.label,
-                        value: state.secondaryColor.value,
-                        error: state.secondaryColor.error,
-                        isDisabled: !state.canEdit
+                    context.render(
+                        NewAdminFormFieldInput(
+                            state: .init(
+                                name: state.title.key,
+                                label: state.title.label,
+                                value: state.title.value,
+                                error: state.title.error,
+                                isDisabled: !state.canEdit
+                            )
+                        )
                     )
-                )
-            )
-            context.render(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: state.tertiaryColor.key,
-                        label: state.tertiaryColor.label,
-                        value: state.tertiaryColor.value,
-                        error: state.tertiaryColor.error,
-                        isDisabled: !state.canEdit
-                    )
-                )
-            )
-            context.render(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: state.primaryFont.key,
-                        label: state.primaryFont.label,
-                        value: state.primaryFont.value,
-                        error: state.primaryFont.error,
-                        isDisabled: !state.canEdit
-                    )
-                )
-            )
-            context.render(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: state.secondaryFont.key,
-                        label: state.secondaryFont.label,
-                        value: state.secondaryFont.value,
-                        error: state.secondaryFont.error,
-                        isDisabled: !state.canEdit
-                    )
-                )
+                    context.render(textarea(state.excerpt, rows: 4))
+                    imagePicker(state.metaImage, context: &context)
+                }
             )
 
-            H2("Code injection")
-            context.render(textarea(state.css, rows: 10))
-            context.render(textarea(state.js, rows: 10))
+            context.render(
+                NewAdminFormGroup(
+                    id: "web-settings-site-defaults",
+                    title: "Site defaults",
+                    persistsState: false
+                ) {
+                    homePagePicker(state.homePage, context: &context)
+                    context.render(
+                        NewAdminFormFieldLanguage(
+                            state: .init(
+                                name: state.locale.key,
+                                label: state.locale.label,
+                                value: state.locale.value,
+                                error: state.locale.error,
+                                isDisabled: !state.canEdit
+                            )
+                        )
+                    )
+                    context.render(
+                        NewAdminFormFieldTimezone(
+                            state: .init(
+                                name: state.timezone.key,
+                                label: state.timezone.label,
+                                value: state.timezone.value,
+                                error: state.timezone.error,
+                                isDisabled: !state.canEdit
+                            )
+                        )
+                    )
+                }
+            )
+
+            context.render(
+                NewAdminFormGroup(
+                    id: "web-settings-theme",
+                    title: "Theme",
+                    persistsState: false
+                ) {
+                    context.render(
+                        NewAdminFormFieldInput(
+                            state: .init(
+                                name: state.primaryColor.key,
+                                label: state.primaryColor.label,
+                                value: state.primaryColor.value,
+                                error: state.primaryColor.error,
+                                isDisabled: !state.canEdit
+                            )
+                        )
+                    )
+                    context.render(
+                        NewAdminFormFieldInput(
+                            state: .init(
+                                name: state.secondaryColor.key,
+                                label: state.secondaryColor.label,
+                                value: state.secondaryColor.value,
+                                error: state.secondaryColor.error,
+                                isDisabled: !state.canEdit
+                            )
+                        )
+                    )
+                    context.render(
+                        NewAdminFormFieldInput(
+                            state: .init(
+                                name: state.tertiaryColor.key,
+                                label: state.tertiaryColor.label,
+                                value: state.tertiaryColor.value,
+                                error: state.tertiaryColor.error,
+                                isDisabled: !state.canEdit
+                            )
+                        )
+                    )
+                    context.render(
+                        NewAdminFormFieldInput(
+                            state: .init(
+                                name: state.primaryFont.key,
+                                label: state.primaryFont.label,
+                                value: state.primaryFont.value,
+                                error: state.primaryFont.error,
+                                isDisabled: !state.canEdit
+                            )
+                        )
+                    )
+                    context.render(
+                        NewAdminFormFieldInput(
+                            state: .init(
+                                name: state.secondaryFont.key,
+                                label: state.secondaryFont.label,
+                                value: state.secondaryFont.value,
+                                error: state.secondaryFont.error,
+                                isDisabled: !state.canEdit
+                            )
+                        )
+                    )
+                }
+            )
+
+            context.render(
+                NewAdminFormGroup(
+                    id: "web-settings-code-injection",
+                    title: "Code injection",
+                    persistsState: false
+                ) {
+                    context.render(textarea(state.css, rows: 10))
+                    context.render(textarea(state.js, rows: 10))
+                }
+            )
 
             if state.canEdit {
                 Div {

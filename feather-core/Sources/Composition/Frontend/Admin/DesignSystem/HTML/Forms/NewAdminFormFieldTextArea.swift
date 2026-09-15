@@ -77,10 +77,7 @@ public struct NewAdminFormFieldTextArea: Component {
             Custom(".new-admin-form-textarea label") {
                 Display(.flex)
                 FlexDirection(.column)
-                Gap(5.px)
-                FontWeight(.normal)
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                Opacity(0.8)
+                Gap(8.px)
             },
             Custom(".new-admin-form-textarea textarea") {
                 Width(100.percent)
@@ -93,7 +90,8 @@ public struct NewAdminFormFieldTextArea: Component {
                 )
                 BorderRadius(9.px)
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
-                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                FontSize(1.rem)
                 Resize(.none)
             },
             Custom(".new-admin-form-textarea--small textarea") {
@@ -132,12 +130,12 @@ public struct NewAdminFormFieldTextArea: Component {
         let errorID = "\(state.name)-error"
         return Section {
             Label {
-                Span {
-                    Span(state.label)
-                    if !state.isRequired {
-                        Span("(optional)").class("field-optional")
-                    }
-                }
+                context.render(
+                    NewAdminFormFieldLabel(
+                        text: state.label,
+                        isRequired: state.isRequired
+                    )
+                )
                 Textarea(state.value ?? "")
                     .name(state.name)
                     .id(state.name)

@@ -39,12 +39,7 @@ public struct NewAdminFormFieldCheckboxGroup: Component {
             Custom(".new-admin-form-checkbox-group") {
                 Display(.flex)
                 FlexDirection(.column)
-                Gap(6.px)
-            },
-            Custom(".new-admin-form-checkbox-group > .field-label") {
-                FontWeight(.normal)
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                Opacity(0.8)
+                Gap(8.px)
             },
             Custom(".new-admin-form-checkbox-group__options") {
                 Display(.flex)
@@ -74,7 +69,7 @@ public struct NewAdminFormFieldCheckboxGroup: Component {
     public func html(context: inout RenderContext) -> Section {
         let errorID = "\(name)-error"
         return Section {
-            Span(label).class("field-label")
+            context.render(NewAdminFormFieldLabel(text: label))
             Div {
                 for option in options {
                     Label {

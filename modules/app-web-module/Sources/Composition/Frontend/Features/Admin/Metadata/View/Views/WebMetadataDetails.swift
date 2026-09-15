@@ -53,7 +53,7 @@ struct WebMetadataDetails: Component {
                                 ? "—" : state.rule.expirationDate
                         ),
                         .init(
-                            label: "Image URL",
+                            label: "Image",
                             value: state.rule.imageUrl.isEmpty
                                 ? "—" : state.rule.imageUrl
                         ),

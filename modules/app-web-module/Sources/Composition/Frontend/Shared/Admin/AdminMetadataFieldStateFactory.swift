@@ -1,27 +1,28 @@
 import FeatherAdmin
 import OpenAPIRuntime
 
-struct AdminMetadataFieldStateFactory {
-    static func make(
+public struct AdminMetadataFieldStateFactory {
+    public static func make(
         _ metadata: AdminMetadataFormValue?,
-        slugPrefix: String? = nil
+        slugPrefix: String? = nil,
+        template: String = "default"
     ) -> AdminMetadataFields.State {
         .init(
             slug: .init(
-                key: "md_slug",
+                key: "slug",
                 label: "Slug",
                 value: metadata?.slug ?? "",
                 error: nil
             ),
             template: .init(
-                key: "md_template",
+                key: "template",
                 label: "Template",
-                value: metadata?.template ?? "default",
+                value: metadata?.template ?? template,
                 error: nil
             ),
             slugPrefix: slugPrefix,
             publicationDate: .init(
-                key: "md_publication_date",
+                key: "publicationDate",
                 label: "Publication date & time",
                 value: AdminMetadataDateDefaults.publicationDate(
                     metadata?.publicationDate
@@ -29,32 +30,32 @@ struct AdminMetadataFieldStateFactory {
                 error: nil
             ),
             expirationDate: .init(
-                key: "md_expiration_date",
+                key: "expirationDate",
                 label: "Expiration date & time",
                 value: metadata?.expirationDate ?? "",
                 error: nil
             ),
             status: .init(
-                key: "md_status",
+                key: "status",
                 label: "Status",
                 value: metadata?.status ?? "draft",
                 error: nil
             ),
             title: .init(
-                key: "md_title",
+                key: "title",
                 label: "Title",
                 value: metadata?.title ?? "",
                 error: nil
             ),
             excerpt: .init(
-                key: "md_excerpt",
+                key: "excerpt",
                 label: "Excerpt",
                 value: metadata?.excerpt ?? "",
                 error: nil
             ),
             imageUrl: .init(
-                key: "md_image_url",
-                label: "Image URL",
+                key: "imageUrl",
+                label: "Image",
                 value: metadata?.imageUrl ?? "",
                 error: nil
             ),
@@ -62,37 +63,37 @@ struct AdminMetadataFieldStateFactory {
                 metadata?.imageUrl
             ),
             canonicalUrl: .init(
-                key: "md_canonical_url",
+                key: "canonicalUrl",
                 label: "Canonical URL",
                 value: metadata?.canonicalUrl ?? "",
                 error: nil
             ),
             noIndex: .init(
-                key: "md_no_index",
+                key: "noIndex",
                 label: "No index",
                 value: metadata?.noIndex ?? false,
                 error: nil
             ),
             primaryKeyword: .init(
-                key: "md_primary_keyword",
+                key: "primaryKeyword",
                 label: "Primary keyword",
                 value: metadata?.primaryKeyword ?? "",
                 error: nil
             ),
             cssCodeInjection: .init(
-                key: "md_css",
+                key: "cssCodeInjection",
                 label: "CSS code injection",
                 value: metadata?.cssCodeInjection ?? "",
                 error: nil
             ),
             javascriptCodeInjection: .init(
-                key: "md_js",
+                key: "javascriptCodeInjection",
                 label: "JavaScript code injection",
                 value: metadata?.javascriptCodeInjection ?? "",
                 error: nil
             ),
             structuredDataCodeInjection: .init(
-                key: "md_structured_data",
+                key: "structuredDataCodeInjection",
                 label: "Structured data",
                 value: metadata?.structuredDataCodeInjection ?? "",
                 error: nil

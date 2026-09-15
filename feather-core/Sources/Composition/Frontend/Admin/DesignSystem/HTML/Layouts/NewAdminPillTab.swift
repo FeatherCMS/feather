@@ -77,14 +77,14 @@ public struct NewAdminPillTab: Component {
                     value: "touch"
                 )
             }
-                Custom(".pill-tabs__track") {
-                    Display(.flex)
-                    FlexWrap(.nowrap)
-                    Gap(4.px)
-                    Width(100.percent)
-                    MaxWidth(100.percent)
-                    MinWidth(0.px)
-                }
+            Custom(".pill-tabs__track") {
+                Display(.flex)
+                FlexWrap(.nowrap)
+                Gap(4.px)
+                Width(100.percent)
+                MaxWidth(100.percent)
+                MinWidth(0.px)
+            }
             Custom(".pill-tabs__scroll::-webkit-scrollbar") {
                 Display(.none)
             }
@@ -98,7 +98,7 @@ public struct NewAdminPillTab: Component {
                 BorderRadius(999.px)
                 BackgroundColor(.transparent)
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
-                    Padding(vertical: 8.px, horizontal: 16.px)
+                Padding(vertical: 8.px, horizontal: 16.px)
                 LineHeight(1.2)
                 TextAlign(.center)
                 Cursor(.pointer)

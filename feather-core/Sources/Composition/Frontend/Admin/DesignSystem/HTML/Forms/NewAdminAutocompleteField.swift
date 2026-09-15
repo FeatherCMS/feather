@@ -75,10 +75,7 @@ public struct NewAdminAutocompleteField: Component {
             Custom(".new-admin-autocomplete > label") {
                 Display(.flex)
                 FlexDirection(.column)
-                Gap(5.px)
-                FontWeight(.normal)
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                Opacity(0.8)
+                Gap(8.px)
             },
             Class("new-admin-autocomplete__control") {
                 Display(.grid)
@@ -88,7 +85,7 @@ public struct NewAdminAutocompleteField: Component {
                 AlignItems(.center)
                 Width(100.percent)
                 BoxSizing(.borderBox)
-                Padding(vertical: 2.px, horizontal: 6.px)
+                Padding(vertical: 0.px, horizontal: 6.px)
                 Border(
                     1.px,
                     .solid,
@@ -98,22 +95,32 @@ public struct NewAdminAutocompleteField: Component {
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
             },
             Custom(".new-admin-autocomplete__control:focus-within") {
-                Outline(
-                    2.px,
-                    .solid,
-                    .color(.variable(TokenKey.Colors.Link.hover))
+                BorderColor(
+                    .variable(TokenKey.Colors.Materials.Primary.border)
                 )
-                OutlineOffset(2.px)
             },
             Custom(".new-admin-autocomplete__input") {
                 Width(100.percent)
                 MinWidth(0.px)
                 BoxSizing(.borderBox)
-                Padding(vertical: 8.px, horizontal: 6.px)
+                Padding(vertical: 9.px, horizontal: 6.px)
                 Border(0.px)
                 Background(.transparent)
-                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
+                FontSize(1.rem)
+                LineHeight(1.2)
                 Outline(0.px, .none)
+                UnsafeRawProperty(name: "box-shadow", value: "none")
+                UnsafeRawProperty(name: "appearance", value: "none")
+                UnsafeRawProperty(name: "-webkit-appearance", value: "none")
+            },
+            Custom(
+                ".new-admin-autocomplete__input:focus, .new-admin-autocomplete__input:focus-visible"
+            ) {
+                UnsafeRawProperty(name: "outline", value: "none !important")
+                UnsafeRawProperty(name: "box-shadow", value: "none !important")
+                UnsafeRawProperty(name: "-webkit-appearance", value: "none")
+                UnsafeRawProperty(name: "appearance", value: "none")
             },
             Class("new-admin-autocomplete__input-wrap") {
                 Display(.flex)
@@ -170,31 +177,27 @@ public struct NewAdminAutocompleteField: Component {
                 BorderRadius(6.px)
                 Background(.transparent)
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                Outline(0.px, .none)
                 Cursor(.pointer)
-            },
-            Custom(".new-admin-autocomplete__toggle:focus-visible") {
-                Outline(
-                    2.px,
-                    .solid,
-                    .color(.variable(TokenKey.Colors.Link.hover))
-                )
-                OutlineOffset(1.px)
             },
             Class("new-admin-autocomplete__chevron") {
                 Display(.inlineBlock)
-                Width(8.px)
-                Height(8.px)
+                Width(28.px)
+                Height(28.px)
                 UnsafeRawProperty(
-                    name: "border-right",
-                    value: "2px solid currentColor"
+                    name: "background-image",
+                    value:
+                        "linear-gradient(45deg, transparent 50%, currentColor 50%), linear-gradient(135deg, currentColor 50%, transparent 50%)"
                 )
                 UnsafeRawProperty(
-                    name: "border-bottom",
-                    value: "2px solid currentColor"
+                    name: "background-position",
+                    value:
+                        "calc(100% - 15px) 50%, calc(100% - 10px) 50%"
                 )
+                UnsafeRawProperty(name: "background-size", value: "5px 5px")
                 UnsafeRawProperty(
-                    name: "transform",
-                    value: "translateY(-2px) rotate(45deg)"
+                    name: "background-repeat",
+                    value: "no-repeat"
                 )
                 UnsafeRawProperty(
                     name: "transition",
@@ -206,7 +209,7 @@ public struct NewAdminAutocompleteField: Component {
             ) {
                 UnsafeRawProperty(
                     name: "transform",
-                    value: "translateY(2px) rotate(225deg)"
+                    value: "rotate(180deg)"
                 )
             },
             Class("new-admin-autocomplete__list") {
@@ -280,12 +283,12 @@ public struct NewAdminAutocompleteField: Component {
 
         return Section {
             Label {
-                Span {
-                    Span(state.label)
-                    if !state.isRequired {
-                        Span("(optional)").class("field-optional")
-                    }
-                }
+                context.render(
+                    NewAdminFormFieldLabel(
+                        text: state.label,
+                        isRequired: state.isRequired
+                    )
+                )
                 Div {
                     Div {
                         if state.selectionMode == .multiple {
@@ -475,6 +478,7 @@ public struct NewAdminAutocompleteField: Component {
                             option.setAttribute("role", "option");
                             option.addEventListener("mousedown", function (event) {
                                 event.preventDefault();
+                                event.stopPropagation();
                                 select(item);
                             });
                             list.appendChild(option);
@@ -506,7 +510,7 @@ public struct NewAdminAutocompleteField: Component {
                         selectedValues = [item.value];
                         syncHiddenInputs();
                         if (status) { status.textContent = item.label + " selected."; }
-                        setOpen(false);
+                        setOpen(true);
                     }
 
                     function removeSelected(value) {
@@ -532,8 +536,10 @@ public struct NewAdminAutocompleteField: Component {
                             if (target && target.closest) {
                                 var remove = target.closest(".new-admin-autocomplete__chip-remove");
                                 if (remove) {
+                                    event.preventDefault();
+                                    event.stopPropagation();
                                     removeSelected(remove.dataset.value || "");
-                                    input.focus();
+                                    setOpen(false);
                                 }
                             }
                         });
