@@ -1,4 +1,8 @@
-@available(*, deprecated, message: "Use the new admin form infrastructure instead.")
+@available(
+    *,
+    deprecated,
+    message: "Use the new admin form infrastructure instead."
+)
 public struct CheckboxFormInput: Codable, Sendable, Equatable, Hashable {
     public let value: Bool
 

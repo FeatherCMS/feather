@@ -11,7 +11,11 @@ import SGML
 import WebBuilders
 import WebComponents
 
-@available(*, deprecated, message: "Use the new admin head and metadata components instead.")
+@available(
+    *,
+    deprecated,
+    message: "Use the new admin head and metadata components instead."
+)
 public struct Metadata: Component {
 
     let canonicalUrl: String

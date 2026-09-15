@@ -1,6 +1,10 @@
 import Foundation
 
-@available(*, deprecated, message: "Use the new admin media asset types instead.")
+@available(
+    *,
+    deprecated,
+    message: "Use the new admin media asset types instead."
+)
 public struct AdminMediaAssetReferenceModel: Codable, Sendable, Equatable,
     Hashable
 {

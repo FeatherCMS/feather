@@ -5,7 +5,11 @@ import WebComponents
 
 public typealias AdminNavigationRenderedButton = HTML.Button
 
-@available(*, deprecated, message: "Use NewAdminButton or a navigation link instead.")
+@available(
+    *,
+    deprecated,
+    message: "Use NewAdminButton or a navigation link instead."
+)
 public struct AdminNavigationButton: Component {
     public let label: String
     public let href: String

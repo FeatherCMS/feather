@@ -106,7 +106,7 @@ struct WebMenuItemForm: Component {
                 )
             )
             context.render(
-            NewAdminFormFieldSelectAutocomplete(
+                NewAdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: state.permission.key,
                         label: state.permission.label,
@@ -166,7 +166,8 @@ struct WebMenuItemForm: Component {
         return context.render(form)
     }
 
-    private var permissionOptions: [NewAdminFormFieldSelectAutocomplete.Option] {
+    private var permissionOptions: [NewAdminFormFieldSelectAutocomplete.Option]
+    {
         let selectedValue = state.permission.value ?? ""
         var options = [
             NewAdminFormFieldSelectAutocomplete.Option(

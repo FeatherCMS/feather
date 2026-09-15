@@ -1,6 +1,10 @@
 import Foundation
 
-@available(*, deprecated, message: "Use the new admin media asset types instead.")
+@available(
+    *,
+    deprecated,
+    message: "Use the new admin media asset types instead."
+)
 extension AdminMediaAssetReferenceModel {
     public static func metadataImageURL(
         _ value: String?

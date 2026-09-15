@@ -15,7 +15,7 @@ extension NewAdminMediaAsset {
 
         let mediaPrefix =
             AppEnvironmentStore.current.publicOrigins.mediaBaseURL
-                .absoluteString
+            .absoluteString
             + "/media/assets/"
         guard rawValue.hasPrefix(mediaPrefix) else {
             return nil

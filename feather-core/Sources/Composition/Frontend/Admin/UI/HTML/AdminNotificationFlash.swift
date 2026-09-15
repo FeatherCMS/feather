@@ -12,8 +12,8 @@ public enum AdminNotificationFlash {
             let value = request.cookies[cookieName]?.value,
             let data = Data(base64Encoded: value)
         else { return nil }
-        return try?
-            JSONDecoder().decode(NewAdminNotification.State.self, from: data)
+        return try? JSONDecoder()
+            .decode(NewAdminNotification.State.self, from: data)
     }
 
     public static func cookie(

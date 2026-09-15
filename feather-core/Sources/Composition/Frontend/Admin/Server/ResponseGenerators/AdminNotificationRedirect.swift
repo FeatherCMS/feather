@@ -99,7 +99,8 @@ public struct AdminNotificationRedirect {
         queryItems.append(.init(name: titleKey, value: title))
         queryItems.append(.init(name: messageKey, value: message))
         queryItems.append(.init(name: positionKey, value: position))
-        let query = queryItems
+        let query =
+            queryItems
             .compactMap { item -> String? in
                 guard let value = item.value else { return nil }
                 return "\(item.name)=\(value.queryEncoded())"

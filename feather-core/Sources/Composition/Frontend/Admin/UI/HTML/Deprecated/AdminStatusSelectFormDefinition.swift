@@ -3,7 +3,11 @@ import SGML
 import WebBuilders
 import WebComponents
 
-@available(*, deprecated, message: "Use NewAdminStatusSelectFormDefinition instead.")
+@available(
+    *,
+    deprecated,
+    message: "Use NewAdminStatusSelectFormDefinition instead."
+)
 public struct AdminStatusSelectFormDefinition: Component {
     public let id: String
     public let action: String

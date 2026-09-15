@@ -1,9 +1,9 @@
 import HTML
-import struct HTML.Button
 import SGML
 import WebBuilders
 import WebComponents
 
+import struct HTML.Button
 
 @available(*, deprecated, message: "Use NewAdminStatusActionForm instead.")
 public struct AdminStatusActionForm: Component {

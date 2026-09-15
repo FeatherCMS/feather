@@ -97,7 +97,12 @@ public struct DefaultRenderingEngine: RenderingEngine {
         return .init(html)
     }
 
-    @available(*, deprecated, message: "Use renderPublicPage(request:title:description:imagePath:content:) instead.")
+    @available(
+        *,
+        deprecated,
+        message:
+            "Use renderPublicPage(request:title:description:imagePath:content:) instead."
+    )
     public func renderPage<T: FlowContent>(
         request: Request,
         title: String,
@@ -114,7 +119,12 @@ public struct DefaultRenderingEngine: RenderingEngine {
         )
     }
 
-    @available(*, deprecated, message: "Use renderNewAdminPage(request:context:title:content:) instead.")
+    @available(
+        *,
+        deprecated,
+        message:
+            "Use renderNewAdminPage(request:context:title:content:) instead."
+    )
     public func renderAdminPage<T: Component>(
         request: Request,
         title: String,
@@ -225,7 +235,11 @@ public struct DefaultRenderingEngine: RenderingEngine {
         normalizedURL(base: publicOrigins.staticBaseURL, path: path)
     }
 
-    @available(*, deprecated, message: "Use the new admin sidebar infrastructure instead.")
+    @available(
+        *,
+        deprecated,
+        message: "Use the new admin sidebar infrastructure instead."
+    )
     public func adminSidebarState(
         request: Request,
         permissions: Set<String>

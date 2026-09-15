@@ -3,7 +3,11 @@ import SGML
 import WebBuilders
 import WebComponents
 
-@available(*, deprecated, message: "Use the new admin design system components instead.")
+@available(
+    *,
+    deprecated,
+    message: "Use the new admin design system components instead."
+)
 public struct AdminConfirmationDialog: Component {
 
     public struct HiddenField: Sendable {

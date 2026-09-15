@@ -1,13 +1,17 @@
 import CSS
 import FeatherContracts
 import HTML
-import struct HTML.Button
 import SGML
 import WebBuilders
 import WebComponents
 
+import struct HTML.Button
 
-@available(*, deprecated, message: "Use the new admin form field components instead.")
+@available(
+    *,
+    deprecated,
+    message: "Use the new admin form field components instead."
+)
 public struct FormDateTimeField: Component {
     public struct State: Sendable {
         public var name: String

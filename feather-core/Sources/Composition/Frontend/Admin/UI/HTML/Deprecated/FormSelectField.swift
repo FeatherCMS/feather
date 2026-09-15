@@ -7,7 +7,11 @@ import WebComponents
 
 private typealias HTMLOption = HTML.Option
 
-@available(*, deprecated, message: "Use the new admin form field components instead.")
+@available(
+    *,
+    deprecated,
+    message: "Use the new admin form field components instead."
+)
 public struct FormSelectField: Component {
     public struct Option: Sendable {
         public var label: String

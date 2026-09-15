@@ -1,14 +1,17 @@
 import CSS
 import HTML
-import struct HTML.Button
 import SGML
 import WebBuilders
 import WebComponents
 
 import class Foundation.JSONEncoder
+import struct HTML.Button
 
-
-@available(*, deprecated, message: "Use NewAdminFormFieldSelectAutocomplete instead.")
+@available(
+    *,
+    deprecated,
+    message: "Use NewAdminFormFieldSelectAutocomplete instead."
+)
 public struct AdminAutocompleteField: Component {
 
     public enum SelectionMode: String, Codable, Sendable {
@@ -16,7 +19,11 @@ public struct AdminAutocompleteField: Component {
         case multiple
     }
 
-    @available(*, deprecated, message: "Use NewAdminFormFieldSelectAutocomplete.Option instead.")
+    @available(
+        *,
+        deprecated,
+        message: "Use NewAdminFormFieldSelectAutocomplete.Option instead."
+    )
     public typealias OptionState = NewAdminFormFieldSelectAutocomplete.Option
 
     public struct State: FeatherAdmin.Object {

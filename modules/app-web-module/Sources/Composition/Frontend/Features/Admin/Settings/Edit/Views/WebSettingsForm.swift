@@ -286,7 +286,8 @@ struct WebSettingsForm: Component {
                     selectedAsset:
                         NewAdminMediaAsset.metadataImageURL(
                             field.value
-                        ).map {
+                        )
+                        .map {
                             .init(
                                 id: $0.id,
                                 storageKey: $0.storageKey,

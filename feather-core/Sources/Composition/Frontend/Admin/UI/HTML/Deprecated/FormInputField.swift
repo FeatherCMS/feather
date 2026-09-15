@@ -5,7 +5,11 @@ import SGML
 import WebBuilders
 import WebComponents
 
-@available(*, deprecated, message: "Use the new admin form field components instead.")
+@available(
+    *,
+    deprecated,
+    message: "Use the new admin form field components instead."
+)
 public struct FormInputField: Component {
     public struct State: Sendable {
         public var name: String
