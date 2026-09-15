@@ -20,7 +20,7 @@ struct BlogTagForm: Component {
         var excerpt: FieldState
         var content: FieldState
         var imageAssetId: FieldState
-        var selectedImageAsset: AdminMediaAssetReferenceModel?
+        var selectedImageAsset: NewAdminMediaAsset?
         var metadata: AdminMetadataFields.State
         var error: String?
 
@@ -45,7 +45,7 @@ struct BlogTagForm: Component {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
-            context.render(NewAdminPillTab(links: tabLinks()))
+            context.render(NewAdminTabBar(links: tabLinks()))
             context.render(
                 NewAdminFormFieldMediaPicker(
                     state: .init(
@@ -55,7 +55,17 @@ struct BlogTagForm: Component {
                             value: state.imageAssetId.value,
                             error: state.imageAssetId.error
                         ),
-                        selectedAsset: state.selectedImageAsset,
+                        selectedAsset: state.selectedImageAsset.map {
+                            .init(
+                                id: $0.id,
+                                storageKey: $0.storageKey,
+                                baseName: $0.baseName,
+                                type: $0.type,
+                                title: $0.title,
+                                altText: $0.altText,
+                                status: $0.status
+                            )
+                        },
                         browsePath:
                             "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
                         allowedExtensions: ["png", "jpg", "jpeg", "webp"]
@@ -120,9 +130,9 @@ struct BlogTagForm: Component {
         return context.render(form)
     }
 
-    private func tabLinks() -> [NewAdminPillTab.Link] {
+    private func tabLinks() -> [NewAdminTabBar.Link] {
         var links = [
-            NewAdminPillTab.Link(
+            NewAdminTabBar.Link(
                 label: "Details",
                 href: action,
                 isCurrent: true

@@ -43,7 +43,7 @@ struct AdminRemoveUserIdentityDefaultPresenter: AdminRemoveUserIdentityPresenter
             request: request,
             context: context,
             title: "Manage user identities",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: UserIdentityRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove selected user identities",

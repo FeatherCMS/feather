@@ -5,4 +5,5 @@
 //  Created by Tibor Bödecs on 2026. 03. 07..
 //
 
+@available(*, deprecated, message: "Use NewAdminDesignSystem instead.")
 public enum FeatherCSS {}

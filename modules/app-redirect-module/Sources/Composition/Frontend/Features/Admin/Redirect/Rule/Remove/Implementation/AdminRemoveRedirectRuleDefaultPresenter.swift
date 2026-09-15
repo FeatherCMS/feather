@@ -45,7 +45,7 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
             request: request,
             context: context,
             title: "Manage redirect rules",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: RedirectRuleRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove selected redirect rules",

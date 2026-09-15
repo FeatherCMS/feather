@@ -29,14 +29,6 @@ struct AdminAddNewsletterCampaignSubscriberDefaultPresenter:
                 status: form.status,
                 isEdit: false,
                 error: error,
-                breadcrumb: .init(links: [
-                    .init(label: "Admin", link: "/admin/"),
-                    .init(
-                        label: "Campaigns",
-                        link: "/admin/newsletter/campaigns/"
-                    ),
-                    .init(label: "Add", link: ""),
-                ]),
                 editAction: nil
             )
         )

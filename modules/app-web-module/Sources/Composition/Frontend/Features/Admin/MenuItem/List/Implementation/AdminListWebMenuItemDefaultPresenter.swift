@@ -90,7 +90,7 @@ struct AdminListWebMenuItemDefaultPresenter:
             request: request,
             context: context,
             title: "Remove selected items",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: webMenuItemBreadcrumbState(menuId: menuId),
                 pageHeader: .init(
                     title: "Remove selected items",

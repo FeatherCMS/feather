@@ -24,7 +24,7 @@ public struct AdminMetadataFieldStateFactory {
             publicationDate: .init(
                 key: "publicationDate",
                 label: "Publication date & time",
-                value: AdminMetadataDateDefaults.publicationDate(
+                value: WebMetadataDateDefaults.publicationDate(
                     metadata?.publicationDate
                 ),
                 error: nil
@@ -59,7 +59,7 @@ public struct AdminMetadataFieldStateFactory {
                 value: metadata?.imageUrl ?? "",
                 error: nil
             ),
-            selectedImageAsset: AdminMediaAssetReferenceModel.metadataImageURL(
+            selectedImageAsset: NewAdminMediaAsset.metadataImageURL(
                 metadata?.imageUrl
             ),
             canonicalUrl: .init(

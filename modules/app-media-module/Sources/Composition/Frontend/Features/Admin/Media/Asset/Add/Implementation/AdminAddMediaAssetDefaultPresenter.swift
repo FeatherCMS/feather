@@ -36,7 +36,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
             )
         )
         if model.isPicker {
-            return renderEngine.renderPage(
+            return renderEngine.renderPublicPage(
                 request: request,
                 title: "Upload media asset",
                 description: "Upload media asset",

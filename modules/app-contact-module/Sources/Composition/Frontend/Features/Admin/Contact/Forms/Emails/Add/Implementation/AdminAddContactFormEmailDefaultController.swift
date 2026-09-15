@@ -56,7 +56,7 @@ struct AdminAddContactFormEmailDefaultController:
         return Response(
             status: .seeOther,
             headers: [
-                .location: AdminToastRedirect.location(
+                .location: AdminNotificationRedirect.location(
                     defaultPath: "/admin/contact/forms/\(formId)/emails/",
                     title: "Added",
                     message: "Contact form email added successfully."

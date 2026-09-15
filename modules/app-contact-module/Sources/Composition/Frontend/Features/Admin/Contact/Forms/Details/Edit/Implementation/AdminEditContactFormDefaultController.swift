@@ -66,7 +66,7 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
         return Response(
             status: .seeOther,
             headers: [
-                .location: AdminToastRedirect.location(
+                .location: AdminNotificationRedirect.location(
                     defaultPath: "/admin/contact/forms/\(formId)/edit/",
                     title: "Saved",
                     message: "Contact form updated successfully."

@@ -92,7 +92,7 @@ struct AdminListWebPageDefaultController:
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
-            as: ListRemoveFormInput.self,
+            as: NewAdminListRemoveFormInput.self,
             context: context
         )
         if !payload.normalizedSelectedIds.isEmpty {
@@ -121,7 +121,7 @@ struct AdminListWebPageDefaultController:
     ) async throws -> Response {
         let id = try context.requiredID()
         let payload = try await request.decode(
-            as: AdminStatusActionFormInput.self,
+            as: NewAdminStatusActionFormInput.self,
             context: context
         )
         let repository = AdminListWebPageFormOpenAPIRepository(
@@ -159,7 +159,7 @@ struct AdminListWebPageDefaultController:
     }
 
     private func resolvedStatus(
-        from payload: AdminStatusActionFormInput,
+        from payload: NewAdminStatusActionFormInput,
         current metadata: AdminMetadataFormValue
     ) -> String {
         let allowedStatuses = Set(["draft", "published", "archived"])
@@ -171,7 +171,7 @@ struct AdminListWebPageDefaultController:
 
     private func statusNotification(
         for status: String
-    ) -> AdminNotification {
+    ) -> NewAdminNotification.State {
         switch status {
         case "published":
             return .init(

@@ -80,7 +80,7 @@ struct AdminEditContactFormEmailDefaultController:
         return Response(
             status: .seeOther,
             headers: [
-                .location: AdminToastRedirect.location(
+                .location: AdminNotificationRedirect.location(
                     defaultPath: "/admin/contact/forms/\(formId)/emails/",
                     title: "Updated",
                     message: "Contact form email updated successfully."

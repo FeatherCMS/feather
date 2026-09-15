@@ -57,7 +57,7 @@ struct AdminRemoveAccountInvitationDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: AdminToastRedirect.location(
+                    .location: AdminNotificationRedirect.location(
                         defaultPath:
                             AccountAdminRoutes.invitationRemove(RouterPath(id))
                             .description,
@@ -75,7 +75,7 @@ struct AdminRemoveAccountInvitationDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: AdminToastRedirect.location(
+                    .location: AdminNotificationRedirect.location(
                         defaultPath: "/admin/account/invitations/",
                         title: "Removed",
                         message: "User invitation removed successfully."

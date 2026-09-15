@@ -516,7 +516,7 @@ extension AssetListView {
     ) -> some FlowContent {
         Div {
             context.render(
-                NewAdminPillTab(
+                NewAdminTabBar(
                     links: [
                         .init(
                             label: "Grid",

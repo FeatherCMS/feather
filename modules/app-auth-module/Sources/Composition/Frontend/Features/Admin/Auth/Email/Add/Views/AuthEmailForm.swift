@@ -27,7 +27,7 @@ struct AuthEmailForm: Component {
 
     struct State: FeatherAdmin.Object {
         var identityId: FieldState
-        var identityOptions: [NewAdminAutocompleteField.Option]
+        var identityOptions: [NewAdminFormFieldSelectAutocomplete.Option]
         var email: FieldState
         var error: String?
         var success: String?
@@ -35,7 +35,7 @@ struct AuthEmailForm: Component {
 
         init(
             identityId: FieldState,
-            identityOptions: [NewAdminAutocompleteField.Option] = [],
+            identityOptions: [NewAdminFormFieldSelectAutocomplete.Option] = [],
             email: FieldState = .init(
                 key: "email",
                 label: "Email address",
@@ -76,7 +76,7 @@ struct AuthEmailForm: Component {
             }
 
             context.render(
-                NewAdminAutocompleteField(
+                NewAdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: state.identityId.key,
                         label: state.identityId.label,

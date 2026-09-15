@@ -9,7 +9,7 @@ import SGML
 import WebBuilders
 import WebComponents
 
-extension AdminMediaAssetReferenceModel {
+extension NewAdminMediaAsset {
     public init(schema: MediaAdminAPI.Components.Schemas.MediaAssetDetailSchema)
     {
         self.init(

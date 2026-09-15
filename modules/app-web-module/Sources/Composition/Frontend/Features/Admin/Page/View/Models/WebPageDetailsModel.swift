@@ -8,6 +8,6 @@ struct WebPageDetailsModel: Sendable {
     let excerpt: String
     let content: String
     let imageAssetId: String?
-    let imageAsset: AdminMediaAssetReferenceModel?
+    let imageAsset: NewAdminMediaAsset?
     let metadata: AdminMetadataFormValue
 }

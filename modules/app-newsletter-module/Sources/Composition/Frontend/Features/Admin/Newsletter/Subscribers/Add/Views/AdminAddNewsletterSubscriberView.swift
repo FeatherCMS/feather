@@ -8,8 +8,6 @@ import WebComponents
 struct AdminAddNewsletterSubscriberView: Component {
     let model: AdminAddNewsletterSubscriberModel
     let isAdded: Bool
-    let breadcrumb: AdminBreadcrumb.State
-
     func html(context: inout RenderContext) -> some BasicTag {
         Section {
             context.render(
@@ -66,7 +64,7 @@ struct AdminAddNewsletterSubscriberView: Component {
                     )
                 )
                 context.render(
-                    NewAdminAutocompleteField(
+                    NewAdminFormFieldSelectAutocomplete(
                         state: .init(
                             name: "campaignIds[]",
                             label: "Campaigns",

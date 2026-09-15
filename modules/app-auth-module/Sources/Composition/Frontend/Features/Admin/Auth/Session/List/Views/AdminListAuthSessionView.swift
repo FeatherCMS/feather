@@ -38,7 +38,7 @@ struct AdminListAuthSessionView: Component {
                 )
             )
             context.render(
-                NewAdminPillTab(links: [
+                NewAdminTabBar(links: [
                     .init(
                         label: "Sessions",
                         href:

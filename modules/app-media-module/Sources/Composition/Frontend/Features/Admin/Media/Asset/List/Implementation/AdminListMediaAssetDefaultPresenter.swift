@@ -93,7 +93,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
             request: request,
             context: context,
             title: "Remove selected assets",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: MediaAssetRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove selected assets",

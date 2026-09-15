@@ -38,7 +38,7 @@ struct NewsletterIssuesTable: Component {
                 )
             )
             context.render(
-                NewAdminPillTab(links: [
+                NewAdminTabBar(links: [
                     .init(
                         label: "Details",
                         href:

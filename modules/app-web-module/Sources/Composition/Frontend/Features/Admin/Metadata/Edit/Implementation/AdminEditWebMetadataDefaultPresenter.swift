@@ -16,7 +16,7 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
         id: String,
         state: WebMetadataForm.State,
         permissions: Set<String>,
-        navigationTabs: [NewAdminPillTab.Link],
+        navigationTabs: [NewAdminTabBar.Link],
         configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> HTMLResponse {
         let title = configuration?.title ?? "Edit web metadata"

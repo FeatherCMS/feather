@@ -44,7 +44,7 @@ struct AdminRemoveContactFormEmailDefaultController:
         -> Response
     {
         let payload = try await request.decode(
-            as: ListRemoveFormInput.self,
+            as: NewAdminListRemoveFormInput.self,
             context: context
         )
         let (interactor, _) = buildRuntime(request, context)
@@ -56,7 +56,7 @@ struct AdminRemoveContactFormEmailDefaultController:
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListRemoveRedirect.location(
+                .location: AdminListRemoveRedirect.location(
                     path: "/admin/contact/forms/\(formId)/emails/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

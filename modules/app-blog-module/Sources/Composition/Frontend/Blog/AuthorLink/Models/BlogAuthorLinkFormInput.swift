@@ -26,7 +26,7 @@ public struct BlogAuthorLinkFormInput: Codable, Sendable, Equatable, Hashable {
     public let label: String
     public let url: String
     public let priority: String
-    public let isBlank: CheckboxFormInput
+    public let isBlank: NewAdminFormFieldCheckbox.Input
     public let permission: String
     public let notes: String
 
@@ -34,7 +34,7 @@ public struct BlogAuthorLinkFormInput: Codable, Sendable, Equatable, Hashable {
         label: String,
         url: String,
         priority: String,
-        isBlank: CheckboxFormInput,
+        isBlank: NewAdminFormFieldCheckbox.Input,
         permission: String,
         notes: String
     ) {
@@ -53,7 +53,7 @@ public struct BlogAuthorLinkFormInput: Codable, Sendable, Equatable, Hashable {
         self.priority = try container.decode(String.self, forKey: .priority)
         self.isBlank =
             try container.decodeIfPresent(
-                CheckboxFormInput.self,
+                NewAdminFormFieldCheckbox.Input.self,
                 forKey: .isBlank
             ) ?? .init(value: false)
         self.permission = try container.decode(String.self, forKey: .permission)

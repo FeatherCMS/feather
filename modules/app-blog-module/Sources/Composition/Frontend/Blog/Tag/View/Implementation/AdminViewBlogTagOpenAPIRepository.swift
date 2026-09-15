@@ -60,11 +60,11 @@ struct AdminViewBlogTagOpenAPIRepository: AdminViewBlogTagRepository {
 
     private func loadImageAsset(
         assetId: String?
-    ) async throws -> AdminMediaAssetReferenceModel? {
+    ) async throws -> NewAdminMediaAsset? {
         try await api.withOpenAPIRepositoryErrorMapping {
-            client -> AdminMediaAssetReferenceModel? in
+            client -> NewAdminMediaAsset? in
             guard let assetId, !assetId.isEmpty else {
-                return nil as AdminMediaAssetReferenceModel?
+                return nil as NewAdminMediaAsset?
             }
             guard
                 let asset = try? await AdminViewMediaAssetOpenAPIRepository(
@@ -72,7 +72,7 @@ struct AdminViewBlogTagOpenAPIRepository: AdminViewBlogTagRepository {
                 )
                 .getAsset(id: assetId)
             else {
-                return nil as AdminMediaAssetReferenceModel?
+                return nil as NewAdminMediaAsset?
             }
             return .init(schema: asset)
         }

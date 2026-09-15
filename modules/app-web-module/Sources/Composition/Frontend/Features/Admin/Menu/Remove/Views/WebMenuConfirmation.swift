@@ -20,7 +20,7 @@ struct WebMenuConfirmation: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         context.render(
-            NewAdminConfirmation(
+            NewAdminRemoveConfirmation(
                 breadcrumb: state.breadcrumb,
                 pageHeader: .init(
                     title: "Remove menu",

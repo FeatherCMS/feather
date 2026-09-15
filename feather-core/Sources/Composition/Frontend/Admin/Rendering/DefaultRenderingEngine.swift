@@ -49,7 +49,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
         self.assets = assets
     }
 
-    public func renderPage<T: FlowContent>(
+    public func renderPublicPage<T: FlowContent>(
         request: Request,
         title: String,
         description: String,
@@ -62,7 +62,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
         }
 
         let metadata = context.render(
-            Metadata(
+            NewAdminMetadata(
                 canonicalUrl: normalizedURL(
                     base: publicOrigins.siteBaseURL,
                     path: request.uri.path
@@ -97,6 +97,24 @@ public struct DefaultRenderingEngine: RenderingEngine {
         return .init(html)
     }
 
+    @available(*, deprecated, message: "Use renderPublicPage(request:title:description:imagePath:content:) instead.")
+    public func renderPage<T: FlowContent>(
+        request: Request,
+        title: String,
+        description: String,
+        imagePath: String,
+        content: T
+    ) -> HTMLResponse {
+        renderPublicPage(
+            request: request,
+            title: title,
+            description: description,
+            imagePath: imagePath,
+            content: content
+        )
+    }
+
+    @available(*, deprecated, message: "Use renderNewAdminPage(request:context:title:content:) instead.")
     public func renderAdminPage<T: Component>(
         request: Request,
         title: String,
@@ -109,13 +127,13 @@ public struct DefaultRenderingEngine: RenderingEngine {
         let toast =
             AdminNotificationFlash.notification(from: request)
             .map { notification in
-                AdminToastRedirect.Payload(
+                AdminNotificationRedirect.Payload(
                     type: notification.kind.rawValue,
                     title: notification.title,
                     message: notification.message,
                     position: notification.position
                 )
-            } ?? AdminToastRedirect.payload(from: request)
+            } ?? AdminNotificationRedirect.payload(from: request)
         let body = Body {
             context.render(
                 AdminBody(
@@ -129,7 +147,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
         }
 
         let metadata = context.render(
-            Metadata(
+            NewAdminMetadata(
                 canonicalUrl: normalizedURL(
                     base: publicOrigins.siteBaseURL,
                     path: request.uri.path
@@ -207,6 +225,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
         normalizedURL(base: publicOrigins.staticBaseURL, path: path)
     }
 
+    @available(*, deprecated, message: "Use the new admin sidebar infrastructure instead.")
     public func adminSidebarState(
         request: Request,
         permissions: Set<String>

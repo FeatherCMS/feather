@@ -37,7 +37,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
 
     public struct State: Sendable {
         public let field: FieldState
-        public let selectedAsset: AdminMediaAssetReferenceModel?
+        public let selectedAsset: NewAdminMediaAsset?
         public let browsePath: String
         public let allowedExtensions: [String]
         public let outputMode: OutputMode
@@ -45,7 +45,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
 
         public init(
             field: FieldState,
-            selectedAsset: AdminMediaAssetReferenceModel?,
+            selectedAsset: NewAdminMediaAsset?,
             browsePath: String,
             allowedExtensions: [String],
             outputMode: OutputMode = .assetId,
@@ -791,7 +791,7 @@ extension NewAdminFormFieldMediaPicker {
         """#
     }
 
-    fileprivate func displayTitle(_ asset: AdminMediaAssetReferenceModel)
+    fileprivate func displayTitle(_ asset: NewAdminMediaAsset)
         -> String
     {
         asset.type.isEmpty ? asset.baseName : "\(asset.baseName).\(asset.type)"
@@ -808,7 +808,7 @@ extension NewAdminFormFieldMediaPicker {
         return raw.addingPercentEncoding(withAllowedCharacters: allowed) ?? raw
     }
 
-    fileprivate func previewURL(for asset: AdminMediaAssetReferenceModel)
+    fileprivate func previewURL(for asset: NewAdminMediaAsset)
         -> String
     {
         "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)/media/assets/\(encodedStorageKey(asset.storageKey))"

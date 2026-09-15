@@ -23,7 +23,7 @@ struct AdminRemoveContactFormEmailDefaultPresenter:
             request: request,
             context: context,
             title: "Remove contact form email",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: ContactAdminRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove contact form email",
@@ -49,7 +49,7 @@ struct AdminRemoveContactFormEmailDefaultPresenter:
             request: request,
             context: context,
             title: "Remove contact form emails",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: ContactAdminRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove contact form emails",

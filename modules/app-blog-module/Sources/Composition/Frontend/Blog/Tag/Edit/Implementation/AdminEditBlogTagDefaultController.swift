@@ -137,7 +137,7 @@ struct AdminEditBlogTagDefaultController:
         excerpt: String = "",
         content: String = "",
         imageAssetId: String? = nil,
-        imageAsset: AdminMediaAssetReferenceModel? = nil,
+        imageAsset: NewAdminMediaAsset? = nil,
         metadata: AdminMetadataFormValue? = nil
     ) -> BlogTagForm.State {
         .init(

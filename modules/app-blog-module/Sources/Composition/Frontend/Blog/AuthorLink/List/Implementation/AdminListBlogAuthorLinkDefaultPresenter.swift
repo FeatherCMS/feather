@@ -71,7 +71,7 @@ struct AdminListBlogAuthorLinkDefaultPresenter:
             request: request,
             context: context,
             title: "Remove blog author links",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: BlogAdminRoutes.authorLinksBreadcrumb(
                     RouterPath(menuId)
                 ),

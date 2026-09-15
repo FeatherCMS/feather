@@ -67,7 +67,7 @@ struct AdminListMediaProcessorDefaultPresenter: AdminListMediaProcessorPresenter
             request: request,
             context: context,
             title: "Remove selected processors",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: MediaProcessorRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove selected processors",

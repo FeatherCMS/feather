@@ -25,7 +25,7 @@ struct AdminRemoveNewsletterSubscribersDefaultPresenter:
             request: request,
             context: context,
             title: "Remove subscribers",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: NewsletterAdminRoutes.breadcrumb + [
                     .init(
                         label: "Subscribers",

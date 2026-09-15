@@ -20,7 +20,7 @@ struct AdminEditWebMetadataDefaultController:
         request: Request,
         context: DefaultRequestContext,
         referenceType: String,
-        navigationTabs: [NewAdminPillTab.Link],
+        navigationTabs: [NewAdminTabBar.Link],
         configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> HTMLResponse {
         try await renderEditWebMetadata(
@@ -36,7 +36,7 @@ struct AdminEditWebMetadataDefaultController:
         request: Request,
         context: DefaultRequestContext,
         referenceType: String,
-        navigationTabs: [NewAdminPillTab.Link],
+        navigationTabs: [NewAdminTabBar.Link],
         configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> Response {
         try await renderPostEditWebMetadata(
@@ -65,7 +65,7 @@ struct AdminEditWebMetadataDefaultController:
         request: Request,
         context: DefaultRequestContext,
         referenceType: String?,
-        navigationTabs: [NewAdminPillTab.Link],
+        navigationTabs: [NewAdminTabBar.Link],
         configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
@@ -133,7 +133,7 @@ struct AdminEditWebMetadataDefaultController:
         request: Request,
         context: DefaultRequestContext,
         referenceType: String?,
-        navigationTabs: [NewAdminPillTab.Link],
+        navigationTabs: [NewAdminTabBar.Link],
         configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
@@ -346,7 +346,7 @@ struct AdminEditWebMetadataDefaultController:
                 value: imageUrl,
                 error: nil
             ),
-            selectedImageAsset: AdminMediaAssetReferenceModel.metadataImageURL(
+            selectedImageAsset: NewAdminMediaAsset.metadataImageURL(
                 imageUrl
             ),
             canonicalUrl: .init(

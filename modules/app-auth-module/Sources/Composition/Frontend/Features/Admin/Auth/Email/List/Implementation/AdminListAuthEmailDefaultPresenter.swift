@@ -66,7 +66,7 @@ struct AdminListAuthEmailDefaultPresenter:
             request: request,
             context: context,
             title: "Remove selected emails",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: breadcrumb(),
                 pageHeader: .init(
                     title: "Remove selected emails",

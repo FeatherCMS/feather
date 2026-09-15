@@ -6,9 +6,35 @@ import WebBuilders
 import WebComponents
 
 public struct NewAdminNotification: Component {
-    let notification: AdminNotification
+    public struct State: Codable, Sendable, Equatable {
+        public enum Kind: String, Codable, Sendable {
+            case success
+            case info
+            case warning
+            case error
+        }
 
-    public init(notification: AdminNotification) {
+        public let kind: Kind
+        public let title: String
+        public let message: String
+        public let position: String
+
+        public init(
+            kind: Kind = .success,
+            title: String,
+            message: String,
+            position: String = "top-right"
+        ) {
+            self.kind = kind
+            self.title = title
+            self.message = message
+            self.position = position
+        }
+    }
+
+    let notification: State
+
+    public init(notification: State) {
         self.notification = notification
     }
 

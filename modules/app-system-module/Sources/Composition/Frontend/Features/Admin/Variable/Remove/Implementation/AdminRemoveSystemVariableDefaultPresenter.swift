@@ -126,7 +126,7 @@ struct AdminRemoveSystemVariableDefaultPresenter:
             request: request,
             context: context,
             title: "Manage system variables",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: SystemVariableRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove selected variables",

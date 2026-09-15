@@ -43,7 +43,7 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
             request: request,
             context: context,
             title: "Manage user roles",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: UserRoleRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove selected user roles",

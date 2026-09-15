@@ -66,7 +66,7 @@ struct AdminListBlogTagDefaultPresenter:
             request: request,
             context: context,
             title: "Remove blog tags",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: BlogAdminRoutes.tagsBreadcrumb,
                 pageHeader: .init(
                     title: "Remove blog tags",

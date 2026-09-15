@@ -11,7 +11,7 @@ struct AppMagicLink {
 
     struct RequestInput: Codable, Sendable {
         let email: String
-        let isPersistent: CheckboxFormInput
+        let isPersistent: NewAdminFormFieldCheckbox.Input
 
         enum CodingKeys: String, CodingKey {
             case email
@@ -34,22 +34,22 @@ struct AppMagicLink {
                 if token == nil {
                     Form {
                         context.render(
-                            EmailField(
+                            NewAdminFormFieldInput(
                                 state: .init(
-                                    key: "email",
+                                    name: "email",
                                     label: "Email address",
-                                    value: email
+                                    value: email,
+                                    type: .email
                                 )
                             )
                         )
                         context.render(
-                            CheckboxField(
+                            NewAdminFormFieldCheckbox(
                                 state: .init(
-                                    key: "is_persistent",
-                                    label: "Permanent link",
-                                    value: isPersistent,
-                                    error: nil,
-                                    labelPosition: .before
+                                    name: "is_persistent",
+                                    label: "Session",
+                                    checkboxLabel: "Permanent link",
+                                    isChecked: isPersistent
                                 )
                             )
                         )
@@ -208,7 +208,7 @@ struct AppMagicLink {
         context: inout RenderContext
     ) -> HTMLResponse {
 
-        renderingEngine.renderPage(
+        renderingEngine.renderPublicPage(
             request: request,
             title: "Magic link",
             description: "Sign in without a password using a magic link.",

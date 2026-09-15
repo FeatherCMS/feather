@@ -70,7 +70,7 @@ struct AdminListBlogAuthorDefaultPresenter:
             request: request,
             context: context,
             title: "Remove blog authors",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: BlogAdminRoutes.authorsBreadcrumb,
                 pageHeader: .init(
                     title: "Remove blog authors",

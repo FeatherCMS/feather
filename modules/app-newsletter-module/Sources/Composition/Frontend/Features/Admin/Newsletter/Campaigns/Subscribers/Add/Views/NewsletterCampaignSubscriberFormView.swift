@@ -15,7 +15,6 @@ struct NewsletterCampaignSubscriberFormView: Component {
         let status: String
         let isEdit: Bool
         let error: String?
-        let breadcrumb: AdminBreadcrumb.State
         let editAction: String?
     }
     let state: State
@@ -63,7 +62,7 @@ struct NewsletterCampaignSubscriberFormView: Component {
                 )
             )
             context.render(
-                NewAdminPillTab(links: [
+                NewAdminTabBar(links: [
                     .init(
                         label: "Details",
                         href:

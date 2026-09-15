@@ -16,7 +16,7 @@ struct MediaProcessorRemoveView: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         context.render(
-            NewAdminConfirmation(
+            NewAdminRemoveConfirmation(
                 breadcrumb: MediaProcessorRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove processor",

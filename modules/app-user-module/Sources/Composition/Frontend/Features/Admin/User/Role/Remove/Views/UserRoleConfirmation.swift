@@ -13,7 +13,7 @@ struct UserRoleConfirmation: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         context.render(
-            NewAdminConfirmation(
+            NewAdminRemoveConfirmation(
                 breadcrumb: UserRoleRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove user role",

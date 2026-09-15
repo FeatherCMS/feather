@@ -111,7 +111,7 @@ struct AdminEditSettingsDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: AdminToastRedirect.location(
+                    .location: AdminNotificationRedirect.location(
                         defaultPath: request.uri.path,
                         title: "Expired",
                         message:
@@ -124,7 +124,7 @@ struct AdminEditSettingsDefaultController:
         return Response(
             status: .seeOther,
             headers: [
-                .location: AdminToastRedirect.location(
+                .location: AdminNotificationRedirect.location(
                     defaultPath: request.uri.path,
                     title: "Saved",
                     message: "Settings edited successfully."

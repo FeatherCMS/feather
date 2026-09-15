@@ -144,7 +144,7 @@ struct AdminEditBlogAuthorDefaultController:
         content: String = "",
         profileImageAssetId: String? = nil,
         metadata: AdminMetadataFormValue? = nil,
-        selectedProfileImage: AdminMediaAssetReferenceModel? = nil,
+        selectedProfileImage: NewAdminMediaAsset? = nil,
         permissions: Set<String>
     ) -> BlogAuthorForm.State {
         .init(

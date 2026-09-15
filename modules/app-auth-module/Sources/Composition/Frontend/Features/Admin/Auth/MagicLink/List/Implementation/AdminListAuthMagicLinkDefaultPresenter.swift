@@ -66,7 +66,7 @@ struct AdminListAuthMagicLinkDefaultPresenter:
             request: request,
             context: context,
             title: "Remove selected magic links",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: breadcrumb(),
                 pageHeader: .init(
                     title: "Remove selected magic links",

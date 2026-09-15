@@ -25,7 +25,7 @@ struct WebSettingsForm: Component {
         var key: String
         var label: String
         var value: String?
-        var options: [NewAdminAutocompleteField.Option]
+        var options: [NewAdminFormFieldSelectAutocomplete.Option]
         var error: String?
     }
 
@@ -254,7 +254,7 @@ struct WebSettingsForm: Component {
     ) -> Section {
 
         context.render(
-            NewAdminAutocompleteField(
+            NewAdminFormFieldSelectAutocomplete(
                 state: .init(
                     name: field.key,
                     label: field.label,
@@ -284,9 +284,19 @@ struct WebSettingsForm: Component {
                         error: field.error
                     ),
                     selectedAsset:
-                        AdminMediaAssetReferenceModel.metadataImageURL(
+                        NewAdminMediaAsset.metadataImageURL(
                             field.value
-                        ),
+                        ).map {
+                            .init(
+                                id: $0.id,
+                                storageKey: $0.storageKey,
+                                baseName: $0.baseName,
+                                type: $0.type,
+                                title: $0.title,
+                                altText: $0.altText,
+                                status: $0.status
+                            )
+                        },
                     browsePath: browsePath,
                     allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                     outputMode: .originalURL

@@ -34,7 +34,7 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
     {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
-            as: ListRemoveFormInput.self,
+            as: NewAdminListRemoveFormInput.self,
             context: context
         )
         try await interactor.remove(

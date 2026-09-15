@@ -16,6 +16,6 @@ struct AdminListBlogAuthorItemModel: Sendable {
     let id: String
     let name: String
     let profileImageAssetId: String?
-    let profileImage: AdminMediaAssetReferenceModel?
+    let profileImage: NewAdminMediaAsset?
     let metadata: AdminMetadataFormValue
 }

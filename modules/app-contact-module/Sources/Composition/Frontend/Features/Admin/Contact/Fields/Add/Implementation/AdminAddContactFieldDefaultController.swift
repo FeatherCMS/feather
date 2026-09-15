@@ -49,7 +49,7 @@ struct AdminAddContactFieldDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: AdminToastRedirect.location(
+                    .location: AdminNotificationRedirect.location(
                         defaultPath: "/admin/contact/fields/",
                         title: "Added",
                         message: "Form field added successfully."

@@ -39,7 +39,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         return Response(
             status: .seeOther,
             headers: [
-                .location: AdminToastRedirect.location(
+                .location: AdminNotificationRedirect.location(
                     defaultPath: "/admin/contact/forms/\(formId)/submissions/",
                     title: "Removed",
                     message: "Contact form submission removed successfully."
@@ -66,7 +66,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
     {
         let formId = try context.requiredParameter("formId")
         let payload = try await request.decode(
-            as: ListRemoveFormInput.self,
+            as: NewAdminListRemoveFormInput.self,
             context: context
         )
         let (interactor, _) = buildRuntime(request, context)
@@ -77,7 +77,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListRemoveRedirect.location(
+                .location: AdminListRemoveRedirect.location(
                     path: "/admin/contact/forms/\(formId)/submissions/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

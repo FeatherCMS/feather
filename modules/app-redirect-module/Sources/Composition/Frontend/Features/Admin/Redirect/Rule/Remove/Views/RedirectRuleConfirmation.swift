@@ -13,7 +13,7 @@ struct RedirectRuleConfirmation: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         context.render(
-            NewAdminConfirmation(
+            NewAdminRemoveConfirmation(
                 breadcrumb: RedirectRuleRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove redirect rule",

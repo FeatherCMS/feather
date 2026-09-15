@@ -18,7 +18,7 @@ struct BlogPostDetailsModel: Sendable {
     let excerpt: String
     let content: String
     let imageAssetId: String?
-    let imageAsset: AdminMediaAssetReferenceModel?
+    let imageAsset: NewAdminMediaAsset?
     let metadata: AdminMetadataFormValue
     let authorIds: [String]
     let tagIds: [String]

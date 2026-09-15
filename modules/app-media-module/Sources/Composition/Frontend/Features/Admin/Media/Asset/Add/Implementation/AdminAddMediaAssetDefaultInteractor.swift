@@ -44,7 +44,7 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
                 view: payload.view,
                 action: "/admin/media/assets/add/",
                 isPicker: false,
-                selectedAsset: AdminMediaAssetReferenceModel(schema: asset)
+                selectedAsset: NewAdminMediaAsset(schema: asset)
             )
         }
         catch let error as OpenAPIRepositoryError {

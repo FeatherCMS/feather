@@ -41,7 +41,7 @@ struct AdminRemoveContactFormFieldDefaultController:
         return Response(
             status: .seeOther,
             headers: [
-                .location: AdminToastRedirect.location(
+                .location: AdminNotificationRedirect.location(
                     defaultPath: basePath,
                     title: "Removed",
                     message: "Contact form field removed successfully."
@@ -65,7 +65,7 @@ struct AdminRemoveContactFormFieldDefaultController:
     {
         let formId = try context.requiredParameter("formId")
         let payload = try await request.decode(
-            as: ListRemoveFormInput.self,
+            as: NewAdminListRemoveFormInput.self,
             context: context
         )
         let (interactor, _) = buildRuntime(request, context)
@@ -76,7 +76,7 @@ struct AdminRemoveContactFormFieldDefaultController:
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListRemoveRedirect.location(
+                .location: AdminListRemoveRedirect.location(
                     path: "/admin/contact/forms/\(formId)/fields/",
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

@@ -32,7 +32,7 @@ struct SettingsEdit: Component {
 
             if let userID = state.userID {
                 context.render(
-                    NewAdminPillTab(links: [
+                    NewAdminTabBar(links: [
                         .init(
                             label: "Details",
                             href: "/admin/user/identities/\(userID)/",

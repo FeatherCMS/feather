@@ -62,7 +62,7 @@ struct AdminRemoveWebPageOpenAPIRepository:
 
     private func loadImageAsset(
         assetId: String?
-    ) async throws -> AdminMediaAssetReferenceModel? {
+    ) async throws -> NewAdminMediaAsset? {
         _ = assetId
         return nil
     }

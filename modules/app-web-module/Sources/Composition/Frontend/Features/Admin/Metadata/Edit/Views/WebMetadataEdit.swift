@@ -15,7 +15,7 @@ struct WebMetadataEdit: Component {
         let form: WebMetadataForm.State
         let breadcrumb: [NewAdminBreadcrumb.Link]
         let action: String
-        let navigationTabs: [NewAdminPillTab.Link]
+        let navigationTabs: [NewAdminTabBar.Link]
         let pageHeader: NewAdminPageHeader.State
     }
 
@@ -27,7 +27,7 @@ struct WebMetadataEdit: Component {
             context.render(
                 NewAdminPageHeader(state: state.pageHeader)
             )
-            context.render(NewAdminPillTab(links: state.navigationTabs))
+            context.render(NewAdminTabBar(links: state.navigationTabs))
             context.render(
                 WebMetadataForm(
                     state: state.form,

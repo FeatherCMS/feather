@@ -13,7 +13,7 @@ struct UserIdentityConfirmation: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         context.render(
-            NewAdminConfirmation(
+            NewAdminRemoveConfirmation(
                 breadcrumb: UserIdentityRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove user identity",

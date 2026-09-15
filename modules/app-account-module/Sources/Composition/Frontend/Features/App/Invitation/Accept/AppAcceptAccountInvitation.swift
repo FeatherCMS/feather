@@ -30,7 +30,11 @@ struct AppAcceptAccountInvitation {
                 if let success {
                     P(success).class("success")
                     context.render(
-                        AdminNavigationButton("Go to login", href: "/login/")
+                        NewAdminButton(
+                            "Go to login",
+                            href: "/login/",
+                            style: .ghost(.primary)
+                        )
                     )
                 }
                 else {
@@ -40,20 +44,22 @@ struct AppAcceptAccountInvitation {
                     Form {
                         Input().type(.hidden).name("token").value(token)
                         context.render(
-                            PasswordField(
+                            NewAdminFormFieldInput(
                                 state: .init(
-                                    key: "password",
+                                    name: "password",
                                     label: "Password",
-                                    value: password
+                                    value: password,
+                                    type: .password
                                 )
                             )
                         )
                         context.render(
-                            PasswordField(
+                            NewAdminFormFieldInput(
                                 state: .init(
-                                    key: "confirmation",
+                                    name: "confirmation",
                                     label: "Confirm password",
-                                    value: confirmation
+                                    value: confirmation,
+                                    type: .password
                                 )
                             )
                         )
@@ -228,7 +234,7 @@ struct AppAcceptAccountInvitation {
         context: inout RenderContext
     ) -> HTMLResponse {
 
-        renderingEngine.renderPage(
+        renderingEngine.renderPublicPage(
             request: request,
             title: "Create account",
             description: "Complete your invited account registration.",

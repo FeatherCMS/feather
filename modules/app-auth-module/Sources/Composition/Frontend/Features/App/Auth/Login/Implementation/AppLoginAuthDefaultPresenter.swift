@@ -26,7 +26,7 @@ struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
         message: String?
     ) -> HTMLResponse {
         var renderContext = RenderContext()
-        return renderEngine.renderPage(
+        return renderEngine.renderPublicPage(
             request: request,
             title: "Login",
             description: "This is the login page for the Feather CMS app",
@@ -50,22 +50,24 @@ struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
     ) -> LoginForm.State {
         .init(
             email: .init(
-                key: "email",
-                label: adminFieldLabelText("Email address", required: true),
+                name: "email",
+                label: "Email address",
                 value: email,
-                error: nil
+                error: nil,
+                type: .email
             ),
             password: .init(
-                key: "password",
-                label: adminFieldLabelText("Password", required: true),
+                name: "password",
+                label: "Password",
                 value: password,
-                error: nil
+                error: nil,
+                type: .password
             ),
             isPersistent: .init(
-                key: "is_persistent",
-                label: "Keep me signed in",
-                value: isPersistent,
-                error: nil
+                name: "is_persistent",
+                label: "Session",
+                checkboxLabel: "Keep me signed in",
+                isChecked: isPersistent
             ),
             redirectPath: redirectPath
         )

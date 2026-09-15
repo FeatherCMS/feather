@@ -7,6 +7,8 @@ public struct NewAdminListRemoveFormInput: Decodable, Sendable {
     public var page: Int?
     public var search: String?
     public var returnTo: String?
+    public var campaignId: String?
+    public var nonce: String?
 
     private enum CodingKeys: String, CodingKey {
         case selectedIds
@@ -16,6 +18,8 @@ public struct NewAdminListRemoveFormInput: Decodable, Sendable {
         case page
         case search
         case returnTo
+        case campaignId
+        case nonce = "_nonce"
     }
 
     public init(
@@ -23,13 +27,17 @@ public struct NewAdminListRemoveFormInput: Decodable, Sendable {
         selectedIds: [String]? = nil,
         page: Int? = nil,
         search: String? = nil,
-        returnTo: String? = nil
+        returnTo: String? = nil,
+        campaignId: String? = nil,
+        nonce: String? = nil
     ) {
         self.ids = ids
         self.selectedIds = selectedIds
         self.page = page
         self.search = search
         self.returnTo = returnTo
+        self.campaignId = campaignId
+        self.nonce = nonce
     }
 
     public init(from decoder: any Decoder) throws {
@@ -78,10 +86,19 @@ public struct NewAdminListRemoveFormInput: Decodable, Sendable {
         page = try container.decodeIfPresent(Int.self, forKey: .page)
         search = try container.decodeIfPresent(String.self, forKey: .search)
         returnTo = try container.decodeIfPresent(String.self, forKey: .returnTo)
+        campaignId = try container.decodeIfPresent(
+            String.self,
+            forKey: .campaignId
+        )
+        nonce = try container.decodeIfPresent(String.self, forKey: .nonce)
     }
 
     public var normalizedIds: [String] {
         ids ?? selectedIds ?? []
+    }
+
+    public var normalizedSelectedIds: [String] {
+        normalizedIds
     }
 
     public var normalizedPage: Int {

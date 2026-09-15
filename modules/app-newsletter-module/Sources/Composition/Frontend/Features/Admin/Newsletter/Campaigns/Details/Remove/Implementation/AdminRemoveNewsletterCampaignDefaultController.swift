@@ -48,7 +48,7 @@ struct AdminRemoveNewsletterCampaignDefaultController:
     {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
-            as: ListRemoveFormInput.self,
+            as: NewAdminListRemoveFormInput.self,
             context: context
         )
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.delete)

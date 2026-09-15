@@ -35,7 +35,7 @@ struct WebMetadataForm: Component {
         var title: FieldState
         var excerpt: FieldState
         var imageUrl: FieldState
-        var selectedImageAsset: AdminMediaAssetReferenceModel?
+        var selectedImageAsset: NewAdminMediaAsset?
         var canonicalUrl: FieldState
         var noIndex: CheckboxState
         var primaryKeyword: FieldState

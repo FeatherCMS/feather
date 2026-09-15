@@ -40,13 +40,13 @@ struct AdminViewAccountProfileOpenAPIRepository:
 
     private func loadImageAsset(
         assetId: String?
-    ) async throws -> AdminMediaAssetReferenceModel? {
+    ) async throws -> NewAdminMediaAsset? {
         guard let assetId, !assetId.isEmpty else { return nil }
         let asset = try? await AdminViewMediaAssetOpenAPIRepository(
             api: mediaAPI
         )
         .getAsset(id: assetId)
-        return asset.map(AdminMediaAssetReferenceModel.init(schema:))
+        return asset.map(NewAdminMediaAsset.init(schema:))
     }
 
 }

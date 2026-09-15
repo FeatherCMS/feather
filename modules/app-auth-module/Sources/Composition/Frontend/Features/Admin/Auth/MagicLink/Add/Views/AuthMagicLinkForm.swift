@@ -34,7 +34,7 @@ struct AuthMagicLinkForm: Component {
 
     struct State: FeatherAdmin.Object {
         var credentialId: FieldState
-        var emailOptions: [NewAdminAutocompleteField.Option]
+        var emailOptions: [NewAdminFormFieldSelectAutocomplete.Option]
         var isPersistent: CheckboxState
         var error: String?
         var success: String?
@@ -42,7 +42,7 @@ struct AuthMagicLinkForm: Component {
 
         init(
             credentialId: FieldState,
-            emailOptions: [NewAdminAutocompleteField.Option] = [],
+            emailOptions: [NewAdminFormFieldSelectAutocomplete.Option] = [],
             isPersistent: CheckboxState,
             error: String? = nil,
             success: String? = nil
@@ -78,7 +78,7 @@ struct AuthMagicLinkForm: Component {
             }
 
             context.render(
-                NewAdminAutocompleteField(
+                NewAdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: state.credentialId.key,
                         label: "Email",

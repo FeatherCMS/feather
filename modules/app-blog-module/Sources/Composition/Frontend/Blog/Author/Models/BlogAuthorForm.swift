@@ -21,7 +21,7 @@ struct BlogAuthorForm: Component {
         var content: FieldState
         var profileImageAssetId: FieldState
         var metadata: AdminMetadataFields.State
-        var selectedProfileImage: AdminMediaAssetReferenceModel?
+        var selectedProfileImage: NewAdminMediaAsset?
         var canSelectProfileImage: Bool
         var canUploadProfileImage: Bool
         var error: String?
@@ -47,7 +47,7 @@ struct BlogAuthorForm: Component {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
-            context.render(NewAdminPillTab(links: tabLinks()))
+            context.render(NewAdminTabBar(links: tabLinks()))
             context.render(
                 NewAdminFormFieldMediaPicker(
                     state: .init(
@@ -57,7 +57,17 @@ struct BlogAuthorForm: Component {
                             value: state.profileImageAssetId.value,
                             error: state.profileImageAssetId.error
                         ),
-                        selectedAsset: state.selectedProfileImage,
+                        selectedAsset: state.selectedProfileImage.map {
+                            .init(
+                                id: $0.id,
+                                storageKey: $0.storageKey,
+                                baseName: $0.baseName,
+                                type: $0.type,
+                                title: $0.title,
+                                altText: $0.altText,
+                                status: $0.status
+                            )
+                        },
                         browsePath:
                             "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
                         allowedExtensions: ["png", "jpg", "jpeg", "webp"]
@@ -122,9 +132,9 @@ struct BlogAuthorForm: Component {
         return context.render(form)
     }
 
-    private func tabLinks() -> [NewAdminPillTab.Link] {
+    private func tabLinks() -> [NewAdminTabBar.Link] {
         var links = [
-            NewAdminPillTab.Link(
+            NewAdminTabBar.Link(
                 label: "Details",
                 href: action,
                 isCurrent: true

@@ -84,7 +84,7 @@ struct AdminListAccountInvitationDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListRemoveRedirect.location(
+                    .location: AdminListRemoveRedirect.location(
                         path: "/admin/account/invitations/",
                         page: page,
                         search: search,
@@ -121,7 +121,7 @@ struct AdminListAccountInvitationDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: AdminToastRedirect.location(
+                    .location: AdminNotificationRedirect.location(
                         defaultPath: AccountAdminRoutes.invitations.description,
                         title: "Expired",
                         message:
@@ -140,7 +140,7 @@ struct AdminListAccountInvitationDefaultController:
         return Response(
             status: .seeOther,
             headers: [
-                .location: ListRemoveRedirect.location(
+                .location: AdminListRemoveRedirect.location(
                     path: AccountAdminRoutes.invitations.description,
                     page: payload.normalizedPage,
                     search: payload.normalizedSearch,

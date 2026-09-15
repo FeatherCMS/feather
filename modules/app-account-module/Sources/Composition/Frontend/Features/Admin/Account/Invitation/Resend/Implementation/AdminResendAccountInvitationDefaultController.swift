@@ -16,7 +16,7 @@ struct AdminResendAccountInvitationDefaultController: Sendable {
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: AdminToastRedirect.location(
+                    .location: AdminNotificationRedirect.location(
                         defaultPath: "/admin/account/invitations/",
                         title: "Sent",
                         message: "Invitation email resent successfully."
@@ -28,7 +28,7 @@ struct AdminResendAccountInvitationDefaultController: Sendable {
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: AdminToastRedirect.location(
+                    .location: AdminNotificationRedirect.location(
                         defaultPath: "/admin/account/invitations/",
                         title: error.errorTitle,
                         message: error.errorDescription,

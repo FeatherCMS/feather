@@ -17,12 +17,12 @@ public struct NewAdminBaseLayout<T: Component>: Component {
     public let content: T
 
     private let topbar: NewAdminTopBar
-    private let sidebar: NewAdminSidebar
+    private let sidebar: NewAdminSideBar
 
     public init(
         content: T,
-        menuGroups: [NewAdminSidebar.Group],
-        notification: AdminNotification? = nil
+        menuGroups: [NewAdminSideBar.Group],
+        notification: NewAdminNotification.State? = nil
     ) {
         self.topbar = .init(
             notification: notification.map(NewAdminNotification.init)

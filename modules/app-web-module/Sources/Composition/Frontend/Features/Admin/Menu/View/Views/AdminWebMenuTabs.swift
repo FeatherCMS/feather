@@ -14,7 +14,7 @@ struct AdminWebMenuTabs: Component {
     let menuID: String
     let active: Tab
 
-    var links: [NewAdminPillTab.Link] {
+    var links: [NewAdminTabBar.Link] {
         let base = WebMenuRoutes.details(RouterPath(menuID)).description
         return [
             .init(
@@ -31,6 +31,6 @@ struct AdminWebMenuTabs: Component {
     }
 
     func html(context: inout RenderContext) -> Div {
-        context.render(NewAdminPillTab(links: links))
+        context.render(NewAdminTabBar(links: links))
     }
 }

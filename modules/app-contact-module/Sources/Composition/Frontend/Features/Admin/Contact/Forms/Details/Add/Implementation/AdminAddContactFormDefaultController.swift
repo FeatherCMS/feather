@@ -54,7 +54,7 @@ struct AdminAddContactFormDefaultController: AdminAddContactFormController {
         return Response(
             status: .seeOther,
             headers: [
-                .location: AdminToastRedirect.location(
+                .location: AdminNotificationRedirect.location(
                     defaultPath: "/admin/contact/forms/",
                     title: "Added",
                     message: "Contact form added successfully."

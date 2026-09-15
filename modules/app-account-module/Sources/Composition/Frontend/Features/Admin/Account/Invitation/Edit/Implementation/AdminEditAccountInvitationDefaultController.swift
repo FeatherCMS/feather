@@ -95,7 +95,7 @@ struct AdminEditAccountInvitationDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: AdminToastRedirect.location(
+                    .location: AdminNotificationRedirect.location(
                         defaultPath: "/admin/account/invitations/\(id)/edit/",
                         title: "Saved",
                         message: "User invitation edited successfully."

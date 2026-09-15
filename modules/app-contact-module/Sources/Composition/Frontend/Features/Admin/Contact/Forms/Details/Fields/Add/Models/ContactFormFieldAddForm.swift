@@ -13,7 +13,7 @@ struct ContactFormFieldAddForm: Decodable {
     var type: String = "text"
     var label: String = ""
     var allowedValues: String = ""
-    var isRequired: CheckboxFormInput = .init(value: false)
+    var isRequired: NewAdminFormFieldCheckbox.Input = .init(value: false)
 
     enum CodingKeys: String, CodingKey {
         case key
@@ -34,7 +34,7 @@ struct ContactFormFieldAddForm: Decodable {
         )
         isRequired =
             try container.decodeIfPresent(
-                CheckboxFormInput.self,
+                NewAdminFormFieldCheckbox.Input.self,
                 forKey: .isRequired
             ) ?? .init(value: false)
     }

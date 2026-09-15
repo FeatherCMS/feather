@@ -26,7 +26,7 @@ struct AuthCredentialForm: Component {
 
     struct State: Sendable {
         var identity: FieldState
-        var identityOptions: [NewAdminAutocompleteField.Option]
+        var identityOptions: [NewAdminFormFieldSelectAutocomplete.Option]
         var email: NewAdminFormFieldInput.State
         var password: NewAdminFormFieldInput.State
         var passwordRequired: Bool
@@ -61,7 +61,7 @@ struct AuthCredentialForm: Component {
                 .name("userId")
                 .value(state.identity.value)
             context.render(
-                NewAdminAutocompleteField(
+                NewAdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: state.email.name,
                         label: "Auth email",

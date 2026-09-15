@@ -27,7 +27,7 @@ struct AccountProfileForm: Component {
         var firstName: FieldState
         var lastName: FieldState
         var profileImageAssetId: FieldState
-        var selectedImageAsset: AdminMediaAssetReferenceModel?
+        var selectedImageAsset: NewAdminMediaAsset?
         var error: String?
         var success: String?
         var nonceToken: String? = nil

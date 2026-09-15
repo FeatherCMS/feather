@@ -92,7 +92,7 @@ struct AdminListWebMenuDefaultController:
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
-            as: ListRemoveFormInput.self,
+            as: NewAdminListRemoveFormInput.self,
             context: context
         )
         if !payload.normalizedSelectedIds.isEmpty {

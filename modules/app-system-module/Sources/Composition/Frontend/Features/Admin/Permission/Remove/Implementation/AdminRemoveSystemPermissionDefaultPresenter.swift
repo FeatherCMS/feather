@@ -28,7 +28,7 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
             request: request,
             context: context,
             title: "Manage system permissions",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: SystemPermissionRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove selected permissions",

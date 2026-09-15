@@ -74,7 +74,7 @@ struct AdminListAccountInvitationDefaultPresenter:
     ) async throws -> HTMLResponse {
         let hiddenFields =
             selectedIds.map {
-                NewAdminConfirmation.HiddenField(name: "ids", value: $0)
+                NewAdminRemoveConfirmation.HiddenField(name: "ids", value: $0)
             } + [
                 .init(name: "page", value: "\(page)"),
                 .init(name: "search", value: search ?? ""),
@@ -86,7 +86,7 @@ struct AdminListAccountInvitationDefaultPresenter:
             request: request,
             context: context,
             title: "Remove selected invitations",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: AccountAdminRoutes.invitationBreadcrumb + [
                     .init(
                         label: "Remove",

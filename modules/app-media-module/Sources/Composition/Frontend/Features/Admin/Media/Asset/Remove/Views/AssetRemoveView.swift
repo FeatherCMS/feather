@@ -14,7 +14,7 @@ struct AssetRemoveView: Component {
 
     func html(context: inout RenderContext) -> some BasicTag {
         context.render(
-            NewAdminConfirmation(
+            NewAdminRemoveConfirmation(
                 breadcrumb: MediaAssetRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove media item",

@@ -28,14 +28,6 @@ struct AdminViewNewsletterCampaignSubscriberDefaultPresenter:
                 status: item.status,
                 isEdit: true,
                 error: nil,
-                breadcrumb: .init(links: [
-                    .init(label: "Admin", link: "/admin/"),
-                    .init(
-                        label: "Campaigns",
-                        link: "/admin/newsletter/campaigns/"
-                    ),
-                    .init(label: "Subscriber", link: ""),
-                ]),
                 editAction: nil
             )
         )

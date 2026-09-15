@@ -21,7 +21,7 @@ struct AdminRemoveContactSubmissionsDefaultPresenter:
             request: request,
             context: context,
             title: "Remove contact submissions",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: ContactAdminRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove contact submissions",

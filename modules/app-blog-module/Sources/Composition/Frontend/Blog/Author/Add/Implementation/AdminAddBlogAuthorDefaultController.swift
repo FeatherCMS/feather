@@ -128,7 +128,7 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
         content: String = "",
         profileImageAssetId: String? = nil,
         metadata: AdminMetadataFormValue? = nil,
-        selectedProfileImage: AdminMediaAssetReferenceModel? = nil,
+        selectedProfileImage: NewAdminMediaAsset? = nil,
         permissions: Set<String>,
         slugPrefix: String? = nil
     ) -> BlogAuthorForm.State {

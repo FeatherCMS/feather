@@ -25,16 +25,16 @@ import WebComponents
 
 struct LoginForm: Component {
 
-    struct State: FeatherAdmin.Object {
-        var email: EmailField.State
-        var password: PasswordField.State
-        var isPersistent: CheckboxField.State
+    struct State {
+        var email: NewAdminFormFieldInput.State
+        var password: NewAdminFormFieldInput.State
+        var isPersistent: NewAdminFormFieldCheckbox.State
         var redirectPath: String
 
         mutating func apply(
             errors: [String: String]
         ) {
-            email.error = errors[email.key]
+            email.error = errors[email.name]
         }
     }
 
@@ -53,17 +53,19 @@ struct LoginForm: Component {
                 .name("redirect")
                 .value(state.redirectPath)
             Section {
-                context.render(EmailField(state: state.email))
+                context.render(NewAdminFormFieldInput(state: state.email))
             }
             .class("login-field")
 
             Section {
-                context.render(PasswordField(state: state.password))
+                context.render(NewAdminFormFieldInput(state: state.password))
             }
             .class("login-field")
 
             Section {
-                context.render(CheckboxField(state: state.isPersistent))
+                context.render(
+                    NewAdminFormFieldCheckbox(state: state.isPersistent)
+                )
             }
             .class("login-checkbox-field")
 

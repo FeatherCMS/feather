@@ -12,7 +12,7 @@ struct AdminContactFormTabs: Component {
 
     func html(context: inout RenderContext) -> Div {
         context.render(
-            NewAdminPillTab(links: [
+            NewAdminTabBar(links: [
                 .init(
                     label: "Details",
                     href: "/admin/contact/forms/\(formId)/details/",

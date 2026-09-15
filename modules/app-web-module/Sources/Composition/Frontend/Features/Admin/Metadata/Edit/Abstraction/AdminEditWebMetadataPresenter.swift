@@ -8,7 +8,7 @@ protocol AdminEditWebMetadataPresenter: Sendable {
         id: String,
         state: WebMetadataForm.State,
         permissions: Set<String>,
-        navigationTabs: [NewAdminPillTab.Link],
+        navigationTabs: [NewAdminTabBar.Link],
         configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> HTMLResponse
 

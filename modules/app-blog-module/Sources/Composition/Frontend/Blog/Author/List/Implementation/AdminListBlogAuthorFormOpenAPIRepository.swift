@@ -95,9 +95,9 @@ struct AdminListBlogAuthorFormOpenAPIRepository {
 
     private func loadProfileImage(
         assetId: String?
-    ) async throws -> AdminMediaAssetReferenceModel? {
+    ) async throws -> NewAdminMediaAsset? {
         try await api.withOpenAPIRepositoryErrorMapping {
-            client -> AdminMediaAssetReferenceModel? in
+            client -> NewAdminMediaAsset? in
             guard let assetId, !assetId.isEmpty else {
                 return nil
             }

@@ -63,7 +63,7 @@ struct AdminEditContactFormFieldDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: AdminToastRedirect.location(
+                    .location: AdminNotificationRedirect.location(
                         defaultPath: basePath,
                         title: "Updated",
                         message: "Contact form field updated successfully."

@@ -15,7 +15,7 @@ struct AdminRemoveNewsletterIssueDefaultPresenter:
             request: request,
             context: context,
             title: "Remove campaign issue",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: NewsletterAdminRoutes.breadcrumb + [
                     .init(
                         label: "Issues",

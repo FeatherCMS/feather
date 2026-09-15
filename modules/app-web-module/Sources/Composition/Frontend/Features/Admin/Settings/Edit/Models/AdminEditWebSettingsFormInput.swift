@@ -37,7 +37,7 @@ public struct AdminEditWebSettingsFormInput: Codable, Sendable, Equatable,
     public let timezone: String
     public let title: String
     public let excerpt: String
-    public let noIndex: CheckboxFormInput
+    public let noIndex: NewAdminFormFieldCheckbox.Input
     public let css: String
     public let js: String
 
@@ -77,7 +77,7 @@ public struct AdminEditWebSettingsFormInput: Codable, Sendable, Equatable,
         self.excerpt = try container.decode(String.self, forKey: .excerpt)
         self.noIndex =
             try container.decodeIfPresent(
-                CheckboxFormInput.self,
+                NewAdminFormFieldCheckbox.Input.self,
                 forKey: .noIndex
             ) ?? .init(value: false)
         self.css = try container.decode(String.self, forKey: .css)

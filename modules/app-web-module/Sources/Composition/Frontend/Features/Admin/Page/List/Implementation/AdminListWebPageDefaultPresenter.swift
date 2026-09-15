@@ -87,7 +87,7 @@ struct AdminListWebPageDefaultPresenter:
             request: request,
             context: context,
             title: "Remove selected pages",
-            content: NewAdminConfirmation(
+            content: NewAdminRemoveConfirmation(
                 breadcrumb: webPageBreadcrumbState(),
                 pageHeader: .init(
                     title: "Remove selected pages",

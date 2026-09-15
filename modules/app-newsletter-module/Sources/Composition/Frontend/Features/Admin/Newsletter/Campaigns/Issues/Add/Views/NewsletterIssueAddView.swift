@@ -57,7 +57,7 @@ struct NewsletterIssueAddView: Component {
                 )
             )
             context.render(
-                NewAdminPillTab(links: [
+                NewAdminTabBar(links: [
                     .init(
                         label: "Details",
                         href:

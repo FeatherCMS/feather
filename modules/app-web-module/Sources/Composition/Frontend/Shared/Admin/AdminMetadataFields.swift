@@ -58,7 +58,7 @@ public struct AdminMetadataFields: Component {
         public var title: FieldState
         public var excerpt: FieldState
         public var imageUrl: FieldState
-        public var selectedImageAsset: AdminMediaAssetReferenceModel?
+        public var selectedImageAsset: NewAdminMediaAsset?
         public var canonicalUrl: FieldState
         public var noIndex: CheckboxState
         public var primaryKeyword: FieldState
@@ -76,7 +76,7 @@ public struct AdminMetadataFields: Component {
             title: FieldState,
             excerpt: FieldState,
             imageUrl: FieldState,
-            selectedImageAsset: AdminMediaAssetReferenceModel? = nil,
+            selectedImageAsset: NewAdminMediaAsset? = nil,
             canonicalUrl: FieldState,
             noIndex: CheckboxState,
             primaryKeyword: FieldState,
@@ -232,7 +232,7 @@ public struct AdminMetadataFields: Component {
                             )
                         )
                         context.render(
-                            NewAdminDatePicker(
+                            NewAdminFormFieldDatePicker(
                                 state: .init(
                                     name: state.publicationDate.key,
                                     label: state.publicationDate.label,
@@ -243,7 +243,7 @@ public struct AdminMetadataFields: Component {
                             )
                         )
                         context.render(
-                            NewAdminDatePicker(
+                            NewAdminFormFieldDatePicker(
                                 state: .init(
                                     name: state.expirationDate.key,
                                     label: state.expirationDate.label,
@@ -393,7 +393,7 @@ public struct AdminMetadataFields: Component {
 
     private func imagePicker(
         _ field: FieldState,
-        selectedAsset: AdminMediaAssetReferenceModel?,
+        selectedAsset: NewAdminMediaAsset?,
         context: inout RenderContext
     ) -> Section {
         let browsePath =
@@ -407,7 +407,17 @@ public struct AdminMetadataFields: Component {
                         value: field.value,
                         error: field.error
                     ),
-                    selectedAsset: selectedAsset,
+                    selectedAsset: selectedAsset.map {
+                        .init(
+                            id: $0.id,
+                            storageKey: $0.storageKey,
+                            baseName: $0.baseName,
+                            type: $0.type,
+                            title: $0.title,
+                            altText: $0.altText,
+                            status: $0.status
+                        )
+                    },
                     browsePath: browsePath,
                     allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                     outputMode: .originalURL

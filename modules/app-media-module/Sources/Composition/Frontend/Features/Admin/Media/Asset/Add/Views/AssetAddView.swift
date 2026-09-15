@@ -25,7 +25,7 @@ struct AssetAddView: Component {
         var view: String = "grid"
         var action: String = "/admin/media/assets/add/"
         var isPicker: Bool = false
-        var selectedAsset: AdminMediaAssetReferenceModel? = nil
+        var selectedAsset: NewAdminMediaAsset? = nil
     }
 
     let state: State
