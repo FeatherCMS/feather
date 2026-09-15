@@ -10,14 +10,13 @@ import WebBuilders
 import WebComponents
 
 struct WebMetadataEdit: Component {
-
     struct State {
         let id: String
         let form: WebMetadataForm.State
         let breadcrumb: [NewAdminBreadcrumb.Link]
         let action: String
         let navigationTabs: [NewAdminPillTab.Link]
-        let title: String
+        let pageHeader: NewAdminPageHeader.State
     }
 
     let state: State
@@ -26,14 +25,7 @@ struct WebMetadataEdit: Component {
         Section {
             context.render(NewAdminBreadcrumb(links: state.breadcrumb))
             context.render(
-                NewAdminPageHeader(
-                    state: .init(
-                        title: state.title,
-                        description:
-                            "Edit the metadata used when this page is rendered and shared.",
-                        previewHref: previewPath
-                    )
-                )
+                NewAdminPageHeader(state: state.pageHeader)
             )
             context.render(NewAdminPillTab(links: state.navigationTabs))
             context.render(
@@ -45,13 +37,5 @@ struct WebMetadataEdit: Component {
             )
         }
         .class("cms-section")
-    }
-
-    private var previewPath: String? {
-        guard let slug = state.form.slug.value else { return nil }
-        let normalizedSlug = slug.trimmingCharacters(
-            in: .whitespacesAndNewlines
-        )
-        return normalizedSlug.isEmpty ? nil : "/\(normalizedSlug)/"
     }
 }

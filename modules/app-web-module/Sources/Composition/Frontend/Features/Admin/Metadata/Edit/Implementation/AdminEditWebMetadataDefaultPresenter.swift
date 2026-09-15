@@ -31,7 +31,12 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
                     breadcrumb: configuration?.breadcrumb ?? breadcrumb(id: id),
                     action: request.uri.path,
                     navigationTabs: navigationTabs,
-                    title: title
+                    pageHeader: .init(
+                        title: title,
+                        description: configuration?.description
+                            ?? "Edit the metadata used when this page is rendered and shared.",
+                        previewHref: previewPath(for: state)
+                    )
                 )
             )
         )
@@ -75,5 +80,13 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
             .init(label: "Web", link: "/admin/web/"),
             .init(label: "Metadata", link: "/admin/web/metadata/"),
         ]
+    }
+
+    private func previewPath(for state: WebMetadataForm.State) -> String? {
+        guard let slug = state.slug.value else { return nil }
+        let normalizedSlug = slug.trimmingCharacters(
+            in: .whitespacesAndNewlines
+        )
+        return normalizedSlug.isEmpty ? nil : "/\(normalizedSlug)/"
     }
 }
