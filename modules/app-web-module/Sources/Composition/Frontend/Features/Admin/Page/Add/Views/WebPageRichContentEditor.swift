@@ -44,8 +44,27 @@ struct WebPageRichContentEditor: Component {
 
         let baseSelectors: [any CSS.Selector] = [
             Custom("\(root)") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(6.px)
                 Width(100.percent)
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
+            },
+            Custom("\(root) > .new-admin-form-field-label") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(5.px)
+                FontWeight(.normal)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                Opacity(0.8)
+            },
+            Custom("\(root) > .new-admin-media-picker > label") {
+                Display(.none)
+            },
+            Custom(
+                "\(root) > .new-admin-media-picker > [data-media-picker-open]"
+            ) {
+                Display(.none)
             },
             Custom("\(root) *") {
                 BoxSizing(.borderBox)
@@ -340,6 +359,32 @@ struct WebPageRichContentEditor: Component {
                 BorderColor(.variable(TokenKey.Colors.Link.default))
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
                 Color(.variable(TokenKey.Colors.Link.default))
+            },
+            Custom("\(root) .media-picker-button") {
+                Display(.inlineFlex)
+                AlignItems(.center)
+                JustifyContent(.center)
+                BoxSizing(.borderBox)
+                UnsafeRawProperty(name: "font", value: "inherit")
+                FontWeight(.normal)
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Buttons.Ghost.Primary.border)
+                )
+                BorderRadius(6.px)
+                Padding(vertical: 7.px, horizontal: 10.px)
+                Background(
+                    .variable(TokenKey.Colors.Buttons.Ghost.Primary.tint)
+                )
+                Color(.variable(TokenKey.Colors.Buttons.Ghost.Primary.text))
+                Cursor(.pointer)
+                TextDecoration(.none)
+            },
+            Custom("\(root) .media-picker-button:hover") {
+                Background(
+                    .variable(TokenKey.Colors.Buttons.Ghost.Primary.hover)
+                )
             },
             Custom("\(root) #rawView") {
                 Padding(18.px)

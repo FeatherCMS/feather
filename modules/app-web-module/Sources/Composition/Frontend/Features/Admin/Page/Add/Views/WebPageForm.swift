@@ -71,70 +71,64 @@ struct WebPageForm: Component {
 
             context.render(NewAdminPillTab(links: metadataTabLinks()))
 
+            context.render(
+                NewAdminFormFieldMediaPicker(
+                    state: .init(
+                        field: .init(
+                            key: state.imageAssetId.key,
+                            label: state.imageAssetId.label,
+                            value: state.imageAssetId.value,
+                            error: state.imageAssetId.error
+                        ),
+                        selectedAsset: state.selectedImageAsset,
+                        browsePath:
+                            "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
+                        allowedExtensions: ["png", "jpg", "jpeg", "webp"]
+                    )
+                )
+            )
+            context.render(
+                NewAdminFormFieldInput(
+                    state: .init(
+                        name: state.title.key,
+                        label: state.title.label,
+                        value: state.title.value,
+                        error: state.title.error,
+                        isRequired: true
+                    )
+                )
+            )
+            context.render(textarea(state.excerpt, rows: 4))
+            context.render(
+                WebPageRichContentEditor(
+                    state: .init(
+                        key: state.content.key,
+                        label: state.content.label,
+                        value: state.content.value,
+                        error: state.content.error
+                    )
+                )
+            )
             Div {
-
-                context.render(
-                    NewAdminFormFieldMediaPicker(
-                        state: .init(
-                            field: .init(
-                                key: state.imageAssetId.key,
-                                label: state.imageAssetId.label,
-                                value: state.imageAssetId.value,
-                                error: state.imageAssetId.error
-                            ),
-                            selectedAsset: state.selectedImageAsset,
-                            browsePath:
-                                "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
-                            allowedExtensions: ["png", "jpg", "jpeg", "webp"]
-                        )
-                    )
-                )
-
-                context.render(
-                    NewAdminFormFieldInput(
-                        state: .init(
-                            name: state.title.key,
-                            label: state.title.label,
-                            value: state.title.value,
-                            error: state.title.error,
-                            isRequired: true
-                        )
-                    )
-                )
-                context.render(textarea(state.excerpt, rows: 4))
-                context.render(
-                    WebPageRichContentEditor(
-                        state: .init(
-                            key: state.content.key,
-                            label: state.content.label,
-                            value: state.content.value,
-                            error: state.content.error
-                        )
-                    )
-                )
-            }
-            Section {
-                Div {
-                    context.render(NewAdminSubmitButton(submitLabel))
-                    if let publishLabel {
-                        Button(publishLabel)
-                            .type(.submit)
-                            .name("submitAction")
-                            .value("publish")
-                            .class("button", "secondary")
-                    }
-                    if let removeHref {
-                        context.render(
-                            NewAdminButton(
-                                removeLabel,
-                                href: removeHref,
-                                style: .destructive
-                            )
-                        )
-                    }
+                context.render(NewAdminSubmitButton(submitLabel))
+                if let publishLabel {
+                    Button(publishLabel)
+                        .type(.submit)
+                        .name("submitAction")
+                        .value("publish")
+                        .class("button", "secondary")
                 }
-                .class("new-admin-form__actions")
+                if let removeHref {
+                    context.render(
+                        NewAdminButton(
+                            removeLabel,
+                            href: removeHref,
+                            style: .destructive
+                        )
+                    )
+                }
             }
+            .class("new-admin-form__actions")
         }
         return context.render(form)
     }

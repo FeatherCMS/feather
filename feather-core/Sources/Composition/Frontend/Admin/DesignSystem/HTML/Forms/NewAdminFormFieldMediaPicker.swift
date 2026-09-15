@@ -138,7 +138,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
                     Height(44.px)
                 }
                 Custom("\(root)__current h3") {
-                    Margin(0)
+                    Margin(top: 0.px, right: 0.px, bottom: 8.px, left: 0.px)
                     Color(.variable(TokenKey.Colors.Materials.Secondary.text))
                     FontSize(1.rem)
                     WordBreak(.breakWord)
@@ -338,7 +338,9 @@ extension NewAdminFormFieldMediaPicker {
     fileprivate func currentCard(context: inout RenderContext)
         -> some FlowContent
     {
-        Div {
+        let hasSelectedAsset = state.field.value?.isEmpty == false
+
+        return Div {
             previewBlock()
             Div {
                 H3(state.selectedAsset.map(displayTitle) ?? "No asset selected")
@@ -346,19 +348,21 @@ extension NewAdminFormFieldMediaPicker {
                     .data("empty-title", "No asset selected")
                 Div {
                     context.render(
-                        NewAdminControlButton("Choose asset")
+                        NewAdminControlButton(
+                            "Choose asset",
+                            style: .ghost(.primary)
+                        )
                     )
-                    .class("new-admin-media-picker__choose")
+                    .class("new-admin-media-picker__choose", "row-button")
                     .data("media-picker-open", state.field.key)
                     context.render(
                         NewAdminControlButton(
                             "Clear",
-                            style: .ghost(.secondary)
+                            style: hasSelectedAsset ? .destructive : .disabled
                         )
                     )
-                    .class("new-admin-media-picker__clear")
+                    .class("new-admin-media-picker__clear", "row-button")
                     .data("media-picker-clear", state.field.key)
-                    .if(state.field.value?.isEmpty != false) { $0.hidden() }
                 }
                 .class("new-admin-media-picker__actions")
             }
@@ -540,7 +544,11 @@ extension NewAdminFormFieldMediaPicker {
             var title = document.querySelector('[data-media-picker-title="' + field + '"]');
             if (title) { title.textContent = asset ? fileName(asset) : title.getAttribute("data-empty-title"); }
             var clear = document.querySelector('[data-media-picker-clear="' + field + '"]');
-            if (clear) { clear.hidden = !asset; }
+            if (clear) {
+              clear.disabled = !asset;
+              clear.classList.toggle("destructive", !!asset);
+              clear.classList.toggle("disabled", !asset);
+            }
           }
 
           function setTab(modal, tab) {
