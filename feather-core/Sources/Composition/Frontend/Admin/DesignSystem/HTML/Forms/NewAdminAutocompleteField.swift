@@ -98,6 +98,12 @@ public struct NewAdminAutocompleteField: Component {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Primary.border)
                 )
+                Outline(
+                    2.px,
+                    .solid,
+                    .color(.variable(TokenKey.Colors.Accents.Primary.border))
+                )
+                OutlineOffset(2.px)
             },
             Custom(".new-admin-autocomplete__input") {
                 Width(100.percent)
@@ -133,16 +139,26 @@ public struct NewAdminAutocompleteField: Component {
                 Display(.inlineFlex)
                 FlexWrap(.wrap)
                 AlignItems(.center)
-                Gap(4.px)
+                Gap(8.px)
+                Width(100.percent)
+                BoxSizing(.borderBox)
+            },
+            Custom(".new-admin-autocomplete__selected:empty") {
+                Display(.none)
             },
             Class("new-admin-autocomplete__chip") {
                 Display(.inlineFlex)
                 AlignItems(.center)
-                Gap(4.px)
+                Gap(6.px)
                 MaxWidth(100.percent)
-                Padding(vertical: 3.px, horizontal: 8.px)
+                Padding(top: 5.px, right: 12.px, bottom: 5.px, left: 16.px)
                 BorderRadius(999.px)
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.hover))
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
                 FontSize(0.875.rem)
             },
@@ -150,13 +166,19 @@ public struct NewAdminAutocompleteField: Component {
                 Display(.inlineFlex)
                 AlignItems(.center)
                 JustifyContent(.center)
-                Width(20.px)
-                Height(20.px)
+                Width(24.px)
+                Height(24.px)
+                BoxSizing(.borderBox)
                 Padding(0.px)
-                Border(0.px)
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
                 BorderRadius(999.px)
-                Background(.transparent)
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                FontSize(1.rem)
                 Cursor(.pointer)
             },
             Custom(".new-admin-autocomplete__chip-remove:focus-visible") {
@@ -289,26 +311,26 @@ public struct NewAdminAutocompleteField: Component {
                         isRequired: state.isRequired
                     )
                 )
+                if state.selectionMode == .multiple {
+                    Div {
+                        for option in selectedOptions {
+                            Span {
+                                Span(option.label)
+                                Button("×")
+                                    .type(.button)
+                                    .class(
+                                        "new-admin-autocomplete__chip-remove"
+                                    )
+                                    .data("value", option.value)
+                                    .ariaLabel("Remove \(option.label)")
+                            }
+                            .class("new-admin-autocomplete__chip")
+                        }
+                    }
+                    .class("new-admin-autocomplete__selected")
+                }
                 Div {
                     Div {
-                        if state.selectionMode == .multiple {
-                            Div {
-                                for option in selectedOptions {
-                                    Span {
-                                        Span(option.label)
-                                        Button("×")
-                                            .type(.button)
-                                            .class(
-                                                "new-admin-autocomplete__chip-remove"
-                                            )
-                                            .data("value", option.value)
-                                            .ariaLabel("Remove \(option.label)")
-                                    }
-                                    .class("new-admin-autocomplete__chip")
-                                }
-                            }
-                            .class("new-admin-autocomplete__selected")
-                        }
                         Input()
                             .type(.text)
                             .class("new-admin-autocomplete__input")

@@ -88,7 +88,7 @@ public struct NewAdminFormGroup: Component {
             Custom(
                 ".new-admin-form-group[open] > summary + .new-admin-form-group__content"
             ) {
-                MarginTop(16.px)
+                MarginTop(24.px)
             },
             Custom(".new-admin-form-group__content") {
                 Display(.flex)
