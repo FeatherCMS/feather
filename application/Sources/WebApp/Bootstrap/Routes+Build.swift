@@ -18,11 +18,9 @@ import HummingbirdAuth
 import AuthFrontend
 import AccountFrontend
 import Logging
-import WebStandards
 import WebApplication
 
 func buildRouter(
-    styleshetCollector: GlobalStylesheetCollector,
     environment: AppEnvironment,
     referenceTypeOptions: [WebMetadataReferenceTypeOption],
     templateOptions: [WebPageTemplateOption],
@@ -72,7 +70,8 @@ func buildRouter(
     let adminMenuCatalog = try await AdminMenuCatalog.load(from: adminEvents)
     let renderingEngine = DefaultRenderingEngine(
         publicOrigins: environment.publicOrigins,
-        adminMenuCatalog: adminMenuCatalog
+        adminMenuCatalog: adminMenuCatalog,
+        adminEvents: adminEvents
     )
     let applicationTemplatePaths = Bundle.module.url(
         forResource: "Templates",
@@ -110,8 +109,7 @@ func buildRouter(
         renderingEngine: renderingEngine,
         themeRenderer: themeRenderer,
         publicContentRepository: publicContentRepository,
-        publicContentEvents: publicContentEvents,
-        styleshetCollector: styleshetCollector
+        publicContentEvents: publicContentEvents
     )
 
     AuthFrontendRoutes.registerAppRoutes(

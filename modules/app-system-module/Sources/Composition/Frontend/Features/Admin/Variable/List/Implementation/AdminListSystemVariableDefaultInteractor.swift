@@ -1,5 +1,6 @@
 import FeatherAdmin
 import Hummingbird
+import SystemAdminAPI
 
 struct AdminListSystemVariableDefaultInteractor:
     AdminListSystemVariableInteractor
@@ -9,15 +10,41 @@ struct AdminListSystemVariableDefaultInteractor:
     func listSystemVariables(
         page: Int,
         search: String?
-    ) async throws -> AdminListSystemVariableModel {
-        try await repository.listSystemVariables(page: page, search: search)
-    }
-
-    func remove(
-        ids: [String]
-    ) async throws {
-        for id in ids {
-            try await repository.delete(id: id)
+    ) async throws -> NewAdminListModel<
+        Components.Schemas.SystemVariableListItemSchema
+    > {
+        do {
+            let response = try await repository.listSystemVariables(
+                page: page,
+                search: search,
+                ids: nil
+            )
+            let body = try response.body.json
+            return .init(
+                items: body.data.items,
+                pageState: .init(
+                    page: body.query.page.number,
+                    pageSize: body.query.page.size,
+                    total: body.data.total
+                )
+            )
+        }
+        catch let error as OpenAPIRepositoryError {
+            throw map(error)
         }
     }
+
+    private func map(
+        _ error: OpenAPIRepositoryError
+    ) -> AdminListSystemVariableError {
+        switch error {
+        case .unauthorized:
+            .unauthorized
+        case .forbidden:
+            .forbidden
+        case .notFound, .conflict, .failure, .transport:
+            .unavailable
+        }
+    }
+
 }

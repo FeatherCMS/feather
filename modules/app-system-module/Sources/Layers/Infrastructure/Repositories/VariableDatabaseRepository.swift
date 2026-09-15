@@ -13,6 +13,7 @@ extension VariableTable.Row {
     var asDomain: Variable {
         .init(
             id: id,
+            key: key,
             value: value,
             name: name,
             notes: notes,
@@ -25,9 +26,16 @@ extension VariableTable.Row {
 public struct VariableDatabaseRepository: VariableRepository {
 
     public let context: any DatabaseContext
+    public let idGenerator: any IDGenerator
 
     public init(context: any DatabaseContext) {
         self.context = context
+        self.idGenerator = NanoIDGenerator()
+    }
+
+    public init(context: DatabaseTransactionContext) {
+        self.context = context
+        self.idGenerator = context.idGenerator
     }
 
     public func insert(
@@ -36,13 +44,21 @@ public struct VariableDatabaseRepository: VariableRepository {
         let table = VariableTable(connection: context.connection)
         let saved = try await table.create(
             row: .init(
-                id: model.id,
+                id: idGenerator.generate(),
+                key: model.key,
                 value: model.value,
                 name: model.name,
                 notes: model.notes
             )
         )
         return saved.asDomain
+    }
+
+    public func find(
+        key: String
+    ) async throws -> Variable? {
+        let table = VariableTable(connection: context.connection)
+        return try await table.find(key: key)?.asDomain
     }
 
     public func find(
@@ -60,6 +76,7 @@ public struct VariableDatabaseRepository: VariableRepository {
             id: model.id,
             row: .init(
                 id: model.id,
+                key: model.key,
                 value: model.value,
                 name: model.name,
                 notes: model.notes,

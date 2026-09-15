@@ -8,14 +8,11 @@ struct AdminEditUserIdentityRoleOpenAPIRepository:
     AdminEditUserIdentityRoleRepository
 {
     let api: UserAdminAPIClient
-    private let unauthorizedMessage =
-        "Please sign in again to view user roles."
-
     init(api: UserAdminAPIClient) {
         self.api = api
     }
 
-    func list() async throws -> [AdminEditUserIdentityRoleOptionModel] {
+    func list() async throws -> [UserIdentityEditRoleOptionModel] {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.userRoleSearch(
                 headers: .init(accept: [.init(contentType: .json)]),
@@ -32,13 +29,9 @@ struct AdminEditUserIdentityRoleOpenAPIRepository:
                     .init(id: $0.id, name: $0.name ?? "")
                 }
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: unauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot access user roles."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

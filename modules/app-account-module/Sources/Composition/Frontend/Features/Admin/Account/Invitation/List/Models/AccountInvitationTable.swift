@@ -1,202 +1,301 @@
 import AccountAdminAPI
+import AccountContracts
 import FeatherAdmin
-import FeatherValidation
+import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AccountInvitationTable: Component {
-
     struct State {
         let isAdded: Bool
         let isEdited: Bool
         let isRemoved: Bool
         let canAccess: Bool
-        let permissions: Set<String>
-        let canAdd: Bool
+        let permissions: NewAdminListActions
         let invitations: [Components.Schemas.AccountInvitationListItemSchema]
-        let page: Int
-        let pageSize: Int
-        let total: Int
+        let pageState: NewAdminListPageState
         let search: String
-        let deniedInfo: String
-        let deniedMessage: String
-        let breadcrumb: AdminBreadcrumb.State
     }
 
     let state: State
 
-    func content() -> some BasicTag {
-        Section {
-            if !state.canAccess {
-                H1(state.deniedInfo)
-                P(state.deniedMessage)
-            }
-            else {
-                AdminBreadcrumb(state: state.breadcrumb)
-                H1("User invitations")
+    func html(context: inout BuilderContext) -> some BasicTag {
+        let canDelete = state.permissions.allows(
+            AccountPermissions.Invitations.delete
+        )
 
-                if state.isAdded {
-                    P("User invitation added successfully.")
-                }
-                if state.isEdited {
-                    P("User invitation edited successfully.")
-                }
-                if state.isRemoved {
-                    P("User invitation removed successfully.")
-                }
-                if state.canAdd {
-                    Div {
-                        AdminNavigationButton(
-                            "Add invitation",
-                            href: "/admin/account/invitations/add/"
-                        )
-                    }
-                    .class("button-row")
-                    Br()
-                    Br()
-                }
-                ListTableSearchForm(
+        return Div {
+            context.build(
+                NewAdminBreadcrumb(
+                    links: AccountAdminRoutes.invitationBreadcrumb
+                )
+            )
+            context.build(
+                NewAdminPageHeader(
                     state: .init(
-                        action: "/admin/account/invitations/",
-                        placeholder: "Quick search invitations",
-                        search: state.search
+                        title: "User invitations",
+                        description:
+                            "Manage invitations sent to prospective users."
                     )
                 )
-
-                if state.invitations.isEmpty {
-                    let totalPages = max(
-                        1,
-                        (state.total + state.pageSize - 1) / state.pageSize
-                    )
-                    if state.total > 0 && state.page > totalPages {
-                        P("Page \(state.page) does not exist.")
-                        P {
-                            Span("Go to ")
-                            A("page 1")
-                                .href("/admin/account/invitations/?page=1")
-                            Span(" or ")
-                            A("page \(totalPages)")
-                                .href(
-                                    "/admin/account/invitations/?page=\(totalPages)"
+            )
+            context.build(
+                NewAdminList(
+                    table: {
+                        if !state.canAccess {
+                            context.build(
+                                NewAdminStatusView(
+                                    state: .init(
+                                        title: "Forbidden",
+                                        message:
+                                            "Your identity cannot access user invitations."
+                                    ),
+                                    icon: FeatherIcons.alertCircle()
                                 )
-                            Span(".")
+                            )
                         }
-                    }
-                    else {
-                        P(
-                            state.search.isEmpty
-                                ? "No user invitations yet."
-                                : "No invitations match your search."
-                        )
-                    }
-                }
-                else {
-                    let canRemove = state.permissions.contains(
-                        "account:invitations:delete"
-                    )
-                    ListTableRemoveForm(
-                        state: .init(
-                            action: "/admin/account/invitations/remove/",
-                            page: state.page,
-                            search: state.search,
-                            canRemove: canRemove,
-                            buttonTitle: "Remove selected"
-                        ),
-                        table: ListTableShell(
-                            table: Table {
-                                Thead {
-                                    Tr {
-                                        if canRemove {
-                                            ListTableSelectAllCheckbox()
-                                        }
-                                        Th("Email")
-                                            .columnWidth(percent: 62)
-                                        Th("Expires At")
-                                            .columnWidth(percent: 28)
-                                        Th("Actions")
-                                    }
-                                }
-                                Tbody {
-                                    for invitation in state.invitations {
-                                        Tr {
-                                            if canRemove {
-                                                ListTableRowSelectCheckbox(
-                                                    state: .init(
-                                                        id: invitation.id
-                                                    )
+                        else if state.pageState.isPageOutOfRange {
+                            context.build(
+                                NewAdminListInvalidPageState(
+                                    pageState: state.pageState,
+                                    path: AccountAdminRoutes.invitations
+                                        .description
+                                )
+                            )
+                        }
+                        else if state.invitations.isEmpty {
+                            context.build(
+                                NewAdminListEmptyState(
+                                    message: state.search.isEmpty
+                                        ? "No user invitations yet."
+                                        : "No invitations match your search.",
+                                    icon: FeatherIcons.inbox(),
+                                    action: {
+                                        if !state.search.isEmpty {
+                                            context.build(
+                                                NewAdminButton(
+                                                    "Reset search",
+                                                    href: AccountAdminRoutes
+                                                        .invitations
+                                                        .description,
+                                                    style: .secondary
                                                 )
+                                            )
+                                        }
+                                        else if state.permissions.allows(
+                                            AccountPermissions.Invitations
+                                                .create
+                                        ) {
+                                            context.build(
+                                                NewAdminButton(
+                                                    "Add new",
+                                                    href: AccountAdminRoutes
+                                                        .invitationAdd
+                                                        .description
+                                                )
+                                            )
+                                        }
+                                    }
+                                )
+                            )
+                        }
+                        else {
+                            context.build(
+                                NewAdminListSelectionForm(
+                                    state: .init(
+                                        action: AccountAdminRoutes
+                                            .invitationRemoveBulk.description,
+                                        pageState: state.pageState,
+                                        search: state.search,
+                                        button: .init(
+                                            "Remove selected",
+                                            style: .destructive
+                                        ),
+                                        isEnabled: canDelete
+                                    ),
+                                    table: context.build(
+                                        NewAdminListShell(
+                                            layout: .init(
+                                                name: "account-invitations",
+                                                columns: [
+                                                    .fixed(260),
+                                                    .fraction(1),
+                                                    .fixed(220),
+                                                ]
+                                            ),
+                                            hasSelection: canDelete,
+                                            table: Table {
+                                                Thead {
+                                                    Tr {
+                                                        if canDelete {
+                                                            context.build(
+                                                                NewAdminListSelectAllCheckbox()
+                                                            )
+                                                        }
+                                                        Th("Email")
+                                                        Th("Expires at")
+                                                        Th("Actions")
+                                                    }
+                                                }
+                                                Tbody {
+                                                    for invitation in state
+                                                        .invitations
+                                                    {
+                                                        Tr {
+                                                            if canDelete {
+                                                                context.build(
+                                                                    NewAdminListRowCheckbox(
+                                                                        id:
+                                                                            invitation
+                                                                            .id
+                                                                    )
+                                                                )
+                                                            }
+                                                            Td(invitation.email)
+                                                                .data(
+                                                                    "label",
+                                                                    "Email"
+                                                                )
+                                                            Td(
+                                                                DateFormatting
+                                                                    .formatUnixTimestamp(
+                                                                        invitation
+                                                                            .expiresAt
+                                                                    )
+                                                            )
+                                                            .data(
+                                                                "label",
+                                                                "Expires at"
+                                                            )
+                                                            context.build(
+                                                                NewAdminListRowActions(
+                                                                    label:
+                                                                        "Actions",
+                                                                    actions: [
+                                                                        .init(
+                                                                            "View",
+                                                                            href:
+                                                                                AccountAdminRoutes
+                                                                                .invitationDetails(
+                                                                                    RouterPath(
+                                                                                        invitation
+                                                                                            .id
+                                                                                    )
+                                                                                )
+                                                                                .description,
+                                                                            style:
+                                                                                .ghost(
+                                                                                    .primary
+                                                                                ),
+                                                                            permission:
+                                                                                AccountPermissions
+                                                                                .Invitations
+                                                                                .read
+                                                                        ),
+                                                                        .init(
+                                                                            "Edit",
+                                                                            href:
+                                                                                AccountAdminRoutes
+                                                                                .invitationEdit(
+                                                                                    RouterPath(
+                                                                                        invitation
+                                                                                            .id
+                                                                                    )
+                                                                                )
+                                                                                .description,
+                                                                            style:
+                                                                                .ghost(
+                                                                                    .secondary
+                                                                                ),
+                                                                            permission:
+                                                                                AccountPermissions
+                                                                                .Invitations
+                                                                                .update
+                                                                        ),
+                                                                        .init(
+                                                                            "Remove",
+                                                                            href:
+                                                                                AccountAdminRoutes
+                                                                                .invitationRemove(
+                                                                                    RouterPath(
+                                                                                        invitation
+                                                                                            .id
+                                                                                    )
+                                                                                )
+                                                                                .description,
+                                                                            style:
+                                                                                .destructive,
+                                                                            permission:
+                                                                                AccountPermissions
+                                                                                .Invitations
+                                                                                .delete
+                                                                        ),
+                                                                    ],
+                                                                    permissions:
+                                                                        state
+                                                                        .permissions
+                                                                )
+                                                            )
+                                                        }
+                                                    }
+                                                }
                                             }
-                                            Td(invitation.email)
-                                                .data(
-                                                    "label",
-                                                    "Email"
-                                                )
-                                                .columnWidth(percent: 62)
-                                            Td(
-                                                DateFormatting
-                                                    .formatUnixTimestamp(
-                                                        invitation.expiresAt
-                                                    )
-                                            )
-                                            .data(
-                                                "label",
-                                                "Expires At"
-                                            )
-                                            .columnWidth(percent: 28)
-                                            ListTableRowActions(
-                                                state: .init(
-                                                    label: "Actions",
-                                                    actions: [
-                                                        .init(
-                                                            title: "Details",
-                                                            href:
-                                                                "/admin/account/invitations/\(invitation.id)/",
-                                                            className: nil,
-                                                            permission:
-                                                                "account:invitations:read"
-                                                        ),
-                                                        .init(
-                                                            title: "Edit",
-                                                            href:
-                                                                "/admin/account/invitations/\(invitation.id)/edit/",
-                                                            className: "edit",
-                                                            permission:
-                                                                "account:invitations:update"
-                                                        ),
-                                                        .init(
-                                                            title: "Remove",
-                                                            href:
-                                                                "/admin/account/invitations/\(invitation.id)/remove/",
-                                                            className: "delete",
-                                                            permission:
-                                                                "account:invitations:delete"
-                                                        ),
-                                                    ],
-                                                    permissions: state
-                                                        .permissions
-                                                )
-                                            )
-                                        }
-                                    }
+                                            .class("cms-table", "action-table")
+                                            .if(canDelete) {
+                                                $0.class("select-table")
+                                            }
+                                        )
+                                    )
+                                )
+                            )
+                        }
+                    },
+                    search: {
+                        context.build(
+                            NewAdminListSearch(
+                                state: .init(
+                                    action: AccountAdminRoutes.invitations
+                                        .description,
+                                    placeholder: "Quick search invitations",
+                                    search: state.search
+                                )
+                            )
+                        )
+                    },
+                    toolbar: {
+                        if state.permissions.allows(
+                            AccountPermissions.Invitations.create
+                        ) {
+                            context.build(
+                                NewAdminListToolbar {
+                                    context.build(
+                                        NewAdminButton(
+                                            "Add new",
+                                            href: AccountAdminRoutes
+                                                .invitationAdd.description
+                                        )
+                                    )
                                 }
-                            }
-                            .class("cms-table", "action-table")
-                            .if(canRemove) { $0.class("select-table") }
+                            )
+                        }
+                    },
+                    pagination: {
+                        context.build(
+                            NewAdminListPagination(
+                                state: .init(
+                                    path: AccountAdminRoutes.invitations
+                                        .description,
+                                    pageState: state.pageState,
+                                    search: state.search
+                                )
+                            )
                         )
-                    )
-                    ListTablePagination(
-                        state: .init(
-                            path: "/admin/account/invitations/",
-                            page: state.page,
-                            pageSize: state.pageSize,
-                            total: state.total,
-                            search: state.search
-                        )
-                    )
-                }
-            }
+                    }
+                )
+            )
         }
         .class("cms-section")
     }

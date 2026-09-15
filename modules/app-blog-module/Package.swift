@@ -127,7 +127,7 @@ let package = Package(
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "WebApplication", package: "app-web-module"),
 
-                .target(name: "BlogDomain"),                
+                .target(name: "BlogDomain"),
             ],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
@@ -138,7 +138,7 @@ let package = Package(
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
-                
+
                 .target(name: "BlogApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
@@ -176,7 +176,7 @@ let package = Package(
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-                
+
                 .target(name: "BlogSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/Admin",
@@ -188,7 +188,7 @@ let package = Package(
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
-                
+
                 .target(name: "BlogSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/App",
@@ -204,7 +204,7 @@ let package = Package(
 
                 .product(name: "WebAdminAPI", package: "app-web-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
-                
+
                 .target(name: "BlogInfrastructure"),
                 .target(name: "BlogAdminAPI"),
                 .target(name: "BlogAppAPI"),
@@ -216,7 +216,7 @@ let package = Package(
             name: "BlogFrontend",
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
-                
+
                 .product(name: "SystemContracts", package: "app-system-module"),
                 .product(name: "SystemFrontend", package: "app-system-module"),
                 .product(name: "WebContracts", package: "app-web-module"),

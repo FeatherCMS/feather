@@ -7,11 +7,10 @@ protocol AdminEditWebMetadataPresenter: Sendable {
     func renderEditPage(
         id: String,
         state: WebMetadataForm.State,
-        isEdited: Bool,
         permissions: Set<String>,
-        navigationTabs: [AdminPillTabs.Link],
+        navigationTabs: [NewAdminTabBar.Link],
         configuration: AdminWebMetadataEditConfiguration?
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderErrorPage(
         id: String,
@@ -19,9 +18,9 @@ protocol AdminEditWebMetadataPresenter: Sendable {
         message: String,
         permissions: Set<String>,
         configuration: AdminWebMetadataEditConfiguration?
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State
+    ) -> [NewAdminBreadcrumb.Link]
 }

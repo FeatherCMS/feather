@@ -9,15 +9,6 @@ protocol AdminListRedirectRuleController: Sendable {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse
 
-    func getRedirectRulesRemoveConfirmation(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> Response
-
-    func postRedirectRulesRemove(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> Response
 }
 
 extension AdminListRedirectRuleController {
@@ -26,16 +17,8 @@ extension AdminListRedirectRuleController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/redirect/rules",
+            RedirectRuleRoutes.list,
             use: getRedirectRules
-        )
-        router.get(
-            "/admin/redirect/rules/remove/",
-            use: getRedirectRulesRemoveConfirmation
-        )
-        router.post(
-            "/admin/redirect/rules/remove/",
-            use: postRedirectRulesRemove
         )
     }
 }

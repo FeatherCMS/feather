@@ -6,6 +6,7 @@ import FeatherAdmin
 import FeatherContracts
 import FeatherValidation
 import FeatherValidationFoundation
+import Foundation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -15,7 +16,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
     let buildRuntime:
@@ -38,6 +40,10 @@ struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
         let pageSize = 20
         let search = request.querySearch()
         let userID = request.uri.queryParameters["userId"].map(String.init)
+        guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.list)
+        else {
+            return try await presenter.renderError(error: .forbidden)
+        }
 
         do {
             let result =
@@ -72,22 +78,15 @@ struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
                 total: result.total,
                 search: search ?? "",
                 userID: userID,
-                deniedInfo: "Forbidden",
-                deniedMessage:
-                    "Your identity cannot access user emails.",
-                breadcrumb: .init(links: [
+                breadcrumb: [
                     .init(label: "Admin", link: "/admin/"),
                     .init(label: "Auth", link: "/admin/auth/"),
-                    .init(
-                        label: "Emails",
-                        link: "/admin/auth/emails/"
-                    ),
-                ])
+                ]
             )
-            return presenter.renderPage(state: state)
+            return try await presenter.renderPage(state: state)
         }
         catch let error as OpenAPIRepositoryError {
-            return presenter.renderError(error: error)
+            return try await presenter.renderError(error: error)
         }
     }
 
@@ -100,23 +99,25 @@ struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
         let page = request.queryPage()
         let search = request.querySearch()
         let userID = request.uri.queryParameters["userId"].map(String.init)
+        guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.delete)
+        else {
+            return try await presenter.renderError(error: .forbidden)
+                .response(from: request, context: context)
+        }
         guard !selectedIds.isEmpty else {
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListRemoveRedirect.location(
-                        path: "/admin/auth/emails/",
+                    .location: listLocation(
                         page: page,
                         search: search,
-                        queryItems: userID.map { [("userId", $0)] } ?? [],
-                        title: nil,
-                        message: nil
+                        userID: userID
                     )
                 ]
             )
         }
         return
-            try presenter.renderRemoveConfirmation(
+            try await presenter.renderRemoveConfirmation(
                 selectedIds: selectedIds,
                 page: page,
                 search: search,
@@ -130,30 +131,56 @@ struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, _) = buildRuntime(request, context)
-        let payload = try await request.decode(
-            as: AdminListAuthEmailRemoveInput.self,
+        let (interactor, presenter) = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.delete)
+        else {
+            return try await presenter.renderError(error: .forbidden)
+                .response(from: request, context: context)
+        }
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<AdminListAuthEmailRemoveInput>.self,
             context: context
         )
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else {
+            return try await presenter.renderInvalidNoncePage()
+                .response(from: request, context: context)
+        }
+        let payload = nonceRequest.input
         if !payload.normalizedSelectedIds.isEmpty {
             try await interactor.remove(ids: payload.normalizedSelectedIds)
         }
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: ListRemoveRedirect.location(
-                    path: "/admin/auth/emails/",
-                    page: payload.normalizedPage,
-                    search: payload.normalizedSearch,
-                    queryItems: payload.normalizedUserID.map {
-                        [("userId", $0)]
-                    } ?? [],
-                    title: !payload.normalizedSelectedIds.isEmpty
-                        ? "Removed" : nil,
-                    message: !payload.normalizedSelectedIds.isEmpty
-                        ? "User email removed successfully." : nil
-                )
-            ]
+        let location = listLocation(
+            page: payload.normalizedPage,
+            search: payload.normalizedSearch,
+            userID: payload.normalizedUserID
         )
+        guard !payload.normalizedSelectedIds.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
+        return AdminNotificationFlash.redirect(
+            to: location,
+            notification: .init(
+                title: "Removed",
+                message: "User email removed successfully."
+            )
+        )
+    }
+
+    private func listLocation(page: Int, search: String?, userID: String?)
+        -> String
+    {
+        var components = URLComponents(string: "/admin/auth/emails/")!
+        components.queryItems = [
+            .init(name: "page", value: "\(page)"),
+            .init(name: "search", value: search),
+            .init(name: "userId", value: userID),
+        ]
+        .compactMap { $0.value == nil || $0.value!.isEmpty ? nil : $0 }
+        return components.string ?? "/admin/auth/emails/"
     }
 }

@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -15,10 +16,15 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (_, presenter) = buildRuntime(request, context)
-        return presenter.renderPage(
-            form: presenter.formState(name: "", status: "invited"),
-            permissions: context.currentUserPermissions
+        let (interactor, presenter) = buildRuntime(request, context)
+        guard
+            context.isCurrentUserAllowed(to: UserPermissions.Identities.create)
+        else {
+            return try await presenter.renderForbiddenPage()
+        }
+        let roleOptions = (try? await interactor.loadRoleOptions()) ?? []
+        return try await presenter.renderAddPage(
+            state: .empty(roleOptions: roleOptions)
         )
     }
 
@@ -27,89 +33,53 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
+        guard
+            context.isCurrentUserAllowed(to: UserPermissions.Identities.create)
+        else {
+            return try await presenter.renderForbiddenPage()
+                .response(from: request, context: context)
+        }
+        let roleOptions = (try? await interactor.loadRoleOptions()) ?? []
         var lastPayload: AdminAddUserIdentityFormInput?
 
         do {
             let payload = try await request.decode(
-                as: AdminAddUserIdentityFormInput.self,
+                as: NonceRequest<AdminAddUserIdentityFormInput>.self,
                 context: context
             )
-            lastPayload = payload
-            try await payload.validate()
-
-            try await interactor.execute(
-                entity: .init(
-                    name: payload.name,
-                    status: payload.status
+            let input = payload.input
+            lastPayload = input
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
                 )
-            )
+            else {
+                return try await presenter.renderInvalidNoncePage()
+                    .response(from: request, context: context)
+            }
+            try await input.validate()
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/user/identities/",
-                        title: "Added",
-                        message: "User identity added successfully."
-                    )
-                ]
-            )
+            try await interactor.add(input: input)
+            return presenter.renderSuccess()
         }
         catch let error as ValidationError {
-            var errors: [String: String] = [:]
-            for failure in error.failures {
-                errors[failure.key] = failure.message
-            }
-            var state = presenter.formState(
-                name: lastPayload?.name ?? "",
-                status: lastPayload?.status ?? "invited"
-            )
-            state.apply(errors: errors)
-            return try createFormResponse(
-                request: request,
-                context: context,
-                presenter: presenter,
-                state: state
-            )
+            return
+                try await presenter.renderValidationError(
+                    input: lastPayload,
+                    error: error,
+                    roleOptions: roleOptions
+                )
+                .response(from: request, context: context)
         }
-        catch let error as OpenAPIRepositoryError {
-            var state = presenter.formState(
-                name: lastPayload?.name ?? "",
-                status: lastPayload?.status ?? "invited"
-            )
-            state.error = presenter.format(error: error)
-            return try createFormResponse(
-                request: request,
-                context: context,
-                presenter: presenter,
-                state: state
-            )
+        catch let error as AdminAddUserIdentityError {
+            return
+                try await presenter.renderAddError(
+                    input: lastPayload,
+                    error: error,
+                    roleOptions: roleOptions
+                )
+                .response(from: request, context: context)
         }
-        catch {
-            var state = presenter.formState(
-                name: lastPayload?.name ?? "",
-                status: lastPayload?.status ?? "invited"
-            )
-            state.error = error.displayMessage
-            return try createFormResponse(
-                request: request,
-                context: context,
-                presenter: presenter,
-                state: state
-            )
-        }
-    }
-
-    private func createFormResponse(
-        request: Request,
-        context: DefaultRequestContext,
-        presenter: any AdminAddUserIdentityPresenter,
-        state: UserIdentityForm.State
-    ) throws -> Response {
-        try presenter.renderPage(
-            form: state,
-            permissions: context.currentUserPermissions
-        )
-        .response(from: request, context: context)
     }
 }

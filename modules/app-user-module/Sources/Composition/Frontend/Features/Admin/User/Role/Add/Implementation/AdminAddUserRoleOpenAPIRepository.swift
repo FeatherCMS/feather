@@ -9,7 +9,7 @@ struct AdminAddUserRoleOpenAPIRepository: AdminAddUserRoleRepository {
     let api: UserAdminAPIClient
 
     func create(
-        payload: UserRoleFormPayloadModel
+        payload: UserRoleAddFormPayloadModel
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
@@ -18,7 +18,6 @@ struct AdminAddUserRoleOpenAPIRepository: AdminAddUserRoleRepository {
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
-                            id: payload.id,
                             name: payload.name,
                             notes: payload.notes
                         )
@@ -28,13 +27,9 @@ struct AdminAddUserRoleOpenAPIRepository: AdminAddUserRoleRepository {
             case .created:
                 return
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to create this user role."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot create user roles."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

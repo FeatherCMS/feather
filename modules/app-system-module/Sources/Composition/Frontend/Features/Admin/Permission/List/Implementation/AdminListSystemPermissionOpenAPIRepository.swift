@@ -12,12 +12,6 @@ struct AdminListSystemPermissionOpenAPIRepository:
         "Please sign in again to view system permissions."
     private let listForbiddenMessage =
         "Your account cannot access system permissions."
-    private let deleteUnauthorizedMessage =
-        "Please sign in again to delete this system permission."
-    private let deleteForbiddenMessage =
-        "Your account cannot delete this system permission."
-    private let deleteNotFoundMessage =
-        "This system permission could not be found."
 
     init(api: SystemAdminAPIClient) {
         self.api = api
@@ -50,13 +44,9 @@ struct AdminListSystemPermissionOpenAPIRepository:
                     pageSize: body.query.page.size
                 )
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: listUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: listForbiddenMessage
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -65,15 +55,4 @@ struct AdminListSystemPermissionOpenAPIRepository:
             }
         }
     }
-
-    func delete(
-        id: String
-    ) async throws {
-        try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.systemPermissionDelete(
-                body: .json(.init(ids: [id], results: false, summary: true))
-            )
-        }
-    }
-
 }

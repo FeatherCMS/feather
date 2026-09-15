@@ -7,15 +7,16 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
-struct AppBlogTagPage: Component, FlowContent {
+struct AppBlogTagPage: Component {
     let state: AppGetBlogTagModel
 
-    func content() -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Main {
-            AppPublicStyleAnchor()
+            context.build(AppPublicStyleAnchor())
             Div {
                 Article {
                     Div {
@@ -34,7 +35,7 @@ struct AppBlogTagPage: Component, FlowContent {
                         .class("public-image")
                     }
 
-                    AppPublicTextBlock(text: state.content)
+                    context.build(AppPublicTextBlock(text: state.content))
 
                     if !state.posts.isEmpty {
                         Section {

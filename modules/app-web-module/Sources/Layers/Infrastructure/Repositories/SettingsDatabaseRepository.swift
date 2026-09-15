@@ -53,98 +53,98 @@ public struct SettingsDatabaseRepository: SettingsRepository {
         _ model: Settings
     ) async throws -> Settings {
         try await save(
-            id: "web-settings-logo",
-            name: "web.site.logo",
+            key: "web-settings-logo",
+            name: "Website logo",
             value: model.logo,
             notes: "Logo of the website"
         )
         try await save(
-            id: "web-settings-logo-dark",
-            name: "web.site.logo_dark",
+            key: "web-settings-logo-dark",
+            name: "Website dark logo",
             value: model.logoDark,
             notes: "Logo of the website in dark mode"
         )
         try await save(
-            id: "web-settings-meta-image",
-            name: "web.site.meta_image",
+            key: "web-settings-meta-image",
+            name: "Website metadata image",
             value: model.metaImage,
             notes: "Default metadata image of the website"
         )
         try await save(
-            id: "web-settings-primary-color",
-            name: "web.site.primary_color",
+            key: "web-settings-primary-color",
+            name: "Website primary color",
             value: model.primaryColor,
             notes: "Primary color of the website"
         )
         try await save(
-            id: "web-settings-secondary-color",
-            name: "web.site.secondary_color",
+            key: "web-settings-secondary-color",
+            name: "Website secondary color",
             value: model.secondaryColor,
             notes: "Secondary color of the website"
         )
         try await save(
-            id: "web-settings-tertiary-color",
-            name: "web.site.tertiary_color",
+            key: "web-settings-tertiary-color",
+            name: "Website tertiary color",
             value: model.tertiaryColor,
             notes: "Tertiary color of the website"
         )
         try await save(
-            id: "web-settings-primary-font",
-            name: "web.site.primary_font",
+            key: "web-settings-primary-font",
+            name: "Website primary font",
             value: model.primaryFont,
             notes: "Primary font of the website"
         )
         try await save(
-            id: "web-settings-secondary-font",
-            name: "web.site.secondary_font",
+            key: "web-settings-secondary-font",
+            name: "Website secondary font",
             value: model.secondaryFont,
             notes: "Secondary font of the website"
         )
         try await save(
-            id: "web-settings-home-page-id",
-            name: "web.site.home_page_id",
+            key: "web-settings-home-page-id",
+            name: "Website home page",
             value: model.homePageId ?? "",
             notes: "Selected home page of the website"
         )
         try await save(
-            id: "web-settings-locale",
-            name: "web.site.locale",
+            key: "web-settings-locale",
+            name: "Website locale",
             value: model.locale,
             notes: "Default locale of the website"
         )
         try await save(
-            id: "web-settings-timezone",
-            name: "web.site.timezone",
+            key: "web-settings-timezone",
+            name: "Website timezone",
             value: model.timezone,
             notes: "Default timezone of the website"
         )
         try await save(
-            id: "web-settings-title",
-            name: "web.site.title",
+            key: "web-settings-title",
+            name: "Website title",
             value: model.title,
             notes: "Title of the website"
         )
         try await save(
-            id: "web-settings-excerpt",
-            name: "web.site.excerpt",
+            key: "web-settings-excerpt",
+            name: "Website excerpt",
             value: model.excerpt,
             notes: "Excerpt for the website"
         )
         try await save(
-            id: "web-settings-no-index",
-            name: "web.site.no_index",
+            key: "web-settings-no-index",
+            name: "Disable website indexing",
             value: model.noIndex ? "true" : "false",
             notes: "Disable site indexing by search engines"
         )
         try await save(
-            id: "web-settings-css",
-            name: "web.site.css",
+            key: "web-settings-css",
+            name: "Website custom CSS",
             value: model.css,
             notes: "Global CSS injection for the site"
         )
         try await save(
-            id: "web-settings-js",
-            name: "web.site.js",
+            key: "web-settings-js",
+            name: "Website custom JavaScript",
             value: model.js,
             notes: "Global JavaScript injection for the site"
         )
@@ -152,12 +152,12 @@ public struct SettingsDatabaseRepository: SettingsRepository {
     }
 
     private func save(
-        id: String,
+        key: String,
         name: String,
         value: String,
         notes: String
     ) async throws {
-        if var existing = try await variableRepository.find(id: id) {
+        if var existing = try await variableRepository.find(key: key) {
             try existing.update(
                 name: name,
                 value: value,
@@ -168,7 +168,7 @@ public struct SettingsDatabaseRepository: SettingsRepository {
         else {
             _ = try await variableRepository.insert(
                 try Variable.create(
-                    id: id,
+                    key: key,
                     value: value,
                     name: name,
                     notes: notes

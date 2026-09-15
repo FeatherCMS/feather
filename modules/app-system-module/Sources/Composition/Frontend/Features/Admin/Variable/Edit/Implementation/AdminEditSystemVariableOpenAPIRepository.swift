@@ -11,7 +11,7 @@ struct AdminEditSystemVariableOpenAPIRepository:
 
     func load(
         id: String
-    ) async throws -> SystemVariableDetailsModel {
+    ) async throws -> SystemVariableEditModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.systemVariableGet(
                 path: .init(systemVariableId: id),
@@ -22,24 +22,17 @@ struct AdminEditSystemVariableOpenAPIRepository:
                 let variable = try okResponse.body.json
                 return .init(
                     id: variable.id,
+                    key: variable.key,
                     value: variable.value,
                     name: variable.name,
                     notes: variable.notes
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "System variable not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to load this system variable."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot edit system variables."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -51,38 +44,23 @@ struct AdminEditSystemVariableOpenAPIRepository:
 
     func update(
         id: String,
-        input: SystemVariableFormInput
+        input: Components.Schemas.SystemVariableCreateSchema
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.systemVariableUpdate(
                 path: .init(systemVariableId: id),
                 headers: .init(accept: [.init(contentType: .json)]),
-                body: .json(
-                    .init(
-                        id: id,
-                        value: input.normalizedValue,
-                        name: input.normalizedName,
-                        notes: input.normalizedNotes
-                    )
-                )
+                body: .json(input)
             )
             switch response {
             case .ok:
                 return
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "System variable not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to update this system variable."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot edit system variables."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

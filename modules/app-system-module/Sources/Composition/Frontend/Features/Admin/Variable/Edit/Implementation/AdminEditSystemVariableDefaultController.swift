@@ -1,7 +1,9 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
+import SystemContracts
 
 struct AdminEditSystemVariableDefaultController:
     AdminEditSystemVariableController
@@ -17,28 +19,26 @@ struct AdminEditSystemVariableDefaultController:
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
+        guard
+            context.isCurrentUserAllowed(to: SystemPermissions.Variables.update)
+        else {
+            return try await runtime.presenter.renderErrorPage(
+                error: .forbidden
+            )
+        }
         let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
+        let permissions = context.currentUserAdminListActions.granted
         do {
             let variable = try await runtime.interactor.load(id: id)
-            return runtime.presenter.renderEditPage(
+            return try await runtime.presenter.renderEditPage(
                 id: id,
-                state: formState(
-                    id: id,
-                    name: variable.name ?? "",
-                    value: variable.value,
-                    notes: variable.notes ?? ""
-                ),
-                isEdited: request.hasQueryFlag("edited"),
+                state: .from(variable: variable),
                 permissions: permissions
             )
         }
-        catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
-                id: id,
-                info: error.errorTitle,
-                message: error.errorDescription,
-                permissions: permissions
+        catch let error as AdminEditSystemVariableError {
+            return try await runtime.presenter.renderErrorPage(
+                error: error
             )
         }
     }
@@ -48,110 +48,60 @@ struct AdminEditSystemVariableDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
+        guard
+            context.isCurrentUserAllowed(to: SystemPermissions.Variables.update)
+        else {
+            return try await runtime.presenter
+                .renderErrorPage(
+                    error: .forbidden
+                )
+                .response(from: request, context: context)
+        }
         let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
-        var lastPayload: SystemVariableFormInput?
+        let permissions = context.currentUserAdminListActions.granted
+        var lastPayload: SystemVariableEditFormInput?
 
         do {
             let payload = try await request.decode(
-                as: SystemVariableFormInput.self,
+                as: NonceRequest<SystemVariableEditFormInput>.self,
                 context: context
             )
-            lastPayload = payload
-            try await payload.validate()
-            try await runtime.interactor.update(id: id, input: payload)
+            lastPayload = payload.input
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                return try await runtime.presenter
+                    .renderInvalidNoncePage()
+                    .response(from: request, context: context)
+            }
+            try await payload.input.validate()
+            try await runtime.interactor.edit(id: id, input: payload.input)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/system/variables/\(id)/edit/",
-                        title: "Saved",
-                        message: "System variable edited successfully."
-                    )
-                ]
-            )
+            return runtime.presenter.renderSuccess(id: id)
         }
         catch let error as ValidationError {
-            var errors: [String: String] = [:]
-            for failure in error.failures {
-                errors[failure.key] = failure.message
-            }
-            var state = formState(
-                id: lastPayload?.normalizedID ?? id,
-                name: lastPayload?.normalizedName ?? "",
-                value: lastPayload?.normalizedValue ?? "",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.apply(errors: errors)
-            return try runtime.presenter
-                .renderEditPage(
+            return try await runtime.presenter
+                .renderValidationError(
                     id: id,
-                    state: state,
-                    isEdited: false,
-                    permissions: permissions
+                    input: lastPayload,
+                    permissions: permissions,
+                    error: error
                 )
                 .response(from: request, context: context)
         }
-        catch let error as OpenAPIRepositoryError {
-            var state = formState(
-                id: lastPayload?.normalizedID ?? id,
-                name: lastPayload?.normalizedName ?? "",
-                value: lastPayload?.normalizedValue ?? "",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.error = error.errorDescription
-            return try runtime.presenter
-                .renderEditPage(
+        catch let error as AdminEditSystemVariableError {
+            return try await runtime.presenter
+                .renderEditError(
                     id: id,
-                    state: state,
-                    isEdited: false,
-                    permissions: permissions
-                )
-                .response(from: request, context: context)
-        }
-        catch {
-            var state = formState(
-                id: lastPayload?.normalizedID ?? id,
-                name: lastPayload?.normalizedName ?? "",
-                value: lastPayload?.normalizedValue ?? "",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.error = error.displayMessage
-            return try runtime.presenter
-                .renderEditPage(
-                    id: id,
-                    state: state,
-                    isEdited: false,
-                    permissions: permissions
+                    input: lastPayload,
+                    permissions: permissions,
+                    error: error
                 )
                 .response(from: request, context: context)
         }
     }
 
-    private func formState(
-        id: String,
-        name: String = "",
-        value: String = "",
-        notes: String = ""
-    ) -> SystemVariableForm.State {
-        .init(
-            id: .init(key: "id", label: "ID", value: id, error: nil),
-            name: .init(key: "name", label: "Name", value: name, error: nil),
-            value: .init(
-                key: "value",
-                label: "Value",
-                value: value,
-                error: nil
-            ),
-            notes: .init(
-                key: "notes",
-                label: "Notes",
-                value: notes,
-                error: nil
-            ),
-            error: nil,
-            success: nil
-        )
-    }
 }

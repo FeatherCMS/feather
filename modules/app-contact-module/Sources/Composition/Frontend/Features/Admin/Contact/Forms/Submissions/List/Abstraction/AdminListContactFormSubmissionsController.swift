@@ -1,0 +1,19 @@
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+protocol AdminListContactFormSubmissionsController: Sendable {
+    func list(request: Request, context: DefaultRequestContext) async throws
+        -> HTMLResponse
+}
+
+extension AdminListContactFormSubmissionsController {
+    func route(on router: Router<DefaultRequestContext>) {
+        router.get(ContactAdminRoutes.formSubmissionsRoute, use: list)
+    }
+}

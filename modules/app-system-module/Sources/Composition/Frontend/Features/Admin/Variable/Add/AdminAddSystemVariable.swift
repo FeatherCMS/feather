@@ -15,6 +15,7 @@ struct AdminAddSystemVariable {
                     ),
                     presenter: AdminAddSystemVariableDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

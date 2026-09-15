@@ -33,14 +33,14 @@ public struct SearchMediaAssets: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> MediaAssetList {
+    ) async throws -> MediaAssetSearchList {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
         return try await query.run { scope in
-            try await scope.assets.list(query: input.query)
+            try await scope.assetSearch.list(query: input.query)
         }
     }
 
@@ -54,7 +54,7 @@ public struct SearchMediaAssets: UseCase {
         }
 
         return try await query.run { scope in
-            try await scope.assets.count(query: input.query)
+            try await scope.assetSearch.count(query: input.query)
         }
     }
 }

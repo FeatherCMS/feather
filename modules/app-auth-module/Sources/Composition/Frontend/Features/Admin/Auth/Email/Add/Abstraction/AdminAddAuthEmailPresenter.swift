@@ -14,21 +14,23 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 protocol AdminAddAuthEmailPresenter: Sendable {
 
     func renderPage(
         form: AuthEmailForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
+    func renderForbiddenPage() async throws -> HTMLResponse
 
     func formState(
         identityId: String,
         identities: [AuthCredentialIdentityOption]
     ) -> AuthEmailForm.State
 
-    func breadcrumb() -> AdminBreadcrumb.State
+    func breadcrumb() -> [NewAdminBreadcrumb.Link]
 
     func format(
         error: OpenAPIRepositoryError

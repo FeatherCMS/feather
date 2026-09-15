@@ -5,24 +5,46 @@ struct AdminEditUserIdentityDefaultInteractor: AdminEditUserIdentityInteractor {
     let identityRepository: any AdminEditUserIdentityRepository
     let roleRepository: any AdminEditUserIdentityRoleRepository
 
-    func loadIdentity(
+    func load(
         id: String
     ) async throws -> AdminEditUserIdentityModel {
-        try await identityRepository.get(id: id)
+        do { return try await identityRepository.load(id: id) }
+        catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
     func loadRoleOptions() async throws
-        -> [AdminEditUserIdentityRoleOptionModel]
+        -> [UserIdentityEditRoleOptionModel]
     {
-        try await roleRepository.list()
+        do { return try await roleRepository.list() }
+        catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
-    func update(
-        entity: AdminEditUserIdentityModel
+    func edit(
+        id: String,
+        input: AdminEditUserIdentityFormInput
     ) async throws {
-        try await identityRepository.update(
-            id: entity.id,
-            payload: entity.payload
-        )
+        do {
+            try await identityRepository.update(
+                id: id,
+                payload: .init(
+                    name: input.normalizedName,
+                    status: input.normalizedStatus,
+                    roleIds: input.roleIds
+                )
+            )
+        }
+        catch let error as OpenAPIRepositoryError { throw map(error) }
+    }
+
+    private func map(_ error: OpenAPIRepositoryError)
+        -> AdminEditUserIdentityError
+    {
+        switch error {
+        case .notFound: .notFound
+        case .unauthorized: .unauthorized
+        case .forbidden: .forbidden
+        case .conflict: .conflict
+        default: .unavailable
+        }
     }
 }

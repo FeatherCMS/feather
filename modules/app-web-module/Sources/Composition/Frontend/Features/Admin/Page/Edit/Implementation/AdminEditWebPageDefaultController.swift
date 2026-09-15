@@ -22,7 +22,7 @@ struct AdminEditWebPageDefaultController:
         let permissions = context.currentUserPermissions
         do {
             let page = try await runtime.interactor.load(id: id)
-            return runtime.presenter.renderEditPage(
+            return try await runtime.presenter.renderEditPage(
                 id: id,
                 state: formState(
                     title: page.title,
@@ -32,12 +32,11 @@ struct AdminEditWebPageDefaultController:
                     imageAsset: page.imageAsset,
                     metadata: page.metadata
                 ),
-                isEdited: request.hasQueryFlag("edited"),
                 permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
+            return try await runtime.presenter.renderErrorPage(
                 id: id,
                 info: error.errorTitle,
                 message: error.errorDescription,
@@ -64,15 +63,12 @@ struct AdminEditWebPageDefaultController:
             try await payload.validate()
             try await runtime.interactor.update(id: id, input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/web/pages/\(id)/edit/",
-                        title: "Saved",
-                        message: "Page edited successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/web/pages/\(id)/edit/",
+                notification: .init(
+                    title: "Saved",
+                    message: "Page edited successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -87,11 +83,10 @@ struct AdminEditWebPageDefaultController:
                 imageAssetId: lastPayload?.normalizedImageAssetId,
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -104,11 +99,10 @@ struct AdminEditWebPageDefaultController:
                 imageAssetId: lastPayload?.normalizedImageAssetId,
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -121,11 +115,10 @@ struct AdminEditWebPageDefaultController:
                 imageAssetId: lastPayload?.normalizedImageAssetId,
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -137,7 +130,7 @@ struct AdminEditWebPageDefaultController:
         excerpt: String = "",
         content: String = "",
         imageAssetId: String? = nil,
-        imageAsset: AdminMediaAssetReferenceModel? = nil,
+        imageAsset: NewAdminMediaAsset? = nil,
         metadata: AdminMetadataFormValue? = nil
     ) -> WebPageForm.State {
         .init(

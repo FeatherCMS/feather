@@ -1,5 +1,6 @@
 import AuthAdminAPI
 import AuthAppAPI
+import AuthContracts
 import CSS
 import FeatherAdmin
 import FeatherValidation
@@ -13,7 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminRemoveAuthMagicLinkDefaultController:
     AdminRemoveAuthMagicLinkController
@@ -31,16 +33,25 @@ struct AdminRemoveAuthMagicLinkDefaultController:
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
+        guard
+            context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.delete)
+        else {
+            return try await presenter.renderError(
+                id: id,
+                error: .forbidden,
+                permissions: permissions
+            )
+        }
         do {
             let link = try await interactor.get(id: id)
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 id: id,
                 credentialId: link.credentialId,
                 permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return presenter.renderError(
+            return try await presenter.renderError(
                 id: id,
                 error: error,
                 permissions: permissions
@@ -54,24 +65,45 @@ struct AdminRemoveAuthMagicLinkDefaultController:
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
         let id = try context.requiredID()
+        guard
+            context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.delete)
+        else {
+            return
+                try await presenter.renderError(
+                    id: id,
+                    error: .forbidden,
+                    permissions: context.currentUserPermissions
+                )
+                .response(from: request, context: context)
+        }
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            context: context
+        )
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else {
+            return try await presenter.renderInvalidNoncePage()
+                .response(from: request, context: context)
+        }
         do {
             try await interactor.execute(
                 entity: .init(id: id)
             )
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/auth/magic-links/",
-                        title: "Removed",
-                        message: "User magic link removed successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/auth/magic-links/",
+                notification: .init(
+                    title: "Removed",
+                    message: "User magic link removed successfully."
+                )
             )
         }
         catch let error as OpenAPIRepositoryError {
             return
-                try presenter.renderError(
+                try await presenter.renderError(
                     id: id,
                     error: error,
                     permissions: context.currentUserPermissions

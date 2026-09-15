@@ -4,13 +4,14 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AppMagicLink {
 
     struct RequestInput: Codable, Sendable {
         let email: String
-        let isPersistent: CheckboxFormInput
+        let isPersistent: NewAdminFormFieldCheckbox.Input
 
         enum CodingKeys: String, CodingKey {
             case email
@@ -18,34 +19,38 @@ struct AppMagicLink {
         }
     }
 
-    struct Page: Component, FlowContent {
+    struct Page: Component {
         let token: String?
         let email: String
         let isPersistent: Bool
         let error: String?
         let message: String?
 
-        func content() -> some BasicTag {
+        func html(context: inout BuilderContext) -> Section {
             Section {
                 H1(token == nil ? "Request a magic link" : "Signing in")
                 if let message { P(message).class("success") }
                 if let error { P(error).class("error") }
                 if token == nil {
                     Form {
-                        EmailField(
-                            state: .init(
-                                key: "email",
-                                label: "Email address",
-                                value: email
+                        context.build(
+                            NewAdminFormFieldInput(
+                                state: .init(
+                                    name: "email",
+                                    label: "Email address",
+                                    value: email,
+                                    type: .email
+                                )
                             )
-                            )
-                        CheckboxField(
-                            state: .init(
-                                key: "is_persistent",
-                                label: "Permanent link",
-                                value: isPersistent,
-                                error: nil,
-                                labelPosition: .before
+                        )
+                        context.build(
+                            NewAdminFormFieldCheckbox(
+                                state: .init(
+                                    name: "is_persistent",
+                                    label: "Session",
+                                    checkboxLabel: "Permanent link",
+                                    isChecked: isPersistent
+                                )
                             )
                         )
                         Button("Send magic link").type(.submit)
@@ -66,12 +71,14 @@ struct AppMagicLink {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        render(
+        var buildContext = BuilderContext()
+        return render(
             request: request,
             email: "",
             isPersistent: true,
             error: nil,
-            message: nil
+            message: nil,
+            context: &buildContext
         )
     }
 
@@ -79,6 +86,7 @@ struct AppMagicLink {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
+        var buildContext = BuilderContext()
         let input = try await request.decode(
             as: RequestInput.self,
             context: context
@@ -103,7 +111,8 @@ struct AppMagicLink {
                     isPersistent: input.isPersistent.value,
                     error: nil,
                     message:
-                        "If the account exists, a magic link has been sent."
+                        "If the account exists, a magic link has been sent.",
+                    context: &buildContext
                 )
             case .undocumented(let statusCode, let response):
                 throw try await context.authAppAPI()
@@ -119,7 +128,8 @@ struct AppMagicLink {
                 email: input.email,
                 isPersistent: input.isPersistent.value,
                 error: error.errorDescription,
-                message: nil
+                message: nil,
+                context: &buildContext
             )
         }
     }
@@ -128,6 +138,7 @@ struct AppMagicLink {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
+        var buildContext = BuilderContext()
         let token = request.uri.queryParameters["token"].map(String.init) ?? ""
         do {
             let response = try await context.authAppAPI()
@@ -159,11 +170,12 @@ struct AppMagicLink {
             case .unauthorized:
                 return try render(
                     request: request,
-                email: "",
-                isPersistent: true,
-                error:
+                    email: "",
+                    isPersistent: true,
+                    error:
                         "This magic link is invalid, expired, or has already been used.",
-                    message: nil
+                    message: nil,
+                    context: &buildContext
                 )
                 .response(from: request, context: context)
             case .undocumented(let statusCode, let response):
@@ -180,7 +192,8 @@ struct AppMagicLink {
                 email: "",
                 isPersistent: true,
                 error: error.errorDescription,
-                message: nil
+                message: nil,
+                context: &buildContext
             )
             .response(from: request, context: context)
         }
@@ -191,19 +204,23 @@ struct AppMagicLink {
         email: String,
         isPersistent: Bool,
         error: String?,
-        message: String?
+        message: String?,
+        context: inout BuilderContext
     ) -> HTMLResponse {
-        renderingEngine.renderPage(
+
+        renderingEngine.renderPublicPage(
             request: request,
             title: "Magic link",
             description: "Sign in without a password using a magic link.",
             imagePath: "images/puppy.png",
-            content: Page(
-                token: nil,
-                email: email,
-                isPersistent: isPersistent,
-                error: error,
-                message: message
+            content: context.build(
+                Page(
+                    token: nil,
+                    email: email,
+                    isPersistent: isPersistent,
+                    error: error,
+                    message: message
+                )
             )
         )
     }

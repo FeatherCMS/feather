@@ -13,7 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 protocol AdminAddAuthMagicLinkController: Sendable {
 
@@ -34,11 +35,11 @@ extension AdminAddAuthMagicLinkController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/auth/magic-links/add/",
+            AuthMagicLinkRoutes.add,
             use: getAddAuthMagicLink
         )
         router.post(
-            "/admin/auth/magic-links/add/",
+            AuthMagicLinkRoutes.add,
             use: postAddAuthMagicLink
         )
     }

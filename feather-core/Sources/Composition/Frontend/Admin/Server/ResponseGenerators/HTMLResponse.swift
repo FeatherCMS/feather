@@ -31,6 +31,10 @@ public struct HTMLResponse: ResponseGenerator {
         var headers: HTTPFields = [
             .contentType: "text/html; charset=utf-8"
         ]
+        if request.cookies[AdminNotificationFlash.cookieName] != nil {
+            headers[values: .setCookie]
+                .append(AdminNotificationFlash.clearCookie().description)
+        }
         #if DEBUG
         headers[.cacheControl] = "no-cache"
         #endif

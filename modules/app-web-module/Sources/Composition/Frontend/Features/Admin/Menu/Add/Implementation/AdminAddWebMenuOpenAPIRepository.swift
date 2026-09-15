@@ -26,13 +26,9 @@ struct AdminAddWebMenuOpenAPIRepository: AdminAddWebMenuRepository {
             case .created:
                 return
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to create this web menu."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot create web menus."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

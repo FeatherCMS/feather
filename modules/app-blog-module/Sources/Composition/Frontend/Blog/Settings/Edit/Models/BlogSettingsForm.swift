@@ -1,24 +1,17 @@
 import BlogAdminAPI
-import BlogAppAPI
 import FeatherAdmin
-import FeatherValidation
 import HTML
 import Hummingbird
-import MediaFrontend
-import OpenAPIRuntime
-import SGML
-import WebFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
-struct BlogSettingsForm: Component, FlowContent {
-
+struct BlogSettingsForm: Component {
     struct FieldState: FeatherAdmin.Object {
         var key: String
         var label: String
         var value: String?
         var error: String?
     }
-
     struct State: FeatherAdmin.Object {
         var postListPath: FieldState
         var authorListPath: FieldState
@@ -28,11 +21,8 @@ struct BlogSettingsForm: Component, FlowContent {
         var tagPathPrefix: FieldState
         var canEdit: Bool
         var error: String?
-        var success: String?
 
-        mutating func apply(
-            errors: [String: String]
-        ) {
+        mutating func apply(errors: [String: String]) {
             postListPath.error = errors[postListPath.key]
             authorListPath.error = errors[authorListPath.key]
             tagListPath.error = errors[tagListPath.key]
@@ -43,84 +33,39 @@ struct BlogSettingsForm: Component, FlowContent {
     }
 
     var state: State
-    var action: String = "/admin/blog/settings/"
-    var submitLabel: String = "Save settings"
+    var action: String = BlogAdminRoutes.blog.description + "/settings/"
 
-    func content() -> some BasicTag {
-        Form {
-            if let success = state.success {
-                P(success).class("success")
-            }
+    func html(context: inout BuilderContext) -> Form {
+        let form = NewAdminForm(action: action) {
             if let error = state.error {
-                P(error).class("error")
+                P(error).class("new-admin-form__error")
             }
-
             H2("List paths")
-            FormInputField(
-                name: state.postListPath.key,
-                label: state.postListPath.label,
-                value: state.postListPath.value,
-                error: state.postListPath.error,
-                isDisabled: !state.canEdit,
-                inputClass: "text-input"
-            )
-            FormInputField(
-                name: state.authorListPath.key,
-                label: state.authorListPath.label,
-                value: state.authorListPath.value,
-                error: state.authorListPath.error,
-                isDisabled: !state.canEdit,
-                inputClass: "text-input"
-            )
-            FormInputField(
-                name: state.tagListPath.key,
-                label: state.tagListPath.label,
-                value: state.tagListPath.value,
-                error: state.tagListPath.error,
-                isDisabled: !state.canEdit,
-                inputClass: "text-input"
-            )
-
+            context.build(field(state.postListPath))
+            context.build(field(state.authorListPath))
+            context.build(field(state.tagListPath))
             H2("Prefixes")
-            FormInputField(
-                name: state.postPathPrefix.key,
-                label: state.postPathPrefix.label,
-                value: state.postPathPrefix.value,
-                error: state.postPathPrefix.error,
-                isDisabled: !state.canEdit,
-                inputClass: "text-input"
-            )
-            FormInputField(
-                name: state.authorPathPrefix.key,
-                label: state.authorPathPrefix.label,
-                value: state.authorPathPrefix.value,
-                error: state.authorPathPrefix.error,
-                isDisabled: !state.canEdit,
-                inputClass: "text-input"
-            )
-            FormInputField(
-                name: state.tagPathPrefix.key,
-                label: state.tagPathPrefix.label,
-                value: state.tagPathPrefix.value,
-                error: state.tagPathPrefix.error,
-                isDisabled: !state.canEdit,
-                inputClass: "text-input"
-            )
-
+            context.build(field(state.postPathPrefix))
+            context.build(field(state.authorPathPrefix))
+            context.build(field(state.tagPathPrefix))
             if state.canEdit {
-                Section {
-                    Div {
-                        Button(submitLabel)
-                            .type(.submit)
-                    }
-                    .class("button-row")
-                }
+                context.build(
+                    NewAdminSubmitButton("Save settings", style: .primary)
+                )
             }
         }
-        .encType(.urlencoded)
-        .method(.post)
-        .action(action)
-        .class("cms-form")
+        return context.build(form)
     }
 
+    private func field(_ value: FieldState) -> NewAdminFormFieldInput {
+        NewAdminFormFieldInput(
+            state: .init(
+                name: value.key,
+                label: value.label,
+                value: value.value,
+                error: value.error,
+                isDisabled: !state.canEdit
+            )
+        )
+    }
 }

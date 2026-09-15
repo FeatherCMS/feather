@@ -13,18 +13,19 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 protocol AdminEditAuthAccessControlPresenter: Sendable {
 
     func deniedPage(
         permissions: Set<String>,
         message: String
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderPage(
         state: AdminEditAuthAccessControlState,
         permissions: Set<String>,
         search: String
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

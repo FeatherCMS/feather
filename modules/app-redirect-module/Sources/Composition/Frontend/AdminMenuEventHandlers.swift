@@ -1,5 +1,6 @@
 import FeatherAdmin
 import FeatherContracts
+import Hummingbird
 import SystemContracts
 
 public enum RedirectAdminMenuEventHandlers {
@@ -28,7 +29,7 @@ public enum RedirectAdminMenuEventHandlers {
                     menuKey: "redirect",
                     label: "Rules",
                     icon: "cornerUpRight",
-                    link: "/admin/redirect/rules/",
+                    link: RedirectRuleRoutes.list.description + "/",
                     permission: "redirect:rules:list"
                 )
             ]

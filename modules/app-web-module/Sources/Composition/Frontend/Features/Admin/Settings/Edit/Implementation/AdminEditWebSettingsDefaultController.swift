@@ -24,7 +24,7 @@ struct AdminEditWebSettingsDefaultController:
         )
 
         guard canRead else {
-            return presenter.renderDeniedPage(
+            return try await presenter.renderDeniedPage(
                 info: "No permission",
                 message: "Your account cannot view the web settings.",
                 permissions: permissions
@@ -37,9 +37,8 @@ struct AdminEditWebSettingsDefaultController:
         }
         catch {
             let canEdit = canEdit(permissions: permissions)
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 state: .init(
-                    isEdited: false,
                     canEdit: canEdit,
                     form: makeFormState(
                         canEdit: canEdit,
@@ -51,9 +50,8 @@ struct AdminEditWebSettingsDefaultController:
             )
         }
         let canEdit = canEdit(permissions: permissions)
-        return presenter.renderPage(
+        return try await presenter.renderPage(
             state: .init(
-                isEdited: request.hasQueryFlag("edited"),
                 canEdit: canEdit,
                 form: makeFormState(from: settings, canEdit: canEdit),
                 breadcrumb: breadcrumb()
@@ -72,7 +70,7 @@ struct AdminEditWebSettingsDefaultController:
 
         guard canEdit else {
             return
-                try presenter.renderDeniedPage(
+                try await presenter.renderDeniedPage(
                     info: "No permission",
                     message: "Your account cannot edit the web settings.",
                     permissions: permissions
@@ -110,9 +108,8 @@ struct AdminEditWebSettingsDefaultController:
             )
             form.apply(errors: errors)
             return
-                try presenter.renderPage(
+                try await presenter.renderPage(
                     state: .init(
-                        isEdited: false,
                         canEdit: canEdit,
                         form: form,
                         breadcrumb: breadcrumb()
@@ -150,9 +147,8 @@ struct AdminEditWebSettingsDefaultController:
             )
             form.apply(errors: errors)
             return
-                try presenter.renderPage(
+                try await presenter.renderPage(
                     state: .init(
-                        isEdited: false,
                         canEdit: canEdit,
                         form: form,
                         breadcrumb: breadcrumb()
@@ -161,15 +157,12 @@ struct AdminEditWebSettingsDefaultController:
                 )
                 .response(from: request, context: context)
         }
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminToastRedirect.location(
-                    defaultPath: "/admin/web/settings/",
-                    title: "Saved",
-                    message: "Settings edited successfully."
-                )
-            ]
+        return AdminNotificationFlash.redirect(
+            to: "/admin/web/settings/",
+            notification: .init(
+                title: "Saved",
+                message: "Settings edited successfully."
+            )
         )
     }
 
@@ -364,14 +357,11 @@ struct AdminEditWebSettingsDefaultController:
         )
     }
 
-    private func breadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Settings", link: "/admin/web/settings/"),
-            ]
-        )
+    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Web", link: "/admin/web/"),
+        ]
     }
 
     private func loadHomePageOptions(

@@ -11,5 +11,5 @@ protocol AdminListAnalyticsLogPresenter: Sendable {
         method: String?,
         responseCode: String?,
         error: String?
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

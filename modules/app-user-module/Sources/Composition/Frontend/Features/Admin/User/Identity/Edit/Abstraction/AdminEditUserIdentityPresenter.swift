@@ -1,20 +1,25 @@
 import FeatherAdmin
+import FeatherValidation
 import Hummingbird
 
 protocol AdminEditUserIdentityPresenter: Sendable {
-
-    func renderPage(
-        state: UserIdentityEdit.State,
-        permissions: Set<String>
-    ) -> HTMLResponse
-
-    func renderError(
-        state: UserIdentityError.State,
-        permissions: Set<String>
-    ) -> HTMLResponse
-
-    func renderDeniedPage(
-        breadcrumb: AdminBreadcrumb.State,
-        permissions: Set<String>
-    ) -> HTMLResponse
+    func renderEditPage(id: String, state: UserIdentityEditForm.State)
+        async throws
+        -> HTMLResponse
+    func renderValidationError(
+        id: String,
+        input: AdminEditUserIdentityFormInput?,
+        error: ValidationError,
+        roleOptions: [UserIdentityEditRoleOptionModel]
+    ) async throws -> HTMLResponse
+    func renderEditError(
+        id: String,
+        input: AdminEditUserIdentityFormInput?,
+        error: AdminEditUserIdentityError,
+        roleOptions: [UserIdentityEditRoleOptionModel]
+    ) async throws -> HTMLResponse
+    func renderSuccess() -> Response
+    func renderUnauthorizedPage() async throws -> HTMLResponse
+    func renderForbiddenPage() async throws -> HTMLResponse
+    func renderInvalidNoncePage() async throws -> HTMLResponse
 }

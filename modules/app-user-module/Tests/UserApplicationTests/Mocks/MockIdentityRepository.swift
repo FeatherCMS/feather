@@ -17,12 +17,12 @@ actor MockIdentityRepository: IdentityRepository {
 
     private let result: Identity
     private let findByIdResult: Identity?
-    private let deleteResult: Bool
+    private let deleteResult: [String]
 
     init(
         result: Identity,
         findByIdResult: Identity? = nil,
-        deleteResult: Bool = false
+        deleteResult: [String] = []
     ) {
         self.result = result
         self.findByIdResult = findByIdResult
@@ -82,8 +82,8 @@ actor MockIdentityRepository: IdentityRepository {
     }
 
     func delete(
-        id: String
-    ) async throws -> Bool {
+        ids: [String]
+    ) async throws -> [String] {
         deleteCallCount += 1
         return deleteResult
     }

@@ -3,11 +3,9 @@ import Foundation
 
 protocol AdminRemoveSystemVariableInteractor: Sendable {
 
-    func get(
-        id: String
-    ) async throws -> SystemVariableDetailsModel
-
     func delete(
-        id: String
+        ids: [String]
     ) async throws
+
+    func names(ids: [String]) async throws -> [String]
 }

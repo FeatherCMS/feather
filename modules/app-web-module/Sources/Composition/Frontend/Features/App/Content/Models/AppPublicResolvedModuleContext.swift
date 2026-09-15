@@ -1,4 +1,4 @@
-struct AppPublicResolvedModuleContext: @unchecked Sendable {
+struct AppPublicResolvedModuleContext: Sendable {
     let templateIdentifier: String?
-    let payload: [String: Any]
+    let payload: [String: any Sendable]
 }

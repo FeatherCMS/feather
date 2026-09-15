@@ -22,7 +22,7 @@ struct AdminRemoveWebMenuItemDefaultController:
         let permissions = context.currentUserPermissions
         do {
             let rule = try await runtime.interactor.get(menuId: menuId, id: id)
-            return runtime.presenter.renderRemovePage(
+            return try await runtime.presenter.renderRemovePage(
                 menuId: menuId,
                 id: id,
                 label: rule.label,
@@ -30,7 +30,7 @@ struct AdminRemoveWebMenuItemDefaultController:
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
+            return try await runtime.presenter.renderErrorPage(
                 menuId: menuId,
                 id: id,
                 info: error.errorTitle,
@@ -50,19 +50,16 @@ struct AdminRemoveWebMenuItemDefaultController:
         let permissions = context.currentUserPermissions
         do {
             try await runtime.interactor.delete(menuId: menuId, id: id)
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/web/menus/\(menuId)/items/",
-                        title: "Removed",
-                        message: "Item removed successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/web/menus/\(menuId)/items/",
+                notification: .init(
+                    title: "Removed",
+                    message: "Item removed successfully."
+                )
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderErrorPage(
                     menuId: menuId,
                     id: id,

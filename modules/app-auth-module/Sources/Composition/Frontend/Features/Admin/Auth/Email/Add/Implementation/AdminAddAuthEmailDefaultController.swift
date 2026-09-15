@@ -1,5 +1,6 @@
 import AuthAdminAPI
 import AuthAppAPI
+import AuthContracts
 import CSS
 import FeatherAdmin
 import FeatherValidation
@@ -13,7 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
 
@@ -28,8 +30,10 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.create)
+        else { return try await presenter.renderForbiddenPage() }
         let identities = (try? await interactor.listIdentities()) ?? []
-        return presenter.renderPage(
+        return try await presenter.renderPage(
             form: presenter.formState(
                 identityId: "",
                 identities: identities
@@ -43,12 +47,36 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.create)
+        else {
+            return try await presenter.renderForbiddenPage()
+                .response(from: request, context: context)
+        }
         var lastPayload: AdminAddAuthEmailFormInput?
         do {
-            let payload = try await request.decode(
-                as: AdminAddAuthEmailFormInput.self,
+            let nonceRequest = try await request.decode(
+                as: NonceRequest<AdminAddAuthEmailFormInput>.self,
                 context: context
             )
+            guard
+                await AdminNonceStore.shared.consume(
+                    nonceRequest.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                var state = presenter.formState(
+                    identityId: "",
+                    identities: (try? await interactor.listIdentities()) ?? []
+                )
+                state.error = "This form has expired. Please reload the page."
+                return try await createResponse(
+                    request: request,
+                    context: context,
+                    presenter: presenter,
+                    state: state
+                )
+            }
+            let payload = nonceRequest.input
             lastPayload = payload
             try await payload.validate()
             try await interactor.execute(
@@ -57,15 +85,12 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
                     email: payload.normalizedEmail
                 )
             )
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/auth/emails/",
-                        title: "Added",
-                        message: "User email added successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/auth/emails/",
+                notification: .init(
+                    title: "Added",
+                    message: "User email added successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -76,7 +101,7 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
                 identities: (try? await interactor.listIdentities()) ?? []
             )
             state.apply(errors: errs)
-            return try createResponse(
+            return try await createResponse(
                 request: request,
                 context: context,
                 presenter: presenter,
@@ -88,7 +113,7 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
                 identityId: lastPayload?.normalizedIdentityId ?? ""
             )
             state.error = presenter.format(error: error)
-            return try createResponse(
+            return try await createResponse(
                 request: request,
                 context: context,
                 presenter: presenter,
@@ -100,7 +125,7 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
                 identityId: lastPayload?.normalizedIdentityId ?? ""
             )
             state.error = error.displayMessage
-            return try createResponse(
+            return try await createResponse(
                 request: request,
                 context: context,
                 presenter: presenter,
@@ -114,8 +139,8 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
         context: DefaultRequestContext,
         presenter: any AdminAddAuthEmailPresenter,
         state: AuthEmailForm.State
-    ) throws -> Response {
-        try presenter.renderPage(
+    ) async throws -> Response {
+        try await presenter.renderPage(
             form: state,
             permissions: context.currentUserPermissions
         )

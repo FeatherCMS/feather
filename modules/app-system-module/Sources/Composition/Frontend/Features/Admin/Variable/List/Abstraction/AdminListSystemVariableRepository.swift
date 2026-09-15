@@ -1,14 +1,14 @@
 import FeatherAdmin
 import Hummingbird
+import SystemAdminAPI
 
 protocol AdminListSystemVariableRepository: Sendable {
 
     func listSystemVariables(
         page: Int,
-        search: String?
-    ) async throws -> AdminListSystemVariableModel
-
-    func delete(
-        id: String
+        search: String?,
+        ids: [String]?
     ) async throws
+        -> SystemAdminAPI.Components.Responses
+        .SystemVariableListItemSearchSchemaSearchResponse
 }

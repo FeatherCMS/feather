@@ -8,8 +8,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminEditBlogSettingsOpenAPIRepository:
     AdminEditBlogSettingsRepository
@@ -42,13 +43,9 @@ struct AdminEditBlogSettingsOpenAPIRepository:
                     hasMissingVariables: false
                 )
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: loadUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: loadForbiddenMessage
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -79,13 +76,9 @@ struct AdminEditBlogSettingsOpenAPIRepository:
             case .ok:
                 return
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: saveUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: saveForbiddenMessage
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

@@ -15,6 +15,7 @@ struct AdminListAuthSession {
                     ),
                     presenter: AdminListAuthSessionDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

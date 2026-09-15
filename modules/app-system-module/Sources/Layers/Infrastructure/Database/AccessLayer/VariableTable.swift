@@ -13,6 +13,7 @@ extension VariableTable.Row {
 
     init(from row: DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
+        self.key = try row.decode(column: "key", as: String.self)
         self.value = try row.decode(column: "value", as: String.self)
         self.name = try row.decode(column: "name", as: String?.self)
         self.notes = try row.decode(column: "notes", as: String?.self)
@@ -33,12 +34,14 @@ struct VariableTable {
 
         struct Create {
             let id: String
+            let key: String
             let value: String
             let name: String?
             let notes: String?
         }
 
         let id: String
+        let key: String
         let value: String
         let name: String?
         let notes: String?
@@ -55,6 +58,7 @@ struct VariableTable {
             query: #"""
                 INSERT INTO system_variable (
                     id,
+                    key,
                     name,
                     value,
                     notes,
@@ -63,6 +67,7 @@ struct VariableTable {
                 )
                 VALUES (
                     \#(row.id),
+                    \#(row.key),
                     \#(row.name),
                     \#(row.value),
                     \#(row.notes),
@@ -81,17 +86,24 @@ struct VariableTable {
 
     func list(
         search: String?,
+        ids: [String]?,
         orderBy: String,
         limit: Int,
         offset: Int
     ) async throws -> [Row] {
-        try await connection.run(
+        let idValues = ids ?? []
+        let idFilter = idValues.isEmpty ? [""] : idValues
+
+        return try await connection.run(
             query: #"""
                 SELECT *
                 FROM system_variable
                 WHERE (
+                    \#(idValues.isEmpty)
+                    OR id IN (\#(idFilter))
+                ) AND (
                     \#(search == nil)
-                    OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(key) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(name) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(value) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(notes) LIKE '%' || LOWER(\#(search ?? "")) || '%'
@@ -106,15 +118,22 @@ struct VariableTable {
     }
 
     func count(
-        search: String?
+        search: String?,
+        ids: [String]?
     ) async throws -> Int {
-        try await connection.run(
+        let idValues = ids ?? []
+        let idFilter = idValues.isEmpty ? [""] : idValues
+
+        return try await connection.run(
             query: #"""
                 SELECT COUNT(*) AS count
                 FROM system_variable
                 WHERE (
+                    \#(idValues.isEmpty)
+                    OR id IN (\#(idFilter))
+                ) AND (
                     \#(search == nil)
-                    OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(key) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(name) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(value) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(notes) LIKE '%' || LOWER(\#(search ?? "")) || '%'
@@ -136,6 +155,24 @@ struct VariableTable {
                 SELECT *
                 FROM system_variable
                 WHERE id=\#(id)
+                LIMIT 1;
+                """#
+        ) { sequence in
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
+            return try Row(from: row)
+        }
+    }
+
+    func find(
+        key: String
+    ) async throws -> Row? {
+        try await connection.run(
+            query: #"""
+                SELECT *
+                FROM system_variable
+                WHERE key=\#(key)
                 LIMIT 1;
                 """#
         ) { sequence in
@@ -173,6 +210,7 @@ struct VariableTable {
                 UPDATE system_variable
                 SET
                     id=\#(row.id),
+                    key=\#(row.key),
                     name=\#(row.name),
                     value=\#(row.value),
                     notes=\#(row.notes),
@@ -182,7 +220,7 @@ struct VariableTable {
                 """#
         ) { sequence in
             guard let row = try await sequence.collect().first else {
-                fatalError("TODO")
+                throw RepositoryError.notFound
             }
             return try Row(from: row)
         }

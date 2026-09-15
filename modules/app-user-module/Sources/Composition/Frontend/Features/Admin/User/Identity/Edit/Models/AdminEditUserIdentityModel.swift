@@ -7,7 +7,4 @@ struct AdminEditUserIdentityModel: Sendable {
     let status: String
     let roleIds: [String]
 
-    var payload: UserIdentityFormPayloadModel {
-        .init(name: name, status: status, roleIds: roleIds)
-    }
 }

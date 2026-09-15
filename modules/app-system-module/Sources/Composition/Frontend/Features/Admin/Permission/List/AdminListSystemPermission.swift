@@ -15,7 +15,8 @@ struct AdminListSystemPermission {
                     ),
                     presenter: AdminListSystemPermissionDefaultPresenter(
                         request: request,
-                        renderEngine: renderingEngine
+                        context: context,
+                        renderingEngine: renderingEngine
                     )
                 )
             }

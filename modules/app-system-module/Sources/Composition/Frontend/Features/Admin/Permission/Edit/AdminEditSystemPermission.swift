@@ -15,6 +15,7 @@ struct AdminEditSystemPermission {
                     ),
                     presenter: AdminEditSystemPermissionDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

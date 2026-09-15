@@ -20,11 +20,11 @@ extension AdminEditUserRoleController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/user/roles/{id}/edit/",
+            UserRoleRoutes.edit(RouterPath("{id}")),
             use: getEditUserRole
         )
         router.post(
-            "/admin/user/roles/{id}/edit/",
+            UserRoleRoutes.edit(RouterPath("{id}")),
             use: postEditUserRole
         )
     }

@@ -9,6 +9,6 @@ protocol AdminEditSystemPermissionRepository: Sendable {
 
     func update(
         id: String,
-        input: SystemPermissionFormInput
+        input: SystemPermissionEditFormInput
     ) async throws
 }

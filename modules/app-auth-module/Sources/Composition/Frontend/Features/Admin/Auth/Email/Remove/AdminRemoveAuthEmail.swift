@@ -13,7 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminRemoveAuthEmail {
     let controller: any AdminRemoveAuthEmailController
@@ -29,6 +30,7 @@ struct AdminRemoveAuthEmail {
                     ),
                     presenter: AdminRemoveAuthEmailDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

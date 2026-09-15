@@ -7,25 +7,29 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct BlogAuthorError: Component {
 
     struct State {
         let info: String
         let message: String
-        let breadcrumb: AdminBreadcrumb.State
+        let breadcrumb: [NewAdminBreadcrumb.Link]
     }
 
     let state: State
 
-    func content() -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
-
-            H1(state.info)
-            P(state.message)
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
+                NewAdminStatusView(
+                    state: .init(title: state.info, message: state.message),
+                    icon: FeatherIcons.alertCircle()
+                )
+            )
         }
         .class("cms-section")
     }

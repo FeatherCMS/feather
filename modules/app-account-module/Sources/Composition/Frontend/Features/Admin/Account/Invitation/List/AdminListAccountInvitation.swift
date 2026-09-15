@@ -15,6 +15,7 @@ struct AdminListAccountInvitation {
                     ),
                     presenter: AdminListAccountInvitationDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

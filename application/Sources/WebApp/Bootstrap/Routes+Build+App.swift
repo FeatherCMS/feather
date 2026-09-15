@@ -12,7 +12,6 @@ import SystemFrontend
 import FeatherAdmin
 import FeatherApplication
 import Hummingbird
-import WebStandards
 import WebApplication
 import NewsFrontend
 
@@ -22,18 +21,12 @@ func buildAppRoutes(
     renderingEngine: DefaultRenderingEngine,
     themeRenderer: DefaultThemeRenderer,
     publicContentRepository: any AppPublicContentRepository,
-    publicContentEvents: any EventPublisher,
-    styleshetCollector: GlobalStylesheetCollector
+    publicContentEvents: any EventPublisher
 ) {
     AppContactFormSubmission().route(on: router)
 
     AppNewsletterCampaignSubscription()
         .route(on: router)
-
-    AppGetStylesheet(
-        globalStylesheetCollector: styleshetCollector
-    )
-    .route(on: router)
 
     AppPublicContent(
         repository: publicContentRepository,

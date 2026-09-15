@@ -265,12 +265,15 @@ components:
           $ref: '#/components/schemas/UserIdentityNameField'
         status:
           $ref: '#/components/schemas/UserIdentityStatusField'
+        roleIds:
+          $ref: '#/components/schemas/UserIdentityRoleIdsField'
       required:
       - name
+      minProperties: 1
     UserIdentityNameField:
       type: string
-      example: Root User
-      minProperties: 0
+      examples:
+      - Root User
     UserIdentityStatusField:
       type: string
       enum:
@@ -281,6 +284,16 @@ components:
       - anonymized
       examples:
       - active
+    UserIdentityRoleIdsField:
+      type: array
+      items:
+        $ref: '#/components/schemas/UserRoleIdField'
+      minItems: 0
+      uniqueItems: false
+    UserRoleIdField:
+      type: string
+      examples:
+      - role_manager
     UserIdentityDetailSchema:
       type: object
       properties:
@@ -294,8 +307,9 @@ components:
           $ref: '#/components/schemas/UserIdentityRoleIDListSchema'
       required:
       - id
+      - name
       - status
-      minProperties: 2
+      minProperties: 3
     UserIdentityIDField:
       type: string
       examples:
@@ -400,9 +414,10 @@ components:
           $ref: '#/components/schemas/UserIdentityRoleIDListSchema'
       required:
       - id
+      - name
       - status
       - roles
-      minProperties: 3
+      minProperties: 4
     UserIdentityListItemSearchQuerySchema:
       type: object
       properties:
@@ -510,16 +525,6 @@ components:
         roleIds:
           $ref: '#/components/schemas/UserIdentityRoleIdsField'
       minProperties: 0
-    UserIdentityRoleIdsField:
-      type: array
-      items:
-        $ref: '#/components/schemas/UserRoleIdField'
-      minItems: 0
-      uniqueItems: false
-    UserRoleIdField:
-      type: string
-      examples:
-      - role_manager
     UserIdentityPatchSchema:
       type: object
       properties:
@@ -533,17 +538,11 @@ components:
     UserRoleCreateSchema:
       type: object
       properties:
-        id:
-          type: string
-          examples:
-          - role_manager
         name:
           $ref: '#/components/schemas/UserRoleNameField'
         notes:
           $ref: '#/components/schemas/UserRoleNotesField'
-      required:
-      - id
-      minProperties: 1
+      minProperties: 0
     UserRoleNotesField:
       type: string
       examples:

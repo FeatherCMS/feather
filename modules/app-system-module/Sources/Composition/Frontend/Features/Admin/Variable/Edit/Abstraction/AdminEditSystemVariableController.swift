@@ -21,11 +21,11 @@ extension AdminEditSystemVariableController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/system/variables/{id}/edit/",
+            SystemVariableRoutes.edit(RouterPath("{id}")),
             use: getEditSystemVariable
         )
         router.post(
-            "/admin/system/variables/{id}/edit/",
+            SystemVariableRoutes.edit(RouterPath("{id}")),
             use: postEditSystemVariable
         )
     }

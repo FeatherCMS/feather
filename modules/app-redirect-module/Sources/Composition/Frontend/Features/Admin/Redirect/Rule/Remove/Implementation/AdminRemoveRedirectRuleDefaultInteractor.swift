@@ -6,15 +6,26 @@ struct AdminRemoveRedirectRuleDefaultInteractor:
 {
     let repository: any AdminRemoveRedirectRuleRepository
 
-    func get(
-        id: String
-    ) async throws -> RedirectRuleDetailsModel {
-        try await repository.get(id: id)
+    func names(ids: [String]) async throws -> [String] {
+        do { return try await repository.names(ids: ids) }
+        catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
-    func delete(
-        id: String
-    ) async throws {
-        try await repository.delete(id: id)
+    func delete(ids: [String]) async throws {
+        do { try await repository.delete(ids: ids) }
+        catch let error as OpenAPIRepositoryError { throw map(error) }
+    }
+
+    private func map(_ error: OpenAPIRepositoryError)
+        -> AdminRemoveRedirectRuleError
+    {
+        switch error {
+        case .notFound: .notFound
+        case .unauthorized: .unauthorized
+        case .forbidden: .forbidden
+        case .conflict: .conflict
+        case .failure(let failure) where failure.statusCode == 409: .conflict
+        default: .unavailable
+        }
     }
 }

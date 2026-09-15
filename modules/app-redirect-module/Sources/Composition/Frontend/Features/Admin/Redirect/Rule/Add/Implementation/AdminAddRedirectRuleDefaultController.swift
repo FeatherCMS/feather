@@ -1,6 +1,6 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import RedirectContracts
@@ -12,146 +12,62 @@ struct AdminAddRedirectRuleDefaultController: AdminAddRedirectRuleController {
             presenter: any AdminAddRedirectRulePresenter
         )
 
-    func getAddRedirectRule(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
-        return runtime.presenter.renderAddPage(
-            state: formState(),
-            permissions: context.currentUserPermissions
+    func getAddRedirectRule(request: Request, context: DefaultRequestContext)
+        async throws -> HTMLResponse
+    {
+        let (_, presenter) = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.create)
+        else { return try await presenter.renderForbiddenPage() }
+        return try await presenter.renderAddPage(
+            state: .empty(),
+            permissions: context.currentUserAdminListActions
         )
     }
 
-    func postAddRedirectRule(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
-        let permissions = context.currentUserPermissions
-        var lastPayload: RedirectRuleFormInput?
-
+    func postAddRedirectRule(request: Request, context: DefaultRequestContext)
+        async throws -> Response
+    {
+        let (interactor, presenter) = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.create)
+        else {
+            return try await presenter.renderForbiddenPage()
+                .response(from: request, context: context)
+        }
+        var lastPayload: RedirectRuleAddFormInput?
         do {
             let payload = try await request.decode(
-                as: RedirectRuleFormInput.self,
+                as: NonceRequest<RedirectRuleAddFormInput>.self,
                 context: context
             )
-            lastPayload = payload
-            try await payload.validate()
-            guard payload.parsedStatusCode != nil else {
-                var state = formState(
-                    source: payload.normalizedSource,
-                    destination: payload.normalizedDestination,
-                    statusCode: payload.normalizedStatusCode,
-                    notes: payload.normalizedNotes
+            lastPayload = payload.input
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
                 )
-                state.apply(errors: [
-                    "statusCode": "Status code must be 301, 302, 307, or 308."
-                ])
-                return try runtime.presenter
-                    .renderAddPage(
-                        state: state,
-                        permissions: permissions
-                    )
+            else {
+                return try await presenter.renderInvalidNoncePage()
                     .response(from: request, context: context)
             }
-            try await runtime.interactor.execute(input: payload)
-
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/redirect/rules/",
-                        title: "Added",
-                        message: "Redirect rule added successfully."
-                    )
-                ]
-            )
+            try await payload.input.validate()
+            try await interactor.add(input: payload.input)
+            return presenter.renderSuccess()
         }
         catch let error as ValidationError {
-            var errors: [String: String] = [:]
-            for failure in error.failures {
-                errors[failure.key] = failure.message
-            }
-            var state = formState(
-                source: lastPayload?.normalizedSource ?? "",
-                destination: lastPayload?.normalizedDestination ?? "",
-                statusCode: lastPayload?.normalizedStatusCode ?? "301",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.apply(errors: errors)
-            return try runtime.presenter
-                .renderAddPage(
-                    state: state,
-                    permissions: permissions
+            return
+                try await presenter.renderValidationError(
+                    input: lastPayload,
+                    error: error
                 )
                 .response(from: request, context: context)
         }
-        catch let error as OpenAPIRepositoryError {
-            var state = formState(
-                source: lastPayload?.normalizedSource ?? "",
-                destination: lastPayload?.normalizedDestination ?? "",
-                statusCode: lastPayload?.normalizedStatusCode ?? "301",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.error = error.errorDescription
-            return try runtime.presenter
-                .renderAddPage(
-                    state: state,
-                    permissions: permissions
+        catch let error as AdminAddRedirectRuleError {
+            return
+                try await presenter.renderAddError(
+                    input: lastPayload,
+                    error: error
                 )
                 .response(from: request, context: context)
         }
-        catch {
-            var state = formState(
-                source: lastPayload?.normalizedSource ?? "",
-                destination: lastPayload?.normalizedDestination ?? "",
-                statusCode: lastPayload?.normalizedStatusCode ?? "301",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.error = error.displayMessage
-            return try runtime.presenter
-                .renderAddPage(
-                    state: state,
-                    permissions: permissions
-                )
-                .response(from: request, context: context)
-        }
-    }
-
-    private func formState(
-        source: String = "",
-        destination: String = "",
-        statusCode: String = "301",
-        notes: String = ""
-    ) -> RedirectRuleForm.State {
-        .init(
-            source: .init(
-                key: "source",
-                label: "Source path",
-                value: source,
-                error: nil
-            ),
-            destination: .init(
-                key: "destination",
-                label: "Destination URL or path",
-                value: destination,
-                error: nil
-            ),
-            statusCode: .init(
-                key: "statusCode",
-                label: "HTTP status code",
-                value: statusCode,
-                error: nil
-            ),
-            notes: .init(
-                key: "notes",
-                label: "Notes",
-                value: notes,
-                error: nil
-            ),
-            error: nil,
-            success: nil
-        )
     }
 }

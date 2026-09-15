@@ -17,9 +17,9 @@ public protocol APIProtocol: Sendable {
     func mediaAssetCreate(_ input: Operations.MediaAssetCreate.Input)
         async throws -> Operations.MediaAssetCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetDelete)`.
-    func mediaAssetDelete(_ input: Operations.MediaAssetDelete.Input)
-        async throws -> Operations.MediaAssetDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)`.
+    func mediaAssetNodeDelete(_ input: Operations.MediaAssetNodeDelete.Input)
+        async throws -> Operations.MediaAssetNodeDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/media/assets/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/search/post(mediaAssetSearch)`.
     func mediaAssetSearch(_ input: Operations.MediaAssetSearch.Input)
@@ -41,10 +41,6 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/post(mediaFolderCreate)`.
     func mediaFolderCreate(_ input: Operations.MediaFolderCreate.Input)
         async throws -> Operations.MediaFolderCreate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/media/folders`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/delete(mediaFolderDelete)`.
-    func mediaFolderDelete(_ input: Operations.MediaFolderDelete.Input)
-        async throws -> Operations.MediaFolderDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/media/folders/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/search/post(mediaFolderSearch)`.
     func mediaFolderSearch(_ input: Operations.MediaFolderSearch.Input)
@@ -95,13 +91,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetDelete)`.
-    public func mediaAssetDelete(
-        headers: Operations.MediaAssetDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)`.
+    public func mediaAssetNodeDelete(
+        headers: Operations.MediaAssetNodeDelete.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.MediaAssetDelete.Output {
-        try await mediaAssetDelete(
-            Operations.MediaAssetDelete.Input(
+    ) async throws -> Operations.MediaAssetNodeDelete.Output {
+        try await mediaAssetNodeDelete(
+            Operations.MediaAssetNodeDelete.Input(
                 headers: headers,
                 body: body
             )
@@ -169,19 +165,6 @@ extension APIProtocol {
     ) async throws -> Operations.MediaFolderCreate.Output {
         try await mediaFolderCreate(
             Operations.MediaFolderCreate.Input(
-                headers: headers,
-                body: body
-            )
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/media/folders`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/delete(mediaFolderDelete)`.
-    public func mediaFolderDelete(
-        headers: Operations.MediaFolderDelete.Input.Headers = .init(),
-        body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.MediaFolderDelete.Output {
-        try await mediaFolderDelete(
-            Operations.MediaFolderDelete.Input(
                 headers: headers,
                 body: body
             )
@@ -477,89 +460,18 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema`.
         public struct DeleteResponseSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/ResultsPayload`.
-            public struct ResultsPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/ResultsPayload/id`.
-                public var id: Swift.String
-                /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/ResultsPayload/status`.
-                @frozen
-                public enum StatusPayload: String, Codable, Hashable, Sendable,
-                    CaseIterable
-                {
-                    case deleted = "deleted"
-                    case notFound = "not_found"
-                    case forbidden = "forbidden"
-                }
-                /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/ResultsPayload/status`.
-                public var status:
-                    Components.Schemas.DeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                /// Creates a new `ResultsPayloadPayload`.
-                ///
-                /// - Parameters:
-                ///   - id:
-                ///   - status:
-                public init(
-                    id: Swift.String,
-                    status: Components.Schemas.DeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                ) {
-                    self.id = id
-                    self.status = status
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case id
-                    case status
-                }
-            }
             /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/results`.
-            public typealias ResultsPayload = [Components.Schemas
-                .DeleteResponseSchema.ResultsPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/results`.
-            public var results:
-                Components.Schemas.DeleteResponseSchema.ResultsPayload?
+            public var results: Components.Schemas.DeleteResultListSchema?
             /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary`.
-            public struct SummaryPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary/requested`.
-                public var requested: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary/deleted`.
-                public var deleted: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary/omitted`.
-                public var omitted: Swift.Int
-                /// Creates a new `SummaryPayload`.
-                ///
-                /// - Parameters:
-                ///   - requested:
-                ///   - deleted:
-                ///   - omitted:
-                public init(
-                    requested: Swift.Int,
-                    deleted: Swift.Int,
-                    omitted: Swift.Int
-                ) {
-                    self.requested = requested
-                    self.deleted = deleted
-                    self.omitted = omitted
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case requested
-                    case deleted
-                    case omitted
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary`.
-            public var summary:
-                Components.Schemas.DeleteResponseSchema.SummaryPayload?
+            public var summary: Components.Schemas.DeleteSummarySchema?
             /// Creates a new `DeleteResponseSchema`.
             ///
             /// - Parameters:
             ///   - results:
             ///   - summary:
             public init(
-                results: Components.Schemas.DeleteResponseSchema
-                    .ResultsPayload? = nil,
-                summary: Components.Schemas.DeleteResponseSchema
-                    .SummaryPayload? = nil
+                results: Components.Schemas.DeleteResultListSchema? = nil,
+                summary: Components.Schemas.DeleteSummarySchema? = nil
             ) {
                 self.results = results
                 self.summary = summary
@@ -569,15 +481,82 @@ public enum Components {
                 case summary
             }
         }
-        /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchQuerySchema`.
-        public struct MediaAssetListItemSearchQuerySchema: Codable, Hashable,
-            Sendable
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public struct DeleteResultListSchemaPayload: Codable, Hashable, Sendable
         {
-            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchQuerySchema/page`.
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            @frozen
+            public enum StatusPayload: String, Codable, Hashable, Sendable,
+                CaseIterable
+            {
+                case deleted = "deleted"
+                case notFound = "not_found"
+                case forbidden = "forbidden"
+            }
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            public var status:
+                Components.Schemas.DeleteResultListSchemaPayload.StatusPayload
+            /// Creates a new `DeleteResultListSchemaPayload`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - status:
+            public init(
+                id: Swift.String,
+                status: Components.Schemas.DeleteResultListSchemaPayload
+                    .StatusPayload
+            ) {
+                self.id = id
+                self.status = status
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case status
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public typealias DeleteResultListSchema = [Components.Schemas
+            .DeleteResultListSchemaPayload]
+        /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema`.
+        public struct DeleteSummarySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/requested`.
+            public var requested: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/deleted`.
+            public var deleted: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/omitted`.
+            public var omitted: Swift.Int
+            /// Creates a new `DeleteSummarySchema`.
+            ///
+            /// - Parameters:
+            ///   - requested:
+            ///   - deleted:
+            ///   - omitted:
+            public init(
+                requested: Swift.Int,
+                deleted: Swift.Int,
+                omitted: Swift.Int
+            ) {
+                self.requested = requested
+                self.deleted = deleted
+                self.omitted = omitted
+            }
+            public enum CodingKeys: String, CodingKey {
+                case requested
+                case deleted
+                case omitted
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema`.
+        public struct MediaAssetNodeSearchItemSearchQuerySchema: Codable,
+            Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/page`.
             public var page: Components.Schemas.SearchPageSchema
-            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/SortPayload/field`.
                 @frozen
                 public enum FieldPayload: String, Codable, Hashable, Sendable,
                     CaseIterable
@@ -591,11 +570,11 @@ public enum Components {
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/SortPayload/field`.
                 public var field:
-                    Components.Schemas.MediaAssetListItemSearchQuerySchema
+                    Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema
                         .SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -604,8 +583,8 @@ public enum Components {
                 ///   - direction:
                 public init(
                     field: Components.Schemas
-                        .MediaAssetListItemSearchQuerySchema.SortPayloadPayload
-                        .FieldPayload,
+                        .MediaAssetNodeSearchItemSearchQuerySchema
+                        .SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -616,18 +595,18 @@ public enum Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchQuerySchema/sort`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/sort`.
             public typealias SortPayload = [Components.Schemas
-                .MediaAssetListItemSearchQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchQuerySchema/sort`.
+                .MediaAssetNodeSearchItemSearchQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/sort`.
             public var sort:
-                Components.Schemas.MediaAssetListItemSearchQuerySchema
+                Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema
                     .SortPayload?
-            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchQuerySchema/`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchQuerySchema//search`.
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/filters/search`.
                 public var search: Swift.String?
-                /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchQuerySchema//parentId`.
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/filters/parentId`.
                 public var parentId: Swift.String?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -646,11 +625,11 @@ public enum Components {
                     case parentId
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchQuerySchema/`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/filters`.
             public var filters:
-                Components.Schemas.MediaAssetListItemSearchQuerySchema
+                Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema
                     .FiltersPayload
-            /// Creates a new `MediaAssetListItemSearchQuerySchema`.
+            /// Creates a new `MediaAssetNodeSearchItemSearchQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -658,10 +637,11 @@ public enum Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchPageSchema,
-                sort: Components.Schemas.MediaAssetListItemSearchQuerySchema
-                    .SortPayload? = nil,
-                filters: Components.Schemas.MediaAssetListItemSearchQuerySchema
-                    .FiltersPayload
+                sort: Components.Schemas
+                    .MediaAssetNodeSearchItemSearchQuerySchema.SortPayload? =
+                    nil,
+                filters: Components.Schemas
+                    .MediaAssetNodeSearchItemSearchQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -708,18 +688,19 @@ public enum Components {
             case asc = "asc"
             case desc = "desc"
         }
-        /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchSchema`.
-        public struct MediaAssetListItemSearchSchema: Codable, Hashable,
+        /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchSchema`.
+        public struct MediaAssetNodeSearchItemSearchSchema: Codable, Hashable,
             Sendable
         {
-            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchSchema/query`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchSchema/query`.
             public var query:
-                Components.Schemas.MediaAssetListItemSearchQuerySchema
-            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchSchema/data`.
+                Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchSchema/data/items`.
-                public var items: [Components.Schemas.MediaAssetListItemSchema]
-                /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchSchema/data/total`.
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchSchema/data/items`.
+                public var items:
+                    [Components.Schemas.MediaAssetNodeSearchItemSchema]
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchSchema/data/total`.
                 public var total: Swift.Int
                 /// Creates a new `DataPayload`.
                 ///
@@ -727,7 +708,7 @@ public enum Components {
                 ///   - items:
                 ///   - total:
                 public init(
-                    items: [Components.Schemas.MediaAssetListItemSchema],
+                    items: [Components.Schemas.MediaAssetNodeSearchItemSchema],
                     total: Swift.Int
                 ) {
                     self.items = items
@@ -738,17 +719,19 @@ public enum Components {
                     case total
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSearchSchema/data`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchSchema/data`.
             public var data:
-                Components.Schemas.MediaAssetListItemSearchSchema.DataPayload
-            /// Creates a new `MediaAssetListItemSearchSchema`.
+                Components.Schemas.MediaAssetNodeSearchItemSearchSchema
+                    .DataPayload
+            /// Creates a new `MediaAssetNodeSearchItemSearchSchema`.
             ///
             /// - Parameters:
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.MediaAssetListItemSearchQuerySchema,
-                data: Components.Schemas.MediaAssetListItemSearchSchema
+                query: Components.Schemas
+                    .MediaAssetNodeSearchItemSearchQuerySchema,
+                data: Components.Schemas.MediaAssetNodeSearchItemSearchSchema
                     .DataPayload
             ) {
                 self.query = query
@@ -757,6 +740,37 @@ public enum Components {
             public enum CodingKeys: String, CodingKey {
                 case query
                 case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSchema`.
+        public struct MediaAssetNodeSearchItemSchema: Codable, Hashable,
+            Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSchema/kind`.
+            public var kind: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSchema/file`.
+            public var file: Components.Schemas.MediaAssetListItemSchema?
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSchema/folder`.
+            public var folder: Components.Schemas.MediaFolderListItemSchema?
+            /// Creates a new `MediaAssetNodeSearchItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - kind:
+            ///   - file:
+            ///   - folder:
+            public init(
+                kind: Swift.String,
+                file: Components.Schemas.MediaAssetListItemSchema? = nil,
+                folder: Components.Schemas.MediaFolderListItemSchema? = nil
+            ) {
+                self.kind = kind
+                self.file = file
+                self.folder = folder
+            }
+            public enum CodingKeys: String, CodingKey {
+                case kind
+                case file
+                case folder
             }
         }
         /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSchema`.
@@ -836,6 +850,67 @@ public enum Components {
                 case updatedAt
             }
         }
+        /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema`.
+        public struct MediaFolderListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/id`.
+            public var id: Components.Schemas.MediaFolderIdField
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/parentId`.
+            public var parentId: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/name`.
+            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/path`.
+            public var path: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/assetCount`.
+            public var assetCount: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/totalSizeBytes`.
+            public var totalSizeBytes: Swift.Int64
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `MediaFolderListItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - parentId:
+            ///   - name:
+            ///   - path:
+            ///   - assetCount:
+            ///   - totalSizeBytes:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.MediaFolderIdField,
+                parentId: Swift.String? = nil,
+                name: Swift.String,
+                path: Swift.String,
+                assetCount: Swift.Int,
+                totalSizeBytes: Swift.Int64,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.parentId = parentId
+                self.name = name
+                self.path = path
+                self.assetCount = assetCount
+                self.totalSizeBytes = totalSizeBytes
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case parentId
+                case name
+                case path
+                case assetCount
+                case totalSizeBytes
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MediaFolderIdField`.
+        public typealias MediaFolderIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MediaAssetPatchSchema`.
         public struct MediaAssetPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MediaAssetPatchSchema/title`.
@@ -996,8 +1071,6 @@ public enum Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/MediaFolderIdField`.
-        public typealias MediaFolderIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema`.
         public struct MediaFolderListItemSearchQuerySchema: Codable, Hashable,
             Sendable
@@ -1051,9 +1124,9 @@ public enum Components {
             public var sort:
                 Components.Schemas.MediaFolderListItemSearchQuerySchema
                     .SortPayload?
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema/`.
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema//parentId`.
+                /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema/filters/parentId`.
                 public var parentId: Swift.String?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -1066,7 +1139,7 @@ public enum Components {
                     case parentId
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema/`.
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema/filters`.
             public var filters:
                 Components.Schemas.MediaFolderListItemSearchQuerySchema
                     .FiltersPayload
@@ -1142,65 +1215,6 @@ public enum Components {
             public enum CodingKeys: String, CodingKey {
                 case query
                 case data
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema`.
-        public struct MediaFolderListItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/id`.
-            public var id: Components.Schemas.MediaFolderIdField
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/parentId`.
-            public var parentId: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/name`.
-            public var name: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/path`.
-            public var path: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/assetCount`.
-            public var assetCount: Swift.Int
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/totalSizeBytes`.
-            public var totalSizeBytes: Swift.Int64
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/createdAt`.
-            public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/updatedAt`.
-            public var updatedAt: Swift.Double
-            /// Creates a new `MediaFolderListItemSchema`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - parentId:
-            ///   - name:
-            ///   - path:
-            ///   - assetCount:
-            ///   - totalSizeBytes:
-            ///   - createdAt:
-            ///   - updatedAt:
-            public init(
-                id: Components.Schemas.MediaFolderIdField,
-                parentId: Swift.String? = nil,
-                name: Swift.String,
-                path: Swift.String,
-                assetCount: Swift.Int,
-                totalSizeBytes: Swift.Int64,
-                createdAt: Swift.Double,
-                updatedAt: Swift.Double
-            ) {
-                self.id = id
-                self.parentId = parentId
-                self.name = name
-                self.path = path
-                self.assetCount = assetCount
-                self.totalSizeBytes = totalSizeBytes
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case parentId
-                case name
-                case path
-                case assetCount
-                case totalSizeBytes
-                case createdAt
-                case updatedAt
             }
         }
         /// - Remark: Generated from `#/components/schemas/MediaFolderPatchSchema`.
@@ -1362,9 +1376,9 @@ public enum Components {
             public var sort:
                 Components.Schemas.MediaProcessorListItemSearchQuerySchema
                     .SortPayload?
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema/`.
+            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema//search`.
+                /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -1378,7 +1392,7 @@ public enum Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema/`.
+            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema/filters`.
             public var filters:
                 Components.Schemas.MediaProcessorListItemSearchQuerySchema
                     .FiltersPayload
@@ -1622,19 +1636,21 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct MediaAssetListItemSearchSchemaSearchResponse: Sendable,
-            Hashable
+        public struct MediaAssetNodeSearchItemSearchSchemaSearchResponse:
+            Sendable, Hashable
         {
-            /// - Remark: Generated from `#/components/responses/MediaAssetListItemSearchSchemaSearchResponse/content`.
+            /// - Remark: Generated from `#/components/responses/MediaAssetNodeSearchItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/MediaAssetListItemSearchSchemaSearchResponse/content/application\/json`.
-                case json(Components.Schemas.MediaAssetListItemSearchSchema)
+                /// - Remark: Generated from `#/components/responses/MediaAssetNodeSearchItemSearchSchemaSearchResponse/content/application\/json`.
+                case json(
+                    Components.Schemas.MediaAssetNodeSearchItemSearchSchema
+                )
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
                 public var json:
-                    Components.Schemas.MediaAssetListItemSearchSchema
+                    Components.Schemas.MediaAssetNodeSearchItemSearchSchema
                 {
                     get throws {
                         switch self {
@@ -1647,14 +1663,14 @@ public enum Components {
             /// Received HTTP response body
             public var body:
                 Components.Responses
-                    .MediaAssetListItemSearchSchemaSearchResponse.Body
-            /// Creates a new `MediaAssetListItemSearchSchemaSearchResponse`.
+                    .MediaAssetNodeSearchItemSearchSchemaSearchResponse.Body
+            /// Creates a new `MediaAssetNodeSearchItemSearchSchemaSearchResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(
                 body: Components.Responses
-                    .MediaAssetListItemSearchSchemaSearchResponse.Body
+                    .MediaAssetNodeSearchItemSearchSchemaSearchResponse.Body
             ) {
                 self.body = body
             }
@@ -2003,15 +2019,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetDelete)`.
-    public enum MediaAssetDelete {
-        public static let id: Swift.String = "mediaAssetDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)`.
+    public enum MediaAssetNodeDelete {
+        public static let id: Swift.String = "mediaAssetNodeDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaAssetDelete.AcceptableContentType
+                        Operations.MediaAssetNodeDelete.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -2019,13 +2035,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaAssetDelete.AcceptableContentType
+                        Operations.MediaAssetNodeDelete.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.MediaAssetDelete.Input.Headers
+            public var headers: Operations.MediaAssetNodeDelete.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -2033,7 +2049,8 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.MediaAssetDelete.Input.Headers = .init(),
+                headers: Operations.MediaAssetNodeDelete.Input.Headers =
+                    .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
@@ -2041,9 +2058,9 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -2070,13 +2087,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.MediaAssetDelete.Output.Unauthorized)
+            case unauthorized(
+                Operations.MediaAssetNodeDelete.Output.Unauthorized
+            )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -2087,7 +2106,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.MediaAssetDelete.Output.Unauthorized
+                Operations.MediaAssetNodeDelete.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -2107,13 +2126,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.MediaAssetDelete.Output.Forbidden)
+            case forbidden(Operations.MediaAssetNodeDelete.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -2123,7 +2142,9 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.MediaAssetDelete.Output.Forbidden {
+            public var forbidden:
+                Operations.MediaAssetNodeDelete.Output.Forbidden
+            {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -2198,7 +2219,7 @@ public enum Operations {
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/search/POST/requestBody/content/application\/json`.
                 case json(
-                    Components.Schemas.MediaAssetListItemSearchQuerySchema
+                    Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema
                 )
             }
             public var body: Operations.MediaAssetSearch.Input.Body
@@ -2223,7 +2244,7 @@ public enum Operations {
             /// HTTP response code: `200 ok`.
             case ok(
                 Components.Responses
-                    .MediaAssetListItemSearchSchemaSearchResponse
+                    .MediaAssetNodeSearchItemSearchSchemaSearchResponse
             )
             /// The associated value of the enum case if `self` is `.ok`.
             ///
@@ -2231,7 +2252,7 @@ public enum Operations {
             /// - SeeAlso: `.ok`.
             public var ok:
                 Components.Responses
-                    .MediaAssetListItemSearchSchemaSearchResponse
+                    .MediaAssetNodeSearchItemSearchSchemaSearchResponse
             {
                 get throws {
                     switch self {
@@ -3192,175 +3213,6 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/media/folders`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/delete(mediaFolderDelete)`.
-    public enum MediaFolderDelete {
-        public static let id: Swift.String = "mediaFolderDelete"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/media/folders/DELETE/header`.
-            public struct Headers: Sendable, Hashable {
-                public var accept:
-                    [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaFolderDelete.AcceptableContentType
-                    >]
-                /// Creates a new `Headers`.
-                ///
-                /// - Parameters:
-                ///   - accept:
-                public init(
-                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaFolderDelete.AcceptableContentType
-                    >] = .defaultValues()
-                ) {
-                    self.accept = accept
-                }
-            }
-            public var headers: Operations.MediaFolderDelete.Input.Headers
-            public var body: Components.RequestBodies.DeleteRequestBody
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - headers:
-            ///   - body:
-            public init(
-                headers: Operations.MediaFolderDelete.Input.Headers = .init(),
-                body: Components.RequestBodies.DeleteRequestBody
-            ) {
-                self.headers = headers
-                self.body = body
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            /// delete response
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/delete(mediaFolderDelete)/responses/200`.
-            ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.DeleteResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
-            ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.DeleteResponse {
-                get throws {
-                    switch self {
-                    case .ok(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/delete(mediaFolderDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.MediaFolderDelete.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/delete(mediaFolderDelete)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.MediaFolderDelete.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/delete(mediaFolderDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.MediaFolderDelete.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/delete(mediaFolderDelete)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.MediaFolderDelete.Output.Forbidden
-            {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
-        }
-        @frozen public enum AcceptableContentType: AcceptableProtocol {
-            case json
-            case other(Swift.String)
-            public init?(rawValue: Swift.String) {
-                switch rawValue.lowercased() {
-                case "application/json":
-                    self = .json
-                default:
-                    self = .other(rawValue)
-                }
-            }
-            public var rawValue: Swift.String {
-                switch self {
-                case .other(let string):
-                    return string
-                case .json:
-                    return "application/json"
-                }
-            }
-            public static var allCases: [Self] {
-                [
-                    .json
-                ]
-            }
-        }
-    }
     /// - Remark: HTTP `POST /api/v1/admin/media/folders/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/search/post(mediaFolderSearch)`.
     public enum MediaFolderSearch {
@@ -4205,7 +4057,7 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// delete response
+            /// Delete response
             ///
             /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)/responses/200`.
             ///

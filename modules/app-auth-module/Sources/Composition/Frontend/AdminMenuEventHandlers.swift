@@ -1,5 +1,6 @@
 import FeatherAdmin
 import FeatherContracts
+import Hummingbird
 import SystemContracts
 
 public enum AuthAdminMenuEventHandlers {
@@ -28,28 +29,29 @@ public enum AuthAdminMenuEventHandlers {
                     menuKey: "auth",
                     label: "Emails",
                     icon: "mail",
-                    link: "/admin/auth/emails/",
-                    permission: "auth:auth-email:list"
+                    link: AuthEmailRoutes.list.description + "/",
+                    permission: "auth:email:list"
                 ),
                 .init(
                     menuKey: "auth",
                     label: "Credentials",
                     icon: "key",
-                    link: "/admin/auth/credentials/",
+                    link: AuthCredentialRoutes.list.description + "/",
                     permission: "auth:credential:list"
                 ),
                 .init(
                     menuKey: "auth",
                     label: "Magic links",
                     icon: "link",
-                    link: "/admin/auth/magic-links/",
+                    link: AuthMagicLinkRoutes.list.description + "/",
                     permission: "auth:magic-links:list"
                 ),
                 .init(
                     menuKey: "auth",
                     label: "Access Control",
-                    icon: "key",
-                    link: "/admin/auth/access-control/",
+                    icon: "unlock",
+                    link: AuthAccessControlRoutes.accessControl.description
+                        + "/",
                     permission: "auth:access-control:list"
                 ),
             ]

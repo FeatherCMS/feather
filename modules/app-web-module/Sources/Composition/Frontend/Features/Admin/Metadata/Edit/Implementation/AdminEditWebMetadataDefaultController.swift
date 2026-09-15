@@ -20,7 +20,7 @@ struct AdminEditWebMetadataDefaultController:
         request: Request,
         context: DefaultRequestContext,
         referenceType: String,
-        navigationTabs: [AdminPillTabs.Link],
+        navigationTabs: [NewAdminTabBar.Link],
         configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> HTMLResponse {
         try await renderEditWebMetadata(
@@ -36,7 +36,7 @@ struct AdminEditWebMetadataDefaultController:
         request: Request,
         context: DefaultRequestContext,
         referenceType: String,
-        navigationTabs: [AdminPillTabs.Link],
+        navigationTabs: [NewAdminTabBar.Link],
         configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> Response {
         try await renderPostEditWebMetadata(
@@ -65,7 +65,7 @@ struct AdminEditWebMetadataDefaultController:
         request: Request,
         context: DefaultRequestContext,
         referenceType: String?,
-        navigationTabs: [AdminPillTabs.Link],
+        navigationTabs: [NewAdminTabBar.Link],
         configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
@@ -78,7 +78,7 @@ struct AdminEditWebMetadataDefaultController:
                 context: context,
                 referenceType: referenceType
             )
-            return runtime.presenter.renderEditPage(
+            return try await runtime.presenter.renderEditPage(
                 id: id,
                 state: formState(
                     referenceType: entry.referenceType,
@@ -100,14 +100,13 @@ struct AdminEditWebMetadataDefaultController:
                     structuredDataCodeInjection: entry
                         .structuredDataCodeInjection
                 ),
-                isEdited: request.hasQueryFlag("edited"),
                 permissions: permissions,
                 navigationTabs: navigationTabs,
                 configuration: configuration
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
+            return try await runtime.presenter.renderErrorPage(
                 id: id,
                 info: error.errorTitle,
                 message: error.errorDescription,
@@ -134,7 +133,7 @@ struct AdminEditWebMetadataDefaultController:
         request: Request,
         context: DefaultRequestContext,
         referenceType: String?,
-        navigationTabs: [AdminPillTabs.Link],
+        navigationTabs: [NewAdminTabBar.Link],
         configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
@@ -158,15 +157,12 @@ struct AdminEditWebMetadataDefaultController:
             try await payload.validate()
             try await runtime.interactor.update(id: metadataID, input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: request.uri.path,
-                        title: "Saved",
-                        message: "Web metadata edited successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: request.uri.path,
+                notification: .init(
+                    title: "Saved",
+                    message: "Web metadata edited successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -196,11 +192,10 @@ struct AdminEditWebMetadataDefaultController:
                     .normalizedStructuredDataCodeInjection ?? ""
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions,
                     navigationTabs: navigationTabs,
                     configuration: configuration
@@ -230,11 +225,10 @@ struct AdminEditWebMetadataDefaultController:
                     .normalizedStructuredDataCodeInjection ?? ""
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions,
                     navigationTabs: navigationTabs,
                     configuration: configuration
@@ -264,11 +258,10 @@ struct AdminEditWebMetadataDefaultController:
                     .normalizedStructuredDataCodeInjection ?? ""
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions,
                     navigationTabs: navigationTabs,
                     configuration: configuration
@@ -349,11 +342,11 @@ struct AdminEditWebMetadataDefaultController:
             ),
             imageUrl: .init(
                 key: "imageUrl",
-                label: "Image URL",
+                label: "Image",
                 value: imageUrl,
                 error: nil
             ),
-            selectedImageAsset: AdminMediaAssetReferenceModel.metadataImageURL(
+            selectedImageAsset: NewAdminMediaAsset.metadataImageURL(
                 imageUrl
             ),
             canonicalUrl: .init(

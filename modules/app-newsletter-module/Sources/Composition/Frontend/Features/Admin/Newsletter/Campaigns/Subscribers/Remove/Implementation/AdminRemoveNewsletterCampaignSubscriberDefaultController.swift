@@ -1,0 +1,81 @@
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
+    AdminRemoveNewsletterCampaignSubscriberController
+{
+    let buildRuntime:
+        @Sendable (Request, DefaultRequestContext) -> (
+            interactor: any AdminRemoveNewsletterCampaignSubscriberInteractor,
+            presenter: any AdminRemoveNewsletterCampaignSubscriberPresenter
+        )
+    func confirm(request: Request, context: DefaultRequestContext) async throws
+        -> HTMLResponse
+    {
+        let (interactor, presenter) = buildRuntime(request, context)
+        let newsletterId = try context.requiredParameter("newsletterId")
+        let subscriberId = try context.requiredParameter("subscriberId")
+        let item = try await interactor.get(
+            newsletterId: newsletterId,
+            subscriberId: subscriberId
+        )
+        return try await presenter.render(
+            newsletterId: newsletterId,
+            subscriberId: subscriberId,
+            email: item.email,
+            permissions: context.currentUserPermissions
+        )
+    }
+    func remove(request: Request, context: DefaultRequestContext) async throws
+        -> Response
+    {
+        let (interactor, _) = buildRuntime(request, context)
+        let newsletterId = try context.requiredParameter("newsletterId")
+        try await interactor.remove(
+            newsletterId: newsletterId,
+            subscriberId: try context.requiredParameter("subscriberId")
+        )
+        return AdminNotificationFlash.redirect(
+            to:
+                NewsletterAdminRoutes.campaignSubscribers(
+                    RouterPath(newsletterId)
+                )
+                .description,
+            notification: .init(
+                title: "Removed",
+                message: "Subscriber removed successfully."
+            )
+        )
+    }
+    func removeSelected(request: Request, context: DefaultRequestContext)
+        async throws -> Response
+    {
+        let (interactor, _) = buildRuntime(request, context)
+        let newsletterId = try context.requiredParameter("newsletterId")
+        let payload = try await request.decode(
+            as: NewAdminListRemoveFormInput.self,
+            context: context
+        )
+        try await interactor.remove(
+            newsletterId: newsletterId,
+            subscriberIds: payload.normalizedSelectedIds
+        )
+        return AdminNotificationFlash.redirect(
+            to:
+                NewsletterAdminRoutes.campaignSubscribers(
+                    RouterPath(newsletterId)
+                )
+                .description,
+            notification: .init(
+                title: "Removed",
+                message: "Subscribers removed successfully."
+            )
+        )
+    }
+}

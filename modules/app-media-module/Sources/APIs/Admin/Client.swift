@@ -116,13 +116,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetDelete)`.
-    public func mediaAssetDelete(_ input: Operations.MediaAssetDelete.Input)
-        async throws -> Operations.MediaAssetDelete.Output
-    {
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)`.
+    public func mediaAssetNodeDelete(
+        _ input: Operations.MediaAssetNodeDelete.Input
+    ) async throws -> Operations.MediaAssetNodeDelete.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.MediaAssetDelete.id,
+            forOperation: Operations.MediaAssetNodeDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/media/assets",
@@ -233,7 +233,8 @@ public struct Client: APIProtocol {
                     )
                     let body:
                         Components.Responses
-                            .MediaAssetListItemSearchSchemaSearchResponse.Body
+                            .MediaAssetNodeSearchItemSearchSchemaSearchResponse
+                            .Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -243,8 +244,8 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.MediaAssetListItemSearchSchema
-                                .self,
+                            Components.Schemas
+                                .MediaAssetNodeSearchItemSearchSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -560,83 +561,6 @@ public struct Client: APIProtocol {
                         )
                     }
                     return .created(.init(body: body))
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/media/folders`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/delete(mediaFolderDelete)`.
-    public func mediaFolderDelete(_ input: Operations.MediaFolderDelete.Input)
-        async throws -> Operations.MediaFolderDelete.Output
-    {
-        try await client.send(
-            input: input,
-            forOperation: Operations.MediaFolderDelete.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/media/folders",
-                    parameters: []
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .delete
-                )
-                suppressMutabilityWarning(&request)
-                converter.setAcceptHeader(
-                    in: &request.headerFields,
-                    contentTypes: input.headers.accept
-                )
-                let body: OpenAPIRuntime.HTTPBody?
-                switch input.body {
-                case .json(let value):
-                    body = try converter.setRequiredRequestBodyAsJSON(
-                        value,
-                        headerFields: &request.headerFields,
-                        contentType: "application/json; charset=utf-8"
-                    )
-                }
-                return (request, body)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 200:
-                    let contentType = converter.extractContentTypeIfPresent(
-                        in: response.headerFields
-                    )
-                    let body: Components.Responses.DeleteResponse.Body
-                    let chosenContentType = try converter.bestContentType(
-                        received: contentType,
-                        options: [
-                            "application/json"
-                        ]
-                    )
-                    switch chosenContentType {
-                    case "application/json":
-                        body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.DeleteResponseSchema.self,
-                            from: responseBody,
-                            transforming: { value in
-                                .json(value)
-                            }
-                        )
-                    default:
-                        preconditionFailure(
-                            "bestContentType chose an invalid content type."
-                        )
-                    }
-                    return .ok(.init(body: body))
                 case 401:
                     return .unauthorized(.init())
                 case 403:

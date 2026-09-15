@@ -7,35 +7,30 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminEditBlogAuthorLinkDefaultPresenter: AdminEditBlogAuthorLinkPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderEditPage(
         menuId: String,
         id: String,
         state: BlogAuthorLinkForm.State,
-        isEdited: Bool,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit blog author link",
-            description: "Edit a management blog author link",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: BlogAuthorLinkEdit(
                 state: .init(
                     menuId: menuId,
                     id: id,
-                    isEdited: isEdited,
                     form: state,
                     breadcrumb: breadcrumb(menuId: menuId, id: id)
                 )
@@ -49,16 +44,11 @@ struct AdminEditBlogAuthorLinkDefaultPresenter: AdminEditBlogAuthorLinkPresenter
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Edit blog author link",
-            description: "Edit a management blog author link",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: BlogAuthorLinkError(
                 state: .init(
                     info: info,
@@ -72,22 +62,7 @@ struct AdminEditBlogAuthorLinkDefaultPresenter: AdminEditBlogAuthorLinkPresenter
     func breadcrumb(
         menuId: String,
         id: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Authors", link: "/admin/blog/authors/"),
-                .init(label: "Author", link: "/admin/blog/authors/\(menuId)/"),
-                .init(
-                    label: "Links",
-                    link: "/admin/blog/authors/\(menuId)/links/"
-                ),
-                .init(
-                    label: "Edit",
-                    link: "/admin/blog/authors/\(menuId)/links/\(id)/edit/"
-                ),
-            ]
-        )
+    ) -> [NewAdminBreadcrumb.Link] {
+        BlogAdminRoutes.authorLinksBreadcrumb(RouterPath(menuId))
     }
 }

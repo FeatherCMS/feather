@@ -7,15 +7,16 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
-struct AppBlogPostListPage: Component, FlowContent {
+struct AppBlogPostListPage: Component {
     let state: AppGetBlogPostListModel
 
-    func content() -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Main {
-            AppPublicStyleAnchor()
+            context.build(AppPublicStyleAnchor())
             Div {
                 Div {
                     P("Blog").class("public-eyebrow")

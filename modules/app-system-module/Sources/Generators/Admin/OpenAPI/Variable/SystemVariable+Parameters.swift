@@ -1,9 +1,9 @@
 import FeatherOpenAPI
 
-struct SystemVariableIdParameter: PathParameterRepresentable {
+struct SystemVariableIDParameter: PathParameterRepresentable {
     var name: String { "systemVariableId" }
     var description: String? { "SystemVariable id" }
     var schema: any OpenAPISchemaRepresentable {
-        SystemVariableIdField().reference()
+        SystemVariableIDField().reference()
     }
 }

@@ -1,5 +1,5 @@
 {
-  "originHash" : "f9b7dc4d76ff1684d481f7d6144b3f2da1870fe12cb53be8b546e8f3de66b611",
+  "originHash" : "7d6b94df43aa9da9cdff8eb925d871b1284af5409067cdd18c2604a906b185f8",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -60,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hummingbird-project/hummingbird-auth",
       "state" : {
-        "revision" : "eb06dff87b6a158565ab0aea854bcfee80e24f5a",
-        "version" : "2.2.0"
+        "revision" : "c457024e55cd69c1dbb332f3d4aed067a9364dbd",
+        "version" : "2.3.0"
       }
     },
     {
@@ -323,15 +323,6 @@
       "state" : {
         "revision" : "704705c5c51156ede21172a38654d522ce487074",
         "version" : "1.8.0"
-      }
-    },
-    {
-      "identity" : "swift-web-standards",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/BinaryBirds/swift-web-standards",
-      "state" : {
-        "revision" : "5368fba24e9b470c9f8f807682c26ca209c4be9f",
-        "version" : "1.0.0-beta.3"
       }
     },
     {

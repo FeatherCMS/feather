@@ -89,7 +89,7 @@ let package = Package(
             name: "AnalyticsDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
-                
+
                 .target(name: "AnalyticsContracts"),
             ],
             path: "Sources/Layers/Domain",
@@ -100,8 +100,8 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "SystemApplication", package: "app-system-module"),
-                
-                .target(name: "AnalyticsDomain"),    
+
+                .target(name: "AnalyticsDomain"),
             ],
             path: "Sources/Layers/Application",
             swiftSettings: defaultSwiftSettings
@@ -110,7 +110,7 @@ let package = Package(
             name: "AnalyticsInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
-                
+
                 .target(name: "AnalyticsApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
@@ -166,10 +166,10 @@ let package = Package(
             name: "AnalyticsBackend",
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
-                
+
                 .target(name: "AnalyticsInfrastructure"),
                 .target(name: "AnalyticsAdminAPI"),
-                .target(name: "AnalyticsAppAPI"),    
+                .target(name: "AnalyticsAppAPI"),
             ],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings

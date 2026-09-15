@@ -11,7 +11,7 @@ import FeatherContracts
 public protocol VariableQueries: Sendable {
 
     func get(
-        _ id: String
+        _ key: String
     ) async throws -> String?
 
     func find(
@@ -30,16 +30,16 @@ public protocol VariableQueries: Sendable {
 extension VariableQueries {
 
     public func get(
-        _ id: String
+        _ key: String
     ) async throws -> String? {
         try await list(
             query: .init(
                 page: .init(size: 1, number: 1),
-                search: id
+                ids: [key]
             )
         )
         .items
-        .first { $0.id == id }?
+        .first { $0.key == key }?
         .value
     }
 }

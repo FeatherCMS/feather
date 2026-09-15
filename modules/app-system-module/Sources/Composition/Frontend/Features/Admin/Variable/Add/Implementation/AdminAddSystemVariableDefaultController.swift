@@ -1,7 +1,9 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
+import SystemContracts
 
 struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
 {
@@ -16,9 +18,13 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
-        return runtime.presenter.renderAddPage(
-            state: formState(),
-            permissions: context.currentUserPermissions
+        guard
+            context.isCurrentUserAllowed(to: SystemPermissions.Variables.create)
+        else {
+            return try await runtime.presenter.renderForbiddenPage()
+        }
+        return try await runtime.presenter.renderAddPage(
+            state: .empty()
         )
     }
 
@@ -27,103 +33,55 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
         context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
-        let permissions = context.currentUserPermissions
-        var lastPayload: SystemVariableFormInput?
+        guard
+            context.isCurrentUserAllowed(to: SystemPermissions.Variables.create)
+        else {
+            return try await runtime.presenter
+                .renderForbiddenPage()
+                .response(from: request, context: context)
+        }
+        var lastPayload: SystemVariableAddFormInput?
 
         do {
             let payload = try await request.decode(
-                as: SystemVariableFormInput.self,
+                as: NonceRequest<SystemVariableAddFormInput>.self,
                 context: context
             )
-            lastPayload = payload
-            try await payload.validate()
-            try await runtime.interactor.execute(input: payload)
-
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/system/variables/",
-                        title: "Added",
-                        message: "System variable added successfully."
-                    )
-                ]
+            let formInput = payload.input
+            lastPayload = formInput
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                return try await runtime.presenter
+                    .renderInvalidNoncePage()
+                    .response(from: request, context: context)
+            }
+            try await formInput.validate()
+            try await runtime.interactor.add(
+                input: formInput
             )
+
+            return runtime.presenter.renderSuccess()
         }
         catch let error as ValidationError {
-            var errors: [String: String] = [:]
-            for failure in error.failures {
-                errors[failure.key] = failure.message
-            }
-            var state = formState(
-                id: lastPayload?.normalizedID ?? "",
-                name: lastPayload?.normalizedName ?? "",
-                value: lastPayload?.normalizedValue ?? "",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.apply(errors: errors)
-            return try runtime.presenter
-                .renderAddPage(
-                    state: state,
-                    permissions: permissions
+            return try await runtime.presenter
+                .renderValidationError(
+                    input: lastPayload,
+                    error: error
                 )
                 .response(from: request, context: context)
         }
-        catch let error as OpenAPIRepositoryError {
-            var state = formState(
-                id: lastPayload?.normalizedID ?? "",
-                name: lastPayload?.normalizedName ?? "",
-                value: lastPayload?.normalizedValue ?? "",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.error = error.errorDescription
-            return try runtime.presenter
-                .renderAddPage(
-                    state: state,
-                    permissions: permissions
-                )
-                .response(from: request, context: context)
-        }
-        catch {
-            var state = formState(
-                id: lastPayload?.normalizedID ?? "",
-                name: lastPayload?.normalizedName ?? "",
-                value: lastPayload?.normalizedValue ?? "",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.error = error.displayMessage
-            return try runtime.presenter
-                .renderAddPage(
-                    state: state,
-                    permissions: permissions
+        catch let error as AdminAddSystemVariableError {
+            return try await runtime.presenter
+                .renderAddError(
+                    input: lastPayload,
+                    error: error
                 )
                 .response(from: request, context: context)
         }
     }
 
-    private func formState(
-        id: String = "",
-        name: String = "",
-        value: String = "",
-        notes: String = ""
-    ) -> SystemVariableForm.State {
-        .init(
-            id: .init(key: "id", label: "ID", value: id, error: nil),
-            name: .init(key: "name", label: "Name", value: name, error: nil),
-            value: .init(
-                key: "value",
-                label: "Value",
-                value: value,
-                error: nil
-            ),
-            notes: .init(
-                key: "notes",
-                label: "Notes",
-                value: notes,
-                error: nil
-            ),
-            error: nil,
-            success: nil
-        )
-    }
 }

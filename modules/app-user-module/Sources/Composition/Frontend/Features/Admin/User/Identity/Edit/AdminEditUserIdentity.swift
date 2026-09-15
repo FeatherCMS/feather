@@ -20,7 +20,8 @@ struct AdminEditUserIdentity {
                     ),
                     presenter: AdminEditUserIdentityDefaultPresenter(
                         request: request,
-                        renderEngine: renderingEngine
+                        context: context,
+                        renderingEngine: renderingEngine
                     )
                 )
             }

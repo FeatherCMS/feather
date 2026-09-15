@@ -16,6 +16,7 @@ struct AdminEditWebMenu {
                     ),
                     presenter: AdminEditWebMenuDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

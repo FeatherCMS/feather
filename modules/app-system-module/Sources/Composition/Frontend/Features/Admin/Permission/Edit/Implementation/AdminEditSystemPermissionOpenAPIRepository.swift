@@ -23,23 +23,16 @@ struct AdminEditSystemPermissionOpenAPIRepository:
                 let permission = try okResponse.body.json
                 return .init(
                     id: permission.id,
+                    key: permission.key,
                     name: permission.name,
                     notes: permission.notes
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "System permission not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to load this system permission."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot edit system permissions."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -51,7 +44,7 @@ struct AdminEditSystemPermissionOpenAPIRepository:
 
     func update(
         id: String,
-        input: SystemPermissionFormInput
+        input: SystemPermissionEditFormInput
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.systemPermissionUpdate(
@@ -59,7 +52,7 @@ struct AdminEditSystemPermissionOpenAPIRepository:
                 headers: .init(accept: [.init(contentType: .json)]),
                 body: .json(
                     .init(
-                        id: id,
+                        key: input.normalizedKey,
                         name: input.normalizedName,
                         notes: input.normalizedNotes
                     )
@@ -70,19 +63,11 @@ struct AdminEditSystemPermissionOpenAPIRepository:
             case .ok:
                 return
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "System permission not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to update this system permission."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot edit system permissions."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

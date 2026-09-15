@@ -9,14 +9,14 @@ protocol AdminEditAccountInvitationPresenter: Sendable {
         state: AccountInvitationForm.State,
         isEdited: Bool,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderErrorPage(
         id: String,
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func formState(
         email: String,
@@ -26,7 +26,7 @@ protocol AdminEditAccountInvitationPresenter: Sendable {
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State
+    ) -> [NewAdminBreadcrumb.Link]
 
     func format(
         error: OpenAPIRepositoryError

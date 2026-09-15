@@ -9,7 +9,4 @@ protocol AdminListSystemPermissionRepository: Sendable {
         search: String?
     ) async throws -> AdminListSystemPermissionModel
 
-    func delete(
-        id: String
-    ) async throws
 }

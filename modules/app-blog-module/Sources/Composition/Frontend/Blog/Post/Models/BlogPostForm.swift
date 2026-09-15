@@ -1,48 +1,40 @@
 import BlogAdminAPI
 import BlogAppAPI
 import FeatherAdmin
-import FeatherValidation
 import HTML
 import Hummingbird
 import MediaFrontend
-import OpenAPIRuntime
-import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
-struct BlogPostForm: Component, FlowContent {
-
+struct BlogPostForm: Component {
     struct FieldState: FeatherAdmin.Object {
         var key: String
         var label: String
         var value: String?
         var error: String?
     }
-
     struct OptionState: FeatherAdmin.Object {
         var key: String
         var label: String
         var value: String
         var isSelected: Bool
     }
-
     struct State: FeatherAdmin.Object {
         var title: FieldState
         var excerpt: FieldState
         var content: FieldState
         var imageAssetId: FieldState
-        var selectedImageAsset: AdminMediaAssetReferenceModel?
+        var selectedImageAsset: NewAdminMediaAsset?
         var metadata: AdminMetadataFields.State
         var authorOptions: [OptionState]
         var tagOptions: [OptionState]
         var authorIdsError: String?
         var tagIdsError: String?
         var error: String?
-        var success: String?
 
-        mutating func apply(
-            errors: [String: String]
-        ) {
+        mutating func apply(errors: [String: String]) {
             title.error = errors[title.key]
             excerpt.error = errors[excerpt.key]
             content.error = errors[content.key]
@@ -54,16 +46,142 @@ struct BlogPostForm: Component, FlowContent {
     }
 
     var state: State
-    var metadataHref: String? = nil
+    var metadataHref: String?
     var action: String
     var submitLabel: String
-    var publishLabel: String? = nil
-    var removeHref: String? = nil
+    var publishLabel: String?
+    var removeHref: String?
     var removeLabel: String = "Remove"
 
-    private func metadataTabLinks() -> [AdminPillTabs.Link] {
-        var links: [AdminPillTabs.Link] = [
-            .init(
+    func html(context: inout BuilderContext) -> Form {
+        let form = NewAdminForm(action: action) {
+            if let error = state.error {
+                P(error).class("new-admin-form__error")
+            }
+            context.build(NewAdminTabBar(links: tabLinks()))
+            context.build(
+                NewAdminFormFieldMediaPicker(
+                    state: .init(
+                        field: .init(
+                            key: state.imageAssetId.key,
+                            label: state.imageAssetId.label,
+                            value: state.imageAssetId.value,
+                            error: state.imageAssetId.error
+                        ),
+                        selectedAsset: state.selectedImageAsset.map {
+                            .init(
+                                id: $0.id,
+                                storageKey: $0.storageKey,
+                                baseName: $0.baseName,
+                                type: $0.type,
+                                title: $0.title,
+                                altText: $0.altText,
+                                status: $0.status
+                            )
+                        },
+                        browsePath:
+                            "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
+                        allowedExtensions: ["png", "jpg", "jpeg", "webp"]
+                    )
+                )
+            )
+            context.build(
+                NewAdminFormFieldInput(
+                    state: .init(
+                        name: state.title.key,
+                        label: state.title.label,
+                        value: state.title.value,
+                        error: state.title.error,
+                        isRequired: true
+                    )
+                )
+            )
+            context.build(
+                NewAdminFormFieldTextArea(
+                    state: .init(
+                        name: state.excerpt.key,
+                        label: state.excerpt.label,
+                        value: state.excerpt.value,
+                        error: state.excerpt.error,
+                        style: .small,
+                        isRequired: true
+                    )
+                )
+            )
+            context.build(
+                NewAdminFormFieldTextArea(
+                    state: .init(
+                        name: state.content.key,
+                        label: state.content.label,
+                        value: state.content.value,
+                        error: state.content.error,
+                        style: .large,
+                        isRequired: true
+                    )
+                )
+            )
+            context.build(
+                NewAdminFormFieldSelectAutocomplete(
+                    state: .init(
+                        name: "authorIds[]",
+                        label: "Authors",
+                        placeholder: "Search and select authors...",
+                        options: state.authorOptions.map {
+                            .init(
+                                label: $0.label,
+                                value: $0.value,
+                                isSelected: $0.isSelected
+                            )
+                        },
+                        error: state.authorIdsError,
+                        selectionMode: .multiple
+                    )
+                )
+            )
+            context.build(
+                NewAdminFormFieldSelectAutocomplete(
+                    state: .init(
+                        name: "tagIds[]",
+                        label: "Tags",
+                        placeholder: "Search and select tags...",
+                        options: state.tagOptions.map {
+                            .init(
+                                label: $0.label,
+                                value: $0.value,
+                                isSelected: $0.isSelected
+                            )
+                        },
+                        error: state.tagIdsError,
+                        selectionMode: .multiple
+                    )
+                )
+            )
+            Div {
+                context.build(
+                    NewAdminSubmitButton(submitLabel, style: .primary)
+                )
+                if let publishLabel {
+                    Button(publishLabel).type(.submit).name("submitAction")
+                        .value("publish").class("button", "secondary")
+                }
+                if let removeHref {
+                    context.build(
+                        NewAdminButton(
+                            removeLabel,
+                            href: removeHref,
+                            style: .destructive
+                        )
+                    )
+                }
+            }
+            .class("new-admin-form__actions")
+        }
+        return context.build(form)
+    }
+
+    private func tabLinks() -> [NewAdminTabBar.Link] {
+        var links = [
+            NewAdminTabBar.Link(
                 label: "Details",
                 href: action,
                 isCurrent: true
@@ -75,125 +193,5 @@ struct BlogPostForm: Component, FlowContent {
             )
         }
         return links
-    }
-
-    func content() -> some BasicTag {
-        Form {
-            if let success = state.success {
-                P(success).class("success")
-            }
-            if let error = state.error {
-                P(error).class("error")
-            }
-
-            AdminPillTabs(links: metadataTabLinks())
-
-            Div {
-
-                AdminMediaAssetPicker(
-                    state: .init(
-                        field: .init(
-                            key: state.imageAssetId.key,
-                            label: state.imageAssetId.label,
-                            value: state.imageAssetId.value,
-                            error: state.imageAssetId.error
-                        ),
-                        selectedAsset: state.selectedImageAsset,
-                        browsePath:
-                            "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
-                        allowedExtensions: ["png", "jpg", "jpeg", "webp"]
-                    )
-                )
-                FormInputField(
-                    name: state.title.key,
-                    label: state.title.label,
-                    value: state.title.value,
-                    error: state.title.error,
-                    isRequired: true
-                )
-                textarea(state.excerpt, rows: 4)
-                textarea(state.content)
-                multiselect(
-                    key: "authorIds[]",
-                    label: "Authors",
-                    placeholder: "Search and select authors...",
-                    options: state.authorOptions,
-                    error: state.authorIdsError
-                )
-                multiselect(
-                    key: "tagIds[]",
-                    label: "Tags",
-                    placeholder: "Search and select tags...",
-                    options: state.tagOptions,
-                    error: state.tagIdsError
-                )
-            }
-            Section {
-                Div {
-                    Button(submitLabel)
-                        .type(.submit)
-                    if let publishLabel {
-                        Button(publishLabel)
-                            .type(.submit)
-                            .name("submitAction")
-                            .value("publish")
-                            .class("secondary")
-                    }
-                    if let removeHref {
-                        AdminNavigationButton(
-                            removeLabel,
-                            href: removeHref,
-                            classes: ["danger"]
-                        )
-                    }
-                }
-                .class("button-row")
-            }
-        }
-        .encType(.urlencoded)
-        .method(.post)
-        .action(action)
-        .class("cms-form")
-    }
-
-    private func textarea(
-        _ field: FieldState,
-        required: Bool = true,
-        rows: Int = 12
-    ) -> FormTextAreaField {
-        FormTextAreaField(
-            name: field.key,
-            label: field.label,
-            value: field.value,
-            error: field.error,
-            rows: rows,
-            isRequired: required
-        )
-    }
-
-    private func multiselect(
-        key: String,
-        label: String,
-        placeholder: String,
-        options: [OptionState],
-        error: String?
-    ) -> some FlowContent {
-        AdminAutocompleteField(
-            state: .init(
-                key: key,
-                label: label,
-                placeholder: placeholder,
-                options: options.map {
-                    .init(
-                        label: $0.label,
-                        value: $0.value,
-                        isSelected: $0.isSelected
-                    )
-                },
-                error: error,
-                selectionMode: .multiple,
-                isEnabled: true
-            )
-        )
     }
 }

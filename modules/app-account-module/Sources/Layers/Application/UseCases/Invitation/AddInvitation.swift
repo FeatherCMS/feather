@@ -17,14 +17,11 @@ import UserDomain
 public struct AddInvitation: UseCase {
     enum Error: UseCaseError {
         case roleNotFound(String)
-        case publicBaseURLNotConfigured
 
         var message: String {
             switch self {
             case .roleNotFound(let roleID):
                 "Role not found: \(roleID)"
-            case .publicBaseURLNotConfigured:
-                "The public site URL is not configured."
             }
         }
     }
@@ -101,14 +98,13 @@ public struct AddInvitation: UseCase {
                 event: UserIdentityDidInsert(identityID: identity.id),
                 using: context
             )
-            guard
-                let publicBaseURL = try await scope.variable.get(
-                    "web-settings-public-base-url"
-                ),
-                !publicBaseURL.isEmpty
-            else {
-                throw Error.publicBaseURLNotConfigured
-            }
+            let configuredPublicBaseURL =
+                try await scope.variable.get("web-settings-public-base-url")?
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            let publicBaseURL =
+                configuredPublicBaseURL?.isEmpty == false
+                ? configuredPublicBaseURL!
+                : "http://localhost:3456"
             return (invitation: invitation, publicBaseURL: publicBaseURL)
         }
 

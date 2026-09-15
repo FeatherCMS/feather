@@ -11,7 +11,7 @@ public struct AdminUser {
     public func route(
         on router: Router<DefaultRequestContext>
     ) {
-        AdminGetUserHome(
+        AdminViewUserOverview(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -21,7 +21,7 @@ public struct AdminUser {
         )
         .controller.route(on: router)
 
-        AdminGetUserIdentity(
+        AdminViewUserIdentity(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -46,7 +46,7 @@ public struct AdminUser {
         )
         .controller.route(on: router)
 
-        AdminGetUserRole(
+        AdminViewUserRole(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)

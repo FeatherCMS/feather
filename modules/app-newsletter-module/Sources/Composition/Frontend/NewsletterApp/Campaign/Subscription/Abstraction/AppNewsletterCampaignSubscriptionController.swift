@@ -4,7 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebBuilders
+import WebComponents
 
 protocol AppNewsletterCampaignSubscriptionController: Sendable {
     func subscribe(

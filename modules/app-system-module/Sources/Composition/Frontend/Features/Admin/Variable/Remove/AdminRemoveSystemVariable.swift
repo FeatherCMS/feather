@@ -15,6 +15,7 @@ struct AdminRemoveSystemVariable {
                     ),
                     presenter: AdminRemoveSystemVariableDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

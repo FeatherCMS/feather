@@ -93,7 +93,7 @@ struct InvitationTable {
                     \#(roleIDs),
                     NOW() + (\#(row.expiresAtInterval) * INTERVAL '1 second'),
                     NOW(),
-                    NOW() 
+                    NOW()
                 )
                 RETURNING *;
                 """#

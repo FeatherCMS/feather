@@ -8,8 +8,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminAddBlogTagDefaultController: AdminAddBlogTagController {
     let buildRuntime:
@@ -24,7 +25,7 @@ struct AdminAddBlogTagDefaultController: AdminAddBlogTagController {
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let slugPrefix = (try? await slugPrefix(context: context)) ?? "/"
-        return runtime.presenter.renderAddPage(
+        return try await runtime.presenter.renderAddPage(
             state: formState(slugPrefix: slugPrefix),
             permissions: context.currentUserPermissions
         )
@@ -47,15 +48,12 @@ struct AdminAddBlogTagDefaultController: AdminAddBlogTagController {
             try await payload.validate()
             try await runtime.interactor.execute(input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/blog/tags/",
-                        title: "Added",
-                        message: "Blog tag added successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/blog/tags/",
+                notification: .init(
+                    title: "Added",
+                    message: "Blog tag added successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -72,7 +70,7 @@ struct AdminAddBlogTagDefaultController: AdminAddBlogTagController {
                 slugPrefix: slugPrefix
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions
@@ -89,7 +87,7 @@ struct AdminAddBlogTagDefaultController: AdminAddBlogTagController {
                 slugPrefix: slugPrefix
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions
@@ -106,7 +104,7 @@ struct AdminAddBlogTagDefaultController: AdminAddBlogTagController {
                 slugPrefix: slugPrefix
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions
@@ -154,7 +152,6 @@ struct AdminAddBlogTagDefaultController: AdminAddBlogTagController {
                 slugPrefix: slugPrefix
             ),
             error: nil,
-            success: nil
         )
     }
 

@@ -1,45 +1,43 @@
-import BlogAdminAPI
-import BlogAppAPI
 import FeatherAdmin
-import FeatherValidation
 import HTML
 import Hummingbird
-import MediaFrontend
-import OpenAPIRuntime
 import SGML
-import WebFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct BlogSettingsEdit: Component {
-
     struct State {
-        let isEdited: Bool
         let canEdit: Bool
         let form: BlogSettingsForm.State
-        let breadcrumb: AdminBreadcrumb.State
+        let breadcrumb: [NewAdminBreadcrumb.Link]
     }
-
     let state: State
 
-    func content() -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
-
-            H1("Settings")
-            P(
-                "Configure the public list paths and detail prefixes used for blog posts, authors, and tags."
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Blog settings",
+                        description:
+                            "Configure public list paths and detail prefixes."
+                    )
+                )
             )
             if !state.canEdit {
-                P(
-                    "You can view these settings, but create and update permission for variables is required to save changes."
+                context.build(
+                    NewAdminStatusView(
+                        state: .init(
+                            title: "Read-only",
+                            message:
+                                "You can view these settings, but update permission is required to save changes."
+                        ),
+                        icon: FeatherIcons.alertCircle()
+                    )
                 )
             }
-
-            if state.isEdited {
-                P("Settings edited successfully.").class("success")
-            }
-
-            BlogSettingsForm(state: state.form)
+            context.build(BlogSettingsForm(state: state.form))
         }
         .class("cms-section")
     }

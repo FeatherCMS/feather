@@ -60,14 +60,13 @@ public struct ResendInvitation: UseCase {
                 token: generateToken(),
                 expiresAt: Date().addingTimeInterval(Invitation.lifetime)
             )
-            guard
-                let publicBaseURL = try await scope.variable.get(
-                    "web-settings-public-base-url"
-                ),
-                !publicBaseURL.isEmpty
-            else {
-                throw Error(message: "The public site URL is not configured.")
-            }
+            let configuredPublicBaseURL =
+                try await scope.variable.get("web-settings-public-base-url")?
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+            let publicBaseURL =
+                configuredPublicBaseURL?.isEmpty == false
+                ? configuredPublicBaseURL!
+                : "http://localhost:3456"
             return (
                 invitation: try await scope.invitation.update(invitation),
                 publicBaseURL: publicBaseURL

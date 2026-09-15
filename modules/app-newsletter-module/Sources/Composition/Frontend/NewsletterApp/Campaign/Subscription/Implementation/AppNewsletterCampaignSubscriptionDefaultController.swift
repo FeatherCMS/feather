@@ -5,7 +5,8 @@ import Hummingbird
 import NewsletterAppAPI
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AppNewsletterCampaignSubscriptionDefaultController:
     AppNewsletterCampaignSubscriptionController

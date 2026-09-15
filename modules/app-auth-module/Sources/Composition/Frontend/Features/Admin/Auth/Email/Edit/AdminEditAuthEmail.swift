@@ -13,7 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminEditAuthEmail {
     let controller: any AdminEditAuthEmailController
@@ -30,6 +31,7 @@ struct AdminEditAuthEmail {
                     ),
                     presenter: AdminEditAuthEmailDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

@@ -7,13 +7,15 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminRemoveBlogAuthorLinkDefaultPresenter:
     AdminRemoveBlogAuthorLinkPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderRemovePage(
@@ -21,17 +23,11 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
         id: String,
         label: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove blog author link",
-            description:
-                "Remove confirmation for a management blog author link",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: BlogAuthorLinkConfirmation(
                 state: .init(
                     menuId: menuId,
@@ -49,17 +45,11 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove blog author link",
-            description:
-                "Remove confirmation for a management blog author link",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: BlogAuthorLinkError(
                 state: .init(
                     info: info,
@@ -73,22 +63,7 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
     func breadcrumb(
         menuId: String,
         id: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Authors", link: "/admin/blog/authors/"),
-                .init(label: "Author", link: "/admin/blog/authors/\(menuId)/"),
-                .init(
-                    label: "Links",
-                    link: "/admin/blog/authors/\(menuId)/links/"
-                ),
-                .init(
-                    label: "Remove",
-                    link: "/admin/blog/authors/\(menuId)/links/\(id)/remove/"
-                ),
-            ]
-        )
+    ) -> [NewAdminBreadcrumb.Link] {
+        BlogAdminRoutes.authorLinksBreadcrumb(RouterPath(menuId))
     }
 }

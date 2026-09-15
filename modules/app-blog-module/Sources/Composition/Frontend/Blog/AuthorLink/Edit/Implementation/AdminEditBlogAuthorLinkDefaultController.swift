@@ -7,8 +7,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminEditBlogAuthorLinkDefaultController:
     AdminEditBlogAuthorLinkController
@@ -29,7 +30,7 @@ struct AdminEditBlogAuthorLinkDefaultController:
         let permissions = context.currentUserPermissions
         do {
             let item = try await runtime.interactor.load(menuId: menuId, id: id)
-            return runtime.presenter.renderEditPage(
+            return try await runtime.presenter.renderEditPage(
                 menuId: menuId,
                 id: id,
                 state: formState(
@@ -40,12 +41,11 @@ struct AdminEditBlogAuthorLinkDefaultController:
                     permission: item.permission,
                     notes: item.notes
                 ),
-                isEdited: request.hasQueryFlag("edited"),
                 permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
+            return try await runtime.presenter.renderErrorPage(
                 menuId: menuId,
                 id: id,
                 info: error.errorTitle,
@@ -84,12 +84,11 @@ struct AdminEditBlogAuthorLinkDefaultController:
                 state.apply(errors: [
                     "priority": "Priority must be a valid integer."
                 ])
-                return try runtime.presenter
+                return try await runtime.presenter
                     .renderEditPage(
                         menuId: menuId,
                         id: id,
                         state: state,
-                        isEdited: false,
                         permissions: permissions
                     )
                     .response(from: request, context: context)
@@ -100,16 +99,17 @@ struct AdminEditBlogAuthorLinkDefaultController:
                 input: payload
             )
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath:
-                            "/admin/blog/authors/\(menuId)/links/\(id)/edit/",
-                        title: "Saved",
-                        message: "Blog author link edited successfully."
+            return AdminNotificationFlash.redirect(
+                to:
+                    BlogAdminRoutes.authorLinkEdit(
+                        RouterPath(menuId),
+                        RouterPath(id)
                     )
-                ]
+                    .description,
+                notification: .init(
+                    title: "Saved",
+                    message: "Blog author link updated successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -126,12 +126,11 @@ struct AdminEditBlogAuthorLinkDefaultController:
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     menuId: menuId,
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -146,12 +145,11 @@ struct AdminEditBlogAuthorLinkDefaultController:
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     menuId: menuId,
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -166,12 +164,11 @@ struct AdminEditBlogAuthorLinkDefaultController:
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderEditPage(
                     menuId: menuId,
                     id: id,
                     state: state,
-                    isEdited: false,
                     permissions: permissions
                 )
                 .response(from: request, context: context)
@@ -224,7 +221,6 @@ struct AdminEditBlogAuthorLinkDefaultController:
                 error: nil
             ),
             error: nil,
-            success: nil
         )
     }
 }

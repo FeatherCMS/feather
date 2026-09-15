@@ -19,6 +19,7 @@ struct AdminListAnalyticsLog {
                     ),
                     presenter: AdminListAnalyticsLogDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

@@ -140,10 +140,13 @@ private func mediaDownloadFilename(
     let filename =
         storageKey.split(separator: "/").last.map(String.init) ?? "download"
     let allowed = CharacterSet(
-        charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_"
+        charactersIn:
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.-_"
     )
     let sanitized = String(
-        filename.unicodeScalars.map { allowed.contains($0) ? Character(String($0)) : "-" }
+        filename.unicodeScalars.map {
+            allowed.contains($0) ? Character(String($0)) : "-"
+        }
     )
     return sanitized.isEmpty ? "download" : sanitized
 }

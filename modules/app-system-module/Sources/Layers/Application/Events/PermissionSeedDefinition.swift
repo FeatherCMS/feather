@@ -1,16 +1,16 @@
 import FeatherContracts
 
 public struct PermissionSeedDefinition: Sendable, Hashable, Codable {
-    public let id: String
+    public let key: String
     public let name: String?
     public let notes: String?
 
     public init(
-        id: String,
+        key: String,
         name: String? = nil,
         notes: String? = nil
     ) {
-        self.id = id
+        self.key = key
         self.name = name
         self.notes = notes
     }
@@ -20,7 +20,7 @@ public struct PermissionSeedDefinition: Sendable, Hashable, Codable {
         notes: String? = nil
     ) {
         self.init(
-            id: permission.rawValue,
+            key: permission.rawValue,
             name: permission.rawValue,
             notes: notes ?? permission.rawValue
         )

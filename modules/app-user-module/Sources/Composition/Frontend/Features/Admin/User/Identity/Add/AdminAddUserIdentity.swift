@@ -11,11 +11,16 @@ struct AdminAddUserIdentity {
                     interactor: AdminAddUserIdentityDefaultInteractor(
                         repository: AdminAddUserIdentityOpenAPIRepository(
                             api: context.userAdminAPI()
-                        )
+                        ),
+                        roleRepository:
+                            AdminAddUserIdentityRoleOpenAPIRepository(
+                                api: context.userAdminAPI()
+                            )
                     ),
                     presenter: AdminAddUserIdentityDefaultPresenter(
                         request: request,
-                        renderEngine: renderingEngine
+                        context: context,
+                        renderingEngine: renderingEngine
                     )
                 )
             }

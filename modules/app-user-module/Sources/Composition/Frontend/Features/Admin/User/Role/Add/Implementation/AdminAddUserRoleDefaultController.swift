@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -16,10 +17,11 @@ struct AdminAddUserRoleDefaultController: AdminAddUserRoleController {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
-        return presenter.renderPage(
-            form: presenter.formState(id: "", name: "", notes: ""),
-            permissions: context.currentUserPermissions
-        )
+        guard context.isCurrentUserAllowed(to: UserPermissions.Roles.create)
+        else {
+            return try await presenter.renderForbiddenPage()
+        }
+        return try await presenter.renderAddPage(state: .addEmpty())
     }
 
     func postAddUserRole(
@@ -27,88 +29,43 @@ struct AdminAddUserRoleDefaultController: AdminAddUserRoleController {
         context: DefaultRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: UserPermissions.Roles.create)
+        else {
+            return try await runtime.presenter
+                .renderForbiddenPage()
+                .response(from: request, context: context)
+        }
         var lastPayload: AdminAddUserRoleFormInput?
         do {
             let payload = try await request.decode(
-                as: AdminAddUserRoleFormInput.self,
+                as: NonceRequest<AdminAddUserRoleFormInput>.self,
                 context: context
             )
-            lastPayload = payload
-            try await payload.validate()
-            try await runtime.interactor.execute(
-                entity: .init(
-                    id: payload.normalizedID,
-                    name: payload.normalizedName,
-                    notes: payload.normalizedNotes
-                ),
-            )
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/user/roles/",
-                        title: "Added",
-                        message: "User role added successfully."
-                    )
-                ]
-            )
+            let input = payload.input
+            lastPayload = input
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                return try await runtime.presenter
+                    .renderInvalidNoncePage()
+                    .response(from: request, context: context)
+            }
+            try await input.validate()
+            try await runtime.interactor.add(input: input)
+            return runtime.presenter.renderSuccess()
         }
         catch let error as ValidationError {
-            var errs: [String: String] = [:]
-            for f in error.failures { errs[f.key] = f.message }
-            var state = runtime.presenter.formState(
-                id: lastPayload?.id ?? "",
-                name: lastPayload?.normalizedName ?? "",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.apply(errors: errs)
-            return try createResponse(
-                request: request,
-                context: context,
-                presenter: runtime.presenter,
-                state: state
-            )
+            return try await runtime.presenter
+                .renderValidationError(input: lastPayload, error: error)
+                .response(from: request, context: context)
         }
-        catch let error as OpenAPIRepositoryError {
-            var state = runtime.presenter.formState(
-                id: lastPayload?.id ?? "",
-                name: lastPayload?.normalizedName ?? "",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.error = runtime.presenter.format(error: error)
-            return try createResponse(
-                request: request,
-                context: context,
-                presenter: runtime.presenter,
-                state: state
-            )
+        catch let error as AdminAddUserRoleError {
+            return try await runtime.presenter
+                .renderAddError(input: lastPayload, error: error)
+                .response(from: request, context: context)
         }
-        catch {
-            var state = runtime.presenter.formState(
-                id: lastPayload?.id ?? "",
-                name: lastPayload?.normalizedName ?? "",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.error = error.displayMessage
-            return try createResponse(
-                request: request,
-                context: context,
-                presenter: runtime.presenter,
-                state: state
-            )
-        }
-    }
-
-    private func createResponse(
-        request: Request,
-        context: DefaultRequestContext,
-        presenter: any AdminAddUserRolePresenter,
-        state: UserRoleForm.State
-    ) throws -> Response {
-        try presenter.renderPage(
-            form: state,
-            permissions: context.currentUserPermissions
-        )
-        .response(from: request, context: context)
     }
 }

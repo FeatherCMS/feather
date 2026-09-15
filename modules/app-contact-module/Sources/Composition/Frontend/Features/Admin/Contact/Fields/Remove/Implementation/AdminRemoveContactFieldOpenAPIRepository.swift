@@ -1,0 +1,36 @@
+import ContactAdminAPI
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+struct AdminRemoveContactFieldOpenAPIRepository {
+    let api: ContactAdminAPIClient
+
+    func get(id: String) async throws -> AdminContactFieldRow {
+        try await AdminListContactFieldsOpenAPIRepository(api: api)
+            .list().first { $0.id == id }
+            ?? {
+                throw OpenAPIRepositoryError.notFound
+            }()
+    }
+
+    func remove(id: String) async throws {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            _ = try await client.contactFieldDelete(
+                body: .json(.init(ids: [id], results: false, summary: true))
+            )
+        }
+    }
+    func remove(ids: [String]) async throws {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            _ = try await client.contactFieldDelete(
+                body: .json(.init(ids: ids, results: false, summary: true))
+            )
+        }
+    }
+}

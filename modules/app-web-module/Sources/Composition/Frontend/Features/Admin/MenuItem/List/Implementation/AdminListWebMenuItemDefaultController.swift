@@ -50,12 +50,9 @@ struct AdminListWebMenuItemDefaultController:
             model = emptyModel
             error = nil
         }
-        return presenter.renderListPage(
+        return try await presenter.renderListPage(
             menuId: menuId,
             model: model,
-            isAdded: request.hasQueryFlag("added"),
-            isEdited: request.hasQueryFlag("edited"),
-            isRemoved: request.hasQueryFlag("removed"),
             permissions: permissions,
             search: search,
             error: error
@@ -68,25 +65,23 @@ struct AdminListWebMenuItemDefaultController:
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
         let menuId = try context.requiredID()
-        let selectedIds = request.queryStrings("selectedIds")
+        let selectedIds = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
         guard !selectedIds.isEmpty else {
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListRemoveRedirect.location(
+                    .location: NewAdminLocation.url(
                         path: "/admin/web/menus/\(menuId)/",
                         page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
+                        search: search
                     )
                 ]
             )
         }
         return
-            try presenter.renderRemoveConfirmation(
+            try await presenter.renderRemoveConfirmation(
                 menuId: menuId,
                 page: page,
                 search: search,
@@ -103,7 +98,7 @@ struct AdminListWebMenuItemDefaultController:
         let (interactor, _) = buildRuntime(request, context)
         let menuId = try context.requiredID()
         let payload = try await request.decode(
-            as: ListRemoveFormInput.self,
+            as: NewAdminListRemoveFormInput.self,
             context: context
         )
         if !payload.normalizedSelectedIds.isEmpty {
@@ -112,19 +107,20 @@ struct AdminListWebMenuItemDefaultController:
                 ids: payload.normalizedSelectedIds
             )
         }
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: ListRemoveRedirect.location(
-                    path: "/admin/web/menus/\(menuId)/",
-                    page: payload.normalizedPage,
-                    search: payload.normalizedSearch,
-                    title: !payload.normalizedSelectedIds.isEmpty
-                        ? "Removed" : nil,
-                    message: !payload.normalizedSelectedIds.isEmpty
-                        ? "Item removed successfully." : nil
-                )
-            ]
+        let location = NewAdminLocation.url(
+            path: "/admin/web/menus/\(menuId)/",
+            page: payload.normalizedPage,
+            search: payload.normalizedSearch
+        )
+        guard !payload.normalizedSelectedIds.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
+        return AdminNotificationFlash.redirect(
+            to: location,
+            notification: .init(
+                title: "Removed",
+                message: "Item removed successfully."
+            )
         )
     }
 

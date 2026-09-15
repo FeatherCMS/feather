@@ -4,25 +4,22 @@ import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
-import WebStandards
+import WebBuilders
+import WebComponents
 
-struct AdminListAuthSessionDefaultPresenter {
+struct AdminListAuthSessionDefaultPresenter: AdminListAuthSessionPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func render(
         model: AdminListAuthSessionModel,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Sessions",
-            description: "List user sessions",
-            imagePath: "images/puppy.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: AdminListAuthSessionView(
                 state: .init(
                     identityID: model.identityID,
@@ -39,35 +36,17 @@ struct AdminListAuthSessionDefaultPresenter {
         error: OpenAPIRepositoryError,
         identityID: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: error.errorTitle,
-            description: error.errorDescription,
-            imagePath: "images/puppy.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: PermissionDeniedView(
+            content: NewAdminStatusView(
                 state: .init(
-                    info: error.errorTitle,
-                    message: error.errorDescription,
-                    breadcrumb: .init(
-                        links: [
-                            .init(label: "Admin", link: "/admin/"),
-                            .init(label: "User", link: "/admin/user/"),
-                            .init(
-                                label: "Identity",
-                                link: "/admin/user/identities/\(identityID)/"
-                            ),
-                            .init(
-                                label: "Sessions",
-                                link: request.uri.path
-                            ),
-                        ]
-                    )
-                )
+                    title: error.errorTitle,
+                    message: error.errorDescription
+                ),
+                icon: FeatherIcons.alertCircle()
             )
         )
     }

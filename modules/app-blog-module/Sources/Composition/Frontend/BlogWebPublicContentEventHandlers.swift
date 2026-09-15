@@ -151,14 +151,14 @@ public enum BlogWebPublicContentEventHandlers {
 
     private static func listPayload(
         key: String,
-        items: [[String: Any]]
+        items: [[String: any Sendable]]
     ) throws -> WebPublicContentResult {
         .init(payload: [key: items])
     }
 
     private static func summaryContext(
         _ value: BlogAppAPI.Components.Schemas.BlogPostSummarySchema
-    ) -> [String: Any] {
+    ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
             title: value.metadata.title,
@@ -174,7 +174,7 @@ public enum BlogWebPublicContentEventHandlers {
 
     private static func summaryContext(
         _ value: BlogAppAPI.Components.Schemas.BlogAuthorSummarySchema
-    ) -> [String: Any] {
+    ) -> [String: any Sendable] {
         baseContext(
             id: value.id,
             title: value.metadata.title,
@@ -187,7 +187,7 @@ public enum BlogWebPublicContentEventHandlers {
 
     private static func summaryContext(
         _ value: BlogAppAPI.Components.Schemas.BlogTagSummarySchema
-    ) -> [String: Any] {
+    ) -> [String: any Sendable] {
         baseContext(
             id: value.id,
             title: value.metadata.title,
@@ -200,7 +200,7 @@ public enum BlogWebPublicContentEventHandlers {
 
     private static func pageContext(
         _ value: BlogAppAPI.Components.Schemas.BlogPostDetailSchema
-    ) -> [String: Any] {
+    ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
             title: value.metadata.title,
@@ -209,7 +209,7 @@ public enum BlogWebPublicContentEventHandlers {
             permalink: value.metadata.slug,
             publicationDate: value.metadata.publicationDate
         )
-        result["contents"] = ["html": value.content] as [String: Any]
+        result["contents"] = ["html": value.content] as [String: any Sendable]
         result["authors"] = value.authors.map(summaryContext)
         result["tags"] = value.tags.map(summaryContext)
         result["relatedPosts"] = value.relatedPosts.map(summaryContext)
@@ -221,7 +221,7 @@ public enum BlogWebPublicContentEventHandlers {
 
     private static func pageContext(
         _ value: BlogAppAPI.Components.Schemas.BlogAuthorDetailSchema
-    ) -> [String: Any] {
+    ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
             title: value.metadata.title,
@@ -230,7 +230,7 @@ public enum BlogWebPublicContentEventHandlers {
             permalink: value.metadata.slug,
             publicationDate: value.metadata.publicationDate
         )
-        result["contents"] = ["html": value.content] as [String: Any]
+        result["contents"] = ["html": value.content] as [String: any Sendable]
         result["posts"] = value.posts.map(summaryContext)
         result["postCountLabel"] = "\(value.posts.count) posts"
         result["noindex"] =
@@ -241,7 +241,7 @@ public enum BlogWebPublicContentEventHandlers {
 
     private static func pageContext(
         _ value: BlogAppAPI.Components.Schemas.BlogTagDetailSchema
-    ) -> [String: Any] {
+    ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
             title: value.metadata.title,
@@ -250,7 +250,7 @@ public enum BlogWebPublicContentEventHandlers {
             permalink: value.metadata.slug,
             publicationDate: value.metadata.publicationDate
         )
-        result["contents"] = ["html": value.content] as [String: Any]
+        result["contents"] = ["html": value.content] as [String: any Sendable]
         result["posts"] = value.posts.map(summaryContext)
         result["postCountLabel"] = "\(value.posts.count) posts"
         result["noindex"] =
@@ -266,12 +266,12 @@ public enum BlogWebPublicContentEventHandlers {
         image: String,
         permalink: String,
         publicationDate: Double?
-    ) -> [String: Any] {
+    ) -> [String: any Sendable] {
         let resolvedImageURL = WebImageURLResolver.resolve(
             image,
             mediaBaseURL: mediaBaseURL
         )
-        var result: [String: Any] = [
+        var result: [String: any Sendable] = [
             "id": id,
             "title": title,
             "description": description,

@@ -1,6 +1,6 @@
 import FeatherAdmin
-import Foundation
 import Hummingbird
+import RedirectAdminAPI
 import RedirectContracts
 
 protocol AdminListRedirectRuleRepository: Sendable {
@@ -9,9 +9,8 @@ protocol AdminListRedirectRuleRepository: Sendable {
         page: Int,
         search: String?,
         statusCode: StatusCode?
-    ) async throws -> AdminListRedirectRuleModel
-
-    func delete(
-        id: String
     ) async throws
+        -> RedirectAdminAPI.Components.Responses
+        .RedirectRuleListItemSearchSchemaSearchResponse
+
 }

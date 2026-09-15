@@ -13,7 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminAuth {
     let renderingEngine: any RenderingEngine
@@ -21,7 +22,7 @@ struct AdminAuth {
     func route(
         on router: Router<DefaultRequestContext>
     ) {
-        AdminGetAuthHome(
+        AdminViewAuthOverview(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -31,7 +32,7 @@ struct AdminAuth {
         )
         .controller.route(on: router)
 
-        AdminGetAuthEmail(
+        AdminViewAuthEmail(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -48,7 +49,7 @@ struct AdminAuth {
         )
         .controller.route(on: router)
 
-        AdminGetAuthMagicLink(
+        AdminViewAuthMagicLink(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -68,22 +69,12 @@ struct AdminAuth {
         )
         .controller.route(on: router)
 
-        AdminGetAuthProfile(
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-
-        AdminEditAuthProfile(
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-
         AdminEditAuthAccessControl(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
-        AdminCredentials(
+        AdminCredential(
             renderingEngine: renderingEngine
         )
         .route(on: router)

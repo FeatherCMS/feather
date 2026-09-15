@@ -1,0 +1,19 @@
+import FeatherAdmin
+import FeatherContracts
+import FeatherValidation
+import Foundation
+import HTML
+import Hummingbird
+import MediaAdminAPI
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+protocol AdminEditMediaProcessorPresenter: Sendable {
+
+    func renderPage(
+        model: AdminEditMediaProcessorModel,
+        permissions: NewAdminListActions
+    ) async throws -> HTMLResponse
+}

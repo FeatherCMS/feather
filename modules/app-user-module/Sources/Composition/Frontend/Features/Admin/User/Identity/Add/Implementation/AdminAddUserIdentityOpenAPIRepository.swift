@@ -8,7 +8,7 @@ struct AdminAddUserIdentityOpenAPIRepository: AdminAddUserIdentityRepository {
     let api: UserAdminAPIClient
 
     func create(
-        payload: UserIdentityFormPayloadModel
+        payload: UserIdentityAddFormPayloadModel
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
@@ -18,7 +18,8 @@ struct AdminAddUserIdentityOpenAPIRepository: AdminAddUserIdentityRepository {
                     body: .json(
                         .init(
                             name: payload.name,
-                            status: .init(rawValue: payload.status) ?? .invited
+                            status: .init(rawValue: payload.status) ?? .invited,
+                            roleIds: payload.roleIds
                         )
                     )
                 )
@@ -26,15 +27,9 @@ struct AdminAddUserIdentityOpenAPIRepository: AdminAddUserIdentityRepository {
             case .created:
                 return
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to create this user identity."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your identity cannot create user identities."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

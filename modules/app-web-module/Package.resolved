@@ -1,5 +1,5 @@
 {
-  "originHash" : "9bb71fe026b34fa33038c1d22e9c1339581b9f9a8d148e972adb2c4ec984faee",
+  "originHash" : "83b18617fd9569633819d110d2dc37b31db8d2d824535bf82b2d414c1a52ec4c",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -38,6 +38,24 @@
       }
     },
     {
+      "identity" : "feather-storage",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-storage",
+      "state" : {
+        "revision" : "d9cf9f07b3b270d34b5ac34fcbbbe765a85b17b8",
+        "version" : "1.0.0-beta.2"
+      }
+    },
+    {
+      "identity" : "feather-storage-fs",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-storage-fs",
+      "state" : {
+        "revision" : "d8ba920af6e6d02740f978ae2f3997a996827125",
+        "version" : "1.0.0-beta.1"
+      }
+    },
+    {
       "identity" : "feather-validation",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-validation",
@@ -60,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hummingbird-project/hummingbird-auth",
       "state" : {
-        "revision" : "eb06dff87b6a158565ab0aea854bcfee80e24f5a",
-        "version" : "2.2.0"
+        "revision" : "c457024e55cd69c1dbb332f3d4aed067a9364dbd",
+        "version" : "2.3.0"
       }
     },
     {
@@ -344,21 +362,21 @@
       }
     },
     {
+      "identity" : "swift-subprocess",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/swiftlang/swift-subprocess",
+      "state" : {
+        "revision" : "13d087685b95d64d6aac9b94500d347bbe84c39b",
+        "version" : "0.4.0"
+      }
+    },
+    {
       "identity" : "swift-system",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-system",
       "state" : {
         "revision" : "704705c5c51156ede21172a38654d522ce487074",
         "version" : "1.8.0"
-      }
-    },
-    {
-      "identity" : "swift-web-standards",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/BinaryBirds/swift-web-standards",
-      "state" : {
-        "revision" : "5368fba24e9b470c9f8f807682c26ca209c4be9f",
-        "version" : "1.0.0-beta.3"
       }
     },
     {

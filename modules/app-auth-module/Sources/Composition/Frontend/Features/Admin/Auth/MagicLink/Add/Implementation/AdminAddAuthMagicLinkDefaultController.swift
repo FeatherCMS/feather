@@ -1,5 +1,6 @@
 import AuthAdminAPI
 import AuthAppAPI
+import AuthContracts
 import CSS
 import FeatherAdmin
 import FeatherValidation
@@ -13,7 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
 
@@ -28,8 +30,11 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
+        guard
+            context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.create)
+        else { return try await presenter.renderForbiddenPage() }
         let emails = try await interactor.listEmails()
-        return presenter.renderPage(
+        return try await presenter.renderPage(
             form: presenter.formState(
                 credentialId: "",
                 emails: emails,
@@ -44,12 +49,38 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
+        guard
+            context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.create)
+        else {
+            return try await presenter.renderForbiddenPage()
+                .response(from: request, context: context)
+        }
         var lastPayload: AdminAddAuthMagicLinkFormInput?
         do {
-            let payload = try await request.decode(
-                as: AdminAddAuthMagicLinkFormInput.self,
+            let nonceRequest = try await request.decode(
+                as: NonceRequest<AdminAddAuthMagicLinkFormInput>.self,
                 context: context
             )
+            guard
+                await AdminNonceStore.shared.consume(
+                    nonceRequest.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                var state = presenter.formState(
+                    credentialId: "",
+                    emails: (try? await interactor.listEmails()) ?? [],
+                    isPersistent: false
+                )
+                state.error = "This form has expired. Please reload the page."
+                return try await createResponse(
+                    request: request,
+                    context: context,
+                    presenter: presenter,
+                    state: state
+                )
+            }
+            let payload = nonceRequest.input
             lastPayload = payload
             try await payload.validate()
             try await interactor.execute(
@@ -58,15 +89,12 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
                     isPersistent: payload.isPersistent.value
                 )
             )
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/auth/magic-links/",
-                        title: "Added",
-                        message: "User magic link added successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/auth/magic-links/",
+                notification: .init(
+                    title: "Added",
+                    message: "User magic link added successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -78,7 +106,7 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
                 isPersistent: lastPayload?.isPersistent.value ?? false
             )
             state.apply(errors: errs)
-            return try createResponse(
+            return try await createResponse(
                 request: request,
                 context: context,
                 presenter: presenter,
@@ -92,7 +120,7 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
                 isPersistent: lastPayload?.isPersistent.value ?? false
             )
             state.error = presenter.format(error: error)
-            return try createResponse(
+            return try await createResponse(
                 request: request,
                 context: context,
                 presenter: presenter,
@@ -106,7 +134,7 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
                 isPersistent: lastPayload?.isPersistent.value ?? false
             )
             state.error = error.displayMessage
-            return try createResponse(
+            return try await createResponse(
                 request: request,
                 context: context,
                 presenter: presenter,
@@ -120,8 +148,8 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
         context: DefaultRequestContext,
         presenter: any AdminAddAuthMagicLinkPresenter,
         state: AuthMagicLinkForm.State
-    ) throws -> Response {
-        try presenter.renderPage(
+    ) async throws -> Response {
+        try await presenter.renderPage(
             form: state,
             permissions: context.currentUserPermissions
         )

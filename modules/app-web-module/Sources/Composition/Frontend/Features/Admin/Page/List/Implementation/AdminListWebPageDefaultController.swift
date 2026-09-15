@@ -48,13 +48,8 @@ struct AdminListWebPageDefaultController:
             model = emptyModel
             error = nil
         }
-        return presenter.renderListPage(
+        return try await presenter.renderListPage(
             model: model,
-            isAdded: request.hasQueryFlag("added"),
-            isEdited: request.hasQueryFlag("edited"),
-            isRemoved: request.hasQueryFlag("removed"),
-            isPublished: request.hasQueryFlag("published"),
-            isUnpublished: request.hasQueryFlag("unpublished"),
             permissions: permissions,
             search: search,
             error: error
@@ -66,25 +61,23 @@ struct AdminListWebPageDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime(request, context)
-        let selectedIds = request.queryStrings("selectedIds")
+        let selectedIds = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
         guard !selectedIds.isEmpty else {
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: ListRemoveRedirect.location(
+                    .location: NewAdminLocation.url(
                         path: "/admin/web/pages/",
                         page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
+                        search: search
                     )
                 ]
             )
         }
         return
-            try presenter.renderRemoveConfirmation(
+            try await presenter.renderRemoveConfirmation(
                 page: page,
                 search: search,
                 selectedIds: selectedIds,
@@ -99,25 +92,26 @@ struct AdminListWebPageDefaultController:
     ) async throws -> Response {
         let (interactor, _) = buildRuntime(request, context)
         let payload = try await request.decode(
-            as: ListRemoveFormInput.self,
+            as: NewAdminListRemoveFormInput.self,
             context: context
         )
         if !payload.normalizedSelectedIds.isEmpty {
             try await interactor.remove(ids: payload.normalizedSelectedIds)
         }
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: ListRemoveRedirect.location(
-                    path: "/admin/web/pages/",
-                    page: payload.normalizedPage,
-                    search: payload.normalizedSearch,
-                    title: !payload.normalizedSelectedIds.isEmpty
-                        ? "Removed" : nil,
-                    message: !payload.normalizedSelectedIds.isEmpty
-                        ? "Web page removed successfully." : nil
-                )
-            ]
+        let location = NewAdminLocation.url(
+            path: "/admin/web/pages/",
+            page: payload.normalizedPage,
+            search: payload.normalizedSearch
+        )
+        guard !payload.normalizedSelectedIds.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
+        return AdminNotificationFlash.redirect(
+            to: location,
+            notification: .init(
+                title: "Removed",
+                message: "Web page removed successfully."
+            )
         )
     }
 
@@ -127,7 +121,7 @@ struct AdminListWebPageDefaultController:
     ) async throws -> Response {
         let id = try context.requiredID()
         let payload = try await request.decode(
-            as: AdminStatusActionFormInput.self,
+            as: NewAdminStatusActionFormInput.self,
             context: context
         )
         let repository = AdminListWebPageFormOpenAPIRepository(
@@ -146,17 +140,9 @@ struct AdminListWebPageDefaultController:
             referenceID: id,
             status: targetStatus
         )
-        let toast = statusToastContent(for: targetStatus)
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminStatusActionRedirect.location(
-                    defaultPath: "/admin/web/pages/",
-                    returnTo: payload.normalizedReturnTo,
-                    title: toast.title,
-                    message: toast.message
-                )
-            ]
+        return AdminNotificationFlash.redirect(
+            to: payload.normalizedReturnTo ?? "/admin/web/pages/",
+            notification: statusNotification(for: targetStatus)
         )
     }
 
@@ -173,7 +159,7 @@ struct AdminListWebPageDefaultController:
     }
 
     private func resolvedStatus(
-        from payload: AdminStatusActionFormInput,
+        from payload: NewAdminStatusActionFormInput,
         current metadata: AdminMetadataFormValue
     ) -> String {
         let allowedStatuses = Set(["draft", "published", "archived"])
@@ -183,16 +169,25 @@ struct AdminListWebPageDefaultController:
             : metadata.normalizedStatus
     }
 
-    private func statusToastContent(
+    private func statusNotification(
         for status: String
-    ) -> (title: String, message: String) {
+    ) -> NewAdminNotification.State {
         switch status {
         case "published":
-            return ("Published", "Web page published successfully.")
+            return .init(
+                title: "Published",
+                message: "Web page published successfully."
+            )
         case "archived":
-            return ("Archived", "Web page archived successfully.")
+            return .init(
+                title: "Archived",
+                message: "Web page archived successfully."
+            )
         default:
-            return ("Draft", "Web page moved to draft successfully.")
+            return .init(
+                title: "Draft",
+                message: "Web page moved to draft successfully."
+            )
         }
     }
 }

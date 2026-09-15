@@ -3,26 +3,23 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminAddWebMenuItemDefaultPresenter: AdminAddWebMenuItemPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderAddPage(
         menuId: String,
         state: WebMenuItemForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add item",
-            description: "Add an item in management",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebMenuItemAdd(
                 state: .init(
                     menuId: menuId,
@@ -35,22 +32,16 @@ struct AdminAddWebMenuItemDefaultPresenter: AdminAddWebMenuItemPresenter {
 
     func breadcrumb(
         menuId: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Menus", link: "/admin/web/menus/"),
-                .init(label: "Menu", link: "/admin/web/menus/\(menuId)/"),
-                .init(
-                    label: "Items",
-                    link: "/admin/web/menus/\(menuId)/items/"
-                ),
-                .init(
-                    label: "Add",
-                    link: "/admin/web/menus/\(menuId)/items/add/"
-                ),
-            ]
-        )
+    ) -> [NewAdminBreadcrumb.Link] {
+        [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Web", link: "/admin/web/"),
+            .init(label: "Menus", link: "/admin/web/menus/"),
+            .init(label: "Menu", link: "/admin/web/menus/\(menuId)/"),
+            .init(
+                label: "Items",
+                link: "/admin/web/menus/\(menuId)/items/"
+            ),
+        ]
     }
 }

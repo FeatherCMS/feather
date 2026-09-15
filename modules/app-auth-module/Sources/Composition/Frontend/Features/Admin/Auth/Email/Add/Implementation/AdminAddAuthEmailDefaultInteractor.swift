@@ -14,7 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminAddAuthEmailDefaultInteractor: AdminAddAuthEmailInteractor {
     let repository: any AdminAddAuthEmailRepository

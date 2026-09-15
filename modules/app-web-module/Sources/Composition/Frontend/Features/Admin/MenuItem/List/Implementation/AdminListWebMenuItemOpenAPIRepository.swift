@@ -51,13 +51,9 @@ struct AdminListWebMenuItemOpenAPIRepository:
                     pageSize: body.query.page.size
                 )
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: listUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: listForbiddenMessage
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -96,17 +92,11 @@ struct AdminListWebMenuItemOpenAPIRepository:
             case .noContent:
                 return
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to move web menu items."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot move web menu items."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "This web menu item could not be found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

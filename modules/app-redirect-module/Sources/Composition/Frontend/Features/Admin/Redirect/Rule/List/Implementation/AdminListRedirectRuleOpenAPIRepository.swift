@@ -10,17 +10,6 @@ struct AdminListRedirectRuleOpenAPIRepository:
     AdminListRedirectRuleRepository
 {
     let api: RedirectAdminAPIClient
-    private let listUnauthorizedMessage =
-        "Please sign in again to view redirect rules."
-    private let listForbiddenMessage =
-        "Your account cannot access redirect rules."
-    private let deleteUnauthorizedMessage =
-        "Please sign in again to delete this redirect rule."
-    private let deleteForbiddenMessage =
-        "Your account cannot delete this redirect rule."
-    private let deleteNotFoundMessage =
-        "This redirect rule could not be found."
-
     init(api: RedirectAdminAPIClient) {
         self.api = api
     }
@@ -29,7 +18,10 @@ struct AdminListRedirectRuleOpenAPIRepository:
         page: Int,
         search: String?,
         statusCode: StatusCode?
-    ) async throws -> AdminListRedirectRuleModel {
+    ) async throws
+        -> RedirectAdminAPI.Components.Responses
+        .RedirectRuleListItemSearchSchemaSearchResponse
+    {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
@@ -37,7 +29,10 @@ struct AdminListRedirectRuleOpenAPIRepository:
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
-                            page: .init(size: 20, number: page),
+                            page: .init(
+                                size: AdminListRedirectRule.pageSize,
+                                number: page
+                            ),
                             filters: .init(
                                 search: search,
                                 statusCode: statusCode?.rawValue
@@ -48,23 +43,11 @@ struct AdminListRedirectRuleOpenAPIRepository:
 
             switch response {
             case .ok(let okResponse):
-                let body = try okResponse.body.json
-                return .init(
-                    items: body.data.items,
-                    total: body.data.total,
-                    page: body.query.page.number,
-                    pageSize: body.query.page.size,
-                    statusCode: body.query.filters.statusCode.map(String.init)
-                        ?? ""
-                )
+                return okResponse
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: listUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: listForbiddenMessage
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -73,15 +56,4 @@ struct AdminListRedirectRuleOpenAPIRepository:
             }
         }
     }
-
-    func delete(
-        id: String
-    ) async throws {
-        try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.redirectRuleDelete(
-                body: .json(.init(ids: [id], results: false, summary: true))
-            )
-        }
-    }
-
 }

@@ -12,6 +12,7 @@ import struct Foundation.Date
 
 public struct PermissionDetail: DTO {
     public let id: String
+    public let key: String
     public var name: String?
     public var notes: String?
     public let createdAt: Date
@@ -19,12 +20,14 @@ public struct PermissionDetail: DTO {
 
     package init(
         id: String,
+        key: String,
         name: String?,
         notes: String?,
         createdAt: Date,
         updatedAt: Date
     ) {
         self.id = id
+        self.key = key
         self.name = name
         self.notes = notes
         self.createdAt = createdAt

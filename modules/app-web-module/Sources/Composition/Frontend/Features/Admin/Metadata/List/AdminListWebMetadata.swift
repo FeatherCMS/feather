@@ -20,6 +20,7 @@ struct AdminListWebMetadata {
                     ),
                     presenter: AdminListWebMetadataDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine,
                         referenceTypeOptions: referenceTypeOptions
                     )

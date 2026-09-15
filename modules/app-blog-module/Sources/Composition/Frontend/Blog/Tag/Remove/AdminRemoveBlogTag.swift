@@ -7,8 +7,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminRemoveBlogTag {
     let controller: any AdminRemoveBlogTagController
@@ -24,6 +25,7 @@ struct AdminRemoveBlogTag {
                     ),
                     presenter: AdminRemoveBlogTagDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

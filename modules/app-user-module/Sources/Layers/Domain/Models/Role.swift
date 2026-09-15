@@ -18,7 +18,7 @@ public struct Role: Model {
     }
 
     public struct New: Sendable {
-        public let id: String
+        public let id: String?
         public let name: String?
         public let notes: String?
     }
@@ -77,6 +77,20 @@ extension Role {
 
         return .init(
             id: id,
+            name: name,
+            notes: notes
+        )
+    }
+
+    public static func create(
+        name: String?,
+        notes: String?
+    ) throws(Self.Error) -> Self.New {
+        try validate(name: name)
+        try validate(notes: notes)
+
+        return .init(
+            id: nil,
             name: name,
             notes: notes
         )

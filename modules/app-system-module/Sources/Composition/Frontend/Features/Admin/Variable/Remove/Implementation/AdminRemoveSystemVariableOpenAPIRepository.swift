@@ -9,37 +9,20 @@ struct AdminRemoveSystemVariableOpenAPIRepository:
 {
     let api: SystemAdminAPIClient
 
-    func get(
-        id: String
-    ) async throws -> SystemVariableDetailsModel {
+    func delete(
+        ids: [String]
+    ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.systemVariableGet(
-                path: .init(systemVariableId: id),
-                headers: .init(accept: [.init(contentType: .json)])
+            let response = try await client.systemVariableDelete(
+                body: .json(.init(ids: ids, results: false, summary: true))
             )
             switch response {
-            case .ok(let okResponse):
-                let variable = try okResponse.body.json
-                return .init(
-                    id: variable.id,
-                    value: variable.value,
-                    name: variable.name,
-                    notes: variable.notes
-                )
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "System variable not found."
-                )
+            case .ok:
+                return
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to load this system variable."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot delete system variables."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -49,13 +32,38 @@ struct AdminRemoveSystemVariableOpenAPIRepository:
         }
     }
 
-    func delete(
-        id: String
-    ) async throws {
+    func names(ids: [String]) async throws -> [String] {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.systemVariableDelete(
-                body: .json(.init(ids: [id], results: false, summary: true))
+            let response = try await client.systemVariableSearch(
+                headers: .init(accept: [.init(contentType: .json)]),
+                body: .json(
+                    .init(
+                        page: .init(size: max(ids.count, 1), number: 1),
+                        filters: .init(ids: ids)
+                    )
+                )
             )
+            switch response {
+            case .ok(let result):
+                let byID = Dictionary(
+                    uniqueKeysWithValues: try result.body.json.data.items.map {
+                        ($0.id, $0)
+                    }
+                )
+                return ids.map { id in
+                    byID[id]?.name ?? byID[id]?.key
+                        ?? "Variable not found (id: \(id))"
+                }
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
         }
     }
 }

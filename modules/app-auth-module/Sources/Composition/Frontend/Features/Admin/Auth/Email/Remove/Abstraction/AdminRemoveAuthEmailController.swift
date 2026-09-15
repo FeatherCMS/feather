@@ -13,7 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 protocol AdminRemoveAuthEmailController: Sendable {
 
@@ -34,11 +35,11 @@ extension AdminRemoveAuthEmailController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/auth/emails/{id}/remove/",
+            AuthEmailRoutes.remove(RouterPath("{id}")),
             use: getRemoveAuthEmail
         )
         router.post(
-            "/admin/auth/emails/{id}/remove/",
+            AuthEmailRoutes.remove(RouterPath("{id}")),
             use: postRemoveAuthEmail
         )
     }

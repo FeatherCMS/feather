@@ -4,21 +4,12 @@ import UserAdminAPI
 
 protocol AdminListUserIdentityInteractor: Sendable {
 
-    func listRoles() async throws -> [Components.Schemas.UserRoleListItemSchema]
-
-    func execute(
+    func list(
         page: Int,
         size: Int,
         search: String?,
         role: String?
-    ) async throws -> (
-        items: [Components.Schemas.UserIdentityListItemSchema],
-        total: Int,
-        page: Int,
-        size: Int
-    )
-
-    func remove(
-        ids: [String]
-    ) async throws
+    ) async throws -> NewAdminListModel<
+        Components.Schemas.UserIdentityListItemSchema
+    >
 }

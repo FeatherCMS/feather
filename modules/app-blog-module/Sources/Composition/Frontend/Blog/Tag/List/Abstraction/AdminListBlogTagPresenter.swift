@@ -7,27 +7,23 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 protocol AdminListBlogTagPresenter: Sendable {
 
     func renderListPage(
         model: AdminListBlogTagModel,
-        isAdded: Bool,
-        isEdited: Bool,
-        isRemoved: Bool,
-        isPublished: Bool,
-        isUnpublished: Bool,
         permissions: Set<String>,
         search: String?,
         error: String?
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderRemoveConfirmation(
         page: Int,
         search: String?,
         selectedIds: [String],
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

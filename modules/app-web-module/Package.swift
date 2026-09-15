@@ -99,6 +99,7 @@ let package = Package(
             from: "0.8.0"
         ),
         .package(path: "../../feather-core"),
+        .package(path: "../app-media-module"),
         .package(path: "../app-system-module"),
     ],
     targets: [
@@ -126,7 +127,7 @@ let package = Package(
                 .product(name: "FeatherApplication", package: "feather-core"),
 
                 .product(name: "SystemApplication", package: "app-system-module"),
-                
+
                 .target(name: "WebDomain"),
             ],
             path: "Sources/Layers/Application",
@@ -136,7 +137,7 @@ let package = Package(
             name: "WebInfrastructure",
             dependencies: [
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
-                
+
                 .target(name: "WebApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
@@ -217,7 +218,8 @@ let package = Package(
                 .target(name: "WebAdminAPI"),
                 .target(name: "WebAppAPI"),
                 .product(name: "SystemAdminAPI", package: "app-system-module"),
-                .product(name: "SystemFrontend", package: "app-system-module")
+                .product(name: "SystemFrontend", package: "app-system-module"),
+                .product(name: "MediaFrontend", package: "app-media-module")
             ],
             path: "Sources/Composition/Frontend",
             resources: [

@@ -1,6 +1,8 @@
 import FeatherAdmin
+import FeatherContracts
 import HTML
 import Hummingbird
+import SystemContracts
 
 struct AdminRemoveSystemVariableDefaultController:
     AdminRemoveSystemVariableController
@@ -11,58 +13,123 @@ struct AdminRemoveSystemVariableDefaultController:
             presenter: any AdminRemoveSystemVariablePresenter
         )
 
-    func getRemoveSystemVariable(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
-        let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
-        do {
-            let variable = try await runtime.interactor.get(id: id)
-            return runtime.presenter.renderRemovePage(
-                id: id,
-                name: variable.name ?? "",
-                permissions: permissions
-            )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
-                id: id,
-                info: error.errorTitle,
-                message: error.errorDescription,
-                permissions: permissions
-            )
-        }
-    }
-
-    func postRemoveSystemVariable(
+    func getRemoveSystemVariables(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
-        let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
-        do {
-            try await runtime.interactor.delete(id: id)
+        let (interactor, presenter) = buildRuntime(request, context)
+        guard
+            context.isCurrentUserAllowed(to: SystemPermissions.Variables.delete)
+        else {
+            return
+                try await presenter.renderErrorPage(
+                    error: .forbidden,
+                    cancel: SystemVariableRoutes.list.description
+                )
+                .response(from: request, context: context)
+        }
+        let ids = request.queryStrings("ids")
+        let page = request.queryPage()
+        let search = request.querySearch()
+        guard !ids.isEmpty else {
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/system/variables/",
-                        title: "Removed",
-                        message: "System variable removed successfully."
+                    .location: NewAdminLocation.url(
+                        path: SystemVariableRoutes.list.description,
+                        page: page,
+                        search: search
                     )
                 ]
             )
         }
-        catch let error as OpenAPIRepositoryError {
-            return try runtime.presenter
+        do {
+            return
+                try await presenter.renderRemoveConfirmation(
+                    page: page,
+                    search: search,
+                    ids: ids,
+                    names: try await interactor.names(ids: ids),
+                    returnTo: request.queryString("returnTo")
+                )
+                .response(from: request, context: context)
+        }
+        catch let error as AdminRemoveSystemVariableError {
+            return
+                try await presenter
                 .renderErrorPage(
-                    id: id,
-                    info: error.errorTitle,
-                    message: error.errorDescription,
-                    permissions: permissions
+                    error: error,
+                    cancel: SystemVariableRoutes.list.description
+                )
+                .response(from: request, context: context)
+        }
+    }
+
+    func postRemoveSystemVariables(
+        request: Request,
+        context: DefaultRequestContext
+    ) async throws -> Response {
+        let (interactor, presenter) = buildRuntime(request, context)
+        guard
+            context.isCurrentUserAllowed(to: SystemPermissions.Variables.delete)
+        else {
+            return
+                try await presenter.renderErrorPage(
+                    error: .forbidden,
+                    cancel: SystemVariableRoutes.list.description
+                )
+                .response(from: request, context: context)
+        }
+        var returnTo = request.queryString("returnTo")
+        do {
+            let payload = try await request.decode(
+                as: NonceRequest<NewAdminListRemoveFormInput>.self,
+                context: context
+            )
+            returnTo = payload.input.normalizedReturnTo
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                return
+                    try await presenter
+                    .renderInvalidNoncePage(
+                        cancel: NewAdminLocation.removeCancel(
+                            path: SystemVariableRoutes.list.description,
+                            returnTo: returnTo
+                        )
+                    )
+                    .response(from: request, context: context)
+            }
+            if !payload.input.normalizedIds.isEmpty {
+                try await interactor.delete(ids: payload.input.normalizedIds)
+            }
+            let location = NewAdminLocation.url(
+                path: SystemVariableRoutes.list.description,
+                page: payload.input.normalizedPage,
+                search: payload.input.normalizedSearch
+            )
+            guard !payload.input.normalizedIds.isEmpty else {
+                return Response(
+                    status: .seeOther,
+                    headers: [.location: location]
+                )
+            }
+            return presenter.renderSuccess(
+                location: location,
+                count: payload.input.normalizedIds.count
+            )
+        }
+        catch let error as AdminRemoveSystemVariableError {
+            return
+                try await presenter.renderErrorPage(
+                    error: error,
+                    cancel: NewAdminLocation.removeCancel(
+                        path: SystemVariableRoutes.list.description,
+                        returnTo: returnTo
+                    )
                 )
                 .response(from: request, context: context)
         }

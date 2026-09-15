@@ -3,21 +3,6 @@ import FeatherValidation
 
 enum AdminAddUserRoleFormFieldValidator {
 
-    static func id(
-        _ value: String?,
-        required: Bool
-    ) -> Validator<String> {
-        .init(
-            key: "id",
-            value: value,
-            required: required,
-            invocation: .all,
-            rules: [
-                .trimmedNonempty(message: "ID is required.")
-            ]
-        )
-    }
-
     static func name(
         _ value: String?,
         required: Bool
@@ -28,7 +13,15 @@ enum AdminAddUserRoleFormFieldValidator {
             required: required,
             invocation: .all,
             rules: [
-                .trimmedNonempty(message: "Name is required.")
+                .trimmedNonempty(message: "Name is required."),
+                .min(
+                    length: 4,
+                    message: "Name must be at least 4 characters."
+                ),
+                .max(
+                    length: 254,
+                    message: "Name must be shorter than 255 characters."
+                ),
             ]
         )
     }
@@ -42,7 +35,12 @@ enum AdminAddUserRoleFormFieldValidator {
             value: value,
             required: required,
             invocation: .all,
-            rules: []
+            rules: [
+                .max(
+                    length: 254,
+                    message: "Notes must be shorter than 255 characters."
+                )
+            ]
         )
     }
 }
@@ -51,8 +49,7 @@ extension AdminAddUserRoleFormInput {
 
     private var validator: GroupValidator {
         GroupValidator {
-            AdminAddUserRoleFormFieldValidator.id(id, required: true)
-            AdminAddUserRoleFormFieldValidator.name(name, required: false)
+            AdminAddUserRoleFormFieldValidator.name(name, required: true)
             AdminAddUserRoleFormFieldValidator.notes(notes, required: false)
         }
     }

@@ -9,22 +9,14 @@ struct AdminRemoveUserIdentity {
             buildRuntime: { request, context in
                 let api = context.userAdminAPI()
                 return (
-                    getInteractor: AdminGetUserIdentityDefaultInteractor(
-                        repository: AdminGetUserIdentityOpenAPIRepository(
-                            api: api
-                        ),
-                        roleRepository:
-                            AdminEditUserIdentityRoleOpenAPIRepository(
-                                api: api
-                            )
-                    ),
-                    removeInteractor: AdminRemoveUserIdentityDefaultInteractor(
+                    interactor: AdminRemoveUserIdentityDefaultInteractor(
                         repository: AdminRemoveUserIdentityOpenAPIRepository(
                             api: api
                         )
                     ),
                     presenter: AdminRemoveUserIdentityDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

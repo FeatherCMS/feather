@@ -16,7 +16,8 @@ extension UseCases {
             idGenerator: idGenerator,
             scope: { context in
                 WriteIdentity(
-                    identity: IdentityDatabaseRepository(context: context)
+                    identity: IdentityDatabaseRepository(context: context),
+                    role: RoleDatabaseRepository(context: context)
                 )
             }
         )

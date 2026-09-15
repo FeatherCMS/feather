@@ -36,7 +36,7 @@ public struct TableSeedMigration: DatabaseMigration {
             FROM system_permission sp
             INNER JOIN user_role ur
                 ON ur.id = 'root'
-            WHERE sp.id IN (
+            WHERE sp.key IN (
                 'analytics:insights:list'
             )
             ON CONFLICT (role_id, permission_id) DO NOTHING;
@@ -67,7 +67,7 @@ public struct TableSeedMigration: DatabaseMigration {
             FROM system_permission sp
             INNER JOIN user_role ur
                 ON ur.id = 'root'
-            WHERE sp.id = 'analytics:not-found:list'
+            WHERE sp.key = 'analytics:not-found:list'
             ON CONFLICT (role_id, permission_id) DO NOTHING;
             """#
         ]

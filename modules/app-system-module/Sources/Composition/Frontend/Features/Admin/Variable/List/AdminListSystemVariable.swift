@@ -2,9 +2,13 @@ import FeatherAdmin
 import Hummingbird
 
 struct AdminListSystemVariable {
+    static let pageSize = 20
+
     let controller: any AdminListSystemVariableController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminListSystemVariableDefaultController(
             buildRuntime: { request, context in
                 (
@@ -15,7 +19,8 @@ struct AdminListSystemVariable {
                     ),
                     presenter: AdminListSystemVariableDefaultPresenter(
                         request: request,
-                        renderEngine: renderingEngine
+                        context: context,
+                        renderingEngine: renderingEngine
                     )
                 )
             }

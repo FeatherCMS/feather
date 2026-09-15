@@ -9,12 +9,7 @@ struct AdminEditUserIdentityOpenAPIRepository:
     AdminEditUserIdentityRepository
 {
     let api: UserAdminAPIClient
-    private let getUnauthorizedMessage =
-        "Please sign in again to load this user identity."
-    private let updateUnauthorizedMessage =
-        "Please sign in again to update this user identity."
-
-    func get(
+    func load(
         id: String
     ) async throws -> AdminEditUserIdentityModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in
@@ -32,17 +27,11 @@ struct AdminEditUserIdentityOpenAPIRepository:
                     roleIds: Array(identity.roleIds ?? [])
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "User identity not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: getUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot access user identities."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -54,7 +43,7 @@ struct AdminEditUserIdentityOpenAPIRepository:
 
     func update(
         id: String,
-        payload: UserIdentityFormPayloadModel
+        payload: UserIdentityEditFormPayloadModel
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.userIdentityPatch(
@@ -72,17 +61,11 @@ struct AdminEditUserIdentityOpenAPIRepository:
             case .ok:
                 return
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "User identity not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: updateUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot edit user identities."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

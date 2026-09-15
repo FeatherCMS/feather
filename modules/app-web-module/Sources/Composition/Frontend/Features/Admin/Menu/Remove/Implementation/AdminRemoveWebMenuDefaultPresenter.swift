@@ -3,28 +3,25 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminRemoveWebMenuDefaultPresenter:
     AdminRemoveWebMenuPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderRemovePage(
         id: String,
         source: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove menu",
-            description: "Remove confirmation for a management menu",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebMenuConfirmation(
                 state: .init(
                     id: id,
@@ -40,16 +37,11 @@ struct AdminRemoveWebMenuDefaultPresenter:
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove menu",
-            description: "Remove confirmation for a management menu",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebMenuError(
                 state: .init(
                     info: info,
@@ -62,17 +54,11 @@ struct AdminRemoveWebMenuDefaultPresenter:
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Menus", link: "/admin/web/menus/"),
-                .init(
-                    label: "Remove",
-                    link: "/admin/web/menus/\(id)/remove/"
-                ),
-            ]
-        )
+    ) -> [NewAdminBreadcrumb.Link] {
+        [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Web", link: "/admin/web/"),
+            .init(label: "Menus", link: "/admin/web/menus/"),
+        ]
     }
 }

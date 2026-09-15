@@ -16,6 +16,7 @@ extension VariableTable.Row {
     var asQueryListItem: VariableList.Item {
         .init(
             id: id,
+            key: key,
             value: value,
             name: name,
             notes: notes,
@@ -27,6 +28,7 @@ extension VariableTable.Row {
     var asDetail: VariableDetail {
         .init(
             id: id,
+            key: key,
             value: value,
             name: name,
             notes: notes,
@@ -69,8 +71,8 @@ public struct VariableDatabaseQueries: VariableQueries {
         let sortParts = query.sort.map { rule -> String in
             let column: String
             switch rule.field {
-            case .id:
-                column = "id"
+            case .key:
+                column = "key"
             case .name:
                 column = "name"
             case .value:
@@ -80,7 +82,7 @@ public struct VariableDatabaseQueries: VariableQueries {
             }
             return "\(column) \(sortDirectionSQL(rule.direction))"
         }
-        return (sortParts + ["id ASC"]).joined(separator: ", ")
+        return (sortParts + ["key ASC"]).joined(separator: ", ")
     }
 
     // MARK: -
@@ -90,7 +92,7 @@ public struct VariableDatabaseQueries: VariableQueries {
     ) async throws -> VariableDetail {
         let table = VariableTable(connection: context.connection)
         guard let row = try await table.find(id: id) else {
-            fatalError()
+            throw RepositoryError.notFound
         }
         return row.asDetail
     }
@@ -114,6 +116,7 @@ public struct VariableDatabaseQueries: VariableQueries {
         let items =
             try await table.list(
                 search: search,
+                ids: query.ids,
                 orderBy: orderBy,
                 limit: page.size,
                 offset: page.offset
@@ -128,6 +131,6 @@ public struct VariableDatabaseQueries: VariableQueries {
     ) async throws -> Int {
         let search = query.search
         let table = VariableTable(connection: context.connection)
-        return try await table.count(search: search)
+        return try await table.count(search: search, ids: query.ids)
     }
 }

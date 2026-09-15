@@ -7,17 +7,18 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
-struct AppBlogPostPage: Component, FlowContent {
+struct AppBlogPostPage: Component {
     let state: AppGetBlogPostModel
 
-    func content() -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Main {
-            AppPublicStyleAnchor()
+            context.build(AppPublicStyleAnchor())
             Div {
-                articlePanel()
+                articlePanel(context: &context)
             }
             .class("public-container")
         }
@@ -26,7 +27,9 @@ struct AppBlogPostPage: Component, FlowContent {
 }
 
 extension AppBlogPostPage {
-    fileprivate func articlePanel() -> some BasicTag {
+    fileprivate func articlePanel(context: inout BuilderContext)
+        -> some BasicTag
+    {
         Article {
             Div {
                 P("Post").class("public-eyebrow")
@@ -51,7 +54,7 @@ extension AppBlogPostPage {
                 .class("public-image")
             }
 
-            AppPublicTextBlock(text: state.content)
+            context.build(AppPublicTextBlock(text: state.content))
 
             if !state.authors.isEmpty {
                 Section {

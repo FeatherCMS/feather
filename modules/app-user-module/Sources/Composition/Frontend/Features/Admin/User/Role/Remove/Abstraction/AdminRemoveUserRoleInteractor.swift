@@ -3,11 +3,11 @@ import Foundation
 
 protocol AdminRemoveUserRoleInteractor: Sendable {
 
-    func get(
-        id: String
-    ) async throws -> UserRoleDetailsModel
+    func names(
+        ids: [String]
+    ) async throws -> [String]
 
-    func execute(
-        entity: AdminRemoveUserRoleModel
+    func delete(
+        ids: [String]
     ) async throws
 }

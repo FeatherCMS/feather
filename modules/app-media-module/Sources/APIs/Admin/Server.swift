@@ -46,7 +46,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.mediaAssetDelete(
+                try await server.mediaAssetNodeDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -118,19 +118,6 @@ extension APIProtocol {
                 )
             },
             method: .post,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/media/folders"
-            )
-        )
-        try transport.register(
-            {
-                try await server.mediaFolderDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
             path: server.apiPathComponentsWithServerPrefix(
                 "/api/v1/admin/media/folders"
             )
@@ -330,8 +317,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetDelete)`.
-    fileprivate func mediaAssetDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)`.
+    fileprivate func mediaAssetNodeDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -340,16 +327,17 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaAssetDelete.id,
+            forOperation: Operations.MediaAssetNodeDelete.id,
             using: {
-                APIHandler.mediaAssetDelete($0)
+                APIHandler.mediaAssetNodeDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.MediaAssetDelete.Input.Headers = .init(
-                    accept: try converter.extractAcceptHeaderIfPresent(
-                        in: request.headerFields
+                let headers: Operations.MediaAssetNodeDelete.Input.Headers =
+                    .init(
+                        accept: try converter.extractAcceptHeaderIfPresent(
+                            in: request.headerFields
+                        )
                     )
-                )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
@@ -374,7 +362,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.MediaAssetDelete.Input(
+                return Operations.MediaAssetNodeDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -449,8 +437,8 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.MediaAssetListItemSearchQuerySchema
-                            .self,
+                        Components.Schemas
+                            .MediaAssetNodeSearchItemSearchQuerySchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -805,92 +793,6 @@ extension UniversalServer where APIHandler: APIProtocol {
                 case .created(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case .json(let value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/media/folders`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/delete(mediaFolderDelete)`.
-    fileprivate func mediaFolderDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.MediaFolderDelete.id,
-            using: {
-                APIHandler.mediaFolderDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let headers: Operations.MediaFolderDelete.Input.Headers = .init(
-                    accept: try converter.extractAcceptHeaderIfPresent(
-                        in: request.headerFields
-                    )
-                )
-                let contentType = converter.extractContentTypeIfPresent(
-                    in: request.headerFields
-                )
-                let body: Components.RequestBodies.DeleteRequestBody
-                let chosenContentType = try converter.bestContentType(
-                    received: contentType,
-                    options: [
-                        "application/json"
-                    ]
-                )
-                switch chosenContentType {
-                case "application/json":
-                    body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.DeleteRequestSchema.self,
-                        from: requestBody,
-                        transforming: { value in
-                            .json(value)
-                        }
-                    )
-                default:
-                    preconditionFailure(
-                        "bestContentType chose an invalid content type."
-                    )
-                }
-                return Operations.MediaFolderDelete.Input(
-                    headers: headers,
-                    body: body
-                )
-            },
-            serializer: { output, request in
-                switch output {
-                case .ok(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {

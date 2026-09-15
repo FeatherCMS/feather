@@ -5,10 +5,10 @@ protocol AdminEditSystemVariableInteractor: Sendable {
 
     func load(
         id: String
-    ) async throws -> SystemVariableDetailsModel
+    ) async throws -> SystemVariableEditModel
 
-    func update(
+    func edit(
         id: String,
-        input: SystemVariableFormInput
+        input: SystemVariableEditFormInput
     ) async throws
 }

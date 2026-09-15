@@ -13,7 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminListAuthMagicLink {
     let controller: any AdminListAuthMagicLinkController
@@ -29,6 +30,7 @@ struct AdminListAuthMagicLink {
                     ),
                     presenter: AdminListAuthMagicLinkDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

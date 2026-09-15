@@ -1,19 +1,18 @@
-import AccountAdminAPI
+import AccountAppAPI
 import FeatherAdmin
+import MediaFrontend
 import OpenAPIRuntime
 
 struct AdminEditAccountProfileOpenAPIRepository:
     AdminEditAccountProfileRepository
 {
-    let api: AccountAdminAPIClient
+    let api: AccountAppAPIClient
+    let mediaAPI: MediaAdminAPIClient
 
-    func load(userID: String) async throws -> AdminEditAccountProfileModel {
+    func get() async throws -> AdminAccountProfileModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.adminAccountProfileGet(
-                .init(
-                    path: .init(userId: userID),
-                    headers: .init(accept: [.init(contentType: .json)])
-                )
+            let response = try await client.accountProfileGet(
+                .init(headers: .init(accept: [.init(contentType: .json)]))
             )
             switch response {
             case .ok(let value):
@@ -21,16 +20,15 @@ struct AdminEditAccountProfileOpenAPIRepository:
                 return .init(
                     firstName: body.firstName,
                     lastName: body.lastName,
-                    profileImageAssetId: body.profileImageAssetId
+                    profileImageAssetId: body.profileImageAssetId,
+                    profileImageAsset: try await loadImageAsset(
+                        assetId: body.profileImageAssetId
+                    )
                 )
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this profile."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot access this profile."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -40,20 +38,29 @@ struct AdminEditAccountProfileOpenAPIRepository:
         }
     }
 
-    func save(
-        userID: String,
-        input: AdminEditAccountProfileFormInput
+    private func loadImageAsset(
+        assetId: String?
+    ) async throws -> NewAdminMediaAsset? {
+        guard let assetId, !assetId.isEmpty else { return nil }
+        let asset = try? await AdminViewMediaAssetOpenAPIRepository(
+            api: mediaAPI
+        )
+        .getAsset(id: assetId)
+        return asset.map(NewAdminMediaAsset.init(schema:))
+    }
+
+    func update(
+        profile: AdminAccountProfileModel
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.adminAccountProfileUpdate(
+            let response = try await client.accountProfileUpdate(
                 .init(
-                    path: .init(userId: userID),
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
-                            firstName: input.firstName,
-                            lastName: input.lastName,
-                            profileImageAssetId: input.profileImageAssetId
+                            firstName: profile.firstName,
+                            lastName: profile.lastName,
+                            profileImageAssetId: profile.profileImageAssetId
                         )
                     )
                 )
@@ -62,13 +69,9 @@ struct AdminEditAccountProfileOpenAPIRepository:
             case .ok:
                 return
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to save this profile."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot edit this profile."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

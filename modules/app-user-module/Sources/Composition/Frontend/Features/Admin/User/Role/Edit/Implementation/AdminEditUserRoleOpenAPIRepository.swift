@@ -18,7 +18,7 @@ struct AdminEditUserRoleOpenAPIRepository: AdminEditUserRoleRepository {
         )
     }
 
-    func get(
+    func load(
         id: String
     ) async throws -> UserRoleDetailsModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in
@@ -37,17 +37,11 @@ struct AdminEditUserRoleOpenAPIRepository: AdminEditUserRoleRepository {
                     notes: item.notes ?? ""
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "User role not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this user role."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot edit user roles."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -59,7 +53,7 @@ struct AdminEditUserRoleOpenAPIRepository: AdminEditUserRoleRepository {
 
     func update(
         id: String,
-        payload: UserRoleFormPayloadModel
+        payload: UserRoleEditFormPayloadModel
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
@@ -73,17 +67,11 @@ struct AdminEditUserRoleOpenAPIRepository: AdminEditUserRoleRepository {
             case .ok:
                 return
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "User role not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to update this user role."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot edit user roles."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

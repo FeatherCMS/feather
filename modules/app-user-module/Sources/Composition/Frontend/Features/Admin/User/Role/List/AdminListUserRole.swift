@@ -2,6 +2,8 @@ import FeatherAdmin
 import Hummingbird
 
 struct AdminListUserRole {
+    static let pageSize = 20
+
     let controller: any AdminListUserRoleController
 
     init(renderingEngine: any RenderingEngine) {
@@ -15,7 +17,8 @@ struct AdminListUserRole {
                     ),
                     presenter: AdminListUserRoleDefaultPresenter(
                         request: request,
-                        renderEngine: renderingEngine
+                        context: context,
+                        renderingEngine: renderingEngine
                     )
                 )
             }

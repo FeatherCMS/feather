@@ -1,5 +1,6 @@
 import FeatherAdmin
 import FeatherContracts
+import Hummingbird
 import SystemContracts
 
 public enum AccountAdminMenuEventHandlers {
@@ -28,21 +29,21 @@ public enum AccountAdminMenuEventHandlers {
                     menuKey: "account",
                     label: "Profile",
                     icon: "user",
-                    link: "/admin/auth/profile/",
-                    permission: "auth:profile:read"
+                    link: AccountAdminRoutes.profile.description + "/",
+                    permission: "account:profile:read"
                 ),
                 .init(
                     menuKey: "account",
                     label: "Settings",
                     icon: "settings",
-                    link: "/admin/account/settings/",
+                    link: AccountAdminRoutes.settings.description + "/",
                     permission: "account:settings:read"
                 ),
                 .init(
                     menuKey: "account",
                     label: "Invitations",
                     icon: "mail",
-                    link: "/admin/account/invitations/",
+                    link: AccountAdminRoutes.invitations.description + "/",
                     permission: "account:invitations:list"
                 ),
             ]

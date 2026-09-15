@@ -23,23 +23,16 @@ struct AdminRemoveSystemPermissionOpenAPIRepository:
                 let permission = try okResponse.body.json
                 return .init(
                     id: permission.id,
+                    key: permission.key,
                     name: permission.name ?? "",
                     notes: permission.notes
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "System permission not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to load this system permission."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot delete system permissions."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -53,9 +46,22 @@ struct AdminRemoveSystemPermissionOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.systemPermissionDelete(
+            let response = try await client.systemPermissionDelete(
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
+            switch response {
+            case .ok:
+                return
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
         }
     }
 }

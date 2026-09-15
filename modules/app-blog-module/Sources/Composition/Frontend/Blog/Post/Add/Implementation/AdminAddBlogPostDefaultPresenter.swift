@@ -7,26 +7,23 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminAddBlogPostDefaultPresenter: AdminAddBlogPostPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderAddPage(
         state: BlogPostForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add post",
-            description: "Add a post in management",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: BlogPostAdd(
                 state: .init(
                     form: state,
@@ -36,14 +33,7 @@ struct AdminAddBlogPostDefaultPresenter: AdminAddBlogPostPresenter {
         )
     }
 
-    func breadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Posts", link: "/admin/blog/posts/"),
-                .init(label: "Add", link: "/admin/blog/posts/add/"),
-            ]
-        )
+    func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        BlogAdminRoutes.postsBreadcrumb
     }
 }

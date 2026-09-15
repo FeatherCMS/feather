@@ -10,8 +10,9 @@ import MediaContracts
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
     let buildRuntime:
@@ -27,7 +28,7 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
         let runtime = buildRuntime(request, context)
         let permissions = context.currentUserPermissions
         let slugPrefix = (try? await slugPrefix(context: context)) ?? "/"
-        return runtime.presenter.renderAddPage(
+        return try await runtime.presenter.renderAddPage(
             state: formState(
                 permissions: permissions,
                 slugPrefix: slugPrefix
@@ -53,15 +54,12 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
             try await payload.validate()
             try await runtime.interactor.execute(input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/blog/authors/",
-                        title: "Added",
-                        message: "Blog author added successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/blog/authors/",
+                notification: .init(
+                    title: "Added",
+                    message: "Blog author added successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -79,7 +77,7 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
                 slugPrefix: slugPrefix
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions
@@ -97,7 +95,7 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
                 slugPrefix: slugPrefix
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions
@@ -115,7 +113,7 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
                 slugPrefix: slugPrefix
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions
@@ -130,7 +128,7 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
         content: String = "",
         profileImageAssetId: String? = nil,
         metadata: AdminMetadataFormValue? = nil,
-        selectedProfileImage: AdminMediaAssetReferenceModel? = nil,
+        selectedProfileImage: NewAdminMediaAsset? = nil,
         permissions: Set<String>,
         slugPrefix: String? = nil
     ) -> BlogAuthorForm.State {
@@ -166,7 +164,6 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
                 MediaPermissions.Assets.create.rawValue
             ),
             error: nil,
-            success: nil
         )
     }
 

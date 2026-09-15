@@ -16,7 +16,7 @@ struct AdminAddWebMenuDefaultController: AdminAddWebMenuController {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
-        return runtime.presenter.renderAddPage(
+        return try await runtime.presenter.renderAddPage(
             state: formState(),
             permissions: context.currentUserPermissions
         )
@@ -39,15 +39,12 @@ struct AdminAddWebMenuDefaultController: AdminAddWebMenuController {
             try await payload.validate()
             try await runtime.interactor.execute(input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/web/menus/",
-                        title: "Added",
-                        message: "Menu added successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/web/menus/",
+                notification: .init(
+                    title: "Added",
+                    message: "Menu added successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -61,7 +58,7 @@ struct AdminAddWebMenuDefaultController: AdminAddWebMenuController {
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions
@@ -75,7 +72,7 @@ struct AdminAddWebMenuDefaultController: AdminAddWebMenuController {
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions
@@ -89,7 +86,7 @@ struct AdminAddWebMenuDefaultController: AdminAddWebMenuController {
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     state: state,
                     permissions: permissions

@@ -7,8 +7,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminRemoveBlogAuthorLinkDefaultController:
     AdminRemoveBlogAuthorLinkController
@@ -29,7 +30,7 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
         let permissions = context.currentUserPermissions
         do {
             let rule = try await runtime.interactor.get(menuId: menuId, id: id)
-            return runtime.presenter.renderRemovePage(
+            return try await runtime.presenter.renderRemovePage(
                 menuId: menuId,
                 id: id,
                 label: rule.label,
@@ -37,7 +38,7 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderErrorPage(
+            return try await runtime.presenter.renderErrorPage(
                 menuId: menuId,
                 id: id,
                 info: error.errorTitle,
@@ -57,19 +58,16 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
         let permissions = context.currentUserPermissions
         do {
             try await runtime.interactor.delete(menuId: menuId, id: id)
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/blog/authors/\(menuId)/",
-                        title: "Removed",
-                        message: "Link removed successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/blog/authors/\(menuId)/",
+                notification: .init(
+                    title: "Removed",
+                    message: "Link removed successfully."
+                )
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderErrorPage(
                     menuId: menuId,
                     id: id,

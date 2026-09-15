@@ -21,6 +21,7 @@ public struct AdminWebMetadataEditHandler: Sendable {
                     ),
                     presenter: AdminEditWebMetadataDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )
@@ -32,7 +33,7 @@ public struct AdminWebMetadataEditHandler: Sendable {
         request: Request,
         context: DefaultRequestContext,
         referenceType: String,
-        navigationTabs: [AdminPillTabs.Link] = [],
+        navigationTabs: [NewAdminTabBar.Link] = [],
         configuration: AdminWebMetadataEditConfiguration? = nil
     ) async throws -> HTMLResponse {
         let tabs =
@@ -52,7 +53,7 @@ public struct AdminWebMetadataEditHandler: Sendable {
         request: Request,
         context: DefaultRequestContext,
         referenceType: String,
-        navigationTabs: [AdminPillTabs.Link] = [],
+        navigationTabs: [NewAdminTabBar.Link] = [],
         configuration: AdminWebMetadataEditConfiguration? = nil
     ) async throws -> Response {
         let tabs =
@@ -70,7 +71,7 @@ public struct AdminWebMetadataEditHandler: Sendable {
 
     private func defaultNavigationTabs(
         request: Request
-    ) -> [AdminPillTabs.Link] {
+    ) -> [NewAdminTabBar.Link] {
         let path = request.uri.path
         guard let marker = path.range(of: "/edit/metadata/") else {
             return []

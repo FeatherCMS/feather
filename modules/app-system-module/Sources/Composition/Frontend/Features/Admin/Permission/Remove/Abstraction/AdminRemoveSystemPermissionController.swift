@@ -3,12 +3,12 @@ import Hummingbird
 
 protocol AdminRemoveSystemPermissionController: Sendable {
 
-    func getRemoveSystemPermission(
+    func getRemoveSystemPermissions(
         request: Request,
         context: DefaultRequestContext
-    ) async throws -> HTMLResponse
+    ) async throws -> Response
 
-    func postRemoveSystemPermission(
+    func postRemoveSystemPermissions(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
@@ -20,12 +20,12 @@ extension AdminRemoveSystemPermissionController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/system/permissions/{id}/remove/",
-            use: getRemoveSystemPermission
+            SystemPermissionRoutes.remove,
+            use: getRemoveSystemPermissions
         )
         router.post(
-            "/admin/system/permissions/{id}/remove/",
-            use: postRemoveSystemPermission
+            SystemPermissionRoutes.remove,
+            use: postRemoveSystemPermissions
         )
     }
 }

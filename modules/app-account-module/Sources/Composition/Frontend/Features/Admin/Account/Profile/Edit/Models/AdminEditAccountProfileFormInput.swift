@@ -1,7 +1,25 @@
+import CSS
 import FeatherAdmin
+import FeatherValidation
+import FeatherValidationFoundation
+import Foundation
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import SystemAdminAPI
+import SystemFrontend
+import UserAdminAPI
+import UserAppAPI
+import UserFrontend
+import WebBuilders
+import WebComponents
 
-struct AdminEditAccountProfileFormInput: Codable, Sendable {
-    let firstName: String?
-    let lastName: String?
-    let profileImageAssetId: String?
+public struct AdminEditAccountProfileFormInput: Codable, Sendable, Equatable,
+    Hashable
+{
+
+    public var firstName: String? = nil
+    public var lastName: String? = nil
+    public var profileImageAssetId: String? = nil
 }

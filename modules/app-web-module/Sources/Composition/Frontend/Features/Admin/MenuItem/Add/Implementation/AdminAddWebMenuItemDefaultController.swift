@@ -20,7 +20,7 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
         do {
             let availablePermissions = try await runtime.interactor
                 .loadPermissions()
-            return runtime.presenter.renderAddPage(
+            return try await runtime.presenter.renderAddPage(
                 menuId: menuId,
                 state: formState(permissionOptions: availablePermissions),
                 permissions: context.currentUserPermissions
@@ -29,7 +29,7 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
         catch {
             var state = formState()
             state.error = error.displayMessage
-            return runtime.presenter.renderAddPage(
+            return try await runtime.presenter.renderAddPage(
                 menuId: menuId,
                 state: state,
                 permissions: context.currentUserPermissions
@@ -78,7 +78,7 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
                     notes: payload.normalizedNotes
                 )
                 state.error = permissionLoadError
-                return try runtime.presenter
+                return try await runtime.presenter
                     .renderAddPage(
                         menuId: menuId,
                         state: state,
@@ -105,7 +105,7 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
                 state.apply(errors: [
                     "permission": "Select a valid permission."
                 ])
-                return try runtime.presenter
+                return try await runtime.presenter
                     .renderAddPage(
                         menuId: menuId,
                         state: state,
@@ -128,7 +128,7 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
                 state.apply(errors: [
                     "priority": "Priority must be a valid integer."
                 ])
-                return try runtime.presenter
+                return try await runtime.presenter
                     .renderAddPage(
                         menuId: menuId,
                         state: state,
@@ -138,15 +138,12 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
             }
             try await runtime.interactor.execute(menuId: menuId, input: payload)
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/web/menus/\(menuId)/edit/",
-                        title: "Added",
-                        message: "Item added successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/web/menus/\(menuId)/edit/",
+                notification: .init(
+                    title: "Added",
+                    message: "Item added successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -165,7 +162,7 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.apply(errors: errors)
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     menuId: menuId,
                     state: state,
@@ -185,7 +182,7 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.error = error.errorDescription
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     menuId: menuId,
                     state: state,
@@ -205,7 +202,7 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
                 notes: lastPayload?.normalizedNotes ?? ""
             )
             state.error = error.displayMessage
-            return try runtime.presenter
+            return try await runtime.presenter
                 .renderAddPage(
                     menuId: menuId,
                     state: state,

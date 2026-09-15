@@ -56,9 +56,8 @@ struct AdminListWebMetadataDefaultController:
             model = emptyModel
             error = nil
         }
-        return presenter.renderListPage(
+        return try await presenter.renderListPage(
             model: model,
-            isEdited: request.hasQueryFlag("edited"),
             permissions: permissions,
             search: search,
             referenceType: normalizedReferenceType,

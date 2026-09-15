@@ -1,0 +1,49 @@
+//
+//  File.swift
+//  web-app
+//
+//  Created by Tibor Bödecs on 2026. 03. 08..
+//
+
+import CSS
+import HTML
+import SGML
+import SVG
+import WebBuilders
+import WebComponents
+
+@available(*, deprecated, message: "Use the new admin design system instead.")
+public struct AdminHeadElements: Component {
+
+    struct State {
+        let canonicalUrl: String
+        let title: String
+        let description: String
+        let imageUrl: String
+        let externalCSSUrls: [String]
+        let css: String
+    }
+
+    let state: State
+
+    public func html(context: inout BuilderContext) -> Head {
+        let metadata = context.build(
+            Metadata(
+                canonicalUrl: state.canonicalUrl,
+                title: state.title,
+                description: state.description,
+                imageUrl: state.imageUrl,
+                noIndex: false
+            )
+        )
+
+        return Head(
+            elements: metadata.children.compactMap {
+                $0 as? any MetadataContent
+            }
+                + state.externalCSSUrls.map {
+                    Link(rel: .stylesheet).href($0)
+                } + [Style(state.css)]
+        )
+    }
+}

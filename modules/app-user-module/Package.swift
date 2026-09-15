@@ -189,7 +189,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "SystemApplication", package: "app-system-module"),
-                
+
                 .target(name: "UserInfrastructure"),
                 .target(name: "UserAdminAPI"),
                 .target(name: "UserAppAPI"),
@@ -201,7 +201,7 @@ let package = Package(
             name: "UserFrontend",
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
-                
+
                 .product(name: "SystemContracts", package: "app-system-module"),
                 .target(name: "UserContracts"),
                 .target(name: "UserAdminAPI"),

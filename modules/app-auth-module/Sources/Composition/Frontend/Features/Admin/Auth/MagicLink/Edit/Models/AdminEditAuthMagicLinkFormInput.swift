@@ -14,7 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 public struct AdminEditAuthMagicLinkFormInput: Codable, Sendable, Equatable,
     Hashable
@@ -26,7 +27,7 @@ public struct AdminEditAuthMagicLinkFormInput: Codable, Sendable, Equatable,
     }
 
     public let credentialId: String
-    public let isPersistent: CheckboxFormInput
+    public let isPersistent: NewAdminFormFieldCheckbox.Input
 
     public var normalizedCredentialId: String {
         credentialId.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -34,7 +35,7 @@ public struct AdminEditAuthMagicLinkFormInput: Codable, Sendable, Equatable,
 
     public init(
         credentialId: String,
-        isPersistent: CheckboxFormInput
+        isPersistent: NewAdminFormFieldCheckbox.Input
     ) {
         self.credentialId = credentialId
         self.isPersistent = isPersistent
@@ -48,7 +49,7 @@ public struct AdminEditAuthMagicLinkFormInput: Codable, Sendable, Equatable,
         )
         self.isPersistent =
             try container.decodeIfPresent(
-                CheckboxFormInput.self,
+                NewAdminFormFieldCheckbox.Input.self,
                 forKey: .isPersistent
             ) ?? .init(value: false)
     }

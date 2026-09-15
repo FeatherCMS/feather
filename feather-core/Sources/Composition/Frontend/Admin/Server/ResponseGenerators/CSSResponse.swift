@@ -16,7 +16,7 @@ public struct CSSResponse: ResponseGenerator {
         from request: Request,
         context: some RequestContext
     ) throws -> Response {
-        let renderer = StylesheetRenderer(minify: false, indent: 4)
+        let renderer = CSSRenderer(minify: false, indent: 4)
         let cssString = renderer.render(css)
         let buffer = ByteBuffer(string: cssString)
         return .init(

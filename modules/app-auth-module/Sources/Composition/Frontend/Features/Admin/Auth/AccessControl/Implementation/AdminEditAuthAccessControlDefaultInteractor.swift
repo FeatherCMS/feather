@@ -14,7 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminEditAuthAccessControlDefaultInteractor:
     AdminEditAuthAccessControlInteractor
@@ -81,7 +82,7 @@ struct AdminEditAuthAccessControlDefaultInteractor:
                         || ($0.name ?? "")
                             .localizedCaseInsensitiveContains(search)
                 }
-                .map(\.id)
+                .map(\.key)
         )
 
         let desiredVisible = Set(

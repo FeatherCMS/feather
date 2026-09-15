@@ -13,7 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 protocol AdminEditAuthMagicLinkController: Sendable {
 
@@ -34,11 +35,11 @@ extension AdminEditAuthMagicLinkController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/auth/magic-links/{id}/edit/",
+            AuthMagicLinkRoutes.edit(RouterPath("{id}")),
             use: getEditAuthMagicLink
         )
         router.post(
-            "/admin/auth/magic-links/{id}/edit/",
+            AuthMagicLinkRoutes.edit(RouterPath("{id}")),
             use: postEditAuthMagicLink
         )
     }

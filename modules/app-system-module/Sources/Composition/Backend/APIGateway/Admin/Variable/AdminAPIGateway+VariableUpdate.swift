@@ -20,6 +20,7 @@ extension AdminAPIGateway {
             subject: subject,
             input: .init(
                 id: input.path.systemVariableId,
+                key: body.key,
                 value: body.value,
                 name: body.name,
                 notes: body.notes

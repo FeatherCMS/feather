@@ -4,6 +4,6 @@ import Foundation
 protocol AdminAddRedirectRuleRepository: Sendable {
 
     func create(
-        input: RedirectRuleFormInput
+        input: RedirectRuleAddFormInput
     ) async throws
 }

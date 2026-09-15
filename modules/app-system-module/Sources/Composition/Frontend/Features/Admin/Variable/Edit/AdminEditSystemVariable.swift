@@ -15,6 +15,7 @@ struct AdminEditSystemVariable {
                     ),
                     presenter: AdminEditSystemVariableDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

@@ -14,23 +14,25 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 protocol AdminRemoveAuthMagicLinkPresenter: Sendable {
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State
+    ) -> [NewAdminBreadcrumb.Link]
 
     func renderPage(
         id: String,
         credentialId: String,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
+    func renderInvalidNoncePage() async throws -> HTMLResponse
 
     func renderError(
         id: String,
         error: OpenAPIRepositoryError,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

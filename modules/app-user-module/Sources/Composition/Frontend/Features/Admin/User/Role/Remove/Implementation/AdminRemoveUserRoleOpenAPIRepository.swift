@@ -18,9 +18,9 @@ struct AdminRemoveUserRoleOpenAPIRepository: AdminRemoveUserRoleRepository {
         )
     }
 
-    func get(
+    private func name(
         id: String
-    ) async throws -> UserRoleDetailsModel {
+    ) async throws -> String {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
@@ -31,23 +31,13 @@ struct AdminRemoveUserRoleOpenAPIRepository: AdminRemoveUserRoleRepository {
             switch response {
             case .ok(let ok):
                 let item = try ok.body.json
-                return .init(
-                    id: item.id,
-                    name: item.name ?? "",
-                    notes: item.notes ?? ""
-                )
+                return item.name ?? id
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "User role not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this user role."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your identity cannot access user roles."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -57,13 +47,33 @@ struct AdminRemoveUserRoleOpenAPIRepository: AdminRemoveUserRoleRepository {
         }
     }
 
+    func names(
+        ids: [String]
+    ) async throws -> [String] {
+        var names: [String] = []
+        for id in ids {
+            names.append(try await name(id: id))
+        }
+        return names
+    }
+
     func delete(
-        id: String
+        ids: [String]
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.userRoleDelete(
-                body: .json(.init(ids: [id], results: false, summary: true))
+            let response = try await client.userRoleDelete(
+                body: .json(.init(ids: ids, results: false, summary: true))
             )
+            switch response {
+            case .ok: return
+            case .unauthorized: throw OpenAPIRepositoryError.unauthorized
+            case .forbidden: throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
         }
     }
 }

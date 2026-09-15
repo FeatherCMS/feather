@@ -16,6 +16,7 @@ struct AdminRemoveSystemPermission {
                     ),
                     presenter: AdminRemoveSystemPermissionDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

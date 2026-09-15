@@ -10,12 +10,15 @@ import FeatherContracts
 public struct ReadMedia: Scope {
     public let folders: any MediaFolderQueries
     public let assets: any MediaAssetQueries
+    public let assetSearch: any MediaAssetSearchQueries
 
     public init(
         folders: any MediaFolderQueries,
-        assets: any MediaAssetQueries
+        assets: any MediaAssetQueries,
+        assetSearch: any MediaAssetSearchQueries
     ) {
         self.folders = folders
         self.assets = assets
+        self.assetSearch = assetSearch
     }
 }

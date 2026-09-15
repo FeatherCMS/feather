@@ -24,6 +24,11 @@ extension RolePermissionTable.Row {
             as: String.self
         )
 
+        self.permissionKey = try row.decode(
+            column: "permission_key",
+            as: String?.self
+        )
+
         self.createdAt = try row.decode(
             column: "created_at",
             as: Date.self
@@ -40,6 +45,7 @@ struct RolePermissionTable {
     struct Row {
         let roleId: String
         let permissionId: String
+        let permissionKey: String?
         let createdAt: Date
         let updatedAt: Date
     }
@@ -63,7 +69,7 @@ struct RolePermissionTable {
                     NOW(),
                     NOW()
                 )
-                RETURNING *;
+                RETURNING *, permission_id AS permission_key;
                 """#
         ) { sequence in
             guard let row = try await sequence.collect().first else {
@@ -81,12 +87,13 @@ struct RolePermissionTable {
     ) async throws -> [Row] {
         try await connection.run(
             query: #"""
-                SELECT *
-                FROM auth_role_permission
+                SELECT arp.*, sp.key AS permission_key
+                FROM auth_role_permission arp
+                INNER JOIN system_permission sp ON sp.id = arp.permission_id
                 WHERE (
                     \#(search == nil)
-                    OR LOWER(role_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(permission_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(arp.role_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(sp.key) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                 )
                 ORDER BY \#(unescaped: orderBy)
                 LIMIT \#(limit)
@@ -103,11 +110,12 @@ struct RolePermissionTable {
         try await connection.run(
             query: #"""
                 SELECT COUNT(*) AS count
-                FROM auth_role_permission
+                FROM auth_role_permission arp
+                INNER JOIN system_permission sp ON sp.id = arp.permission_id
                 WHERE (
                     \#(search == nil)
-                    OR LOWER(role_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(permission_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(arp.role_id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(sp.key) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                 );
                 """#
         ) { sequence in
@@ -124,10 +132,11 @@ struct RolePermissionTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT *
-                FROM auth_role_permission
-                WHERE role_id=\#(roleId)
-                AND permission_id=\#(permissionId)
+                SELECT arp.*, sp.key AS permission_key
+                FROM auth_role_permission arp
+                INNER JOIN system_permission sp ON sp.id = arp.permission_id
+                WHERE arp.role_id=\#(roleId)
+                AND arp.permission_id=\#(permissionId)
                 LIMIT 1;
                 """#
         ) { sequence in
@@ -152,7 +161,7 @@ struct RolePermissionTable {
                     updated_at=NOW()
                 WHERE role_id=\#(roleId)
                 AND permission_id=\#(permissionId)
-                RETURNING *;
+                RETURNING *, permission_id AS permission_key;
                 """#
         ) { sequence in
             guard let row = try await sequence.collect().first else {
@@ -167,14 +176,17 @@ struct RolePermissionTable {
     ) async throws -> [String] {
         try await connection.run(
             query: #"""
-                SELECT permission_id
-                FROM auth_role_permission
-                WHERE role_id=\#(roleId)
-                ORDER BY permission_id ASC;
+                SELECT sp.key AS permission_key
+                FROM auth_role_permission arp
+                INNER JOIN system_permission sp ON sp.id = arp.permission_id
+                WHERE arp.role_id=\#(roleId)
+                ORDER BY sp.key ASC;
                 """#
         ) { sequence in
             try await sequence.collect()
-                .map { try $0.decode(column: "permission_id", as: String.self) }
+                .map {
+                    try $0.decode(column: "permission_key", as: String.self)
+                }
         }
     }
 

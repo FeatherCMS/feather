@@ -6,11 +6,11 @@ protocol AdminEditSettingsPresenter: Sendable {
     func renderPage(
         state: SettingsEdit.State,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderDeniedPage(
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

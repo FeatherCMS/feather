@@ -59,7 +59,7 @@ public struct EditIdentity: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
-        let model = try await transaction.run { scope in
+        return try await transaction.run { scope in
             guard var model = try await scope.identity.findBy(id: input.id)
             else {
                 throw Error(message: "Identity not found")
@@ -69,21 +69,30 @@ public struct EditIdentity: UseCase {
 
             let updated = try await scope.identity.update(model)
 
-            if let roleIds = input.roleIds {
-                for roleId in roleIds {
-                    guard try await scope.role.findBy(id: roleId) != nil
-                    else {
-                        throw Error(message: "Role not found: \(roleId)")
-                    }
+            let roleIds = input.roleIds ?? []
+            for roleId in roleIds {
+                guard try await scope.role.findBy(id: roleId) != nil
+                else {
+                    throw Error(message: "Role not found: \(roleId)")
                 }
-                try await scope.identity.replaceRoleIds(
-                    identityId: model.id,
-                    roleIds: roleIds
-                )
             }
+            try await scope.identity.replaceRoleIds(
+                identityId: model.id,
+                roleIds: roleIds
+            )
 
-            return updated
+            let persistedRoleIds = try await scope.identity.findRoleIdsBy(
+                identityId: updated.id
+            )
+            let detail = updated.asDetail
+            return .init(
+                id: detail.id,
+                name: detail.name,
+                roleIds: persistedRoleIds,
+                status: detail.status,
+                createdAt: detail.createdAt,
+                updatedAt: detail.updatedAt
+            )
         }
-        return model.asDetail
     }
 }

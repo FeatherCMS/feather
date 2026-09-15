@@ -7,28 +7,37 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct BlogAuthorAdd: Component {
 
     struct State {
         let form: BlogAuthorForm.State
-        let breadcrumb: AdminBreadcrumb.State
+        let breadcrumb: [NewAdminBreadcrumb.Link]
     }
 
     let state: State
 
-    func content() -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
-
-            H1("Add author")
-            BlogAuthorForm(
-                state: state.form,
-                action: "/admin/blog/authors/add/",
-                submitLabel: "Add author",
-                publishLabel: "Publish author"
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Add author",
+                        description: "Create a new blog author."
+                    )
+                )
+            )
+            context.build(
+                BlogAuthorForm(
+                    state: state.form,
+                    action: "/admin/blog/authors/add/",
+                    submitLabel: "Add author",
+                    publishLabel: "Publish author"
+                )
             )
         }
         .class("cms-section")

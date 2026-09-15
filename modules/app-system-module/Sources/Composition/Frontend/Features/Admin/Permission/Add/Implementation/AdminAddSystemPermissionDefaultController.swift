@@ -1,6 +1,7 @@
 import FeatherAdmin
 import FeatherValidation
 import Hummingbird
+import SystemContracts
 
 struct AdminAddSystemPermissionDefaultController:
     AdminAddSystemPermissionController
@@ -16,10 +17,14 @@ struct AdminAddSystemPermissionDefaultController:
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
-        return presenter.renderAddPage(
-            state: formState(),
-            permissions: context.currentUserPermissions
-        )
+        guard
+            context.isCurrentUserAllowed(
+                to: SystemPermissions.Permissions.create
+            )
+        else {
+            return try await presenter.renderForbiddenPage()
+        }
+        return try await presenter.renderAddPage(state: .empty())
     }
 
     func postAddSystemPermission(
@@ -27,97 +32,60 @@ struct AdminAddSystemPermissionDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime(request, context)
-        let permissions = context.currentUserPermissions
-        var lastPayload: SystemPermissionFormInput?
+        guard
+            context.isCurrentUserAllowed(
+                to: SystemPermissions.Permissions.create
+            )
+        else {
+            return
+                try await presenter.renderForbiddenPage()
+                .response(from: request, context: context)
+        }
+        var lastPayload: SystemPermissionAddFormInput?
 
         do {
             let payload = try await request.decode(
-                as: SystemPermissionFormInput.self,
+                as: NonceRequest<SystemPermissionAddFormInput>.self,
                 context: context
             )
-            lastPayload = payload
-            try await payload.validate()
+            lastPayload = payload.input
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                return
+                    try await presenter.renderInvalidNoncePage()
+                    .response(from: request, context: context)
+            }
+            try await payload.input.validate()
 
             try await interactor.execute(
                 entity: .init(
-                    name: payload.normalizedName,
-                    notes: payload.normalizedNotes
+                    key: payload.input.normalizedKey,
+                    name: payload.input.normalizedName,
+                    notes: payload.input.normalizedNotes
                 )
             )
 
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/system/permissions/",
-                        title: "Added",
-                        message: "System permission added successfully."
-                    )
-                ]
-            )
+            return presenter.renderSuccess()
         }
         catch let error as ValidationError {
-            var errors: [String: String] = [:]
-            for failure in error.failures {
-                errors[failure.key] = failure.message
-            }
-            var state = formState(
-                name: lastPayload?.normalizedName ?? "",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.apply(errors: errors)
             return
-                try presenter
-                .renderAddPage(
-                    state: state,
-                    permissions: permissions
+                try await presenter.renderValidationError(
+                    input: lastPayload,
+                    error: error
                 )
                 .response(from: request, context: context)
         }
-        catch let error as OpenAPIRepositoryError {
-            var state = formState(
-                name: lastPayload?.normalizedName ?? "",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.error = error.errorDescription
+        catch let error as AdminAddSystemPermissionError {
             return
-                try presenter
-                .renderAddPage(
-                    state: state,
-                    permissions: permissions
+                try await presenter.renderAddError(
+                    input: lastPayload,
+                    error: error
                 )
                 .response(from: request, context: context)
         }
-        catch {
-            var state = formState(
-                name: lastPayload?.normalizedName ?? "",
-                notes: lastPayload?.normalizedNotes ?? ""
-            )
-            state.error = error.displayMessage
-            return
-                try presenter
-                .renderAddPage(
-                    state: state,
-                    permissions: permissions
-                )
-                .response(from: request, context: context)
-        }
-    }
-
-    private func formState(
-        name: String = "",
-        notes: String = ""
-    ) -> SystemPermissionForm.State {
-        .init(
-            name: .init(key: "name", label: "Name", value: name, error: nil),
-            notes: .init(
-                key: "notes",
-                label: "Notes",
-                value: notes,
-                error: nil
-            ),
-            error: nil,
-            success: nil
-        )
     }
 }

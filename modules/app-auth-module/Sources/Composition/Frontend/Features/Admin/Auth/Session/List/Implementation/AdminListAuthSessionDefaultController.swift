@@ -8,7 +8,7 @@ struct AdminListAuthSessionDefaultController:
     let buildRuntime:
         @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminListAuthSessionInteractor,
-            presenter: AdminListAuthSessionDefaultPresenter
+            presenter: any AdminListAuthSessionPresenter
         )
 
     func get(
@@ -19,10 +19,8 @@ struct AdminListAuthSessionDefaultController:
         let permissions = context.currentUserPermissions
         guard context.isCurrentUserAllowed(to: AuthPermissions.Sessions.list)
         else {
-            return runtime.presenter.renderError(
-                error: .forbidden(
-                    message: "Your identity cannot access user sessions."
-                ),
+            return try await runtime.presenter.renderError(
+                error: .forbidden,
                 identityID: try context.requiredID(),
                 permissions: permissions
             )
@@ -33,13 +31,13 @@ struct AdminListAuthSessionDefaultController:
             let model = try await runtime.interactor.list(
                 identityID: identityID
             )
-            return runtime.presenter.render(
+            return try await runtime.presenter.render(
                 model: model,
                 permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return runtime.presenter.renderError(
+            return try await runtime.presenter.renderError(
                 error: error,
                 identityID: identityID,
                 permissions: permissions

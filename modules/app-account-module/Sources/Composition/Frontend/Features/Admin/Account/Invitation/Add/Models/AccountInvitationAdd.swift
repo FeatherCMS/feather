@@ -4,26 +4,36 @@ import FeatherValidation
 import HTML
 import Hummingbird
 import SGML
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AccountInvitationAdd: Component {
 
     struct State {
         let form: AccountInvitationForm.State
-        let breadcrumb: AdminBreadcrumb.State
+        let breadcrumb: [NewAdminBreadcrumb.Link]
     }
 
     let state: State
 
-    func content() -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
-
-            H1("Add user invitation")
-            AccountInvitationForm(
-                state: state.form,
-                action: "/admin/account/invitations/add/",
-                submitLabel: "Add invitation"
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Add user invitation",
+                        description:
+                            "Invite a user and assign their initial roles."
+                    )
+                )
+            )
+            context.build(
+                AccountInvitationForm(
+                    state: state.form,
+                    action: "/admin/account/invitations/add/",
+                    submitLabel: "Add invitation"
+                )
             )
         }
         .class("cms-section")

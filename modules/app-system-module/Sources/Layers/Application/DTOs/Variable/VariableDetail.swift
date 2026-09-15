@@ -12,6 +12,7 @@ import struct Foundation.Date
 
 public struct VariableDetail: DTO {
     public let id: String
+    public let key: String
     public let value: String
     public let name: String?
     public let notes: String?
@@ -20,6 +21,7 @@ public struct VariableDetail: DTO {
 
     package init(
         id: String,
+        key: String,
         value: String,
         name: String?,
         notes: String?,
@@ -27,6 +29,7 @@ public struct VariableDetail: DTO {
         updatedAt: Date
     ) {
         self.id = id
+        self.key = key
         self.value = value
         self.name = name
         self.notes = notes

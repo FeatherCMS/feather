@@ -3,9 +3,10 @@ import FeatherAdmin
 import HTML
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebBuilders
+import WebComponents
 
-struct AppPublicStyleAnchor: Component, FlowContent {
+struct AppPublicStyleAnchor: Component {
     func selectors() -> [any Selector] {
         Class("public-shell") {
             MinHeight(100.vh)
@@ -28,9 +29,9 @@ struct AppPublicStyleAnchor: Component, FlowContent {
             Display(.grid)
             Gap(20.px)
             Padding(28.px)
-            Border(1.px, .solid, .variable("cms-gray-3"))
+            //            Border(1.px, .solid, .variable("cms-gray-3"))
             BorderRadius(24.px)
-            Background(color: .color(.variable("cms-white")))
+            //            Background(.variable("cms-white"))
             UnsafeRawProperty(name: "box-shadow", value: "var(--cms-shadow)")
         }
         Class("public-heading") {
@@ -39,7 +40,7 @@ struct AppPublicStyleAnchor: Component, FlowContent {
         }
         Custom(".public-heading h1") {
             Margin(0)
-            Color(.variable("cms-strong-font"))
+            // Color(.variable("cms-strong-font"))
             UnsafeRawProperty(
                 name: "font-size",
                 value: "clamp(2.2rem, 6vw, 3.6rem)"
@@ -49,7 +50,7 @@ struct AppPublicStyleAnchor: Component, FlowContent {
         }
         Custom(".public-heading p") {
             Margin(0)
-            Color(.variable("cms-light-font"))
+            // Color(.variable("cms-light-font"))
             FontSize(1.rem)
             LineHeight(1.65)
         }
@@ -71,16 +72,16 @@ struct AppPublicStyleAnchor: Component, FlowContent {
             AlignItems(.center)
             Padding(vertical: 8.px, horizontal: 12.px)
             BorderRadius(999.px)
-            Background(color: .color(.variable("cms-gray-2")))
-            Color(.variable("cms-light-font"))
+            //            Background(.variable(TokenKey.Background.primary))
+            // Color(.variable("cms-light-font"))
             FontSize(0.84.rem)
             FontWeight(600)
         }
         Class("public-image") {
             BorderRadius(20.px)
-            Border(1.px, .solid, .variable("cms-gray-3"))
+            // Border(1.px, .solid, .variable("cms-gray-3"))
             Overflow(.hidden)
-            Background(color: .color(.variable("cms-gray-2")))
+            //            Background(.variable(TokenKey.Background.primary))
         }
         Custom(".public-image img") {
             Display(.block)
@@ -88,7 +89,7 @@ struct AppPublicStyleAnchor: Component, FlowContent {
             Height(.auto)
         }
         Class("public-body") {
-            Color(.variable("cms-strong-font"))
+            // Color(.variable("cms-strong-font"))
             LineHeight(1.75)
             UnsafeRawProperty(name: "white-space", value: "pre-wrap")
         }
@@ -99,24 +100,24 @@ struct AppPublicStyleAnchor: Component, FlowContent {
             Display(.grid)
             Gap(12.px)
             Padding(18.px)
-            Border(1.px, .solid, .variable("cms-gray-3"))
+            // Border(1.px, .solid, .variable("cms-gray-3"))
             BorderRadius(18.px)
-            Background(color: .color(.variable("cms-gray-1")))
+            //            Background(.variable(TokenKey.Background.primary))
             TextDecoration(.none)
         }
         Custom(".public-card h2, .public-card h3") {
             Margin(0)
-            Color(.variable("cms-strong-font"))
+            // Color(.variable("cms-strong-font"))
             FontSize(1.1.rem)
         }
         Custom(".public-card p") {
             Margin(0)
-            Color(.variable("cms-light-font"))
+            // Color(.variable("cms-light-font"))
             LineHeight(1.6)
         }
         Custom(".public-card:hover") {
             Transform(.translateY((-1).px))
-            BorderColor(.variable("cms-gray-4"))
+            // BorderColor(.variable("cms-gray-4"))
         }
         Class("public-section") {
             Display(.grid)
@@ -124,7 +125,7 @@ struct AppPublicStyleAnchor: Component, FlowContent {
         }
         Custom(".public-section h2") {
             Margin(0)
-            Color(.variable("cms-strong-font"))
+            //            Color(.variable(TokenKey.Background.primary))
             FontSize(1.45.rem)
         }
         Class("public-links") {
@@ -137,14 +138,14 @@ struct AppPublicStyleAnchor: Component, FlowContent {
             AlignItems(.center)
             Padding(vertical: 8.px, horizontal: 12.px)
             BorderRadius(999.px)
-            Background(color: .color(.variable("cms-gray-2")))
-            Color(.variable("cms-strong-font"))
+            //            Background(.variable(TokenKey.Background.primary))
+            // Color(.variable("cms-strong-font"))
             TextDecoration(.none)
             FontWeight(600)
         }
     }
 
-    func content() -> some BasicTag {
+    func html(context: inout BuilderContext) -> Div {
         Div {}
     }
 }

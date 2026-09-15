@@ -1,9 +1,9 @@
 import FeatherOpenAPI
 
-struct SystemPermissionIdParameter: PathParameterRepresentable {
+struct SystemPermissionIDParameter: PathParameterRepresentable {
     var name: String { "systemPermissionId" }
     var description: String? { "SystemPermission id" }
     var schema: any OpenAPISchemaRepresentable {
-        SystemPermissionIdField().reference()
+        SystemPermissionIDField().reference()
     }
 }

@@ -1,123 +1,86 @@
 import FeatherAdmin
 import FeatherContracts
-import HTML
 import Hummingbird
-import SGML
-import SystemContracts
-import WebStandards
+import SystemAdminAPI
+import WebComponents
 
 struct AdminListSystemVariableDefaultPresenter:
     AdminListSystemVariablePresenter
 {
     let request: Request
-    let renderEngine: any RenderingEngine
+    let context: DefaultRequestContext
+    let renderingEngine: any RenderingEngine
 
     func renderListPage(
-        model: AdminListSystemVariableModel,
-        isAdded: Bool,
-        isEdited: Bool,
-        isRemoved: Bool,
-        permissions: Set<String>,
-        search: String?,
-        error: String?
-    ) -> HTMLResponse {
-        let canAccess = permissions.contains(
-            SystemPermissions.Variables.list.rawValue
-        )
-        if let error {
-            return renderEngine.renderAdminPage(
-                request: request,
-                title: "Manage system variables",
-                description: "Management system variable list",
-                imagePath: "images/logos/logo.png",
-                sidebarState: renderEngine.adminSidebarState(
-                    request: request,
-                    permissions: permissions
-                ),
-                content: SystemVariableError(
-                    state: .init(
-                        info: "Unable to load system variables.",
-                        message: error,
-                        breadcrumb: systemVariableBreadcrumbState()
-                    )
-                )
-            )
-        }
-        return renderEngine.renderAdminPage(
+        model: NewAdminListModel<
+            Components.Schemas.SystemVariableListItemSchema
+        >,
+        permissions: Set<PermissionKey>,
+        search: String?
+    ) async throws -> HTMLResponse {
+        let actions = NewAdminListActions(permissions)
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
-            title: "Manage system variables",
-            description: "Management system variable list",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
+            context: context,
+            title: "Variables",
             content: SystemVariableTable(
                 state: .init(
-                    isAdded: isAdded,
-                    isEdited: isEdited,
-                    isRemoved: isRemoved,
-                    canAccess: canAccess,
-                    permissions: permissions,
-                    canAdd: permissions.contains(
-                        SystemPermissions.Variables.create.rawValue
-                    ),
+                    permissions: actions,
                     variables: model.items,
-                    page: model.page,
-                    pageSize: model.pageSize,
-                    total: model.total,
-                    search: search ?? "",
-                    deniedInfo: "Forbidden",
-                    deniedMessage:
-                        "Your account cannot access system variables.",
-                    breadcrumb: systemVariableBreadcrumbState()
+                    pageState: model.pageState,
+                    search: search,
                 )
-            )
-        )
-    }
-
-    func renderRemoveConfirmation(
-        page: Int,
-        search: String?,
-        selectedIds: [String],
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
-            request: request,
-            title: "Remove selected variables",
-            description: "Confirm remove",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
             ),
-            content: ListRemoveConfirmation(
-                state: .init(
-                    breadcrumb: systemVariableBreadcrumbState(),
-                    title: "Remove selected variables",
-                    message:
-                        "Are you sure you want to remove these selected variables? This action cannot be undone.",
-                    action: "/admin/system/variables/remove/",
-                    cancelLink: ListRemoveRedirect.location(
-                        path: "/admin/system/variables/",
-                        page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
-                    ),
-                    selectedIds: selectedIds
-                )
-            )
+
         )
     }
 
-    private func systemVariableBreadcrumbState() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "System", link: "/admin/system/"),
-                .init(label: "Variables", link: "/admin/system/variables/"),
-            ]
+    func renderErrorPage(
+        error: AdminListSystemVariableError
+    ) async throws -> HTMLResponse {
+        let state: NewAdminStatusView.State
+
+        switch error {
+        case .unauthorized:
+            state = .init(
+                title: "Session expired",
+                message: "Please sign in again to view system variables."
+            )
+        case .forbidden:
+            state = .init(
+                title: "Forbidden",
+                message: "Your account cannot access system variables."
+            )
+        case .unavailable:
+            state = .init(
+                title: "System variables unavailable",
+                message: "The request could not be completed. Please try again."
+            )
+        }
+
+        let page = try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Variables",
+            content: NewAdminStatusView(
+                state: state,
+                icon: FeatherIcons.alertCircle()
+            )
         )
+        return HTMLResponse(content: page.content, status: status(for: error))
     }
+
+    private func status(
+        for error: AdminListSystemVariableError
+    ) -> HTTPResponse.Status {
+        switch error {
+        case .unauthorized:
+            .unauthorized
+        case .forbidden:
+            .forbidden
+        case .unavailable:
+            .serviceUnavailable
+        }
+    }
+
 }

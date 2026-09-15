@@ -1,22 +1,20 @@
 import FeatherAdmin
+import FeatherContracts
 import Hummingbird
+import SystemAdminAPI
 
 protocol AdminListSystemVariablePresenter: Sendable {
 
     func renderListPage(
-        model: AdminListSystemVariableModel,
-        isAdded: Bool,
-        isEdited: Bool,
-        isRemoved: Bool,
-        permissions: Set<String>,
-        search: String?,
-        error: String?
-    ) -> HTMLResponse
+        model: NewAdminListModel<
+            Components.Schemas.SystemVariableListItemSchema
+        >,
+        permissions: Set<PermissionKey>,
+        search: String?
+    ) async throws -> HTMLResponse
 
-    func renderRemoveConfirmation(
-        page: Int,
-        search: String?,
-        selectedIds: [String],
-        permissions: Set<String>
-    ) -> HTMLResponse
+    func renderErrorPage(
+        error: AdminListSystemVariableError
+    ) async throws -> HTMLResponse
+
 }

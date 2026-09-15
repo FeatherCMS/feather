@@ -90,7 +90,7 @@ let package = Package(
             name: "NewsletterDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
-                
+
                 .target(name: "NewsletterContracts"),
             ],
             path: "Sources/Layers/Domain",
@@ -161,13 +161,13 @@ let package = Package(
         // MARK: -
         .target(
             name: "NewsletterBackend",
-            dependencies: [                
+            dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "SystemApplication", package: "app-system-module"),
 
                 .target(name: "NewsletterInfrastructure"),
                 .target(name: "NewsletterAdminAPI"),
-                .target(name: "NewsletterAppAPI"),    
+                .target(name: "NewsletterAppAPI"),
             ],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings

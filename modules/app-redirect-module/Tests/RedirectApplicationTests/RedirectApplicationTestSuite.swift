@@ -222,7 +222,7 @@ struct RedirectApplicationTestSuite {
         await #expect(throws: AuthError.self) {
             _ = try await useCase.execute(
                 subject: Subject(id: "subject-4"),
-                input: RemoveRule.Input(id: "v-4")
+                input: RemoveRule.Input(ids: ["v-4"])
             )
         }
         #expect(await repository.deleteCallCount == 0)
@@ -245,10 +245,10 @@ struct RedirectApplicationTestSuite {
 
         let deleted = try await useCase.execute(
             subject: Subject(id: "subject-5"),
-            input: RemoveRule.Input(id: "v-5")
+            input: RemoveRule.Input(ids: ["v-5"])
         )
 
-        #expect(deleted)
+        #expect(deleted == ["v-5"])
         #expect(await repository.deleteCallCount == 1)
         #expect(await repository.lastDeleteId == "v-5")
     }

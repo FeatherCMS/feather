@@ -4,15 +4,29 @@ import Foundation
 struct AdminRemoveUserRoleDefaultInteractor: AdminRemoveUserRoleInteractor {
     let repository: any AdminRemoveUserRoleRepository
 
-    func get(
-        id: String
-    ) async throws -> UserRoleDetailsModel {
-        try await repository.get(id: id)
+    func names(
+        ids: [String]
+    ) async throws -> [String] {
+        do { return try await repository.names(ids: ids) }
+        catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
-    func execute(
-        entity: AdminRemoveUserRoleModel
+    func delete(
+        ids: [String]
     ) async throws {
-        try await repository.delete(id: entity.id)
+        do { try await repository.delete(ids: ids) }
+        catch let error as OpenAPIRepositoryError { throw map(error) }
+    }
+
+    private func map(_ error: OpenAPIRepositoryError)
+        -> AdminRemoveUserRoleError
+    {
+        switch error {
+        case .notFound: .notFound
+        case .unauthorized: .unauthorized
+        case .forbidden: .forbidden
+        case .conflict: .conflict
+        default: .unavailable
+        }
     }
 }

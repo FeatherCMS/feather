@@ -36,19 +36,13 @@ public struct AdminWebMetadataStatusUpdater: Sendable {
                         $0.referenceId == referenceID
                     })
                 else {
-                    throw OpenAPIRepositoryError.notFound(
-                        message: "Web metadata not found."
-                    )
+                    throw OpenAPIRepositoryError.notFound
                 }
                 metadataID = entry.id
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to update this web metadata."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot edit web metadata."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -65,17 +59,11 @@ public struct AdminWebMetadataStatusUpdater: Sendable {
             case .ok:
                 return
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Web metadata not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to update this web metadata."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot edit web metadata."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

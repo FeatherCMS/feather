@@ -20,11 +20,17 @@ extension AdminRemoveAuthSessionController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/user/identities/{id}/sessions/{sessionId}/remove/",
+            AuthSessionRoutes.remove(
+                RouterPath("{id}"),
+                sessionID: RouterPath("{sessionId}")
+            ),
             use: getRemoveAuthSession
         )
         router.post(
-            "/admin/user/identities/{id}/sessions/{sessionId}/remove/",
+            AuthSessionRoutes.remove(
+                RouterPath("{id}"),
+                sessionID: RouterPath("{sessionId}")
+            ),
             use: postRemoveAuthSession
         )
     }

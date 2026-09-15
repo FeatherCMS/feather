@@ -8,13 +8,11 @@ import RedirectFrontend
 import UserFrontend
 import SystemFrontend
 import FeatherAdmin
-import CSS
 import Configuration
 import Foundation
 import Hummingbird
 import Logging
 import ServiceLifecycle
-import WebStandards
 
 func buildApplication(
     reader: ConfigReader
@@ -36,16 +34,7 @@ func buildApplication(
 
     let webMetadataExtensions = try await buildWebMetadataExtensions()
 
-    var styleshetCollector = GlobalStylesheetCollector()
-
-    // list all global css components
-    styleshetCollector.register(FeatherCSS.ModernNormalize.self)
-    styleshetCollector.register(FeatherCSS.ModernBase.self)
-    styleshetCollector.register(FeatherCSS.Grid.self)
-    styleshetCollector.register(FeatherCSS.Base.self)
-
     let router = try await buildRouter(
-        styleshetCollector: styleshetCollector,
         environment: environment,
         referenceTypeOptions: webMetadataExtensions.referenceTypes,
         templateOptions: webMetadataExtensions.templates,

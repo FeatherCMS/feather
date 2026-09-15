@@ -17,6 +17,10 @@ public protocol VariableRepository: Repository {
     ) async throws -> Variable
 
     func find(
+        key: String
+    ) async throws -> Variable?
+
+    func find(
         id: String
     ) async throws -> Variable?
 

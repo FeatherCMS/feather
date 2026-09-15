@@ -1,32 +1,21 @@
-import BlogAdminAPI
-import BlogAppAPI
-import CSS
 import FeatherAdmin
-import FeatherValidation
 import HTML
-import Hummingbird
-import MediaFrontend
-import OpenAPIRuntime
-import SGML
-import WebFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
-struct BlogAuthorLinkForm: Component, FlowContent {
-
+struct BlogAuthorLinkForm: Component {
     struct FieldState: FeatherAdmin.Object {
         var key: String
         var label: String
         var value: String?
         var error: String?
     }
-
     struct CheckboxState: FeatherAdmin.Object {
         var key: String
         var label: String
         var value: Bool
         var error: String?
     }
-
     struct State: FeatherAdmin.Object {
         var label: FieldState
         var url: FieldState
@@ -35,11 +24,8 @@ struct BlogAuthorLinkForm: Component, FlowContent {
         var permission: FieldState
         var notes: FieldState
         var error: String?
-        var success: String?
 
-        mutating func apply(
-            errors: [String: String]
-        ) {
+        mutating func apply(errors: [String: String]) {
             label.error = errors[label.key]
             url.error = errors[url.key]
             priority.error = errors[priority.key]
@@ -48,97 +34,99 @@ struct BlogAuthorLinkForm: Component, FlowContent {
             notes.error = errors[notes.key]
         }
     }
-
     var state: State
     var action: String
     var submitLabel: String
-    var removeHref: String? = nil
+    var removeHref: String?
     var removeLabel: String = "Remove"
 
-    func content() -> some BasicTag {
-        Form {
-            if let success = state.success {
-                P(success).class("success")
-            }
+    func html(context: inout BuilderContext) -> Form {
+        let form = NewAdminForm(action: action) {
             if let error = state.error {
-                P(error).class("error")
+                P(error).class("new-admin-form__error")
             }
-
-            FormInputField(
-                name: state.label.key,
-                label: state.label.label,
-                value: state.label.value,
-                error: state.label.error,
-                isRequired: true
-            )
-            FormInputField(
-                name: state.url.key,
-                label: state.url.label,
-                value: state.url.value,
-                error: state.url.error,
-                isRequired: true
-            )
-            FormInputField(
-                name: state.priority.key,
-                label: state.priority.label,
-                value: state.priority.value,
-                error: state.priority.error,
-                isRequired: true
-            )
-            checkbox(state.isBlank)
-            FormInputField(
-                name: state.permission.key,
-                label: state.permission.label,
-                value: state.permission.value,
-                error: state.permission.error
-            )
-            textarea(state.notes)
-
-            Section {
-                Div {
-                    Button(submitLabel)
-                        .type(.submit)
-                    if let removeHref {
-                        AdminNavigationButton(
-                            removeLabel,
-                            href: removeHref,
-                            classes: ["danger"]
-                        )
-                    }
-                }
-                .class("button-row")
-            }
-        }
-        .encType(.urlencoded)
-        .method(.post)
-        .action(action)
-        .class("cms-form")
-    }
-
-    private func textarea(
-        _ field: FieldState
-    ) -> FormTextAreaField {
-        FormTextAreaField(
-            name: field.key,
-            label: field.label,
-            value: field.value,
-            error: field.error,
-            rows: 6
-        )
-    }
-
-    private func checkbox(
-        _ field: CheckboxState
-    ) -> some BasicTag {
-        Section {
-            CheckboxField(
-                state: .init(
-                    key: field.key,
-                    label: field.label,
-                    value: field.value,
-                    error: field.error
+            context.build(
+                NewAdminFormFieldInput(
+                    state: .init(
+                        name: state.label.key,
+                        label: state.label.label,
+                        value: state.label.value,
+                        error: state.label.error,
+                        isRequired: true
+                    )
                 )
             )
+            context.build(
+                NewAdminFormFieldInput(
+                    state: .init(
+                        name: state.url.key,
+                        label: state.url.label,
+                        value: state.url.value,
+                        error: state.url.error,
+                        isRequired: true
+                    )
+                )
+            )
+            context.build(
+                NewAdminFormFieldInput(
+                    state: .init(
+                        name: state.priority.key,
+                        label: state.priority.label,
+                        value: state.priority.value,
+                        error: state.priority.error,
+                        type: .number,
+                        isRequired: true
+                    )
+                )
+            )
+            context.build(
+                NewAdminFormFieldCheckbox(
+                    state: .init(
+                        name: state.isBlank.key,
+                        label: "Link target",
+                        checkboxLabel: "Open link in a new tab",
+                        isChecked: state.isBlank.value,
+                        error: state.isBlank.error
+                    )
+                )
+            )
+            context.build(
+                NewAdminFormFieldInput(
+                    state: .init(
+                        name: state.permission.key,
+                        label: state.permission.label,
+                        value: state.permission.value,
+                        error: state.permission.error
+                    )
+                )
+            )
+            context.build(
+                NewAdminFormFieldTextArea(
+                    state: .init(
+                        name: state.notes.key,
+                        label: state.notes.label,
+                        value: state.notes.value,
+                        error: state.notes.error,
+                        style: .medium
+                    )
+                )
+            )
+            Div {
+                context.build(
+                    NewAdminSubmitButton(submitLabel, style: .primary)
+                )
+                if let removeHref {
+                    context.build(
+                        NewAdminButton(
+                            removeLabel,
+                            href: removeHref,
+                            style: .destructive
+                        )
+                    )
+                }
+            }
+            .class("new-admin-form__actions")
         }
+        return context.build(form)
     }
 }

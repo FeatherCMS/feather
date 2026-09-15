@@ -13,7 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 protocol AdminEditAuthAccessControlController: Sendable {
 
@@ -34,11 +35,11 @@ extension AdminEditAuthAccessControlController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/auth/access-control/",
+            AuthAccessControlRoutes.accessControl,
             use: getAuthAccessControl
         )
         router.post(
-            "/admin/auth/access-control/",
+            AuthAccessControlRoutes.accessControl,
             use: postAuthAccessControl
         )
     }

@@ -16,6 +16,7 @@ struct AdminRemoveAccountInvitation {
                     ),
                     presenter: AdminRemoveAccountInvitationDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

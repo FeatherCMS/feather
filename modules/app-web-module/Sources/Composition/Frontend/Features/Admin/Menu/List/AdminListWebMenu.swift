@@ -16,6 +16,7 @@ struct AdminListWebMenu {
                     ),
                     presenter: AdminListWebMenuDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

@@ -7,9 +7,10 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebContracts
 import WebFrontend
-import WebStandards
 
 public struct AdminBlog {
     public let renderingEngine: any RenderingEngine
@@ -26,7 +27,7 @@ public struct AdminBlog {
     public func route(
         on router: Router<DefaultRequestContext>
     ) {
-        AdminGetBlogHome(
+        AdminViewBlogOverview(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -41,7 +42,7 @@ public struct AdminBlog {
         )
         .controller.route(on: router)
 
-        AdminGetBlogPost(
+        AdminViewBlogPost(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -66,7 +67,7 @@ public struct AdminBlog {
         )
         .controller.route(on: router)
 
-        AdminGetBlogAuthor(
+        AdminViewBlogAuthor(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -91,7 +92,7 @@ public struct AdminBlog {
         )
         .controller.route(on: router)
 
-        AdminGetBlogAuthorLink(
+        AdminViewBlogAuthorLink(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
@@ -116,7 +117,7 @@ public struct AdminBlog {
         )
         .controller.route(on: router)
 
-        AdminGetBlogTag(
+        AdminViewBlogTag(
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)

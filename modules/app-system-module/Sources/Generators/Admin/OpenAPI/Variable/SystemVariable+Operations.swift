@@ -15,7 +15,7 @@ public protocol SystemVariableIDOperation: SystemVariableOperation {
 extension SystemVariableIDOperation {
     public var parameters: [ParameterRepresentable] {
         [
-            SystemVariableIdParameter().reference()
+            SystemVariableIDParameter().reference()
         ]
     }
 }
@@ -44,12 +44,14 @@ struct SystemVariableSearchOperation: SystemVariableOperation {
         .init(
             items: SystemVariableListItemSchema(),
             sortFieldKeys: [
-                "id",
+                "key",
                 "name",
                 "value",
                 "notes",
             ],
-            filters: SearchFilterSchema()
+            filters: SearchFilterSchema(
+                additionalProperties: ["ids": SystemVariableIDsFilter()]
+            )
         )
     }
 

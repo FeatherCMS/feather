@@ -14,7 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 protocol AppLogoutAuthPresenter: Sendable {
     func expiredSessionCookie() -> Cookie

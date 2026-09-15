@@ -99,6 +99,7 @@ struct UserInfrastructureTestSuite {
                 .save(
                     row: .init(
                         id: "role-filter-test-user",
+                        name: "Role Filter Test User",
                         status: "active",
                         isRoot: false
                     )

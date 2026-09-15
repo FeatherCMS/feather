@@ -4,6 +4,6 @@ import Foundation
 protocol AdminAddUserIdentityRepository: Sendable {
 
     func create(
-        payload: UserIdentityFormPayloadModel
+        payload: UserIdentityAddFormPayloadModel
     ) async throws
 }

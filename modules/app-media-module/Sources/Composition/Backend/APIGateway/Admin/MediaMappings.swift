@@ -23,7 +23,7 @@ extension AdminAPIGateway {
 
     func map(
         _ query: MediaAdminAPI.Components.Schemas
-            .MediaAssetListItemSearchQuerySchema
+            .MediaAssetNodeSearchItemSearchQuerySchema
     ) -> MediaAssetList.Query {
         let sort: [MediaAssetList.Query.Sort] = (query.sort ?? [])
             .map { rule in
@@ -85,6 +85,23 @@ extension AdminAPIGateway {
             createdAt: item.createdAt.timeIntervalSince1970,
             updatedAt: item.updatedAt.timeIntervalSince1970
         )
+    }
+
+    func map(
+        _ item: MediaAssetSearchList.Item
+    ) -> MediaAdminAPI.Components.Schemas.MediaAssetNodeSearchItemSchema {
+        switch item {
+        case .asset(let item):
+            return .init(
+                kind: "file",
+                file: map(item)
+            )
+        case .folder(let item):
+            return .init(
+                kind: "folder",
+                folder: map(item)
+            )
+        }
     }
 
     func map(

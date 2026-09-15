@@ -7,8 +7,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminListBlogAuthor {
     let controller: any AdminListBlogAuthorController
@@ -24,6 +25,7 @@ struct AdminListBlogAuthor {
                     ),
                     presenter: AdminListBlogAuthorDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

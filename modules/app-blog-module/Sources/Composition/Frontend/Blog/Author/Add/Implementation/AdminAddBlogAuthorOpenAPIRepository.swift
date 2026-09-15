@@ -8,8 +8,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminAddBlogAuthorOpenAPIRepository: AdminAddBlogAuthorRepository {
     let api: BlogAdminAPIClient
@@ -35,14 +36,9 @@ struct AdminAddBlogAuthorOpenAPIRepository: AdminAddBlogAuthorRepository {
             case .created:
                 return
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to create this blog author."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot create blog authors."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

@@ -1,9 +1,11 @@
 import CSS
+import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
 import SVG
-import WebStandards
+import WebBuilders
+import WebComponents
 
 public struct RenderingEngineAssetConfiguration: Sendable {
     public let publicStylesheetPaths: [String]
@@ -32,35 +34,35 @@ public struct RenderingEngineAssetConfiguration: Sendable {
 public struct DefaultRenderingEngine: RenderingEngine {
     public let publicOrigins: AppPublicOriginConfiguration
     public let adminMenuCatalog: AdminMenuCatalog
+    public let adminEvents: any EventPublisher
     public let assets: RenderingEngineAssetConfiguration
 
     public init(
         publicOrigins: AppPublicOriginConfiguration,
         adminMenuCatalog: AdminMenuCatalog,
+        adminEvents: any EventPublisher,
         assets: RenderingEngineAssetConfiguration = .init()
     ) {
         self.publicOrigins = publicOrigins
         self.adminMenuCatalog = adminMenuCatalog
+        self.adminEvents = adminEvents
         self.assets = assets
     }
 
-    public func renderPage<T: FlowContent>(
+    public func renderPublicPage<T: FlowContent>(
         request: Request,
         title: String,
         description: String,
         imagePath: String,
         content: T
     ) -> HTMLResponse {
+        var context = BuilderContext()
         let body = Body {
             content
         }
 
-        let collector = ComponentStylesheetCollector()
-        let renderer = StylesheetRenderer(minify: false, indent: 4)
-        let css = renderer.render(collector.getStylesheet(from: body))
-
-        let head = Head {
-            Metadata(
+        let metadata = context.build(
+            NewAdminMetadata(
                 canonicalUrl: normalizedURL(
                     base: publicOrigins.siteBaseURL,
                     path: request.uri.path
@@ -73,16 +75,18 @@ public struct DefaultRenderingEngine: RenderingEngine {
                 ),
                 noIndex: false
             )
-            for path in assets.publicStylesheetPaths {
-                Link(rel: .stylesheet)
-                    .href(stylesheetURL(path: path))
+        )
+        var headElements =
+            metadata.children
+            + assets.publicStylesheetPaths.map {
+                Link(rel: .stylesheet).href(stylesheetURL(path: $0))
             }
-            if let path = assets.rootStylesheetPath {
-                Link(rel: .stylesheet)
-                    .href(path)
-            }
-            Style(css)
+        if let path = assets.rootStylesheetPath {
+            headElements.append(Link(rel: .stylesheet).href(path))
         }
+        let head = Head(
+            elements: headElements.compactMap { $0 as? any MetadataContent }
+        )
 
         let html = Html {
             head
@@ -93,6 +97,34 @@ public struct DefaultRenderingEngine: RenderingEngine {
         return .init(html)
     }
 
+    @available(
+        *,
+        deprecated,
+        message:
+            "Use renderPublicPage(request:title:description:imagePath:content:) instead."
+    )
+    public func renderPage<T: FlowContent>(
+        request: Request,
+        title: String,
+        description: String,
+        imagePath: String,
+        content: T
+    ) -> HTMLResponse {
+        renderPublicPage(
+            request: request,
+            title: title,
+            description: description,
+            imagePath: imagePath,
+            content: content
+        )
+    }
+
+    @available(
+        *,
+        deprecated,
+        message:
+            "Use renderNewAdminPage(request:context:title:content:) instead."
+    )
     public func renderAdminPage<T: Component>(
         request: Request,
         title: String,
@@ -101,23 +133,31 @@ public struct DefaultRenderingEngine: RenderingEngine {
         sidebarState: AdminSidebar.State,
         content: T
     ) -> HTMLResponse {
-        let toast = AdminToastRedirect.payload(from: request)
+        var context = BuilderContext()
+        let toast =
+            AdminNotificationFlash.notification(from: request)
+            .map { notification in
+                AdminNotificationRedirect.Payload(
+                    type: notification.kind.rawValue,
+                    title: notification.title,
+                    message: notification.message,
+                    position: notification.position
+                )
+            } ?? AdminNotificationRedirect.payload(from: request)
         let body = Body {
-            AdminBody(
-                state: .init(
-                    sidebar: sidebarState,
-                    toast: toast,
-                    content: content
+            context.build(
+                AdminBody(
+                    state: .init(
+                        sidebar: sidebarState,
+                        toast: toast,
+                        content: content
+                    )
                 )
             )
         }
 
-        let collector = ComponentStylesheetCollector()
-        let renderer = StylesheetRenderer(minify: false, indent: 4)
-        let css = renderer.render(collector.getStylesheet(from: body))
-
-        let head = Head {
-            Metadata(
+        let metadata = context.build(
+            NewAdminMetadata(
                 canonicalUrl: normalizedURL(
                     base: publicOrigins.siteBaseURL,
                     path: request.uri.path
@@ -130,16 +170,18 @@ public struct DefaultRenderingEngine: RenderingEngine {
                 ),
                 noIndex: false
             )
-            for path in assets.adminStylesheetPaths {
-                Link(rel: .stylesheet)
-                    .href(stylesheetURL(path: path))
+        )
+        var headElements =
+            metadata.children
+            + assets.adminStylesheetPaths.map {
+                Link(rel: .stylesheet).href(stylesheetURL(path: $0))
             }
-            if let path = assets.rootStylesheetPath {
-                Link(rel: .stylesheet)
-                    .href(path)
-            }
-            Style(css)
+        if let path = assets.rootStylesheetPath {
+            headElements.append(Link(rel: .stylesheet).href(path))
         }
+        let head = Head(
+            elements: headElements.compactMap { $0 as? any MetadataContent }
+        )
 
         let html = Html {
             head
@@ -148,6 +190,30 @@ public struct DefaultRenderingEngine: RenderingEngine {
         .lang("en-US")
 
         return .init(html)
+    }
+
+    public func renderNewAdminPage<T: Component>(
+        request: Request,
+        context: DefaultRequestContext,
+        title: String,
+        content: T
+    ) async throws -> HTMLResponse {
+        let menuGroups = try await context.adminMenuGroups(
+            request: request,
+            events: adminEvents
+        )
+        let notification = AdminNotificationFlash.notification(from: request)
+        var context = BuilderContext()
+        let layout = NewAdminBaseLayout(
+            content: content,
+            menuGroups: menuGroups,
+            notification: notification
+        )
+        return .init(
+            context.build(
+                NewAdminHTML(title: title, body: .init(content: layout))
+            )
+        )
     }
 
     private func normalizedURL(
@@ -169,6 +235,11 @@ public struct DefaultRenderingEngine: RenderingEngine {
         normalizedURL(base: publicOrigins.staticBaseURL, path: path)
     }
 
+    @available(
+        *,
+        deprecated,
+        message: "Use the new admin sidebar infrastructure instead."
+    )
     public func adminSidebarState(
         request: Request,
         permissions: Set<String>

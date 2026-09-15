@@ -1,11 +1,13 @@
 import FeatherAdmin
 import Foundation
 import Hummingbird
+import MediaFrontend
 import OpenAPIRuntime
 import WebAdminAPI
 
 struct AdminEditWebPageOpenAPIRepository: AdminEditWebPageRepository {
     let api: WebAdminAPIClient
+    let mediaAPI: MediaAdminAPIClient
 
     func load(
         id: String
@@ -34,17 +36,11 @@ struct AdminEditWebPageOpenAPIRepository: AdminEditWebPageRepository {
                     )
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Web page not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this web page."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot access web pages."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -75,17 +71,11 @@ struct AdminEditWebPageOpenAPIRepository: AdminEditWebPageRepository {
             case .ok:
                 return
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Web page not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to update this web page."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot edit web pages."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -97,8 +87,12 @@ struct AdminEditWebPageOpenAPIRepository: AdminEditWebPageRepository {
 
     private func loadImageAsset(
         assetId: String?
-    ) async throws -> AdminMediaAssetReferenceModel? {
-        _ = assetId
-        return nil
+    ) async throws -> NewAdminMediaAsset? {
+        guard let assetId, !assetId.isEmpty else { return nil }
+        let asset = try? await AdminViewMediaAssetOpenAPIRepository(
+            api: mediaAPI
+        )
+        .getAsset(id: assetId)
+        return asset.map(NewAdminMediaAsset.init(schema:))
     }
 }

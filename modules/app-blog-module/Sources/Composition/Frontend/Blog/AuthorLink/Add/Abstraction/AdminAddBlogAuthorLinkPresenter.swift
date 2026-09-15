@@ -7,8 +7,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 protocol AdminAddBlogAuthorLinkPresenter: Sendable {
 
@@ -16,9 +17,9 @@ protocol AdminAddBlogAuthorLinkPresenter: Sendable {
         menuId: String,
         state: BlogAuthorLinkForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func breadcrumb(
         menuId: String
-    ) -> AdminBreadcrumb.State
+    ) -> [NewAdminBreadcrumb.Link]
 }

@@ -13,7 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 protocol AdminListAuthMagicLinkController: Sendable {
 
@@ -39,15 +40,15 @@ extension AdminListAuthMagicLinkController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/auth/magic-links",
+            AuthMagicLinkRoutes.list,
             use: getAuthMagicLinks
         )
         router.get(
-            "/admin/auth/magic-links/remove/",
+            AuthMagicLinkRoutes.remove,
             use: getAuthMagicLinksRemoveConfirmation
         )
         router.post(
-            "/admin/auth/magic-links/remove/",
+            AuthMagicLinkRoutes.remove,
             use: postAuthMagicLinksRemove
         )
     }

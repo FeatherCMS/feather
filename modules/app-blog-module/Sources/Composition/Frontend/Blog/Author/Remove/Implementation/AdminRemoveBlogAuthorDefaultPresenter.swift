@@ -7,29 +7,26 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminRemoveBlogAuthorDefaultPresenter:
     AdminRemoveBlogAuthorPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderRemovePage(
         id: String,
         source: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove author",
-            description: "Remove confirmation for a management author",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: BlogAuthorConfirmation(
                 state: .init(
                     id: id,
@@ -45,16 +42,11 @@ struct AdminRemoveBlogAuthorDefaultPresenter:
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove author",
-            description: "Remove confirmation for a management author",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: BlogAuthorError(
                 state: .init(
                     info: info,
@@ -67,17 +59,7 @@ struct AdminRemoveBlogAuthorDefaultPresenter:
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Authors", link: "/admin/blog/authors/"),
-                .init(
-                    label: "Remove",
-                    link: "/admin/blog/authors/\(id)/remove/"
-                ),
-            ]
-        )
+    ) -> [NewAdminBreadcrumb.Link] {
+        BlogAdminRoutes.authorsBreadcrumb
     }
 }

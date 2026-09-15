@@ -39,7 +39,6 @@ public struct AddRole: UseCase {
         let model = try await transaction.run { scope in
             try await scope.role.insert(
                 Role.create(
-                    id: input.id,
                     name: input.name,
                     notes: input.notes
                 )

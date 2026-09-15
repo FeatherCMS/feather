@@ -14,7 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
     let request: Request
@@ -24,15 +25,18 @@ struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
         form: LoginForm.State,
         message: String?
     ) -> HTMLResponse {
-        renderEngine.renderPage(
+        var buildContext = BuilderContext()
+        return renderEngine.renderPublicPage(
             request: request,
             title: "Login",
             description: "This is the login page for the Feather CMS app",
             imagePath: "images/logos/logo.png",
-            content: LoginPage(
-                state: .init(
-                    form: form,
-                    message: message
+            content: buildContext.build(
+                LoginPage(
+                    state: .init(
+                        form: form,
+                        message: message
+                    )
                 )
             )
         )
@@ -46,22 +50,24 @@ struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
     ) -> LoginForm.State {
         .init(
             email: .init(
-                key: "email",
-                label: adminFieldLabelText("Email address", required: true),
+                name: "email",
+                label: "Email address",
                 value: email,
-                error: nil
+                error: nil,
+                type: .email
             ),
             password: .init(
-                key: "password",
-                label: adminFieldLabelText("Password", required: true),
+                name: "password",
+                label: "Password",
                 value: password,
-                error: nil
+                error: nil,
+                type: .password
             ),
             isPersistent: .init(
-                key: "is_persistent",
-                label: "Keep me signed in",
-                value: isPersistent,
-                error: nil
+                name: "is_persistent",
+                label: "Session",
+                checkboxLabel: "Keep me signed in",
+                isChecked: isPersistent
             ),
             redirectPath: redirectPath
         )

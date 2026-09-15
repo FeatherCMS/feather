@@ -3,7 +3,9 @@ import Foundation
 
 protocol AdminRemoveUserIdentityRepository: Sendable {
 
+    func names(ids: [String]) async throws -> [String]
+
     func delete(
-        id: String
+        ids: [String]
     ) async throws
 }

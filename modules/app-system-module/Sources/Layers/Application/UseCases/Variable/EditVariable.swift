@@ -33,17 +33,20 @@ public struct EditVariable: UseCase {
 
     public struct Input: DTO {
         public let id: String
+        public let key: String?
         public let value: String?
         public let name: String?
         public let notes: String?
 
         public init(
             id: String,
+            key: String? = nil,
             value: String?,
             name: String?,
             notes: String?
         ) {
             self.id = id
+            self.key = key
             self.name = name
             self.value = value
             self.notes = notes
@@ -60,19 +63,19 @@ public struct EditVariable: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
-        let id = input.id
         let name = input.name
         let value = input.value
         let notes = input.notes
 
         let model = try await transaction.run { scope in
             guard
-                var model = try await scope.variable.find(id: id)
+                var model = try await scope.variable.find(id: input.id)
             else {
                 throw Error(message: "Variable not found")
             }
 
             try model.update(
+                key: input.key,
                 name: name,
                 value: value,
                 notes: notes

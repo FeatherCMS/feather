@@ -19,13 +19,7 @@ extension AdminAddSystemPermissionController {
     func route(
         on router: Router<DefaultRequestContext>
     ) {
-        router.get(
-            "/admin/system/permissions/add/",
-            use: getAddSystemPermission
-        )
-        router.post(
-            "/admin/system/permissions/add/",
-            use: postAddSystemPermission
-        )
+        router.get(SystemPermissionRoutes.add, use: getAddSystemPermission)
+        router.post(SystemPermissionRoutes.add, use: postAddSystemPermission)
     }
 }

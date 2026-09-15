@@ -27,15 +27,15 @@ public enum EventHandlers {
         ) { _, _ in
             [
                 .init(
-                    id: "news-settings-article-path-prefix",
+                    key: "news-settings-article-path-prefix",
                     value: "news",
-                    name: "news.article.path_prefix",
+                    name: "News article path prefix",
                     notes: "Public news article detail path prefix."
                 ),
                 .init(
-                    id: "news-settings-category-path-prefix",
+                    key: "news-settings-category-path-prefix",
                     value: "news/categories",
-                    name: "news.category.path_prefix",
+                    name: "News category path prefix",
                     notes: "Public news category detail path prefix."
                 ),
             ]

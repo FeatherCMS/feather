@@ -30,8 +30,8 @@ extension AdminAPIGateway {
             .map { rule in
                 let field: VariableList.Query.Sort.Field
                 switch rule.field {
-                case .id:
-                    field = .id
+                case .key:
+                    field = .key
                 case .name:
                     field = .name
                 case .value:
@@ -48,7 +48,8 @@ extension AdminAPIGateway {
         return .init(
             page: map(query.page),
             sort: sort,
-            search: query.filters.search
+            search: query.filters.search,
+            ids: query.filters.ids
         )
     }
 
@@ -57,6 +58,7 @@ extension AdminAPIGateway {
     ) -> Components.Schemas.SystemVariableDetailSchema {
         .init(
             id: detail.id,
+            key: detail.key,
             value: detail.value,
             name: detail.name,
             notes: detail.notes
@@ -68,6 +70,7 @@ extension AdminAPIGateway {
     ) -> Components.Schemas.SystemVariableListItemSchema {
         .init(
             id: item.id,
+            key: item.key,
             value: item.value,
             name: item.name,
             notes: item.notes
@@ -81,8 +84,8 @@ extension AdminAPIGateway {
             .map { rule in
                 let field: PermissionList.Query.Sort.Field
                 switch rule.field {
-                case .id:
-                    field = .id
+                case .key:
+                    field = .key
                 case .name:
                     field = .name
                 case .notes:
@@ -97,7 +100,8 @@ extension AdminAPIGateway {
         return .init(
             page: map(query.page),
             sort: sort,
-            search: query.filters.search
+            search: query.filters.search,
+            ids: query.filters.ids
         )
     }
 
@@ -106,6 +110,7 @@ extension AdminAPIGateway {
     ) -> Components.Schemas.SystemPermissionDetailSchema {
         .init(
             id: detail.id,
+            key: detail.key,
             name: detail.name,
             notes: detail.notes
         )
@@ -116,6 +121,7 @@ extension AdminAPIGateway {
     ) -> Components.Schemas.SystemPermissionListItemSchema {
         .init(
             id: item.id,
+            key: item.key,
             name: item.name,
             notes: item.notes
         )

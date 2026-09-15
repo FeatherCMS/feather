@@ -3,25 +3,22 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminAddWebMenuDefaultPresenter: AdminAddWebMenuPresenter {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderAddPage(
         state: WebMenuForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Add menu",
-            description: "Add a menu in management",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: WebMenuAdd(
                 state: .init(
                     form: state,
@@ -31,14 +28,11 @@ struct AdminAddWebMenuDefaultPresenter: AdminAddWebMenuPresenter {
         )
     }
 
-    func breadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Menus", link: "/admin/web/menus/"),
-                .init(label: "Add", link: "/admin/web/menus/add/"),
-            ]
-        )
+    func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Web", link: "/admin/web/"),
+            .init(label: "Menus", link: "/admin/web/menus/"),
+        ]
     }
 }

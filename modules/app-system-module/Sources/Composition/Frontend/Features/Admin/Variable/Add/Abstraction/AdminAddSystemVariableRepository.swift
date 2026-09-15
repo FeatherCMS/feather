@@ -1,9 +1,10 @@
 import FeatherAdmin
 import Foundation
+import SystemAdminAPI
 
 protocol AdminAddSystemVariableRepository: Sendable {
 
     func create(
-        input: SystemVariableFormInput
+        input: Components.Schemas.SystemVariableCreateSchema
     ) async throws
 }

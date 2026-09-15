@@ -1,13 +1,13 @@
 import FeatherAdmin
 import Foundation
 
-public struct AdminEditUserIdentityFormInput: Codable, Sendable, Equatable,
+public struct AdminEditUserIdentityFormInput: Decodable, Sendable, Equatable,
     Hashable
 {
 
     public let name: String
     public let status: String
-    public let roleIds: [String]?
+    public let roleIds: [String]
 
     var normalizedStatus: String {
         status.trimmingCharacters(in: .whitespacesAndNewlines)

@@ -16,6 +16,7 @@ extension PermissionTable.Row {
     var asQueryListItem: PermissionList.Item {
         .init(
             id: id,
+            key: key,
             name: name,
             notes: notes,
             createdAt: createdAt,
@@ -26,6 +27,7 @@ extension PermissionTable.Row {
     var asDetail: PermissionDetail {
         .init(
             id: id,
+            key: key,
             name: name,
             notes: notes,
             createdAt: createdAt,
@@ -69,8 +71,8 @@ public struct PermissionDatabaseQueries: PermissionQueries {
         let sortParts = query.sort.map { rule -> String in
             let column: String
             switch rule.field {
-            case .id:
-                column = "id"
+            case .key:
+                column = "key"
             case .name:
                 column = "name"
             case .notes:
@@ -78,7 +80,7 @@ public struct PermissionDatabaseQueries: PermissionQueries {
             }
             return "\(column) \(sortDirectionSQL(rule.direction))"
         }
-        return (sortParts + ["id ASC"]).joined(separator: ", ")
+        return (sortParts + ["key ASC"]).joined(separator: ", ")
     }
 
     // MARK: -
@@ -88,7 +90,7 @@ public struct PermissionDatabaseQueries: PermissionQueries {
     ) async throws -> PermissionDetail {
         let table = PermissionTable(connection: context.connection)
         guard let row = try await table.find(id: id) else {
-            fatalError()
+            throw RepositoryError.notFound
         }
         return row.asDetail
     }
@@ -104,6 +106,7 @@ public struct PermissionDatabaseQueries: PermissionQueries {
         let items =
             try await table.list(
                 search: search,
+                ids: query.ids,
                 orderBy: orderBy,
                 limit: page.size,
                 offset: page.offset
@@ -119,7 +122,7 @@ public struct PermissionDatabaseQueries: PermissionQueries {
         let search = query.search
 
         let table = PermissionTable(connection: context.connection)
-        return try await table.count(search: search)
+        return try await table.count(search: search, ids: query.ids)
     }
 
 }

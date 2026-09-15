@@ -11,8 +11,9 @@ import NIOCore
 import OpenAPIAsyncHTTPClient
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 public struct BlogAdminAPIClient: Sendable {
     public let client: BlogAdminAPI.Client

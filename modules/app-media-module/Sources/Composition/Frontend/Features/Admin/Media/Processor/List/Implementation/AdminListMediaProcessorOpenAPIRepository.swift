@@ -1,0 +1,177 @@
+import FeatherAdmin
+import FeatherValidation
+import Foundation
+import HTML
+import Hummingbird
+import MediaAdminAPI
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+struct AdminMediaProcessorOpenAPIRepository {
+    let api: MediaAdminAPIClient
+    private let listUnauthorizedMessage =
+        "Please sign in again to view media processors."
+    private let getUnauthorizedMessage =
+        "Please sign in again to load this media processor."
+    private let createUnauthorizedMessage =
+        "Please sign in again to create this media processor."
+    private let updateUnauthorizedMessage =
+        "Please sign in again to update this media processor."
+    private let deleteUnauthorizedMessage =
+        "Please sign in again to delete this media processor."
+
+    init(api: MediaAdminAPIClient) {
+        self.api = api
+    }
+
+    func listProcessors(
+        page: Int,
+        search: String?
+    ) async throws -> AdminListMediaProcessorRepositoryResult {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response =
+                try await client
+                .mediaProcessorSearch(
+                    body: .json(
+                        .init(
+                            page: .init(size: 100, number: page),
+                            sort: [.init(field: .name, direction: .asc)],
+                            filters: .init(search: search)
+                        )
+                    )
+                )
+            switch response {
+            case .ok(let ok):
+                let body = try ok.body.json
+                return .init(
+                    items: body.data.items,
+                    pageState: .init(
+                        page: body.query.page.number,
+                        pageSize: body.query.page.size,
+                        total: body.data.total
+                    )
+                )
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+
+    func getProcessor(
+        id: String
+    ) async throws -> Components.Schemas.MediaProcessorDetailSchema {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response =
+                try await client
+                .mediaProcessorGet(
+                    path: .init(mediaProcessorId: id)
+                )
+            switch response {
+            case .ok(let ok):
+                return try ok.body.json
+            case .notFound:
+                throw OpenAPIRepositoryError.notFound
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+
+    func createProcessor(
+        form: AddProcessorForm
+    ) async throws {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response =
+                try await client
+                .mediaProcessorCreate(
+                    body: .json(
+                        .init(
+                            name: form.fileSuffix,
+                            matchExtensions: form.matchExtensions,
+                            commandTemplate: form.commandTemplate
+                        )
+                    )
+                )
+            switch response {
+            case .created:
+                return
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+
+    func updateProcessor(
+        id: String,
+        form: AddProcessorForm
+    ) async throws {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response =
+                try await client
+                .mediaProcessorUpdate(
+                    path: .init(mediaProcessorId: id),
+                    body: .json(
+                        .init(
+                            name: form.fileSuffix,
+                            matchExtensions: form.matchExtensions,
+                            commandTemplate: form.commandTemplate
+                        )
+                    )
+                )
+            switch response {
+            case .ok:
+                return
+            case .notFound:
+                throw OpenAPIRepositoryError.notFound
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+
+    func deleteProcessor(
+        id: String
+    ) async throws {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            _ = try await client.mediaProcessorDelete(
+                body: .json(.init(ids: [id], results: false, summary: true))
+            )
+        }
+    }
+
+    func delete(
+        id: String
+    ) async throws {
+        try await deleteProcessor(id: id)
+    }
+}

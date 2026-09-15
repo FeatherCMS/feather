@@ -7,29 +7,26 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminRemoveBlogTagDefaultPresenter:
     AdminRemoveBlogTagPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderRemovePage(
         id: String,
         source: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove tag",
-            description: "Remove confirmation for a management tag",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: BlogTagConfirmation(
                 state: .init(
                     id: id,
@@ -45,16 +42,11 @@ struct AdminRemoveBlogTagDefaultPresenter:
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderingEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove tag",
-            description: "Remove confirmation for a management tag",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderingEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
             content: BlogTagError(
                 state: .init(
                     info: info,
@@ -67,17 +59,7 @@ struct AdminRemoveBlogTagDefaultPresenter:
 
     func breadcrumb(
         id: String
-    ) -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Tags", link: "/admin/blog/tags/"),
-                .init(
-                    label: "Remove",
-                    link: "/admin/blog/tags/\(id)/remove/"
-                ),
-            ]
-        )
+    ) -> [NewAdminBreadcrumb.Link] {
+        BlogAdminRoutes.tagsBreadcrumb
     }
 }

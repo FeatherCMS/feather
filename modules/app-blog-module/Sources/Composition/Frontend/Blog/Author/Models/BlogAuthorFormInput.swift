@@ -9,8 +9,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 public struct BlogAuthorFormInput: Codable, Sendable, Equatable, Hashable {
 

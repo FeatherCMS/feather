@@ -3,11 +3,9 @@ import Foundation
 
 protocol AdminRemoveUserRoleRepository: Sendable {
 
-    func get(
-        id: String
-    ) async throws -> UserRoleDetailsModel
+    func names(ids: [String]) async throws -> [String]
 
     func delete(
-        id: String
+        ids: [String]
     ) async throws
 }

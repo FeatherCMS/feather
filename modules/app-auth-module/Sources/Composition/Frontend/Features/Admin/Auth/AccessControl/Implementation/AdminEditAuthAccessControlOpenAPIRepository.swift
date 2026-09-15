@@ -14,7 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminEditAuthAccessControlOpenAPIRepository:
     AdminEditAuthAccessControlRepository
@@ -72,13 +73,9 @@ struct AdminEditAuthAccessControlOpenAPIRepository:
             case .ok(let ok):
                 return try ok.body.json.data.items
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: rolesUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: rolesForbiddenMessage
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await userAPI.failure(
                     statusCode: statusCode,
@@ -108,13 +105,9 @@ struct AdminEditAuthAccessControlOpenAPIRepository:
             case .ok(let ok):
                 return try ok.body.json.data.items
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: permissionsUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: permissionsForbiddenMessage
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await systemAPI.failure(
                     statusCode: statusCode,
@@ -152,13 +145,9 @@ struct AdminEditAuthAccessControlOpenAPIRepository:
                     }
                 )
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: rolePermissionLoadError
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: rolePermissionLoadError
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -185,13 +174,9 @@ struct AdminEditAuthAccessControlOpenAPIRepository:
             case .ok:
                 break
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: deleteUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: deleteForbiddenMessage
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -220,13 +205,9 @@ struct AdminEditAuthAccessControlOpenAPIRepository:
             case .created:
                 break
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: createUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: createForbiddenMessage
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

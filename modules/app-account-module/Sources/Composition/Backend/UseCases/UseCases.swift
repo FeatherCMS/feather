@@ -23,15 +23,14 @@ public struct UseCases: Sendable {
         idGenerator: any IDGenerator,
         authorizer: any Authorizer,
         mailSender: any MailSender,
-        events: any EventPublisher,
-        credentialWriter: any InvitationCredentialWriter
+        events: any EventPublisher
     ) {
         self.database = database
         self.idGenerator = idGenerator
         self.authorizer = authorizer
         self.mailSender = mailSender
         self.events = events
-        self.credentialWriter = credentialWriter
+        self.credentialWriter = InvitationCredentialWriterAdapter()
     }
 
 }

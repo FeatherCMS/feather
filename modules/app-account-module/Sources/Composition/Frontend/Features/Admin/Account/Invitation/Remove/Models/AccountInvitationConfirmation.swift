@@ -4,31 +4,33 @@ import FeatherValidation
 import HTML
 import Hummingbird
 import SGML
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AccountInvitationConfirmation: Component {
 
     struct State {
         let id: String
         let email: String
-        let breadcrumb: AdminBreadcrumb.State
+        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let nonceToken: String?
     }
 
     let state: State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
-            state: .init(
+    func html(context: inout BuilderContext) -> some BasicTag {
+        context.build(
+            NewAdminRemoveConfirmation(
                 breadcrumb: state.breadcrumb,
-                title: "Remove user invitation",
-                message:
-                    "Are you sure you want to remove this user invitation? This action cannot be undone.",
-                details: [
-                    .init(prefix: "Email: ", value: state.email)
-                ],
+                pageHeader: .init(
+                    title: "Remove user invitation",
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: [state.email],
+                action: "/admin/account/invitations/\(state.id)/remove/",
+                cancel: "/admin/account/invitations/",
                 submitLabel: "Remove invitation",
-                actionURL: "/admin/account/invitations/\(state.id)/remove/",
-                cancelURL: "/admin/account/invitations/"
+                nonceToken: state.nonceToken
             )
         )
     }

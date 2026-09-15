@@ -8,8 +8,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminEditBlogAuthorOpenAPIRepository: AdminEditBlogAuthorRepository {
     let api: BlogAdminAPIClient
@@ -42,18 +43,11 @@ struct AdminEditBlogAuthorOpenAPIRepository: AdminEditBlogAuthorRepository {
                     items: []
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Blog author not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this blog author."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot access blog authors."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -85,17 +79,11 @@ struct AdminEditBlogAuthorOpenAPIRepository: AdminEditBlogAuthorRepository {
             case .ok:
                 return
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Blog author not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to update this blog author."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot edit blog authors."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -107,14 +95,14 @@ struct AdminEditBlogAuthorOpenAPIRepository: AdminEditBlogAuthorRepository {
 
     private func loadProfileImage(
         assetId: String?
-    ) async throws -> AdminMediaAssetReferenceModel? {
+    ) async throws -> NewAdminMediaAsset? {
         try await api.withOpenAPIRepositoryErrorMapping {
-            client -> AdminMediaAssetReferenceModel? in
+            client -> NewAdminMediaAsset? in
             guard let assetId, !assetId.isEmpty else {
                 return nil
             }
             guard
-                let asset = try? await AdminMediaAssetOpenAPIRepository(
+                let asset = try? await AdminViewMediaAssetOpenAPIRepository(
                     api: api
                 )
                 .getAsset(id: assetId)

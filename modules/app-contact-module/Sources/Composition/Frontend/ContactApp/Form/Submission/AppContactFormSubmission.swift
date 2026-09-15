@@ -4,7 +4,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebBuilders
+import WebComponents
 
 public struct AppContactFormSubmission {
     let controller: any AppContactFormSubmissionController

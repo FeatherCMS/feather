@@ -20,19 +20,23 @@ extension AdminEditSettingsController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/account/settings/",
+            RouterPath(AccountAdminRoutes.settings.description + "/"),
             use: getEditSettings
         )
         router.post(
-            "/admin/account/settings/",
+            RouterPath(AccountAdminRoutes.settings.description + "/"),
             use: postEditSettings
         )
         router.get(
-            "/admin/account/users/{userId}/settings/",
+            RouterPath(
+                AccountAdminRoutes.userSettingsPattern.description + "/"
+            ),
             use: getEditSettings
         )
         router.post(
-            "/admin/account/users/{userId}/settings/",
+            RouterPath(
+                AccountAdminRoutes.userSettingsPattern.description + "/"
+            ),
             use: postEditSettings
         )
     }

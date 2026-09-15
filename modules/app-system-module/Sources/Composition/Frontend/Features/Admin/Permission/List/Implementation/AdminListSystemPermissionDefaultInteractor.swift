@@ -11,14 +11,21 @@ struct AdminListSystemPermissionDefaultInteractor:
         page: Int,
         search: String?
     ) async throws -> AdminListSystemPermissionModel {
-        try await repository.listSystemPermissions(page: page, search: search)
-    }
-
-    func remove(
-        ids: [String]
-    ) async throws {
-        for id in ids {
-            try await repository.delete(id: id)
+        do {
+            return try await repository.listSystemPermissions(
+                page: page,
+                search: search
+            )
+        }
+        catch let error as OpenAPIRepositoryError {
+            switch error {
+            case .unauthorized:
+                throw AdminListSystemPermissionError.unauthorized
+            case .forbidden: throw AdminListSystemPermissionError.forbidden
+            case .failure, .transport, .notFound, .conflict:
+                throw AdminListSystemPermissionError.unavailable
+            }
         }
     }
+
 }

@@ -1,7 +1,9 @@
 import FeatherAdmin
 import HTML
+import Hummingbird
 import SGML
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct SettingsEdit: Component {
 
@@ -9,46 +11,50 @@ struct SettingsEdit: Component {
         let userID: String?
         let isEdited: Bool
         let canEdit: Bool
-        let form: SettingsForm.State
-        let breadcrumb: AdminBreadcrumb.State
+        var form: SettingsForm.State
+        let breadcrumb: [NewAdminBreadcrumb.Link]
     }
 
     let state: State
 
-    func content() -> some BasicTag {
+    func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            AdminBreadcrumb(state: state.breadcrumb)
-
-            H1("Settings")
+            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Settings",
+                        description:
+                            "Manage application preferences for this account."
+                    )
+                )
+            )
 
             if let userID = state.userID {
-                AdminPillTabs(links: [
-                    .init(
-                        label: "Details",
-                        href: "/admin/user/identities/\(userID)/",
-                        isCurrent: false
-                    ),
-                    .init(
-                        label: "Profile",
-                        href: "/admin/account/users/\(userID)/profile/",
-                        isCurrent: false
-                    ),
-                    .init(
-                        label: "Settings",
-                        href: "/admin/account/users/\(userID)/settings/",
-                        isCurrent: true
-                    ),
-                    .init(
-                        label: "Sessions",
-                        href: "/admin/user/identities/\(userID)/sessions/",
-                        isCurrent: false
-                    ),
-                    .init(
-                        label: "Magic links",
-                        href: "/admin/auth/magic-links/?userId=\(userID)",
-                        isCurrent: false
-                    ),
-                ])
+                context.build(
+                    NewAdminTabBar(links: [
+                        .init(
+                            label: "Details",
+                            href: "/admin/user/identities/\(userID)/",
+                            isCurrent: false
+                        ),
+                        .init(
+                            label: "Settings",
+                            href: "/admin/account/users/\(userID)/settings/",
+                            isCurrent: true
+                        ),
+                        .init(
+                            label: "Sessions",
+                            href: "/admin/user/identities/\(userID)/sessions/",
+                            isCurrent: false
+                        ),
+                        .init(
+                            label: "Magic links",
+                            href: "/admin/auth/magic-links/?userId=\(userID)",
+                            isCurrent: false
+                        ),
+                    ])
+                )
             }
 
             if !state.canEdit {
@@ -61,7 +67,12 @@ struct SettingsEdit: Component {
                 P("Settings edited successfully.").class("success")
             }
 
-            SettingsForm(state: state.form)
+            let action =
+                state.userID.map {
+                    AccountAdminRoutes.userSettings(RouterPath($0)).description
+                        + "/"
+                } ?? AccountAdminRoutes.settings.description + "/"
+            context.build(SettingsForm(state: state.form, action: action))
         }
         .class("cms-section")
     }

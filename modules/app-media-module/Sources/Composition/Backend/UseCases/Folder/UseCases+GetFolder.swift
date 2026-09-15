@@ -21,6 +21,9 @@ extension UseCases {
                     ),
                     assets: MediaAssetDatabaseQueries(
                         context: context
+                    ),
+                    assetSearch: MediaAssetSearchDatabaseQueries(
+                        context: context
                     )
                 )
             }

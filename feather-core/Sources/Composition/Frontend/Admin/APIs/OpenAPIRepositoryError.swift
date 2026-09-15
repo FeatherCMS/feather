@@ -2,9 +2,10 @@ import Foundation
 import Hummingbird
 
 public enum OpenAPIRepositoryError: Error {
-    case unauthorized(message: String)
-    case forbidden(message: String)
-    case notFound(message: String)
+    case unauthorized
+    case forbidden
+    case notFound
+    case conflict
     case failure(Failure)
     case transport(description: String)
 
@@ -88,6 +89,8 @@ extension OpenAPIRepositoryError {
             return .forbidden
         case .notFound:
             return .notFound
+        case .conflict:
+            return .conflict
         case .failure(let failure):
             return .init(code: failure.statusCode)
         case .transport:
@@ -103,6 +106,8 @@ extension OpenAPIRepositoryError {
             return "Forbidden"
         case .notFound:
             return "Not found"
+        case .conflict:
+            return "Unable to save changes"
         case .failure(let failure):
             return "Unexpected response from server (\(failure.statusCode))."
         case .transport:
@@ -116,12 +121,14 @@ extension OpenAPIRepositoryError {
 
     public var technicalDetailsLines: [String] {
         switch self {
-        case .unauthorized(let message):
-            return [message]
-        case .forbidden(let message):
-            return [message]
-        case .notFound(let message):
-            return [message]
+        case .unauthorized:
+            return []
+        case .forbidden:
+            return []
+        case .notFound:
+            return []
+        case .conflict:
+            return []
         case .failure(let failure):
             if let backendError = failure.backendError {
                 var lines = [

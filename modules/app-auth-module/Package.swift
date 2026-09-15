@@ -89,7 +89,6 @@ let package = Package(
             from: "2.34.0"
         ),
         .package(path: "../../feather-core"),
-        .package(path: "../app-account-module"),
         .package(path: "../app-media-module"),
         .package(path: "../app-system-module"),
         .package(path: "../app-user-module"),
@@ -108,7 +107,7 @@ let package = Package(
             name: "AuthDomain",
             dependencies: [
                 .product(name: "FeatherDomain", package: "feather-core"),
-                
+
                 .target(name: "AuthContracts"),
             ],
             path: "Sources/Layers/Domain",
@@ -122,7 +121,7 @@ let package = Package(
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "UserApplication", package: "app-user-module"),
                 .product(name: "WebApplication", package: "app-web-module"),
-                
+
                 .target(name: "AuthDomain"),
             ],
             path: "Sources/Layers/Application",
@@ -134,7 +133,7 @@ let package = Package(
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
 
                 .product(name: "UserInfrastructure", package: "app-user-module"),
-                
+
                 .target(name: "AuthApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
@@ -208,12 +207,11 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
 
-                .product(name: "AccountAppAPI", package: "app-account-module"),
                 .product(name: "MediaFrontend", package: "app-media-module"),
                 .product(name: "UserFrontend", package: "app-user-module"),
                 .product(name: "SystemFrontend", package: "app-system-module"),
                 .product(name: "WebContracts", package: "app-web-module"),
-                
+
                 .target(name: "AuthContracts"),
                 .target(name: "AuthAdminAPI"),
                 .target(name: "AuthAppAPI"),
@@ -245,7 +243,7 @@ let package = Package(
                 .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
-                
+
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
                 .product(name: "UserInfrastructure", package: "app-user-module"),
 

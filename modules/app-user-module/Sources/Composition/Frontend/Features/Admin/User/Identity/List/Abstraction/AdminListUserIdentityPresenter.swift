@@ -1,21 +1,15 @@
 import FeatherAdmin
+import FeatherContracts
 import Hummingbird
+import UserAdminAPI
 
 protocol AdminListUserIdentityPresenter: Sendable {
-
-    func renderPage(
-        state: UserIdentityTable.State
-    ) -> HTMLResponse
-
-    func renderError(
-        error: OpenAPIRepositoryError
-    ) -> HTMLResponse
-
-    func renderRemoveConfirmation(
-        selectedIds: [String],
-        page: Int,
+    func renderListPage(
+        model: NewAdminListModel<Components.Schemas.UserIdentityListItemSchema>,
+        permissions: Set<PermissionKey>,
         search: String?,
-        role: String?,
-        permissions: Set<String>
-    ) -> HTMLResponse
+        role: String?
+    ) async throws -> HTMLResponse
+    func renderErrorPage(error: AdminListUserIdentityError) async throws
+        -> HTMLResponse
 }

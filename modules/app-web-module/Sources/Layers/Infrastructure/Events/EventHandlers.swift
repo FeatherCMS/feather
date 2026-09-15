@@ -73,105 +73,105 @@ public enum EventHandlers {
         ) { _, _ in
             [
                 .init(
-                    id: "web-settings-logo",
+                    key: "web-settings-logo",
                     value: "",
-                    name: "web.site.logo",
+                    name: "Website logo",
                     notes: "Logo of the website"
                 ),
                 .init(
-                    id: "web-settings-public-base-url",
+                    key: "web-settings-public-base-url",
                     value: "http://localhost:3456",
-                    name: "web.site.public_base_url",
+                    name: "Website public base URL",
                     notes: "Canonical public URL of the website"
                 ),
                 .init(
-                    id: "web-settings-logo-dark",
+                    key: "web-settings-logo-dark",
                     value: "",
-                    name: "web.site.logo_dark",
+                    name: "Website dark logo",
                     notes: "Logo of the website in dark mode"
                 ),
                 .init(
-                    id: "web-settings-meta-image",
+                    key: "web-settings-meta-image",
                     value: "",
-                    name: "web.site.meta_image",
+                    name: "Website metadata image",
                     notes: "Default metadata image of the website"
                 ),
                 .init(
-                    id: "web-settings-primary-color",
+                    key: "web-settings-primary-color",
                     value: "",
-                    name: "web.site.primary_color",
+                    name: "Website primary color",
                     notes: "Primary color of the website"
                 ),
                 .init(
-                    id: "web-settings-secondary-color",
+                    key: "web-settings-secondary-color",
                     value: "",
-                    name: "web.site.secondary_color",
+                    name: "Website secondary color",
                     notes: "Secondary color of the website"
                 ),
                 .init(
-                    id: "web-settings-tertiary-color",
+                    key: "web-settings-tertiary-color",
                     value: "",
-                    name: "web.site.tertiary_color",
+                    name: "Website tertiary color",
                     notes: "Tertiary color of the website"
                 ),
                 .init(
-                    id: "web-settings-primary-font",
+                    key: "web-settings-primary-font",
                     value: "",
-                    name: "web.site.primary_font",
+                    name: "Website primary font",
                     notes: "Primary font of the website"
                 ),
                 .init(
-                    id: "web-settings-secondary-font",
+                    key: "web-settings-secondary-font",
                     value: "",
-                    name: "web.site.secondary_font",
+                    name: "Website secondary font",
                     notes: "Secondary font of the website"
                 ),
                 .init(
-                    id: "web-settings-home-page-id",
+                    key: "web-settings-home-page-id",
                     value: "",
-                    name: "web.site.home_page_id",
+                    name: "Website home page",
                     notes: "Selected home page of the website"
                 ),
                 .init(
-                    id: "web-settings-locale",
+                    key: "web-settings-locale",
                     value: "en_us",
-                    name: "web.site.locale",
+                    name: "Website locale",
                     notes: "Default locale of the website"
                 ),
                 .init(
-                    id: "web-settings-timezone",
+                    key: "web-settings-timezone",
                     value: "utc",
-                    name: "web.site.timezone",
+                    name: "Website timezone",
                     notes: "Default timezone of the website"
                 ),
                 .init(
-                    id: "web-settings-title",
+                    key: "web-settings-title",
                     value: "",
-                    name: "web.site.title",
+                    name: "Website title",
                     notes: "Title of the website"
                 ),
                 .init(
-                    id: "web-settings-excerpt",
+                    key: "web-settings-excerpt",
                     value: "",
-                    name: "web.site.excerpt",
+                    name: "Website excerpt",
                     notes: "Excerpt for the website"
                 ),
                 .init(
-                    id: "web-settings-no-index",
+                    key: "web-settings-no-index",
                     value: "false",
-                    name: "web.site.no_index",
+                    name: "Disable website indexing",
                     notes: "Disable site indexing by search engines"
                 ),
                 .init(
-                    id: "web-settings-css",
+                    key: "web-settings-css",
                     value: "",
-                    name: "web.site.css",
+                    name: "Website custom CSS",
                     notes: "Global CSS injection for the site"
                 ),
                 .init(
-                    id: "web-settings-js",
+                    key: "web-settings-js",
                     value: "",
-                    name: "web.site.js",
+                    name: "Website custom JavaScript",
                     notes: "Global JavaScript injection for the site"
                 ),
             ]

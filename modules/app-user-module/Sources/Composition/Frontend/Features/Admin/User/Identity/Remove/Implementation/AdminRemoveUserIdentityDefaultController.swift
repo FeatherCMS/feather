@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import HTML
 import Hummingbird
 import UserContracts
@@ -8,32 +9,29 @@ struct AdminRemoveUserIdentityDefaultController:
 {
     let buildRuntime:
         @Sendable (Request, DefaultRequestContext) -> (
-            getInteractor: any AdminGetUserIdentityInteractor,
-            removeInteractor: any AdminRemoveUserIdentityInteractor,
+            interactor: any AdminRemoveUserIdentityInteractor,
             presenter: any AdminRemoveUserIdentityPresenter
         )
 
-    func getRemoveUserIdentity(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> HTMLResponse {
-        let (getInteractor, _, presenter) = buildRuntime(request, context)
+    func getRemoveUserIdentity(request: Request, context: DefaultRequestContext)
+        async throws -> HTMLResponse
+    {
+        let (interactor, presenter) = buildRuntime(request, context)
+        guard
+            context.isCurrentUserAllowed(to: UserPermissions.Identities.delete)
+        else { return try await presenter.renderForbiddenPage() }
         let id = try context.requiredID()
         do {
-            let identity = try await getInteractor.execute(id: id)
-            return presenter.renderPage(
-                state: .init(
-                    id: identity.id,
-                    breadcrumb: presenter.breadcrumb(id: id)
-                ),
-                permissions: context.currentUserPermissions
+            let names = try await interactor.names(ids: [id])
+            return try await presenter.renderRemovePage(
+                id: id,
+                name: names.first ?? id
             )
         }
-        catch let error as OpenAPIRepositoryError {
-            return presenter.errorPage(
-                id: id,
+        catch let error as AdminRemoveUserIdentityError {
+            return try await presenter.renderErrorPage(
                 error: error,
-                permissions: context.currentUserPermissions
+                cancel: UserIdentityRoutes.list.description
             )
         }
     }
@@ -42,27 +40,159 @@ struct AdminRemoveUserIdentityDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (_, removeInteractor, presenter) = buildRuntime(request, context)
+        let (removeInteractor, presenter) = buildRuntime(request, context)
+        guard
+            context.isCurrentUserAllowed(to: UserPermissions.Identities.delete)
+        else {
+            return try await presenter.renderForbiddenPage()
+                .response(from: request, context: context)
+        }
         let id = try context.requiredID()
         do {
-            try await removeInteractor.execute(entity: .init(id: id))
+            let payload = try await request.decode(
+                as: NonceRequest<NewAdminListRemoveFormInput>.self,
+                context: context
+            )
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                return
+                    try await presenter.renderInvalidNoncePage(
+                        cancel: UserIdentityRoutes.list.description
+                    )
+                    .response(from: request, context: context)
+            }
+            try await removeInteractor.delete(ids: [id])
+            return presenter.renderSuccess(
+                location: UserIdentityRoutes.list.description,
+                count: 1
+            )
+        }
+        catch let error as AdminRemoveUserIdentityError {
+            return
+                try await presenter.renderErrorPage(
+                    error: error,
+                    cancel: UserIdentityRoutes.list.description
+                )
+                .response(from: request, context: context)
+        }
+    }
+
+    func getRemoveUserIdentities(
+        request: Request,
+        context: DefaultRequestContext
+    ) async throws -> Response {
+        let (interactor, presenter) = buildRuntime(request, context)
+        guard
+            context.isCurrentUserAllowed(to: UserPermissions.Identities.delete)
+        else {
+            return try await presenter.renderForbiddenPage()
+                .response(from: request, context: context)
+        }
+        let ids = request.queryStrings("ids")
+        let page = request.queryPage()
+        let search = request.querySearch()
+        guard !ids.isEmpty else {
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/user/identities/",
-                        title: "Removed",
-                        message: "User identity removed successfully."
+                    .location: NewAdminLocation.url(
+                        path: UserIdentityRoutes.list.description,
+                        page: page,
+                        search: search
                     )
                 ]
             )
         }
-        catch let error as OpenAPIRepositoryError {
+        do {
             return
-                try presenter.errorPage(
-                    id: id,
+                try await presenter.renderRemoveConfirmation(
+                    page: page,
+                    search: search,
+                    ids: ids,
+                    names: try await interactor.names(ids: ids),
+                    returnTo: request.queryString("returnTo")
+                )
+                .response(from: request, context: context)
+        }
+        catch let error as AdminRemoveUserIdentityError {
+            return
+                try await presenter.renderErrorPage(
                     error: error,
-                    permissions: context.currentUserPermissions
+                    cancel: NewAdminLocation.removeCancel(
+                        path: UserIdentityRoutes.list.description,
+                        returnTo: request.queryString("returnTo")
+                    )
+                )
+                .response(from: request, context: context)
+        }
+    }
+
+    func postRemoveUserIdentities(
+        request: Request,
+        context: DefaultRequestContext
+    ) async throws -> Response {
+        let (removeInteractor, presenter) = buildRuntime(request, context)
+        guard
+            context.isCurrentUserAllowed(to: UserPermissions.Identities.delete)
+        else {
+            return try await presenter.renderForbiddenPage()
+                .response(from: request, context: context)
+        }
+        var returnTo = request.queryString("returnTo")
+        do {
+            let payload = try await request.decode(
+                as: NonceRequest<NewAdminListRemoveFormInput>.self,
+                context: context
+            )
+            returnTo = payload.input.normalizedReturnTo
+            guard
+                await AdminNonceStore.shared.consume(
+                    payload.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                return
+                    try await presenter.renderInvalidNoncePage(
+                        cancel: NewAdminLocation.removeCancel(
+                            path: UserIdentityRoutes.list.description,
+                            returnTo: returnTo
+                        )
+                    )
+                    .response(from: request, context: context)
+            }
+            if !payload.input.normalizedIds.isEmpty {
+                try await removeInteractor.delete(
+                    ids: payload.input.normalizedIds
+                )
+            }
+            let location = NewAdminLocation.url(
+                path: UserIdentityRoutes.list.description,
+                page: payload.input.normalizedPage,
+                search: payload.input.normalizedSearch
+            )
+            guard !payload.input.normalizedIds.isEmpty else {
+                return Response(
+                    status: .seeOther,
+                    headers: [.location: location]
+                )
+            }
+            return presenter.renderSuccess(
+                location: location,
+                count: payload.input.normalizedIds.count
+            )
+        }
+        catch let error as AdminRemoveUserIdentityError {
+            return
+                try await presenter.renderErrorPage(
+                    error: error,
+                    cancel: NewAdminLocation.removeCancel(
+                        path: UserIdentityRoutes.list.description,
+                        returnTo: returnTo
+                    )
                 )
                 .response(from: request, context: context)
         }

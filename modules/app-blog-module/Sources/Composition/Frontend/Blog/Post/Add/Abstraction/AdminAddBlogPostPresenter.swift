@@ -7,15 +7,16 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 protocol AdminAddBlogPostPresenter: Sendable {
 
     func renderAddPage(
         state: BlogPostForm.State,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
-    func breadcrumb() -> AdminBreadcrumb.State
+    func breadcrumb() -> [NewAdminBreadcrumb.Link]
 }

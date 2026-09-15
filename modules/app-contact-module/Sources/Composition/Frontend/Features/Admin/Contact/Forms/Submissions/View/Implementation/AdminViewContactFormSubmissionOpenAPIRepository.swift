@@ -1,0 +1,49 @@
+import ContactAdminAPI
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+struct AdminViewContactFormSubmissionOpenAPIRepository {
+    let api: ContactAdminAPIClient
+    func get(formId: String, id: String) async throws
+        -> AdminContactFormSubmissionItem
+    {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response = try await client.contactFormSubmissionGet(
+                path: .init(contactFormId: formId, contactFormSubmissionId: id)
+            )
+            switch response {
+            case .ok(let value):
+                let item = try value.body.json
+                let values = item.values.additionalProperties
+                return .init(
+                    id: item.id,
+                    formId: item.formId,
+                    status: item.status,
+                    createdAt: DateFormatting.formatUnixTimestamp(
+                        item.createdAt
+                    ),
+                    email: values.first { $0.key.lowercased() == "email" }?
+                        .value,
+                    values: values
+                )
+            case .notFound:
+                throw OpenAPIRepositoryError.notFound
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+}

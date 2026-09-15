@@ -8,8 +8,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminListBlogAuthorLinkDefaultController:
     AdminListBlogAuthorLinkController
@@ -58,12 +59,9 @@ struct AdminListBlogAuthorLinkDefaultController:
             model = emptyModel
             error = nil
         }
-        return presenter.renderListPage(
+        return try await presenter.renderListPage(
             menuId: menuId,
             model: model,
-            isAdded: request.hasQueryFlag("added"),
-            isEdited: request.hasQueryFlag("edited"),
-            isRemoved: request.hasQueryFlag("removed"),
             permissions: permissions,
             search: search,
             error: error
@@ -88,7 +86,7 @@ struct AdminListBlogAuthorLinkDefaultController:
             )
         }
         return
-            try presenter.renderRemoveConfirmation(
+            try await presenter.renderRemoveConfirmation(
                 menuId: menuId,
                 page: page,
                 search: search,
@@ -105,7 +103,7 @@ struct AdminListBlogAuthorLinkDefaultController:
         let (interactor, _) = buildRuntime(request, context)
         let menuId = try context.requiredID()
         let payload = try await request.decode(
-            as: ListRemoveFormInput.self,
+            as: NewAdminListRemoveFormInput.self,
             context: context
         )
         if !payload.normalizedSelectedIds.isEmpty {
@@ -114,18 +112,16 @@ struct AdminListBlogAuthorLinkDefaultController:
                 ids: payload.normalizedSelectedIds
             )
         }
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location:
-                    !payload.normalizedSelectedIds.isEmpty
-                    ? AdminToastRedirect.location(
-                        defaultPath: "/admin/blog/authors/\(menuId)/",
-                        title: "Removed",
-                        message: "Link removed successfully."
-                    )
-                    : "/admin/blog/authors/\(menuId)/"
-            ]
+        let location = BlogAdminRoutes.author(RouterPath(menuId)).description
+        guard !payload.normalizedSelectedIds.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
+        return AdminNotificationFlash.redirect(
+            to: location,
+            notification: .init(
+                title: "Removed",
+                message: "Blog author links removed successfully."
+            )
         )
     }
 }

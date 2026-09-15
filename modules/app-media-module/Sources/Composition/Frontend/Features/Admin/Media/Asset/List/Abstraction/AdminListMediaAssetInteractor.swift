@@ -1,0 +1,26 @@
+import FeatherAdmin
+import FeatherValidation
+import Foundation
+import HTML
+import Hummingbird
+import MediaAdminAPI
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+protocol AdminListMediaAssetInteractor: Sendable {
+
+    func listMediaAssets(
+        page: Int,
+        search: String?,
+        parentId: String?,
+        view: AdminListMediaAssetModel.ViewMode,
+        picker: AdminListMediaAssetModel.PickerState
+    ) async throws -> AdminListMediaAssetModel
+
+    func remove(
+        ids: [String]
+    ) async throws
+
+}

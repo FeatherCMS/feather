@@ -3,12 +3,12 @@ import Foundation
 
 protocol AdminEditUserRoleRepository: Sendable {
 
-    func get(
+    func load(
         id: String
     ) async throws -> UserRoleDetailsModel
 
     func update(
         id: String,
-        payload: UserRoleFormPayloadModel
+        payload: UserRoleEditFormPayloadModel
     ) async throws
 }

@@ -20,11 +20,11 @@ extension AdminEditSystemPermissionController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/system/permissions/{id}/edit/",
+            SystemPermissionRoutes.edit(RouterPath("{id}")),
             use: getEditSystemPermission
         )
         router.post(
-            "/admin/system/permissions/{id}/edit/",
+            SystemPermissionRoutes.edit(RouterPath("{id}")),
             use: postEditSystemPermission
         )
     }

@@ -15,7 +15,8 @@ struct AdminRemoveUserRole {
                     ),
                     presenter: AdminRemoveUserRoleDefaultPresenter(
                         request: request,
-                        renderEngine: renderingEngine
+                        context: context,
+                        renderingEngine: renderingEngine
                     )
                 )
             }

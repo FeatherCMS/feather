@@ -4,38 +4,36 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebContracts
-import WebStandards
 
 struct AdminListWebPageDefaultPresenter:
     AdminListWebPagePresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderListPage(
         model: AdminListWebPageModel,
-        isAdded: Bool,
-        isEdited: Bool,
-        isRemoved: Bool,
-        isPublished: Bool,
-        isUnpublished: Bool,
         permissions: Set<String>,
         search: String?,
         error: String?
-    ) -> HTMLResponse {
-        let canAccess = permissions.contains(WebPermissions.Pages.list.rawValue)
-        let canEdit = permissions.contains(WebPermissions.Pages.update.rawValue)
+    ) async throws -> HTMLResponse {
+        let actions = NewAdminListActions(
+            Set(
+                WebPermissions.Pages.allPermissions()
+                    .filter {
+                        permissions.contains($0.rawValue)
+                    }
+            )
+        )
         if let error {
-            return renderEngine.renderAdminPage(
+            return try await renderEngine.renderNewAdminPage(
                 request: request,
+                context: context,
                 title: "Manage web pages",
-                description: "Management web page list",
-                imagePath: "images/logos/logo.png",
-                sidebarState: renderEngine.adminSidebarState(
-                    request: request,
-                    permissions: permissions
-                ),
                 content: WebPageError(
                     state: .init(
                         info: "Unable to load web pages.",
@@ -45,36 +43,34 @@ struct AdminListWebPageDefaultPresenter:
                 )
             )
         }
-        return renderEngine.renderAdminPage(
-            request: request,
-            title: "Manage web pages",
-            description: "Management web page list",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
+        guard actions.allows(WebPermissions.Pages.list) else {
+            return try await renderEngine.renderNewAdminPage(
                 request: request,
-                permissions: permissions
-            ),
+                context: context,
+                title: "Manage web pages",
+                content: WebPageError(
+                    state: .init(
+                        info: "Forbidden",
+                        message: "Your account cannot access web pages.",
+                        breadcrumb: webPageBreadcrumbState()
+                    )
+                )
+            )
+        }
+        return try await renderEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Manage web pages",
             content: WebPageTable(
                 state: .init(
-                    isAdded: isAdded,
-                    isEdited: isEdited,
-                    isRemoved: isRemoved,
-                    isPublished: isPublished,
-                    isUnpublished: isUnpublished,
-                    canAccess: canAccess,
-                    canEdit: canEdit,
-                    permissions: permissions,
-                    canAdd: permissions.contains(
-                        WebPermissions.Pages.create.rawValue
+                    permissions: actions,
+                    pages: model.items,
+                    pageState: .init(
+                        page: model.page,
+                        pageSize: model.pageSize,
+                        total: model.total
                     ),
-                    rules: model.items,
-                    page: model.page,
-                    pageSize: model.pageSize,
-                    total: model.total,
-                    search: search ?? "",
-                    deniedInfo: "Forbidden",
-                    deniedMessage:
-                        "Your account cannot access web pages.",
+                    search: search,
                     breadcrumb: webPageBreadcrumbState()
                 )
             )
@@ -86,43 +82,35 @@ struct AdminListWebPageDefaultPresenter:
         search: String?,
         selectedIds: [String],
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove selected pages",
-            description: "Confirm remove",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ListRemoveConfirmation(
-                state: .init(
-                    breadcrumb: webPageBreadcrumbState(),
+            content: NewAdminRemoveConfirmation(
+                breadcrumb: webPageBreadcrumbState(),
+                pageHeader: .init(
                     title: "Remove selected pages",
-                    message:
-                        "Are you sure you want to remove these selected pages? This action cannot be undone.",
-                    action: "/admin/web/pages/remove/",
-                    cancelLink: ListRemoveRedirect.location(
-                        path: "/admin/web/pages/",
-                        page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
-                    ),
-                    selectedIds: selectedIds
-                )
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: selectedIds,
+                action: WebPageRoutes.remove.description,
+                cancel: NewAdminLocation.url(
+                    path: WebPageRoutes.list.description,
+                    page: page,
+                    search: search
+                ),
+                hiddenFields: selectedIds.map {
+                    .init(name: "ids", value: $0)
+                }
             )
         )
     }
 
-    private func webPageBreadcrumbState() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Pages", link: "/admin/web/pages/"),
-            ]
-        )
+    private func webPageBreadcrumbState() -> [NewAdminBreadcrumb.Link] {
+        [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Web", link: "/admin/web/"),
+        ]
     }
 }

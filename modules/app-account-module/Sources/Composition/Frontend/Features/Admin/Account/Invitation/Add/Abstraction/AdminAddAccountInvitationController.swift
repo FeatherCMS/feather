@@ -20,11 +20,11 @@ extension AdminAddAccountInvitationController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/account/invitations/add/",
+            RouterPath(AccountAdminRoutes.invitationAdd.description + "/"),
             use: getAddAccountInvitation
         )
         router.post(
-            "/admin/account/invitations/add/",
+            RouterPath(AccountAdminRoutes.invitationAdd.description + "/"),
             use: postAddAccountInvitation
         )
     }

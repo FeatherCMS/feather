@@ -1,73 +1,64 @@
+import CSS
 import FeatherAdmin
+import FeatherValidation
+import FeatherValidationFoundation
 import HTML
 import Hummingbird
+import OpenAPIRuntime
+import SGML
+import SystemAdminAPI
+import SystemFrontend
+import UserAdminAPI
+import UserAppAPI
+import UserFrontend
+import WebBuilders
+import WebComponents
 
 struct AdminEditAccountProfileDefaultPresenter:
     AdminEditAccountProfilePresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
-    func render(
-        userID: String,
-        model: AdminEditAccountProfileModel,
-        canEdit: Bool,
-        isEdited: Bool,
+    func renderPage(
+        state: AccountProfileEdit.State,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        let path = "/admin/account/users/\(userID)/profile/"
-        return renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        var state = state
+        state.form.nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
-            title: "Profile",
-            description: "Edit user profile",
-            imagePath: "images/puppy.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: AccountProfileEdit(
-                userID: userID,
-                state: .init(
-                    firstName: model.firstName,
-                    lastName: model.lastName,
-                    profileImageAssetId: model.profileImageAssetId,
-                    canEdit: canEdit,
-                    action: path
-                ),
-                isEdited: isEdited
-            )
+            context: context,
+            title: "Edit profile",
+            content: AccountProfileEdit(state: state)
         )
     }
 
     func renderDeniedPage(
-        userID: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "No permission",
-            description: "No permission",
-            imagePath: "images/puppy.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: PermissionDeniedView(
+            content: NewAdminStatusView(
                 state: .init(
-                    info: "No permission",
-                    message: "Your account cannot view this profile.",
-                    breadcrumb: .init(
-                        links: [
-                            .init(label: "Admin", link: "/admin/"),
-                            .init(label: "User", link: "/admin/user/"),
-                            .init(
-                                label: "Profile",
-                                link: "/admin/account/users/\(userID)/profile/"
-                            ),
-                        ]
-                    )
-                )
+                    title: "No permission",
+                    message: "Your identity cannot edit the profile."
+                ),
+                icon: FeatherIcons.alertCircle()
             )
         )
+    }
+
+    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Account", link: "/admin/account/"),
+            .init(label: "Profile", link: "/admin/account/profile/"),
+        ]
     }
 }

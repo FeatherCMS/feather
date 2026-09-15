@@ -53,45 +53,63 @@ struct MediaFolderTable {
     func create(
         row: Row.Create
     ) async throws -> Row {
-        try await connection.run(
+        _ = try await connection.run(
             query: #"""
-                INSERT INTO media_folder (
-                    id, parent_id, name, path, asset_count, total_size_bytes, created_at, updated_at
+                INSERT INTO media_asset_node (
+                    id, parent_id, kind, name, created_at, updated_at
                 ) VALUES (
-                    \#(row.id), \#(row.parentId), \#(row.name), \#(row.path), \#(row.assetCount), \#(Int(row.totalSizeBytes)), NOW(), NOW()
-                )
-                RETURNING *;
+                    \#(row.id), \#(row.parentId), 'folder', \#(row.name), NOW(), NOW()
+                );
                 """#
-        ) { seq in
-            guard let row = try await seq.collect().first else {
-                throw RepositoryError.notFound
-            }
-            return try Row(from: row)
+        ) { _ in }
+        _ = try await connection.run(
+            query: #"""
+                INSERT INTO media_asset_node_folder (
+                    node_id, path, asset_count, total_size_bytes
+                ) VALUES (
+                    \#(row.id), \#(row.path), \#(row.assetCount), \#(Int(row.totalSizeBytes))
+                );
+                """#
+        ) { _ in }
+        guard let result = try await find(id: row.id) else {
+            throw RepositoryError.notFound
         }
+        return result
     }
 
     func update(
         row: Row
     ) async throws -> Row {
-        try await connection.run(
+        _ = try await connection.run(
             query: #"""
-                UPDATE media_folder
+                UPDATE media_asset_node
                 SET parent_id = \#(row.parentId),
                     name = \#(row.name),
-                    path = \#(row.path),
-                    asset_count = \#(row.assetCount),
-                    total_size_bytes = \#(Int(row.totalSizeBytes)),
                     updated_at = NOW()
                 WHERE id = \#(row.id)
-                  AND deleted_at IS NULL
-                RETURNING *;
+                  AND kind = 'folder'
+                  AND deleted_at IS NULL;
                 """#
-        ) { seq in
-            guard let row = try await seq.collect().first else {
-                throw RepositoryError.notFound
-            }
-            return try Row(from: row)
+        ) { _ in }
+        _ = try await connection.run(
+            query: #"""
+                UPDATE media_asset_node_folder
+                SET path = \#(row.path),
+                    asset_count = \#(row.assetCount),
+                    total_size_bytes = \#(Int(row.totalSizeBytes))
+                WHERE node_id = \#(row.id)
+                  AND EXISTS (
+                    SELECT 1 FROM media_asset_node
+                    WHERE id = \#(row.id)
+                      AND kind = 'folder'
+                      AND deleted_at IS NULL
+                  );
+                """#
+        ) { _ in }
+        guard let result = try await find(id: row.id) else {
+            throw RepositoryError.notFound
         }
+        return result
     }
 
     func find(
@@ -99,10 +117,21 @@ struct MediaFolderTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT *
-                FROM media_folder
-                WHERE id = \#(id)
-                  AND deleted_at IS NULL
+                SELECT
+                    n.id,
+                    n.parent_id,
+                    n.name,
+                    f.path,
+                    f.asset_count,
+                    f.total_size_bytes,
+                    n.created_at,
+                    n.updated_at,
+                    n.deleted_at
+                FROM media_asset_node n
+                JOIN media_asset_node_folder f ON f.node_id = n.id
+                WHERE n.id = \#(id)
+                  AND n.kind = 'folder'
+                  AND n.deleted_at IS NULL
                 LIMIT 1;
                 """#
         ) { seq in
@@ -116,10 +145,21 @@ struct MediaFolderTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT *
-                FROM media_folder
-                WHERE path = \#(path)
-                  AND deleted_at IS NULL
+                SELECT
+                    n.id,
+                    n.parent_id,
+                    n.name,
+                    f.path,
+                    f.asset_count,
+                    f.total_size_bytes,
+                    n.created_at,
+                    n.updated_at,
+                    n.deleted_at
+                FROM media_asset_node n
+                JOIN media_asset_node_folder f ON f.node_id = n.id
+                WHERE f.path = \#(path)
+                  AND n.kind = 'folder'
+                  AND n.deleted_at IS NULL
                 LIMIT 1;
                 """#
         ) { seq in
@@ -133,14 +173,25 @@ struct MediaFolderTable {
     ) async throws -> [Row] {
         try await connection.run(
             query: #"""
-                SELECT *
-                FROM media_folder
-                WHERE deleted_at IS NULL
+                SELECT
+                    n.id,
+                    n.parent_id,
+                    n.name,
+                    f.path,
+                    f.asset_count,
+                    f.total_size_bytes,
+                    n.created_at,
+                    n.updated_at,
+                    n.deleted_at
+                FROM media_asset_node n
+                JOIN media_asset_node_folder f ON f.node_id = n.id
+                WHERE n.kind = 'folder'
+                  AND n.deleted_at IS NULL
                   AND (
-                    (\#(parentId == nil) AND parent_id IS NULL)
-                    OR parent_id = \#(parentId)
+                    (\#(parentId == nil) AND n.parent_id IS NULL)
+                    OR n.parent_id = \#(parentId)
                   )
-                ORDER BY LOWER(name) ASC, id ASC;
+                ORDER BY LOWER(n.name) ASC, n.id ASC;
                 """#
         ) { seq in
             try await seq.collect().map { try Row(from: $0) }
@@ -152,14 +203,25 @@ struct MediaFolderTable {
     ) async throws -> [Row] {
         try await connection.run(
             query: #"""
-                SELECT *
-                FROM media_folder
-                WHERE deleted_at IS NULL
+                SELECT
+                    n.id,
+                    n.parent_id,
+                    n.name,
+                    f.path,
+                    f.asset_count,
+                    f.total_size_bytes,
+                    n.created_at,
+                    n.updated_at,
+                    n.deleted_at
+                FROM media_asset_node n
+                JOIN media_asset_node_folder f ON f.node_id = n.id
+                WHERE n.kind = 'folder'
+                  AND n.deleted_at IS NULL
                   AND (
-                    path = \#(path)
-                    OR path LIKE \#(path + "/%")
+                    f.path = \#(path)
+                    OR f.path LIKE \#(path + "/%")
                   )
-                ORDER BY LENGTH(path) ASC, LOWER(name) ASC, id ASC;
+                ORDER BY LENGTH(f.path) ASC, LOWER(n.name) ASC, n.id ASC;
                 """#
         ) { seq in
             try await seq.collect().map { try Row(from: $0) }
@@ -177,8 +239,9 @@ struct MediaFolderTable {
             .joined(separator: ", ")
         return try await connection.run(
             query: #"""
-                DELETE FROM media_folder
+                DELETE FROM media_asset_node
                 WHERE id IN (\#(unescaped: values))
+                  AND kind = 'folder'
                 RETURNING id;
                 """#
         ) { sequence in

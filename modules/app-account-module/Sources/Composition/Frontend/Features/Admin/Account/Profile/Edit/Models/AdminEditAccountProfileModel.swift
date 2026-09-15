@@ -1,5 +1,33 @@
+import CSS
+import FeatherAdmin
+import FeatherValidation
+import FeatherValidationFoundation
+import Foundation
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import SystemAdminAPI
+import SystemFrontend
+import UserAdminAPI
+import UserAppAPI
+import UserFrontend
+import WebBuilders
+import WebComponents
+
 struct AdminEditAccountProfileModel: Sendable {
+    let id: String
     let firstName: String?
     let lastName: String?
     let profileImageAssetId: String?
+    let profileImageAsset: NewAdminMediaAsset?
+
+    var accountProfile: AdminAccountProfileModel {
+        .init(
+            firstName: firstName,
+            lastName: lastName,
+            profileImageAssetId: profileImageAssetId,
+            profileImageAsset: profileImageAsset
+        )
+    }
 }

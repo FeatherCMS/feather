@@ -1,5 +1,6 @@
 import AuthAdminAPI
 import AuthAppAPI
+import AuthContracts
 import CSS
 import FeatherAdmin
 import FeatherValidation
@@ -13,7 +14,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
 {
@@ -34,10 +36,19 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
             context
         )
         let permissions = context.currentUserPermissions
+        guard
+            context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.update)
+        else {
+            return try await presenter.renderError(
+                id: id,
+                error: .forbidden,
+                permissions: permissions
+            )
+        }
         do {
             let link = try await interactor.get(id: id)
             let emails = try await interactor.listEmails()
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 id: id,
                 isEdited: isEdited,
                 form: presenter.formState(
@@ -49,7 +60,7 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return presenter.renderError(
+            return try await presenter.renderError(
                 id: id,
                 error: error,
                 permissions: permissions
@@ -66,12 +77,43 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
             request,
             context
         )
+        guard
+            context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.update)
+        else {
+            return
+                try await presenter.renderError(
+                    id: id,
+                    error: .forbidden,
+                    permissions: context.currentUserPermissions
+                )
+                .response(from: request, context: context)
+        }
         var lastPayload: AdminEditAuthMagicLinkFormInput?
         do {
-            let payload = try await request.decode(
-                as: AdminEditAuthMagicLinkFormInput.self,
+            let nonceRequest = try await request.decode(
+                as: NonceRequest<AdminEditAuthMagicLinkFormInput>.self,
                 context: context
             )
+            guard
+                await AdminNonceStore.shared.consume(
+                    nonceRequest.nonce,
+                    sessionToken: context.sessionToken
+                )
+            else {
+                var state = presenter.formState(
+                    credentialId: "",
+                    isPersistent: false
+                )
+                state.error = "This form has expired. Please reload the page."
+                return try await updateResponse(
+                    request: request,
+                    context: context,
+                    id: id,
+                    presenter: presenter,
+                    state: state
+                )
+            }
+            let payload = nonceRequest.input
             lastPayload = payload
             try await payload.validate()
             try await interactor.execute(
@@ -81,15 +123,12 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
                     isPersistent: payload.isPersistent.value
                 )
             )
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminToastRedirect.location(
-                        defaultPath: "/admin/auth/magic-links/\(id)/edit/",
-                        title: "Saved",
-                        message: "User magic link edited successfully."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: "/admin/auth/magic-links/\(id)/edit/",
+                notification: .init(
+                    title: "Saved",
+                    message: "User magic link edited successfully."
+                )
             )
         }
         catch let error as ValidationError {
@@ -100,7 +139,7 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
                 isPersistent: lastPayload?.isPersistent.value ?? false
             )
             state.apply(errors: errs)
-            return try updateResponse(
+            return try await updateResponse(
                 request: request,
                 context: context,
                 id: id,
@@ -114,7 +153,7 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
                 isPersistent: lastPayload?.isPersistent.value ?? false
             )
             state.error = presenter.format(error: error)
-            return try updateResponse(
+            return try await updateResponse(
                 request: request,
                 context: context,
                 id: id,
@@ -128,7 +167,7 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
                 isPersistent: lastPayload?.isPersistent.value ?? false
             )
             state.error = error.displayMessage
-            return try updateResponse(
+            return try await updateResponse(
                 request: request,
                 context: context,
                 id: id,
@@ -144,8 +183,8 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
         id: String,
         presenter: any AdminEditAuthMagicLinkPresenter,
         state: AuthMagicLinkForm.State
-    ) throws -> Response {
-        try presenter.renderPage(
+    ) async throws -> Response {
+        try await presenter.renderPage(
             id: id,
             isEdited: false,
             form: state,

@@ -15,7 +15,7 @@ public enum WebAdminDashboardEventHandlers {
                 apiBaseURL: context.apiBaseURL,
                 sessionToken: context.sessionToken
             )
-            var contentStats: [AdminGetHomeModel.ContentStat] = []
+            var contentStats: [AdminViewDashboardModel.ContentStat] = []
 
             await appendCount(
                 label: "Web pages",
@@ -59,13 +59,9 @@ public enum WebAdminDashboardEventHandlers {
             switch response {
             case .ok(let value): return try value.body.json.data.total
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: unauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: forbiddenMessage
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -91,13 +87,9 @@ public enum WebAdminDashboardEventHandlers {
             switch response {
             case .ok(let value): return try value.body.json.data.total
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: unauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: forbiddenMessage
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -119,7 +111,7 @@ public enum WebAdminDashboardEventHandlers {
         permission: String,
         permissions: Set<String>,
         operation: @escaping @Sendable () async throws -> Int,
-        to contentStats: inout [AdminGetHomeModel.ContentStat]
+        to contentStats: inout [AdminViewDashboardModel.ContentStat]
     ) async {
         guard permissions.contains(permission),
             let count = try? await operation()

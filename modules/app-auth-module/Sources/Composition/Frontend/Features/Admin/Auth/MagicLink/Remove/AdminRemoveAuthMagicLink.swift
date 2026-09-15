@@ -13,7 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AdminRemoveAuthMagicLink {
     let controller: any AdminRemoveAuthMagicLinkController
@@ -29,6 +30,7 @@ struct AdminRemoveAuthMagicLink {
                     ),
                     presenter: AdminRemoveAuthMagicLinkDefaultPresenter(
                         request: request,
+                        context: context,
                         renderEngine: renderingEngine
                     )
                 )

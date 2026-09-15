@@ -20,11 +20,15 @@ extension AdminEditAccountInvitationController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/account/invitations/{id}/edit/",
+            RouterPath(
+                AccountAdminRoutes.invitationEditPattern.description + "/"
+            ),
             use: getEditAccountInvitation
         )
         router.post(
-            "/admin/account/invitations/{id}/edit/",
+            RouterPath(
+                AccountAdminRoutes.invitationEditPattern.description + "/"
+            ),
             use: postEditAccountInvitation
         )
     }

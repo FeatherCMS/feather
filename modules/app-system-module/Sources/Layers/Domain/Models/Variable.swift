@@ -18,13 +18,14 @@ public struct Variable: Model {
     }
 
     public struct New: Sendable {
-        public let id: String
+        public let key: String
         public let value: String
         public let name: String?
         public let notes: String?
     }
 
     public let id: String
+    public var key: String
     public var value: String
     public var name: String?
     public var notes: String?
@@ -33,6 +34,7 @@ public struct Variable: Model {
 
     package init(
         id: String,
+        key: String,
         value: String,
         name: String?,
         notes: String?,
@@ -40,6 +42,7 @@ public struct Variable: Model {
         updatedAt: Date
     ) {
         self.id = id
+        self.key = key
         self.value = value
         self.name = name
         self.notes = notes
@@ -80,7 +83,7 @@ extension Variable {
     }
 
     public static func create(
-        id: String,
+        key: String,
         value: String,
         name: String?,
         notes: String?
@@ -90,7 +93,7 @@ extension Variable {
         try validate(notes: notes)
 
         return .init(
-            id: id,
+            key: key,
             value: value,
             name: name,
             notes: notes
@@ -98,10 +101,12 @@ extension Variable {
     }
 
     public mutating func update(
+        key: String? = nil,
         name: String? = nil,
         value: String? = nil,
         notes: String? = nil
     ) throws(Self.Error) {
+        self.key = key ?? self.key
         let newName = name ?? self.name
         let newValue = value ?? self.value
         let newNotes = notes ?? self.notes

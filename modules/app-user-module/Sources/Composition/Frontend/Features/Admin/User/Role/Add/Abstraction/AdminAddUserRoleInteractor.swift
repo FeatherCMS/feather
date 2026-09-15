@@ -3,7 +3,7 @@ import Foundation
 
 protocol AdminAddUserRoleInteractor: Sendable {
 
-    func execute(
-        entity: AdminAddUserRoleModel
+    func add(
+        input: AdminAddUserRoleFormInput
     ) async throws
 }

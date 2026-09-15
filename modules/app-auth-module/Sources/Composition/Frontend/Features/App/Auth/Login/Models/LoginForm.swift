@@ -13,7 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 //
 //  File.swift
@@ -22,18 +23,18 @@ import WebStandards
 //  Addd by Tibor Bödecs on 2026. 03. 01..
 //
 
-struct LoginForm: Component, FlowContent {
+struct LoginForm: Component {
 
-    struct State: FeatherAdmin.Object {
-        var email: EmailField.State
-        var password: PasswordField.State
-        var isPersistent: CheckboxField.State
+    struct State {
+        var email: NewAdminFormFieldInput.State
+        var password: NewAdminFormFieldInput.State
+        var isPersistent: NewAdminFormFieldCheckbox.State
         var redirectPath: String
 
         mutating func apply(
             errors: [String: String]
         ) {
-            email.error = errors[email.key]
+            email.error = errors[email.name]
         }
     }
 
@@ -45,24 +46,26 @@ struct LoginForm: Component, FlowContent {
         }
     }
 
-    func content() -> some BasicTag {
+    func html(context: inout BuilderContext) -> Form {
         Form {
             Input()
                 .type(.hidden)
                 .name("redirect")
                 .value(state.redirectPath)
             Section {
-                EmailField(state: state.email)
+                context.build(NewAdminFormFieldInput(state: state.email))
             }
             .class("login-field")
 
             Section {
-                PasswordField(state: state.password)
+                context.build(NewAdminFormFieldInput(state: state.password))
             }
             .class("login-field")
 
             Section {
-                CheckboxField(state: state.isPersistent)
+                context.build(
+                    NewAdminFormFieldCheckbox(state: state.isPersistent)
+                )
             }
             .class("login-checkbox-field")
 

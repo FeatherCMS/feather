@@ -1,17 +1,27 @@
+import CSS
 import FeatherAdmin
+import FeatherValidation
+import FeatherValidationFoundation
+import HTML
 import Hummingbird
+import OpenAPIRuntime
+import SGML
+import SystemAdminAPI
+import SystemFrontend
+import UserAdminAPI
+import UserAppAPI
+import UserFrontend
+import WebBuilders
+import WebComponents
 
 protocol AdminEditAccountProfilePresenter: Sendable {
-    func render(
-        userID: String,
-        model: AdminEditAccountProfileModel,
-        canEdit: Bool,
-        isEdited: Bool,
+
+    func renderPage(
+        state: AccountProfileEdit.State,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderDeniedPage(
-        userID: String,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 }

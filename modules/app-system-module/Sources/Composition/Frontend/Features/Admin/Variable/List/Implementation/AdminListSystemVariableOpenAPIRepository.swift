@@ -7,16 +7,6 @@ struct AdminListSystemVariableOpenAPIRepository:
     AdminListSystemVariableRepository
 {
     let api: SystemAdminAPIClient
-    private let listUnauthorizedMessage =
-        "Please sign in again to view system variables."
-    private let listForbiddenMessage =
-        "Your account cannot access system variables."
-    private let deleteUnauthorizedMessage =
-        "Please sign in again to delete this system variable."
-    private let deleteForbiddenMessage =
-        "Your account cannot delete this system variable."
-    private let deleteNotFoundMessage =
-        "This system variable could not be found."
 
     init(api: SystemAdminAPIClient) {
         self.api = api
@@ -24,8 +14,12 @@ struct AdminListSystemVariableOpenAPIRepository:
 
     func listSystemVariables(
         page: Int,
-        search: String?
-    ) async throws -> AdminListSystemVariableModel {
+        search: String?,
+        ids: [String]? = nil
+    ) async throws
+        -> SystemAdminAPI.Components.Responses
+        .SystemVariableListItemSearchSchemaSearchResponse
+    {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
@@ -33,45 +27,31 @@ struct AdminListSystemVariableOpenAPIRepository:
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
-                            page: .init(size: 20, number: page),
-                            filters: .init(search: search)
+                            page: .init(
+                                size: max(
+                                    AdminListSystemVariable.pageSize,
+                                    ids?.count ?? 0
+                                ),
+                                number: page
+                            ),
+                            filters: .init(search: search, ids: ids)
                         )
                     )
                 )
 
             switch response {
             case .ok(let okResponse):
-                let body = try okResponse.body.json
-                return .init(
-                    items: body.data.items,
-                    total: body.data.total,
-                    page: body.query.page.number,
-                    pageSize: body.query.page.size
-                )
+                return okResponse
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: listUnauthorizedMessage
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: listForbiddenMessage
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
                     responseBody: response.body
                 )
             }
-        }
-    }
-
-    func delete(
-        id: String
-    ) async throws {
-        try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.systemVariableDelete(
-                body: .json(.init(ids: [id], results: false, summary: true))
-            )
         }
     }
 

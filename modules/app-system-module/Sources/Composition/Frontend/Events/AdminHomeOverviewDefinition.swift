@@ -1,14 +1,14 @@
 public struct AdminHomeOverviewDefinition: Sendable {
-    public let contentStats: [AdminGetHomeModel.ContentStat]
-    public let dailyTraffic: [AdminGetHomeModel.TrafficPoint]?
-    public let topPages: [AdminGetHomeModel.BreakdownItem]?
-    public let insightCards: [AdminGetHomeModel.InsightCard]
+    public let contentStats: [AdminViewDashboardModel.ContentStat]
+    public let dailyTraffic: [AdminViewDashboardModel.TrafficPoint]?
+    public let topPages: [AdminViewDashboardModel.BreakdownItem]?
+    public let insightCards: [AdminViewDashboardModel.InsightCard]
 
     public init(
-        contentStats: [AdminGetHomeModel.ContentStat],
-        dailyTraffic: [AdminGetHomeModel.TrafficPoint]?,
-        topPages: [AdminGetHomeModel.BreakdownItem]?,
-        insightCards: [AdminGetHomeModel.InsightCard]
+        contentStats: [AdminViewDashboardModel.ContentStat],
+        dailyTraffic: [AdminViewDashboardModel.TrafficPoint]?,
+        topPages: [AdminViewDashboardModel.BreakdownItem]?,
+        insightCards: [AdminViewDashboardModel.InsightCard]
     ) {
         self.contentStats = contentStats
         self.dailyTraffic = dailyTraffic

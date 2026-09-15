@@ -9,8 +9,9 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct AdminEditBlogSettingsDefaultController:
     AdminEditBlogSettingsController
@@ -32,7 +33,7 @@ struct AdminEditBlogSettingsDefaultController:
         )
 
         guard canRead else {
-            return presenter.renderDeniedPage(
+            return try await presenter.renderDeniedPage(
                 info: "No permission",
                 message: "Your account cannot view the blog settings.",
                 permissions: permissions
@@ -45,9 +46,8 @@ struct AdminEditBlogSettingsDefaultController:
         }
         catch {
             let canEdit = canEdit(permissions: permissions)
-            return presenter.renderPage(
+            return try await presenter.renderPage(
                 state: .init(
-                    isEdited: false,
                     canEdit: canEdit,
                     form: makeFormState(
                         canEdit: canEdit,
@@ -59,9 +59,8 @@ struct AdminEditBlogSettingsDefaultController:
             )
         }
         let canEdit = canEdit(permissions: permissions)
-        return presenter.renderPage(
+        return try await presenter.renderPage(
             state: .init(
-                isEdited: request.hasQueryFlag("edited"),
                 canEdit: canEdit,
                 form: makeFormState(from: settings, canEdit: canEdit),
                 breadcrumb: breadcrumb()
@@ -80,7 +79,7 @@ struct AdminEditBlogSettingsDefaultController:
 
         guard canEdit else {
             return
-                try presenter.renderDeniedPage(
+                try await presenter.renderDeniedPage(
                     info: "No permission",
                     message: "Your account cannot edit the blog settings.",
                     permissions: permissions
@@ -106,9 +105,8 @@ struct AdminEditBlogSettingsDefaultController:
             )
             form.apply(errors: errors)
             return
-                try presenter.renderPage(
+                try await presenter.renderPage(
                     state: .init(
-                        isEdited: false,
                         canEdit: canEdit,
                         form: form,
                         breadcrumb: breadcrumb()
@@ -134,9 +132,8 @@ struct AdminEditBlogSettingsDefaultController:
             )
             form.apply(errors: errors)
             return
-                try presenter.renderPage(
+                try await presenter.renderPage(
                     state: .init(
-                        isEdited: false,
                         canEdit: canEdit,
                         form: form,
                         breadcrumb: breadcrumb()
@@ -145,15 +142,12 @@ struct AdminEditBlogSettingsDefaultController:
                 )
                 .response(from: request, context: context)
         }
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminToastRedirect.location(
-                    defaultPath: "/admin/blog/settings/",
-                    title: "Saved",
-                    message: "Settings edited successfully."
-                )
-            ]
+        return AdminNotificationFlash.redirect(
+            to: BlogAdminRoutes.blog.description + "/settings/",
+            notification: .init(
+                title: "Saved",
+                message: "Blog settings updated successfully."
+            )
         )
     }
 
@@ -227,8 +221,7 @@ struct AdminEditBlogSettingsDefaultController:
                 error: nil
             ),
             canEdit: canEdit,
-            error: error,
-            success: nil
+            error: error
         )
     }
 
@@ -248,13 +241,7 @@ struct AdminEditBlogSettingsDefaultController:
         )
     }
 
-    private func breadcrumb() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Blog", link: "/admin/blog/"),
-                .init(label: "Settings", link: "/admin/blog/settings/"),
-            ]
-        )
+    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
+        BlogAdminRoutes.breadcrumb
     }
 }

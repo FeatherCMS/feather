@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import Hummingbird
 
@@ -6,27 +7,27 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
     AdminRemoveAccountInvitationPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderRemovePage(
         id: String,
         email: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
-            title: "Manage user invitations",
-            description: "Management user invitation list",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
+            context: context,
+            title: "Remove user invitation",
             content: AccountInvitationConfirmation(
                 state: .init(
                     id: id,
                     email: email,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: breadcrumb(id: id),
+                    nonceToken: nonceToken
                 )
             )
         )
@@ -37,37 +38,25 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove user invitation",
-            description: "Remove confirmation for a management user invitation",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: AccountInvitationError(
-                state: .init(
-                    info: info,
-                    message: message,
-                    breadcrumb: breadcrumb(id: id)
-                )
+            content: NewAdminStatusView(
+                state: .init(title: info, message: message),
+                icon: FeatherIcons.alertCircle()
             )
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> AdminBreadcrumb.State {
-        .init(links: [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "User", link: "/admin/user/"),
-            .init(label: "Invitations", link: "/admin/account/invitations/"),
+    func breadcrumb(id: String) -> [NewAdminBreadcrumb.Link] {
+        AccountAdminRoutes.invitationBreadcrumb + [
             .init(
                 label: "Remove",
-                link: "/admin/account/invitations/\(id)/remove/"
-            ),
-        ])
+                link: AccountAdminRoutes.invitationRemove(RouterPath(id))
+                    .description
+            )
+        ]
     }
 }

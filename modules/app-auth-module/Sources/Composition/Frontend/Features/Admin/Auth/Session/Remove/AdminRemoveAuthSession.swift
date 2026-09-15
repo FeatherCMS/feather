@@ -20,6 +20,7 @@ struct AdminRemoveAuthSession {
                     ),
                     presenter: AdminRemoveAuthSessionDefaultPresenter(
                         request: request,
+                        context: context,
                         renderingEngine: renderingEngine
                     )
                 )

@@ -12,6 +12,7 @@ extension Variable {
     var asDetail: VariableDetail {
         .init(
             id: id,
+            key: key,
             value: value,
             name: name,
             notes: notes,

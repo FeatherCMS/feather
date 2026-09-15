@@ -5,7 +5,8 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
-import WebStandards
+import WebBuilders
+import WebComponents
 
 struct AppContactFormSubmissionDefaultController:
     AppContactFormSubmissionController

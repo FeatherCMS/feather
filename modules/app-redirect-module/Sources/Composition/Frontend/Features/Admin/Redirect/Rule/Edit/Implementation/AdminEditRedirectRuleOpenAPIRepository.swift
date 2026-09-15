@@ -13,7 +13,7 @@ struct AdminEditRedirectRuleOpenAPIRepository:
 
     func load(
         id: String
-    ) async throws -> RedirectRuleDetailsModel {
+    ) async throws -> RedirectRuleEditModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.redirectRuleGet(
                 path: .init(redirectRuleId: id),
@@ -30,18 +30,11 @@ struct AdminEditRedirectRuleOpenAPIRepository:
                     notes: rule.notes
                 )
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Redirect rule not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this redirect rule."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot edit redirect rules."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -53,7 +46,7 @@ struct AdminEditRedirectRuleOpenAPIRepository:
 
     func update(
         id: String,
-        input: RedirectRuleFormInput
+        input: RedirectRuleEditFormInput
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.redirectRuleUpdate(
@@ -74,19 +67,11 @@ struct AdminEditRedirectRuleOpenAPIRepository:
             case .ok:
                 return
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Redirect rule not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to update this redirect rule."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot edit redirect rules."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

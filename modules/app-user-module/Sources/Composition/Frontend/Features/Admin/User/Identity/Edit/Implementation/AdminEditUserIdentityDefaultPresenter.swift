@@ -1,67 +1,177 @@
 import FeatherAdmin
-import HTML
+import FeatherValidation
 import Hummingbird
+import UserContracts
+import WebComponents
 
-struct AdminEditUserIdentityDefaultPresenter:
-    AdminEditUserIdentityPresenter
-{
+struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
     let request: Request
-    let renderEngine: any RenderingEngine
+    let context: DefaultRequestContext
+    let renderingEngine: any RenderingEngine
 
-    func renderPage(
-        state: UserIdentityEdit.State,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
-            request: request,
-            title: "Edit identity",
-            description: "Edit user identity",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: UserIdentityEdit(state: state)
+    func renderEditPage(id: String, state: UserIdentityEditForm.State)
+        async throws
+        -> HTMLResponse
+    {
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
         )
-    }
-
-    func renderError(
-        state: UserIdentityError.State,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
-            request: request,
-            title: "Edit identity",
-            description: "Edit user identity",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: UserIdentityError(state: state)
-        )
-    }
-
-    func renderDeniedPage(
-        breadcrumb: AdminBreadcrumb.State,
-        permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
-            request: request,
-            title: "No permission",
-            description: "No permission",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: PermissionDeniedView(
-                state: .init(
-                    info: "No permission",
-                    message: "Your identity cannot edit user identities.",
-                    breadcrumb: breadcrumb
-                )
+        return try await renderPage(
+            content: UserIdentityEditPage(
+                id: id,
+                form: state,
+                permissions: context.currentUserAdminListActions,
+                nonceToken: nonceToken
             )
         )
+    }
+
+    func renderValidationError(
+        id: String,
+        input: AdminEditUserIdentityFormInput?,
+        error: ValidationError,
+        roleOptions: [UserIdentityEditRoleOptionModel]
+    ) async throws -> HTMLResponse {
+        var state =
+            input.map {
+                UserIdentityEditForm.State.from(
+                    name: $0.normalizedName,
+                    status: $0.normalizedStatus,
+                    roleIds: $0.roleIds,
+                    roleOptions: roleOptions
+                )
+            } ?? .empty()
+        var errors: [String: String] = [:]
+        for failure in error.failures { errors[failure.key] = failure.message }
+        state.apply(errors: errors)
+        return try await renderEditPage(id: id, state: state)
+            .withStatus(.unprocessableContent)
+    }
+
+    func renderEditError(
+        id: String,
+        input: AdminEditUserIdentityFormInput?,
+        error: AdminEditUserIdentityError,
+        roleOptions: [UserIdentityEditRoleOptionModel]
+    ) async throws -> HTMLResponse {
+        switch error {
+        case .notFound:
+            return try await renderStatusPage(
+                title: "User identity not found",
+                message: "This user identity may have been removed.",
+                status: .notFound
+            )
+        case .unauthorized:
+            return try await renderStatusPage(
+                title: "Session expired",
+                message: "Please sign in again to edit user identities.",
+                status: .unauthorized
+            )
+        case .forbidden: return try await renderForbiddenPage()
+        case .conflict:
+            return try await renderFormError(
+                id: id,
+                input: input,
+                message: "A user identity with this name already exists.",
+                status: .conflict,
+                roleOptions: roleOptions
+            )
+        case .unavailable:
+            return try await renderFormError(
+                id: id,
+                input: input,
+                message:
+                    "The user identity could not be updated. Please try again.",
+                status: .serviceUnavailable,
+                roleOptions: roleOptions
+            )
+        }
+    }
+
+    func renderSuccess() -> Response {
+        AdminNotificationFlash.redirect(
+            to: UserIdentityRoutes.list.description,
+            notification: .init(
+                title: "Saved",
+                message: "User identity updated successfully."
+            )
+        )
+    }
+
+    func renderUnauthorizedPage() async throws -> HTMLResponse {
+        try await renderStatusPage(
+            title: "Session expired",
+            message: "Please sign in again to edit user identities.",
+            status: .unauthorized
+        )
+    }
+    func renderForbiddenPage() async throws -> HTMLResponse {
+        try await renderStatusPage(
+            title: "Forbidden",
+            message: "Your account cannot edit user identities.",
+            status: .forbidden
+        )
+    }
+    func renderInvalidNoncePage() async throws -> HTMLResponse {
+        try await renderStatusPage(
+            title: "Form expired",
+            message:
+                "This form is no longer valid. Please reload the page and try again.",
+            status: .badRequest
+        )
+    }
+
+    private func renderFormError(
+        id: String,
+        input: AdminEditUserIdentityFormInput?,
+        message: String,
+        status: HTTPResponse.Status,
+        roleOptions: [UserIdentityEditRoleOptionModel]
+    ) async throws -> HTMLResponse {
+        var state =
+            input.map {
+                UserIdentityEditForm.State.from(
+                    name: $0.normalizedName,
+                    status: $0.normalizedStatus,
+                    roleIds: $0.roleIds,
+                    roleOptions: roleOptions
+                )
+            } ?? .empty()
+        state.error = message
+        return try await renderEditPage(id: id, state: state).withStatus(status)
+    }
+
+    private func renderStatusPage(
+        title: String,
+        message: String,
+        status: HTTPResponse.Status
+    ) async throws -> HTMLResponse {
+        let page = try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Manage user identities",
+            content: NewAdminStatusView(
+                state: .init(title: title, message: message),
+                icon: FeatherIcons.alertCircle()
+            )
+        )
+        return HTMLResponse(content: page.content, status: status)
+    }
+
+    private func renderPage<T: Component>(content: T) async throws
+        -> HTMLResponse
+    {
+        try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Manage user identities",
+            content: content
+        )
+    }
+}
+
+extension HTMLResponse {
+    fileprivate func withStatus(_ status: HTTPResponse.Status) -> HTMLResponse {
+        HTMLResponse(content: content, status: status)
     }
 }

@@ -22,18 +22,11 @@ struct AdminEditWebMetadataOpenAPIRepository: AdminEditWebMetadataRepository {
                 let entry = try okResponse.body.json
                 return map(entry)
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Web metadata not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this web metadata."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot access web metadata."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -68,19 +61,13 @@ struct AdminEditWebMetadataOpenAPIRepository: AdminEditWebMetadataRepository {
                         $0.referenceId == referenceID
                     })
                 else {
-                    throw OpenAPIRepositoryError.notFound(
-                        message: "Web metadata not found."
-                    )
+                    throw OpenAPIRepositoryError.notFound
                 }
                 return try await load(id: entry.id)
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message: "Please sign in again to load this web metadata."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message: "Your account cannot access web metadata."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -130,19 +117,11 @@ struct AdminEditWebMetadataOpenAPIRepository: AdminEditWebMetadataRepository {
             case .ok:
                 return
             case .notFound:
-                throw OpenAPIRepositoryError.notFound(
-                    message: "Web metadata not found."
-                )
+                throw OpenAPIRepositoryError.notFound
             case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized(
-                    message:
-                        "Please sign in again to update this web metadata."
-                )
+                throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                throw OpenAPIRepositoryError.forbidden(
-                    message:
-                        "Your account cannot edit web metadata."
-                )
+                throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

@@ -4,35 +4,37 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebContracts
-import WebStandards
 
 struct AdminListWebMenuDefaultPresenter:
     AdminListWebMenuPresenter
 {
     let request: Request
+    let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
     func renderListPage(
         model: AdminListWebMenuModel,
-        isAdded: Bool,
-        isEdited: Bool,
-        isRemoved: Bool,
         permissions: Set<String>,
         search: String?,
         error: String?
-    ) -> HTMLResponse {
-        let canAccess = permissions.contains(WebPermissions.Menus.list.rawValue)
+    ) async throws -> HTMLResponse {
+        let actions = NewAdminListActions(
+            Set(
+                WebPermissions.Menus.allPermissions()
+                    .filter {
+                        permissions.contains($0.rawValue)
+                    }
+            )
+        )
+        let canAccess = actions.allows(WebPermissions.Menus.list)
         if let error {
-            return renderEngine.renderAdminPage(
+            return try await renderEngine.renderNewAdminPage(
                 request: request,
+                context: context,
                 title: "Manage menus",
-                description: "Management menu list",
-                imagePath: "images/logos/logo.png",
-                sidebarState: renderEngine.adminSidebarState(
-                    request: request,
-                    permissions: permissions
-                ),
                 content: WebMenuError(
                     state: .init(
                         info: "Unable to load web menus.",
@@ -42,33 +44,34 @@ struct AdminListWebMenuDefaultPresenter:
                 )
             )
         }
-        return renderEngine.renderAdminPage(
-            request: request,
-            title: "Manage menus",
-            description: "Management menu list",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
+        guard canAccess else {
+            return try await renderEngine.renderNewAdminPage(
                 request: request,
-                permissions: permissions
-            ),
+                context: context,
+                title: "Manage menus",
+                content: WebMenuError(
+                    state: .init(
+                        info: "Forbidden",
+                        message: "Your account cannot access web menus.",
+                        breadcrumb: webMenuBreadcrumbState()
+                    )
+                )
+            )
+        }
+        return try await renderEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Manage menus",
             content: WebMenuTable(
                 state: .init(
-                    isAdded: isAdded,
-                    isEdited: isEdited,
-                    isRemoved: isRemoved,
-                    canAccess: canAccess,
-                    permissions: permissions,
-                    canAdd: permissions.contains(
-                        WebPermissions.Menus.create.rawValue
+                    permissions: actions,
+                    menus: model.items,
+                    pageState: .init(
+                        page: model.page,
+                        pageSize: model.pageSize,
+                        total: model.total
                     ),
-                    rules: model.items,
-                    page: model.page,
-                    pageSize: model.pageSize,
-                    total: model.total,
                     search: search ?? "",
-                    deniedInfo: "Forbidden",
-                    deniedMessage:
-                        "Your account cannot access web menus.",
                     breadcrumb: webMenuBreadcrumbState()
                 )
             )
@@ -80,43 +83,35 @@ struct AdminListWebMenuDefaultPresenter:
         search: String?,
         selectedIds: [String],
         permissions: Set<String>
-    ) -> HTMLResponse {
-        renderEngine.renderAdminPage(
+    ) async throws -> HTMLResponse {
+        try await renderEngine.renderNewAdminPage(
             request: request,
+            context: context,
             title: "Remove selected menus",
-            description: "Confirm remove",
-            imagePath: "images/logos/logo.png",
-            sidebarState: renderEngine.adminSidebarState(
-                request: request,
-                permissions: permissions
-            ),
-            content: ListRemoveConfirmation(
-                state: .init(
-                    breadcrumb: webMenuBreadcrumbState(),
+            content: NewAdminRemoveConfirmation(
+                breadcrumb: webMenuBreadcrumbState(),
+                pageHeader: .init(
                     title: "Remove selected menus",
-                    message:
-                        "Are you sure you want to remove these selected menus? This action cannot be undone.",
-                    action: "/admin/web/menus/remove/",
-                    cancelLink: ListRemoveRedirect.location(
-                        path: "/admin/web/menus/",
-                        page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
-                    ),
-                    selectedIds: selectedIds
-                )
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: selectedIds,
+                action: WebMenuRoutes.remove.description,
+                cancel: NewAdminLocation.url(
+                    path: WebMenuRoutes.list.description,
+                    page: page,
+                    search: search
+                ),
+                hiddenFields: selectedIds.map {
+                    .init(name: "ids", value: $0)
+                }
             )
         )
     }
 
-    private func webMenuBreadcrumbState() -> AdminBreadcrumb.State {
-        .init(
-            links: [
-                .init(label: "Admin", link: "/admin/"),
-                .init(label: "Web", link: "/admin/web/"),
-                .init(label: "Menus", link: "/admin/web/menus/"),
-            ]
-        )
+    private func webMenuBreadcrumbState() -> [NewAdminBreadcrumb.Link] {
+        [
+            .init(label: "Admin", link: "/admin/"),
+            .init(label: "Web", link: "/admin/web/"),
+        ]
     }
 }

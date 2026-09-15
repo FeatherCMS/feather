@@ -7,32 +7,32 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct BlogAuthorConfirmation: Component {
 
     struct State {
         let id: String
         let source: String
-        let breadcrumb: AdminBreadcrumb.State
+        let breadcrumb: [NewAdminBreadcrumb.Link]
     }
 
     let state: State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
-            state: .init(
+    func html(context: inout BuilderContext) -> some BasicTag {
+        context.build(
+            NewAdminRemoveConfirmation(
                 breadcrumb: state.breadcrumb,
-                title: "Remove author",
-                message:
-                    "Are you sure you want to remove this author? This action cannot be undone.",
-                details: [
-                    .init(prefix: "Name: ", value: state.source)
-                ],
-                submitLabel: "Remove author",
-                actionURL: "/admin/blog/authors/\(state.id)/remove/",
-                cancelURL: "/admin/blog/authors/"
+                pageHeader: .init(
+                    title: "Remove author",
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: [state.source],
+                action: "/admin/blog/authors/\(state.id)/remove/",
+                cancel: "/admin/blog/authors/",
+                submitLabel: "Remove author"
             )
         )
     }

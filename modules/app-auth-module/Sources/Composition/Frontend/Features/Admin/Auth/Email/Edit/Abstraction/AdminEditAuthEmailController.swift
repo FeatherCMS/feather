@@ -13,7 +13,8 @@ import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
-import WebStandards
+import WebBuilders
+import WebComponents
 
 protocol AdminEditAuthEmailController: Sendable {
 
@@ -34,11 +35,11 @@ extension AdminEditAuthEmailController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/auth/emails/{id}/edit/",
+            AuthEmailRoutes.edit(RouterPath("{id}")),
             use: getEditAuthEmail
         )
         router.post(
-            "/admin/auth/emails/{id}/edit/",
+            AuthEmailRoutes.edit(RouterPath("{id}")),
             use: postEditAuthEmail
         )
     }

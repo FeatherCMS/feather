@@ -7,32 +7,32 @@ import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
+import WebBuilders
+import WebComponents
 import WebFrontend
-import WebStandards
 
 struct BlogTagConfirmation: Component {
 
     struct State {
         let id: String
         let source: String
-        let breadcrumb: AdminBreadcrumb.State
+        let breadcrumb: [NewAdminBreadcrumb.Link]
     }
 
     let state: State
 
-    func content() -> some BasicTag {
-        AdminConfirmationDialog(
-            state: .init(
+    func html(context: inout BuilderContext) -> some BasicTag {
+        context.build(
+            NewAdminRemoveConfirmation(
                 breadcrumb: state.breadcrumb,
-                title: "Remove tag",
-                message:
-                    "Are you sure you want to remove this tag? This action cannot be undone.",
-                details: [
-                    .init(prefix: "Title: ", value: state.source)
-                ],
-                submitLabel: "Remove tag",
-                actionURL: "/admin/blog/tags/\(state.id)/remove/",
-                cancelURL: "/admin/blog/tags/"
+                pageHeader: .init(
+                    title: "Remove tag",
+                    description: "This action cannot be undone."
+                ),
+                selectedItems: [state.source],
+                action: "/admin/blog/tags/\(state.id)/remove/",
+                cancel: "/admin/blog/tags/",
+                submitLabel: "Remove tag"
             )
         )
     }

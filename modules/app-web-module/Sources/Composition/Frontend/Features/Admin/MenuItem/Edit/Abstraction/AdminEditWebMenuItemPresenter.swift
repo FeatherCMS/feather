@@ -8,9 +8,8 @@ protocol AdminEditWebMenuItemPresenter: Sendable {
         menuId: String,
         id: String,
         state: WebMenuItemForm.State,
-        isEdited: Bool,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func renderErrorPage(
         menuId: String,
@@ -18,10 +17,10 @@ protocol AdminEditWebMenuItemPresenter: Sendable {
         info: String,
         message: String,
         permissions: Set<String>
-    ) -> HTMLResponse
+    ) async throws -> HTMLResponse
 
     func breadcrumb(
         menuId: String,
         id: String
-    ) -> AdminBreadcrumb.State
+    ) -> [NewAdminBreadcrumb.Link]
 }

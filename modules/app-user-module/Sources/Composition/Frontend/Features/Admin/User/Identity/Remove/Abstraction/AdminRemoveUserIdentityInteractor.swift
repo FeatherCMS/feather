@@ -3,7 +3,11 @@ import Foundation
 
 protocol AdminRemoveUserIdentityInteractor: Sendable {
 
-    func execute(
-        entity: AdminRemoveUserIdentityModel
+    func names(
+        ids: [String]
+    ) async throws -> [String]
+
+    func delete(
+        ids: [String]
     ) async throws
 }

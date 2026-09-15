@@ -14,6 +14,16 @@ protocol AdminRemoveRedirectRuleController: Sendable {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response
+
+    func getRemoveRedirectRules(
+        request: Request,
+        context: DefaultRequestContext
+    ) async throws -> Response
+
+    func postRemoveRedirectRules(
+        request: Request,
+        context: DefaultRequestContext
+    ) async throws -> Response
 }
 
 extension AdminRemoveRedirectRuleController {
@@ -22,12 +32,20 @@ extension AdminRemoveRedirectRuleController {
         on router: Router<DefaultRequestContext>
     ) {
         router.get(
-            "/admin/redirect/rules/{id}/remove/",
+            RedirectRuleRoutes.remove(RouterPath("{id}")),
             use: getRemoveRedirectRule
         )
         router.post(
-            "/admin/redirect/rules/{id}/remove/",
+            RedirectRuleRoutes.remove(RouterPath("{id}")),
             use: postRemoveRedirectRule
+        )
+        router.get(
+            RedirectRuleRoutes.remove,
+            use: getRemoveRedirectRules
+        )
+        router.post(
+            RedirectRuleRoutes.remove,
+            use: postRemoveRedirectRules
         )
     }
 }

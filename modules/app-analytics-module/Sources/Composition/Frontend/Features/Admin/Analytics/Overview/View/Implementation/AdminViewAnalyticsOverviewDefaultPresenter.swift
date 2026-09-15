@@ -1,0 +1,24 @@
+import FeatherAdmin
+import HTML
+import Hummingbird
+import SGML
+
+struct AdminViewAnalyticsOverviewDefaultPresenter:
+    AdminViewAnalyticsOverviewPresenter
+{
+    let request: Request
+    let context: DefaultRequestContext
+    let renderingEngine: any RenderingEngine
+
+    func renderOverview(
+        model: AdminViewAnalyticsOverviewModel,
+        permissions: Set<String>
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: model.title,
+            content: AdminViewAnalyticsOverviewComponent()
+        )
+    }
+}

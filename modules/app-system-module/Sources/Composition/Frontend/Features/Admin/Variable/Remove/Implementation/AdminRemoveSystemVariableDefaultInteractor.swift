@@ -6,15 +6,42 @@ struct AdminRemoveSystemVariableDefaultInteractor:
 {
     let repository: any AdminRemoveSystemVariableRepository
 
-    func get(
-        id: String
-    ) async throws -> SystemVariableDetailsModel {
-        try await repository.get(id: id)
+    func delete(
+        ids: [String]
+    ) async throws {
+        do {
+            try await repository.delete(ids: ids)
+        }
+        catch let error as OpenAPIRepositoryError {
+            throw map(error)
+        }
     }
 
-    func delete(
-        id: String
-    ) async throws {
-        try await repository.delete(id: id)
+    func names(ids: [String]) async throws -> [String] {
+        do {
+            return try await repository.names(ids: ids)
+        }
+        catch let error as OpenAPIRepositoryError {
+            throw map(error)
+        }
+    }
+
+    private func map(
+        _ error: OpenAPIRepositoryError
+    ) -> AdminRemoveSystemVariableError {
+        switch error {
+        case .notFound:
+            .notFound
+        case .unauthorized:
+            .unauthorized
+        case .forbidden:
+            .forbidden
+        case .conflict:
+            .conflict
+        case .failure(let failure) where failure.statusCode == 409:
+            .conflict
+        case .failure, .transport:
+            .unavailable
+        }
     }
 }
