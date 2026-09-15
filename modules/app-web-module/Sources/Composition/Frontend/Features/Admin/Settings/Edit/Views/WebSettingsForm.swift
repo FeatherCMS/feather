@@ -94,7 +94,8 @@ struct WebSettingsForm: Component {
                 NewAdminFormFieldCheckbox(
                     state: .init(
                         name: state.noIndex.key,
-                        label: state.noIndex.label,
+                        label: "Search engine indexing",
+                        checkboxLabel: "Disallow site indexing",
                         isChecked: state.noIndex.value,
                         error: state.noIndex.error
                     )

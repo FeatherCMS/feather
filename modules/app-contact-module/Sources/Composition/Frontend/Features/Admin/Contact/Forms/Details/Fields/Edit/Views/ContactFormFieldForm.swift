@@ -63,7 +63,8 @@ struct ContactFormFieldForm: Component {
                 NewAdminFormFieldCheckbox(
                     state: .init(
                         name: "isRequired",
-                        label: "Required",
+                        label: "Field validation",
+                        checkboxLabel: "Require this field",
                         isChecked: field.isRequired
                     )
                 )

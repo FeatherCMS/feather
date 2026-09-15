@@ -94,7 +94,8 @@ struct AuthMagicLinkForm: Component {
                 NewAdminFormFieldCheckbox(
                     state: .init(
                         name: state.isPersistent.key,
-                        label: state.isPersistent.label,
+                        label: "Session persistence",
+                        checkboxLabel: "Keep the user signed in",
                         isChecked: state.isPersistent.value,
                         error: state.isPersistent.error
                     )

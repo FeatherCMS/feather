@@ -8,6 +8,7 @@ public struct NewAdminFormFieldCheckbox: Component {
     public struct State: Sendable {
         public let name: String
         public let label: String
+        public let checkboxLabel: String
         public let isChecked: Bool
         public let error: String?
         public let help: String?
@@ -16,6 +17,7 @@ public struct NewAdminFormFieldCheckbox: Component {
         public init(
             name: String,
             label: String,
+            checkboxLabel: String,
             isChecked: Bool = false,
             error: String? = nil,
             help: String? = nil,
@@ -23,6 +25,7 @@ public struct NewAdminFormFieldCheckbox: Component {
         ) {
             self.name = name
             self.label = label
+            self.checkboxLabel = checkboxLabel
             self.isChecked = isChecked
             self.error = error
             self.help = help
@@ -42,6 +45,12 @@ public struct NewAdminFormFieldCheckbox: Component {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(6.px)
+            },
+            Custom(".new-admin-form-checkbox > .field-label") {
+                Display(.block)
+                FontWeight(.normal)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                Opacity(0.8)
             },
             Class("new-admin-form-checkbox__label") {
                 Display(.flex)
@@ -64,6 +73,8 @@ public struct NewAdminFormFieldCheckbox: Component {
     public func html(context: inout RenderContext) -> Section {
         let errorID = "\(state.name)-error"
         return Section {
+            Span(state.label)
+                .class("field-label")
             Label {
                 context.render(
                     NewAdminCheckbox(
@@ -76,7 +87,7 @@ public struct NewAdminFormFieldCheckbox: Component {
                         errorID: state.error == nil ? nil : errorID
                     )
                 )
-                Span(state.label)
+                Span(state.checkboxLabel)
             }
             .class("new-admin-form-checkbox__label")
             .for(state.name)

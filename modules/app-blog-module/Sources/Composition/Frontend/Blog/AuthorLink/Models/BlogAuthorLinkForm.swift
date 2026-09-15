@@ -83,7 +83,8 @@ struct BlogAuthorLinkForm: Component {
                 NewAdminFormFieldCheckbox(
                     state: .init(
                         name: state.isBlank.key,
-                        label: state.isBlank.label,
+                        label: "Link target",
+                        checkboxLabel: "Open link in a new tab",
                         isChecked: state.isBlank.value,
                         error: state.isBlank.error
                     )

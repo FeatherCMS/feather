@@ -144,7 +144,8 @@ struct WebMetadataForm: Component {
                 NewAdminFormFieldCheckbox(
                     state: .init(
                         name: state.noIndex.key,
-                        label: state.noIndex.label,
+                        label: "Search engine indexing",
+                        checkboxLabel: "Disallow indexing for this page",
                         isChecked: state.noIndex.value,
                         error: state.noIndex.error
                     )
