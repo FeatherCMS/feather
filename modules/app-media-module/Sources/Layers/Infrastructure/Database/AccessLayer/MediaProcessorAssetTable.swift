@@ -23,6 +23,12 @@ extension MediaProcessorAssetTable.Row {
 }
 
 struct MediaProcessorAssetTable {
+    struct LookupRow {
+        let assetId: String
+        let name: String
+        let storageKey: String
+    }
+
     struct Row {
         struct Create {
             let id: String
@@ -89,6 +95,55 @@ struct MediaProcessorAssetTable {
                 """#
         ) { seq in
             try await seq.collect().map { try Row(from: $0) }
+        }
+    }
+
+    func lookup(
+        assetIDs: [String],
+        variantNames: [String]?
+    ) async throws -> [LookupRow] {
+        guard !assetIDs.isEmpty else { return [] }
+        if let variantNames, variantNames.isEmpty { return [] }
+        let assetValues = assetIDs
+            .map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
+        let variantFilter: String
+        if variantNames == nil {
+            variantFilter = ""
+        }
+        else {
+            let variantValues = variantNames!
+                .map {
+                    "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+                }
+                .joined(separator: ", ")
+            variantFilter = "AND p.name IN (\(variantValues))"
+        }
+        return try await connection.run(
+            query: #"""
+                SELECT
+                    pa.asset_id,
+                    p.name,
+                    pa.storage_key
+                FROM media_processor_asset pa
+                JOIN media_processor p ON p.id = pa.processor_id
+                WHERE pa.asset_id IN (\#(unescaped: assetValues))
+                  \#(unescaped: variantFilter)
+                ORDER BY pa.asset_id ASC, p.name ASC, pa.created_at ASC;
+                """#
+        ) { seq in
+            try await seq.collect().map { row in
+                .init(
+                    assetId: try row.decode(column: "asset_id", as: String.self),
+                    name: try row.decode(column: "name", as: String.self),
+                    storageKey: try row.decode(
+                        column: "storage_key",
+                        as: String.self
+                    )
+                )
+            }
         }
     }
 

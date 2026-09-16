@@ -115,6 +115,41 @@ struct MediaAssetTable {
         }
     }
 
+    func lookup(
+        ids: [String]
+    ) async throws -> [Row] {
+        guard !ids.isEmpty else { return [] }
+        let values = ids
+            .map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
+        return try await connection.run(
+            query: #"""
+                SELECT
+                    n.id,
+                    n.parent_id AS folder_id,
+                    f.storage_key,
+                    f.base_name,
+                    f.type,
+                    f.size_bytes,
+                    f.status,
+                    f.title,
+                    f.alt_text,
+                    n.created_at,
+                    n.updated_at,
+                    n.deleted_at
+                FROM media_asset_node n
+                JOIN media_asset_node_file f ON f.node_id = n.id
+                WHERE n.id IN (\#(unescaped: values))
+                  AND n.kind = 'file'
+                  AND n.deleted_at IS NULL;
+                """#
+        ) { seq in
+            try await seq.collect().map { try Row(from: $0) }
+        }
+    }
+
     func find(
         storageKey: String
     ) async throws -> Row? {

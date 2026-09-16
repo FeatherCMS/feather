@@ -70,6 +70,24 @@ extension AdminAPIGateway {
     }
 
     func map(
+        _ item: MediaAssetLookup.Item
+    ) -> MediaAdminAPI.Components.Schemas.MediaAssetLookupItemSchema {
+        .init(
+            id: item.id,
+            storageKey: item.storageKey,
+            _type: item.type,
+            title: item.title,
+            altText: item.altText,
+            variants: item.variants.map {
+                .init(
+                    name: $0.name,
+                    storageKey: $0.storageKey
+                )
+            }
+        )
+    }
+
+    func map(
         _ item: MediaAssetList.Item
     ) -> MediaAdminAPI.Components.Schemas.MediaAssetListItemSchema {
         .init(

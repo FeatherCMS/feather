@@ -43,6 +43,17 @@ extension MediaAssetTable.Row {
             updatedAt: updatedAt
         )
     }
+
+    var asLookupItem: MediaAssetLookup.Item {
+        .init(
+            id: id,
+            storageKey: storageKey,
+            type: type,
+            title: title,
+            altText: altText,
+            variants: []
+        )
+    }
 }
 
 public struct MediaAssetDatabaseQueries: MediaAssetQueries {
@@ -97,6 +108,43 @@ public struct MediaAssetDatabaseQueries: MediaAssetQueries {
             throw RepositoryError.notFound
         }
         return row.asDetail
+    }
+
+    public func lookup(
+        ids: [String],
+        variants: [String]?
+    ) async throws -> MediaAssetLookup {
+        let assetRows = try await MediaAssetTable(connection: context.connection)
+            .lookup(ids: ids)
+        let variantRows = try await MediaProcessorAssetTable(
+            connection: context.connection
+        ).lookup(
+            assetIDs: ids,
+            variantNames: variants
+        )
+        var variantsByAssetID = [
+            String: [MediaAssetLookup.Variant]
+        ]()
+        for variant in variantRows {
+            variantsByAssetID[variant.assetId, default: []].append(
+                .init(
+                    name: variant.name,
+                    storageKey: variant.storageKey
+                )
+            )
+        }
+        return .init(
+            items: assetRows.map { row in
+                .init(
+                    id: row.id,
+                    storageKey: row.storageKey,
+                    type: row.type,
+                    title: row.title,
+                    altText: row.altText,
+                    variants: variantsByAssetID[row.id] ?? []
+                )
+            }
+        )
     }
 
     public func findByStorageKey(

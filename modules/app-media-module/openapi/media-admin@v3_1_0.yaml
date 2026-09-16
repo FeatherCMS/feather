@@ -65,6 +65,22 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+  /api/v1/admin/media/assets/lookup:
+    post:
+      tags:
+      - MediaAssets
+      operationId: mediaAssetLookup
+      requestBody:
+        $ref: '#/components/requestBodies/MediaAssetLookupRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/MediaAssetLookupResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/media/assets/{mediaAssetId}:
     get:
       tags:
@@ -664,6 +680,84 @@ components:
       type: string
       examples:
       - media_folder_blog_posts
+    MediaAssetLookupRequestSchema:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            examples:
+            - media_asset_1
+          minItems: 0
+          uniqueItems: false
+        variants:
+          $ref: '#/components/schemas/MediaAssetLookupVariantsField'
+      required:
+      - ids
+      minProperties: 1
+    MediaAssetLookupVariantsField:
+      type: array
+      items:
+        type: string
+        examples:
+        - thumb
+      minItems: 0
+      uniqueItems: false
+    MediaAssetLookupSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/MediaAssetLookupItemSchema'
+      minItems: 0
+      uniqueItems: false
+    MediaAssetLookupItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MediaAssetIdField'
+        storageKey:
+          type: string
+          examples:
+          - media/assets/asset-1
+        type:
+          type: string
+          examples:
+          - jpeg
+        title:
+          type:
+          - string
+          - 'null'
+        altText:
+          type:
+          - string
+          - 'null'
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/MediaAssetLookupVariantSchema'
+          minItems: 0
+          uniqueItems: false
+      required:
+      - id
+      - storageKey
+      - type
+      - variants
+      minProperties: 4
+    MediaAssetLookupVariantSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+          - thumb
+        storageKey:
+          type: string
+          examples:
+          - media/assets/asset-1
+      required:
+      - name
+      - storageKey
+      minProperties: 2
     MediaAssetPatchSchema:
       type: object
       properties:
@@ -1044,6 +1138,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MediaAssetNodeSearchItemSearchSchema'
+    MediaAssetLookupResponse:
+      description: MediaAsset lookup response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MediaAssetLookupSchema'
     MediaAssetVariantListResponse:
       description: MediaAsset variant list response
       content:
@@ -1108,6 +1208,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DeleteRequestSchema'
+      required: true
+    MediaAssetLookupRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MediaAssetLookupRequestSchema'
       required: true
     MediaAssetPatchRequestBody:
       content:

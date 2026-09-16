@@ -114,6 +114,23 @@ struct MediaAssetPatchSchema: ObjectSchemaRepresentable {
     }
 }
 
+struct MediaAssetLookupIDsField: ArraySchemaRepresentable {
+    var items: SchemaRepresentable? { MediaAssetIdField() }
+}
+
+struct MediaAssetLookupRequestSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "ids": MediaAssetLookupIDsField(),
+            "variants": MediaAssetLookupVariantsField().reference(required: false),
+        ]
+    }
+}
+
+struct MediaAssetLookupVariantsField: ArraySchemaRepresentable {
+    var items: SchemaRepresentable? { MediaAssetVariantNameField() }
+}
+
 struct MediaAssetDetailSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
@@ -176,5 +193,39 @@ struct MediaAssetVariantListSchema: ObjectSchemaRepresentable {
         [
             "items": MediaAssetVariantItemsField().reference()
         ]
+    }
+}
+
+struct MediaAssetLookupItemSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "id": MediaAssetIdField().reference(),
+            "storageKey": MediaAssetStorageKeyField(),
+            "type": MediaAssetTypeField(),
+            "title": MediaAssetNullableTextField(required: false),
+            "altText": MediaAssetNullableTextField(required: false),
+            "variants": MediaAssetLookupVariantListField(),
+        ]
+    }
+}
+
+struct MediaAssetLookupVariantSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "name": MediaAssetVariantNameField(),
+            "storageKey": MediaAssetStorageKeyField(),
+        ]
+    }
+}
+
+struct MediaAssetLookupVariantListField: ArraySchemaRepresentable {
+    var items: SchemaRepresentable? {
+        MediaAssetLookupVariantSchema().reference()
+    }
+}
+
+struct MediaAssetLookupSchema: ArraySchemaRepresentable {
+    var items: SchemaRepresentable? {
+        MediaAssetLookupItemSchema().reference()
     }
 }

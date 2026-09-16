@@ -66,6 +66,18 @@ struct MediaAssetGetOperation: MediaAssetIDOperation {
     }
 }
 
+struct MediaAssetLookupOperation: MediaAssetOperation {
+    var requestBody: RequestBodyRepresentable? {
+        MediaAssetLookupRequestBody().reference()
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: MediaAssetLookupResponse().reference()
+        ]
+    }
+}
+
 struct MediaAssetUpdateOperation: MediaAssetIDOperation {
     var requestBody: RequestBodyRepresentable? {
         MediaAssetPatchRequestBody().reference()

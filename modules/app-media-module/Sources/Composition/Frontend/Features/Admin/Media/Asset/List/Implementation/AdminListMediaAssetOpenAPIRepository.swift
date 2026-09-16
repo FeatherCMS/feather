@@ -94,6 +94,12 @@ struct AdminListMediaAssetOpenAPIRepository {
         }
     }
 
+    func lookupAssets(
+        ids: [String]
+    ) async throws -> [Components.Schemas.MediaAssetLookupItemSchema] {
+        try await api.lookupAssets(ids: ids)
+    }
+
     func getFolder(
         id: String
     ) async throws -> Components.Schemas.MediaFolderDetailSchema {
@@ -106,33 +112,6 @@ struct AdminListMediaAssetOpenAPIRepository {
             switch response {
             case .ok(let ok):
                 return try ok.body.json
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
-        }
-    }
-
-    func getVariants(
-        id: String
-    ) async throws -> [Components.Schemas.MediaAssetVariantListItemSchema] {
-        try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response =
-                try await client
-                .mediaAssetVariantSearch(
-                    path: .init(mediaAssetId: id)
-                )
-            switch response {
-            case .ok(let ok):
-                return try ok.body.json.items
             case .notFound:
                 throw OpenAPIRepositoryError.notFound
             case .unauthorized:

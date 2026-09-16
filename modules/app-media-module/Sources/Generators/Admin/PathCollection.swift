@@ -7,6 +7,7 @@ struct PathCollection: PathCollectionRepresentable {
         [
             "api/v1/admin/media/assets": MediaAssetPathItems(),
             "api/v1/admin/media/assets/search": MediaAssetSearchPathItems(),
+            "api/v1/admin/media/assets/lookup": MediaAssetLookupPathItems(),
             "api/v1/admin/media/assets/{mediaAssetId}": MediaAssetIdPathItems(),
             "api/v1/admin/media/assets/{mediaAssetId}/variants":
                 MediaAssetVariantPathItems(),

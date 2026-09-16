@@ -9,6 +9,10 @@ struct MediaAssetSearchPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { MediaAssetSearchOperation() }
 }
 
+struct MediaAssetLookupPathItems: PathItemRepresentable {
+    var post: OperationRepresentable? { MediaAssetLookupOperation() }
+}
+
 struct MediaAssetIdPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { MediaAssetGetOperation() }
     var patch: OperationRepresentable? { MediaAssetUpdateOperation() }
