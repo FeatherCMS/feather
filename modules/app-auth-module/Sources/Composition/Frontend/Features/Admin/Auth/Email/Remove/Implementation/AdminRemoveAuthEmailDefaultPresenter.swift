@@ -47,7 +47,7 @@ struct AdminRemoveAuthEmailDefaultPresenter:
     }
 
     func renderInvalidNoncePage() async throws -> HTMLResponse {
-        return try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove user email",
@@ -66,7 +66,7 @@ struct AdminRemoveAuthEmailDefaultPresenter:
         item: NewAdminRemoveItemContext,
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
-        return try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove user email",

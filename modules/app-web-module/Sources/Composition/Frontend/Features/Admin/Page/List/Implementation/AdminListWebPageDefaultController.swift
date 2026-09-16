@@ -94,10 +94,12 @@ struct AdminListWebPageDefaultController:
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
-        guard await AdminNonceStore.shared.consume(
-            nonceRequest.nonce,
-            sessionToken: context.sessionToken
-        ) else { return Response(status: .badRequest) }
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         let payload = nonceRequest.input
         if !payload.normalizedSelectedIds.isEmpty {
             try await interactor.remove(ids: payload.normalizedSelectedIds)

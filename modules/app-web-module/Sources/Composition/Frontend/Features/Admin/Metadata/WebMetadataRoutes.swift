@@ -15,7 +15,8 @@ enum WebMetadataRoutes {
         for requestPath: String
     ) -> [NewAdminBreadcrumb.Link] {
         if let marker = requestPath.range(of: "/edit/metadata/") {
-            let detailsPath = String(requestPath[..<marker.lowerBound]) + "/edit/"
+            let detailsPath =
+                String(requestPath[..<marker.lowerBound]) + "/edit/"
             return [
                 .init(label: "Admin", link: "/admin/"),
                 .init(label: "Details", link: detailsPath),

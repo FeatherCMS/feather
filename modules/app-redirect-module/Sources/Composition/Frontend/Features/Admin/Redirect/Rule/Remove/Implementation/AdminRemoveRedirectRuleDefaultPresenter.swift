@@ -61,7 +61,6 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
         )
     }
 
-
     func renderErrorPage(error: AdminRemoveRedirectRuleError, cancel: String)
         async throws -> HTMLResponse
     {

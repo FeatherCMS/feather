@@ -25,7 +25,6 @@ protocol AdminEditAuthEmailPresenter: Sendable {
         email: String
     ) -> AuthEmailForm.State
 
-
     func renderPage(
         id: String,
         isEdited: Bool,

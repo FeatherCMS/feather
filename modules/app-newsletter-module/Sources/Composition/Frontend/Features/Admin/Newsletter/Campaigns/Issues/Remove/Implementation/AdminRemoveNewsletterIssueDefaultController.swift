@@ -34,10 +34,12 @@ struct AdminRemoveNewsletterIssueDefaultController:
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
-        guard await AdminNonceStore.shared.consume(
-            nonceRequest.nonce,
-            sessionToken: context.sessionToken
-        ) else { return Response(status: .badRequest) }
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         try await interactor.remove(
             newsletterId: newsletterId,
             issueId: try context.requiredParameter("issueId")

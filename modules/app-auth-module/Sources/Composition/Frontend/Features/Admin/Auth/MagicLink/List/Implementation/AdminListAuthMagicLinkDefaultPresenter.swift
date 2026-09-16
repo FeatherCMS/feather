@@ -107,7 +107,6 @@ struct AdminListAuthMagicLinkDefaultPresenter:
         )
     }
 
-
     private func listLocation(page: Int, search: String?, userID: String?)
         -> String
     {

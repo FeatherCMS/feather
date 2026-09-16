@@ -22,7 +22,6 @@ struct AdminViewAuthMagicLinkDefaultPresenter: AdminViewAuthMagicLinkPresenter {
     let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
-
     func renderPage(
         link: AuthMagicLinkDetailsModel,
         permissions: Set<String>

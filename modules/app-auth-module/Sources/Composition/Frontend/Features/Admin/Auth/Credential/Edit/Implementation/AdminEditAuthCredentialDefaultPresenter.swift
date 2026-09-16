@@ -36,7 +36,11 @@ struct AdminEditAuthCredentialDefaultPresenter: AdminEditAuthCredentialPresenter
             context: context,
             title: "Edit credential",
             content: AuthCredentialEdit(
-                state: .init(id: id, form: form, breadcrumb: AuthCredentialRoutes.breadcrumb)
+                state: .init(
+                    id: id,
+                    form: form,
+                    breadcrumb: AuthCredentialRoutes.breadcrumb
+                )
             )
         )
     }

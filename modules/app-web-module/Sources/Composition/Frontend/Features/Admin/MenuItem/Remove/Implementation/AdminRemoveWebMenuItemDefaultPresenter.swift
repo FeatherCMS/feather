@@ -45,7 +45,7 @@ struct AdminRemoveWebMenuItemDefaultPresenter:
         info: String,
         message: String
     ) async throws -> HTMLResponse {
-        return try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove item",

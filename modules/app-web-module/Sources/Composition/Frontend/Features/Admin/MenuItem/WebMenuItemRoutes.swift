@@ -31,7 +31,7 @@ enum WebMenuItemRoutes {
             .init(
                 label: "Items",
                 link: list(menuID).description
-            ),
+            )
         ]
     }
 
@@ -43,7 +43,10 @@ enum WebMenuItemRoutes {
                 label: "Menus",
                 link: WebMenuRoutes.list.description
             ),
-            .init(label: "Menu", link: WebMenuRoutes.details(menuID).description),
+            .init(
+                label: "Menu",
+                link: WebMenuRoutes.details(menuID).description
+            ),
         ]
     }
 }

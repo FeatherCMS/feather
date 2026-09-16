@@ -25,7 +25,6 @@ protocol AdminEditAuthMagicLinkPresenter: Sendable {
         isPersistent: Bool
     ) -> AuthMagicLinkForm.State
 
-
     func renderPage(
         id: String,
         isEdited: Bool,

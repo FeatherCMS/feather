@@ -38,10 +38,12 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
             as: NewAdminListRemoveFormInput.self,
             context: context
         )
-        guard await AdminNonceStore.shared.consume(
-            payload.nonce,
-            sessionToken: context.sessionToken
-        ) else { return Response(status: .badRequest) }
+        guard
+            await AdminNonceStore.shared.consume(
+                payload.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         let (interactor, _) = buildRuntime(request, context)
         try await interactor.remove(ids: payload.normalizedSelectedIds)
         return Response(

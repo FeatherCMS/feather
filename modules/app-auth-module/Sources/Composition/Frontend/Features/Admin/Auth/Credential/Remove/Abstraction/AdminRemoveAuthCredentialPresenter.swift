@@ -17,7 +17,10 @@ import WebBuilders
 import WebComponents
 
 protocol AdminRemoveAuthCredentialPresenter: Sendable {
-    func renderPage(item: NewAdminRemoveItemContext, model: AuthCredentialDetailsModel)
+    func renderPage(
+        item: NewAdminRemoveItemContext,
+        model: AuthCredentialDetailsModel
+    )
         async throws -> HTMLResponse
     func renderInvalidNoncePage() async throws -> HTMLResponse
     func renderError(

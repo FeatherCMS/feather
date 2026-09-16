@@ -43,7 +43,10 @@ struct AdminRemoveAuthCredentialDefaultController:
         do {
             let model = try await interactor.get(id: id)
             return try await presenter.renderPage(
-                item: .init(id: id, label: model.email.emptyToNil ?? model.userId),
+                item: .init(
+                    id: id,
+                    label: model.email.emptyToNil ?? model.userId
+                ),
                 model: model
             )
         }

@@ -35,7 +35,7 @@ struct AdminRemoveAuthSessionDefaultPresenter:
     }
 
     func renderInvalidNoncePage() async throws -> HTMLResponse {
-        return try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove session",
@@ -55,7 +55,7 @@ struct AdminRemoveAuthSessionDefaultPresenter:
         identityId: String,
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
-        return try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove session",

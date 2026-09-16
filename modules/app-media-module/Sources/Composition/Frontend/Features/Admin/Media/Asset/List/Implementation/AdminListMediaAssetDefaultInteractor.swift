@@ -123,9 +123,10 @@ extension AdminListMediaAssetDefaultInteractor {
         result.reserveCapacity(items.count)
         for item in items {
             if let asset = item.file {
-                let preview = assetsByID[asset.id].flatMap {
-                    preferredPreview(from: $0.variants)
-                }
+                let preview = assetsByID[asset.id]
+                    .flatMap {
+                        preferredPreview(from: $0.variants)
+                    }
                 result.append(
                     .asset(
                         .init(

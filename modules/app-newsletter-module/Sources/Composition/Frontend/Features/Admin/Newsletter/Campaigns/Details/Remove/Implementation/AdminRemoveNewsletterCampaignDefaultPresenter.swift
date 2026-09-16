@@ -31,7 +31,8 @@ struct AdminRemoveNewsletterCampaignDefaultPresenter:
                     description: "This action cannot be undone."
                 ),
                 selectedItems: [item.label],
-                action: NewsletterAdminRoutes.campaignRemove(RouterPath(item.id))
+                action:
+                    NewsletterAdminRoutes.campaignRemove(RouterPath(item.id))
                     .description,
                 cancel: NewsletterAdminRoutes.campaigns.description,
                 submitLabel: "Remove campaign",

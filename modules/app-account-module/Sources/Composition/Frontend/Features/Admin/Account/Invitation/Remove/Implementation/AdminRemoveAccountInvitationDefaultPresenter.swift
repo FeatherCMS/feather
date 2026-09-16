@@ -38,7 +38,7 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
         info: String,
         message: String
     ) async throws -> HTMLResponse {
-        return try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove user invitation",

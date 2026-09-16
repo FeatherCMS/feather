@@ -38,7 +38,7 @@ struct AdminRemoveNewsletterIssueDefaultPresenter:
                 action:
                     NewsletterAdminRoutes.issueRemove(
                         newsletterID: RouterPath(newsletterId),
-                            issueID: RouterPath(item.id)
+                        issueID: RouterPath(item.id)
                     )
                     .description,
                 cancel:

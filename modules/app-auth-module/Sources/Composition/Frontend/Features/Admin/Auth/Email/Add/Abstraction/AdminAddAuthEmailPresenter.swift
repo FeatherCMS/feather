@@ -30,7 +30,6 @@ protocol AdminAddAuthEmailPresenter: Sendable {
         identities: [AuthCredentialIdentityOption]
     ) -> AuthEmailForm.State
 
-
     func format(
         error: OpenAPIRepositoryError
     ) -> String

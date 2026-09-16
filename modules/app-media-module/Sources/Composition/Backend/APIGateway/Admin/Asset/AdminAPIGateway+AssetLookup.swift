@@ -15,10 +15,11 @@ extension AdminAPIGateway {
         }
 
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeLookupAssets().execute(
-            subject: subject,
-            input: .init(ids: body.ids, variants: body.variants)
-        )
+        let result = try await useCases.makeLookupAssets()
+            .execute(
+                subject: subject,
+                input: .init(ids: body.ids, variants: body.variants)
+            )
 
         return .ok(
             .init(body: .json(result.items.map(map)))

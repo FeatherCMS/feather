@@ -47,7 +47,7 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
     }
 
     func renderInvalidNoncePage() async throws -> HTMLResponse {
-        return try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove user magic link",
@@ -66,7 +66,7 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
         item: NewAdminRemoveItemContext,
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
-        return try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove user magic link",

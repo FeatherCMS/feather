@@ -55,7 +55,6 @@ struct AdminAddAccountInvitationDefaultPresenter:
         )
     }
 
-
     func format(
         error: OpenAPIRepositoryError
     ) -> String {

@@ -50,7 +50,9 @@ public struct MediaAdminAPIClient: Sendable {
     public func lookupAssets(
         ids: [String],
         variants: [String]? = nil
-    ) async throws -> [MediaAdminAPI.Components.Schemas.MediaAssetLookupItemSchema] {
+    ) async throws -> [MediaAdminAPI.Components.Schemas
+        .MediaAssetLookupItemSchema]
+    {
         guard !ids.isEmpty else { return [] }
 
         return try await withOpenAPIRepositoryErrorMapping { client in

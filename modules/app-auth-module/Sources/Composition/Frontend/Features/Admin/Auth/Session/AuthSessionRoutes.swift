@@ -19,7 +19,10 @@ enum AuthSessionRoutes {
             .init(label: "Admin", link: "/admin/"),
             .init(label: "User", link: "/admin/user/"),
             .init(label: "Identities", link: identities.description + "/"),
-            .init(label: "Details", link: identities.appendingPath(identityID).description + "/"),
+            .init(
+                label: "Details",
+                link: identities.appendingPath(identityID).description + "/"
+            ),
         ]
     }
 

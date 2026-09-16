@@ -22,7 +22,6 @@ struct AdminViewAuthEmailDefaultPresenter: AdminViewAuthEmailPresenter {
     let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
-
     func renderPage(
         link: AuthEmailDetailsModel,
         permissions: Set<String>

@@ -30,10 +30,12 @@ struct AdminRemoveNewsletterCampaignDefaultController:
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
-        guard await AdminNonceStore.shared.consume(
-            nonceRequest.nonce,
-            sessionToken: context.sessionToken
-        ) else { return Response(status: .badRequest) }
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         try await interactor.remove(
             id: try context.requiredParameter("newsletterId")
         )
@@ -56,10 +58,12 @@ struct AdminRemoveNewsletterCampaignDefaultController:
         let payload = nonceRequest.input
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.delete)
         else { return Response(status: .forbidden) }
-        guard await AdminNonceStore.shared.consume(
-            nonceRequest.nonce,
-            sessionToken: context.sessionToken
-        ) else { return Response(status: .badRequest) }
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         try await interactor.remove(ids: payload.normalizedSelectedIds)
         return AdminNotificationFlash.redirect(
             to: NewsletterAdminRoutes.campaigns.description,

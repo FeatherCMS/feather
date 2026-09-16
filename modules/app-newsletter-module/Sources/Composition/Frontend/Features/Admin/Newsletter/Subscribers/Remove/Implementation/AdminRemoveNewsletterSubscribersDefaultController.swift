@@ -22,9 +22,10 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
     {
         let (_, presenter) = buildRuntime(request, context)
         return try await presenter.renderRemovePage(
-            items: request.queryStrings("selectedIds").map {
-                .init(id: $0, label: $0)
-            },
+            items: request.queryStrings("selectedIds")
+                .map {
+                    .init(id: $0, label: $0)
+                },
             search: request.querySearch(),
             campaignId: request.queryString("campaignId")
         )
@@ -38,10 +39,12 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
-        guard await AdminNonceStore.shared.consume(
-            nonceRequest.nonce,
-            sessionToken: context.sessionToken
-        ) else { return Response(status: .badRequest) }
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         let payload = nonceRequest.input
         try await interactor.remove(
             ids: payload.normalizedSelectedIds,

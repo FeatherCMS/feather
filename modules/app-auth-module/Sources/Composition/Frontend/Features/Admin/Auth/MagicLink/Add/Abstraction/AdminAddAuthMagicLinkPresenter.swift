@@ -31,7 +31,6 @@ protocol AdminAddAuthMagicLinkPresenter: Sendable {
         isPersistent: Bool
     ) -> AuthMagicLinkForm.State
 
-
     func format(
         error: OpenAPIRepositoryError
     ) -> String

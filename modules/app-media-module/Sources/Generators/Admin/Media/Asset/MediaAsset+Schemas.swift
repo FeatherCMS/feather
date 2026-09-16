@@ -122,7 +122,8 @@ struct MediaAssetLookupRequestSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "ids": MediaAssetLookupIDsField(),
-            "variants": MediaAssetLookupVariantsField().reference(required: false),
+            "variants": MediaAssetLookupVariantsField()
+                .reference(required: false),
         ]
     }
 }

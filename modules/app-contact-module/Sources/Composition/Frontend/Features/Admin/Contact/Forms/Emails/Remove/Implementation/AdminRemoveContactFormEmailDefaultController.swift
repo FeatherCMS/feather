@@ -34,9 +34,10 @@ struct AdminRemoveContactFormEmailDefaultController:
         }
         return try await presenter.renderRemovePage(
             formId: formId,
-            items: request.queryStrings("selectedIds").map {
-                .init(id: $0, label: $0)
-            }
+            items: request.queryStrings("selectedIds")
+                .map {
+                    .init(id: $0, label: $0)
+                }
         )
     }
 
@@ -49,10 +50,12 @@ struct AdminRemoveContactFormEmailDefaultController:
         )
         let (interactor, _) = buildRuntime(request, context)
         let formId = try context.requiredParameter("formId")
-        guard await AdminNonceStore.shared.consume(
-            payload.nonce,
-            sessionToken: context.sessionToken
-        ) else { return Response(status: .badRequest) }
+        guard
+            await AdminNonceStore.shared.consume(
+                payload.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         try await interactor.remove(
             id: formId,
             emailIds: payload.normalizedSelectedIds

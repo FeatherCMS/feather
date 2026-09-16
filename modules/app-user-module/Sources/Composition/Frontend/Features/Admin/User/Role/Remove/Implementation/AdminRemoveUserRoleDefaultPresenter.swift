@@ -11,8 +11,7 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
     func renderRemovePage(
         items: [NewAdminRemoveItemContext],
         returnTo: String?
-    ) async throws -> HTMLResponse
-    {
+    ) async throws -> HTMLResponse {
         guard items.count == 1 else {
             return try await renderBulkRemovePage(
                 items: items,

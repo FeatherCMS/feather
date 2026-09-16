@@ -52,7 +52,6 @@ struct AdminEditAuthMagicLinkDefaultPresenter: AdminEditAuthMagicLinkPresenter {
         )
     }
 
-
     func renderPage(
         id: String,
         isEdited: Bool,

@@ -38,10 +38,12 @@ struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
-        guard await AdminNonceStore.shared.consume(
-            payload.nonce,
-            sessionToken: context.sessionToken
-        ) else {
+        guard
+            await AdminNonceStore.shared.consume(
+                payload.nonce,
+                sessionToken: context.sessionToken
+            )
+        else {
             return Response(status: .badRequest)
         }
         let model = try await interactor.postRemoveMediaAsset(id: id)

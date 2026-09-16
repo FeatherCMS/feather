@@ -52,7 +52,6 @@ struct AdminEditAuthEmailDefaultPresenter: AdminEditAuthEmailPresenter {
         )
     }
 
-
     func renderPage(
         id: String,
         isEdited: Bool,

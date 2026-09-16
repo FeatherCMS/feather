@@ -104,7 +104,8 @@ struct MediaProcessorAssetTable {
     ) async throws -> [LookupRow] {
         guard !assetIDs.isEmpty else { return [] }
         if let variantNames, variantNames.isEmpty { return [] }
-        let assetValues = assetIDs
+        let assetValues =
+            assetIDs
             .map {
                 "'\($0.replacingOccurrences(of: "'", with: "''"))'"
             }
@@ -134,16 +135,20 @@ struct MediaProcessorAssetTable {
                 ORDER BY pa.asset_id ASC, p.name ASC, pa.created_at ASC;
                 """#
         ) { seq in
-            try await seq.collect().map { row in
-                .init(
-                    assetId: try row.decode(column: "asset_id", as: String.self),
-                    name: try row.decode(column: "name", as: String.self),
-                    storageKey: try row.decode(
-                        column: "storage_key",
-                        as: String.self
+            try await seq.collect()
+                .map { row in
+                    .init(
+                        assetId: try row.decode(
+                            column: "asset_id",
+                            as: String.self
+                        ),
+                        name: try row.decode(column: "name", as: String.self),
+                        storageKey: try row.decode(
+                            column: "storage_key",
+                            as: String.self
+                        )
                     )
-                )
-            }
+                }
         }
     }
 

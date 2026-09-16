@@ -27,7 +27,10 @@ struct AdminRemoveMediaProcessorDefaultInteractor:
             try await repository.deleteProcessor(id: id)
         }
         catch let error as OpenAPIRepositoryError {
-            return .init(item: .init(id: id, label: id), error: error.errorDescription)
+            return .init(
+                item: .init(id: id, label: id),
+                error: error.errorDescription
+            )
         }
         return .init(item: .init(id: id, label: id), error: nil)
     }

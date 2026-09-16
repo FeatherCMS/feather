@@ -114,24 +114,26 @@ public struct MediaAssetDatabaseQueries: MediaAssetQueries {
         ids: [String],
         variants: [String]?
     ) async throws -> MediaAssetLookup {
-        let assetRows = try await MediaAssetTable(connection: context.connection)
-            .lookup(ids: ids)
+        let assetRows = try await MediaAssetTable(
+            connection: context.connection
+        )
+        .lookup(ids: ids)
         let variantRows = try await MediaProcessorAssetTable(
             connection: context.connection
-        ).lookup(
+        )
+        .lookup(
             assetIDs: ids,
             variantNames: variants
         )
-        var variantsByAssetID = [
-            String: [MediaAssetLookup.Variant]
-        ]()
+        var variantsByAssetID: [String: [MediaAssetLookup.Variant]] = [:]
         for variant in variantRows {
-            variantsByAssetID[variant.assetId, default: []].append(
-                .init(
-                    name: variant.name,
-                    storageKey: variant.storageKey
+            variantsByAssetID[variant.assetId, default: []]
+                .append(
+                    .init(
+                        name: variant.name,
+                        storageKey: variant.storageKey
+                    )
                 )
-            )
         }
         return .init(
             items: assetRows.map { row in

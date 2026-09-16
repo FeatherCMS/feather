@@ -81,7 +81,6 @@ struct AdminAddAuthEmailDefaultPresenter: AdminAddAuthEmailPresenter {
         )
     }
 
-
     func format(
         error: OpenAPIRepositoryError
     ) -> String {

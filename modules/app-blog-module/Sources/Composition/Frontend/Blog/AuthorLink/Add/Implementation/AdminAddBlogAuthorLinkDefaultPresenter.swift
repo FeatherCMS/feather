@@ -29,7 +29,9 @@ struct AdminAddBlogAuthorLinkDefaultPresenter: AdminAddBlogAuthorLinkPresenter {
                 state: .init(
                     menuId: menuId,
                     form: state,
-                    breadcrumb: BlogAdminRoutes.authorLinksBreadcrumb(RouterPath(menuId))
+                    breadcrumb: BlogAdminRoutes.authorLinksBreadcrumb(
+                        RouterPath(menuId)
+                    )
                 )
             )
         )

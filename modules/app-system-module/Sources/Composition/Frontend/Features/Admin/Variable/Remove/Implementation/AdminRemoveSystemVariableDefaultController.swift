@@ -46,9 +46,10 @@ struct AdminRemoveSystemVariableDefaultController:
         do {
             return
                 try await presenter.renderRemovePage(
-                    items: zip(ids, try await interactor.names(ids: ids)).map {
-                        .init(id: $0.0, label: $0.1)
-                    },
+                    items: zip(ids, try await interactor.names(ids: ids))
+                        .map {
+                            .init(id: $0.0, label: $0.1)
+                        },
                     returnTo: request.queryString("returnTo")
                 )
                 .response(from: request, context: context)

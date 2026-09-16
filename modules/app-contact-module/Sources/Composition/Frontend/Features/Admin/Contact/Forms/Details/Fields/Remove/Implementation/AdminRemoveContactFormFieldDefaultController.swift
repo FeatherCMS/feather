@@ -36,10 +36,12 @@ struct AdminRemoveContactFormFieldDefaultController:
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
-        guard await AdminNonceStore.shared.consume(
-            nonceRequest.nonce,
-            sessionToken: context.sessionToken
-        ) else { return Response(status: .badRequest) }
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         try await interactor.remove(
             formId: formId,
             id: try context.requiredParameter("fieldId")
@@ -63,9 +65,10 @@ struct AdminRemoveContactFormFieldDefaultController:
         let (_, presenter) = buildRuntime(request, context)
         return try await presenter.renderRemovePage(
             formId: try context.requiredParameter("formId"),
-            items: request.queryStrings("selectedIds").map {
-                .init(id: $0, label: $0)
-            }
+            items: request.queryStrings("selectedIds")
+                .map {
+                    .init(id: $0, label: $0)
+                }
         )
     }
     func removeSelected(request: Request, context: DefaultRequestContext)
@@ -77,10 +80,12 @@ struct AdminRemoveContactFormFieldDefaultController:
             as: NewAdminListRemoveFormInput.self,
             context: context
         )
-        guard await AdminNonceStore.shared.consume(
-            payload.nonce,
-            sessionToken: context.sessionToken
-        ) else { return Response(status: .badRequest) }
+        guard
+            await AdminNonceStore.shared.consume(
+                payload.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         let (interactor, _) = buildRuntime(request, context)
         try await interactor.remove(
             formId: formId,

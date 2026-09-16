@@ -88,7 +88,6 @@ struct AdminAddAuthMagicLinkDefaultPresenter: AdminAddAuthMagicLinkPresenter {
         )
     }
 
-
     func format(
         error: OpenAPIRepositoryError
     ) -> String {

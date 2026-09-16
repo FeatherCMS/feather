@@ -19,7 +19,6 @@ import WebComponents
 
 protocol AdminViewAuthEmailPresenter: Sendable {
 
-
     func renderPage(
         link: AuthEmailDetailsModel,
         permissions: Set<String>

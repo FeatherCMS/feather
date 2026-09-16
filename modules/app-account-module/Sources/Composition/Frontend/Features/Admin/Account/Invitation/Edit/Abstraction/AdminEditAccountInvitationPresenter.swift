@@ -24,7 +24,6 @@ protocol AdminEditAccountInvitationPresenter: Sendable {
         roleOptions: [AccountInvitationForm.RoleOptionState]
     ) -> AccountInvitationForm.State
 
-
     func format(
         error: OpenAPIRepositoryError
     ) -> String

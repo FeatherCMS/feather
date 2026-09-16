@@ -22,7 +22,8 @@ struct AssetRemoveView: Component {
                     description: "Confirm removal of this media item."
                 ),
                 selectedItems: [item.label],
-                action: MediaAssetRoutes.remove(RouterPath(item.id)).description,
+                action: MediaAssetRoutes.remove(RouterPath(item.id))
+                    .description,
                 cancel: MediaAssetRoutes.list.description,
                 submitLabel: "Remove item",
                 nonceToken: nonceToken,

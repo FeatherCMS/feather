@@ -19,7 +19,6 @@ import WebComponents
 
 protocol AdminViewAuthMagicLinkPresenter: Sendable {
 
-
     func renderPage(
         link: AuthMagicLinkDetailsModel,
         permissions: Set<String>

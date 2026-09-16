@@ -47,10 +47,12 @@ struct AdminRemoveContactFieldDefaultController:
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
-        guard await AdminNonceStore.shared.consume(
-            nonceRequest.nonce,
-            sessionToken: context.sessionToken
-        ) else { return Response(status: .badRequest) }
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         try await interactor.remove(
             id: try context.requiredParameter("fieldId")
         )
@@ -76,9 +78,10 @@ struct AdminRemoveContactFieldDefaultController:
             return try await presenter.renderForbiddenPage()
         }
         return try await presenter.renderRemovePage(
-            items: request.queryStrings("selectedIds").map {
-                .init(id: $0, label: $0)
-            }
+            items: request.queryStrings("selectedIds")
+                .map {
+                    .init(id: $0, label: $0)
+                }
         )
     }
 
@@ -98,10 +101,12 @@ struct AdminRemoveContactFieldDefaultController:
                 .renderForbiddenPage()
                 .response(from: request, context: context)
         }
-        guard await AdminNonceStore.shared.consume(
-            payload.nonce,
-            sessionToken: context.sessionToken
-        ) else {
+        guard
+            await AdminNonceStore.shared.consume(
+                payload.nonce,
+                sessionToken: context.sessionToken
+            )
+        else {
             return Response(status: .badRequest)
         }
         try await interactor.remove(ids: payload.normalizedSelectedIds)
