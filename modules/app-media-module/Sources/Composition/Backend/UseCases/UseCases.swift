@@ -189,6 +189,90 @@ extension UseCases {
         return updatedResult
     }
 
+    public func createAssetAndEnqueue(
+        input: CreateMediaAsset.Input
+    ) async throws -> MediaAssetDetail {
+        let result = try await makeCreateAsset().execute(input: input)
+        let matchingProcessors =
+            try await database
+            .withConnection { connection in
+                let processorRepo = MediaProcessorDatabaseRepository(
+                    context: .init(
+                        connection: connection,
+                        idGenerator: idGenerator
+                    )
+                )
+                return try await processorRepo.listActive()
+                    .filter {
+                        MediaExtensionMatcher.matches(
+                            storageKey: result.storageKey,
+                            type: result.type,
+                            processor: $0
+                        )
+                    }
+            }
+
+        guard !matchingProcessors.isEmpty else {
+            return try await database.withConnection {
+                connection in
+                let assetRepo = MediaAssetDatabaseRepository(
+                    context: .init(
+                        connection: connection,
+                        idGenerator: idGenerator
+                    )
+                )
+                guard let asset = try await assetRepo.find(id: result.id) else {
+                    return result
+                }
+                var updated = asset
+                updated.status = .ready
+                return try await assetRepo.update(updated).asDetail
+            }
+        }
+
+        let updatedResult = try await database.withConnection {
+            connection in
+            let assetRepo = MediaAssetDatabaseRepository(
+                context: .init(
+                    connection: connection,
+                    idGenerator: idGenerator
+                )
+            )
+            guard let asset = try await assetRepo.find(id: result.id) else {
+                return result
+            }
+            var updated = asset
+            updated.status = .processing
+            return try await assetRepo.update(updated).asDetail
+        }
+
+        do {
+            try await enqueueVariantGeneration(
+                assetId: result.id,
+                processors: matchingProcessors
+            )
+        }
+        catch {
+            _ = try? await database.withConnection {
+                connection in
+                let assetRepo = MediaAssetDatabaseRepository(
+                    context: .init(
+                        connection: connection,
+                        idGenerator: idGenerator
+                    )
+                )
+                guard let asset = try await assetRepo.find(id: result.id) else {
+                    return result
+                }
+                var reverted = asset
+                reverted.status = .uploaded
+                return try await assetRepo.update(reverted).asDetail
+            }
+            throw error
+        }
+        return updatedResult
+    }
+
     public func deleteAssetNodesAndFiles(
         subject: Subject,
         assetIds: [String]

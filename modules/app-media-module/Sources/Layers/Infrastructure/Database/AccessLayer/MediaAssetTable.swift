@@ -182,6 +182,36 @@ struct MediaAssetTable {
         }
     }
 
+    func list(
+        storageKeyPrefix: String
+    ) async throws -> [Row] {
+        try await connection.run(
+            query: #"""
+                SELECT
+                    n.id,
+                    n.parent_id AS folder_id,
+                    f.storage_key,
+                    f.base_name,
+                    f.type,
+                    f.size_bytes,
+                    f.status,
+                    f.title,
+                    f.alt_text,
+                    n.created_at,
+                    n.updated_at,
+                    n.deleted_at
+                FROM media_asset_node n
+                JOIN media_asset_node_file f ON f.node_id = n.id
+                WHERE f.storage_key LIKE \#(storageKeyPrefix + "%")
+                  AND n.kind = 'file'
+                  AND n.deleted_at IS NULL
+                ORDER BY f.storage_key ASC;
+                """#
+        ) { sequence in
+            try await sequence.collect().map { try Row(from: $0) }
+        }
+    }
+
     func update(
         row: Row
     ) async throws -> Row {

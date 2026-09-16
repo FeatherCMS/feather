@@ -92,6 +92,14 @@ public struct MediaAssetDatabaseRepository: MediaAssetRepository {
     }
 
     public func list(
+        storageKeyPrefix: String
+    ) async throws -> [MediaAsset] {
+        try await MediaAssetTable(connection: context.connection)
+            .list(storageKeyPrefix: storageKeyPrefix)
+            .map(\.asDomain)
+    }
+
+    public func list(
         folderIds: [String]
     ) async throws -> [MediaAsset] {
         try await MediaAssetTable(connection: context.connection)

@@ -64,6 +64,12 @@ public struct CreateMediaAsset: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
+        return try await execute(input: input)
+    }
+
+    public func execute(
+        input: Input
+    ) async throws -> MediaAssetDetail {
         let objectKey = input.storageKey
         try await storage.upload(key: objectKey, data: input.data)
 
