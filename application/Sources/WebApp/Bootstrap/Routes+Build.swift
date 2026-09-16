@@ -67,10 +67,8 @@ func buildRouter(
     NewsletterAdminMenuEventHandlers.register(in: &adminEvents)
     ContactAdminMenuEventHandlers.register(in: &adminEvents)
     WebAdminMenuEventHandlers.register(in: &adminEvents)
-    let adminMenuCatalog = try await AdminMenuCatalog.load(from: adminEvents)
     let renderingEngine = DefaultRenderingEngine(
         publicOrigins: environment.publicOrigins,
-        adminMenuCatalog: adminMenuCatalog,
         adminEvents: adminEvents
     )
     let applicationTemplatePaths = Bundle.module.url(
