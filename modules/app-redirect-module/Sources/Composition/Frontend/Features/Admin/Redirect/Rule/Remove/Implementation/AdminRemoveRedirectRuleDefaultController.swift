@@ -100,13 +100,19 @@ struct AdminRemoveRedirectRuleDefaultController:
         let ids = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
+        let returnTo = request.queryString("returnTo")
+            ?? NewAdminLocation.url(
+                path: RedirectRuleRoutes.list.description,
+                page: page,
+                search: search
+            )
         guard !ids.isEmpty else {
             return Response(
                 status: .seeOther,
                 headers: [
                     .location: NewAdminLocation.removeCancel(
                         path: RedirectRuleRoutes.list.description,
-                        returnTo: request.queryString("returnTo")
+                        returnTo: returnTo
                     )
                 ]
             )
@@ -118,7 +124,7 @@ struct AdminRemoveRedirectRuleDefaultController:
                         .map {
                             .init(id: $0.0, label: $0.1)
                         },
-                    returnTo: request.queryString("returnTo")
+                    returnTo: returnTo
                 )
                 .response(from: request, context: context)
         }
@@ -128,7 +134,7 @@ struct AdminRemoveRedirectRuleDefaultController:
                     error: error,
                     cancel: NewAdminLocation.removeCancel(
                         path: RedirectRuleRoutes.list.description,
-                        returnTo: request.queryString("returnTo")
+                        returnTo: returnTo
                     )
                 )
                 .response(from: request, context: context)
