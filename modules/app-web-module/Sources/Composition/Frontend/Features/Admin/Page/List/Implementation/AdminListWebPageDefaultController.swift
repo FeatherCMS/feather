@@ -159,7 +159,7 @@ struct AdminListWebPageDefaultController:
             title: details.title,
             excerpt: details.excerpt,
             content: details.content,
-            imageAssetId: details.imageAssetId,
+            imageAssetId: details.imageAsset?.id,
             submitAction: nil
         )
     }

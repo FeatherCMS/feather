@@ -77,6 +77,14 @@ public struct MediaAdminAPIClient: Sendable {
             }
         }
     }
+
+    public func loadImageAsset(
+        assetId: String?
+    ) async -> NewAdminMediaAsset? {
+        guard let assetId, !assetId.isEmpty else { return nil }
+        return try? await AdminViewMediaAssetOpenAPIRepository(api: self)
+            .getAssetWithPreview(id: assetId)
+    }
 }
 
 extension DefaultRequestContext {

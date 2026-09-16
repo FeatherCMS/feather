@@ -293,6 +293,7 @@ struct WebSettingsForm: Component {
                                 storageKey: $0.storageKey,
                                 baseName: $0.baseName,
                                 type: $0.type,
+                                variants: $0.variants,
                                 title: $0.title,
                                 altText: $0.altText,
                                 status: $0.status

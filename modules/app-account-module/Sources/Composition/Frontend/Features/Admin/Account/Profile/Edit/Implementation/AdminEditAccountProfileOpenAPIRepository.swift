@@ -21,9 +21,7 @@ struct AdminEditAccountProfileOpenAPIRepository:
                     firstName: body.firstName,
                     lastName: body.lastName,
                     profileImageAssetId: body.profileImageAssetId,
-                    profileImageAsset: try await loadImageAsset(
-                        assetId: body.profileImageAssetId
-                    )
+                    profileImageAsset: await mediaAPI.loadImageAsset(assetId: body.profileImageAssetId)
                 )
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized
@@ -36,17 +34,6 @@ struct AdminEditAccountProfileOpenAPIRepository:
                 )
             }
         }
-    }
-
-    private func loadImageAsset(
-        assetId: String?
-    ) async throws -> NewAdminMediaAsset? {
-        guard let assetId, !assetId.isEmpty else { return nil }
-        let asset = try? await AdminViewMediaAssetOpenAPIRepository(
-            api: mediaAPI
-        )
-        .getAsset(id: assetId)
-        return asset.map(NewAdminMediaAsset.init(schema:))
     }
 
     func update(
@@ -80,4 +67,5 @@ struct AdminEditAccountProfileOpenAPIRepository:
             }
         }
     }
+
 }

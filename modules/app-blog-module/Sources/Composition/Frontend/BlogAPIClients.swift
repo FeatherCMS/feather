@@ -50,6 +50,13 @@ public struct BlogAdminAPIClient: Sendable {
             responseBody: try await responseBody?.collectString()
         )
     }
+
+    public func mediaAdminAPI() -> MediaAdminAPIClient {
+        .init(
+            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            sessionToken: sessionToken
+        )
+    }
 }
 
 public struct BlogAppAPIClient: Sendable {

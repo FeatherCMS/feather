@@ -170,7 +170,7 @@ struct AdminListBlogPostDefaultController:
             title: details.title,
             excerpt: details.excerpt,
             content: details.content,
-            imageAssetId: details.imageAssetId,
+            imageAssetId: details.imageAsset?.id,
             authorIds: details.authorIds,
             tagIds: details.tagIds,
             submitAction: nil

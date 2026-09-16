@@ -383,9 +383,9 @@ extension NewAdminFormFieldMediaPicker {
     fileprivate func previewBlock() -> some FlowContent {
         Div {
             if let selectedAsset = state.selectedAsset {
-                if isImage(selectedAsset.type) {
+                if let previewURL = previewURL(for: selectedAsset) {
                     Img(
-                        src: previewURL(for: selectedAsset),
+                        src: previewURL,
                         alt: displayTitle(selectedAsset)
                     )
                 }
@@ -513,19 +513,14 @@ extension NewAdminFormFieldMediaPicker {
 
           function previewURL(asset) {
             var previewStorageKey = String(asset && asset.previewStorageKey || "");
-            var storageKey = previewStorageKey || String(asset && asset.storageKey || "");
-            var prefix = previewStorageKey ? "/media/variants/" : "/media/assets/";
-            return "\#(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)" + prefix + encodedStorageKey(storageKey);
+            if (!previewStorageKey) { return ""; }
+            return "\#(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)/media/variants/" + encodedStorageKey(previewStorageKey);
           }
 
           function fileName(asset) {
-            var base = String(asset && asset.baseName || "");
-            var type = String(asset && asset.type || "");
-            return base ? (type ? base + "." + type : base) : "No asset selected";
-          }
-
-          function isImage(asset) {
-            return ["png", "jpg", "jpeg", "webp", "gif"].indexOf(String(asset && asset.type || "").toLowerCase()) >= 0;
+            var title = String(asset && asset.title || "").trim();
+            var base = String(asset && asset.baseName || "").trim();
+            return title || base || "No asset selected";
           }
 
           function escapeHTML(value) {
@@ -536,7 +531,7 @@ extension NewAdminFormFieldMediaPicker {
             if (!asset) {
               return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="8.5" cy="10.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg>';
             }
-            return isImage(asset)
+            return asset.previewStorageKey
               ? '<img src="' + escapeHTML(previewURL(asset)) + '" alt="' + escapeHTML(fileName(asset)) + '">'
               : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>';
           }
@@ -791,10 +786,9 @@ extension NewAdminFormFieldMediaPicker {
         """#
     }
 
-    fileprivate func displayTitle(_ asset: NewAdminMediaAsset)
-        -> String
-    {
-        asset.type.isEmpty ? asset.baseName : "\(asset.baseName).\(asset.type)"
+    fileprivate func displayTitle(_ asset: NewAdminMediaAsset) -> String {
+        let title = asset.title?.trimmingCharacters(in: .whitespacesAndNewlines)
+        return title?.isEmpty == false ? title! : asset.baseName
     }
 
     fileprivate func encodedStorageKey(_ key: String) -> String {
@@ -809,9 +803,12 @@ extension NewAdminFormFieldMediaPicker {
     }
 
     fileprivate func previewURL(for asset: NewAdminMediaAsset)
-        -> String
+        -> String?
     {
-        "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)/media/assets/\(encodedStorageKey(asset.storageKey))"
+        guard let previewStorageKey = asset.previewStorageKey,
+              !previewStorageKey.isEmpty
+        else { return nil }
+        return "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)/media/variants/\(encodedStorageKey(previewStorageKey))"
     }
 
     fileprivate func uploadPath() -> String {
@@ -821,7 +818,4 @@ extension NewAdminFormFieldMediaPicker {
         return "/admin/media/assets/add/"
     }
 
-    fileprivate func isImage(_ type: String) -> Bool {
-        ["png", "jpg", "jpeg", "webp", "gif"].contains(type.lowercased())
-    }
 }

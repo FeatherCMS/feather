@@ -27,10 +27,7 @@ struct AdminViewWebPageOpenAPIRepository: AdminViewWebPageRepository {
                     title: page.title,
                     excerpt: page.excerpt,
                     content: page.content,
-                    imageAssetId: page.imageAssetId,
-                    imageAsset: try await loadImageAsset(
-                        assetId: page.imageAssetId
-                    ),
+                    imageAsset: await mediaAPI.loadImageAsset(assetId: page.imageAssetId),
                     metadata: AdminMetadataSchemaBuilder.formValue(
                         from: page.metadata,
                         fallbackTitle: page.title,
@@ -52,14 +49,4 @@ struct AdminViewWebPageOpenAPIRepository: AdminViewWebPageRepository {
         }
     }
 
-    private func loadImageAsset(
-        assetId: String?
-    ) async throws -> NewAdminMediaAsset? {
-        guard let assetId, !assetId.isEmpty else { return nil }
-        let asset = try? await AdminViewMediaAssetOpenAPIRepository(
-            api: mediaAPI
-        )
-        .getAsset(id: assetId)
-        return asset.map(NewAdminMediaAsset.init(schema:))
-    }
 }
