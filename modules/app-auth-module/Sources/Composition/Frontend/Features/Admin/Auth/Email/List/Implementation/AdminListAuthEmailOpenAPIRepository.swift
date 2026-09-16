@@ -89,7 +89,6 @@ struct AdminListAuthEmailOpenAPIRepository:
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.authEmailDelete(
-                path: .init(authEmailId: id),
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }

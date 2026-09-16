@@ -250,6 +250,21 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
+    delete:
+      tags:
+      - AuthEmails
+      operationId: authEmailDelete
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/DeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/auth/emails/:
     get:
       tags:
@@ -276,23 +291,6 @@ paths:
           $ref: '#/components/responses/AuthEmailDetailResponse'
         404:
           description: Auth auth email not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - AuthEmails
-      operationId: authEmailDelete
-      parameters:
-      - $ref: '#/components/parameters/AuthEmailIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/DeleteRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
         401:
           description: Unauthorized
         403:

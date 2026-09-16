@@ -25,20 +25,13 @@ public struct DeleteIssue: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws {
+    ) async throws -> [String] {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
-        try await transaction.run { scope in
-            let deleted = try await scope.issue.delete(ids: input.ids)
-            guard !deleted.isEmpty else {
-                throw Error.notFound
-            }
+        return try await transaction.run { scope in
+            try await scope.issue.delete(ids: input.ids)
         }
-    }
-
-    public enum Error: UseCaseError {
-        case notFound
     }
 }

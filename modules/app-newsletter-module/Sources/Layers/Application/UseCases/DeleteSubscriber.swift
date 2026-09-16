@@ -4,7 +4,6 @@ import NewsletterContracts
 import NewsletterDomain
 
 public struct DeleteSubscriber: UseCase {
-    struct Error: UseCaseError { let message: String }
     struct Action: PermissionAction { let key = Permissions.Subscribers.delete }
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<Write>
@@ -25,19 +24,16 @@ public struct DeleteSubscriber: UseCase {
         }
     }
 
-    public func execute(subject: Subject, input: Input) async throws {
+    public func execute(subject: Subject, input: Input) async throws -> [String] {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
-        try await transaction.run { scope in
-            let deleted = try await scope.subscriber.delete(
+        return try await transaction.run { scope in
+            try await scope.subscriber.delete(
                 newsletterId: input.newsletterId,
                 emails: input.emails
             )
-            guard !deleted.isEmpty else {
-                throw Error(message: "Newsletter subscriber not found")
-            }
         }
     }
 }

@@ -84,6 +84,7 @@ extension AuthEmailIdOperation {
 }
 struct AuthEmailPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { AuthEmailCreateOperation() }
+    var delete: OperationRepresentable? { AuthEmailDeleteOperation() }
 }
 struct AuthEmailListPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { AuthEmailListOperation() }
@@ -91,7 +92,6 @@ struct AuthEmailListPathItems: PathItemRepresentable {
 struct AuthEmailIdPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { AuthEmailGetOperation() }
     var patch: OperationRepresentable? { AuthEmailPatchOperation() }
-    var delete: OperationRepresentable? { AuthEmailDeleteOperation() }
 }
 struct AuthEmailCreateOperation: AuthEmailOperation {
     var requestBody: RequestBodyRepresentable? {
@@ -125,6 +125,6 @@ struct AuthEmailPatchOperation: AuthEmailIdOperation {
         ]
     }
 }
-struct AuthEmailDeleteOperation: AuthEmailIdOperation,
+struct AuthEmailDeleteOperation: AuthEmailOperation,
     DeleteOperation
 {}
