@@ -100,7 +100,8 @@ struct AdminRemoveRedirectRuleDefaultController:
         let ids = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
-        let returnTo = request.queryString("returnTo")
+        let returnTo =
+            request.queryString("returnTo")
             ?? NewAdminLocation.url(
                 path: RedirectRuleRoutes.list.description,
                 page: page,

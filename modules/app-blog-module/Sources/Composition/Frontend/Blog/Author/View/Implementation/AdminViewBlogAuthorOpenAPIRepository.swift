@@ -63,7 +63,8 @@ struct AdminViewBlogAuthorOpenAPIRepository: AdminViewBlogAuthorRepository {
                     excerpt: author.excerpt,
                     content: author.content,
                     profileImageAssetId: author.profileImageAssetId,
-                    profileImage: await api.mediaAdminAPI().loadImageAsset(assetId: author.profileImageAssetId),
+                    profileImage: await api.mediaAdminAPI()
+                        .loadImageAsset(assetId: author.profileImageAssetId),
                     metadata: AdminMetadataSchemaBuilder.formValue(
                         from: author.metadata,
                         fallbackTitle: author.name,

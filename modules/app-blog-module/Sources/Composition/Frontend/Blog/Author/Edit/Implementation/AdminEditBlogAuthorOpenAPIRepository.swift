@@ -32,7 +32,8 @@ struct AdminEditBlogAuthorOpenAPIRepository: AdminEditBlogAuthorRepository {
                     excerpt: menu.excerpt,
                     content: menu.content,
                     profileImageAssetId: menu.profileImageAssetId,
-                    profileImage: await api.mediaAdminAPI().loadImageAsset(assetId: menu.profileImageAssetId),
+                    profileImage: await api.mediaAdminAPI()
+                        .loadImageAsset(assetId: menu.profileImageAssetId),
                     metadata: AdminMetadataSchemaBuilder.formValue(
                         from: menu.metadata,
                         fallbackTitle: menu.name,

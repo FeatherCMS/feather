@@ -18,8 +18,7 @@ extension NewAdminMediaAsset {
     public init(
         schema: MediaAdminAPI.Components.Schemas.MediaAssetDetailSchema,
         variants: [NewAdminMediaAssetVariant]
-    )
-    {
+    ) {
         self.init(
             id: schema.id,
             storageKey: schema.storageKey,

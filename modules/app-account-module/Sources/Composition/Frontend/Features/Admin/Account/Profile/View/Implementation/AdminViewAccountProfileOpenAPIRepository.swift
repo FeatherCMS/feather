@@ -21,7 +21,9 @@ struct AdminViewAccountProfileOpenAPIRepository:
                     firstName: body.firstName,
                     lastName: body.lastName,
                     profileImageAssetId: body.profileImageAssetId,
-                    profileImageAsset: await mediaAPI.loadImageAsset(assetId: body.profileImageAssetId)
+                    profileImageAsset: try await mediaAPI.loadImageAsset(
+                        assetId: body.profileImageAssetId
+                    )
                 )
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized

@@ -16,29 +16,14 @@ struct AssetDetailsView: Component {
     let variants: [Components.Schemas.MediaAssetVariantListItemSchema]
     let permissions: NewAdminListActions
 
-    private func compactStorageKey(
-        _ key: String
-    ) -> String {
-        let prefix = "media/assets/"
-        guard key.hasPrefix(prefix) else { return key }
-        return String(key.dropFirst(prefix.count))
-    }
-
     private func previewLink(
         for storageKey: String,
         isVariant: Bool
     ) -> String {
-        let normalizedKey = compactStorageKey(storageKey)
-        let allowed = CharacterSet(
-            charactersIn:
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~/"
+        NewAdminMediaAsset.mediaURL(
+            storageKey: storageKey,
+            isVariant: isVariant
         )
-        let encoded =
-            normalizedKey.addingPercentEncoding(withAllowedCharacters: allowed)
-            ?? normalizedKey
-        let prefix = isVariant ? "/media/variants/" : "/media/assets/"
-        return
-            "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)\(prefix)\(encoded)"
     }
 
     func html(context: inout BuilderContext) -> some BasicTag {

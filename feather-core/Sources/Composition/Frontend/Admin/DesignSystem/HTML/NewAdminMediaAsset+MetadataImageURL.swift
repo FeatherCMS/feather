@@ -24,7 +24,7 @@ extension NewAdminMediaAsset {
         let encodedStorageKey = String(rawValue.dropFirst(mediaPrefix.count))
         let decodedStorageKey =
             encodedStorageKey.removingPercentEncoding ?? encodedStorageKey
-        let storageKey = "media/assets/" + decodedStorageKey
+        let storageKey = decodedStorageKey
         let fileName =
             url.lastPathComponent.removingPercentEncoding
             ?? url.lastPathComponent

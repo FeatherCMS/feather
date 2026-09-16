@@ -31,7 +31,8 @@ struct AdminListBlogPostFormOpenAPIRepository {
                     title: page.title,
                     excerpt: page.excerpt,
                     content: page.content,
-                    imageAsset: await api.mediaAdminAPI().loadImageAsset(assetId: page.imageAssetId),
+                    imageAsset: await api.mediaAdminAPI()
+                        .loadImageAsset(assetId: page.imageAssetId),
                     metadata: AdminMetadataSchemaBuilder.formValue(
                         from: page.metadata,
                         fallbackTitle: page.title,

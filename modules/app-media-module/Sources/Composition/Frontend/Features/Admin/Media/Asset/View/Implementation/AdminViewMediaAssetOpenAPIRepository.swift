@@ -51,7 +51,8 @@ public struct AdminViewMediaAssetOpenAPIRepository: Sendable {
             ids: [id],
             variants: ["image_preview"]
         )
-        let variants = lookup
+        let variants =
+            lookup
             .first(where: { $0.id == id })?
             .variants
             .map {

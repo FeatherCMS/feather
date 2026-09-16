@@ -27,20 +27,11 @@ public struct AccountAdmin {
                 guard let asset = profile.profileImageAsset else {
                     return Response(status: .notFound)
                 }
-                let prefix = "media/assets/"
-                let storageKey =
-                    asset.storageKey.hasPrefix(prefix)
-                    ? String(asset.storageKey.dropFirst(prefix.count))
-                    : asset.storageKey
-                let encodedStorageKey =
-                    storageKey.addingPercentEncoding(
-                        withAllowedCharacters: .urlPathAllowed
-                    ) ?? storageKey
                 return Response(
                     status: .seeOther,
                     headers: [
                         .location:
-                            "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)/media/assets/\(encodedStorageKey)"
+                            asset.originalURL
                     ]
                 )
             }

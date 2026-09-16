@@ -502,9 +502,7 @@ extension NewAdminFormFieldMediaPicker {
           }
 
           function encodedStorageKey(key) {
-            var prefix = "media/assets/";
-            var value = String(key || "");
-            return encodeURI(value.indexOf(prefix) === 0 ? value.slice(prefix.length) : value);
+            return encodeURI(String(key || ""));
           }
 
           function mediaURL(asset) {
@@ -791,24 +789,10 @@ extension NewAdminFormFieldMediaPicker {
         return title?.isEmpty == false ? title! : asset.baseName
     }
 
-    fileprivate func encodedStorageKey(_ key: String) -> String {
-        let prefix = "media/assets/"
-        let raw =
-            key.hasPrefix(prefix) ? String(key.dropFirst(prefix.count)) : key
-        let allowed = CharacterSet(
-            charactersIn:
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~/"
-        )
-        return raw.addingPercentEncoding(withAllowedCharacters: allowed) ?? raw
-    }
-
     fileprivate func previewURL(for asset: NewAdminMediaAsset)
         -> String?
     {
-        guard let previewStorageKey = asset.previewStorageKey,
-              !previewStorageKey.isEmpty
-        else { return nil }
-        return "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)/media/variants/\(encodedStorageKey(previewStorageKey))"
+        asset.previewURL
     }
 
     fileprivate func uploadPath() -> String {

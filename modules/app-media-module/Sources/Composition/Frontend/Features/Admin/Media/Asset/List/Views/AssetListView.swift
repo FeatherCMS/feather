@@ -441,26 +441,14 @@ extension AssetListView {
             : "\(path)?\(encoded.joined(separator: "&"))"
     }
 
-    fileprivate func encodedStorageKey(
-        _ key: String
-    ) -> String {
-        let prefix = "media/assets/"
-        let raw =
-            key.hasPrefix(prefix) ? String(key.dropFirst(prefix.count)) : key
-        let allowed = CharacterSet(
-            charactersIn:
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~/"
-        )
-        return raw.addingPercentEncoding(withAllowedCharacters: allowed) ?? raw
-    }
-
     fileprivate func previewLink(
         for storageKey: String,
         isVariant: Bool
     ) -> String {
-        let prefix = isVariant ? "/media/variants/" : "/media/assets/"
-        return
-            "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)\(prefix)\(encodedStorageKey(storageKey))"
+        NewAdminMediaAsset.mediaURL(
+            storageKey: storageKey,
+            isVariant: isVariant
+        )
     }
 
     fileprivate func assetOriginalLink(
@@ -867,10 +855,17 @@ extension AssetListView {
                 .class("media-assets-card-preview-button")
                 .data("picker-select", item.asset.id)
                 .data("picker-field", field)
-                .data("picker-storage-key", item.asset.storageKey)
+                .data(
+                    "picker-storage-key",
+                    NewAdminMediaAsset.normalizedStorageKey(
+                        item.asset.storageKey
+                    )
+                )
                 .data(
                     "picker-preview-storage-key",
-                    item.preview?.storageKey ?? ""
+                    NewAdminMediaAsset.normalizedStorageKey(
+                        item.preview?.storageKey ?? ""
+                    )
                 )
                 .data("picker-base-name", item.asset.baseName)
                 .data("picker-type", item.asset._type)
@@ -916,10 +911,17 @@ extension AssetListView {
                     )
                     .data("picker-select", item.asset.id)
                     .data("picker-field", field)
-                    .data("picker-storage-key", item.asset.storageKey)
+                    .data(
+                        "picker-storage-key",
+                        NewAdminMediaAsset.normalizedStorageKey(
+                            item.asset.storageKey
+                        )
+                    )
                     .data(
                         "picker-preview-storage-key",
-                        item.preview?.storageKey ?? ""
+                        NewAdminMediaAsset.normalizedStorageKey(
+                            item.preview?.storageKey ?? ""
+                        )
                     )
                     .data("picker-base-name", item.asset.baseName)
                     .data("picker-type", item.asset._type)
@@ -1115,11 +1117,15 @@ extension AssetListView {
                     .data("picker-field", field)
                     .data(
                         "picker-storage-key",
-                        item.asset.storageKey
+                        NewAdminMediaAsset.normalizedStorageKey(
+                            item.asset.storageKey
+                        )
                     )
                     .data(
                         "picker-preview-storage-key",
-                        item.preview?.storageKey ?? ""
+                        NewAdminMediaAsset.normalizedStorageKey(
+                            item.preview?.storageKey ?? ""
+                        )
                     )
                     .data(
                         "picker-base-name",
