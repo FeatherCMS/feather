@@ -851,12 +851,12 @@ extension AssetListView {
                 .data("picker-select", item.asset.id)
                 .data("picker-field", field)
                 .data(
-                        "picker-url",
-                    item.asset.url
+                    "picker-url",
+                    previewLink(for: item.asset.url)
                 )
                 .data(
-                        "picker-preview-url",
-                    item.preview?.url ?? ""
+                    "picker-preview-url",
+                    item.preview.map { previewLink(for: $0.url) } ?? ""
                 )
                 .data("picker-name", item.asset.name)
                 .data("picker-extension", item.asset._extension)
@@ -904,11 +904,11 @@ extension AssetListView {
                     .data("picker-field", field)
                     .data(
                         "picker-url",
-                        item.asset.url
+                        previewLink(for: item.asset.url)
                     )
                     .data(
                         "picker-preview-url",
-                        item.preview?.url ?? ""
+                        item.preview.map { previewLink(for: $0.url) } ?? ""
                     )
                     .data("picker-name", item.asset.name)
                     .data("picker-extension", item.asset._extension)
@@ -1103,11 +1103,11 @@ extension AssetListView {
                     .data("picker-field", field)
                     .data(
                         "picker-url",
-                        item.asset.url
+                        previewLink(for: item.asset.url)
                     )
                     .data(
                         "picker-preview-url",
-                        item.preview?.url ?? ""
+                        item.preview.map { previewLink(for: $0.url) } ?? ""
                     )
                     .data(
                         "picker-name",

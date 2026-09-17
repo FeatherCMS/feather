@@ -56,7 +56,13 @@ struct AssetAddView: Component {
                     )
                     .data(
                         "media-picker-selected-url",
-                        selectedAsset.url
+                        NewAdminMediaAsset.mediaURL(path: selectedAsset.url)
+                    )
+                    .data(
+                        "media-picker-selected-preview-url",
+                        selectedAsset.previewURL.map {
+                            NewAdminMediaAsset.mediaURL(path: $0)
+                        } ?? ""
                     )
                     .data(
                         "media-picker-selected-name",

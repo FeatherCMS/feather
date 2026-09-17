@@ -786,7 +786,7 @@ extension NewAdminFormFieldMediaPicker {
     fileprivate func previewURL(for asset: NewAdminMediaAsset)
         -> String?
     {
-        asset.previewURL
+        asset.previewURL.map(NewAdminMediaAsset.mediaURL(path:))
     }
 
     fileprivate func uploadPath() -> String {
