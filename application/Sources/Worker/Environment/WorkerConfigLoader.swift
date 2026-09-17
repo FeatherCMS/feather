@@ -125,6 +125,13 @@ struct WorkerConfigLoader {
                         forKey: "storage_shard_segment_length",
                         default: 2
                     )
+                ),
+                maxConcurrentProcessing: max(
+                    1,
+                    mediaScope.int(
+                        forKey: "max_concurrent_processing",
+                        default: 4
+                    )
                 )
             ),
             ses: .init(

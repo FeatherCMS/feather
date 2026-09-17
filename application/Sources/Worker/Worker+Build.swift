@@ -150,7 +150,8 @@ func buildWorker(
         storageKeyShard: .init(
             depth: config.media.storageShardDepth,
             segmentLength: config.media.storageShardSegmentLength
-        )
+        ),
+        maxConcurrentProcessing: config.media.maxConcurrentProcessing
     )
 
     var jobSchedule = JobSchedule()

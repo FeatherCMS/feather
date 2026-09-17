@@ -26,6 +26,7 @@ struct WorkerConfig: Sendable {
         let storageRootPath: String
         let storageShardDepth: Int
         let storageShardSegmentLength: Int
+        let maxConcurrentProcessing: Int
     }
 
     struct SESConfig: Sendable {
