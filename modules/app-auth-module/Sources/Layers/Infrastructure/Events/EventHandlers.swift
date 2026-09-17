@@ -37,7 +37,7 @@ public enum EventHandlers {
                 ),
                 .init(
                     label: "Sign in",
-                    url: "/login/",
+                    url: "/login/?redirect=/admin/",
                     priority: 100,
                     authentication: .anonymous
                 ),
