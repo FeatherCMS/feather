@@ -155,11 +155,16 @@ This file documents the backend permission keys and what they allow a user to do
 - `media:assets:list`: List and search media assets. Also covers media folder browsing.
 - `media:assets:delete`: Delete a media asset. Also covers media folder deletion.
 
-- `media:processors:create`: Create a media processor.
-- `media:processors:read`: View a single media processor.
-- `media:processors:update`: Edit a media processor.
-- `media:processors:list`: List and search media processors.
-- `media:processors:delete`: Delete a media processor.
+- `media:variants:create`: Create a media variant.
+- `media:variants:read`: View a single media variant.
+- `media:variants:update`: Edit a media variant.
+- `media:variants:list`: List and search media variants.
+- `media:variants:delete`: Delete a media variant.
+- `media:variant-processors:create`: Create a processor rule inside a variant.
+- `media:variant-processors:read`: View processor rules inside a variant.
+- `media:variant-processors:update`: Edit a processor rule inside a variant.
+- `media:variant-processors:list`: List processor rules inside a variant.
+- `media:variant-processors:delete`: Delete processor rules inside a variant.
 
 ## Effective Permission Rules
 

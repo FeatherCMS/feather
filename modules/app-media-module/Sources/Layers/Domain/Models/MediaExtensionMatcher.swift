@@ -8,26 +8,14 @@ import Foundation
 
 public enum MediaExtensionMatcher {
     public static func matches(
-        asset: MediaAssetNodeFile,
-        processor: MediaProcessor
-    ) -> Bool {
-        matches(
-            extension: asset.extension,
-            processor: processor
-        )
-    }
-
-    public static func matches(
         `extension`: String,
-        processor: MediaProcessor
+        processor: MediaVariantProcessor
     ) -> Bool {
         let assetExtension = canonicalExtension(from: `extension`) ?? "bin"
-
         let acceptedExtensions = processor.matchExtensions
             .components(separatedBy: CharacterSet(charactersIn: ",; \n\r\t"))
             .compactMap { canonicalExtension(from: String($0)) }
             .filter { !$0.isEmpty }
-
         return acceptedExtensions.contains(assetExtension)
     }
 

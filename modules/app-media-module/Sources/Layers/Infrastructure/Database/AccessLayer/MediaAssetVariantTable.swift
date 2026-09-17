@@ -7,7 +7,8 @@ extension MediaAssetVariantTable.Row {
     init(from row: DatabaseRow) throws {
         id = try row.decode(column: "id", as: String.self)
         nodeId = try row.decode(column: "asset_id", as: String.self)
-        processorId = try row.decode(column: "processor_id", as: String.self)
+        variantId = try row.decode(column: "variant_id", as: String.self)
+        variantProcessorId = try row.decode(column: "variant_processor_id", as: String.self)
         name = try row.decode(column: "name", as: String.self)
         storageObjectId = try row.decode(column: "storage_object_id", as: String.self)
         objectKey = try row.decode(column: "object_key", as: String.self)
@@ -28,7 +29,8 @@ struct MediaAssetVariantTable {
         struct Create {
             let id: String
             let nodeId: String
-            let processorId: String
+            let variantId: String
+            let variantProcessorId: String
             let name: String
             let storageObjectId: String
             let `extension`: String
@@ -36,7 +38,8 @@ struct MediaAssetVariantTable {
 
         let id: String
         let nodeId: String
-        let processorId: String
+        let variantId: String
+        let variantProcessorId: String
         let name: String
         let storageObjectId: String
         let objectKey: String
@@ -50,27 +53,27 @@ struct MediaAssetVariantTable {
         _ = try await connection.run(
             query: #"""
                 INSERT INTO media_asset_variant (
-                    id, asset_id, processor_id, name, storage_object_id, extension, created_at
+                    id, asset_id, variant_id, variant_processor_id, name, storage_object_id, extension, created_at
                 ) VALUES (
-                    \#(row.id), \#(row.nodeId), \#(row.processorId), \#(row.name),
+                    \#(row.id), \#(row.nodeId), \#(row.variantId), \#(row.variantProcessorId), \#(row.name),
                     \#(row.storageObjectId), \#(row.extension), NOW()
                 )
                 """#
         ) { _ in }
-        guard let result = try await find(nodeId: row.nodeId, processorId: row.processorId) else {
+        guard let result = try await find(nodeId: row.nodeId, variantId: row.variantId) else {
             throw RepositoryError.notFound
         }
         return result
     }
 
-    func find(nodeId: String, processorId: String) async throws -> Row? {
+    func find(nodeId: String, variantId: String) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT v.id, v.asset_id, v.processor_id, v.name, v.storage_object_id,
+                SELECT v.id, v.asset_id, v.variant_id, v.variant_processor_id, v.name, v.storage_object_id,
                        o.object_key, v.extension, v.created_at
                 FROM media_asset_variant v
                 JOIN media_asset_storage_object o ON o.id = v.storage_object_id
-                WHERE v.asset_id = \#(nodeId) AND v.processor_id = \#(processorId)
+                WHERE v.asset_id = \#(nodeId) AND v.variant_id = \#(variantId)
                 LIMIT 1;
                 """#
         ) { sequence in
@@ -82,7 +85,7 @@ struct MediaAssetVariantTable {
     func list(nodeId: String) async throws -> [Row] {
         try await connection.run(
             query: #"""
-                SELECT v.id, v.asset_id, v.processor_id, v.name, v.storage_object_id,
+                SELECT v.id, v.asset_id, v.variant_id, v.variant_processor_id, v.name, v.storage_object_id,
                        o.object_key, v.extension, v.created_at
                 FROM media_asset_variant v
                 JOIN media_asset_storage_object o ON o.id = v.storage_object_id

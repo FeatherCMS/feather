@@ -6,7 +6,7 @@ public protocol MediaAssetNodeFileVariantRepository: Repository {
     ) async throws -> MediaAssetNodeFileVariant
     func find(
         nodeId: String,
-        processorId: String
+        variantId: String
     ) async throws -> MediaAssetNodeFileVariant?
     func list(
         nodeId: String

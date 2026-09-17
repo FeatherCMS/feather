@@ -71,7 +71,7 @@ extension MediaStorageClient {
         let requiredLength = shardConfiguration.depth * shardConfiguration.segmentLength
         guard characters.count > requiredLength else { return key }
 
-        var segments: [String] = []
+        var segments = Array(components[..<assetsIndex])
         for index in 0..<shardConfiguration.depth {
             let start = index * shardConfiguration.segmentLength
             let end = start + shardConfiguration.segmentLength

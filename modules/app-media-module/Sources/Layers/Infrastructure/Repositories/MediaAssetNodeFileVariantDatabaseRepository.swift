@@ -8,7 +8,8 @@ extension MediaAssetVariantTable.Row {
         .init(
             id: id,
             nodeId: nodeId,
-            processorId: processorId,
+            variantId: variantId,
+            variantProcessorId: variantProcessorId,
             name: name,
             storageObjectId: storageObjectId,
             objectKey: objectKey,
@@ -31,7 +32,8 @@ public struct MediaAssetNodeFileVariantDatabaseRepository: MediaAssetNodeFileVar
                 row: .init(
                     id: context.idGenerator.generate(),
                     nodeId: model.nodeId,
-                    processorId: model.processorId,
+                    variantId: model.variantId,
+                    variantProcessorId: model.variantProcessorId,
                     name: model.name,
                     storageObjectId: model.storageObjectId,
                     extension: model.extension
@@ -40,9 +42,9 @@ public struct MediaAssetNodeFileVariantDatabaseRepository: MediaAssetNodeFileVar
         return row.asDomain
     }
 
-    public func find(nodeId: String, processorId: String) async throws -> MediaAssetNodeFileVariant? {
+    public func find(nodeId: String, variantId: String) async throws -> MediaAssetNodeFileVariant? {
         try await MediaAssetVariantTable(connection: context.connection)
-            .find(nodeId: nodeId, processorId: processorId)?.asDomain
+            .find(nodeId: nodeId, variantId: variantId)?.asDomain
     }
 
     public func list(nodeId: String) async throws -> [MediaAssetNodeFileVariant] {

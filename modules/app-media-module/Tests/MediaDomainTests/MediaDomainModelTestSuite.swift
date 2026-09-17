@@ -24,18 +24,20 @@ struct MediaDomainModelTestSuite {
     }
 
     @Test
-    func mediaAssetVariantStoresProcessorAndObjectIdentity() {
+    func mediaAssetVariantStoresVariantAndProcessorIdentity() {
         let variant = MediaAssetNodeFileVariant.create(
             nodeId: "asset-1",
-            processorId: "processor-1",
-            name: "image_preview",
+            variantId: "variant-1",
+            variantProcessorId: "processor-1",
+            name: "preview",
             storageObjectId: "object-2",
-            objectKey: "assets/asset-1/variants/processor-1.webp",
+            objectKey: "/media/assets/asset-1/variants/processor-1.webp",
             extension: "webp"
         )
 
         #expect(variant.nodeId == "asset-1")
-        #expect(variant.processorId == "processor-1")
+        #expect(variant.variantId == "variant-1")
+        #expect(variant.variantProcessorId == "processor-1")
         #expect(variant.objectKey.hasSuffix(".webp"))
     }
 
@@ -48,7 +50,7 @@ struct MediaDomainModelTestSuite {
             slug: "hero",
             slugPath: "hero",
             storageObjectId: "object-1",
-            objectKey: "assets/asset-1/original.jpg",
+            objectKey: "/media/assets/asset-1/original.jpg",
             extension: "jpg",
             contentType: "image/jpeg",
             sizeBytes: 123,
@@ -59,17 +61,17 @@ struct MediaDomainModelTestSuite {
             updatedAt: .init(),
             deletedAt: nil
         )
-        let processor = MediaProcessor(
+        let processor = MediaVariantProcessor(
             id: "processor-1",
+            variantId: "variant-1",
             name: "image_preview",
             matchExtensions: "png, jpg",
             commandTemplate: "cp {input.fullname} {output.fullname}",
-            isRequired: false,
             isActive: true,
             createdAt: .init(),
             updatedAt: .init()
         )
 
-        #expect(MediaExtensionMatcher.matches(asset: asset, processor: processor))
+        #expect(MediaExtensionMatcher.matches(extension: asset.extension, processor: processor))
     }
 }

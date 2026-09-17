@@ -5,7 +5,8 @@ import struct Foundation.Date
 public struct MediaAssetNodeFileVariant: Model {
     public struct New: Sendable {
         public let nodeId: String
-        public let processorId: String
+        public let variantId: String
+        public let variantProcessorId: String
         public let name: String
         public let storageObjectId: String
         public let objectKey: String
@@ -14,7 +15,8 @@ public struct MediaAssetNodeFileVariant: Model {
 
     public let id: String
     public let nodeId: String
-    public let processorId: String
+    public let variantId: String
+    public let variantProcessorId: String
     public let name: String
     public let storageObjectId: String
     public let objectKey: String
@@ -24,7 +26,8 @@ public struct MediaAssetNodeFileVariant: Model {
     package init(
         id: String,
         nodeId: String,
-        processorId: String,
+        variantId: String,
+        variantProcessorId: String,
         name: String,
         storageObjectId: String,
         objectKey: String,
@@ -33,7 +36,8 @@ public struct MediaAssetNodeFileVariant: Model {
     ) {
         self.id = id
         self.nodeId = nodeId
-        self.processorId = processorId
+        self.variantId = variantId
+        self.variantProcessorId = variantProcessorId
         self.name = name
         self.storageObjectId = storageObjectId
         self.objectKey = objectKey
@@ -43,7 +47,8 @@ public struct MediaAssetNodeFileVariant: Model {
 
     public static func create(
         nodeId: String,
-        processorId: String,
+        variantId: String,
+        variantProcessorId: String,
         name: String,
         storageObjectId: String,
         objectKey: String,
@@ -51,7 +56,8 @@ public struct MediaAssetNodeFileVariant: Model {
     ) -> New {
         .init(
             nodeId: nodeId,
-            processorId: processorId,
+            variantId: variantId,
+            variantProcessorId: variantProcessorId,
             name: name,
             storageObjectId: storageObjectId,
             objectKey: objectKey,

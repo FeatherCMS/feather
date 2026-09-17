@@ -37,9 +37,6 @@ struct MediaJobController {
                         ),
                         assets: MediaAssetNodeFileDatabaseRepository(context: context),
                         storageObjects: MediaAssetStorageObjectDatabaseRepository(context: context),
-                        processors: MediaProcessorDatabaseRepository(
-                            context: context
-                        ),
                         variants: MediaAssetNodeFileVariantDatabaseRepository(
                             context: context
                         )

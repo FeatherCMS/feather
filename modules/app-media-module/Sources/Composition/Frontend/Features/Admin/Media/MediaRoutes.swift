@@ -61,33 +61,3 @@ enum MediaFolderRoutes {
     }
 
 }
-
-enum MediaProcessorRoutes {
-    static let list = MediaAdminRoutes.media.appendingPath(
-        RouterPath("processors")
-    )
-    static let add = list.appendingPath(RouterPath("add"))
-    static let remove = list.appendingPath(RouterPath("remove"))
-
-    static var listBreadcrumb: [NewAdminBreadcrumb.Link] {
-        MediaAdminRoutes.breadcrumb
-    }
-
-    static var breadcrumb: [NewAdminBreadcrumb.Link] {
-        MediaAdminRoutes.breadcrumb + [
-            .init(label: "Processors", link: list.description)
-        ]
-    }
-
-    static func details(_ id: RouterPath) -> RouterPath {
-        list.appendingPath(id)
-    }
-
-    static func edit(_ id: RouterPath) -> RouterPath {
-        details(id).appendingPath(RouterPath("edit"))
-    }
-
-    static func remove(_ id: RouterPath) -> RouterPath {
-        details(id).appendingPath(RouterPath("remove"))
-    }
-}

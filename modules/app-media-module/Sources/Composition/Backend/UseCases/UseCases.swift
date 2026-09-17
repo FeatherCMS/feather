@@ -57,15 +57,21 @@ public struct UseCases: Sendable {
                     folders: MediaAssetNodeFolderDatabaseRepository(context: context),
                     assets: MediaAssetNodeFileDatabaseRepository(context: context),
                     storageObjects: MediaAssetStorageObjectDatabaseRepository(context: context),
-                    processors: MediaProcessorDatabaseRepository(context: context),
-                    variants: MediaAssetNodeFileVariantDatabaseRepository(context: context)
+                    variants: MediaAssetNodeFileVariantDatabaseRepository(context: context),
+                    variantDefinitions: MediaVariantDatabaseRepository(context: context),
+                    variantProcessors: MediaVariantProcessorDatabaseRepository(context: context)
                 )
             }
         )
     }
 
-    public func enqueueVariantGeneration(assetId: String, processors: [MediaProcessor]) async throws {
-        for processor in processors { try await variantQueue.enqueueMediaGenerateVariant(assetId: assetId, processorId: processor.id) }
+    public func enqueueVariantGeneration(assetId: String, processors: [MediaVariantProcessor]) async throws {
+        for processor in processors {
+            try await variantQueue.enqueueMediaGenerateVariant(
+                assetId: assetId,
+                variantProcessorId: processor.id
+            )
+        }
     }
 
     public func createAssetAndEnqueue(subject: Subject, input: CreateMediaAsset.Input) async throws -> MediaAssetDetail {
@@ -80,7 +86,7 @@ public struct UseCases: Sendable {
 
     private func finalizeAssetCreation(result: MediaAssetDetail, input: CreateMediaAsset.Input) async throws -> MediaAssetDetail {
         let processors = try await database.withConnection { connection in
-            let repo = MediaProcessorDatabaseRepository(context: .init(connection: connection, idGenerator: idGenerator))
+            let repo = MediaVariantProcessorDatabaseRepository(context: .init(connection: connection, idGenerator: idGenerator))
             return try await repo.listActive().filter {
                 MediaExtensionMatcher.matches(extension: input.extension, processor: $0)
             }
@@ -119,11 +125,16 @@ public struct UseCases: Sendable {
         try await database.withConnection { connection in
             let repo = MediaAssetNodeFileVariantDatabaseRepository(context: .init(connection: connection, idGenerator: idGenerator))
             guard try await MediaAssetNodeFileDatabaseRepository(context: .init(connection: connection, idGenerator: idGenerator)).find(id: assetId) != nil else { throw RepositoryError.notFound }
-            return try await repo.list(nodeId: assetId).map { .init(assetId: assetId, variantId: $0.id, name: $0.name, extension: $0.extension, objectKey: $0.objectKey) }
+            return try await repo.list(nodeId: assetId).map { .init(assetId: assetId, variantId: $0.variantId, name: $0.name, extension: $0.extension, objectKey: $0.objectKey) }
         }
     }
 
-    private func objectKey(for asset: MediaAssetDetail) -> String { "assets/\(asset.id)/original.\(asset.extension)" }
+    private func objectKey(for asset: MediaAssetDetail) -> String {
+        MediaStorageObjectKey.original(
+            assetID: asset.id,
+            fileExtension: asset.extension
+        )
+    }
 }
 
 private func mediaType(for extension: String) -> String {

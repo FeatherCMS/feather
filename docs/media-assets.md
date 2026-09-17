@@ -39,12 +39,19 @@ media_asset_storage_object
   created_at TIMESTAMPTZ NOT NULL
   deleted_at TIMESTAMPTZ NULL
 
-media_processor
+media_variant
+  id          TEXT PRIMARY KEY
+  variant_key TEXT UNIQUE NOT NULL
+  name        TEXT UNIQUE NOT NULL
+  is_required BOOLEAN NOT NULL
+  is_active   BOOLEAN NOT NULL
+
+media_variant_processor
   id               TEXT PRIMARY KEY
-  name             TEXT UNIQUE NOT NULL
+  variant_id       TEXT NOT NULL -> media_variant.id
+  name             TEXT NOT NULL
   match_extensions TEXT NOT NULL
   command_template TEXT NOT NULL
-  is_required      BOOLEAN NOT NULL
   is_active        BOOLEAN NOT NULL
   created_at       TIMESTAMPTZ NOT NULL
   updated_at       TIMESTAMPTZ NOT NULL
@@ -52,12 +59,13 @@ media_processor
 media_asset_variant
   id                TEXT PRIMARY KEY
   asset_id          TEXT NOT NULL -> media_asset_node_file.node_id
-  processor_id      TEXT NOT NULL -> media_processor.id
+  variant_id        TEXT NOT NULL -> media_variant.id
+  variant_processor_id TEXT NOT NULL -> media_variant_processor.id
   name              TEXT NOT NULL
   storage_object_id TEXT UNIQUE NOT NULL -> media_asset_storage_object.id
   extension         TEXT NOT NULL
   created_at        TIMESTAMPTZ NOT NULL
-  UNIQUE(asset_id, processor_id)
+  UNIQUE(asset_id, variant_id)
   UNIQUE(asset_id, name)
 ```
 
@@ -88,7 +96,7 @@ Storage keys are immutable and do not include mutable folder names:
 
 ```
 assets/{asset-id}/original.{extension}
-assets/{asset-id}/variants/{processor-id}.{extension}
+assets/{asset-id}/variants/{variant-key}.{extension}
 ```
 
 The database stores these logical keys in
@@ -125,17 +133,26 @@ media lookup names are removed in the new API.
 
 ## Processors and variants
 
-A processor matches normalized extensions and executes its command template
-with temporary input/output paths, such as `{input.fullname}` and
-`{output.fullname}`. The original object is never replaced. A successful run
-writes a new storage object and creates one
-`media_asset_variant(asset_id, processor_id)` row.
+Variants are logical output contracts, such as `preview`. A variant owns the
+required/active flags and stable public key. Its child
+`media_variant_processor` rows contain the executable command and the source
+extensions for which that command applies. This keeps implementation names
+out of public variant URLs and permits different processors for one logical
+variant:
 
-Variant names are stable processor names and are unique per asset. The
-variant's output extension is stored independently because a processor may
-change formats. Asset status is `uploaded` initially, then `processing` while
-matching active processors are pending, and `ready` when all matching active
-processors have generated variants or none match.
+```
+preview -> png,jpg,jpeg,bmp -> ImageMagick -> webp
+preview -> pdf              -> Ghostscript -> png
+preview -> mp4,mov,avi      -> FFmpeg      -> png
+```
+
+The generated `media_asset_variant` row references both the logical variant
+and the selected processor rule. The original object is never replaced. A
+successful run writes a new storage object and creates one
+`media_asset_variant(asset_id, variant_id)` row. Asset status is `uploaded`
+initially, then `processing` while required active variants applicable to the
+source extension are pending, and `ready` when they have generated outputs or
+no applicable rule exists.
 
 ## Physical storage sharding
 
@@ -167,10 +184,10 @@ length:    2
 physical:  ki/tn/A5/mXY7cFexHPtSC9F/original.jpg
 ```
 
-The corresponding variant ends with its processor object path:
+The corresponding variant keeps the stable variant key in its object path:
 
 ```
-ki/tn/A5/mXY7cFexHPtSC9F/variants/{processor-id}.webp
+ki/tn/A5/mXY7cFexHPtSC9F/variants/{variant-key}.webp
 ```
 
 With depth `0`, the physical path is the logical key

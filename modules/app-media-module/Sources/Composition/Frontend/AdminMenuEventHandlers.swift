@@ -27,16 +27,16 @@ public enum MediaAdminMenuEventHandlers {
                 .init(
                     menuKey: "media",
                     label: "Assets",
-                    icon: "box",
+                    icon: "folder",
                     link: "/admin/media/assets/",
                     permission: "media:assets:list"
                 ),
                 .init(
                     menuKey: "media",
-                    label: "Processors",
-                    icon: "playCircle",
-                    link: "/admin/media/processors/",
-                    permission: "media:processors:list"
+                    label: "Variants",
+                    icon: "crop",
+                    link: "/admin/media/variants/",
+                    permission: "media:variants:list"
                 ),
             ]
         }

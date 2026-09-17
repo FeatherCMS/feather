@@ -11,8 +11,9 @@ public struct TableMigration: DatabaseMigration {
     public func apply(on connection: any DatabaseConnection) async throws {
         let queries: [DatabaseQuery] = [
             // Clean-install media schema. Legacy media tables are removed.
-            #"DROP TABLE IF EXISTS media_processor_asset;"#,
             #"DROP TABLE IF EXISTS media_asset_variant;"#,
+            #"DROP TABLE IF EXISTS media_variant_processor;"#,
+            #"DROP TABLE IF EXISTS media_variant;"#,
             #"DROP TABLE IF EXISTS media_asset_node_file;"#,
             #"DROP TABLE IF EXISTS media_asset_node_folder;"#,
             #"DROP TABLE IF EXISTS media_asset_storage_object;"#,
@@ -54,7 +55,7 @@ public struct TableMigration: DatabaseMigration {
             #"""
             CREATE TABLE IF NOT EXISTS media_asset_storage_object (
                 id TEXT PRIMARY KEY,
-                object_key TEXT NOT NULL UNIQUE,
+                object_key TEXT NOT NULL UNIQUE CHECK (object_key LIKE '/media/assets/%'),
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 deleted_at TIMESTAMPTZ
             );
@@ -88,11 +89,10 @@ public struct TableMigration: DatabaseMigration {
             """#,
 
             #"""
-            CREATE TABLE IF NOT EXISTS media_processor (
+            CREATE TABLE IF NOT EXISTS media_variant (
                 id TEXT PRIMARY KEY,
+                variant_key TEXT NOT NULL UNIQUE,
                 name TEXT NOT NULL UNIQUE,
-                match_extensions TEXT NOT NULL,
-                command_template TEXT NOT NULL,
                 is_required BOOLEAN NOT NULL DEFAULT TRUE,
                 is_active BOOLEAN NOT NULL DEFAULT TRUE,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
@@ -100,15 +100,33 @@ public struct TableMigration: DatabaseMigration {
             );
             """#,
             #"""
+            CREATE TABLE IF NOT EXISTS media_variant_processor (
+                id TEXT PRIMARY KEY,
+                variant_id TEXT NOT NULL REFERENCES media_variant(id) ON DELETE CASCADE,
+                name TEXT NOT NULL,
+                match_extensions TEXT NOT NULL,
+                command_template TEXT NOT NULL,
+                is_active BOOLEAN NOT NULL DEFAULT TRUE,
+                created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
+                updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
+                UNIQUE(variant_id, name)
+            );
+            """#,
+            #"""
+            CREATE INDEX IF NOT EXISTS media_variant_processor_variant_id_idx
+            ON media_variant_processor (variant_id);
+            """#,
+            #"""
             CREATE TABLE IF NOT EXISTS media_asset_variant (
                 id TEXT PRIMARY KEY,
                 asset_id TEXT NOT NULL REFERENCES media_asset_node_file(node_id) ON DELETE CASCADE,
-                processor_id TEXT NOT NULL REFERENCES media_processor(id) ON DELETE CASCADE,
+                variant_id TEXT NOT NULL REFERENCES media_variant(id) ON DELETE CASCADE,
+                variant_processor_id TEXT NOT NULL REFERENCES media_variant_processor(id) ON DELETE CASCADE,
                 name TEXT NOT NULL,
                 storage_object_id TEXT NOT NULL UNIQUE REFERENCES media_asset_storage_object(id) ON DELETE RESTRICT,
                 extension TEXT NOT NULL,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
-                UNIQUE(asset_id, processor_id),
+                UNIQUE(asset_id, variant_id),
                 UNIQUE(asset_id, name)
             );
             """#,
@@ -117,8 +135,8 @@ public struct TableMigration: DatabaseMigration {
             ON media_asset_variant (asset_id);
             """#,
             #"""
-            CREATE INDEX IF NOT EXISTS media_asset_variant_processor_id_idx
-            ON media_asset_variant (processor_id);
+            CREATE INDEX IF NOT EXISTS media_asset_variant_variant_id_idx
+            ON media_asset_variant (variant_id);
             """#,
         ]
 

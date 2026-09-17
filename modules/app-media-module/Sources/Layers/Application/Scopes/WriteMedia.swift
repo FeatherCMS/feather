@@ -12,20 +12,23 @@ public struct WriteMedia: Scope {
     public let folders: any MediaAssetNodeFolderRepository
     public let assets: any MediaAssetNodeFileRepository
     public let storageObjects: any MediaAssetStorageObjectRepository
-    public let processors: any MediaProcessorRepository
     public let variants: any MediaAssetNodeFileVariantRepository
+    public let variantDefinitions: any MediaVariantRepository
+    public let variantProcessors: any MediaVariantProcessorRepository
 
     public init(
         folders: any MediaAssetNodeFolderRepository,
         assets: any MediaAssetNodeFileRepository,
         storageObjects: any MediaAssetStorageObjectRepository,
-        processors: any MediaProcessorRepository,
-        variants: any MediaAssetNodeFileVariantRepository
+        variants: any MediaAssetNodeFileVariantRepository,
+        variantDefinitions: any MediaVariantRepository,
+        variantProcessors: any MediaVariantProcessorRepository
     ) {
         self.folders = folders
         self.assets = assets
         self.storageObjects = storageObjects
-        self.processors = processors
         self.variants = variants
+        self.variantDefinitions = variantDefinitions
+        self.variantProcessors = variantProcessors
     }
 }

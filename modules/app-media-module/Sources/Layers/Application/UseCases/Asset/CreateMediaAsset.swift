@@ -51,7 +51,10 @@ public struct CreateMediaAsset: UseCase {
             scope.assets.prepareStorageIdentity()
         }
         let file = normalizedFile(input.fileName, extension: input.extension)
-        let objectKey = "assets/\(storageIdentity.nodeId)/original.\(file.extension)"
+        let objectKey = MediaStorageObjectKey.original(
+            assetID: storageIdentity.nodeId,
+            fileExtension: file.extension
+        )
         try await storage.upload(key: objectKey, data: input.data)
 
         do {
