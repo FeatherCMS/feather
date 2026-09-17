@@ -135,7 +135,8 @@ public struct GenerateMediaAssetVariants: UseCase {
                     }
                 )
                 let variants = try generatedOutputs.map { output in
-                    guard let storageObjectID = storageObjectIDs[output.objectKey]
+                    guard
+                        let storageObjectID = storageObjectIDs[output.objectKey]
                     else { throw Error.assetNotFound }
                     return MediaAssetNodeFileVariant.create(
                         nodeId: prepared.asset.id,
@@ -169,7 +170,7 @@ public struct GenerateMediaAssetVariants: UseCase {
     }
 }
 
-private extension GenerateMediaAssetVariants {
+extension GenerateMediaAssetVariants {
     private func prepare(assetID: String) async throws -> Prepared {
         try await transaction.run { scope in
             guard let asset = try await scope.assets.find(id: assetID) else {
@@ -212,7 +213,7 @@ private extension GenerateMediaAssetVariants {
         }
     }
 
-    func updateStatus(
+    fileprivate func updateStatus(
         assetID: String,
         status: MediaAssetNodeFile.Status
     ) async throws {
@@ -221,7 +222,7 @@ private extension GenerateMediaAssetVariants {
         }
     }
 
-    func deleteUploaded(keys: [String]) async {
+    fileprivate func deleteUploaded(keys: [String]) async {
         for key in keys {
             _ = try? await MediaStorageData.delete(
                 from: storage,
@@ -230,7 +231,7 @@ private extension GenerateMediaAssetVariants {
         }
     }
 
-    func runProcessor(
+    fileprivate func runProcessor(
         _ processor: MediaVariantProcessor,
         asset: MediaAssetNodeFile,
         inputURL: URL
@@ -263,7 +264,7 @@ private extension GenerateMediaAssetVariants {
         )
     }
 
-    func render(
+    fileprivate func render(
         template: String,
         inputPath: String,
         outputPath: String
@@ -287,30 +288,35 @@ private extension GenerateMediaAssetVariants {
         }
     }
 
-    func temporaryURL(extension: String) -> URL {
+    fileprivate func temporaryURL(extension: String) -> URL {
         FileManager.default.temporaryDirectory
             .appendingPathComponent(UUID().uuidString)
             .appendingPathExtension(`extension`)
     }
 
-    func temporaryFile(data: Data, extension: String) throws -> URL {
+    fileprivate func temporaryFile(data: Data, extension: String) throws -> URL
+    {
         let url = temporaryURL(extension: `extension`)
         try data.write(to: url)
         return url
     }
 
-    func resolveOutputURL(preferredURL: URL) throws -> URL {
+    fileprivate func resolveOutputURL(preferredURL: URL) throws -> URL {
         if FileManager.default.fileExists(atPath: preferredURL.path) {
             return preferredURL
         }
-        let candidates = try FileManager.default.contentsOfDirectory(
-            at: preferredURL.deletingLastPathComponent(),
-            includingPropertiesForKeys: nil
-        ).filter {
-            $0.deletingPathExtension().lastPathComponent
-                == preferredURL.deletingPathExtension().lastPathComponent
-        }
-        return candidates.first(where: { $0.pathExtension == preferredURL.pathExtension })
+        let candidates = try FileManager.default
+            .contentsOfDirectory(
+                at: preferredURL.deletingLastPathComponent(),
+                includingPropertiesForKeys: nil
+            )
+            .filter {
+                $0.deletingPathExtension().lastPathComponent
+                    == preferredURL.deletingPathExtension().lastPathComponent
+            }
+        return candidates.first(where: {
+            $0.pathExtension == preferredURL.pathExtension
+        })
             ?? (candidates.count == 1 ? candidates[0] : preferredURL)
     }
 }

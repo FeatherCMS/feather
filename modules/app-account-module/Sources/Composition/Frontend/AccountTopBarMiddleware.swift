@@ -15,10 +15,11 @@ public struct AccountTopBarMiddleware: RouterMiddleware {
     public func handle(
         _ request: Request,
         context: DefaultRequestContext,
-        next: @concurrent (
-            Request,
-            DefaultRequestContext
-        ) async throws -> Response
+        next:
+            @concurrent (
+                Request,
+                DefaultRequestContext
+            ) async throws -> Response
     ) async throws -> Response {
         var context = context
         guard context.account != nil else {
@@ -30,7 +31,8 @@ public struct AccountTopBarMiddleware: RouterMiddleware {
                 apiBaseURL: apiBaseURL,
                 sessionToken: context.sessionToken
             )
-            let profileID = try await accountAPI
+            let profileID =
+                try await accountAPI
                 .withOpenAPIRepositoryErrorMapping { client in
                     let response = try await client.accountProfileGet()
                     return try response.ok.body.json.profileImageAssetId
@@ -41,7 +43,8 @@ public struct AccountTopBarMiddleware: RouterMiddleware {
                         apiBaseURL: apiBaseURL,
                         sessionToken: context.sessionToken
                     )
-                ).getAssetWithPreview(id: profileID)
+                )
+                .getAssetWithPreview(id: profileID)
                 context.accountTopBarState = .init(
                     profileImageURL: asset.previewURL.map(
                         NewAdminMediaAsset.mediaURL(path:)

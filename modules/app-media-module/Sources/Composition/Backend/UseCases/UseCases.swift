@@ -116,7 +116,8 @@ public struct UseCases: Sendable {
         )
     }
 
-    public func activeVariantProcessors() async throws -> [MediaVariantProcessor]
+    public func activeVariantProcessors() async throws
+        -> [MediaVariantProcessor]
     {
         try await database.withConnection { connection in
             let repo = MediaVariantProcessorDatabaseRepository(

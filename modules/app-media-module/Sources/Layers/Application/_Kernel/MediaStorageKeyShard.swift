@@ -19,7 +19,8 @@ public struct MediaStorageKeyShard: Sendable, Equatable {
     public func physicalKey(for key: String) -> String {
         guard isEnabled else { return key }
 
-        let components = key
+        let components =
+            key
             .split(separator: "/", omittingEmptySubsequences: true)
             .map(String.init)
         guard let assetsIndex = components.firstIndex(of: "assets"),

@@ -189,11 +189,12 @@ public struct MetadataDatabaseQueries: MetadataQueries {
         referenceIDs: [String]
     ) async throws -> [MetadataDetail] {
         let table = WebMetadataTable(connection: context.connection)
-        return try await table.resolve(
-            referenceType: referenceType,
-            referenceIDs: referenceIDs
-        )
-        .map(\.asDetail)
+        return
+            try await table.resolve(
+                referenceType: referenceType,
+                referenceIDs: referenceIDs
+            )
+            .map(\.asDetail)
     }
 
     public func count(

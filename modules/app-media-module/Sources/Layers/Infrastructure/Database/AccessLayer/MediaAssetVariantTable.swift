@@ -79,30 +79,37 @@ struct MediaAssetVariantTable {
 
     func create(rows: [Row.Create]) async throws {
         guard !rows.isEmpty else { return }
-        let values = rows.map { row in
-            let id = row.id.replacingOccurrences(of: "'", with: "''")
-            let nodeID = row.nodeId.replacingOccurrences(of: "'", with: "''")
-            let variantID = row.variantId.replacingOccurrences(
-                of: "'",
-                with: "''"
-            )
-            let processorID = row.variantProcessorId.replacingOccurrences(
-                of: "'",
-                with: "''"
-            )
-            let name = row.name.replacingOccurrences(of: "'", with: "''")
-            let storageObjectID = row.storageObjectId.replacingOccurrences(
-                of: "'",
-                with: "''"
-            )
-            let fileExtension = row.extension.replacingOccurrences(
-                of: "'",
-                with: "''"
-            )
-            return "('\(id)', '\(nodeID)', '\(variantID)', '\(processorID)', '\(name)', '\(storageObjectID)', '\(fileExtension)', NOW())"
-        }.joined(separator: ", ")
+        let values =
+            rows.map { row in
+                let id = row.id.replacingOccurrences(of: "'", with: "''")
+                let nodeID = row.nodeId.replacingOccurrences(
+                    of: "'",
+                    with: "''"
+                )
+                let variantID = row.variantId.replacingOccurrences(
+                    of: "'",
+                    with: "''"
+                )
+                let processorID = row.variantProcessorId.replacingOccurrences(
+                    of: "'",
+                    with: "''"
+                )
+                let name = row.name.replacingOccurrences(of: "'", with: "''")
+                let storageObjectID = row.storageObjectId.replacingOccurrences(
+                    of: "'",
+                    with: "''"
+                )
+                let fileExtension = row.extension.replacingOccurrences(
+                    of: "'",
+                    with: "''"
+                )
+                return
+                    "('\(id)', '\(nodeID)', '\(variantID)', '\(processorID)', '\(name)', '\(storageObjectID)', '\(fileExtension)', NOW())"
+            }
+            .joined(separator: ", ")
         try await connection.run(
-            query: #"INSERT INTO media_asset_variant (id, asset_id, variant_id, variant_processor_id, name, storage_object_id, extension, created_at) VALUES \#(unescaped: values);"#
+            query:
+                #"INSERT INTO media_asset_variant (id, asset_id, variant_id, variant_processor_id, name, storage_object_id, extension, created_at) VALUES \#(unescaped: values);"#
         ) { _ in }
     }
 

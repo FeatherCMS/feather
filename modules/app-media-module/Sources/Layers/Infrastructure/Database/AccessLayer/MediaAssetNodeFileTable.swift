@@ -146,7 +146,8 @@ struct MediaAssetNodeFileTable {
 
     func updateStatus(id: String, status: String) async throws {
         try await connection.run(
-            query: #"UPDATE media_asset_node_file SET status = \#(status) WHERE node_id = \#(id);"#
+            query:
+                #"UPDATE media_asset_node_file SET status = \#(status) WHERE node_id = \#(id);"#
         ) { _ in }
     }
 

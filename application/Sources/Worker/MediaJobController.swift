@@ -83,9 +83,10 @@ struct MediaJobController {
                         variantDefinitions: MediaVariantDatabaseRepository(
                             context: context
                         ),
-                        variantProcessors: MediaVariantProcessorDatabaseRepository(
-                            context: context
-                        )
+                        variantProcessors:
+                            MediaVariantProcessorDatabaseRepository(
+                                context: context
+                            )
                     )
                 }
             )
@@ -98,7 +99,9 @@ struct MediaJobController {
             )
 
             do {
-                try await useCase.execute(input: .init(assetId: parameters.assetId))
+                try await useCase.execute(
+                    input: .init(assetId: parameters.assetId)
+                )
                 await coordinator.release(assetID: parameters.assetId)
             }
             catch {
