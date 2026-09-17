@@ -1,5 +1,5 @@
 {
-  "originHash" : "fd4d33e38c11aa724c12eb42c6670ccf667815dcbcbef62ecd0b1f5fed72928a",
+  "originHash" : "9cdbe9f991de6ca849fc501829d9e5b23e9d9c241a033618017cc70aafc037a6",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -305,6 +305,15 @@
       "state" : {
         "revision" : "50688cacbd41d547e9eb9f7a213542340b7c442b",
         "version" : "1.7.5"
+      }
+    },
+    {
+      "identity" : "swift-web-standards",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BinaryBirds/swift-web-standards",
+      "state" : {
+        "revision" : "c5a7f7e7e4eb674e3ab63e99b757b774b96fbcaf",
+        "version" : "1.0.0-beta.4"
       }
     }
   ],

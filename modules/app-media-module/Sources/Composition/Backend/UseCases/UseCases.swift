@@ -3,7 +3,6 @@ import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
-import FeatherStorageFS
 import Foundation
 import MediaApplication
 import MediaDomain
@@ -19,20 +18,20 @@ public struct UseCases: Sendable {
 
     let database: any DatabaseClient
     let idGenerator: any IDGenerator
-    let mediaStorageRootPath: String
+    let mediaStorage: any MediaStorage
     let variantQueue: any MediaVariantQueue
     let authorizer: any Authorizer
 
     public init(
         database: any DatabaseClient,
         idGenerator: any IDGenerator,
-        mediaStorageRootPath: String,
+        mediaStorage: any MediaStorage,
         authorizer: any Authorizer,
         variantQueue: any MediaVariantQueue
     ) {
         self.database = database
         self.idGenerator = idGenerator
-        self.mediaStorageRootPath = mediaStorageRootPath
+        self.mediaStorage = mediaStorage
         self.variantQueue = variantQueue
         self.authorizer = authorizer
     }
@@ -46,14 +45,6 @@ extension UseCases {
     ) -> String {
         key.hasPrefix(mediaAssetKeyPrefix)
             ? key : "\(mediaAssetKeyPrefix)\(key)"
-    }
-
-    func storage() -> any MediaStorage {
-        MediaStorageClient(
-            client: StorageClientFS(
-                rootPath: mediaStorageRootPath
-            )
-        )
     }
 
     func writeTransaction() -> DatabaseTransactionExecutor<WriteMedia> {
@@ -238,19 +229,19 @@ extension UseCases {
         storageKey: String
     ) async throws -> Data {
         do {
-            return try await storage().download(key: storageKey)
+            return try await mediaStorage.download(key: storageKey)
         }
         catch {
             let expanded = expandAssetStorageKeyIfNeeded(storageKey)
             guard expanded != storageKey else { throw error }
-            return try await storage().download(key: expanded)
+            return try await mediaStorage.download(key: expanded)
         }
     }
 
     public func downloadOriginalAssetData(
         asset: MediaAssetDetail
     ) async throws -> Data {
-        let storage = storage()
+        let storage = mediaStorage
         var candidates: [String] = [asset.storageKey]
         if let expanded = expandedOriginalStorageKey(asset: asset),
             expanded != asset.storageKey
