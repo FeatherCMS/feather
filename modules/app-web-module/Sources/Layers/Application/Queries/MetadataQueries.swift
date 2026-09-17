@@ -34,6 +34,11 @@ public protocol MetadataQueries: Sendable {
         referenceIDs: [String]
     ) async throws -> [MetadataList.Item]
 
+    func resolveDetails(
+        referenceType: String,
+        referenceIDs: [String]
+    ) async throws -> [MetadataDetail]
+
     func count(
         query: MetadataList.Query
     ) async throws -> Int
