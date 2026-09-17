@@ -324,7 +324,7 @@ Content-Type: application/json
 ```json
 {
   "ids": ["asset_logo", "asset_hero"],
-  "variants": ["image_preview"]
+  "variants": ["preview"]
 }
 ```
 

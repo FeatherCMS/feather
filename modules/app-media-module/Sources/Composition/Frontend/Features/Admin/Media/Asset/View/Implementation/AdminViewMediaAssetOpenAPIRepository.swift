@@ -49,7 +49,7 @@ public struct AdminViewMediaAssetOpenAPIRepository: Sendable {
         let asset = try await getAsset(id: id)
         let resolve = try await api.resolveAssets(
             ids: [id],
-            variants: ["image_preview"]
+            variants: ["preview"]
         )
         let variants =
             resolve

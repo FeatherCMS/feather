@@ -64,7 +64,7 @@ struct MediaDomainModelTestSuite {
         let processor = MediaVariantProcessor(
             id: "processor-1",
             variantId: "variant-1",
-            name: "image_preview",
+            name: "preview",
             matchExtensions: "png, jpg",
             commandTemplate: "cp {input.fullname} {output.fullname}",
             isActive: true,

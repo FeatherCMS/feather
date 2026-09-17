@@ -53,6 +53,6 @@ public struct NewAdminMediaAsset: Sendable, Equatable, Codable, Hashable {
     public var originalURL: String { url }
 
     public var previewURL: String? {
-        variants.first { $0.name == "image_preview" }?.url
+        variants.first { $0.name == "preview" }?.url
     }
 }

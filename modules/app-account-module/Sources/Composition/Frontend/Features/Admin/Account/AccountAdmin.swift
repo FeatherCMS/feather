@@ -3,6 +3,7 @@ import FeatherAdmin
 import Foundation
 import Hummingbird
 import MediaFrontend
+import NIOCore
 
 public struct AccountAdmin {
     public let renderingEngine: any RenderingEngine
@@ -25,13 +26,21 @@ public struct AccountAdmin {
                     )
                     .get()
                 guard let asset = profile.profileImageAsset else {
-                    return Response(status: .notFound)
+                    return Response(
+                        status: .ok,
+                        headers: [.contentType: "image/svg+xml"],
+                        body: .init(
+                            byteBuffer: ByteBuffer(string: Self.profileImageFallback)
+                        )
+                    )
                 }
                 return Response(
                     status: .seeOther,
                     headers: [
                         .location:
-                            asset.originalURL
+                            NewAdminMediaAsset.mediaURL(
+                                path: asset.originalURL
+                            )
                     ]
                 )
             }
@@ -87,4 +96,8 @@ public struct AccountAdmin {
 
         AdminResendAccountInvitation().route(on: router)
     }
+
+    private static let profileImageFallback = """
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#6e6e73" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+        """
 }
