@@ -102,7 +102,7 @@ struct BlogAuthorPatchOperation: BlogAuthorIDOperation {
     }
 }
 
-struct BlogAuthorDeleteOperation: BlogAuthorOperation,
+struct BlogAuthorRemoveOperation: BlogAuthorOperation,
     DeleteOperation
 {
 }

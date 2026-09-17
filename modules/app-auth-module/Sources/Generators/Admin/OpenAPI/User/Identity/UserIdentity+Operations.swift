@@ -49,7 +49,7 @@ struct UserIdentitySessionListOperation: UserIdentitySessionOperation {
     }
 }
 
-struct UserIdentitySessionDeleteOperation: UserIdentitySessionOperation,
+struct UserIdentitySessionRemoveOperation: UserIdentitySessionOperation,
     DeleteOperation
 {
 }

@@ -88,7 +88,7 @@ struct AdminNewsletterSubscribersAPIClient {
                 : item.newsletters
             for newsletter in newsletters {
                 try await api.withOpenAPIRepositoryErrorMapping { client in
-                    _ = try await client.newsletterSubscriberDelete(
+                    _ = try await client.newsletterSubscriberRemove(
                         path: .init(newsletterCampaignId: newsletter.id),
                         body: .json(
                             .init(

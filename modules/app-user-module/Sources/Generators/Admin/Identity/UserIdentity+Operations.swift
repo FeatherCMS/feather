@@ -80,7 +80,7 @@ struct UserIdentitySearchOperation: UserIdentityOperation {
     }
 }
 
-struct UserIdentityDeleteOperation: UserIdentityOperation,
+struct UserIdentityRemoveOperation: UserIdentityOperation,
     DeleteOperation
 {
 

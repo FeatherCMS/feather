@@ -17,9 +17,9 @@ public protocol APIProtocol: Sendable {
     func blogPostCreate(_ input: Operations.BlogPostCreate.Input) async throws
         -> Operations.BlogPostCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)`.
-    func blogPostDelete(_ input: Operations.BlogPostDelete.Input) async throws
-        -> Operations.BlogPostDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostRemove)`.
+    func blogPostRemove(_ input: Operations.BlogPostRemove.Input) async throws
+        -> Operations.BlogPostRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/blog/posts/`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts//get(blogPostList)`.
     func blogPostList(_ input: Operations.BlogPostList.Input) async throws
@@ -45,9 +45,9 @@ public protocol APIProtocol: Sendable {
     func blogAuthorCreate(_ input: Operations.BlogAuthorCreate.Input)
         async throws -> Operations.BlogAuthorCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)`.
-    func blogAuthorDelete(_ input: Operations.BlogAuthorDelete.Input)
-        async throws -> Operations.BlogAuthorDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorRemove)`.
+    func blogAuthorRemove(_ input: Operations.BlogAuthorRemove.Input)
+        async throws -> Operations.BlogAuthorRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/blog/authors/`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors//get(blogAuthorList)`.
     func blogAuthorList(_ input: Operations.BlogAuthorList.Input) async throws
@@ -73,9 +73,9 @@ public protocol APIProtocol: Sendable {
     func blogAuthorLinkCreate(_ input: Operations.BlogAuthorLinkCreate.Input)
         async throws -> Operations.BlogAuthorLinkCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)`.
-    func blogAuthorLinkDelete(_ input: Operations.BlogAuthorLinkDelete.Input)
-        async throws -> Operations.BlogAuthorLinkDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkRemove)`.
+    func blogAuthorLinkRemove(_ input: Operations.BlogAuthorLinkRemove.Input)
+        async throws -> Operations.BlogAuthorLinkRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/blog/authors/{blogAuthorId}/links/`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links//get(blogAuthorLinkList)`.
     func blogAuthorLinkList(_ input: Operations.BlogAuthorLinkList.Input)
@@ -109,9 +109,9 @@ public protocol APIProtocol: Sendable {
     func blogTagCreate(_ input: Operations.BlogTagCreate.Input) async throws
         -> Operations.BlogTagCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)`.
-    func blogTagDelete(_ input: Operations.BlogTagDelete.Input) async throws
-        -> Operations.BlogTagDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagRemove)`.
+    func blogTagRemove(_ input: Operations.BlogTagRemove.Input) async throws
+        -> Operations.BlogTagRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/blog/tags/`.
     /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags//get(blogTagList)`.
     func blogTagList(_ input: Operations.BlogTagList.Input) async throws
@@ -150,13 +150,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)`.
-    public func blogPostDelete(
-        headers: Operations.BlogPostDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostRemove)`.
+    public func blogPostRemove(
+        headers: Operations.BlogPostRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.BlogPostDelete.Output {
-        try await blogPostDelete(
-            Operations.BlogPostDelete.Input(
+    ) async throws -> Operations.BlogPostRemove.Output {
+        try await blogPostRemove(
+            Operations.BlogPostRemove.Input(
                 headers: headers,
                 body: body
             )
@@ -239,13 +239,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)`.
-    public func blogAuthorDelete(
-        headers: Operations.BlogAuthorDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorRemove)`.
+    public func blogAuthorRemove(
+        headers: Operations.BlogAuthorRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.BlogAuthorDelete.Output {
-        try await blogAuthorDelete(
-            Operations.BlogAuthorDelete.Input(
+    ) async throws -> Operations.BlogAuthorRemove.Output {
+        try await blogAuthorRemove(
+            Operations.BlogAuthorRemove.Input(
                 headers: headers,
                 body: body
             )
@@ -332,14 +332,14 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)`.
-    public func blogAuthorLinkDelete(
-        path: Operations.BlogAuthorLinkDelete.Input.Path,
-        headers: Operations.BlogAuthorLinkDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkRemove)`.
+    public func blogAuthorLinkRemove(
+        path: Operations.BlogAuthorLinkRemove.Input.Path,
+        headers: Operations.BlogAuthorLinkRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.BlogAuthorLinkDelete.Output {
-        try await blogAuthorLinkDelete(
-            Operations.BlogAuthorLinkDelete.Input(
+    ) async throws -> Operations.BlogAuthorLinkRemove.Output {
+        try await blogAuthorLinkRemove(
+            Operations.BlogAuthorLinkRemove.Input(
                 path: path,
                 headers: headers,
                 body: body
@@ -453,13 +453,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)`.
-    public func blogTagDelete(
-        headers: Operations.BlogTagDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagRemove)`.
+    public func blogTagRemove(
+        headers: Operations.BlogTagRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.BlogTagDelete.Output {
-        try await blogTagDelete(
-            Operations.BlogTagDelete.Input(
+    ) async throws -> Operations.BlogTagRemove.Output {
+        try await blogTagRemove(
+            Operations.BlogTagRemove.Input(
                 headers: headers,
                 body: body
             )
@@ -3131,15 +3131,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)`.
-    public enum BlogPostDelete {
-        public static let id: Swift.String = "blogPostDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostRemove)`.
+    public enum BlogPostRemove {
+        public static let id: Swift.String = "blogPostRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/blog/posts/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogPostDelete.AcceptableContentType
+                        Operations.BlogPostRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -3147,13 +3147,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogPostDelete.AcceptableContentType
+                        Operations.BlogPostRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.BlogPostDelete.Input.Headers
+            public var headers: Operations.BlogPostRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -3161,7 +3161,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.BlogPostDelete.Input.Headers = .init(),
+                headers: Operations.BlogPostRemove.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
@@ -3171,7 +3171,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -3198,13 +3198,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.BlogPostDelete.Output.Unauthorized)
+            case unauthorized(Operations.BlogPostRemove.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3215,7 +3215,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.BlogPostDelete.Output.Unauthorized
+                Operations.BlogPostRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3235,13 +3235,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogPostDelete.Output.Forbidden)
+            case forbidden(Operations.BlogPostRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3251,7 +3251,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.BlogPostDelete.Output.Forbidden {
+            public var forbidden: Operations.BlogPostRemove.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -4471,15 +4471,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)`.
-    public enum BlogAuthorDelete {
-        public static let id: Swift.String = "blogAuthorDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorRemove)`.
+    public enum BlogAuthorRemove {
+        public static let id: Swift.String = "blogAuthorRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogAuthorDelete.AcceptableContentType
+                        Operations.BlogAuthorRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -4487,13 +4487,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogAuthorDelete.AcceptableContentType
+                        Operations.BlogAuthorRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.BlogAuthorDelete.Input.Headers
+            public var headers: Operations.BlogAuthorRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -4501,7 +4501,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.BlogAuthorDelete.Input.Headers = .init(),
+                headers: Operations.BlogAuthorRemove.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
@@ -4511,7 +4511,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -4538,13 +4538,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.BlogAuthorDelete.Output.Unauthorized)
+            case unauthorized(Operations.BlogAuthorRemove.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -4555,7 +4555,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.BlogAuthorDelete.Output.Unauthorized
+                Operations.BlogAuthorRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -4575,13 +4575,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogAuthorDelete.Output.Forbidden)
+            case forbidden(Operations.BlogAuthorRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -4591,7 +4591,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.BlogAuthorDelete.Output.Forbidden {
+            public var forbidden: Operations.BlogAuthorRemove.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -5850,9 +5850,9 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)`.
-    public enum BlogAuthorLinkDelete {
-        public static let id: Swift.String = "blogAuthorLinkDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkRemove)`.
+    public enum BlogAuthorLinkRemove {
+        public static let id: Swift.String = "blogAuthorLinkRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/DELETE/path`.
             public struct Path: Sendable, Hashable {
@@ -5872,12 +5872,12 @@ public enum Operations {
                     self.blogAuthorId = blogAuthorId
                 }
             }
-            public var path: Operations.BlogAuthorLinkDelete.Input.Path
+            public var path: Operations.BlogAuthorLinkRemove.Input.Path
             /// - Remark: Generated from `#/paths/api/v1/admin/blog/authors/{blogAuthorId}/links/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogAuthorLinkDelete.AcceptableContentType
+                        Operations.BlogAuthorLinkRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -5885,13 +5885,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogAuthorLinkDelete.AcceptableContentType
+                        Operations.BlogAuthorLinkRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.BlogAuthorLinkDelete.Input.Headers
+            public var headers: Operations.BlogAuthorLinkRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -5900,8 +5900,8 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.BlogAuthorLinkDelete.Input.Path,
-                headers: Operations.BlogAuthorLinkDelete.Input.Headers =
+                path: Operations.BlogAuthorLinkRemove.Input.Path,
+                headers: Operations.BlogAuthorLinkRemove.Input.Headers =
                     .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
@@ -5913,7 +5913,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -5940,15 +5940,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.BlogAuthorLinkDelete.Output.Unauthorized
+                Operations.BlogAuthorLinkRemove.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -5959,7 +5959,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.BlogAuthorLinkDelete.Output.Unauthorized
+                Operations.BlogAuthorLinkRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -5979,13 +5979,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogAuthorLinkDelete.Output.Forbidden)
+            case forbidden(Operations.BlogAuthorLinkRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -5996,7 +5996,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.BlogAuthorLinkDelete.Output.Forbidden
+                Operations.BlogAuthorLinkRemove.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -7654,15 +7654,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)`.
-    public enum BlogTagDelete {
-        public static let id: Swift.String = "blogTagDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagRemove)`.
+    public enum BlogTagRemove {
+        public static let id: Swift.String = "blogTagRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/blog/tags/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogTagDelete.AcceptableContentType
+                        Operations.BlogTagRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -7670,13 +7670,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.BlogTagDelete.AcceptableContentType
+                        Operations.BlogTagRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.BlogTagDelete.Input.Headers
+            public var headers: Operations.BlogTagRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -7684,7 +7684,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.BlogTagDelete.Input.Headers = .init(),
+                headers: Operations.BlogTagRemove.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
@@ -7694,7 +7694,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -7721,13 +7721,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.BlogTagDelete.Output.Unauthorized)
+            case unauthorized(Operations.BlogTagRemove.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -7738,7 +7738,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.BlogTagDelete.Output.Unauthorized
+                Operations.BlogTagRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -7758,13 +7758,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.BlogTagDelete.Output.Forbidden)
+            case forbidden(Operations.BlogTagRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -7774,7 +7774,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.BlogTagDelete.Output.Forbidden {
+            public var forbidden: Operations.BlogTagRemove.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):

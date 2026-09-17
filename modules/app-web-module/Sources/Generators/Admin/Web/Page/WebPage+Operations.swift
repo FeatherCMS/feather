@@ -101,7 +101,7 @@ struct WebPagePatchOperation: WebPageIDOperation {
     }
 }
 
-struct WebPageDeleteOperation: WebPageOperation,
+struct WebPageRemoveOperation: WebPageOperation,
     DeleteOperation
 {
 }

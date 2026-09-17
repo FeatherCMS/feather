@@ -203,6 +203,8 @@ public enum Components {
         public struct UserIdentityDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/UserIdentityDetailSchema/id`.
             public var id: Components.Schemas.UserIdentityIDField
+            /// - Remark: Generated from `#/components/schemas/UserIdentityDetailSchema/name`.
+            public var name: Components.Schemas.UserIdentityNameField
             /// - Remark: Generated from `#/components/schemas/UserIdentityDetailSchema/status`.
             public var status: Components.Schemas.UserIdentityStatusField
             /// - Remark: Generated from `#/components/schemas/UserIdentityDetailSchema/roleIds`.
@@ -211,25 +213,31 @@ public enum Components {
             ///
             /// - Parameters:
             ///   - id:
+            ///   - name:
             ///   - status:
             ///   - roleIds:
             public init(
                 id: Components.Schemas.UserIdentityIDField,
+                name: Components.Schemas.UserIdentityNameField,
                 status: Components.Schemas.UserIdentityStatusField,
                 roleIds: Components.Schemas.UserIdentityRoleIDListSchema? = nil
             ) {
                 self.id = id
+                self.name = name
                 self.status = status
                 self.roleIds = roleIds
             }
             public enum CodingKeys: String, CodingKey {
                 case id
+                case name
                 case status
                 case roleIds
             }
         }
         /// - Remark: Generated from `#/components/schemas/UserIdentityIDField`.
         public typealias UserIdentityIDField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/UserIdentityNameField`.
+        public typealias UserIdentityNameField = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserIdentityStatusField`.
         @frozen
         public enum UserIdentityStatusField: String, Codable, Hashable,

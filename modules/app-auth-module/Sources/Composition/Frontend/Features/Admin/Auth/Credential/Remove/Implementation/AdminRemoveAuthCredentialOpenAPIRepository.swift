@@ -52,7 +52,7 @@ struct AdminRemoveAuthCredentialOpenAPIRepository:
 
     func delete(id: String) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.authCredentialDelete(
+            _ = try await client.authCredentialRemove(
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }

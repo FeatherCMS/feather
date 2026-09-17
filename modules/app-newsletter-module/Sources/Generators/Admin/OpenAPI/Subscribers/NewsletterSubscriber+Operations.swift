@@ -50,7 +50,7 @@ struct NewsletterSubscriberUpdateOperation: NewsletterSubscriberIDOperation {
         ]
     }
 }
-struct NewsletterSubscriberDeleteOperation: NewsletterSubscriberOperation,
+struct NewsletterSubscriberRemoveOperation: NewsletterSubscriberOperation,
     DeleteOperation
 {
 }

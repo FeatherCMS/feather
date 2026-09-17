@@ -65,7 +65,7 @@ struct AuthCredentialSearchOperation: AuthCredentialOperation {
     }
 }
 
-struct AuthCredentialDeleteOperation: AuthCredentialOperation,
+struct AuthCredentialRemoveOperation: AuthCredentialOperation,
     DeleteOperation
 {
 }

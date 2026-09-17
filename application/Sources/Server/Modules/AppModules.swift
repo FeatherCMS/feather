@@ -93,8 +93,7 @@ struct AppModules: Sendable {
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer,
             mailSender: JobQueueMailSender(queue: infrastructure.jobQueue),
-            events: infrastructure.events,
-            credentialWriter: InvitationCredentialWriterAdapter()
+            events: infrastructure.events
         )
         self.account = account
         let auth = AuthBackend.UseCases(

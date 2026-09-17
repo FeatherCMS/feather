@@ -98,7 +98,7 @@ paths:
     delete:
       tags:
       - UserIdentities
-      operationId: userIdentitySessionDelete
+      operationId: userIdentitySessionRemove
       parameters:
       - $ref: '#/components/parameters/UserIdentityIdParameter'
       requestBody:
@@ -132,7 +132,7 @@ paths:
     delete:
       tags:
       - AuthCredentials
-      operationId: authCredentialDelete
+      operationId: authCredentialRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -253,7 +253,7 @@ paths:
     delete:
       tags:
       - AuthEmails
-      operationId: authEmailDelete
+      operationId: authEmailRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -335,7 +335,7 @@ paths:
     delete:
       tags:
       - AuthRolePermissions
-      operationId: authRolePermissionDelete
+      operationId: authRolePermissionRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -387,7 +387,7 @@ paths:
     delete:
       tags:
       - AuthMagicLinks
-      operationId: authMagicLinkDelete
+      operationId: authMagicLinkRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:

@@ -3,7 +3,7 @@ import FeatherOpenAPI
 struct AccountInvitationPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { AccountInvitationCreateOperation() }
     var delete: OperationRepresentable? {
-        AccountInvitationDeleteOperation()
+        AccountInvitationRemoveOperation()
     }
 }
 

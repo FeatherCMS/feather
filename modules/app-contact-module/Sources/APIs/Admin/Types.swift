@@ -21,9 +21,9 @@ public protocol APIProtocol: Sendable {
     func contactFormCreate(_ input: Operations.ContactFormCreate.Input)
         async throws -> Operations.ContactFormCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormDelete)`.
-    func contactFormDelete(_ input: Operations.ContactFormDelete.Input)
-        async throws -> Operations.ContactFormDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)`.
+    func contactFormRemove(_ input: Operations.ContactFormRemove.Input)
+        async throws -> Operations.ContactFormRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/get(contactFormGet)`.
     func contactFormGet(_ input: Operations.ContactFormGet.Input) async throws
@@ -41,9 +41,9 @@ public protocol APIProtocol: Sendable {
     func formFieldCreate(_ input: Operations.FormFieldCreate.Input) async throws
         -> Operations.FormFieldCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldDelete)`.
-    func formFieldDelete(_ input: Operations.FormFieldDelete.Input) async throws
-        -> Operations.FormFieldDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)`.
+    func formFieldRemove(_ input: Operations.FormFieldRemove.Input) async throws
+        -> Operations.FormFieldRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)`.
     func formFieldGet(_ input: Operations.FormFieldGet.Input) async throws
@@ -61,9 +61,9 @@ public protocol APIProtocol: Sendable {
     func contactFieldCreate(_ input: Operations.ContactFieldCreate.Input)
         async throws -> Operations.ContactFieldCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldDelete)`.
-    func contactFieldDelete(_ input: Operations.ContactFieldDelete.Input)
-        async throws -> Operations.ContactFieldDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)`.
+    func contactFieldRemove(_ input: Operations.ContactFieldRemove.Input)
+        async throws -> Operations.ContactFieldRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/contact/field/{formFieldId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/get(contactFieldGet)`.
     func contactFieldGet(_ input: Operations.ContactFieldGet.Input) async throws
@@ -78,10 +78,10 @@ public protocol APIProtocol: Sendable {
         _ input: Operations.ContactFormSubmissionList.Input
     ) async throws -> Operations.ContactFormSubmissionList.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionDelete)`.
-    func contactFormSubmissionDelete(
-        _ input: Operations.ContactFormSubmissionDelete.Input
-    ) async throws -> Operations.ContactFormSubmissionDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)`.
+    func contactFormSubmissionRemove(
+        _ input: Operations.ContactFormSubmissionRemove.Input
+    ) async throws -> Operations.ContactFormSubmissionRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)`.
     func contactFormSubmissionGet(
@@ -119,13 +119,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormDelete)`.
-    public func contactFormDelete(
-        headers: Operations.ContactFormDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)`.
+    public func contactFormRemove(
+        headers: Operations.ContactFormRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.ContactFormDelete.Output {
-        try await contactFormDelete(
-            Operations.ContactFormDelete.Input(
+    ) async throws -> Operations.ContactFormRemove.Output {
+        try await contactFormRemove(
+            Operations.ContactFormRemove.Input(
                 headers: headers,
                 body: body
             )
@@ -188,14 +188,14 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldDelete)`.
-    public func formFieldDelete(
-        path: Operations.FormFieldDelete.Input.Path,
-        headers: Operations.FormFieldDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)`.
+    public func formFieldRemove(
+        path: Operations.FormFieldRemove.Input.Path,
+        headers: Operations.FormFieldRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.FormFieldDelete.Output {
-        try await formFieldDelete(
-            Operations.FormFieldDelete.Input(
+    ) async throws -> Operations.FormFieldRemove.Output {
+        try await formFieldRemove(
+            Operations.FormFieldRemove.Input(
                 path: path,
                 headers: headers,
                 body: body
@@ -253,13 +253,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldDelete)`.
-    public func contactFieldDelete(
-        headers: Operations.ContactFieldDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)`.
+    public func contactFieldRemove(
+        headers: Operations.ContactFieldRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.ContactFieldDelete.Output {
-        try await contactFieldDelete(
-            Operations.ContactFieldDelete.Input(
+    ) async throws -> Operations.ContactFieldRemove.Output {
+        try await contactFieldRemove(
+            Operations.ContactFieldRemove.Input(
                 headers: headers,
                 body: body
             )
@@ -307,14 +307,14 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionDelete)`.
-    public func contactFormSubmissionDelete(
-        path: Operations.ContactFormSubmissionDelete.Input.Path,
-        headers: Operations.ContactFormSubmissionDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)`.
+    public func contactFormSubmissionRemove(
+        path: Operations.ContactFormSubmissionRemove.Input.Path,
+        headers: Operations.ContactFormSubmissionRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.ContactFormSubmissionDelete.Output {
-        try await contactFormSubmissionDelete(
-            Operations.ContactFormSubmissionDelete.Input(
+    ) async throws -> Operations.ContactFormSubmissionRemove.Output {
+        try await contactFormSubmissionRemove(
+            Operations.ContactFormSubmissionRemove.Input(
                 path: path,
                 headers: headers,
                 body: body
@@ -1658,15 +1658,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormDelete)`.
-    public enum ContactFormDelete {
-        public static let id: Swift.String = "contactFormDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)`.
+    public enum ContactFormRemove {
+        public static let id: Swift.String = "contactFormRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.ContactFormDelete.AcceptableContentType
+                        Operations.ContactFormRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -1674,13 +1674,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.ContactFormDelete.AcceptableContentType
+                        Operations.ContactFormRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.ContactFormDelete.Input.Headers
+            public var headers: Operations.ContactFormRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -1688,7 +1688,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.ContactFormDelete.Input.Headers = .init(),
+                headers: Operations.ContactFormRemove.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
@@ -1698,7 +1698,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -1725,13 +1725,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.ContactFormDelete.Output.Unauthorized)
+            case unauthorized(Operations.ContactFormRemove.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -1742,7 +1742,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.ContactFormDelete.Output.Unauthorized
+                Operations.ContactFormRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -1762,13 +1762,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.ContactFormDelete.Output.Forbidden)
+            case forbidden(Operations.ContactFormRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -1778,7 +1778,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.ContactFormDelete.Output.Forbidden
+            public var forbidden: Operations.ContactFormRemove.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -2639,9 +2639,9 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldDelete)`.
-    public enum FormFieldDelete {
-        public static let id: Swift.String = "formFieldDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)`.
+    public enum FormFieldRemove {
+        public static let id: Swift.String = "formFieldRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/DELETE/path`.
             public struct Path: Sendable, Hashable {
@@ -2658,12 +2658,12 @@ public enum Operations {
                     self.contactFormId = contactFormId
                 }
             }
-            public var path: Operations.FormFieldDelete.Input.Path
+            public var path: Operations.FormFieldRemove.Input.Path
             /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.FormFieldDelete.AcceptableContentType
+                        Operations.FormFieldRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -2671,13 +2671,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.FormFieldDelete.AcceptableContentType
+                        Operations.FormFieldRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.FormFieldDelete.Input.Headers
+            public var headers: Operations.FormFieldRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -2686,8 +2686,8 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.FormFieldDelete.Input.Path,
-                headers: Operations.FormFieldDelete.Input.Headers = .init(),
+                path: Operations.FormFieldRemove.Input.Path,
+                headers: Operations.FormFieldRemove.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.path = path
@@ -2698,7 +2698,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -2725,13 +2725,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.FormFieldDelete.Output.Unauthorized)
+            case unauthorized(Operations.FormFieldRemove.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -2742,7 +2742,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.FormFieldDelete.Output.Unauthorized
+                Operations.FormFieldRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -2762,13 +2762,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.FormFieldDelete.Output.Forbidden)
+            case forbidden(Operations.FormFieldRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -2778,7 +2778,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.FormFieldDelete.Output.Forbidden {
+            public var forbidden: Operations.FormFieldRemove.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -3610,15 +3610,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldDelete)`.
-    public enum ContactFieldDelete {
-        public static let id: Swift.String = "contactFieldDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)`.
+    public enum ContactFieldRemove {
+        public static let id: Swift.String = "contactFieldRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.ContactFieldDelete.AcceptableContentType
+                        Operations.ContactFieldRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -3626,13 +3626,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.ContactFieldDelete.AcceptableContentType
+                        Operations.ContactFieldRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.ContactFieldDelete.Input.Headers
+            public var headers: Operations.ContactFieldRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -3640,7 +3640,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.ContactFieldDelete.Input.Headers = .init(),
+                headers: Operations.ContactFieldRemove.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
@@ -3650,7 +3650,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -3677,13 +3677,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.ContactFieldDelete.Output.Unauthorized)
+            case unauthorized(Operations.ContactFieldRemove.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3694,7 +3694,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.ContactFieldDelete.Output.Unauthorized
+                Operations.ContactFieldRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3714,13 +3714,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.ContactFieldDelete.Output.Forbidden)
+            case forbidden(Operations.ContactFieldRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3730,7 +3730,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.ContactFieldDelete.Output.Forbidden
+            public var forbidden: Operations.ContactFieldRemove.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -4415,9 +4415,9 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionDelete)`.
-    public enum ContactFormSubmissionDelete {
-        public static let id: Swift.String = "contactFormSubmissionDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)`.
+    public enum ContactFormSubmissionRemove {
+        public static let id: Swift.String = "contactFormSubmissionRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/DELETE/path`.
             public struct Path: Sendable, Hashable {
@@ -4434,12 +4434,12 @@ public enum Operations {
                     self.contactFormId = contactFormId
                 }
             }
-            public var path: Operations.ContactFormSubmissionDelete.Input.Path
+            public var path: Operations.ContactFormSubmissionRemove.Input.Path
             /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.ContactFormSubmissionDelete
+                        Operations.ContactFormSubmissionRemove
                             .AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
@@ -4448,7 +4448,7 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.ContactFormSubmissionDelete
+                        Operations.ContactFormSubmissionRemove
                             .AcceptableContentType
                     >] = .defaultValues()
                 ) {
@@ -4456,7 +4456,7 @@ public enum Operations {
                 }
             }
             public var headers:
-                Operations.ContactFormSubmissionDelete.Input.Headers
+                Operations.ContactFormSubmissionRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -4465,8 +4465,8 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.ContactFormSubmissionDelete.Input.Path,
-                headers: Operations.ContactFormSubmissionDelete.Input.Headers =
+                path: Operations.ContactFormSubmissionRemove.Input.Path,
+                headers: Operations.ContactFormSubmissionRemove.Input.Headers =
                     .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
@@ -4478,7 +4478,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -4505,15 +4505,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.ContactFormSubmissionDelete.Output.Unauthorized
+                Operations.ContactFormSubmissionRemove.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -4524,7 +4524,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.ContactFormSubmissionDelete.Output.Unauthorized
+                Operations.ContactFormSubmissionRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -4544,15 +4544,15 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(
-                Operations.ContactFormSubmissionDelete.Output.Forbidden
+                Operations.ContactFormSubmissionRemove.Output.Forbidden
             )
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -4563,7 +4563,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.ContactFormSubmissionDelete.Output.Forbidden
+                Operations.ContactFormSubmissionRemove.Output.Forbidden
             {
                 get throws {
                     switch self {

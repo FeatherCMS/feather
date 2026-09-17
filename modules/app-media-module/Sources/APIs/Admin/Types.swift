@@ -17,9 +17,9 @@ public protocol APIProtocol: Sendable {
     func mediaAssetCreate(_ input: Operations.MediaAssetCreate.Input)
         async throws -> Operations.MediaAssetCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)`.
-    func mediaAssetNodeDelete(_ input: Operations.MediaAssetNodeDelete.Input)
-        async throws -> Operations.MediaAssetNodeDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)`.
+    func mediaAssetNodeRemove(_ input: Operations.MediaAssetNodeRemove.Input)
+        async throws -> Operations.MediaAssetNodeRemove.Output
     /// - Remark: HTTP `POST /api/v1/admin/media/assets/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/search/post(mediaAssetSearch)`.
     func mediaAssetSearch(_ input: Operations.MediaAssetSearch.Input)
@@ -62,9 +62,9 @@ public protocol APIProtocol: Sendable {
     func mediaProcessorCreate(_ input: Operations.MediaProcessorCreate.Input)
         async throws -> Operations.MediaProcessorCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/media/processors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)`.
-    func mediaProcessorDelete(_ input: Operations.MediaProcessorDelete.Input)
-        async throws -> Operations.MediaProcessorDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorRemove)`.
+    func mediaProcessorRemove(_ input: Operations.MediaProcessorRemove.Input)
+        async throws -> Operations.MediaProcessorRemove.Output
     /// - Remark: HTTP `POST /api/v1/admin/media/processors/search`.
     /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/search/post(mediaProcessorSearch)`.
     func mediaProcessorSearch(_ input: Operations.MediaProcessorSearch.Input)
@@ -95,13 +95,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)`.
-    public func mediaAssetNodeDelete(
-        headers: Operations.MediaAssetNodeDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)`.
+    public func mediaAssetNodeRemove(
+        headers: Operations.MediaAssetNodeRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.MediaAssetNodeDelete.Output {
-        try await mediaAssetNodeDelete(
-            Operations.MediaAssetNodeDelete.Input(
+    ) async throws -> Operations.MediaAssetNodeRemove.Output {
+        try await mediaAssetNodeRemove(
+            Operations.MediaAssetNodeRemove.Input(
                 headers: headers,
                 body: body
             )
@@ -242,13 +242,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/processors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)`.
-    public func mediaProcessorDelete(
-        headers: Operations.MediaProcessorDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorRemove)`.
+    public func mediaProcessorRemove(
+        headers: Operations.MediaProcessorRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.MediaProcessorDelete.Output {
-        try await mediaProcessorDelete(
-            Operations.MediaProcessorDelete.Input(
+    ) async throws -> Operations.MediaProcessorRemove.Output {
+        try await mediaProcessorRemove(
+            Operations.MediaProcessorRemove.Input(
                 headers: headers,
                 body: body
             )
@@ -2174,15 +2174,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)`.
-    public enum MediaAssetNodeDelete {
-        public static let id: Swift.String = "mediaAssetNodeDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)`.
+    public enum MediaAssetNodeRemove {
+        public static let id: Swift.String = "mediaAssetNodeRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaAssetNodeDelete.AcceptableContentType
+                        Operations.MediaAssetNodeRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -2190,13 +2190,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaAssetNodeDelete.AcceptableContentType
+                        Operations.MediaAssetNodeRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.MediaAssetNodeDelete.Input.Headers
+            public var headers: Operations.MediaAssetNodeRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -2204,7 +2204,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.MediaAssetNodeDelete.Input.Headers =
+                headers: Operations.MediaAssetNodeRemove.Input.Headers =
                     .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
@@ -2215,7 +2215,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -2242,15 +2242,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.MediaAssetNodeDelete.Output.Unauthorized
+                Operations.MediaAssetNodeRemove.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -2261,7 +2261,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.MediaAssetNodeDelete.Output.Unauthorized
+                Operations.MediaAssetNodeRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -2281,13 +2281,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.MediaAssetNodeDelete.Output.Forbidden)
+            case forbidden(Operations.MediaAssetNodeRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -2298,7 +2298,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.MediaAssetNodeDelete.Output.Forbidden
+                Operations.MediaAssetNodeRemove.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -4342,15 +4342,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/processors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)`.
-    public enum MediaProcessorDelete {
-        public static let id: Swift.String = "mediaProcessorDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorRemove)`.
+    public enum MediaProcessorRemove {
+        public static let id: Swift.String = "mediaProcessorRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/media/processors/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaProcessorDelete.AcceptableContentType
+                        Operations.MediaProcessorRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -4358,13 +4358,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaProcessorDelete.AcceptableContentType
+                        Operations.MediaProcessorRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.MediaProcessorDelete.Input.Headers
+            public var headers: Operations.MediaProcessorRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -4372,7 +4372,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.MediaProcessorDelete.Input.Headers =
+                headers: Operations.MediaProcessorRemove.Input.Headers =
                     .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
@@ -4383,7 +4383,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -4410,15 +4410,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.MediaProcessorDelete.Output.Unauthorized
+                Operations.MediaProcessorRemove.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -4429,7 +4429,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.MediaProcessorDelete.Output.Unauthorized
+                Operations.MediaProcessorRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -4449,13 +4449,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.MediaProcessorDelete.Output.Forbidden)
+            case forbidden(Operations.MediaProcessorRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -4466,7 +4466,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.MediaProcessorDelete.Output.Forbidden
+                Operations.MediaProcessorRemove.Output.Forbidden
             {
                 get throws {
                     switch self {

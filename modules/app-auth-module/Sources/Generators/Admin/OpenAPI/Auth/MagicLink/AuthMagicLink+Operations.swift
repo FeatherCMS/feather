@@ -73,7 +73,7 @@ struct AuthMagicLinkSearchOperation: AuthMagicLinkOperation {
     }
 }
 
-struct AuthMagicLinkDeleteOperation: AuthMagicLinkOperation,
+struct AuthMagicLinkRemoveOperation: AuthMagicLinkOperation,
     DeleteOperation
 {
 }

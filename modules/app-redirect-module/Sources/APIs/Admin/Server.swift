@@ -46,7 +46,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.redirectRuleDelete(
+                try await server.redirectRuleRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -214,8 +214,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/redirect/rules`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)`.
-    fileprivate func redirectRuleDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleRemove)`.
+    fileprivate func redirectRuleRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -224,12 +224,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.RedirectRuleDelete.id,
+            forOperation: Operations.RedirectRuleRemove.id,
             using: {
-                APIHandler.redirectRuleDelete($0)
+                APIHandler.redirectRuleRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.RedirectRuleDelete.Input.Headers =
+                let headers: Operations.RedirectRuleRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -259,7 +259,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.RedirectRuleDelete.Input(
+                return Operations.RedirectRuleRemove.Input(
                     headers: headers,
                     body: body
                 )

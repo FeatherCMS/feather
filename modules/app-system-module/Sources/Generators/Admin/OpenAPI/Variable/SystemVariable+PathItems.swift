@@ -2,7 +2,7 @@ import FeatherOpenAPI
 
 struct SystemVariablePathItems: PathItemRepresentable {
     var post: OperationRepresentable? { SystemVariableCreateOperation() }
-    var delete: OperationRepresentable? { SystemVariableDeleteOperation() }
+    var delete: OperationRepresentable? { SystemVariableRemoveOperation() }
 }
 
 struct SystemVariableSearchPathItems: PathItemRepresentable {

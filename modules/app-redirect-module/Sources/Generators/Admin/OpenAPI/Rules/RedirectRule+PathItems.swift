@@ -2,7 +2,7 @@ import FeatherOpenAPI
 
 struct RedirectRulePathItems: PathItemRepresentable {
     var post: OperationRepresentable? { RedirectRuleCreateOperation() }
-    var delete: OperationRepresentable? { RedirectRuleDeleteOperation() }
+    var delete: OperationRepresentable? { RedirectRuleRemoveOperation() }
 }
 
 struct RedirectRuleSearchPathItems: PathItemRepresentable {

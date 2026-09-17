@@ -65,7 +65,7 @@ struct RedirectRuleSearchOperation: RedirectRuleOperation {
     }
 }
 
-struct RedirectRuleDeleteOperation: RedirectRuleOperation,
+struct RedirectRuleRemoveOperation: RedirectRuleOperation,
     DeleteOperation
 {
 }

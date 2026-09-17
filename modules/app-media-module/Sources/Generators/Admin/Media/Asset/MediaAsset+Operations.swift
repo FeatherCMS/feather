@@ -91,7 +91,7 @@ struct MediaAssetUpdateOperation: MediaAssetIDOperation {
     }
 }
 
-struct MediaAssetNodeDeleteOperation: MediaAssetOperation,
+struct MediaAssetNodeRemoveOperation: MediaAssetOperation,
     DeleteOperation
 {
 }

@@ -161,7 +161,7 @@ struct AdminEditAuthAccessControlOpenAPIRepository:
         pair: AdminEditAuthAccessControlPair
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.authRolePermissionDelete(
+            let response = try await client.authRolePermissionRemove(
                 body: .json(
                     .init(
                         ids: ["\(pair.roleId):\(pair.permissionId)"],

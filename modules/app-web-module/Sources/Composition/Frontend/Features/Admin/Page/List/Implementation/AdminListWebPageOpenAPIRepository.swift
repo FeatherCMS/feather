@@ -132,7 +132,7 @@ struct AdminListWebPageOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.webPageDelete(
+            _ = try await client.webPageRemove(
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }

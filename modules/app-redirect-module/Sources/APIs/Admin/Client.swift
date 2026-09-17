@@ -117,13 +117,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/redirect/rules`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)`.
-    public func redirectRuleDelete(_ input: Operations.RedirectRuleDelete.Input)
-        async throws -> Operations.RedirectRuleDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleRemove)`.
+    public func redirectRuleRemove(_ input: Operations.RedirectRuleRemove.Input)
+        async throws -> Operations.RedirectRuleRemove.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.RedirectRuleDelete.id,
+            forOperation: Operations.RedirectRuleRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/redirect/rules",

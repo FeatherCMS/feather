@@ -46,7 +46,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userIdentityDelete(
+                try await server.userIdentityRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -137,7 +137,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userRoleDelete(
+                try await server.userRoleRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -309,8 +309,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)`.
-    fileprivate func userIdentityDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)`.
+    fileprivate func userIdentityRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -319,12 +319,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.UserIdentityDelete.id,
+            forOperation: Operations.UserIdentityRemove.id,
             using: {
-                APIHandler.userIdentityDelete($0)
+                APIHandler.userIdentityRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.UserIdentityDelete.Input.Headers =
+                let headers: Operations.UserIdentityRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -354,7 +354,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.UserIdentityDelete.Input(
+                return Operations.UserIdentityRemove.Input(
                     headers: headers,
                     body: body
                 )
@@ -902,8 +902,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)`.
-    fileprivate func userRoleDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)`.
+    fileprivate func userRoleRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -912,12 +912,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.UserRoleDelete.id,
+            forOperation: Operations.UserRoleRemove.id,
             using: {
-                APIHandler.userRoleDelete($0)
+                APIHandler.userRoleRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.UserRoleDelete.Input.Headers = .init(
+                let headers: Operations.UserRoleRemove.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
@@ -946,7 +946,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.UserRoleDelete.Input(
+                return Operations.UserRoleRemove.Input(
                     headers: headers,
                     body: body
                 )

@@ -33,7 +33,7 @@ struct AdminRemoveBlogTagOpenAPIRepository:
                     title: page.title,
                     excerpt: page.excerpt,
                     content: page.content,
-                    imageAsset: await api.mediaAdminAPI()
+                    imageAsset: try await api.mediaAdminAPI()
                         .loadImageAsset(assetId: page.imageAssetId),
                     metadata: AdminMetadataSchemaBuilder.formValue(
                         from: page.metadata,
@@ -60,7 +60,7 @@ struct AdminRemoveBlogTagOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.blogTagDelete(
+            _ = try await client.blogTagRemove(
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }

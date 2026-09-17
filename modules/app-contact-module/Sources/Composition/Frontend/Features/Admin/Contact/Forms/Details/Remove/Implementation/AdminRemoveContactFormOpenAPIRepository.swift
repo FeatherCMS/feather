@@ -15,7 +15,7 @@ struct AdminRemoveContactFormOpenAPIRepository {
     }
     func remove(ids: [String]) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.contactFormDelete(
+            _ = try await client.contactFormRemove(
                 body: .json(.init(ids: ids, results: false, summary: true))
             )
         }

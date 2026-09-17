@@ -18,10 +18,10 @@ public protocol APIProtocol: Sendable {
         _ input: Operations.SystemPermissionCreate.Input
     ) async throws -> Operations.SystemPermissionCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/system/permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)`.
-    func systemPermissionDelete(
-        _ input: Operations.SystemPermissionDelete.Input
-    ) async throws -> Operations.SystemPermissionDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionRemove)`.
+    func systemPermissionRemove(
+        _ input: Operations.SystemPermissionRemove.Input
+    ) async throws -> Operations.SystemPermissionRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/system/permissions/`.
     /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions//get(systemPermissionList)`.
     func systemPermissionList(_ input: Operations.SystemPermissionList.Input)
@@ -49,9 +49,9 @@ public protocol APIProtocol: Sendable {
     func systemVariableCreate(_ input: Operations.SystemVariableCreate.Input)
         async throws -> Operations.SystemVariableCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/system/variables`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)`.
-    func systemVariableDelete(_ input: Operations.SystemVariableDelete.Input)
-        async throws -> Operations.SystemVariableDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableRemove)`.
+    func systemVariableRemove(_ input: Operations.SystemVariableRemove.Input)
+        async throws -> Operations.SystemVariableRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/system/variables/`.
     /// - Remark: Generated from `#/paths//api/v1/admin/system/variables//get(systemVariableList)`.
     func systemVariableList(_ input: Operations.SystemVariableList.Input)
@@ -98,13 +98,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)`.
-    public func systemPermissionDelete(
-        headers: Operations.SystemPermissionDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionRemove)`.
+    public func systemPermissionRemove(
+        headers: Operations.SystemPermissionRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.SystemPermissionDelete.Output {
-        try await systemPermissionDelete(
-            Operations.SystemPermissionDelete.Input(
+    ) async throws -> Operations.SystemPermissionRemove.Output {
+        try await systemPermissionRemove(
+            Operations.SystemPermissionRemove.Input(
                 headers: headers,
                 body: body
             )
@@ -189,13 +189,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/variables`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)`.
-    public func systemVariableDelete(
-        headers: Operations.SystemVariableDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableRemove)`.
+    public func systemVariableRemove(
+        headers: Operations.SystemVariableRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.SystemVariableDelete.Output {
-        try await systemVariableDelete(
-            Operations.SystemVariableDelete.Input(
+    ) async throws -> Operations.SystemVariableRemove.Output {
+        try await systemVariableRemove(
+            Operations.SystemVariableRemove.Input(
                 headers: headers,
                 body: body
             )
@@ -1659,15 +1659,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)`.
-    public enum SystemPermissionDelete {
-        public static let id: Swift.String = "systemPermissionDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionRemove)`.
+    public enum SystemPermissionRemove {
+        public static let id: Swift.String = "systemPermissionRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/system/permissions/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.SystemPermissionDelete.AcceptableContentType
+                        Operations.SystemPermissionRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -1675,13 +1675,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.SystemPermissionDelete.AcceptableContentType
+                        Operations.SystemPermissionRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.SystemPermissionDelete.Input.Headers
+            public var headers: Operations.SystemPermissionRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -1689,7 +1689,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.SystemPermissionDelete.Input.Headers =
+                headers: Operations.SystemPermissionRemove.Input.Headers =
                     .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
@@ -1700,7 +1700,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -1727,15 +1727,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.SystemPermissionDelete.Output.Unauthorized
+                Operations.SystemPermissionRemove.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -1746,7 +1746,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.SystemPermissionDelete.Output.Unauthorized
+                Operations.SystemPermissionRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -1766,13 +1766,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.SystemPermissionDelete.Output.Forbidden)
+            case forbidden(Operations.SystemPermissionRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -1783,7 +1783,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.SystemPermissionDelete.Output.Forbidden
+                Operations.SystemPermissionRemove.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -3053,15 +3053,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/variables`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)`.
-    public enum SystemVariableDelete {
-        public static let id: Swift.String = "systemVariableDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableRemove)`.
+    public enum SystemVariableRemove {
+        public static let id: Swift.String = "systemVariableRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/system/variables/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.SystemVariableDelete.AcceptableContentType
+                        Operations.SystemVariableRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -3069,13 +3069,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.SystemVariableDelete.AcceptableContentType
+                        Operations.SystemVariableRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.SystemVariableDelete.Input.Headers
+            public var headers: Operations.SystemVariableRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -3083,7 +3083,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.SystemVariableDelete.Input.Headers =
+                headers: Operations.SystemVariableRemove.Input.Headers =
                     .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
@@ -3094,7 +3094,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -3121,15 +3121,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.SystemVariableDelete.Output.Unauthorized
+                Operations.SystemVariableRemove.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3140,7 +3140,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.SystemVariableDelete.Output.Unauthorized
+                Operations.SystemVariableRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3160,13 +3160,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.SystemVariableDelete.Output.Forbidden)
+            case forbidden(Operations.SystemVariableRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3177,7 +3177,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.SystemVariableDelete.Output.Forbidden
+                Operations.SystemVariableRemove.Output.Forbidden
             {
                 get throws {
                     switch self {

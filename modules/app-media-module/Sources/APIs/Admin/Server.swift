@@ -46,7 +46,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.mediaAssetNodeDelete(
+                try await server.mediaAssetNodeRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -189,7 +189,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.mediaProcessorDelete(
+                try await server.mediaProcessorRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -330,8 +330,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)`.
-    fileprivate func mediaAssetNodeDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)`.
+    fileprivate func mediaAssetNodeRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -340,12 +340,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaAssetNodeDelete.id,
+            forOperation: Operations.MediaAssetNodeRemove.id,
             using: {
-                APIHandler.mediaAssetNodeDelete($0)
+                APIHandler.mediaAssetNodeRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.MediaAssetNodeDelete.Input.Headers =
+                let headers: Operations.MediaAssetNodeRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -375,7 +375,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.MediaAssetNodeDelete.Input(
+                return Operations.MediaAssetNodeRemove.Input(
                     headers: headers,
                     body: body
                 )
@@ -1272,8 +1272,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/processors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)`.
-    fileprivate func mediaProcessorDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorRemove)`.
+    fileprivate func mediaProcessorRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1282,12 +1282,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaProcessorDelete.id,
+            forOperation: Operations.MediaProcessorRemove.id,
             using: {
-                APIHandler.mediaProcessorDelete($0)
+                APIHandler.mediaProcessorRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.MediaProcessorDelete.Input.Headers =
+                let headers: Operations.MediaProcessorRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -1317,7 +1317,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.MediaProcessorDelete.Input(
+                return Operations.MediaProcessorRemove.Input(
                     headers: headers,
                     body: body
                 )

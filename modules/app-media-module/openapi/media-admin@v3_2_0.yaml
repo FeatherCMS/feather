@@ -33,7 +33,7 @@ paths:
     delete:
       tags:
       - MediaAssets
-      operationId: mediaAssetNodeDelete
+      operationId: mediaAssetNodeRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -228,7 +228,7 @@ paths:
     delete:
       tags:
       - MediaProcessors
-      operationId: mediaProcessorDelete
+      operationId: mediaProcessorRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:

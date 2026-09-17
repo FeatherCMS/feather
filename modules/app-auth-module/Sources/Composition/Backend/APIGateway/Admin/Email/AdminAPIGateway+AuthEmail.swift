@@ -89,9 +89,9 @@ extension AdminAPIGateway {
         return .ok(.init(body: .json(authEmailDetail(result))))
     }
 
-    public func authEmailDelete(
-        _ input: Operations.AuthEmailDelete.Input
-    ) async throws -> Operations.AuthEmailDelete.Output {
+    public func authEmailRemove(
+        _ input: Operations.AuthEmailRemove.Input
+    ) async throws -> Operations.AuthEmailRemove.Output {
         let body: Components.Schemas.DeleteRequestSchema
         switch input.body {
         case .json(let value): body = value

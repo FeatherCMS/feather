@@ -93,7 +93,7 @@ struct AdminNewsletterCampaignAPIClient {
 
     func remove(id: String) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.newsletterCampaignDelete(
+            _ = try await client.newsletterCampaignRemove(
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }

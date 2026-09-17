@@ -86,7 +86,7 @@ struct WebMetadataLookupOperation: WebMetadataOperation {
     }
 }
 
-struct WebMetadataDeleteOperation: WebMetadataOperation, DeleteOperation {
+struct WebMetadataRemoveOperation: WebMetadataOperation, DeleteOperation {
 }
 
 struct WebMetadataGetOperation: WebMetadataIDOperation {

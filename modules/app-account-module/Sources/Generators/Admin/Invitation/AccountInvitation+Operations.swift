@@ -65,7 +65,7 @@ struct AccountInvitationSearchOperation: AccountInvitationOperation {
     }
 }
 
-struct AccountInvitationDeleteOperation: AccountInvitationOperation,
+struct AccountInvitationRemoveOperation: AccountInvitationOperation,
     DeleteOperation
 {
 }

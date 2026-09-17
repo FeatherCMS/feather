@@ -1,5 +1,6 @@
 import HTTPTypes
 import NIOHTTP1
+import OpenAPIRuntime
 import UserDomain
 
 extension Role.Error: HTTPErrorRepresentable {

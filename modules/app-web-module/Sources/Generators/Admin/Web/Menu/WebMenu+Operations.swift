@@ -102,7 +102,7 @@ struct WebMenuPatchOperation: WebMenuIDOperation {
     }
 }
 
-struct WebMenuDeleteOperation: WebMenuOperation,
+struct WebMenuRemoveOperation: WebMenuOperation,
     DeleteOperation
 {
 }

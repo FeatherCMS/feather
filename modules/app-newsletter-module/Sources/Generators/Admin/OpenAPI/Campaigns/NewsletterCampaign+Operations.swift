@@ -45,7 +45,7 @@ struct NewsletterCampaignUpdateOperation: NewsletterCampaignIDOperation {
         ]
     }
 }
-struct NewsletterCampaignDeleteOperation: NewsletterCampaignOperation,
+struct NewsletterCampaignRemoveOperation: NewsletterCampaignOperation,
     DeleteOperation
 {
 }

@@ -69,7 +69,7 @@ struct AdminListWebMetadataOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.webMetadataDelete(
+            _ = try await client.webMetadataRemove(
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }

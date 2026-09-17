@@ -10,7 +10,7 @@ import FeatherOpenAPI
 struct UserIdentityPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { UserIdentityCreateOperation() }
     //    var get: OperationRepresentable? { UserIdentityListOperation() }
-    var delete: OperationRepresentable? { UserIdentityDeleteOperation() }
+    var delete: OperationRepresentable? { UserIdentityRemoveOperation() }
 }
 
 struct UserIdentitySearchPathItems: PathItemRepresentable {

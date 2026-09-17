@@ -84,7 +84,7 @@ extension AuthEmailIdOperation {
 }
 struct AuthEmailPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { AuthEmailCreateOperation() }
-    var delete: OperationRepresentable? { AuthEmailDeleteOperation() }
+    var delete: OperationRepresentable? { AuthEmailRemoveOperation() }
 }
 struct AuthEmailListPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { AuthEmailListOperation() }
@@ -125,6 +125,6 @@ struct AuthEmailPatchOperation: AuthEmailIdOperation {
         ]
     }
 }
-struct AuthEmailDeleteOperation: AuthEmailOperation,
+struct AuthEmailRemoveOperation: AuthEmailOperation,
     DeleteOperation
 {}

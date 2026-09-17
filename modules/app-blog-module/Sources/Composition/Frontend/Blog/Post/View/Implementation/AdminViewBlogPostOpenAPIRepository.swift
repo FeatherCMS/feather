@@ -33,7 +33,7 @@ struct AdminViewBlogPostOpenAPIRepository: AdminViewBlogPostRepository {
                     title: page.title,
                     excerpt: page.excerpt,
                     content: page.content,
-                    imageAsset: await api.mediaAdminAPI()
+                    imageAsset: try await api.mediaAdminAPI()
                         .loadImageAsset(assetId: page.imageAssetId),
                     metadata: AdminMetadataSchemaBuilder.formValue(
                         from: page.metadata,

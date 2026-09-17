@@ -3,7 +3,7 @@ import FeatherOpenAPI
 struct SystemPermissionPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { SystemPermissionCreateOperation() }
     var delete: OperationRepresentable? {
-        SystemPermissionDeleteOperation()
+        SystemPermissionRemoveOperation()
     }
 }
 

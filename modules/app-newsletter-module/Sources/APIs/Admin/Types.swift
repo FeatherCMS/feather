@@ -23,10 +23,10 @@ public protocol APIProtocol: Sendable {
         _ input: Operations.NewsletterCampaignCreate.Input
     ) async throws -> Operations.NewsletterCampaignCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignDelete)`.
-    func newsletterCampaignDelete(
-        _ input: Operations.NewsletterCampaignDelete.Input
-    ) async throws -> Operations.NewsletterCampaignDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignRemove)`.
+    func newsletterCampaignRemove(
+        _ input: Operations.NewsletterCampaignRemove.Input
+    ) async throws -> Operations.NewsletterCampaignRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/get(newsletterCampaignGet)`.
     func newsletterCampaignGet(_ input: Operations.NewsletterCampaignGet.Input)
@@ -45,9 +45,9 @@ public protocol APIProtocol: Sendable {
     func newsletterIssueCreate(_ input: Operations.NewsletterIssueCreate.Input)
         async throws -> Operations.NewsletterIssueCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueDelete)`.
-    func newsletterIssueDelete(_ input: Operations.NewsletterIssueDelete.Input)
-        async throws -> Operations.NewsletterIssueDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)`.
+    func newsletterIssueRemove(_ input: Operations.NewsletterIssueRemove.Input)
+        async throws -> Operations.NewsletterIssueRemove.Output
     /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/post(newsletterCampaignTestEmail)`.
     func newsletterCampaignTestEmail(
@@ -82,10 +82,10 @@ public protocol APIProtocol: Sendable {
         _ input: Operations.NewsletterSubscriberCreate.Input
     ) async throws -> Operations.NewsletterSubscriberCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberDelete)`.
-    func newsletterSubscriberDelete(
-        _ input: Operations.NewsletterSubscriberDelete.Input
-    ) async throws -> Operations.NewsletterSubscriberDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)`.
+    func newsletterSubscriberRemove(
+        _ input: Operations.NewsletterSubscriberRemove.Input
+    ) async throws -> Operations.NewsletterSubscriberRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/get(newsletterSubscriberGet)`.
     func newsletterSubscriberGet(
@@ -123,13 +123,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignDelete)`.
-    public func newsletterCampaignDelete(
-        headers: Operations.NewsletterCampaignDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignRemove)`.
+    public func newsletterCampaignRemove(
+        headers: Operations.NewsletterCampaignRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.NewsletterCampaignDelete.Output {
-        try await newsletterCampaignDelete(
-            Operations.NewsletterCampaignDelete.Input(
+    ) async throws -> Operations.NewsletterCampaignRemove.Output {
+        try await newsletterCampaignRemove(
+            Operations.NewsletterCampaignRemove.Input(
                 headers: headers,
                 body: body
             )
@@ -192,14 +192,14 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueDelete)`.
-    public func newsletterIssueDelete(
-        path: Operations.NewsletterIssueDelete.Input.Path,
-        headers: Operations.NewsletterIssueDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)`.
+    public func newsletterIssueRemove(
+        path: Operations.NewsletterIssueRemove.Input.Path,
+        headers: Operations.NewsletterIssueRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.NewsletterIssueDelete.Output {
-        try await newsletterIssueDelete(
-            Operations.NewsletterIssueDelete.Input(
+    ) async throws -> Operations.NewsletterIssueRemove.Output {
+        try await newsletterIssueRemove(
+            Operations.NewsletterIssueRemove.Input(
                 path: path,
                 headers: headers,
                 body: body
@@ -302,14 +302,14 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberDelete)`.
-    public func newsletterSubscriberDelete(
-        path: Operations.NewsletterSubscriberDelete.Input.Path,
-        headers: Operations.NewsletterSubscriberDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)`.
+    public func newsletterSubscriberRemove(
+        path: Operations.NewsletterSubscriberRemove.Input.Path,
+        headers: Operations.NewsletterSubscriberRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.NewsletterSubscriberDelete.Output {
-        try await newsletterSubscriberDelete(
-            Operations.NewsletterSubscriberDelete.Input(
+    ) async throws -> Operations.NewsletterSubscriberRemove.Output {
+        try await newsletterSubscriberRemove(
+            Operations.NewsletterSubscriberRemove.Input(
                 path: path,
                 headers: headers,
                 body: body
@@ -469,89 +469,18 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema`.
         public struct DeleteResponseSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/ResultsPayload`.
-            public struct ResultsPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/ResultsPayload/id`.
-                public var id: Swift.String
-                /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/ResultsPayload/status`.
-                @frozen
-                public enum StatusPayload: String, Codable, Hashable, Sendable,
-                    CaseIterable
-                {
-                    case deleted = "deleted"
-                    case notFound = "not_found"
-                    case forbidden = "forbidden"
-                }
-                /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/ResultsPayload/status`.
-                public var status:
-                    Components.Schemas.DeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                /// Creates a new `ResultsPayloadPayload`.
-                ///
-                /// - Parameters:
-                ///   - id:
-                ///   - status:
-                public init(
-                    id: Swift.String,
-                    status: Components.Schemas.DeleteResponseSchema
-                        .ResultsPayloadPayload.StatusPayload
-                ) {
-                    self.id = id
-                    self.status = status
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case id
-                    case status
-                }
-            }
             /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/results`.
-            public typealias ResultsPayload = [Components.Schemas
-                .DeleteResponseSchema.ResultsPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/results`.
-            public var results:
-                Components.Schemas.DeleteResponseSchema.ResultsPayload?
+            public var results: Components.Schemas.DeleteResultListSchema?
             /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary`.
-            public struct SummaryPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary/requested`.
-                public var requested: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary/deleted`.
-                public var deleted: Swift.Int
-                /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary/omitted`.
-                public var omitted: Swift.Int
-                /// Creates a new `SummaryPayload`.
-                ///
-                /// - Parameters:
-                ///   - requested:
-                ///   - deleted:
-                ///   - omitted:
-                public init(
-                    requested: Swift.Int,
-                    deleted: Swift.Int,
-                    omitted: Swift.Int
-                ) {
-                    self.requested = requested
-                    self.deleted = deleted
-                    self.omitted = omitted
-                }
-                public enum CodingKeys: String, CodingKey {
-                    case requested
-                    case deleted
-                    case omitted
-                }
-            }
-            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary`.
-            public var summary:
-                Components.Schemas.DeleteResponseSchema.SummaryPayload?
+            public var summary: Components.Schemas.DeleteSummarySchema?
             /// Creates a new `DeleteResponseSchema`.
             ///
             /// - Parameters:
             ///   - results:
             ///   - summary:
             public init(
-                results: Components.Schemas.DeleteResponseSchema
-                    .ResultsPayload? = nil,
-                summary: Components.Schemas.DeleteResponseSchema
-                    .SummaryPayload? = nil
+                results: Components.Schemas.DeleteResultListSchema? = nil,
+                summary: Components.Schemas.DeleteSummarySchema? = nil
             ) {
                 self.results = results
                 self.summary = summary
@@ -559,6 +488,73 @@ public enum Components {
             public enum CodingKeys: String, CodingKey {
                 case results
                 case summary
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public struct DeleteResultListSchemaPayload: Codable, Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            @frozen
+            public enum StatusPayload: String, Codable, Hashable, Sendable,
+                CaseIterable
+            {
+                case deleted = "deleted"
+                case notFound = "not_found"
+                case forbidden = "forbidden"
+            }
+            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
+            public var status:
+                Components.Schemas.DeleteResultListSchemaPayload.StatusPayload
+            /// Creates a new `DeleteResultListSchemaPayload`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - status:
+            public init(
+                id: Swift.String,
+                status: Components.Schemas.DeleteResultListSchemaPayload
+                    .StatusPayload
+            ) {
+                self.id = id
+                self.status = status
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case status
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
+        public typealias DeleteResultListSchema = [Components.Schemas
+            .DeleteResultListSchemaPayload]
+        /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema`.
+        public struct DeleteSummarySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/requested`.
+            public var requested: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/deleted`.
+            public var deleted: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/omitted`.
+            public var omitted: Swift.Int
+            /// Creates a new `DeleteSummarySchema`.
+            ///
+            /// - Parameters:
+            ///   - requested:
+            ///   - deleted:
+            ///   - omitted:
+            public init(
+                requested: Swift.Int,
+                deleted: Swift.Int,
+                omitted: Swift.Int
+            ) {
+                self.requested = requested
+                self.deleted = deleted
+                self.omitted = omitted
+            }
+            public enum CodingKeys: String, CodingKey {
+                case requested
+                case deleted
+                case omitted
             }
         }
         /// - Remark: Generated from `#/components/schemas/NewsletterIdField`.
@@ -1620,15 +1616,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignDelete)`.
-    public enum NewsletterCampaignDelete {
-        public static let id: Swift.String = "newsletterCampaignDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignRemove)`.
+    public enum NewsletterCampaignRemove {
+        public static let id: Swift.String = "newsletterCampaignRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.NewsletterCampaignDelete
+                        Operations.NewsletterCampaignRemove
                             .AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
@@ -1637,7 +1633,7 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.NewsletterCampaignDelete
+                        Operations.NewsletterCampaignRemove
                             .AcceptableContentType
                     >] = .defaultValues()
                 ) {
@@ -1645,7 +1641,7 @@ public enum Operations {
                 }
             }
             public var headers:
-                Operations.NewsletterCampaignDelete.Input.Headers
+                Operations.NewsletterCampaignRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -1653,7 +1649,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.NewsletterCampaignDelete.Input.Headers =
+                headers: Operations.NewsletterCampaignRemove.Input.Headers =
                     .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
@@ -1662,9 +1658,9 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -1691,15 +1687,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.NewsletterCampaignDelete.Output.Unauthorized
+                Operations.NewsletterCampaignRemove.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -1710,7 +1706,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.NewsletterCampaignDelete.Output.Unauthorized
+                Operations.NewsletterCampaignRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -1730,13 +1726,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.NewsletterCampaignDelete.Output.Forbidden)
+            case forbidden(Operations.NewsletterCampaignRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -1747,7 +1743,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.NewsletterCampaignDelete.Output.Forbidden
+                Operations.NewsletterCampaignRemove.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -2639,9 +2635,9 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueDelete)`.
-    public enum NewsletterIssueDelete {
-        public static let id: Swift.String = "newsletterIssueDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)`.
+    public enum NewsletterIssueRemove {
+        public static let id: Swift.String = "newsletterIssueRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/DELETE/path`.
             public struct Path: Sendable, Hashable {
@@ -2659,12 +2655,12 @@ public enum Operations {
                     self.newsletterCampaignId = newsletterCampaignId
                 }
             }
-            public var path: Operations.NewsletterIssueDelete.Input.Path
+            public var path: Operations.NewsletterIssueRemove.Input.Path
             /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.NewsletterIssueDelete.AcceptableContentType
+                        Operations.NewsletterIssueRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -2672,13 +2668,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.NewsletterIssueDelete.AcceptableContentType
+                        Operations.NewsletterIssueRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.NewsletterIssueDelete.Input.Headers
+            public var headers: Operations.NewsletterIssueRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -2687,8 +2683,8 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.NewsletterIssueDelete.Input.Path,
-                headers: Operations.NewsletterIssueDelete.Input.Headers =
+                path: Operations.NewsletterIssueRemove.Input.Path,
+                headers: Operations.NewsletterIssueRemove.Input.Headers =
                     .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
@@ -2698,9 +2694,9 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -2727,15 +2723,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.NewsletterIssueDelete.Output.Unauthorized
+                Operations.NewsletterIssueRemove.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -2746,7 +2742,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.NewsletterIssueDelete.Output.Unauthorized
+                Operations.NewsletterIssueRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -2766,13 +2762,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.NewsletterIssueDelete.Output.Forbidden)
+            case forbidden(Operations.NewsletterIssueRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -2783,7 +2779,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.NewsletterIssueDelete.Output.Forbidden
+                Operations.NewsletterIssueRemove.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -4302,9 +4298,9 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberDelete)`.
-    public enum NewsletterSubscriberDelete {
-        public static let id: Swift.String = "newsletterSubscriberDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)`.
+    public enum NewsletterSubscriberRemove {
+        public static let id: Swift.String = "newsletterSubscriberRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/DELETE/path`.
             public struct Path: Sendable, Hashable {
@@ -4322,12 +4318,12 @@ public enum Operations {
                     self.newsletterCampaignId = newsletterCampaignId
                 }
             }
-            public var path: Operations.NewsletterSubscriberDelete.Input.Path
+            public var path: Operations.NewsletterSubscriberRemove.Input.Path
             /// - Remark: Generated from `#/paths/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.NewsletterSubscriberDelete
+                        Operations.NewsletterSubscriberRemove
                             .AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
@@ -4336,7 +4332,7 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.NewsletterSubscriberDelete
+                        Operations.NewsletterSubscriberRemove
                             .AcceptableContentType
                     >] = .defaultValues()
                 ) {
@@ -4344,7 +4340,7 @@ public enum Operations {
                 }
             }
             public var headers:
-                Operations.NewsletterSubscriberDelete.Input.Headers
+                Operations.NewsletterSubscriberRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -4353,8 +4349,8 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.NewsletterSubscriberDelete.Input.Path,
-                headers: Operations.NewsletterSubscriberDelete.Input.Headers =
+                path: Operations.NewsletterSubscriberRemove.Input.Path,
+                headers: Operations.NewsletterSubscriberRemove.Input.Headers =
                     .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
@@ -4364,9 +4360,9 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// delete response
+            /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -4393,15 +4389,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.NewsletterSubscriberDelete.Output.Unauthorized
+                Operations.NewsletterSubscriberRemove.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -4412,7 +4408,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.NewsletterSubscriberDelete.Output.Unauthorized
+                Operations.NewsletterSubscriberRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -4432,15 +4428,15 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(
-                Operations.NewsletterSubscriberDelete.Output.Forbidden
+                Operations.NewsletterSubscriberRemove.Output.Forbidden
             )
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -4451,7 +4447,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.NewsletterSubscriberDelete.Output.Forbidden
+                Operations.NewsletterSubscriberRemove.Output.Forbidden
             {
                 get throws {
                     switch self {

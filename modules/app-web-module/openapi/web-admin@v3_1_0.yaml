@@ -37,7 +37,7 @@ paths:
     delete:
       tags:
       - WebMetadata
-      operationId: webMetadataDelete
+      operationId: webMetadataRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -174,7 +174,7 @@ paths:
     delete:
       tags:
       - WebPages
-      operationId: webPageDelete
+      operationId: webPageRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -295,7 +295,7 @@ paths:
     delete:
       tags:
       - WebMenus
-      operationId: webMenuDelete
+      operationId: webMenuRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -418,7 +418,7 @@ paths:
     delete:
       tags:
       - WebMenuItems
-      operationId: webMenuItemDelete
+      operationId: webMenuItemRemove
       parameters:
       - $ref: '#/components/parameters/WebMenuItemMenuIdParameter'
       requestBody:

@@ -116,7 +116,7 @@ struct WebMenuItemPatchOperation: WebMenuItemIDOperation {
     }
 }
 
-struct WebMenuItemDeleteOperation: WebMenuItemMenuOperation,
+struct WebMenuItemRemoveOperation: WebMenuItemMenuOperation,
     DeleteOperation
 {
 }

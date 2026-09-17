@@ -65,7 +65,7 @@ struct AdminListWebMenuOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.webMenuDelete(
+            _ = try await client.webMenuRemove(
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }

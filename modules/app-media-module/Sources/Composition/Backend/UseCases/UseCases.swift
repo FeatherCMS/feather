@@ -277,7 +277,7 @@ extension UseCases {
         subject: Subject,
         assetIds: [String]
     ) async throws -> [String] {
-        try await makeDeleteAsset()
+        try await makeRemoveAsset()
             .execute(
                 subject: subject,
                 input: .init(ids: assetIds)

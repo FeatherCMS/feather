@@ -116,13 +116,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)`.
-    public func mediaAssetNodeDelete(
-        _ input: Operations.MediaAssetNodeDelete.Input
-    ) async throws -> Operations.MediaAssetNodeDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)`.
+    public func mediaAssetNodeRemove(
+        _ input: Operations.MediaAssetNodeRemove.Input
+    ) async throws -> Operations.MediaAssetNodeRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.MediaAssetNodeDelete.id,
+            forOperation: Operations.MediaAssetNodeRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/media/assets",
@@ -968,13 +968,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/processors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)`.
-    public func mediaProcessorDelete(
-        _ input: Operations.MediaProcessorDelete.Input
-    ) async throws -> Operations.MediaProcessorDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorRemove)`.
+    public func mediaProcessorRemove(
+        _ input: Operations.MediaProcessorRemove.Input
+    ) async throws -> Operations.MediaProcessorRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.MediaProcessorDelete.id,
+            forOperation: Operations.MediaProcessorRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/media/processors",

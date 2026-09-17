@@ -116,7 +116,7 @@ paths:
     delete:
       tags:
       - AccountInvitations
-      operationId: accountInvitationDelete
+      operationId: accountInvitationRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:

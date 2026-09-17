@@ -101,7 +101,7 @@ struct BlogTagPatchOperation: BlogTagIDOperation {
     }
 }
 
-struct BlogTagDeleteOperation: BlogTagOperation,
+struct BlogTagRemoveOperation: BlogTagOperation,
     DeleteOperation
 {
 }

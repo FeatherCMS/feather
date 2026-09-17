@@ -560,13 +560,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/account/invitations`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)`.
-    public func accountInvitationDelete(
-        _ input: Operations.AccountInvitationDelete.Input
-    ) async throws -> Operations.AccountInvitationDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationRemove)`.
+    public func accountInvitationRemove(
+        _ input: Operations.AccountInvitationRemove.Input
+    ) async throws -> Operations.AccountInvitationRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.AccountInvitationDelete.id,
+            forOperation: Operations.AccountInvitationRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/account/invitations",
