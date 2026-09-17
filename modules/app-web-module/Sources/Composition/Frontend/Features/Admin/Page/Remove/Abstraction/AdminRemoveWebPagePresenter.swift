@@ -5,19 +5,13 @@ import OpenAPIRuntime
 protocol AdminRemoveWebPagePresenter: Sendable {
 
     func renderRemovePage(
-        id: String,
-        source: String,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
         id: String,
         info: String,
-        message: String,
-        permissions: Set<String>
+        message: String
     ) async throws -> HTMLResponse
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link]
 }

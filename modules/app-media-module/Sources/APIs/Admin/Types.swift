@@ -17,13 +17,17 @@ public protocol APIProtocol: Sendable {
     func mediaAssetCreate(_ input: Operations.MediaAssetCreate.Input)
         async throws -> Operations.MediaAssetCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)`.
-    func mediaAssetNodeDelete(_ input: Operations.MediaAssetNodeDelete.Input)
-        async throws -> Operations.MediaAssetNodeDelete.Output
-    /// - Remark: HTTP `POST /api/v1/admin/media/assets/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/search/post(mediaAssetSearch)`.
-    func mediaAssetSearch(_ input: Operations.MediaAssetSearch.Input)
-        async throws -> Operations.MediaAssetSearch.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)`.
+    func mediaAssetNodeRemove(_ input: Operations.MediaAssetNodeRemove.Input)
+        async throws -> Operations.MediaAssetNodeRemove.Output
+    /// - Remark: HTTP `POST /api/v1/admin/media/assets/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/list/post(mediaAssetList)`.
+    func mediaAssetList(_ input: Operations.MediaAssetList.Input) async throws
+        -> Operations.MediaAssetList.Output
+    /// - Remark: HTTP `POST /api/v1/admin/media/assets/resolve`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)`.
+    func mediaAssetResolve(_ input: Operations.MediaAssetResolve.Input)
+        async throws -> Operations.MediaAssetResolve.Output
     /// - Remark: HTTP `GET /api/v1/admin/media/assets/{mediaAssetId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/get(mediaAssetGet)`.
     func mediaAssetGet(_ input: Operations.MediaAssetGet.Input) async throws
@@ -41,10 +45,10 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/post(mediaFolderCreate)`.
     func mediaFolderCreate(_ input: Operations.MediaFolderCreate.Input)
         async throws -> Operations.MediaFolderCreate.Output
-    /// - Remark: HTTP `POST /api/v1/admin/media/folders/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/search/post(mediaFolderSearch)`.
-    func mediaFolderSearch(_ input: Operations.MediaFolderSearch.Input)
-        async throws -> Operations.MediaFolderSearch.Output
+    /// - Remark: HTTP `POST /api/v1/admin/media/folders/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/list/post(mediaFolderList)`.
+    func mediaFolderList(_ input: Operations.MediaFolderList.Input) async throws
+        -> Operations.MediaFolderList.Output
     /// - Remark: HTTP `GET /api/v1/admin/media/folders/{mediaFolderId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/{mediaFolderId}/get(mediaFolderGet)`.
     func mediaFolderGet(_ input: Operations.MediaFolderGet.Input) async throws
@@ -53,26 +57,51 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/{mediaFolderId}/patch(mediaFolderUpdate)`.
     func mediaFolderUpdate(_ input: Operations.MediaFolderUpdate.Input)
         async throws -> Operations.MediaFolderUpdate.Output
-    /// - Remark: HTTP `POST /api/v1/admin/media/processors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/post(mediaProcessorCreate)`.
-    func mediaProcessorCreate(_ input: Operations.MediaProcessorCreate.Input)
-        async throws -> Operations.MediaProcessorCreate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/media/processors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)`.
-    func mediaProcessorDelete(_ input: Operations.MediaProcessorDelete.Input)
-        async throws -> Operations.MediaProcessorDelete.Output
-    /// - Remark: HTTP `POST /api/v1/admin/media/processors/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/search/post(mediaProcessorSearch)`.
-    func mediaProcessorSearch(_ input: Operations.MediaProcessorSearch.Input)
-        async throws -> Operations.MediaProcessorSearch.Output
-    /// - Remark: HTTP `GET /api/v1/admin/media/processors/{mediaProcessorId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/get(mediaProcessorGet)`.
-    func mediaProcessorGet(_ input: Operations.MediaProcessorGet.Input)
-        async throws -> Operations.MediaProcessorGet.Output
-    /// - Remark: HTTP `PATCH /api/v1/admin/media/processors/{mediaProcessorId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/patch(mediaProcessorUpdate)`.
-    func mediaProcessorUpdate(_ input: Operations.MediaProcessorUpdate.Input)
-        async throws -> Operations.MediaProcessorUpdate.Output
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/post(mediaVariantCreate)`.
+    func mediaVariantCreate(_ input: Operations.MediaVariantCreate.Input)
+        async throws -> Operations.MediaVariantCreate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/media/variants`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/delete(mediaVariantRemove)`.
+    func mediaVariantRemove(_ input: Operations.MediaVariantRemove.Input)
+        async throws -> Operations.MediaVariantRemove.Output
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/list/post(mediaVariantList)`.
+    func mediaVariantList(_ input: Operations.MediaVariantList.Input)
+        async throws -> Operations.MediaVariantList.Output
+    /// - Remark: HTTP `GET /api/v1/admin/media/variants/{mediaVariantId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/get(mediaVariantGet)`.
+    func mediaVariantGet(_ input: Operations.MediaVariantGet.Input) async throws
+        -> Operations.MediaVariantGet.Output
+    /// - Remark: HTTP `PATCH /api/v1/admin/media/variants/{mediaVariantId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/patch(mediaVariantUpdate)`.
+    func mediaVariantUpdate(_ input: Operations.MediaVariantUpdate.Input)
+        async throws -> Operations.MediaVariantUpdate.Output
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants/{mediaVariantId}/processors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/post(mediaVariantProcessorCreate)`.
+    func mediaVariantProcessorCreate(
+        _ input: Operations.MediaVariantProcessorCreate.Input
+    ) async throws -> Operations.MediaVariantProcessorCreate.Output
+    /// - Remark: HTTP `DELETE /api/v1/admin/media/variants/{mediaVariantId}/processors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/delete(mediaVariantProcessorRemove)`.
+    func mediaVariantProcessorRemove(
+        _ input: Operations.MediaVariantProcessorRemove.Input
+    ) async throws -> Operations.MediaVariantProcessorRemove.Output
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants/{mediaVariantId}/processors/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/list/post(mediaVariantProcessorList)`.
+    func mediaVariantProcessorList(
+        _ input: Operations.MediaVariantProcessorList.Input
+    ) async throws -> Operations.MediaVariantProcessorList.Output
+    /// - Remark: HTTP `GET /api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/get(mediaVariantProcessorGet)`.
+    func mediaVariantProcessorGet(
+        _ input: Operations.MediaVariantProcessorGet.Input
+    ) async throws -> Operations.MediaVariantProcessorGet.Output
+    /// - Remark: HTTP `PATCH /api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/patch(mediaVariantProcessorUpdate)`.
+    func mediaVariantProcessorUpdate(
+        _ input: Operations.MediaVariantProcessorUpdate.Input
+    ) async throws -> Operations.MediaVariantProcessorUpdate.Output
 }
 
 /// Convenience overloads for operation inputs.
@@ -91,26 +120,39 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)`.
-    public func mediaAssetNodeDelete(
-        headers: Operations.MediaAssetNodeDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)`.
+    public func mediaAssetNodeRemove(
+        headers: Operations.MediaAssetNodeRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.MediaAssetNodeDelete.Output {
-        try await mediaAssetNodeDelete(
-            Operations.MediaAssetNodeDelete.Input(
+    ) async throws -> Operations.MediaAssetNodeRemove.Output {
+        try await mediaAssetNodeRemove(
+            Operations.MediaAssetNodeRemove.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/assets/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/search/post(mediaAssetSearch)`.
-    public func mediaAssetSearch(
-        headers: Operations.MediaAssetSearch.Input.Headers = .init(),
-        body: Operations.MediaAssetSearch.Input.Body
-    ) async throws -> Operations.MediaAssetSearch.Output {
-        try await mediaAssetSearch(
-            Operations.MediaAssetSearch.Input(
+    /// - Remark: HTTP `POST /api/v1/admin/media/assets/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/list/post(mediaAssetList)`.
+    public func mediaAssetList(
+        headers: Operations.MediaAssetList.Input.Headers = .init(),
+        body: Operations.MediaAssetList.Input.Body
+    ) async throws -> Operations.MediaAssetList.Output {
+        try await mediaAssetList(
+            Operations.MediaAssetList.Input(
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/media/assets/resolve`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)`.
+    public func mediaAssetResolve(
+        headers: Operations.MediaAssetResolve.Input.Headers = .init(),
+        body: Components.RequestBodies.MediaAssetResolveRequestBody
+    ) async throws -> Operations.MediaAssetResolve.Output {
+        try await mediaAssetResolve(
+            Operations.MediaAssetResolve.Input(
                 headers: headers,
                 body: body
             )
@@ -170,14 +212,14 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/folders/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/search/post(mediaFolderSearch)`.
-    public func mediaFolderSearch(
-        headers: Operations.MediaFolderSearch.Input.Headers = .init(),
-        body: Operations.MediaFolderSearch.Input.Body
-    ) async throws -> Operations.MediaFolderSearch.Output {
-        try await mediaFolderSearch(
-            Operations.MediaFolderSearch.Input(
+    /// - Remark: HTTP `POST /api/v1/admin/media/folders/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/list/post(mediaFolderList)`.
+    public func mediaFolderList(
+        headers: Operations.MediaFolderList.Input.Headers = .init(),
+        body: Operations.MediaFolderList.Input.Body
+    ) async throws -> Operations.MediaFolderList.Output {
+        try await mediaFolderList(
+            Operations.MediaFolderList.Input(
                 headers: headers,
                 body: body
             )
@@ -211,67 +253,140 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/processors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/post(mediaProcessorCreate)`.
-    public func mediaProcessorCreate(
-        headers: Operations.MediaProcessorCreate.Input.Headers = .init(),
-        body: Components.RequestBodies.MediaProcessorCreateRequestBody
-    ) async throws -> Operations.MediaProcessorCreate.Output {
-        try await mediaProcessorCreate(
-            Operations.MediaProcessorCreate.Input(
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/post(mediaVariantCreate)`.
+    public func mediaVariantCreate(
+        headers: Operations.MediaVariantCreate.Input.Headers = .init(),
+        body: Components.RequestBodies.MediaVariantCreateRequestBody
+    ) async throws -> Operations.MediaVariantCreate.Output {
+        try await mediaVariantCreate(
+            Operations.MediaVariantCreate.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/media/processors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)`.
-    public func mediaProcessorDelete(
-        headers: Operations.MediaProcessorDelete.Input.Headers = .init(),
+    /// - Remark: HTTP `DELETE /api/v1/admin/media/variants`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/delete(mediaVariantRemove)`.
+    public func mediaVariantRemove(
+        headers: Operations.MediaVariantRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.MediaProcessorDelete.Output {
-        try await mediaProcessorDelete(
-            Operations.MediaProcessorDelete.Input(
+    ) async throws -> Operations.MediaVariantRemove.Output {
+        try await mediaVariantRemove(
+            Operations.MediaVariantRemove.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/processors/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/search/post(mediaProcessorSearch)`.
-    public func mediaProcessorSearch(
-        headers: Operations.MediaProcessorSearch.Input.Headers = .init(),
-        body: Operations.MediaProcessorSearch.Input.Body
-    ) async throws -> Operations.MediaProcessorSearch.Output {
-        try await mediaProcessorSearch(
-            Operations.MediaProcessorSearch.Input(
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/list/post(mediaVariantList)`.
+    public func mediaVariantList(
+        headers: Operations.MediaVariantList.Input.Headers = .init(),
+        body: Operations.MediaVariantList.Input.Body
+    ) async throws -> Operations.MediaVariantList.Output {
+        try await mediaVariantList(
+            Operations.MediaVariantList.Input(
                 headers: headers,
                 body: body
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/media/processors/{mediaProcessorId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/get(mediaProcessorGet)`.
-    public func mediaProcessorGet(
-        path: Operations.MediaProcessorGet.Input.Path,
-        headers: Operations.MediaProcessorGet.Input.Headers = .init()
-    ) async throws -> Operations.MediaProcessorGet.Output {
-        try await mediaProcessorGet(
-            Operations.MediaProcessorGet.Input(
+    /// - Remark: HTTP `GET /api/v1/admin/media/variants/{mediaVariantId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/get(mediaVariantGet)`.
+    public func mediaVariantGet(
+        path: Operations.MediaVariantGet.Input.Path,
+        headers: Operations.MediaVariantGet.Input.Headers = .init()
+    ) async throws -> Operations.MediaVariantGet.Output {
+        try await mediaVariantGet(
+            Operations.MediaVariantGet.Input(
                 path: path,
                 headers: headers
             )
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/media/processors/{mediaProcessorId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/patch(mediaProcessorUpdate)`.
-    public func mediaProcessorUpdate(
-        path: Operations.MediaProcessorUpdate.Input.Path,
-        headers: Operations.MediaProcessorUpdate.Input.Headers = .init(),
-        body: Components.RequestBodies.MediaProcessorCreateRequestBody
-    ) async throws -> Operations.MediaProcessorUpdate.Output {
-        try await mediaProcessorUpdate(
-            Operations.MediaProcessorUpdate.Input(
+    /// - Remark: HTTP `PATCH /api/v1/admin/media/variants/{mediaVariantId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/patch(mediaVariantUpdate)`.
+    public func mediaVariantUpdate(
+        path: Operations.MediaVariantUpdate.Input.Path,
+        headers: Operations.MediaVariantUpdate.Input.Headers = .init(),
+        body: Components.RequestBodies.MediaVariantCreateRequestBody
+    ) async throws -> Operations.MediaVariantUpdate.Output {
+        try await mediaVariantUpdate(
+            Operations.MediaVariantUpdate.Input(
+                path: path,
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants/{mediaVariantId}/processors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/post(mediaVariantProcessorCreate)`.
+    public func mediaVariantProcessorCreate(
+        path: Operations.MediaVariantProcessorCreate.Input.Path,
+        headers: Operations.MediaVariantProcessorCreate.Input.Headers = .init(),
+        body: Components.RequestBodies.MediaVariantProcessorCreateRequestBody
+    ) async throws -> Operations.MediaVariantProcessorCreate.Output {
+        try await mediaVariantProcessorCreate(
+            Operations.MediaVariantProcessorCreate.Input(
+                path: path,
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/media/variants/{mediaVariantId}/processors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/delete(mediaVariantProcessorRemove)`.
+    public func mediaVariantProcessorRemove(
+        path: Operations.MediaVariantProcessorRemove.Input.Path,
+        headers: Operations.MediaVariantProcessorRemove.Input.Headers = .init(),
+        body: Components.RequestBodies.DeleteRequestBody
+    ) async throws -> Operations.MediaVariantProcessorRemove.Output {
+        try await mediaVariantProcessorRemove(
+            Operations.MediaVariantProcessorRemove.Input(
+                path: path,
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants/{mediaVariantId}/processors/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/list/post(mediaVariantProcessorList)`.
+    public func mediaVariantProcessorList(
+        path: Operations.MediaVariantProcessorList.Input.Path,
+        headers: Operations.MediaVariantProcessorList.Input.Headers = .init(),
+        body: Operations.MediaVariantProcessorList.Input.Body
+    ) async throws -> Operations.MediaVariantProcessorList.Output {
+        try await mediaVariantProcessorList(
+            Operations.MediaVariantProcessorList.Input(
+                path: path,
+                headers: headers,
+                body: body
+            )
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/get(mediaVariantProcessorGet)`.
+    public func mediaVariantProcessorGet(
+        path: Operations.MediaVariantProcessorGet.Input.Path,
+        headers: Operations.MediaVariantProcessorGet.Input.Headers = .init()
+    ) async throws -> Operations.MediaVariantProcessorGet.Output {
+        try await mediaVariantProcessorGet(
+            Operations.MediaVariantProcessorGet.Input(
+                path: path,
+                headers: headers
+            )
+        )
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/patch(mediaVariantProcessorUpdate)`.
+    public func mediaVariantProcessorUpdate(
+        path: Operations.MediaVariantProcessorUpdate.Input.Path,
+        headers: Operations.MediaVariantProcessorUpdate.Input.Headers = .init(),
+        body: Components.RequestBodies.MediaVariantProcessorCreateRequestBody
+    ) async throws -> Operations.MediaVariantProcessorUpdate.Output {
+        try await mediaVariantProcessorUpdate(
+            Operations.MediaVariantProcessorUpdate.Input(
                 path: path,
                 headers: headers,
                 body: body
@@ -309,8 +424,8 @@ public enum Components {
             public var parentId: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MediaAssetCreateSchema/fileName`.
             public var fileName: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaAssetCreateSchema/type`.
-            public var _type: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetCreateSchema/extension`.
+            public var _extension: Swift.String
             /// - Remark: Generated from `#/components/schemas/MediaAssetCreateSchema/title`.
             public var title: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MediaAssetCreateSchema/altText`.
@@ -322,21 +437,21 @@ public enum Components {
             /// - Parameters:
             ///   - parentId:
             ///   - fileName:
-            ///   - _type:
+            ///   - _extension:
             ///   - title:
             ///   - altText:
             ///   - data:
             public init(
                 parentId: Swift.String? = nil,
                 fileName: Swift.String,
-                _type: Swift.String,
+                _extension: Swift.String,
                 title: Swift.String? = nil,
                 altText: Swift.String? = nil,
                 data: Swift.String
             ) {
                 self.parentId = parentId
                 self.fileName = fileName
-                self._type = _type
+                self._extension = _extension
                 self.title = title
                 self.altText = altText
                 self.data = data
@@ -344,7 +459,7 @@ public enum Components {
             public enum CodingKeys: String, CodingKey {
                 case parentId
                 case fileName
-                case _type = "type"
+                case _extension = "extension"
                 case title
                 case altText
                 case data
@@ -356,12 +471,18 @@ public enum Components {
             public var id: Components.Schemas.MediaAssetIdField
             /// - Remark: Generated from `#/components/schemas/MediaAssetDetailSchema/folderId`.
             public var folderId: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/MediaAssetDetailSchema/storageKey`.
-            public var storageKey: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaAssetDetailSchema/baseName`.
-            public var baseName: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaAssetDetailSchema/type`.
-            public var _type: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetDetailSchema/name`.
+            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetDetailSchema/slug`.
+            public var slug: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetDetailSchema/slugPath`.
+            public var slugPath: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetDetailSchema/url`.
+            public var url: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetDetailSchema/extension`.
+            public var _extension: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetDetailSchema/contentType`.
+            public var contentType: Swift.String
             /// - Remark: Generated from `#/components/schemas/MediaAssetDetailSchema/sizeBytes`.
             public var sizeBytes: Swift.Int64
             /// - Remark: Generated from `#/components/schemas/MediaAssetDetailSchema/status`.
@@ -379,9 +500,12 @@ public enum Components {
             /// - Parameters:
             ///   - id:
             ///   - folderId:
-            ///   - storageKey:
-            ///   - baseName:
-            ///   - _type:
+            ///   - name:
+            ///   - slug:
+            ///   - slugPath:
+            ///   - url:
+            ///   - _extension:
+            ///   - contentType:
             ///   - sizeBytes:
             ///   - status:
             ///   - title:
@@ -391,9 +515,12 @@ public enum Components {
             public init(
                 id: Components.Schemas.MediaAssetIdField,
                 folderId: Swift.String? = nil,
-                storageKey: Swift.String,
-                baseName: Swift.String,
-                _type: Swift.String,
+                name: Swift.String,
+                slug: Swift.String,
+                slugPath: Swift.String,
+                url: Swift.String,
+                _extension: Swift.String,
+                contentType: Swift.String,
                 sizeBytes: Swift.Int64,
                 status: Swift.String,
                 title: Swift.String? = nil,
@@ -403,9 +530,12 @@ public enum Components {
             ) {
                 self.id = id
                 self.folderId = folderId
-                self.storageKey = storageKey
-                self.baseName = baseName
-                self._type = _type
+                self.name = name
+                self.slug = slug
+                self.slugPath = slugPath
+                self.url = url
+                self._extension = _extension
+                self.contentType = contentType
                 self.sizeBytes = sizeBytes
                 self.status = status
                 self.title = title
@@ -416,9 +546,12 @@ public enum Components {
             public enum CodingKeys: String, CodingKey {
                 case id
                 case folderId
-                case storageKey
-                case baseName
-                case _type = "type"
+                case name
+                case slug
+                case slugPath
+                case url
+                case _extension = "extension"
+                case contentType
                 case sizeBytes
                 case status
                 case title
@@ -562,8 +695,9 @@ public enum Components {
                     CaseIterable
                 {
                     case id = "id"
-                    case storageKey = "storageKey"
-                    case _type = "type"
+                    case name = "name"
+                    case slugPath = "slugPath"
+                    case _extension = "extension"
                     case sizeBytes = "sizeBytes"
                     case status = "status"
                     case title = "title"
@@ -779,12 +913,18 @@ public enum Components {
             public var id: Components.Schemas.MediaAssetIdField
             /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSchema/folderId`.
             public var folderId: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSchema/storageKey`.
-            public var storageKey: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSchema/baseName`.
-            public var baseName: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSchema/type`.
-            public var _type: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSchema/name`.
+            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSchema/slug`.
+            public var slug: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSchema/slugPath`.
+            public var slugPath: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSchema/url`.
+            public var url: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSchema/extension`.
+            public var _extension: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSchema/contentType`.
+            public var contentType: Swift.String
             /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSchema/sizeBytes`.
             public var sizeBytes: Swift.Int64
             /// - Remark: Generated from `#/components/schemas/MediaAssetListItemSchema/status`.
@@ -802,9 +942,12 @@ public enum Components {
             /// - Parameters:
             ///   - id:
             ///   - folderId:
-            ///   - storageKey:
-            ///   - baseName:
-            ///   - _type:
+            ///   - name:
+            ///   - slug:
+            ///   - slugPath:
+            ///   - url:
+            ///   - _extension:
+            ///   - contentType:
             ///   - sizeBytes:
             ///   - status:
             ///   - title:
@@ -814,9 +957,12 @@ public enum Components {
             public init(
                 id: Components.Schemas.MediaAssetIdField,
                 folderId: Swift.String? = nil,
-                storageKey: Swift.String,
-                baseName: Swift.String,
-                _type: Swift.String,
+                name: Swift.String,
+                slug: Swift.String,
+                slugPath: Swift.String,
+                url: Swift.String,
+                _extension: Swift.String,
+                contentType: Swift.String,
                 sizeBytes: Swift.Int64,
                 status: Swift.String,
                 title: Swift.String? = nil,
@@ -826,9 +972,12 @@ public enum Components {
             ) {
                 self.id = id
                 self.folderId = folderId
-                self.storageKey = storageKey
-                self.baseName = baseName
-                self._type = _type
+                self.name = name
+                self.slug = slug
+                self.slugPath = slugPath
+                self.url = url
+                self._extension = _extension
+                self.contentType = contentType
                 self.sizeBytes = sizeBytes
                 self.status = status
                 self.title = title
@@ -839,9 +988,12 @@ public enum Components {
             public enum CodingKeys: String, CodingKey {
                 case id
                 case folderId
-                case storageKey
-                case baseName
-                case _type = "type"
+                case name
+                case slug
+                case slugPath
+                case url
+                case _extension = "extension"
+                case contentType
                 case sizeBytes
                 case status
                 case title
@@ -858,8 +1010,10 @@ public enum Components {
             public var parentId: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/name`.
             public var name: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/path`.
-            public var path: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/slug`.
+            public var slug: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/slugPath`.
+            public var slugPath: Swift.String
             /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/assetCount`.
             public var assetCount: Swift.Int
             /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSchema/totalSizeBytes`.
@@ -874,7 +1028,8 @@ public enum Components {
             ///   - id:
             ///   - parentId:
             ///   - name:
-            ///   - path:
+            ///   - slug:
+            ///   - slugPath:
             ///   - assetCount:
             ///   - totalSizeBytes:
             ///   - createdAt:
@@ -883,7 +1038,8 @@ public enum Components {
                 id: Components.Schemas.MediaFolderIdField,
                 parentId: Swift.String? = nil,
                 name: Swift.String,
-                path: Swift.String,
+                slug: Swift.String,
+                slugPath: Swift.String,
                 assetCount: Swift.Int,
                 totalSizeBytes: Swift.Int64,
                 createdAt: Swift.Double,
@@ -892,7 +1048,8 @@ public enum Components {
                 self.id = id
                 self.parentId = parentId
                 self.name = name
-                self.path = path
+                self.slug = slug
+                self.slugPath = slugPath
                 self.assetCount = assetCount
                 self.totalSizeBytes = totalSizeBytes
                 self.createdAt = createdAt
@@ -902,7 +1059,8 @@ public enum Components {
                 case id
                 case parentId
                 case name
-                case path
+                case slug
+                case slugPath
                 case assetCount
                 case totalSizeBytes
                 case createdAt
@@ -911,6 +1069,117 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/MediaFolderIdField`.
         public typealias MediaFolderIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MediaAssetResolveRequestSchema`.
+        public struct MediaAssetResolveRequestSchema: Codable, Hashable,
+            Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveRequestSchema/ids`.
+            public var ids: [Swift.String]
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveRequestSchema/variants`.
+            public var variants:
+                Components.Schemas.MediaAssetResolveVariantsField?
+            /// Creates a new `MediaAssetResolveRequestSchema`.
+            ///
+            /// - Parameters:
+            ///   - ids:
+            ///   - variants:
+            public init(
+                ids: [Swift.String],
+                variants: Components.Schemas.MediaAssetResolveVariantsField? =
+                    nil
+            ) {
+                self.ids = ids
+                self.variants = variants
+            }
+            public enum CodingKeys: String, CodingKey {
+                case ids
+                case variants
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MediaAssetResolveVariantsField`.
+        public typealias MediaAssetResolveVariantsField = [Swift.String]
+        /// - Remark: Generated from `#/components/schemas/MediaAssetResolveSchema`.
+        public typealias MediaAssetResolveSchema = [Components.Schemas
+            .MediaAssetResolveItemSchema]
+        /// - Remark: Generated from `#/components/schemas/MediaAssetResolveItemSchema`.
+        public struct MediaAssetResolveItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveItemSchema/id`.
+            public var id: Components.Schemas.MediaAssetIdField
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveItemSchema/url`.
+            public var url: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveItemSchema/extension`.
+            public var _extension: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveItemSchema/title`.
+            public var title: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveItemSchema/altText`.
+            public var altText: Swift.String?
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveItemSchema/variants`.
+            public var variants:
+                [Components.Schemas.MediaAssetResolveVariantSchema]
+            /// Creates a new `MediaAssetResolveItemSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - url:
+            ///   - _extension:
+            ///   - title:
+            ///   - altText:
+            ///   - variants:
+            public init(
+                id: Components.Schemas.MediaAssetIdField,
+                url: Swift.String,
+                _extension: Swift.String,
+                title: Swift.String? = nil,
+                altText: Swift.String? = nil,
+                variants: [Components.Schemas.MediaAssetResolveVariantSchema]
+            ) {
+                self.id = id
+                self.url = url
+                self._extension = _extension
+                self.title = title
+                self.altText = altText
+                self.variants = variants
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case url
+                case _extension = "extension"
+                case title
+                case altText
+                case variants
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MediaAssetResolveVariantSchema`.
+        public struct MediaAssetResolveVariantSchema: Codable, Hashable,
+            Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveVariantSchema/name`.
+            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveVariantSchema/url`.
+            public var url: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveVariantSchema/extension`.
+            public var _extension: Swift.String
+            /// Creates a new `MediaAssetResolveVariantSchema`.
+            ///
+            /// - Parameters:
+            ///   - name:
+            ///   - url:
+            ///   - _extension:
+            public init(
+                name: Swift.String,
+                url: Swift.String,
+                _extension: Swift.String
+            ) {
+                self.name = name
+                self.url = url
+                self._extension = _extension
+            }
+            public enum CodingKeys: String, CodingKey {
+                case name
+                case url
+                case _extension = "extension"
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/MediaAssetPatchSchema`.
         public struct MediaAssetPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MediaAssetPatchSchema/title`.
@@ -960,33 +1229,33 @@ public enum Components {
             public var variantId: Swift.String
             /// - Remark: Generated from `#/components/schemas/MediaAssetVariantListItemSchema/name`.
             public var name: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaAssetVariantListItemSchema/type`.
-            public var _type: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaAssetVariantListItemSchema/storageKey`.
-            public var storageKey: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetVariantListItemSchema/extension`.
+            public var _extension: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaAssetVariantListItemSchema/url`.
+            public var url: Swift.String
             /// Creates a new `MediaAssetVariantListItemSchema`.
             ///
             /// - Parameters:
             ///   - variantId:
             ///   - name:
-            ///   - _type:
-            ///   - storageKey:
+            ///   - _extension:
+            ///   - url:
             public init(
                 variantId: Swift.String,
                 name: Swift.String,
-                _type: Swift.String,
-                storageKey: Swift.String
+                _extension: Swift.String,
+                url: Swift.String
             ) {
                 self.variantId = variantId
                 self.name = name
-                self._type = _type
-                self.storageKey = storageKey
+                self._extension = _extension
+                self.url = url
             }
             public enum CodingKeys: String, CodingKey {
                 case variantId
                 case name
-                case _type = "type"
-                case storageKey
+                case _extension = "extension"
+                case url
             }
         }
         /// - Remark: Generated from `#/components/schemas/MediaFolderCreateSchema`.
@@ -1020,8 +1289,10 @@ public enum Components {
             public var parentId: Swift.String?
             /// - Remark: Generated from `#/components/schemas/MediaFolderDetailSchema/name`.
             public var name: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaFolderDetailSchema/path`.
-            public var path: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFolderDetailSchema/slug`.
+            public var slug: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaFolderDetailSchema/slugPath`.
+            public var slugPath: Swift.String
             /// - Remark: Generated from `#/components/schemas/MediaFolderDetailSchema/assetCount`.
             public var assetCount: Swift.Int
             /// - Remark: Generated from `#/components/schemas/MediaFolderDetailSchema/totalSizeBytes`.
@@ -1036,7 +1307,8 @@ public enum Components {
             ///   - id:
             ///   - parentId:
             ///   - name:
-            ///   - path:
+            ///   - slug:
+            ///   - slugPath:
             ///   - assetCount:
             ///   - totalSizeBytes:
             ///   - createdAt:
@@ -1045,7 +1317,8 @@ public enum Components {
                 id: Components.Schemas.MediaFolderIdField,
                 parentId: Swift.String? = nil,
                 name: Swift.String,
-                path: Swift.String,
+                slug: Swift.String,
+                slugPath: Swift.String,
                 assetCount: Swift.Int,
                 totalSizeBytes: Swift.Int64,
                 createdAt: Swift.Double,
@@ -1054,7 +1327,8 @@ public enum Components {
                 self.id = id
                 self.parentId = parentId
                 self.name = name
-                self.path = path
+                self.slug = slug
+                self.slugPath = slugPath
                 self.assetCount = assetCount
                 self.totalSizeBytes = totalSizeBytes
                 self.createdAt = createdAt
@@ -1064,7 +1338,8 @@ public enum Components {
                 case id
                 case parentId
                 case name
-                case path
+                case slug
+                case slugPath
                 case assetCount
                 case totalSizeBytes
                 case createdAt
@@ -1232,123 +1507,171 @@ public enum Components {
                 case name
             }
         }
-        /// - Remark: Generated from `#/components/schemas/MediaProcessorCreateSchema`.
-        public struct MediaProcessorCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorCreateSchema/name`.
+        /// - Remark: Generated from `#/components/schemas/MediaVariantCreateSchema`.
+        public struct MediaVariantCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaVariantCreateSchema/key`.
+            public var key: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaVariantCreateSchema/name`.
             public var name: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorCreateSchema/matchExtensions`.
-            public var matchExtensions: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorCreateSchema/commandTemplate`.
-            public var commandTemplate: Swift.String
-            /// Creates a new `MediaProcessorCreateSchema`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantCreateSchema/isRequired`.
+            public var isRequired: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/MediaVariantCreateSchema/isActive`.
+            public var isActive: Swift.Bool
+            /// Creates a new `MediaVariantCreateSchema`.
             ///
             /// - Parameters:
+            ///   - key:
             ///   - name:
-            ///   - matchExtensions:
-            ///   - commandTemplate:
+            ///   - isRequired:
+            ///   - isActive:
             public init(
+                key: Swift.String,
                 name: Swift.String,
-                matchExtensions: Swift.String,
-                commandTemplate: Swift.String
+                isRequired: Swift.Bool,
+                isActive: Swift.Bool
             ) {
+                self.key = key
                 self.name = name
-                self.matchExtensions = matchExtensions
-                self.commandTemplate = commandTemplate
+                self.isRequired = isRequired
+                self.isActive = isActive
             }
             public enum CodingKeys: String, CodingKey {
+                case key
                 case name
-                case matchExtensions
-                case commandTemplate
+                case isRequired
+                case isActive
             }
         }
-        /// - Remark: Generated from `#/components/schemas/MediaProcessorDetailSchema`.
-        public struct MediaProcessorDetailSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorDetailSchema/id`.
-            public var id: Components.Schemas.MediaProcessorIdField
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorDetailSchema/name`.
+        /// - Remark: Generated from `#/components/schemas/MediaVariantDetailSchema`.
+        public struct MediaVariantDetailSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaVariantDetailSchema/id`.
+            public var id: Components.Schemas.MediaVariantIdField
+            /// - Remark: Generated from `#/components/schemas/MediaVariantDetailSchema/key`.
+            public var key: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaVariantDetailSchema/name`.
             public var name: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorDetailSchema/matchExtensions`.
-            public var matchExtensions: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorDetailSchema/commandTemplate`.
-            public var commandTemplate: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorDetailSchema/isRequired`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantDetailSchema/isRequired`.
             public var isRequired: Swift.Bool
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorDetailSchema/isActive`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantDetailSchema/isActive`.
             public var isActive: Swift.Bool
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorDetailSchema/createdAt`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantDetailSchema/processors`.
+            public var processors:
+                [Components.Schemas.MediaVariantProcessorListItemSchema]
+            /// - Remark: Generated from `#/components/schemas/MediaVariantDetailSchema/createdAt`.
             public var createdAt: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorDetailSchema/updatedAt`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantDetailSchema/updatedAt`.
             public var updatedAt: Swift.Double
-            /// Creates a new `MediaProcessorDetailSchema`.
+            /// Creates a new `MediaVariantDetailSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - key:
+            ///   - name:
+            ///   - isRequired:
+            ///   - isActive:
+            ///   - processors:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.MediaVariantIdField,
+                key: Swift.String,
+                name: Swift.String,
+                isRequired: Swift.Bool,
+                isActive: Swift.Bool,
+                processors: [Components.Schemas
+                    .MediaVariantProcessorListItemSchema],
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.key = key
+                self.name = name
+                self.isRequired = isRequired
+                self.isActive = isActive
+                self.processors = processors
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case key
+                case name
+                case isRequired
+                case isActive
+                case processors
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MediaVariantIdField`.
+        public typealias MediaVariantIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSchema`.
+        public struct MediaVariantProcessorListItemSchema: Codable, Hashable,
+            Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSchema/id`.
+            public var id: Components.Schemas.MediaVariantIdField
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSchema/name`.
+            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSchema/matchExtensions`.
+            public var matchExtensions: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSchema/commandTemplate`.
+            public var commandTemplate: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSchema/isActive`.
+            public var isActive: Swift.Bool
+            /// Creates a new `MediaVariantProcessorListItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
             ///   - name:
             ///   - matchExtensions:
             ///   - commandTemplate:
-            ///   - isRequired:
             ///   - isActive:
-            ///   - createdAt:
-            ///   - updatedAt:
             public init(
-                id: Components.Schemas.MediaProcessorIdField,
+                id: Components.Schemas.MediaVariantIdField,
                 name: Swift.String,
                 matchExtensions: Swift.String,
                 commandTemplate: Swift.String,
-                isRequired: Swift.Bool,
-                isActive: Swift.Bool,
-                createdAt: Swift.Double,
-                updatedAt: Swift.Double
+                isActive: Swift.Bool
             ) {
                 self.id = id
                 self.name = name
                 self.matchExtensions = matchExtensions
                 self.commandTemplate = commandTemplate
-                self.isRequired = isRequired
                 self.isActive = isActive
-                self.createdAt = createdAt
-                self.updatedAt = updatedAt
             }
             public enum CodingKeys: String, CodingKey {
                 case id
                 case name
                 case matchExtensions
                 case commandTemplate
-                case isRequired
                 case isActive
-                case createdAt
-                case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/MediaProcessorIdField`.
-        public typealias MediaProcessorIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema`.
-        public struct MediaProcessorListItemSearchQuerySchema: Codable,
-            Hashable, Sendable
+        /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema`.
+        public struct MediaVariantListItemSearchQuerySchema: Codable, Hashable,
+            Sendable
         {
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema/page`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/page`.
             public var page: Components.Schemas.SearchPageSchema
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema/SortPayload`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/SortPayload/field`.
                 @frozen
                 public enum FieldPayload: String, Codable, Hashable, Sendable,
                     CaseIterable
                 {
                     case id = "id"
+                    case key = "key"
                     case name = "name"
-                    case matchExtensions = "matchExtensions"
-                    case commandTemplate = "commandTemplate"
                     case isRequired = "isRequired"
                     case isActive = "isActive"
-                    case createdAt = "createdAt"
-                    case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/SortPayload/field`.
                 public var field:
-                    Components.Schemas.MediaProcessorListItemSearchQuerySchema
+                    Components.Schemas.MediaVariantListItemSearchQuerySchema
                         .SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -1357,7 +1680,7 @@ public enum Components {
                 ///   - direction:
                 public init(
                     field: Components.Schemas
-                        .MediaProcessorListItemSearchQuerySchema
+                        .MediaVariantListItemSearchQuerySchema
                         .SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
@@ -1369,16 +1692,16 @@ public enum Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema/sort`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/sort`.
             public typealias SortPayload = [Components.Schemas
-                .MediaProcessorListItemSearchQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema/sort`.
+                .MediaVariantListItemSearchQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/sort`.
             public var sort:
-                Components.Schemas.MediaProcessorListItemSearchQuerySchema
+                Components.Schemas.MediaVariantListItemSearchQuerySchema
                     .SortPayload?
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -1392,11 +1715,11 @@ public enum Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/filters`.
             public var filters:
-                Components.Schemas.MediaProcessorListItemSearchQuerySchema
+                Components.Schemas.MediaVariantListItemSearchQuerySchema
                     .FiltersPayload
-            /// Creates a new `MediaProcessorListItemSearchQuerySchema`.
+            /// Creates a new `MediaVariantListItemSearchQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
@@ -1404,10 +1727,10 @@ public enum Components {
             ///   - filters:
             public init(
                 page: Components.Schemas.SearchPageSchema,
-                sort: Components.Schemas.MediaProcessorListItemSearchQuerySchema
+                sort: Components.Schemas.MediaVariantListItemSearchQuerySchema
                     .SortPayload? = nil,
                 filters: Components.Schemas
-                    .MediaProcessorListItemSearchQuerySchema.FiltersPayload
+                    .MediaVariantListItemSearchQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -1421,19 +1744,19 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/SearchStringField`.
         public typealias SearchStringField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchSchema`.
-        public struct MediaProcessorListItemSearchSchema: Codable, Hashable,
+        /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchSchema`.
+        public struct MediaVariantListItemSearchSchema: Codable, Hashable,
             Sendable
         {
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchSchema/query`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchSchema/query`.
             public var query:
-                Components.Schemas.MediaProcessorListItemSearchQuerySchema
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchSchema/data`.
+                Components.Schemas.MediaVariantListItemSearchQuerySchema
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchSchema/data/items`.
+                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchSchema/data/items`.
                 public var items:
-                    [Components.Schemas.MediaProcessorListItemSchema]
-                /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchSchema/data/total`.
+                    [Components.Schemas.MediaVariantListItemSchema]
+                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchSchema/data/total`.
                 public var total: Swift.Int
                 /// Creates a new `DataPayload`.
                 ///
@@ -1441,7 +1764,7 @@ public enum Components {
                 ///   - items:
                 ///   - total:
                 public init(
-                    items: [Components.Schemas.MediaProcessorListItemSchema],
+                    items: [Components.Schemas.MediaVariantListItemSchema],
                     total: Swift.Int
                 ) {
                     self.items = items
@@ -1452,19 +1775,17 @@ public enum Components {
                     case total
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSearchSchema/data`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchSchema/data`.
             public var data:
-                Components.Schemas.MediaProcessorListItemSearchSchema
-                    .DataPayload
-            /// Creates a new `MediaProcessorListItemSearchSchema`.
+                Components.Schemas.MediaVariantListItemSearchSchema.DataPayload
+            /// Creates a new `MediaVariantListItemSearchSchema`.
             ///
             /// - Parameters:
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas
-                    .MediaProcessorListItemSearchQuerySchema,
-                data: Components.Schemas.MediaProcessorListItemSearchSchema
+                query: Components.Schemas.MediaVariantListItemSearchQuerySchema,
+                data: Components.Schemas.MediaVariantListItemSearchSchema
                     .DataPayload
             ) {
                 self.query = query
@@ -1475,52 +1796,298 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSchema`.
-        public struct MediaProcessorListItemSchema: Codable, Hashable, Sendable
-        {
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSchema/id`.
-            public var id: Components.Schemas.MediaProcessorIdField
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSchema/name`.
+        /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSchema`.
+        public struct MediaVariantListItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSchema/id`.
+            public var id: Components.Schemas.MediaVariantIdField
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSchema/key`.
+            public var key: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSchema/name`.
             public var name: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSchema/matchExtensions`.
-            public var matchExtensions: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSchema/commandTemplate`.
-            public var commandTemplate: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSchema/isRequired`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSchema/isRequired`.
             public var isRequired: Swift.Bool
-            /// - Remark: Generated from `#/components/schemas/MediaProcessorListItemSchema/isActive`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSchema/isActive`.
             public var isActive: Swift.Bool
-            /// Creates a new `MediaProcessorListItemSchema`.
+            /// Creates a new `MediaVariantListItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
+            ///   - key:
             ///   - name:
-            ///   - matchExtensions:
-            ///   - commandTemplate:
             ///   - isRequired:
             ///   - isActive:
             public init(
-                id: Components.Schemas.MediaProcessorIdField,
+                id: Components.Schemas.MediaVariantIdField,
+                key: Swift.String,
                 name: Swift.String,
-                matchExtensions: Swift.String,
-                commandTemplate: Swift.String,
                 isRequired: Swift.Bool,
                 isActive: Swift.Bool
             ) {
                 self.id = id
+                self.key = key
                 self.name = name
-                self.matchExtensions = matchExtensions
-                self.commandTemplate = commandTemplate
                 self.isRequired = isRequired
                 self.isActive = isActive
             }
             public enum CodingKeys: String, CodingKey {
                 case id
+                case key
+                case name
+                case isRequired
+                case isActive
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorCreateSchema`.
+        public struct MediaVariantProcessorCreateSchema: Codable, Hashable,
+            Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorCreateSchema/name`.
+            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorCreateSchema/matchExtensions`.
+            public var matchExtensions: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorCreateSchema/commandTemplate`.
+            public var commandTemplate: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorCreateSchema/isActive`.
+            public var isActive: Swift.Bool
+            /// Creates a new `MediaVariantProcessorCreateSchema`.
+            ///
+            /// - Parameters:
+            ///   - name:
+            ///   - matchExtensions:
+            ///   - commandTemplate:
+            ///   - isActive:
+            public init(
+                name: Swift.String,
+                matchExtensions: Swift.String,
+                commandTemplate: Swift.String,
+                isActive: Swift.Bool
+            ) {
+                self.name = name
+                self.matchExtensions = matchExtensions
+                self.commandTemplate = commandTemplate
+                self.isActive = isActive
+            }
+            public enum CodingKeys: String, CodingKey {
                 case name
                 case matchExtensions
                 case commandTemplate
-                case isRequired
                 case isActive
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorDetailSchema`.
+        public struct MediaVariantProcessorDetailSchema: Codable, Hashable,
+            Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorDetailSchema/id`.
+            public var id: Components.Schemas.MediaVariantIdField
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorDetailSchema/variantId`.
+            public var variantId: Components.Schemas.MediaVariantIdField
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorDetailSchema/name`.
+            public var name: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorDetailSchema/matchExtensions`.
+            public var matchExtensions: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorDetailSchema/commandTemplate`.
+            public var commandTemplate: Swift.String
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorDetailSchema/isActive`.
+            public var isActive: Swift.Bool
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorDetailSchema/createdAt`.
+            public var createdAt: Swift.Double
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorDetailSchema/updatedAt`.
+            public var updatedAt: Swift.Double
+            /// Creates a new `MediaVariantProcessorDetailSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - variantId:
+            ///   - name:
+            ///   - matchExtensions:
+            ///   - commandTemplate:
+            ///   - isActive:
+            ///   - createdAt:
+            ///   - updatedAt:
+            public init(
+                id: Components.Schemas.MediaVariantIdField,
+                variantId: Components.Schemas.MediaVariantIdField,
+                name: Swift.String,
+                matchExtensions: Swift.String,
+                commandTemplate: Swift.String,
+                isActive: Swift.Bool,
+                createdAt: Swift.Double,
+                updatedAt: Swift.Double
+            ) {
+                self.id = id
+                self.variantId = variantId
+                self.name = name
+                self.matchExtensions = matchExtensions
+                self.commandTemplate = commandTemplate
+                self.isActive = isActive
+                self.createdAt = createdAt
+                self.updatedAt = updatedAt
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case variantId
+                case name
+                case matchExtensions
+                case commandTemplate
+                case isActive
+                case createdAt
+                case updatedAt
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema`.
+        public struct MediaVariantProcessorListItemSearchQuerySchema: Codable,
+            Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/page`.
+            public var page: Components.Schemas.SearchPageSchema
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/SortPayload/field`.
+                @frozen
+                public enum FieldPayload: String, Codable, Hashable, Sendable,
+                    CaseIterable
+                {
+                    case id = "id"
+                    case name = "name"
+                    case matchExtensions = "matchExtensions"
+                    case commandTemplate = "commandTemplate"
+                    case isActive = "isActive"
+                }
+                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/SortPayload/field`.
+                public var field:
+                    Components.Schemas
+                        .MediaVariantProcessorListItemSearchQuerySchema
+                        .SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas
+                        .MediaVariantProcessorListItemSearchQuerySchema
+                        .SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas
+                .MediaVariantProcessorListItemSearchQuerySchema
+                .SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/sort`.
+            public var sort:
+                Components.Schemas
+                    .MediaVariantProcessorListItemSearchQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                public init(search: Components.Schemas.SearchStringField? = nil)
+                {
+                    self.search = search
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/filters`.
+            public var filters:
+                Components.Schemas
+                    .MediaVariantProcessorListItemSearchQuerySchema
+                    .FiltersPayload
+            /// Creates a new `MediaVariantProcessorListItemSearchQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchPageSchema,
+                sort: Components.Schemas
+                    .MediaVariantProcessorListItemSearchQuerySchema
+                    .SortPayload? = nil,
+                filters: Components.Schemas
+                    .MediaVariantProcessorListItemSearchQuerySchema
+                    .FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchSchema`.
+        public struct MediaVariantProcessorListItemSearchSchema: Codable,
+            Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchSchema/query`.
+            public var query:
+                Components.Schemas
+                    .MediaVariantProcessorListItemSearchQuerySchema
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchSchema/data`.
+            public struct DataPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchSchema/data/items`.
+                public var items:
+                    [Components.Schemas.MediaVariantProcessorListItemSchema]
+                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchSchema/data/total`.
+                public var total: Swift.Int
+                /// Creates a new `DataPayload`.
+                ///
+                /// - Parameters:
+                ///   - items:
+                ///   - total:
+                public init(
+                    items: [Components.Schemas
+                        .MediaVariantProcessorListItemSchema],
+                    total: Swift.Int
+                ) {
+                    self.items = items
+                    self.total = total
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case items
+                    case total
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchSchema/data`.
+            public var data:
+                Components.Schemas.MediaVariantProcessorListItemSearchSchema
+                    .DataPayload
+            /// Creates a new `MediaVariantProcessorListItemSearchSchema`.
+            ///
+            /// - Parameters:
+            ///   - query:
+            ///   - data:
+            public init(
+                query: Components.Schemas
+                    .MediaVariantProcessorListItemSearchQuerySchema,
+                data: Components.Schemas
+                    .MediaVariantProcessorListItemSearchSchema.DataPayload
+            ) {
+                self.query = query
+                self.data = data
+            }
+            public enum CodingKeys: String, CodingKey {
+                case query
+                case data
             }
         }
     }
@@ -1536,11 +2103,16 @@ public enum Components {
         /// - Remark: Generated from `#/components/parameters/MediaFolderIdParameter`.
         public typealias MediaFolderIdParameter = Components.Schemas
             .MediaFolderIdField
-        /// MediaProcessor id
+        /// Media variant id
         ///
-        /// - Remark: Generated from `#/components/parameters/MediaProcessorIdParameter`.
-        public typealias MediaProcessorIdParameter = Components.Schemas
-            .MediaProcessorIdField
+        /// - Remark: Generated from `#/components/parameters/MediaVariantIdParameter`.
+        public typealias MediaVariantIdParameter = Components.Schemas
+            .MediaVariantIdField
+        /// Media variant processor id
+        ///
+        /// - Remark: Generated from `#/components/parameters/MediaVariantProcessorIdParameter`.
+        public typealias MediaVariantProcessorIdParameter = Components.Schemas
+            .MediaVariantIdField
     }
     /// Types generated from the `#/components/requestBodies` section of the OpenAPI document.
     public enum RequestBodies {
@@ -1553,6 +2125,11 @@ public enum Components {
         @frozen public enum DeleteRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody/content/application\/json`.
             case json(Components.Schemas.DeleteRequestSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/MediaAssetResolveRequestBody`.
+        @frozen public enum MediaAssetResolveRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MediaAssetResolveRequestBody/content/application\/json`.
+            case json(Components.Schemas.MediaAssetResolveRequestSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/MediaAssetPatchRequestBody`.
         @frozen public enum MediaAssetPatchRequestBody: Sendable, Hashable {
@@ -1569,11 +2146,16 @@ public enum Components {
             /// - Remark: Generated from `#/components/requestBodies/MediaFolderPatchRequestBody/content/application\/json`.
             case json(Components.Schemas.MediaFolderPatchSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/MediaProcessorCreateRequestBody`.
-        @frozen public enum MediaProcessorCreateRequestBody: Sendable, Hashable
-        {
-            /// - Remark: Generated from `#/components/requestBodies/MediaProcessorCreateRequestBody/content/application\/json`.
-            case json(Components.Schemas.MediaProcessorCreateSchema)
+        /// - Remark: Generated from `#/components/requestBodies/MediaVariantCreateRequestBody`.
+        @frozen public enum MediaVariantCreateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MediaVariantCreateRequestBody/content/application\/json`.
+            case json(Components.Schemas.MediaVariantCreateSchema)
+        }
+        /// - Remark: Generated from `#/components/requestBodies/MediaVariantProcessorCreateRequestBody`.
+        @frozen
+        public enum MediaVariantProcessorCreateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MediaVariantProcessorCreateRequestBody/content/application\/json`.
+            case json(Components.Schemas.MediaVariantProcessorCreateSchema)
         }
     }
     /// Types generated from the `#/components/responses` section of the OpenAPI document.
@@ -1671,6 +2253,36 @@ public enum Components {
             public init(
                 body: Components.Responses
                     .MediaAssetNodeSearchItemSearchSchemaSearchResponse.Body
+            ) {
+                self.body = body
+            }
+        }
+        public struct MediaAssetResolveResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MediaAssetResolveResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/MediaAssetResolveResponse/content/application\/json`.
+                case json(Components.Schemas.MediaAssetResolveSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.MediaAssetResolveSchema {
+                    get throws {
+                        switch self {
+                        case .json(let body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.MediaAssetResolveResponse.Body
+            /// Creates a new `MediaAssetResolveResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(
+                body: Components.Responses.MediaAssetResolveResponse.Body
             ) {
                 self.body = body
             }
@@ -1774,16 +2386,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct MediaProcessorDetailResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/MediaProcessorDetailResponse/content`.
+        public struct MediaVariantDetailResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MediaVariantDetailResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/MediaProcessorDetailResponse/content/application\/json`.
-                case json(Components.Schemas.MediaProcessorDetailSchema)
+                /// - Remark: Generated from `#/components/responses/MediaVariantDetailResponse/content/application\/json`.
+                case json(Components.Schemas.MediaVariantDetailSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.MediaProcessorDetailSchema {
+                public var json: Components.Schemas.MediaVariantDetailSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -1794,30 +2406,30 @@ public enum Components {
             }
             /// Received HTTP response body
             public var body:
-                Components.Responses.MediaProcessorDetailResponse.Body
-            /// Creates a new `MediaProcessorDetailResponse`.
+                Components.Responses.MediaVariantDetailResponse.Body
+            /// Creates a new `MediaVariantDetailResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(
-                body: Components.Responses.MediaProcessorDetailResponse.Body
+                body: Components.Responses.MediaVariantDetailResponse.Body
             ) {
                 self.body = body
             }
         }
-        public struct MediaProcessorListItemSearchSchemaSearchResponse:
-            Sendable, Hashable
+        public struct MediaVariantListItemSearchSchemaSearchResponse: Sendable,
+            Hashable
         {
-            /// - Remark: Generated from `#/components/responses/MediaProcessorListItemSearchSchemaSearchResponse/content`.
+            /// - Remark: Generated from `#/components/responses/MediaVariantListItemSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/MediaProcessorListItemSearchSchemaSearchResponse/content/application\/json`.
-                case json(Components.Schemas.MediaProcessorListItemSearchSchema)
+                /// - Remark: Generated from `#/components/responses/MediaVariantListItemSearchSchemaSearchResponse/content/application\/json`.
+                case json(Components.Schemas.MediaVariantListItemSearchSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
                 public var json:
-                    Components.Schemas.MediaProcessorListItemSearchSchema
+                    Components.Schemas.MediaVariantListItemSearchSchema
                 {
                     get throws {
                         switch self {
@@ -1830,14 +2442,89 @@ public enum Components {
             /// Received HTTP response body
             public var body:
                 Components.Responses
-                    .MediaProcessorListItemSearchSchemaSearchResponse.Body
-            /// Creates a new `MediaProcessorListItemSearchSchemaSearchResponse`.
+                    .MediaVariantListItemSearchSchemaSearchResponse.Body
+            /// Creates a new `MediaVariantListItemSearchSchemaSearchResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(
                 body: Components.Responses
-                    .MediaProcessorListItemSearchSchemaSearchResponse.Body
+                    .MediaVariantListItemSearchSchemaSearchResponse.Body
+            ) {
+                self.body = body
+            }
+        }
+        public struct MediaVariantProcessorDetailResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MediaVariantProcessorDetailResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/MediaVariantProcessorDetailResponse/content/application\/json`.
+                case json(Components.Schemas.MediaVariantProcessorDetailSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json:
+                    Components.Schemas.MediaVariantProcessorDetailSchema
+                {
+                    get throws {
+                        switch self {
+                        case .json(let body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body:
+                Components.Responses.MediaVariantProcessorDetailResponse.Body
+            /// Creates a new `MediaVariantProcessorDetailResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(
+                body: Components.Responses.MediaVariantProcessorDetailResponse
+                    .Body
+            ) {
+                self.body = body
+            }
+        }
+        public struct MediaVariantProcessorListItemSearchSchemaSearchResponse:
+            Sendable, Hashable
+        {
+            /// - Remark: Generated from `#/components/responses/MediaVariantProcessorListItemSearchSchemaSearchResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/MediaVariantProcessorListItemSearchSchemaSearchResponse/content/application\/json`.
+                case json(
+                    Components.Schemas.MediaVariantProcessorListItemSearchSchema
+                )
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json:
+                    Components.Schemas.MediaVariantProcessorListItemSearchSchema
+                {
+                    get throws {
+                        switch self {
+                        case .json(let body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body:
+                Components.Responses
+                    .MediaVariantProcessorListItemSearchSchemaSearchResponse
+                    .Body
+            /// Creates a new `MediaVariantProcessorListItemSearchSchemaSearchResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(
+                body: Components.Responses
+                    .MediaVariantProcessorListItemSearchSchemaSearchResponse
+                    .Body
             ) {
                 self.body = body
             }
@@ -2019,15 +2706,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)`.
-    public enum MediaAssetNodeDelete {
-        public static let id: Swift.String = "mediaAssetNodeDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)`.
+    public enum MediaAssetNodeRemove {
+        public static let id: Swift.String = "mediaAssetNodeRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaAssetNodeDelete.AcceptableContentType
+                        Operations.MediaAssetNodeRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -2035,13 +2722,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaAssetNodeDelete.AcceptableContentType
+                        Operations.MediaAssetNodeRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.MediaAssetNodeDelete.Input.Headers
+            public var headers: Operations.MediaAssetNodeRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -2049,7 +2736,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.MediaAssetNodeDelete.Input.Headers =
+                headers: Operations.MediaAssetNodeRemove.Input.Headers =
                     .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
@@ -2060,7 +2747,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -2087,15 +2774,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.MediaAssetNodeDelete.Output.Unauthorized
+                Operations.MediaAssetNodeRemove.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -2106,7 +2793,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.MediaAssetNodeDelete.Output.Unauthorized
+                Operations.MediaAssetNodeRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -2126,13 +2813,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.MediaAssetNodeDelete.Output.Forbidden)
+            case forbidden(Operations.MediaAssetNodeRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -2143,7 +2830,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.MediaAssetNodeDelete.Output.Forbidden
+                Operations.MediaAssetNodeRemove.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -2191,16 +2878,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/assets/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/search/post(mediaAssetSearch)`.
-    public enum MediaAssetSearch {
-        public static let id: Swift.String = "mediaAssetSearch"
+    /// - Remark: HTTP `POST /api/v1/admin/media/assets/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/list/post(mediaAssetList)`.
+    public enum MediaAssetList {
+        public static let id: Swift.String = "mediaAssetList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/search/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/list/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaAssetSearch.AcceptableContentType
+                        Operations.MediaAssetList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -2208,29 +2895,29 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaAssetSearch.AcceptableContentType
+                        Operations.MediaAssetList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.MediaAssetSearch.Input.Headers
-            /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/search/POST/requestBody`.
+            public var headers: Operations.MediaAssetList.Input.Headers
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/list/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/search/POST/requestBody/content/application\/json`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/list/POST/requestBody/content/application\/json`.
                 case json(
                     Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema
                 )
             }
-            public var body: Operations.MediaAssetSearch.Input.Body
+            public var body: Operations.MediaAssetList.Input.Body
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.MediaAssetSearch.Input.Headers = .init(),
-                body: Operations.MediaAssetSearch.Input.Body
+                headers: Operations.MediaAssetList.Input.Headers = .init(),
+                body: Operations.MediaAssetList.Input.Body
             ) {
                 self.headers = headers
                 self.body = body
@@ -2239,7 +2926,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Search response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/search/post(mediaAssetSearch)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/list/post(mediaAssetList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(
@@ -2272,13 +2959,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/search/post(mediaAssetSearch)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/list/post(mediaAssetList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.MediaAssetSearch.Output.Unauthorized)
+            case unauthorized(Operations.MediaAssetList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/search/post(mediaAssetSearch)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/list/post(mediaAssetList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -2289,7 +2976,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.MediaAssetSearch.Output.Unauthorized
+                Operations.MediaAssetList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -2309,13 +2996,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/search/post(mediaAssetSearch)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/list/post(mediaAssetList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.MediaAssetSearch.Output.Forbidden)
+            case forbidden(Operations.MediaAssetList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/search/post(mediaAssetSearch)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/list/post(mediaAssetList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -2325,7 +3012,177 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.MediaAssetSearch.Output.Forbidden {
+            public var forbidden: Operations.MediaAssetList.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/media/assets/resolve`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)`.
+    public enum MediaAssetResolve {
+        public static let id: Swift.String = "mediaAssetResolve"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/resolve/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.MediaAssetResolve.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.MediaAssetResolve.AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.MediaAssetResolve.Input.Headers
+            public var body:
+                Components.RequestBodies.MediaAssetResolveRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.MediaAssetResolve.Input.Headers = .init(),
+                body: Components.RequestBodies.MediaAssetResolveRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// MediaAsset resolve response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.MediaAssetResolveResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.MediaAssetResolveResponse {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.MediaAssetResolve.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.MediaAssetResolve.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.MediaAssetResolve.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.MediaAssetResolve.Output.Forbidden
+            {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -3213,16 +4070,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/folders/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/search/post(mediaFolderSearch)`.
-    public enum MediaFolderSearch {
-        public static let id: Swift.String = "mediaFolderSearch"
+    /// - Remark: HTTP `POST /api/v1/admin/media/folders/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/list/post(mediaFolderList)`.
+    public enum MediaFolderList {
+        public static let id: Swift.String = "mediaFolderList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/media/folders/search/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/folders/list/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaFolderSearch.AcceptableContentType
+                        Operations.MediaFolderList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -3230,29 +4087,29 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaFolderSearch.AcceptableContentType
+                        Operations.MediaFolderList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.MediaFolderSearch.Input.Headers
-            /// - Remark: Generated from `#/paths/api/v1/admin/media/folders/search/POST/requestBody`.
+            public var headers: Operations.MediaFolderList.Input.Headers
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/folders/list/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/media/folders/search/POST/requestBody/content/application\/json`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/folders/list/POST/requestBody/content/application\/json`.
                 case json(
                     Components.Schemas.MediaFolderListItemSearchQuerySchema
                 )
             }
-            public var body: Operations.MediaFolderSearch.Input.Body
+            public var body: Operations.MediaFolderList.Input.Body
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.MediaFolderSearch.Input.Headers = .init(),
-                body: Operations.MediaFolderSearch.Input.Body
+                headers: Operations.MediaFolderList.Input.Headers = .init(),
+                body: Operations.MediaFolderList.Input.Body
             ) {
                 self.headers = headers
                 self.body = body
@@ -3261,7 +4118,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Search response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/search/post(mediaFolderSearch)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/list/post(mediaFolderList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(
@@ -3294,13 +4151,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/search/post(mediaFolderSearch)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/list/post(mediaFolderList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.MediaFolderSearch.Output.Unauthorized)
+            case unauthorized(Operations.MediaFolderList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/search/post(mediaFolderSearch)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/list/post(mediaFolderList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3311,7 +4168,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.MediaFolderSearch.Output.Unauthorized
+                Operations.MediaFolderList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3331,13 +4188,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/search/post(mediaFolderSearch)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/list/post(mediaFolderList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.MediaFolderSearch.Output.Forbidden)
+            case forbidden(Operations.MediaFolderList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/search/post(mediaFolderSearch)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/list/post(mediaFolderList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3347,8 +4204,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.MediaFolderSearch.Output.Forbidden
-            {
+            public var forbidden: Operations.MediaFolderList.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -3841,16 +4697,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/processors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/post(mediaProcessorCreate)`.
-    public enum MediaProcessorCreate {
-        public static let id: Swift.String = "mediaProcessorCreate"
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/post(mediaVariantCreate)`.
+    public enum MediaVariantCreate {
+        public static let id: Swift.String = "mediaVariantCreate"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/media/processors/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaProcessorCreate.AcceptableContentType
+                        Operations.MediaVariantCreate.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -3858,42 +4714,40 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaProcessorCreate.AcceptableContentType
+                        Operations.MediaVariantCreate.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.MediaProcessorCreate.Input.Headers
+            public var headers: Operations.MediaVariantCreate.Input.Headers
             public var body:
-                Components.RequestBodies.MediaProcessorCreateRequestBody
+                Components.RequestBodies.MediaVariantCreateRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.MediaProcessorCreate.Input.Headers =
-                    .init(),
-                body: Components.RequestBodies.MediaProcessorCreateRequestBody
+                headers: Operations.MediaVariantCreate.Input.Headers = .init(),
+                body: Components.RequestBodies.MediaVariantCreateRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// MediaProcessor response
+            /// Media variant response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/post(mediaProcessorCreate)/responses/201`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/post(mediaVariantCreate)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
-            case created(Components.Responses.MediaProcessorDetailResponse)
+            case created(Components.Responses.MediaVariantDetailResponse)
             /// The associated value of the enum case if `self` is `.created`.
             ///
             /// - Throws: An error if `self` is not `.created`.
             /// - SeeAlso: `.created`.
-            public var created:
-                Components.Responses.MediaProcessorDetailResponse
+            public var created: Components.Responses.MediaVariantDetailResponse
             {
                 get throws {
                     switch self {
@@ -3913,15 +4767,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/post(mediaProcessorCreate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/post(mediaVariantCreate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.MediaProcessorCreate.Output.Unauthorized
-            )
+            case unauthorized(Operations.MediaVariantCreate.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/post(mediaProcessorCreate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/post(mediaVariantCreate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3932,7 +4784,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.MediaProcessorCreate.Output.Unauthorized
+                Operations.MediaVariantCreate.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -3952,13 +4804,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/post(mediaProcessorCreate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/post(mediaVariantCreate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.MediaProcessorCreate.Output.Forbidden)
+            case forbidden(Operations.MediaVariantCreate.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/post(mediaProcessorCreate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/post(mediaVariantCreate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3968,8 +4820,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.MediaProcessorCreate.Output.Forbidden
+            public var forbidden: Operations.MediaVariantCreate.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -4017,16 +4868,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/media/processors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)`.
-    public enum MediaProcessorDelete {
-        public static let id: Swift.String = "mediaProcessorDelete"
+    /// - Remark: HTTP `DELETE /api/v1/admin/media/variants`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/delete(mediaVariantRemove)`.
+    public enum MediaVariantRemove {
+        public static let id: Swift.String = "mediaVariantRemove"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/media/processors/DELETE/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaProcessorDelete.AcceptableContentType
+                        Operations.MediaVariantRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -4034,13 +4885,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaProcessorDelete.AcceptableContentType
+                        Operations.MediaVariantRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.MediaProcessorDelete.Input.Headers
+            public var headers: Operations.MediaVariantRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -4048,8 +4899,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.MediaProcessorDelete.Input.Headers =
-                    .init(),
+                headers: Operations.MediaVariantRemove.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
@@ -4059,7 +4909,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/delete(mediaVariantRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -4086,15 +4936,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/delete(mediaVariantRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.MediaProcessorDelete.Output.Unauthorized
-            )
+            case unauthorized(Operations.MediaVariantRemove.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/delete(mediaVariantRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -4105,7 +4953,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.MediaProcessorDelete.Output.Unauthorized
+                Operations.MediaVariantRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -4125,13 +4973,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/delete(mediaVariantRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.MediaProcessorDelete.Output.Forbidden)
+            case forbidden(Operations.MediaVariantRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/delete(mediaVariantRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -4141,8 +4989,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.MediaProcessorDelete.Output.Forbidden
+            public var forbidden: Operations.MediaVariantRemove.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -4190,16 +5037,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/processors/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/search/post(mediaProcessorSearch)`.
-    public enum MediaProcessorSearch {
-        public static let id: Swift.String = "mediaProcessorSearch"
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/list/post(mediaVariantList)`.
+    public enum MediaVariantList {
+        public static let id: Swift.String = "mediaVariantList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/media/processors/search/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/list/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaProcessorSearch.AcceptableContentType
+                        Operations.MediaVariantList.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -4207,30 +5054,29 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaProcessorSearch.AcceptableContentType
+                        Operations.MediaVariantList.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.MediaProcessorSearch.Input.Headers
-            /// - Remark: Generated from `#/paths/api/v1/admin/media/processors/search/POST/requestBody`.
+            public var headers: Operations.MediaVariantList.Input.Headers
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/list/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/media/processors/search/POST/requestBody/content/application\/json`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/list/POST/requestBody/content/application\/json`.
                 case json(
-                    Components.Schemas.MediaProcessorListItemSearchQuerySchema
+                    Components.Schemas.MediaVariantListItemSearchQuerySchema
                 )
             }
-            public var body: Operations.MediaProcessorSearch.Input.Body
+            public var body: Operations.MediaVariantList.Input.Body
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.MediaProcessorSearch.Input.Headers =
-                    .init(),
-                body: Operations.MediaProcessorSearch.Input.Body
+                headers: Operations.MediaVariantList.Input.Headers = .init(),
+                body: Operations.MediaVariantList.Input.Body
             ) {
                 self.headers = headers
                 self.body = body
@@ -4239,12 +5085,12 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Search response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/search/post(mediaProcessorSearch)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/list/post(mediaVariantList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(
                 Components.Responses
-                    .MediaProcessorListItemSearchSchemaSearchResponse
+                    .MediaVariantListItemSearchSchemaSearchResponse
             )
             /// The associated value of the enum case if `self` is `.ok`.
             ///
@@ -4252,7 +5098,7 @@ public enum Operations {
             /// - SeeAlso: `.ok`.
             public var ok:
                 Components.Responses
-                    .MediaProcessorListItemSearchSchemaSearchResponse
+                    .MediaVariantListItemSearchSchemaSearchResponse
             {
                 get throws {
                     switch self {
@@ -4272,15 +5118,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/search/post(mediaProcessorSearch)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/list/post(mediaVariantList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.MediaProcessorSearch.Output.Unauthorized
-            )
+            case unauthorized(Operations.MediaVariantList.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/search/post(mediaProcessorSearch)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/list/post(mediaVariantList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -4291,7 +5135,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.MediaProcessorSearch.Output.Unauthorized
+                Operations.MediaVariantList.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -4311,13 +5155,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/search/post(mediaProcessorSearch)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/list/post(mediaVariantList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.MediaProcessorSearch.Output.Forbidden)
+            case forbidden(Operations.MediaVariantList.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/search/post(mediaProcessorSearch)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/list/post(mediaVariantList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -4327,9 +5171,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden:
-                Operations.MediaProcessorSearch.Output.Forbidden
-            {
+            public var forbidden: Operations.MediaVariantList.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -4376,35 +5218,35 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/media/processors/{mediaProcessorId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/get(mediaProcessorGet)`.
-    public enum MediaProcessorGet {
-        public static let id: Swift.String = "mediaProcessorGet"
+    /// - Remark: HTTP `GET /api/v1/admin/media/variants/{mediaVariantId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/get(mediaVariantGet)`.
+    public enum MediaVariantGet {
+        public static let id: Swift.String = "mediaVariantGet"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/media/processors/{mediaProcessorId}/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// MediaProcessor id
+                /// Media variant id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/media/processors/{mediaProcessorId}/GET/path/mediaProcessorId`.
-                public var mediaProcessorId:
-                    Components.Parameters.MediaProcessorIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/GET/path/mediaVariantId`.
+                public var mediaVariantId:
+                    Components.Parameters.MediaVariantIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - mediaProcessorId: MediaProcessor id
+                ///   - mediaVariantId: Media variant id
                 public init(
-                    mediaProcessorId: Components.Parameters
-                        .MediaProcessorIdParameter
+                    mediaVariantId: Components.Parameters
+                        .MediaVariantIdParameter
                 ) {
-                    self.mediaProcessorId = mediaProcessorId
+                    self.mediaVariantId = mediaVariantId
                 }
             }
-            public var path: Operations.MediaProcessorGet.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/media/processors/{mediaProcessorId}/GET/header`.
+            public var path: Operations.MediaVariantGet.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaProcessorGet.AcceptableContentType
+                        Operations.MediaVariantGet.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -4412,38 +5254,38 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaProcessorGet.AcceptableContentType
+                        Operations.MediaVariantGet.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.MediaProcessorGet.Input.Headers
+            public var headers: Operations.MediaVariantGet.Input.Headers
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - path:
             ///   - headers:
             public init(
-                path: Operations.MediaProcessorGet.Input.Path,
-                headers: Operations.MediaProcessorGet.Input.Headers = .init()
+                path: Operations.MediaVariantGet.Input.Path,
+                headers: Operations.MediaVariantGet.Input.Headers = .init()
             ) {
                 self.path = path
                 self.headers = headers
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// MediaProcessor response
+            /// Media variant response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/get(mediaProcessorGet)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/get(mediaVariantGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.MediaProcessorDetailResponse)
+            case ok(Components.Responses.MediaVariantDetailResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.MediaProcessorDetailResponse {
+            public var ok: Components.Responses.MediaVariantDetailResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -4460,15 +5302,15 @@ public enum Operations {
                 /// Creates a new `NotFound`.
                 public init() {}
             }
-            /// MediaProcessor not found
+            /// Media variant not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/get(mediaProcessorGet)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/get(mediaVariantGet)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.MediaProcessorGet.Output.NotFound)
-            /// MediaProcessor not found
+            case notFound(Operations.MediaVariantGet.Output.NotFound)
+            /// Media variant not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/get(mediaProcessorGet)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/get(mediaVariantGet)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             public static var notFound: Self {
@@ -4478,7 +5320,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.MediaProcessorGet.Output.NotFound {
+            public var notFound: Operations.MediaVariantGet.Output.NotFound {
                 get throws {
                     switch self {
                     case .notFound(let response):
@@ -4497,13 +5339,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/get(mediaProcessorGet)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/get(mediaVariantGet)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.MediaProcessorGet.Output.Unauthorized)
+            case unauthorized(Operations.MediaVariantGet.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/get(mediaProcessorGet)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/get(mediaVariantGet)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -4514,7 +5356,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.MediaProcessorGet.Output.Unauthorized
+                Operations.MediaVariantGet.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -4534,13 +5376,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/get(mediaProcessorGet)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/get(mediaVariantGet)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.MediaProcessorGet.Output.Forbidden)
+            case forbidden(Operations.MediaVariantGet.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/get(mediaProcessorGet)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/get(mediaVariantGet)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -4550,8 +5392,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.MediaProcessorGet.Output.Forbidden
-            {
+            public var forbidden: Operations.MediaVariantGet.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -4598,35 +5439,35 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/media/processors/{mediaProcessorId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/patch(mediaProcessorUpdate)`.
-    public enum MediaProcessorUpdate {
-        public static let id: Swift.String = "mediaProcessorUpdate"
+    /// - Remark: HTTP `PATCH /api/v1/admin/media/variants/{mediaVariantId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/patch(mediaVariantUpdate)`.
+    public enum MediaVariantUpdate {
+        public static let id: Swift.String = "mediaVariantUpdate"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/media/processors/{mediaProcessorId}/PATCH/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/PATCH/path`.
             public struct Path: Sendable, Hashable {
-                /// MediaProcessor id
+                /// Media variant id
                 ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/media/processors/{mediaProcessorId}/PATCH/path/mediaProcessorId`.
-                public var mediaProcessorId:
-                    Components.Parameters.MediaProcessorIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/PATCH/path/mediaVariantId`.
+                public var mediaVariantId:
+                    Components.Parameters.MediaVariantIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - mediaProcessorId: MediaProcessor id
+                ///   - mediaVariantId: Media variant id
                 public init(
-                    mediaProcessorId: Components.Parameters
-                        .MediaProcessorIdParameter
+                    mediaVariantId: Components.Parameters
+                        .MediaVariantIdParameter
                 ) {
-                    self.mediaProcessorId = mediaProcessorId
+                    self.mediaVariantId = mediaVariantId
                 }
             }
-            public var path: Operations.MediaProcessorUpdate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/media/processors/{mediaProcessorId}/PATCH/header`.
+            public var path: Operations.MediaVariantUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaProcessorUpdate.AcceptableContentType
+                        Operations.MediaVariantUpdate.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -4634,15 +5475,15 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaProcessorUpdate.AcceptableContentType
+                        Operations.MediaVariantUpdate.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.MediaProcessorUpdate.Input.Headers
+            public var headers: Operations.MediaVariantUpdate.Input.Headers
             public var body:
-                Components.RequestBodies.MediaProcessorCreateRequestBody
+                Components.RequestBodies.MediaVariantCreateRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
@@ -4650,10 +5491,9 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.MediaProcessorUpdate.Input.Path,
-                headers: Operations.MediaProcessorUpdate.Input.Headers =
-                    .init(),
-                body: Components.RequestBodies.MediaProcessorCreateRequestBody
+                path: Operations.MediaVariantUpdate.Input.Path,
+                headers: Operations.MediaVariantUpdate.Input.Headers = .init(),
+                body: Components.RequestBodies.MediaVariantCreateRequestBody
             ) {
                 self.path = path
                 self.headers = headers
@@ -4661,17 +5501,17 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// MediaProcessor response
+            /// Media variant response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/patch(mediaProcessorUpdate)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/patch(mediaVariantUpdate)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.MediaProcessorDetailResponse)
+            case ok(Components.Responses.MediaVariantDetailResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.MediaProcessorDetailResponse {
+            public var ok: Components.Responses.MediaVariantDetailResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -4688,15 +5528,15 @@ public enum Operations {
                 /// Creates a new `NotFound`.
                 public init() {}
             }
-            /// MediaProcessor not found
+            /// Media variant not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/patch(mediaProcessorUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/patch(mediaVariantUpdate)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.MediaProcessorUpdate.Output.NotFound)
-            /// MediaProcessor not found
+            case notFound(Operations.MediaVariantUpdate.Output.NotFound)
+            /// Media variant not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/patch(mediaProcessorUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/patch(mediaVariantUpdate)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             public static var notFound: Self {
@@ -4706,8 +5546,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.MediaProcessorUpdate.Output.NotFound
-            {
+            public var notFound: Operations.MediaVariantUpdate.Output.NotFound {
                 get throws {
                     switch self {
                     case .notFound(let response):
@@ -4726,15 +5565,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/patch(mediaProcessorUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/patch(mediaVariantUpdate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(
-                Operations.MediaProcessorUpdate.Output.Unauthorized
-            )
+            case unauthorized(Operations.MediaVariantUpdate.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/patch(mediaProcessorUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/patch(mediaVariantUpdate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -4745,7 +5582,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.MediaProcessorUpdate.Output.Unauthorized
+                Operations.MediaVariantUpdate.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -4765,13 +5602,257 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/patch(mediaProcessorUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/patch(mediaVariantUpdate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.MediaProcessorUpdate.Output.Forbidden)
+            case forbidden(Operations.MediaVariantUpdate.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/patch(mediaProcessorUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/patch(mediaVariantUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.MediaVariantUpdate.Output.Forbidden
+            {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants/{mediaVariantId}/processors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/post(mediaVariantProcessorCreate)`.
+    public enum MediaVariantProcessorCreate {
+        public static let id: Swift.String = "mediaVariantProcessorCreate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/POST/path`.
+            public struct Path: Sendable, Hashable {
+                /// Media variant id
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/POST/path/mediaVariantId`.
+                public var mediaVariantId:
+                    Components.Parameters.MediaVariantIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - mediaVariantId: Media variant id
+                public init(
+                    mediaVariantId: Components.Parameters
+                        .MediaVariantIdParameter
+                ) {
+                    self.mediaVariantId = mediaVariantId
+                }
+            }
+            public var path: Operations.MediaVariantProcessorCreate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.MediaVariantProcessorCreate
+                            .AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.MediaVariantProcessorCreate
+                            .AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers:
+                Operations.MediaVariantProcessorCreate.Input.Headers
+            public var body:
+                Components.RequestBodies.MediaVariantProcessorCreateRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.MediaVariantProcessorCreate.Input.Path,
+                headers: Operations.MediaVariantProcessorCreate.Input.Headers =
+                    .init(),
+                body: Components.RequestBodies
+                    .MediaVariantProcessorCreateRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Media variant processor response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/post(mediaVariantProcessorCreate)/responses/201`.
+            ///
+            /// HTTP response code: `201 created`.
+            case created(
+                Components.Responses.MediaVariantProcessorDetailResponse
+            )
+            /// The associated value of the enum case if `self` is `.created`.
+            ///
+            /// - Throws: An error if `self` is not `.created`.
+            /// - SeeAlso: `.created`.
+            public var created:
+                Components.Responses.MediaVariantProcessorDetailResponse
+            {
+                get throws {
+                    switch self {
+                    case .created(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "created",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Media variant not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/post(mediaVariantProcessorCreate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(
+                Operations.MediaVariantProcessorCreate.Output.NotFound
+            )
+            /// Media variant not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/post(mediaVariantProcessorCreate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound:
+                Operations.MediaVariantProcessorCreate.Output.NotFound
+            {
+                get throws {
+                    switch self {
+                    case .notFound(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/post(mediaVariantProcessorCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(
+                Operations.MediaVariantProcessorCreate.Output.Unauthorized
+            )
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/post(mediaVariantProcessorCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.MediaVariantProcessorCreate.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/post(mediaVariantProcessorCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(
+                Operations.MediaVariantProcessorCreate.Output.Forbidden
+            )
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/post(mediaVariantProcessorCreate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -4782,7 +5863,952 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.MediaProcessorUpdate.Output.Forbidden
+                Operations.MediaVariantProcessorCreate.Output.Forbidden
+            {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/media/variants/{mediaVariantId}/processors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/delete(mediaVariantProcessorRemove)`.
+    public enum MediaVariantProcessorRemove {
+        public static let id: Swift.String = "mediaVariantProcessorRemove"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/DELETE/path`.
+            public struct Path: Sendable, Hashable {
+                /// Media variant id
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/DELETE/path/mediaVariantId`.
+                public var mediaVariantId:
+                    Components.Parameters.MediaVariantIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - mediaVariantId: Media variant id
+                public init(
+                    mediaVariantId: Components.Parameters
+                        .MediaVariantIdParameter
+                ) {
+                    self.mediaVariantId = mediaVariantId
+                }
+            }
+            public var path: Operations.MediaVariantProcessorRemove.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/DELETE/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.MediaVariantProcessorRemove
+                            .AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.MediaVariantProcessorRemove
+                            .AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers:
+                Operations.MediaVariantProcessorRemove.Input.Headers
+            public var body: Components.RequestBodies.DeleteRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.MediaVariantProcessorRemove.Input.Path,
+                headers: Operations.MediaVariantProcessorRemove.Input.Headers =
+                    .init(),
+                body: Components.RequestBodies.DeleteRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Delete response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/delete(mediaVariantProcessorRemove)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.DeleteResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok: Components.Responses.DeleteResponse {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/delete(mediaVariantProcessorRemove)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(
+                Operations.MediaVariantProcessorRemove.Output.Unauthorized
+            )
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/delete(mediaVariantProcessorRemove)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.MediaVariantProcessorRemove.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/delete(mediaVariantProcessorRemove)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(
+                Operations.MediaVariantProcessorRemove.Output.Forbidden
+            )
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/delete(mediaVariantProcessorRemove)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden:
+                Operations.MediaVariantProcessorRemove.Output.Forbidden
+            {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants/{mediaVariantId}/processors/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/list/post(mediaVariantProcessorList)`.
+    public enum MediaVariantProcessorList {
+        public static let id: Swift.String = "mediaVariantProcessorList"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/list/POST/path`.
+            public struct Path: Sendable, Hashable {
+                /// Media variant id
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/list/POST/path/mediaVariantId`.
+                public var mediaVariantId:
+                    Components.Parameters.MediaVariantIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - mediaVariantId: Media variant id
+                public init(
+                    mediaVariantId: Components.Parameters
+                        .MediaVariantIdParameter
+                ) {
+                    self.mediaVariantId = mediaVariantId
+                }
+            }
+            public var path: Operations.MediaVariantProcessorList.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/list/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.MediaVariantProcessorList
+                            .AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.MediaVariantProcessorList
+                            .AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers:
+                Operations.MediaVariantProcessorList.Input.Headers
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/list/POST/requestBody`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/list/POST/requestBody/content/application\/json`.
+                case json(
+                    Components.Schemas
+                        .MediaVariantProcessorListItemSearchQuerySchema
+                )
+            }
+            public var body: Operations.MediaVariantProcessorList.Input.Body
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.MediaVariantProcessorList.Input.Path,
+                headers: Operations.MediaVariantProcessorList.Input.Headers =
+                    .init(),
+                body: Operations.MediaVariantProcessorList.Input.Body
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Search response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/list/post(mediaVariantProcessorList)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(
+                Components.Responses
+                    .MediaVariantProcessorListItemSearchSchemaSearchResponse
+            )
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok:
+                Components.Responses
+                    .MediaVariantProcessorListItemSearchSchemaSearchResponse
+            {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Media variant not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/list/post(mediaVariantProcessorList)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.MediaVariantProcessorList.Output.NotFound)
+            /// Media variant not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/list/post(mediaVariantProcessorList)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound:
+                Operations.MediaVariantProcessorList.Output.NotFound
+            {
+                get throws {
+                    switch self {
+                    case .notFound(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/list/post(mediaVariantProcessorList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(
+                Operations.MediaVariantProcessorList.Output.Unauthorized
+            )
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/list/post(mediaVariantProcessorList)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.MediaVariantProcessorList.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/list/post(mediaVariantProcessorList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(
+                Operations.MediaVariantProcessorList.Output.Forbidden
+            )
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/list/post(mediaVariantProcessorList)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden:
+                Operations.MediaVariantProcessorList.Output.Forbidden
+            {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/get(mediaVariantProcessorGet)`.
+    public enum MediaVariantProcessorGet {
+        public static let id: Swift.String = "mediaVariantProcessorGet"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/GET/path`.
+            public struct Path: Sendable, Hashable {
+                /// Media variant id
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/GET/path/mediaVariantId`.
+                public var mediaVariantId:
+                    Components.Parameters.MediaVariantIdParameter
+                /// Media variant processor id
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/GET/path/mediaVariantProcessorId`.
+                public var mediaVariantProcessorId:
+                    Components.Parameters.MediaVariantProcessorIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - mediaVariantId: Media variant id
+                ///   - mediaVariantProcessorId: Media variant processor id
+                public init(
+                    mediaVariantId: Components.Parameters
+                        .MediaVariantIdParameter,
+                    mediaVariantProcessorId: Components.Parameters
+                        .MediaVariantProcessorIdParameter
+                ) {
+                    self.mediaVariantId = mediaVariantId
+                    self.mediaVariantProcessorId = mediaVariantProcessorId
+                }
+            }
+            public var path: Operations.MediaVariantProcessorGet.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/GET/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.MediaVariantProcessorGet
+                            .AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.MediaVariantProcessorGet
+                            .AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers:
+                Operations.MediaVariantProcessorGet.Input.Headers
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            public init(
+                path: Operations.MediaVariantProcessorGet.Input.Path,
+                headers: Operations.MediaVariantProcessorGet.Input.Headers =
+                    .init()
+            ) {
+                self.path = path
+                self.headers = headers
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Media variant processor response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/get(mediaVariantProcessorGet)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.MediaVariantProcessorDetailResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok:
+                Components.Responses.MediaVariantProcessorDetailResponse
+            {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Media variant processor not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/get(mediaVariantProcessorGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(Operations.MediaVariantProcessorGet.Output.NotFound)
+            /// Media variant processor not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/get(mediaVariantProcessorGet)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound:
+                Operations.MediaVariantProcessorGet.Output.NotFound
+            {
+                get throws {
+                    switch self {
+                    case .notFound(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/get(mediaVariantProcessorGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(
+                Operations.MediaVariantProcessorGet.Output.Unauthorized
+            )
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/get(mediaVariantProcessorGet)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.MediaVariantProcessorGet.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/get(mediaVariantProcessorGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.MediaVariantProcessorGet.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/get(mediaVariantProcessorGet)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden:
+                Operations.MediaVariantProcessorGet.Output.Forbidden
+            {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/patch(mediaVariantProcessorUpdate)`.
+    public enum MediaVariantProcessorUpdate {
+        public static let id: Swift.String = "mediaVariantProcessorUpdate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/PATCH/path`.
+            public struct Path: Sendable, Hashable {
+                /// Media variant id
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/PATCH/path/mediaVariantId`.
+                public var mediaVariantId:
+                    Components.Parameters.MediaVariantIdParameter
+                /// Media variant processor id
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/PATCH/path/mediaVariantProcessorId`.
+                public var mediaVariantProcessorId:
+                    Components.Parameters.MediaVariantProcessorIdParameter
+                /// Creates a new `Path`.
+                ///
+                /// - Parameters:
+                ///   - mediaVariantId: Media variant id
+                ///   - mediaVariantProcessorId: Media variant processor id
+                public init(
+                    mediaVariantId: Components.Parameters
+                        .MediaVariantIdParameter,
+                    mediaVariantProcessorId: Components.Parameters
+                        .MediaVariantProcessorIdParameter
+                ) {
+                    self.mediaVariantId = mediaVariantId
+                    self.mediaVariantProcessorId = mediaVariantProcessorId
+                }
+            }
+            public var path: Operations.MediaVariantProcessorUpdate.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/PATCH/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.MediaVariantProcessorUpdate
+                            .AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.MediaVariantProcessorUpdate
+                            .AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers:
+                Operations.MediaVariantProcessorUpdate.Input.Headers
+            public var body:
+                Components.RequestBodies.MediaVariantProcessorCreateRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - path:
+            ///   - headers:
+            ///   - body:
+            public init(
+                path: Operations.MediaVariantProcessorUpdate.Input.Path,
+                headers: Operations.MediaVariantProcessorUpdate.Input.Headers =
+                    .init(),
+                body: Components.RequestBodies
+                    .MediaVariantProcessorCreateRequestBody
+            ) {
+                self.path = path
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Media variant processor response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/patch(mediaVariantProcessorUpdate)/responses/200`.
+            ///
+            /// HTTP response code: `200 ok`.
+            case ok(Components.Responses.MediaVariantProcessorDetailResponse)
+            /// The associated value of the enum case if `self` is `.ok`.
+            ///
+            /// - Throws: An error if `self` is not `.ok`.
+            /// - SeeAlso: `.ok`.
+            public var ok:
+                Components.Responses.MediaVariantProcessorDetailResponse
+            {
+                get throws {
+                    switch self {
+                    case .ok(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct NotFound: Sendable, Hashable {
+                /// Creates a new `NotFound`.
+                public init() {}
+            }
+            /// Media variant processor not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/patch(mediaVariantProcessorUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            case notFound(
+                Operations.MediaVariantProcessorUpdate.Output.NotFound
+            )
+            /// Media variant processor not found
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/patch(mediaVariantProcessorUpdate)/responses/404`.
+            ///
+            /// HTTP response code: `404 notFound`.
+            public static var notFound: Self {
+                .notFound(.init())
+            }
+            /// The associated value of the enum case if `self` is `.notFound`.
+            ///
+            /// - Throws: An error if `self` is not `.notFound`.
+            /// - SeeAlso: `.notFound`.
+            public var notFound:
+                Operations.MediaVariantProcessorUpdate.Output.NotFound
+            {
+                get throws {
+                    switch self {
+                    case .notFound(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "notFound",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/patch(mediaVariantProcessorUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(
+                Operations.MediaVariantProcessorUpdate.Output.Unauthorized
+            )
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/patch(mediaVariantProcessorUpdate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.MediaVariantProcessorUpdate.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/patch(mediaVariantProcessorUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(
+                Operations.MediaVariantProcessorUpdate.Output.Forbidden
+            )
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/patch(mediaVariantProcessorUpdate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden:
+                Operations.MediaVariantProcessorUpdate.Output.Forbidden
             {
                 get throws {
                     switch self {

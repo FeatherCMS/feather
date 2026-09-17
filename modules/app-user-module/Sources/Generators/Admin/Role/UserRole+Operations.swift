@@ -64,7 +64,7 @@ struct UserRoleSearchOperation: UserRoleOperation {
     }
 }
 
-struct UserRoleDeleteOperation: UserRoleOperation, DeleteOperation {
+struct UserRoleRemoveOperation: UserRoleOperation, DeleteOperation {
 }
 
 struct UserRoleGetOperation: UserRoleIDOperation {

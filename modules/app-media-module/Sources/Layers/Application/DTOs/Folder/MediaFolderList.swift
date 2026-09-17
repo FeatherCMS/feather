@@ -1,9 +1,3 @@
-//
-//  MediaFolderList.swift
-//  app-media-module
-//
-//  Created by Binary Birds on 2026. 06. 18.
-
 import FeatherApplication
 import FeatherContracts
 
@@ -14,17 +8,18 @@ public struct MediaFolderList: DTO {
         public let id: String
         public let parentId: String?
         public let name: String
-        public let path: String
+        public let slug: String
+        public let slugPath: String
         public let assetCount: Int
         public let totalSizeBytes: Int64
         public let createdAt: Date
         public let updatedAt: Date
-
         public init(
             id: String,
             parentId: String?,
             name: String,
-            path: String,
+            slug: String,
+            slugPath: String,
             assetCount: Int,
             totalSizeBytes: Int64,
             createdAt: Date,
@@ -33,25 +28,18 @@ public struct MediaFolderList: DTO {
             self.id = id
             self.parentId = parentId
             self.name = name
-            self.path = path
+            self.slug = slug
+            self.slugPath = slugPath
             self.assetCount = assetCount
             self.totalSizeBytes = totalSizeBytes
             self.createdAt = createdAt
             self.updatedAt = updatedAt
         }
     }
-
     public struct Query: Sendable {
         public let parentId: String?
-
-        public init(parentId: String?) {
-            self.parentId = parentId
-        }
+        public init(parentId: String?) { self.parentId = parentId }
     }
-
     public let items: [Item]
-
-    public init(items: [Item]) {
-        self.items = items
-    }
+    public init(items: [Item]) { self.items = items }
 }

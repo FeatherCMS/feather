@@ -24,6 +24,17 @@ public struct MetadataList: DTO {
         public let createdAt: Date
         public let updatedAt: Date
 
+        public func availability(
+            at date: Date
+        ) -> Metadata.Availability {
+            .init(
+                status: status,
+                publicationDate: publicationDate,
+                expirationDate: expirationDate,
+                at: date
+            )
+        }
+
         package init(
             id: String,
             referenceType: String,

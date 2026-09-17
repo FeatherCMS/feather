@@ -21,14 +21,14 @@ struct AdminRemoveContactFieldOpenAPIRepository {
 
     func remove(id: String) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.contactFieldDelete(
+            _ = try await client.contactFieldRemove(
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }
     }
     func remove(ids: [String]) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.contactFieldDelete(
+            _ = try await client.contactFieldRemove(
                 body: .json(.init(ids: ids, results: false, summary: true))
             )
         }

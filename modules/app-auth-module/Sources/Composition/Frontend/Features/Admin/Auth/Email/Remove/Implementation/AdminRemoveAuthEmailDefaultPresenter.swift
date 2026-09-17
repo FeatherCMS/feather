@@ -24,20 +24,9 @@ struct AdminRemoveAuthEmailDefaultPresenter:
     let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Emails", link: "/admin/auth/emails/"),
-        ]
-    }
-
     func renderPage(
-        id: String,
-        identityId: String,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext,
+        identityId: String
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -48,9 +37,9 @@ struct AdminRemoveAuthEmailDefaultPresenter:
             title: "Manage user emails",
             content: AuthEmailConfirmation(
                 state: .init(
-                    id: id,
+                    item: item,
                     identityId: identityId,
-                    breadcrumb: breadcrumb(id: id),
+                    breadcrumb: AuthEmailRoutes.breadcrumb,
                     nonceToken: nonceToken
                 )
             )
@@ -74,9 +63,8 @@ struct AdminRemoveAuthEmailDefaultPresenter:
     }
 
     func renderError(
-        id: String,
-        error: OpenAPIRepositoryError,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext,
+        error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
         try await renderEngine.renderNewAdminPage(
             request: request,
@@ -86,7 +74,7 @@ struct AdminRemoveAuthEmailDefaultPresenter:
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: AuthEmailRoutes.breadcrumb
                 )
             )
         )

@@ -2,7 +2,7 @@ import FeatherOpenAPI
 
 struct UserRolePathItems: PathItemRepresentable {
     var post: OperationRepresentable? { UserRoleCreateOperation() }
-    var delete: OperationRepresentable? { UserRoleDeleteOperation() }
+    var delete: OperationRepresentable? { UserRoleRemoveOperation() }
 }
 
 struct UserRoleSearchPathItems: PathItemRepresentable {

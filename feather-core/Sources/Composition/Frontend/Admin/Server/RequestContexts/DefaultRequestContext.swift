@@ -16,11 +16,13 @@ public struct DefaultRequestContext: AuthRequestContext {
 
     public var sessionToken: String?
     public var account: AccountModel?
+    public var accountTopBarState: NewAdminTopBar.State
 
     public init(
         source: ApplicationRequestContextSource,
     ) {
         self.coreContext = .init(source: source)
+        self.accountTopBarState = .init()
     }
 
     public var requestDecoder: URLFormRequestDecoder {

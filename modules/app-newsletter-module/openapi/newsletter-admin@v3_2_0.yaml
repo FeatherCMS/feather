@@ -42,7 +42,7 @@ paths:
     delete:
       tags:
       - Newsletter
-      operationId: newsletterCampaignDelete
+      operationId: newsletterCampaignRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -127,7 +127,7 @@ paths:
     delete:
       tags:
       - Newsletter
-      operationId: newsletterIssueDelete
+      operationId: newsletterIssueRemove
       parameters:
       - $ref: '#/components/parameters/NewsletterCampaignIdParameter'
       requestBody:
@@ -274,7 +274,7 @@ paths:
     delete:
       tags:
       - Newsletter
-      operationId: newsletterSubscriberDelete
+      operationId: newsletterSubscriberRemove
       parameters:
       - $ref: '#/components/parameters/NewsletterCampaignIdParameter'
       requestBody:
@@ -379,60 +379,70 @@ components:
             - id1
           minItems: 0
           uniqueItems: false
+        results:
+          type: boolean
+          examples:
+          - true
         summary:
           type: boolean
           examples:
           - true
       required:
       - ids
+      - results
       - summary
-      minProperties: 2
+      minProperties: 3
     DeleteResponseSchema:
       type: object
       properties:
         results:
-          type: array
-          items:
-            type: object
-            properties:
-              id:
-                type: string
-                examples:
-                - id1
-              status:
-                type: string
-                enum:
-                - deleted
-                - not_found
-                - forbidden
-                examples:
-                - deleted
-            required:
-            - id
-            - status
-            minProperties: 2
-          minItems: 0
-          uniqueItems: false
+          $ref: '#/components/schemas/DeleteResultListSchema'
         summary:
-          type: object
-          properties:
-            requested:
-              type: integer
-              examples:
-              - 1
-            deleted:
-              type: integer
-              examples:
-              - 1
-            omitted:
-              type: integer
-              example: 1
-          required:
-          - requested
-          - deleted
-          - omitted
-          minProperties: 4
-      minProperties: 2
+          $ref: '#/components/schemas/DeleteSummarySchema'
+      minProperties: 0
+    DeleteResultListSchema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            examples:
+            - id1
+          status:
+            type: string
+            enum:
+            - deleted
+            - not_found
+            - forbidden
+            examples:
+            - deleted
+        required:
+        - id
+        - status
+        minProperties: 2
+      minItems: 0
+      uniqueItems: false
+    DeleteSummarySchema:
+      type: object
+      properties:
+        requested:
+          type: integer
+          examples:
+          - 1
+        deleted:
+          type: integer
+          examples:
+          - 1
+        omitted:
+          type: integer
+          examples:
+          - 1
+      required:
+      - requested
+      - deleted
+      - omitted
+      minProperties: 3
     NewsletterIdField:
       type: string
     NewsletterCampaignPatchSchema:
@@ -641,7 +651,7 @@ components:
           schema:
             $ref: '#/components/schemas/NewsletterCampaignSchema'
     DeleteResponse:
-      description: delete response
+      description: Delete response
       content:
         application/json:
           schema:

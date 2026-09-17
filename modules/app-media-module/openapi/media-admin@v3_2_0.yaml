@@ -7,8 +7,8 @@ tags:
   description: Manage media assets.
 - name: MediaFolders
   description: Manage media folders.
-- name: MediaProcessors
-  description: Manage media processors.
+- name: MediaVariants
+  description: Manage media variants and their processing rules.
 servers:
 - url: http://127.0.0.1:8080/
 security:
@@ -33,7 +33,7 @@ paths:
     delete:
       tags:
       - MediaAssets
-      operationId: mediaAssetNodeDelete
+      operationId: mediaAssetNodeRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -45,11 +45,11 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/media/assets/search:
+  /api/v1/admin/media/assets/list:
     post:
       tags:
       - MediaAssets
-      operationId: mediaAssetSearch
+      operationId: mediaAssetList
       requestBody:
         content:
           application/json:
@@ -59,6 +59,22 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/MediaAssetNodeSearchItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/media/assets/resolve:
+    post:
+      tags:
+      - MediaAssets
+      operationId: mediaAssetResolve
+      requestBody:
+        $ref: '#/components/requestBodies/MediaAssetResolveRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/MediaAssetResolveResponse'
         401:
           description: Unauthorized
         403:
@@ -136,11 +152,11 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/media/folders/search:
+  /api/v1/admin/media/folders/list:
     post:
       tags:
       - MediaFolders
-      operationId: mediaFolderSearch
+      operationId: mediaFolderList
       requestBody:
         content:
           application/json:
@@ -193,16 +209,16 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/media/processors:
+  /api/v1/admin/media/variants:
     post:
       tags:
-      - MediaProcessors
-      operationId: mediaProcessorCreate
+      - MediaVariants
+      operationId: mediaVariantCreate
       requestBody:
-        $ref: '#/components/requestBodies/MediaProcessorCreateRequestBody'
+        $ref: '#/components/requestBodies/MediaVariantCreateRequestBody'
       responses:
         201:
-          $ref: '#/components/responses/MediaProcessorDetailResponse'
+          $ref: '#/components/responses/MediaVariantDetailResponse'
         401:
           description: Unauthorized
         403:
@@ -211,8 +227,8 @@ paths:
       - bearerAuth: []
     delete:
       tags:
-      - MediaProcessors
-      operationId: mediaProcessorDelete
+      - MediaVariants
+      operationId: mediaVariantRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -224,38 +240,38 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/media/processors/search:
+  /api/v1/admin/media/variants/list:
     post:
       tags:
-      - MediaProcessors
-      operationId: mediaProcessorSearch
+      - MediaVariants
+      operationId: mediaVariantList
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MediaProcessorListItemSearchQuerySchema'
+              $ref: '#/components/schemas/MediaVariantListItemSearchQuerySchema'
         required: true
       responses:
         200:
-          $ref: '#/components/responses/MediaProcessorListItemSearchSchemaSearchResponse'
+          $ref: '#/components/responses/MediaVariantListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
         403:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/media/processors/{mediaProcessorId}:
+  /api/v1/admin/media/variants/{mediaVariantId}:
     get:
       tags:
-      - MediaProcessors
-      operationId: mediaProcessorGet
+      - MediaVariants
+      operationId: mediaVariantGet
       parameters:
-      - $ref: '#/components/parameters/MediaProcessorIdParameter'
+      - $ref: '#/components/parameters/MediaVariantIdParameter'
       responses:
         200:
-          $ref: '#/components/responses/MediaProcessorDetailResponse'
+          $ref: '#/components/responses/MediaVariantDetailResponse'
         404:
-          description: MediaProcessor not found
+          description: Media variant not found
         401:
           description: Unauthorized
         403:
@@ -264,17 +280,117 @@ paths:
       - bearerAuth: []
     patch:
       tags:
-      - MediaProcessors
-      operationId: mediaProcessorUpdate
+      - MediaVariants
+      operationId: mediaVariantUpdate
       parameters:
-      - $ref: '#/components/parameters/MediaProcessorIdParameter'
+      - $ref: '#/components/parameters/MediaVariantIdParameter'
       requestBody:
-        $ref: '#/components/requestBodies/MediaProcessorCreateRequestBody'
+        $ref: '#/components/requestBodies/MediaVariantCreateRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/MediaProcessorDetailResponse'
+          $ref: '#/components/responses/MediaVariantDetailResponse'
         404:
-          description: MediaProcessor not found
+          description: Media variant not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/media/variants/{mediaVariantId}/processors:
+    post:
+      tags:
+      - MediaVariants
+      operationId: mediaVariantProcessorCreate
+      parameters:
+      - $ref: '#/components/parameters/MediaVariantIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/MediaVariantProcessorCreateRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/MediaVariantProcessorDetailResponse'
+        404:
+          description: Media variant not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - MediaVariants
+      operationId: mediaVariantProcessorRemove
+      parameters:
+      - $ref: '#/components/parameters/MediaVariantIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/DeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/media/variants/{mediaVariantId}/processors/list:
+    post:
+      tags:
+      - MediaVariants
+      operationId: mediaVariantProcessorList
+      parameters:
+      - $ref: '#/components/parameters/MediaVariantIdParameter'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/MediaVariantProcessorListItemSearchSchemaSearchResponse'
+        404:
+          description: Media variant not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}:
+    get:
+      tags:
+      - MediaVariants
+      operationId: mediaVariantProcessorGet
+      parameters:
+      - $ref: '#/components/parameters/MediaVariantIdParameter'
+      - $ref: '#/components/parameters/MediaVariantProcessorIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/MediaVariantProcessorDetailResponse'
+        404:
+          description: Media variant processor not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - MediaVariants
+      operationId: mediaVariantProcessorUpdate
+      parameters:
+      - $ref: '#/components/parameters/MediaVariantIdParameter'
+      - $ref: '#/components/parameters/MediaVariantProcessorIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/MediaVariantProcessorCreateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/MediaVariantProcessorDetailResponse'
+        404:
+          description: Media variant processor not found
         401:
           description: Unauthorized
         403:
@@ -294,7 +410,7 @@ components:
           type: string
           examples:
           - cover-image.jpg
-        type:
+        extension:
           type: string
           examples:
           - jpeg
@@ -312,7 +428,7 @@ components:
           - AQID
       required:
       - fileName
-      - type
+      - extension
       - data
       minProperties: 3
     MediaAssetDetailSchema:
@@ -324,18 +440,30 @@ components:
           type:
           - string
           - 'null'
-        storageKey:
+        name:
           type: string
           examples:
-          - media/assets/asset-1
-        baseName:
+          - cover-image.jpg
+        slug:
           type: string
           examples:
-          - asset-1
-        type:
+          - cover-image
+        slugPath:
+          type: string
+          examples:
+          - posts/cover-image
+        url:
+          type: string
+          examples:
+          - /media/assets/media_asset_1/cover-image.jpg
+        extension:
           type: string
           examples:
           - jpeg
+        contentType:
+          type: string
+          examples:
+          - image/jpeg
         sizeBytes:
           type: integer
           format: int64
@@ -363,14 +491,17 @@ components:
           - 1.717171717e+9
       required:
       - id
-      - storageKey
-      - baseName
-      - type
+      - name
+      - slug
+      - slugPath
+      - url
+      - extension
+      - contentType
       - sizeBytes
       - status
       - createdAt
       - updatedAt
-      minProperties: 8
+      minProperties: 11
     MediaAssetIdField:
       type: string
       examples:
@@ -464,8 +595,9 @@ components:
                 type: string
                 enum:
                 - id
-                - storageKey
-                - type
+                - name
+                - slugPath
+                - extension
                 - sizeBytes
                 - status
                 - title
@@ -570,18 +702,30 @@ components:
           type:
           - string
           - 'null'
-        storageKey:
+        name:
           type: string
           examples:
-          - media/assets/asset-1
-        baseName:
+          - cover-image.jpg
+        slug:
           type: string
           examples:
-          - asset-1
-        type:
+          - cover-image
+        slugPath:
+          type: string
+          examples:
+          - posts/cover-image
+        url:
+          type: string
+          examples:
+          - /media/assets/media_asset_1/cover-image.jpg
+        extension:
           type: string
           examples:
           - jpeg
+        contentType:
+          type: string
+          examples:
+          - image/jpeg
         sizeBytes:
           type: integer
           format: int64
@@ -609,14 +753,17 @@ components:
           - 1.717171717e+9
       required:
       - id
-      - storageKey
-      - baseName
-      - type
+      - name
+      - slug
+      - slugPath
+      - url
+      - extension
+      - contentType
       - sizeBytes
       - status
       - createdAt
       - updatedAt
-      minProperties: 8
+      minProperties: 11
     MediaFolderListItemSchema:
       type: object
       properties:
@@ -630,7 +777,11 @@ components:
           type: string
           examples:
           - Posts
-        path:
+        slug:
+          type: string
+          examples:
+          - posts
+        slugPath:
           type: string
           examples:
           - blog/posts
@@ -654,16 +805,100 @@ components:
       required:
       - id
       - name
-      - path
+      - slug
+      - slugPath
       - assetCount
       - totalSizeBytes
       - createdAt
       - updatedAt
-      minProperties: 7
+      minProperties: 8
     MediaFolderIdField:
       type: string
       examples:
       - media_folder_blog_posts
+    MediaAssetResolveRequestSchema:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            examples:
+            - media_asset_1
+          minItems: 0
+          uniqueItems: false
+        variants:
+          $ref: '#/components/schemas/MediaAssetResolveVariantsField'
+      required:
+      - ids
+      minProperties: 1
+    MediaAssetResolveVariantsField:
+      type: array
+      items:
+        type: string
+        examples:
+        - thumb
+      minItems: 0
+      uniqueItems: false
+    MediaAssetResolveSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/MediaAssetResolveItemSchema'
+      minItems: 0
+      uniqueItems: false
+    MediaAssetResolveItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MediaAssetIdField'
+        url:
+          type: string
+          examples:
+          - /media/assets/media_asset_1/cover-image.jpg
+        extension:
+          type: string
+          examples:
+          - jpeg
+        title:
+          type:
+          - string
+          - 'null'
+        altText:
+          type:
+          - string
+          - 'null'
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/MediaAssetResolveVariantSchema'
+          minItems: 0
+          uniqueItems: false
+      required:
+      - id
+      - url
+      - extension
+      - variants
+      minProperties: 4
+    MediaAssetResolveVariantSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+          - thumb
+        url:
+          type: string
+          examples:
+          - /media/assets/media_asset_1/cover-image.jpg
+        extension:
+          type: string
+          examples:
+          - jpeg
+      required:
+      - name
+      - url
+      - extension
+      minProperties: 3
     MediaAssetPatchSchema:
       type: object
       properties:
@@ -701,19 +936,19 @@ components:
           type: string
           examples:
           - thumb
-        type:
+        extension:
           type: string
           examples:
-          - processor
-        storageKey:
+          - jpeg
+        url:
           type: string
           examples:
-          - media/assets/asset-1
+          - /media/assets/media_asset_1/cover-image.jpg
       required:
       - variantId
       - name
-      - type
-      - storageKey
+      - extension
+      - url
       minProperties: 4
     MediaFolderCreateSchema:
       type: object
@@ -742,7 +977,11 @@ components:
           type: string
           examples:
           - Posts
-        path:
+        slug:
+          type: string
+          examples:
+          - posts
+        slugPath:
           type: string
           examples:
           - blog/posts
@@ -766,12 +1005,13 @@ components:
       required:
       - id
       - name
-      - path
+      - slug
+      - slugPath
       - assetCount
       - totalSizeBytes
       - createdAt
       - updatedAt
-      minProperties: 7
+      minProperties: 8
     MediaFolderListItemSearchQuerySchema:
       type: object
       properties:
@@ -850,43 +1090,17 @@ components:
       required:
       - name
       minProperties: 1
-    MediaProcessorCreateSchema:
+    MediaVariantCreateSchema:
       type: object
       properties:
+        key:
+          type: string
+          examples:
+          - preview
         name:
           type: string
           examples:
-          - thumb
-        matchExtensions:
-          type: string
-          examples:
-          - png,jpg,jpeg
-        commandTemplate:
-          type: string
-          examples:
-          - magick {input.fullname} -resize 64x64^ -gravity center -extent 64x64 {output.fullname}
-      required:
-      - name
-      - matchExtensions
-      - commandTemplate
-      minProperties: 3
-    MediaProcessorDetailSchema:
-      type: object
-      properties:
-        id:
-          $ref: '#/components/schemas/MediaProcessorIdField'
-        name:
-          type: string
-          examples:
-          - thumb
-        matchExtensions:
-          type: string
-          examples:
-          - png,jpg,jpeg
-        commandTemplate:
-          type: string
-          examples:
-          - magick {input.fullname} -resize 64x64^ -gravity center -extent 64x64 {output.fullname}
+          - Preview
         isRequired:
           type: boolean
           examples:
@@ -895,6 +1109,39 @@ components:
           type: boolean
           examples:
           - true
+      required:
+      - key
+      - name
+      - isRequired
+      - isActive
+      minProperties: 4
+    MediaVariantDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MediaVariantIdField'
+        key:
+          type: string
+          examples:
+          - preview
+        name:
+          type: string
+          examples:
+          - Preview
+        isRequired:
+          type: boolean
+          examples:
+          - true
+        isActive:
+          type: boolean
+          examples:
+          - true
+        processors:
+          type: array
+          items:
+            $ref: '#/components/schemas/MediaVariantProcessorListItemSchema'
+          minItems: 0
+          uniqueItems: false
         createdAt:
           type: number
           format: double
@@ -907,19 +1154,47 @@ components:
           - 1.717171717e+9
       required:
       - id
+      - key
       - name
-      - matchExtensions
-      - commandTemplate
       - isRequired
       - isActive
+      - processors
       - createdAt
       - updatedAt
       minProperties: 8
-    MediaProcessorIdField:
+    MediaVariantIdField:
       type: string
       examples:
-      - media_processor_image_thumb
-    MediaProcessorListItemSearchQuerySchema:
+      - V1StGXR8_Z5jdHi6B-myT
+    MediaVariantProcessorListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MediaVariantIdField'
+        name:
+          type: string
+          examples:
+          - Preview
+        matchExtensions:
+          type: string
+          examples:
+          - png,jpg,jpeg,bmp
+        commandTemplate:
+          type: string
+          examples:
+          - convert {input.fullname} -resize 256x256 {output.fullname}
+        isActive:
+          type: boolean
+          examples:
+          - true
+      required:
+      - id
+      - name
+      - matchExtensions
+      - commandTemplate
+      - isActive
+      minProperties: 5
+    MediaVariantListItemSearchQuerySchema:
       type: object
       properties:
         page:
@@ -933,13 +1208,10 @@ components:
                 type: string
                 enum:
                 - id
+                - key
                 - name
-                - matchExtensions
-                - commandTemplate
                 - isRequired
                 - isActive
-                - createdAt
-                - updatedAt
                 examples:
                 - id
               direction:
@@ -966,18 +1238,18 @@ components:
       type: string
       examples:
       - foo
-    MediaProcessorListItemSearchSchema:
+    MediaVariantListItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/MediaProcessorListItemSearchQuerySchema'
+          $ref: '#/components/schemas/MediaVariantListItemSearchQuerySchema'
         data:
           type: object
           properties:
             items:
               type: array
               items:
-                $ref: '#/components/schemas/MediaProcessorListItemSchema'
+                $ref: '#/components/schemas/MediaVariantListItemSchema'
               minItems: 0
               uniqueItems: false
             total:
@@ -992,23 +1264,19 @@ components:
       - query
       - data
       minProperties: 2
-    MediaProcessorListItemSchema:
+    MediaVariantListItemSchema:
       type: object
       properties:
         id:
-          $ref: '#/components/schemas/MediaProcessorIdField'
+          $ref: '#/components/schemas/MediaVariantIdField'
+        key:
+          type: string
+          examples:
+          - preview
         name:
           type: string
           examples:
-          - thumb
-        matchExtensions:
-          type: string
-          examples:
-          - png,jpg,jpeg
-        commandTemplate:
-          type: string
-          examples:
-          - magick {input.fullname} -resize 64x64^ -gravity center -extent 64x64 {output.fullname}
+          - Preview
         isRequired:
           type: boolean
           examples:
@@ -1019,12 +1287,145 @@ components:
           - true
       required:
       - id
+      - key
+      - name
+      - isRequired
+      - isActive
+      minProperties: 5
+    MediaVariantProcessorCreateSchema:
+      type: object
+      properties:
+        name:
+          type: string
+          examples:
+          - Preview
+        matchExtensions:
+          type: string
+          examples:
+          - png,jpg,jpeg,bmp
+        commandTemplate:
+          type: string
+          examples:
+          - convert {input.fullname} -resize 256x256 {output.fullname}
+        isActive:
+          type: boolean
+          examples:
+          - true
+      required:
       - name
       - matchExtensions
       - commandTemplate
-      - isRequired
       - isActive
-      minProperties: 6
+      minProperties: 4
+    MediaVariantProcessorDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MediaVariantIdField'
+        variantId:
+          $ref: '#/components/schemas/MediaVariantIdField'
+        name:
+          type: string
+          examples:
+          - Preview
+        matchExtensions:
+          type: string
+          examples:
+          - png,jpg,jpeg,bmp
+        commandTemplate:
+          type: string
+          examples:
+          - convert {input.fullname} -resize 256x256 {output.fullname}
+        isActive:
+          type: boolean
+          examples:
+          - true
+        createdAt:
+          type: number
+          format: double
+          examples:
+          - 1.717171717e+9
+        updatedAt:
+          type: number
+          format: double
+          examples:
+          - 1.717171717e+9
+      required:
+      - id
+      - variantId
+      - name
+      - matchExtensions
+      - commandTemplate
+      - isActive
+      - createdAt
+      - updatedAt
+      minProperties: 8
+    MediaVariantProcessorListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - name
+                - matchExtensions
+                - commandTemplate
+                - isActive
+                examples:
+                - id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    MediaVariantProcessorListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/MediaVariantProcessorListItemSchema'
+              minItems: 0
+              uniqueItems: false
+            total:
+              type: integer
+              examples:
+              - 123
+          required:
+          - items
+          - total
+          minProperties: 2
+      required:
+      - query
+      - data
+      minProperties: 2
   responses:
     MediaAssetDetailResponse:
       description: MediaAsset response
@@ -1044,6 +1445,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MediaAssetNodeSearchItemSearchSchema'
+    MediaAssetResolveResponse:
+      description: MediaAsset resolve response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MediaAssetResolveSchema'
     MediaAssetVariantListResponse:
       description: MediaAsset variant list response
       content:
@@ -1062,18 +1469,30 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MediaFolderListItemSearchSchema'
-    MediaProcessorDetailResponse:
-      description: MediaProcessor response
+    MediaVariantDetailResponse:
+      description: Media variant response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/MediaProcessorDetailSchema'
-    MediaProcessorListItemSearchSchemaSearchResponse:
+            $ref: '#/components/schemas/MediaVariantDetailSchema'
+    MediaVariantListItemSearchSchemaSearchResponse:
       description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/MediaProcessorListItemSearchSchema'
+            $ref: '#/components/schemas/MediaVariantListItemSearchSchema'
+    MediaVariantProcessorDetailResponse:
+      description: Media variant processor response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MediaVariantProcessorDetailSchema'
+    MediaVariantProcessorListItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MediaVariantProcessorListItemSearchSchema'
   parameters:
     MediaAssetIdParameter:
       name: mediaAssetId
@@ -1089,13 +1508,20 @@ components:
       schema:
         $ref: '#/components/schemas/MediaFolderIdField'
       description: Media folder id
-    MediaProcessorIdParameter:
-      name: mediaProcessorId
+    MediaVariantIdParameter:
+      name: mediaVariantId
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/MediaProcessorIdField'
-      description: MediaProcessor id
+        $ref: '#/components/schemas/MediaVariantIdField'
+      description: Media variant id
+    MediaVariantProcessorIdParameter:
+      name: mediaVariantProcessorId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/MediaVariantIdField'
+      description: Media variant processor id
   requestBodies:
     MediaAssetCreateRequestBody:
       content:
@@ -1108,6 +1534,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/DeleteRequestSchema'
+      required: true
+    MediaAssetResolveRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MediaAssetResolveRequestSchema'
       required: true
     MediaAssetPatchRequestBody:
       content:
@@ -1127,11 +1559,17 @@ components:
           schema:
             $ref: '#/components/schemas/MediaFolderPatchSchema'
       required: true
-    MediaProcessorCreateRequestBody:
+    MediaVariantCreateRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/MediaProcessorCreateSchema'
+            $ref: '#/components/schemas/MediaVariantCreateSchema'
+      required: true
+    MediaVariantProcessorCreateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MediaVariantProcessorCreateSchema'
       required: true
   securitySchemes:
     bearerAuth:

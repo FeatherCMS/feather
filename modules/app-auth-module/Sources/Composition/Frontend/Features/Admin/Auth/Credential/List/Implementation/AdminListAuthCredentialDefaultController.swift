@@ -57,10 +57,7 @@ struct AdminListAuthCredentialDefaultController:
                     pageSize: result.size,
                     total: result.total,
                     search: search ?? "",
-                    breadcrumb: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(label: "Auth", link: "/admin/auth/"),
-                    ]
+                    breadcrumb: AuthCredentialRoutes.listBreadcrumb
                 )
             )
         }

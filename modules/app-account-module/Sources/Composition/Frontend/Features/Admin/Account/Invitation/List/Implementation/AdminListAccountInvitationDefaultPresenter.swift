@@ -66,15 +66,17 @@ struct AdminListAccountInvitationDefaultPresenter:
         )
     }
 
-    func renderRemoveConfirmation(
+    func renderRemovePage(
         page: Int,
         search: String?,
-        selectedIds: [String],
-        permissions: Set<String>
+        items: [NewAdminRemoveItemContext]
     ) async throws -> HTMLResponse {
         let hiddenFields =
-            selectedIds.map {
-                NewAdminRemoveConfirmation.HiddenField(name: "ids", value: $0)
+            items.map {
+                NewAdminRemoveConfirmation.HiddenField(
+                    name: "ids",
+                    value: $0.id
+                )
             } + [
                 .init(name: "page", value: "\(page)"),
                 .init(name: "search", value: search ?? ""),
@@ -98,7 +100,7 @@ struct AdminListAccountInvitationDefaultPresenter:
                     title: "Remove selected invitations",
                     description: "This action cannot be undone."
                 ),
-                selectedItems: selectedIds,
+                selectedItems: items.map(\.label),
                 action: AccountAdminRoutes.invitationRemoveBulk.description,
                 cancel: NewAdminLocation.url(
                     path: AccountAdminRoutes.invitations.description,

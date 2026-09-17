@@ -122,6 +122,46 @@ public struct WebMetadataPatchSchema: ObjectSchemaRepresentable {
     }
 }
 
+public struct WebMetadataReferenceIDsSchema: ArraySchemaRepresentable {
+    public init() {}
+    public var items: SchemaRepresentable? {
+        WebMetadataReferenceIDField()
+    }
+}
+
+public struct WebMetadataResolveRequestSchema: ObjectSchemaRepresentable {
+    public init() {}
+    public var propertyMap: SchemaMap {
+        [
+            "referenceType": WebMetadataReferenceTypeField(),
+            "referenceIds": WebMetadataReferenceIDsSchema(),
+        ]
+    }
+}
+
+public struct WebMetadataResolveItemSchema: ObjectSchemaRepresentable {
+    public init() {}
+    public var propertyMap: SchemaMap {
+        [
+            "referenceId": WebMetadataReferenceIDField(),
+            "slug": WebMetadataSlugField(),
+            "publicationDate": WebMetadataTimestampField(),
+            "expirationDate": WebMetadataNullableTimestampField(
+                required: false
+            ),
+            "status": WebMetadataStatusField(),
+            "availability": WebMetadataAvailabilityField().reference(),
+        ]
+    }
+}
+
+public struct WebMetadataResolveSchema: ArraySchemaRepresentable {
+    public init() {}
+    public var items: SchemaRepresentable? {
+        WebMetadataResolveItemSchema().reference()
+    }
+}
+
 public struct WebMetadataListItemSchema: ObjectSchemaRepresentable {
     public init() {}
     public var propertyMap: SchemaMap {
@@ -139,6 +179,7 @@ public struct WebMetadataListItemSchema: ObjectSchemaRepresentable {
                 required: false
             ),
             "status": WebMetadataStatusField().reference(),
+            "availability": WebMetadataAvailabilityField().reference(),
             "title": WebMetadataTitleField().reference(),
             "createdAt": WebMetadataTimestampField().reference(),
             "updatedAt": WebMetadataTimestampField().reference(),

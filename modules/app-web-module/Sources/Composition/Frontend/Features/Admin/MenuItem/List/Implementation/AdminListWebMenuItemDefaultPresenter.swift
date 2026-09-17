@@ -39,7 +39,9 @@ struct AdminListWebMenuItemDefaultPresenter:
                     state: .init(
                         info: "Unable to load web menu items.",
                         message: error,
-                        breadcrumb: webMenuItemBreadcrumbState(menuId: menuId)
+                        breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
+                            RouterPath(menuId)
+                        )
                     )
                 )
             )
@@ -53,7 +55,9 @@ struct AdminListWebMenuItemDefaultPresenter:
                     state: .init(
                         info: "Forbidden",
                         message: "Your account cannot access web menu items.",
-                        breadcrumb: webMenuItemBreadcrumbState(menuId: menuId)
+                        breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
+                            RouterPath(menuId)
+                        )
                     )
                 )
             )
@@ -73,30 +77,36 @@ struct AdminListWebMenuItemDefaultPresenter:
                         total: model.total
                     ),
                     search: search,
-                    breadcrumb: webMenuItemBreadcrumbState(menuId: menuId)
+                    breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
+                        RouterPath(menuId)
+                    )
                 )
             )
         )
     }
 
-    func renderRemoveConfirmation(
+    func renderRemovePage(
         menuId: String,
         page: Int,
         search: String?,
-        selectedIds: [String],
-        permissions: Set<String>
+        items: [NewAdminRemoveItemContext]
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove selected items",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: webMenuItemBreadcrumbState(menuId: menuId),
+                breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
+                    RouterPath(menuId)
+                ),
                 pageHeader: .init(
                     title: "Remove selected items",
                     description: "This action cannot be undone."
                 ),
-                selectedItems: selectedIds,
+                selectedItems: items.map(\.label),
                 action: WebMenuItemRoutes.remove(RouterPath(menuId))
                     .description,
                 cancel: NewAdminLocation.url(
@@ -105,21 +115,12 @@ struct AdminListWebMenuItemDefaultPresenter:
                     page: page,
                     search: search
                 ),
-                hiddenFields: selectedIds.map {
-                    .init(name: "ids", value: $0)
+                nonceToken: nonceToken,
+                hiddenFields: items.map {
+                    .init(name: "ids", value: $0.id)
                 }
             )
         )
     }
 
-    private func webMenuItemBreadcrumbState(
-        menuId: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Web", link: "/admin/web/"),
-            .init(label: "Menus", link: "/admin/web/menus/"),
-            .init(label: "Menu", link: "/admin/web/menus/\(menuId)/"),
-        ]
-    }
 }

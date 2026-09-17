@@ -8,8 +8,16 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
-    func renderRemovePage(id: String, name: String) async throws -> HTMLResponse
-    {
+    func renderRemovePage(
+        items: [NewAdminRemoveItemContext],
+        returnTo: String?
+    ) async throws -> HTMLResponse {
+        guard items.count == 1 else {
+            return try await renderBulkRemovePage(
+                items: items,
+                returnTo: returnTo
+            )
+        }
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
@@ -18,18 +26,15 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
             context: context,
             title: "Remove user role",
             content: UserRoleConfirmation(
-                id: id,
-                name: name,
+                id: items[0].id,
+                name: items[0].label,
                 nonceToken: nonceToken
             )
         )
     }
 
-    func renderRemoveConfirmation(
-        page: Int,
-        search: String?,
-        ids: [String],
-        names: [String],
+    private func renderBulkRemovePage(
+        items: [NewAdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
@@ -49,13 +54,11 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
                     title: "Remove selected user roles",
                     description: "This action cannot be undone."
                 ),
-                selectedItems: names,
+                selectedItems: items.map(\.label),
                 action: UserRoleRoutes.remove.description,
                 cancel: cancel,
-                hiddenFields: ids.map { .init(name: "ids", value: $0) } + [
+                hiddenFields: items.map { .init(name: "ids", value: $0.id) } + [
                     .init(name: "_nonce", value: nonceToken),
-                    .init(name: "page", value: String(page)),
-                    .init(name: "search", value: search ?? ""),
                     .init(name: "returnTo", value: cancel),
                 ]
             )

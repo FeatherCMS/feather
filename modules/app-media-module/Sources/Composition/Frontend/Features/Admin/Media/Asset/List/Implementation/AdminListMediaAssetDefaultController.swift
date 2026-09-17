@@ -103,10 +103,10 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
             )
         }
         return
-            try await presenter.renderRemoveConfirmation(
+            try await presenter.renderRemovePage(
                 pageState: .init(page: page, pageSize: 20, total: 0),
                 search: search,
-                selectedIds: selectedIds,
+                items: selectedIds.map { .init(id: $0, label: $0) },
                 returnTo: request.queryString("returnTo")
             )
             .response(from: request, context: context)

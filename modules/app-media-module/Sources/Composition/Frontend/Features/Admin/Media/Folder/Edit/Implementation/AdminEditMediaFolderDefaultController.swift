@@ -69,7 +69,8 @@ struct AdminEditMediaFolderDefaultController: AdminEditMediaFolderController {
                 id: id,
                 parentId: fallback?.parentId,
                 name: payload.normalizedName,
-                path: fallback?.path ?? "",
+                slug: fallback?.slug ?? "",
+                slugPath: fallback?.slugPath ?? "",
                 assetCount: fallback?.assetCount ?? 0,
                 totalSizeBytes: fallback?.totalSizeBytes ?? 0,
                 error: error.displayMessage

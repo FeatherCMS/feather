@@ -46,7 +46,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.mediaAssetNodeDelete(
+                try await server.mediaAssetNodeRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -59,7 +59,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.mediaAssetSearch(
+                try await server.mediaAssetList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -67,7 +67,20 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/media/assets/search"
+                "/api/v1/admin/media/assets/list"
+            )
+        )
+        try transport.register(
+            {
+                try await server.mediaAssetResolve(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix(
+                "/api/v1/admin/media/assets/resolve"
             )
         )
         try transport.register(
@@ -124,7 +137,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.mediaFolderSearch(
+                try await server.mediaFolderList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -132,7 +145,7 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/media/folders/search"
+                "/api/v1/admin/media/folders/list"
             )
         )
         try transport.register(
@@ -163,7 +176,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.mediaProcessorCreate(
+                try await server.mediaVariantCreate(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -171,12 +184,12 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/media/processors"
+                "/api/v1/admin/media/variants"
             )
         )
         try transport.register(
             {
-                try await server.mediaProcessorDelete(
+                try await server.mediaVariantRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -184,12 +197,12 @@ extension APIProtocol {
             },
             method: .delete,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/media/processors"
+                "/api/v1/admin/media/variants"
             )
         )
         try transport.register(
             {
-                try await server.mediaProcessorSearch(
+                try await server.mediaVariantList(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -197,12 +210,12 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/media/processors/search"
+                "/api/v1/admin/media/variants/list"
             )
         )
         try transport.register(
             {
-                try await server.mediaProcessorGet(
+                try await server.mediaVariantGet(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -210,12 +223,12 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/media/processors/{mediaProcessorId}"
+                "/api/v1/admin/media/variants/{mediaVariantId}"
             )
         )
         try transport.register(
             {
-                try await server.mediaProcessorUpdate(
+                try await server.mediaVariantUpdate(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -223,7 +236,72 @@ extension APIProtocol {
             },
             method: .patch,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/media/processors/{mediaProcessorId}"
+                "/api/v1/admin/media/variants/{mediaVariantId}"
+            )
+        )
+        try transport.register(
+            {
+                try await server.mediaVariantProcessorCreate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix(
+                "/api/v1/admin/media/variants/{mediaVariantId}/processors"
+            )
+        )
+        try transport.register(
+            {
+                try await server.mediaVariantProcessorRemove(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix(
+                "/api/v1/admin/media/variants/{mediaVariantId}/processors"
+            )
+        )
+        try transport.register(
+            {
+                try await server.mediaVariantProcessorList(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix(
+                "/api/v1/admin/media/variants/{mediaVariantId}/processors/list"
+            )
+        )
+        try transport.register(
+            {
+                try await server.mediaVariantProcessorGet(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix(
+                "/api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}"
+            )
+        )
+        try transport.register(
+            {
+                try await server.mediaVariantProcessorUpdate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .patch,
+            path: server.apiPathComponentsWithServerPrefix(
+                "/api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}"
             )
         )
     }
@@ -317,8 +395,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/media/assets`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeDelete)`.
-    fileprivate func mediaAssetNodeDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/delete(mediaAssetNodeRemove)`.
+    fileprivate func mediaAssetNodeRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -327,12 +405,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaAssetNodeDelete.id,
+            forOperation: Operations.MediaAssetNodeRemove.id,
             using: {
-                APIHandler.mediaAssetNodeDelete($0)
+                APIHandler.mediaAssetNodeRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.MediaAssetNodeDelete.Input.Headers =
+                let headers: Operations.MediaAssetNodeRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -362,7 +440,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.MediaAssetNodeDelete.Input(
+                return Operations.MediaAssetNodeRemove.Input(
                     headers: headers,
                     body: body
                 )
@@ -403,9 +481,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/assets/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/search/post(mediaAssetSearch)`.
-    fileprivate func mediaAssetSearch(
+    /// - Remark: HTTP `POST /api/v1/admin/media/assets/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/list/post(mediaAssetList)`.
+    fileprivate func mediaAssetList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -414,12 +492,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaAssetSearch.id,
+            forOperation: Operations.MediaAssetList.id,
             using: {
-                APIHandler.mediaAssetSearch($0)
+                APIHandler.mediaAssetList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.MediaAssetSearch.Input.Headers = .init(
+                let headers: Operations.MediaAssetList.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
@@ -427,7 +505,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Operations.MediaAssetSearch.Input.Body
+                let body: Operations.MediaAssetList.Input.Body
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -449,7 +527,93 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.MediaAssetSearch.Input(
+                return Operations.MediaAssetList.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case .ok(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case .json(let value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case .unauthorized(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .forbidden(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .undocumented(let statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/media/assets/resolve`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)`.
+    fileprivate func mediaAssetResolve(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.MediaAssetResolve.id,
+            using: {
+                APIHandler.mediaAssetResolve($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.MediaAssetResolve.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
+                    )
+                )
+                let contentType = converter.extractContentTypeIfPresent(
+                    in: request.headerFields
+                )
+                let body: Components.RequestBodies.MediaAssetResolveRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.MediaAssetResolveRequestSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure(
+                        "bestContentType chose an invalid content type."
+                    )
+                }
+                return Operations.MediaAssetResolve.Input(
                     headers: headers,
                     body: body
                 )
@@ -824,9 +988,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/folders/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/search/post(mediaFolderSearch)`.
-    fileprivate func mediaFolderSearch(
+    /// - Remark: HTTP `POST /api/v1/admin/media/folders/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/list/post(mediaFolderList)`.
+    fileprivate func mediaFolderList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -835,12 +999,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaFolderSearch.id,
+            forOperation: Operations.MediaFolderList.id,
             using: {
-                APIHandler.mediaFolderSearch($0)
+                APIHandler.mediaFolderList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.MediaFolderSearch.Input.Headers = .init(
+                let headers: Operations.MediaFolderList.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
@@ -848,7 +1012,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Operations.MediaFolderSearch.Input.Body
+                let body: Operations.MediaFolderList.Input.Body
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -870,7 +1034,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.MediaFolderSearch.Input(
+                return Operations.MediaFolderList.Input(
                     headers: headers,
                     body: body
                 )
@@ -1084,9 +1248,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/processors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/post(mediaProcessorCreate)`.
-    fileprivate func mediaProcessorCreate(
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/post(mediaVariantCreate)`.
+    fileprivate func mediaVariantCreate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1095,12 +1259,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaProcessorCreate.id,
+            forOperation: Operations.MediaVariantCreate.id,
             using: {
-                APIHandler.mediaProcessorCreate($0)
+                APIHandler.mediaVariantCreate($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.MediaProcessorCreate.Input.Headers =
+                let headers: Operations.MediaVariantCreate.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -1109,8 +1273,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body:
-                    Components.RequestBodies.MediaProcessorCreateRequestBody
+                let body: Components.RequestBodies.MediaVariantCreateRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1120,7 +1283,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.MediaProcessorCreateSchema.self,
+                        Components.Schemas.MediaVariantCreateSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1131,7 +1294,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.MediaProcessorCreate.Input(
+                return Operations.MediaVariantCreate.Input(
                     headers: headers,
                     body: body
                 )
@@ -1172,9 +1335,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/media/processors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/delete(mediaProcessorDelete)`.
-    fileprivate func mediaProcessorDelete(
+    /// - Remark: HTTP `DELETE /api/v1/admin/media/variants`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/delete(mediaVariantRemove)`.
+    fileprivate func mediaVariantRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1183,12 +1346,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaProcessorDelete.id,
+            forOperation: Operations.MediaVariantRemove.id,
             using: {
-                APIHandler.mediaProcessorDelete($0)
+                APIHandler.mediaVariantRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.MediaProcessorDelete.Input.Headers =
+                let headers: Operations.MediaVariantRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -1218,7 +1381,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.MediaProcessorDelete.Input(
+                return Operations.MediaVariantRemove.Input(
                     headers: headers,
                     body: body
                 )
@@ -1259,9 +1422,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/processors/search`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/search/post(mediaProcessorSearch)`.
-    fileprivate func mediaProcessorSearch(
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/list/post(mediaVariantList)`.
+    fileprivate func mediaVariantList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1270,21 +1433,20 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaProcessorSearch.id,
+            forOperation: Operations.MediaVariantList.id,
             using: {
-                APIHandler.mediaProcessorSearch($0)
+                APIHandler.mediaVariantList($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.MediaProcessorSearch.Input.Headers =
-                    .init(
-                        accept: try converter.extractAcceptHeaderIfPresent(
-                            in: request.headerFields
-                        )
+                let headers: Operations.MediaVariantList.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
                     )
+                )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Operations.MediaProcessorSearch.Input.Body
+                let body: Operations.MediaVariantList.Input.Body
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1294,8 +1456,8 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas
-                            .MediaProcessorListItemSearchQuerySchema.self,
+                        Components.Schemas.MediaVariantListItemSearchQuerySchema
+                            .self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1306,7 +1468,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.MediaProcessorSearch.Input(
+                return Operations.MediaVariantList.Input(
                     headers: headers,
                     body: body
                 )
@@ -1347,9 +1509,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/media/processors/{mediaProcessorId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/get(mediaProcessorGet)`.
-    fileprivate func mediaProcessorGet(
+    /// - Remark: HTTP `GET /api/v1/admin/media/variants/{mediaVariantId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/get(mediaVariantGet)`.
+    fileprivate func mediaVariantGet(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1358,24 +1520,24 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaProcessorGet.id,
+            forOperation: Operations.MediaVariantGet.id,
             using: {
-                APIHandler.mediaProcessorGet($0)
+                APIHandler.mediaVariantGet($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.MediaProcessorGet.Input.Path = .init(
-                    mediaProcessorId: try converter.getPathParameterAsURI(
+                let path: Operations.MediaVariantGet.Input.Path = .init(
+                    mediaVariantId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "mediaProcessorId",
-                        as: Components.Parameters.MediaProcessorIdParameter.self
+                        name: "mediaVariantId",
+                        as: Components.Parameters.MediaVariantIdParameter.self
                     )
                 )
-                let headers: Operations.MediaProcessorGet.Input.Headers = .init(
+                let headers: Operations.MediaVariantGet.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
                 )
-                return Operations.MediaProcessorGet.Input(
+                return Operations.MediaVariantGet.Input(
                     path: path,
                     headers: headers
                 )
@@ -1421,9 +1583,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/media/processors/{mediaProcessorId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/processors/{mediaProcessorId}/patch(mediaProcessorUpdate)`.
-    fileprivate func mediaProcessorUpdate(
+    /// - Remark: HTTP `PATCH /api/v1/admin/media/variants/{mediaVariantId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/patch(mediaVariantUpdate)`.
+    fileprivate func mediaVariantUpdate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1432,19 +1594,19 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaProcessorUpdate.id,
+            forOperation: Operations.MediaVariantUpdate.id,
             using: {
-                APIHandler.mediaProcessorUpdate($0)
+                APIHandler.mediaVariantUpdate($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.MediaProcessorUpdate.Input.Path = .init(
-                    mediaProcessorId: try converter.getPathParameterAsURI(
+                let path: Operations.MediaVariantUpdate.Input.Path = .init(
+                    mediaVariantId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "mediaProcessorId",
-                        as: Components.Parameters.MediaProcessorIdParameter.self
+                        name: "mediaVariantId",
+                        as: Components.Parameters.MediaVariantIdParameter.self
                     )
                 )
-                let headers: Operations.MediaProcessorUpdate.Input.Headers =
+                let headers: Operations.MediaVariantUpdate.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -1453,8 +1615,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body:
-                    Components.RequestBodies.MediaProcessorCreateRequestBody
+                let body: Components.RequestBodies.MediaVariantCreateRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -1464,7 +1625,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.MediaProcessorCreateSchema.self,
+                        Components.Schemas.MediaVariantCreateSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -1475,7 +1636,512 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.MediaProcessorUpdate.Input(
+                return Operations.MediaVariantUpdate.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case .ok(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case .json(let value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case .notFound(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .unauthorized(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .forbidden(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .undocumented(let statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants/{mediaVariantId}/processors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/post(mediaVariantProcessorCreate)`.
+    fileprivate func mediaVariantProcessorCreate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.MediaVariantProcessorCreate.id,
+            using: {
+                APIHandler.mediaVariantProcessorCreate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.MediaVariantProcessorCreate.Input.Path =
+                    .init(
+                        mediaVariantId: try converter.getPathParameterAsURI(
+                            in: metadata.pathParameters,
+                            name: "mediaVariantId",
+                            as: Components.Parameters.MediaVariantIdParameter
+                                .self
+                        )
+                    )
+                let headers:
+                    Operations.MediaVariantProcessorCreate.Input.Headers =
+                        .init(
+                            accept: try converter.extractAcceptHeaderIfPresent(
+                                in: request.headerFields
+                            )
+                        )
+                let contentType = converter.extractContentTypeIfPresent(
+                    in: request.headerFields
+                )
+                let body:
+                    Components.RequestBodies
+                        .MediaVariantProcessorCreateRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.MediaVariantProcessorCreateSchema
+                            .self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure(
+                        "bestContentType chose an invalid content type."
+                    )
+                }
+                return Operations.MediaVariantProcessorCreate.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case .created(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case .json(let value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case .notFound(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .unauthorized(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .forbidden(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .undocumented(let statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `DELETE /api/v1/admin/media/variants/{mediaVariantId}/processors`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/delete(mediaVariantProcessorRemove)`.
+    fileprivate func mediaVariantProcessorRemove(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.MediaVariantProcessorRemove.id,
+            using: {
+                APIHandler.mediaVariantProcessorRemove($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.MediaVariantProcessorRemove.Input.Path =
+                    .init(
+                        mediaVariantId: try converter.getPathParameterAsURI(
+                            in: metadata.pathParameters,
+                            name: "mediaVariantId",
+                            as: Components.Parameters.MediaVariantIdParameter
+                                .self
+                        )
+                    )
+                let headers:
+                    Operations.MediaVariantProcessorRemove.Input.Headers =
+                        .init(
+                            accept: try converter.extractAcceptHeaderIfPresent(
+                                in: request.headerFields
+                            )
+                        )
+                let contentType = converter.extractContentTypeIfPresent(
+                    in: request.headerFields
+                )
+                let body: Components.RequestBodies.DeleteRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.DeleteRequestSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure(
+                        "bestContentType chose an invalid content type."
+                    )
+                }
+                return Operations.MediaVariantProcessorRemove.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case .ok(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case .json(let value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case .unauthorized(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .forbidden(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .undocumented(let statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/media/variants/{mediaVariantId}/processors/list`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/list/post(mediaVariantProcessorList)`.
+    fileprivate func mediaVariantProcessorList(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.MediaVariantProcessorList.id,
+            using: {
+                APIHandler.mediaVariantProcessorList($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.MediaVariantProcessorList.Input.Path =
+                    .init(
+                        mediaVariantId: try converter.getPathParameterAsURI(
+                            in: metadata.pathParameters,
+                            name: "mediaVariantId",
+                            as: Components.Parameters.MediaVariantIdParameter
+                                .self
+                        )
+                    )
+                let headers:
+                    Operations.MediaVariantProcessorList.Input.Headers = .init(
+                        accept: try converter.extractAcceptHeaderIfPresent(
+                            in: request.headerFields
+                        )
+                    )
+                let contentType = converter.extractContentTypeIfPresent(
+                    in: request.headerFields
+                )
+                let body: Operations.MediaVariantProcessorList.Input.Body
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas
+                            .MediaVariantProcessorListItemSearchQuerySchema
+                            .self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure(
+                        "bestContentType chose an invalid content type."
+                    )
+                }
+                return Operations.MediaVariantProcessorList.Input(
+                    path: path,
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case .ok(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case .json(let value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case .notFound(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .unauthorized(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .forbidden(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .undocumented(let statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/get(mediaVariantProcessorGet)`.
+    fileprivate func mediaVariantProcessorGet(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.MediaVariantProcessorGet.id,
+            using: {
+                APIHandler.mediaVariantProcessorGet($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.MediaVariantProcessorGet.Input.Path =
+                    .init(
+                        mediaVariantId: try converter.getPathParameterAsURI(
+                            in: metadata.pathParameters,
+                            name: "mediaVariantId",
+                            as: Components.Parameters.MediaVariantIdParameter
+                                .self
+                        ),
+                        mediaVariantProcessorId:
+                            try converter.getPathParameterAsURI(
+                                in: metadata.pathParameters,
+                                name: "mediaVariantProcessorId",
+                                as: Components.Parameters
+                                    .MediaVariantProcessorIdParameter.self
+                            )
+                    )
+                let headers: Operations.MediaVariantProcessorGet.Input.Headers =
+                    .init(
+                        accept: try converter.extractAcceptHeaderIfPresent(
+                            in: request.headerFields
+                        )
+                    )
+                return Operations.MediaVariantProcessorGet.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case .ok(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case .json(let value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case .notFound(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .unauthorized(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .forbidden(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .undocumented(let statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `PATCH /api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}/patch(mediaVariantProcessorUpdate)`.
+    fileprivate func mediaVariantProcessorUpdate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.MediaVariantProcessorUpdate.id,
+            using: {
+                APIHandler.mediaVariantProcessorUpdate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.MediaVariantProcessorUpdate.Input.Path =
+                    .init(
+                        mediaVariantId: try converter.getPathParameterAsURI(
+                            in: metadata.pathParameters,
+                            name: "mediaVariantId",
+                            as: Components.Parameters.MediaVariantIdParameter
+                                .self
+                        ),
+                        mediaVariantProcessorId:
+                            try converter.getPathParameterAsURI(
+                                in: metadata.pathParameters,
+                                name: "mediaVariantProcessorId",
+                                as: Components.Parameters
+                                    .MediaVariantProcessorIdParameter.self
+                            )
+                    )
+                let headers:
+                    Operations.MediaVariantProcessorUpdate.Input.Headers =
+                        .init(
+                            accept: try converter.extractAcceptHeaderIfPresent(
+                                in: request.headerFields
+                            )
+                        )
+                let contentType = converter.extractContentTypeIfPresent(
+                    in: request.headerFields
+                )
+                let body:
+                    Components.RequestBodies
+                        .MediaVariantProcessorCreateRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.MediaVariantProcessorCreateSchema
+                            .self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure(
+                        "bestContentType chose an invalid content type."
+                    )
+                }
+                return Operations.MediaVariantProcessorUpdate.Input(
                     path: path,
                     headers: headers,
                     body: body

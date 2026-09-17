@@ -15,21 +15,14 @@ protocol AdminRemoveBlogAuthorLinkPresenter: Sendable {
 
     func renderRemovePage(
         menuId: String,
-        id: String,
-        label: String,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
         menuId: String,
         id: String,
         info: String,
-        message: String,
-        permissions: Set<String>
+        message: String
     ) async throws -> HTMLResponse
 
-    func breadcrumb(
-        menuId: String,
-        id: String
-    ) -> [NewAdminBreadcrumb.Link]
 }

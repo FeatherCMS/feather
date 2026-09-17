@@ -17,9 +17,9 @@ public protocol APIProtocol: Sendable {
     func redirectRuleCreate(_ input: Operations.RedirectRuleCreate.Input)
         async throws -> Operations.RedirectRuleCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/redirect/rules`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)`.
-    func redirectRuleDelete(_ input: Operations.RedirectRuleDelete.Input)
-        async throws -> Operations.RedirectRuleDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleRemove)`.
+    func redirectRuleRemove(_ input: Operations.RedirectRuleRemove.Input)
+        async throws -> Operations.RedirectRuleRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/redirect/rules/`.
     /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules//get(redirectRuleList)`.
     func redirectRuleList(_ input: Operations.RedirectRuleList.Input)
@@ -58,13 +58,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/redirect/rules`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)`.
-    public func redirectRuleDelete(
-        headers: Operations.RedirectRuleDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleRemove)`.
+    public func redirectRuleRemove(
+        headers: Operations.RedirectRuleRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.RedirectRuleDelete.Output {
-        try await redirectRuleDelete(
-            Operations.RedirectRuleDelete.Input(
+    ) async throws -> Operations.RedirectRuleRemove.Output {
+        try await redirectRuleRemove(
+            Operations.RedirectRuleRemove.Input(
                 headers: headers,
                 body: body
             )
@@ -974,15 +974,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/redirect/rules`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)`.
-    public enum RedirectRuleDelete {
-        public static let id: Swift.String = "redirectRuleDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleRemove)`.
+    public enum RedirectRuleRemove {
+        public static let id: Swift.String = "redirectRuleRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/redirect/rules/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.RedirectRuleDelete.AcceptableContentType
+                        Operations.RedirectRuleRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -990,13 +990,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.RedirectRuleDelete.AcceptableContentType
+                        Operations.RedirectRuleRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.RedirectRuleDelete.Input.Headers
+            public var headers: Operations.RedirectRuleRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -1004,7 +1004,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.RedirectRuleDelete.Input.Headers = .init(),
+                headers: Operations.RedirectRuleRemove.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
@@ -1014,7 +1014,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -1041,13 +1041,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.RedirectRuleDelete.Output.Unauthorized)
+            case unauthorized(Operations.RedirectRuleRemove.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -1058,7 +1058,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.RedirectRuleDelete.Output.Unauthorized
+                Operations.RedirectRuleRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -1078,13 +1078,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.RedirectRuleDelete.Output.Forbidden)
+            case forbidden(Operations.RedirectRuleRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/redirect/rules/delete(redirectRuleRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -1094,7 +1094,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.RedirectRuleDelete.Output.Forbidden
+            public var forbidden: Operations.RedirectRuleRemove.Output.Forbidden
             {
                 get throws {
                     switch self {

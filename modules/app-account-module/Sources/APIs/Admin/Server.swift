@@ -124,7 +124,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.accountInvitationDelete(
+                try await server.accountInvitationRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -771,8 +771,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/account/invitations`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)`.
-    fileprivate func accountInvitationDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationRemove)`.
+    fileprivate func accountInvitationRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -781,12 +781,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AccountInvitationDelete.id,
+            forOperation: Operations.AccountInvitationRemove.id,
             using: {
-                APIHandler.accountInvitationDelete($0)
+                APIHandler.accountInvitationRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.AccountInvitationDelete.Input.Headers =
+                let headers: Operations.AccountInvitationRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -816,7 +816,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.AccountInvitationDelete.Input(
+                return Operations.AccountInvitationRemove.Input(
                     headers: headers,
                     body: body
                 )

@@ -22,10 +22,12 @@ public struct NewAdminBaseLayout<T: Component>: Component {
     public init(
         content: T,
         menuGroups: [NewAdminSideBar.Group],
-        notification: NewAdminNotification.State? = nil
+        notification: NewAdminNotification.State? = nil,
+        accountTopBarState: NewAdminTopBar.State = .init()
     ) {
         self.topbar = .init(
-            notification: notification.map(NewAdminNotification.init)
+            notification: notification.map(NewAdminNotification.init),
+            state: accountTopBarState
         )
         self.sidebar = .init(groups: menuGroups)
         self.content = content

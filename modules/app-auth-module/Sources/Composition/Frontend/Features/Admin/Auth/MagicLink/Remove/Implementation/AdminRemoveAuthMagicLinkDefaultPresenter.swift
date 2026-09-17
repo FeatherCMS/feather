@@ -24,20 +24,9 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
     let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Magic links", link: "/admin/auth/magic-links/"),
-        ]
-    }
-
     func renderPage(
-        id: String,
-        credentialId: String,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext,
+        credentialId: String
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -48,9 +37,9 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
             title: "Manage user magic links",
             content: AuthMagicLinkConfirmation(
                 state: .init(
-                    id: id,
+                    item: item,
                     credentialId: credentialId,
-                    breadcrumb: breadcrumb(id: id),
+                    breadcrumb: AuthMagicLinkRoutes.breadcrumb,
                     nonceToken: nonceToken
                 )
             )
@@ -74,9 +63,8 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
     }
 
     func renderError(
-        id: String,
-        error: OpenAPIRepositoryError,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext,
+        error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
         try await renderEngine.renderNewAdminPage(
             request: request,
@@ -86,7 +74,7 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: AuthMagicLinkRoutes.breadcrumb
                 )
             )
         )

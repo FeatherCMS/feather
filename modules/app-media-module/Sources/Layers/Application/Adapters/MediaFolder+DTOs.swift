@@ -1,18 +1,13 @@
-//
-//  MediaFolder+DTOs.swift
-//  app-media-module
-//
-//  Created by Binary Birds on 2026. 06. 18.
-
 import MediaDomain
 
-extension MediaFolder {
+extension MediaAssetNodeFolder {
     public var asDetail: MediaFolderDetail {
         .init(
             id: id,
             parentId: parentId,
             name: name,
-            path: path,
+            slug: slug,
+            slugPath: slugPath,
             assetCount: assetCount,
             totalSizeBytes: totalSizeBytes,
             createdAt: createdAt,
@@ -25,7 +20,8 @@ extension MediaFolder {
             id: id,
             parentId: parentId,
             name: name,
-            path: path,
+            slug: slug,
+            slugPath: slugPath,
             assetCount: assetCount,
             totalSizeBytes: totalSizeBytes,
             createdAt: createdAt,

@@ -52,7 +52,7 @@ struct AdminRemoveUserIdentityOpenAPIRepository:
         ids: [String]
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.userIdentityDelete(
+            let response = try await client.userIdentityRemove(
                 body: .json(.init(ids: ids, results: false, summary: true))
             )
             switch response {

@@ -16,7 +16,7 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
         .init(
             parentId: "",
             fileName: "",
-            type: "bin",
+            extension: "bin",
             title: "",
             altText: "",
             data: "",
@@ -36,7 +36,7 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
             return .init(
                 parentId: "",
                 fileName: "",
-                type: "bin",
+                extension: "bin",
                 title: "",
                 altText: "",
                 data: "",
@@ -51,7 +51,7 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
             return .init(
                 parentId: payload.parentId,
                 fileName: payload.fileName,
-                type: payload.type,
+                extension: payload.extension,
                 title: payload.title,
                 altText: payload.altText,
                 data: payload.data,

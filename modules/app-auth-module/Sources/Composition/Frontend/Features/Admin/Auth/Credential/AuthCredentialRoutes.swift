@@ -17,6 +17,22 @@ enum AuthCredentialRoutes {
         ]
     }
 
+    static func detailsBreadcrumb(
+        _ id: RouterPath
+    ) -> [NewAdminBreadcrumb.Link] {
+        breadcrumb + [
+            .init(label: "User", link: details(id).description)
+        ]
+    }
+
+    static func removeBreadcrumb(
+        _ id: RouterPath
+    ) -> [NewAdminBreadcrumb.Link] {
+        detailsBreadcrumb(id) + [
+            .init(label: "Remove", link: remove(id).description)
+        ]
+    }
+
     static func details(_ id: RouterPath) -> RouterPath {
         list.appendingPath(id)
     }

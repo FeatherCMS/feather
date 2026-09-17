@@ -4,8 +4,8 @@ struct MediaFolderPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { MediaFolderCreateOperation() }
 }
 
-struct MediaFolderSearchPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { MediaFolderSearchOperation() }
+struct MediaFolderListPathItems: PathItemRepresentable {
+    var post: OperationRepresentable? { MediaFolderListOperation() }
 }
 
 struct MediaFolderIdPathItems: PathItemRepresentable {

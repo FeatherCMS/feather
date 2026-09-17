@@ -16,19 +16,14 @@ protocol AdminViewBlogAuthorLinkPresenter: Sendable {
 
     func renderDetailsPage(
         rule: BlogAuthorLinkDetailsModel,
-        breadcrumb: [NewAdminBreadcrumb.Link],
         permissions: Set<String>
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
+        menuId: String,
         info: String,
         message: String,
-        breadcrumb: [NewAdminBreadcrumb.Link],
         permissions: Set<String>
     ) async throws -> HTMLResponse
 
-    func breadcrumb(
-        menuId: String,
-        id: String
-    ) -> [NewAdminBreadcrumb.Link]
 }

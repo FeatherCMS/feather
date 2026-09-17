@@ -5,16 +5,7 @@ import Hummingbird
 protocol AdminRemoveRedirectRulePresenter: Sendable {
 
     func renderRemovePage(
-        id: String,
-        source: String,
-        returnTo: String?
-    ) async throws -> HTMLResponse
-
-    func renderRemoveConfirmation(
-        page: Int,
-        search: String?,
-        ids: [String],
-        names: [String],
+        items: [NewAdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse
     func renderErrorPage(error: AdminRemoveRedirectRuleError, cancel: String)

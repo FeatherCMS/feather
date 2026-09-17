@@ -10,7 +10,11 @@ struct MediaFolderNameField: StringSchemaRepresentable {
     var example: String? = "Posts"
 }
 
-struct MediaFolderPathField: StringSchemaRepresentable {
+struct MediaFolderSlugField: StringSchemaRepresentable {
+    var example: String? = "posts"
+}
+
+struct MediaFolderSlugPathField: StringSchemaRepresentable {
     var example: String? = "blog/posts"
 }
 
@@ -80,7 +84,8 @@ struct MediaFolderDetailSchema: ObjectSchemaRepresentable {
             "id": MediaFolderIdField().reference(),
             "parentId": MediaFolderNullableIdField(),
             "name": MediaFolderNameField(),
-            "path": MediaFolderPathField(),
+            "slug": MediaFolderSlugField(),
+            "slugPath": MediaFolderSlugPathField(),
             "assetCount": MediaFolderCountField(),
             "totalSizeBytes": MediaFolderBytesField(),
             "createdAt": MediaFolderTimestampField(),
@@ -95,7 +100,8 @@ struct MediaFolderListItemSchema: ObjectSchemaRepresentable {
             "id": MediaFolderIdField().reference(),
             "parentId": MediaFolderNullableIdField(),
             "name": MediaFolderNameField(),
-            "path": MediaFolderPathField(),
+            "slug": MediaFolderSlugField(),
+            "slugPath": MediaFolderSlugPathField(),
             "assetCount": MediaFolderCountField(),
             "totalSizeBytes": MediaFolderBytesField(),
             "createdAt": MediaFolderTimestampField(),

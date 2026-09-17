@@ -68,7 +68,7 @@ struct AdminEditSettingsDefaultController:
                     error: nil,
                     success: nil
                 ),
-                breadcrumb: breadcrumb()
+                breadcrumb: AccountAdminRoutes.settingsBreadcrumb
             ),
             permissions: permissions
         )
@@ -133,11 +133,4 @@ struct AdminEditSettingsDefaultController:
         )
     }
 
-    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Account", link: "/admin/account/"),
-            .init(label: "Settings", link: "/admin/account/settings/"),
-        ]
-    }
 }

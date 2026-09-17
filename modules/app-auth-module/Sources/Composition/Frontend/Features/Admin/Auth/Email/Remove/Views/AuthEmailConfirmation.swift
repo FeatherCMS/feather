@@ -7,7 +7,7 @@ import WebComponents
 
 struct AuthEmailConfirmation: Component {
     struct State {
-        let id: String
+        let item: NewAdminRemoveItemContext
         let identityId: String
         let breadcrumb: [NewAdminBreadcrumb.Link]
         let nonceToken: String?
@@ -23,8 +23,8 @@ struct AuthEmailConfirmation: Component {
                     title: "Remove user email",
                     description: "This action cannot be undone."
                 ),
-                selectedItems: [state.identityId],
-                action: "/admin/auth/emails/\(state.id)/remove/",
+                selectedItems: [state.item.label],
+                action: "/admin/auth/emails/\(state.item.id)/remove/",
                 cancel: "/admin/auth/emails/",
                 nonceToken: state.nonceToken
             )

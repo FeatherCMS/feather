@@ -20,10 +20,9 @@ protocol AdminListBlogAuthorPresenter: Sendable {
         error: String?
     ) async throws -> HTMLResponse
 
-    func renderRemoveConfirmation(
+    func renderRemovePage(
         page: Int,
         search: String?,
-        selectedIds: [String],
-        permissions: Set<String>
+        items: [NewAdminRemoveItemContext]
     ) async throws -> HTMLResponse
 }

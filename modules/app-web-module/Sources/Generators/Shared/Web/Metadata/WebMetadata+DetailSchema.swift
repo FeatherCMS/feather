@@ -67,6 +67,7 @@ public struct WebMetadataDetailSchema: ObjectSchemaRepresentable {
                 required: false
             ),
             "status": WebMetadataStatusField(),
+            "availability": WebMetadataAvailabilityField().reference(),
             "title": WebMetadataNullableTextField(required: false),
             "excerpt": WebMetadataNullableTextField(required: false),
             "imageUrl": WebMetadataNullableTextField(required: false),

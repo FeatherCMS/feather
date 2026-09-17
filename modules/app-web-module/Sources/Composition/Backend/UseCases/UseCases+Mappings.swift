@@ -190,6 +190,10 @@ extension UseCases {
             publicationDate: timestamp(detail.publicationDate),
             expirationDate: timestamp(detail.expirationDate),
             status: detail.status.rawValue,
+            availability: .init(
+                rawValue: detail.availability(at: .now).rawValue
+            )
+                ?? .draft,
             title: detail.title,
             excerpt: detail.excerpt,
             imageUrl: detail.imageURL,
@@ -215,9 +219,26 @@ extension UseCases {
             publicationDate: timestamp(item.publicationDate),
             expirationDate: timestamp(item.expirationDate),
             status: item.status.rawValue,
+            availability: .init(rawValue: item.availability(at: .now).rawValue)
+                ?? .draft,
             title: item.title,
             createdAt: item.createdAt.timeIntervalSince1970,
             updatedAt: item.updatedAt.timeIntervalSince1970
+        )
+    }
+
+    func mapResolveMetadata(
+        _ item: MetadataList.Item,
+        at date: Date
+    ) -> WebAdminAPI.Components.Schemas.WebMetadataResolveItemSchema {
+        .init(
+            referenceId: item.referenceID,
+            slug: item.slug,
+            publicationDate: item.publicationDate.timeIntervalSince1970,
+            expirationDate: timestamp(item.expirationDate),
+            status: item.status.rawValue,
+            availability: .init(rawValue: item.availability(at: date).rawValue)
+                ?? .draft
         )
     }
 

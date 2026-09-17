@@ -32,7 +32,6 @@ struct AdminViewAccountInvitationDefaultController:
                     roleIds: invitation.roleIds,
                     roleNames: roleNames
                 ),
-                breadcrumb: runtime.presenter.breadcrumb(id: id),
                 permissions: permissions
             )
         }
@@ -40,7 +39,6 @@ struct AdminViewAccountInvitationDefaultController:
             return try await runtime.presenter.renderErrorPage(
                 info: error.errorTitle,
                 message: error.errorDescription,
-                breadcrumb: runtime.presenter.breadcrumb(id: id),
                 permissions: permissions
             )
         }

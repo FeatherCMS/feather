@@ -108,11 +108,8 @@ struct AdminRemoveSystemVariableDefaultPresenter:
         }
     }
 
-    func renderRemoveConfirmation(
-        page: Int,
-        search: String?,
-        ids: [String],
-        names: [String],
+    func renderRemovePage(
+        items: [NewAdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
@@ -133,11 +130,11 @@ struct AdminRemoveSystemVariableDefaultPresenter:
                     description:
                         "You’re about to permanently remove the selected system variables. This action cannot be undone."
                 ),
-                selectedItems: names,
+                selectedItems: items.map(\.label),
                 action: SystemVariableRoutes.remove.description,
                 cancel: cancel,
-                hiddenFields: ids.map {
-                    .init(name: "ids", value: $0)
+                hiddenFields: items.map {
+                    .init(name: "ids", value: $0.id)
                 } + [
                     .init(name: "_nonce", value: nonceToken),
                     .init(name: "returnTo", value: cancel),

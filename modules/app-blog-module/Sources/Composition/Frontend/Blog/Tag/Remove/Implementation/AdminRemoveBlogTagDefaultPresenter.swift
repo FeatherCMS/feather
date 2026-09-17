@@ -19,19 +19,21 @@ struct AdminRemoveBlogTagDefaultPresenter:
     let renderingEngine: any RenderingEngine
 
     func renderRemovePage(
-        id: String,
-        source: String,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove tag",
             content: BlogTagConfirmation(
                 state: .init(
-                    id: id,
-                    source: source,
-                    breadcrumb: breadcrumb(id: id)
+                    id: item.id,
+                    source: item.label,
+                    breadcrumb: BlogAdminRoutes.tagsBreadcrumb,
+                    nonceToken: nonceToken
                 )
             )
         )
@@ -40,8 +42,7 @@ struct AdminRemoveBlogTagDefaultPresenter:
     func renderErrorPage(
         id: String,
         info: String,
-        message: String,
-        permissions: Set<String>
+        message: String
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
             request: request,
@@ -51,15 +52,10 @@ struct AdminRemoveBlogTagDefaultPresenter:
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: BlogAdminRoutes.tagsBreadcrumb
                 )
             )
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        BlogAdminRoutes.tagsBreadcrumb
-    }
 }

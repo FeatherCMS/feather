@@ -1,4 +1,5 @@
 import AuthAppAPI
+import CSS
 import FeatherAdmin
 import HTML
 import Hummingbird
@@ -20,48 +21,171 @@ struct AppMagicLink {
     }
 
     struct Page: Component {
-        let token: String?
         let email: String
         let isPersistent: Bool
         let error: String?
         let message: String?
 
-        func html(context: inout BuilderContext) -> Section {
-            Section {
-                H1(token == nil ? "Request a magic link" : "Signing in")
-                if let message { P(message).class("success") }
-                if let error { P(error).class("error") }
-                if token == nil {
-                    Form {
-                        context.build(
-                            NewAdminFormFieldInput(
-                                state: .init(
-                                    name: "email",
-                                    label: "Email address",
-                                    value: email,
-                                    type: .email
+        func rules() -> [any Rule] {
+            NewAdminDesignSystem().rules()
+                + [Media(selectors: selectors())]
+        }
+
+        func selectors() -> [any Selector] {
+            [
+                Custom("body") {
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Secondary.tint)
+                    )
+                },
+                Class("login-page") {
+                    Display(.flex)
+                    AlignItems(.center)
+                    JustifyContent(.center)
+                    BoxSizing(.borderBox)
+                    Padding(vertical: 32.px, horizontal: 20.px)
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Secondary.tint)
+                    )
+                },
+                Class("login-card") {
+                    Width(100.percent)
+                    MaxWidth(440.px)
+                    BoxSizing(.borderBox)
+                    MarginTop(10.percent)
+                    Padding(32.px)
+                    Border(
+                        1.px,
+                        .solid,
+                        .variable(TokenKey.Colors.Materials.Primary.border)
+                    )
+                    BorderRadius(20.px)
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Primary.tint)
+                    )
+                    BoxShadow(
+                        0.px,
+                        12.px,
+                        blur: 26.px,
+                        spread: 2.px,
+                        color: CSSColor(
+                            stringLiteral:
+                                "var(--\(TokenKey.Colors.BoxShadow.tint.propertyName))"
+                        )
+                    )
+                },
+                Custom(".login-card .admin-page-header") {
+                    Margin(bottom: 0.px)
+                },
+                Custom(".login-card .new-admin-form") {
+                    MarginTop(24.px)
+                },
+                Custom(".login-card .new-admin-form__actions") {
+                    AlignItems(.stretch)
+                },
+                Custom(".login-card .new-admin-form__actions .button") {
+                    Width(100.percent)
+                },
+                Custom(".login-card .new-admin-form__success") {
+                    Margin(0)
+                    Padding(vertical: 12.px, horizontal: 14.px)
+                    BorderRadius(8.px)
+                    Border(
+                        1.px,
+                        .solid,
+                        .variable(TokenKey.Colors.Palette.Green.border)
+                    )
+                    Background(
+                        .variable(TokenKey.Colors.Palette.Green.background)
+                    )
+                    Color(.variable(TokenKey.Colors.Palette.Green.text))
+                },
+                Class("login-actions") {
+                    Display(.flex)
+                    FlexDirection(.column)
+                    AlignItems(.stretch)
+                    Gap(10.px)
+                    MarginTop(32.px)
+                },
+                Custom(".login-actions .button") {
+                    Width(100.percent)
+                },
+            ]
+        }
+
+        func html(context: inout BuilderContext) -> Main {
+            Main {
+                Div {
+                    context.build(
+                        NewAdminPageHeader(
+                            state: .init(
+                                title: "Sign in",
+                                description:
+                                    "Enter your email to receive a sign-in link."
+                            )
+                        )
+                    )
+
+                    context.build(
+                        NewAdminForm(action: "/magic-link/") {
+                            if let message {
+                                P(message).class("new-admin-form__success")
+                            }
+                            if let error {
+                                P(error).class("new-admin-form__error")
+                            }
+                            context.build(
+                                NewAdminFormFieldInput(
+                                    state: .init(
+                                        name: "email",
+                                        label: "Email address",
+                                        value: email,
+                                        type: .email,
+                                        isRequired: true
+                                    )
                                 )
+                            )
+                            context.build(
+                                NewAdminFormFieldCheckbox(
+                                    state: .init(
+                                        name: "is_persistent",
+                                        label: "Session",
+                                        checkboxLabel: "Permanent link",
+                                        isChecked: isPersistent
+                                    )
+                                )
+                            )
+                            Div {
+                                context.build(
+                                    NewAdminSubmitButton("Send magic link")
+                                )
+                            }
+                            .class("new-admin-form__actions")
+                        }
+                    )
+
+                    Div {
+                        context.build(
+                            NewAdminButton(
+                                "Sign in with credentials",
+                                href: "/login/",
+                                style: .ghost(.primary)
                             )
                         )
                         context.build(
-                            NewAdminFormFieldCheckbox(
-                                state: .init(
-                                    name: "is_persistent",
-                                    label: "Session",
-                                    checkboxLabel: "Permanent link",
-                                    isChecked: isPersistent
-                                )
+                            NewAdminButton(
+                                "Home",
+                                href: "/",
+                                style: .ghost(.secondary)
                             )
                         )
-                        Button("Send magic link").type(.submit)
                     }
-                    .method(.post)
-                    .action("/magic-link/")
-                    .encType(.urlencoded)
-                    .class("cms-form")
+                    .class("login-actions")
                 }
+                .class("login-card")
             }
-            .class("cms-section")
+            .class("login-page")
+            .role("main")
         }
     }
 
@@ -110,8 +234,7 @@ struct AppMagicLink {
                     email: input.email,
                     isPersistent: input.isPersistent.value,
                     error: nil,
-                    message:
-                        "If the account exists, a magic link has been sent.",
+                    message: "If registered, your sign-in link is on its way.",
                     context: &buildContext
                 )
             case .undocumented(let statusCode, let response):
@@ -207,22 +330,21 @@ struct AppMagicLink {
         message: String?,
         context: inout BuilderContext
     ) -> HTMLResponse {
-
-        renderingEngine.renderPublicPage(
-            request: request,
+        let component = NewAdminHTML(
             title: "Magic link",
-            description: "Sign in without a password using a magic link.",
-            imagePath: "images/puppy.png",
-            content: context.build(
-                Page(
-                    token: nil,
+            body: .init(
+                content: Page(
                     email: email,
                     isPersistent: isPersistent,
                     error: error,
                     message: message
-                )
-            )
+                ),
+                showsFooter: false,
+                allowsPasswordManagerAutofill: true
+            ),
+            stylesheetPath: nil
         )
+        return .init(context.build(component))
     }
 
     func route(

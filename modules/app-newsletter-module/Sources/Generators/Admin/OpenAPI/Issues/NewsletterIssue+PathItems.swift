@@ -3,7 +3,7 @@ import FeatherOpenAPI
 struct NewsletterIssuePathItems: PathItemRepresentable {
     var get: OperationRepresentable? { NewsletterIssueListOperation() }
     var post: OperationRepresentable? { NewsletterIssueCreateOperation() }
-    var delete: OperationRepresentable? { NewsletterIssueDeleteOperation() }
+    var delete: OperationRepresentable? { NewsletterIssueRemoveOperation() }
 }
 struct NewsletterCampaignTestEmailPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { NewsletterCampaignTestEmailOperation() }

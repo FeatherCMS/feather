@@ -43,6 +43,31 @@ public struct AdminViewMediaAssetOpenAPIRepository: Sendable {
         }
     }
 
+    public func getAssetWithPreview(
+        id: String
+    ) async throws -> NewAdminMediaAsset {
+        let asset = try await getAsset(id: id)
+        let resolve = try await api.resolveAssets(
+            ids: [id],
+            variants: ["preview"]
+        )
+        let variants =
+            resolve
+            .first(where: { $0.id == id })?
+            .variants
+            .map {
+                NewAdminMediaAssetVariant(
+                    name: $0.name,
+                    url: $0.url,
+                    extension: $0._extension
+                )
+            } ?? []
+        return .init(
+            schema: asset,
+            variants: variants
+        )
+    }
+
     func getVariants(
         id: String
     ) async throws -> [Components.Schemas.MediaAssetVariantListItemSchema] {

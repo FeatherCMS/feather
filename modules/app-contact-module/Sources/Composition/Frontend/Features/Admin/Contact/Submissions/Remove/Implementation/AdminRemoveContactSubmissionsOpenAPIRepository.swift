@@ -22,7 +22,7 @@ struct AdminRemoveContactSubmissionsOpenAPIRepository {
                     return parts.count == 2 ? String(parts[1]) : nil
                 }
                 guard !submissionIds.isEmpty else { continue }
-                _ = try await client.contactFormSubmissionDelete(
+                _ = try await client.contactFormSubmissionRemove(
                     path: .init(contactFormId: formId),
                     body: .json(
                         .init(ids: submissionIds, results: false, summary: true)

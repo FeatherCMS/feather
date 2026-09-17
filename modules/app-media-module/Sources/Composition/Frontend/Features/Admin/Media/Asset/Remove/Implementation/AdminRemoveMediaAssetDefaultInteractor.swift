@@ -15,7 +15,7 @@ struct AdminRemoveMediaAssetDefaultInteractor: AdminRemoveMediaAssetInteractor {
     func getRemoveMediaAsset(
         id: String
     ) async throws -> AdminRemoveMediaAssetModel {
-        .init(id: id, error: nil)
+        .init(item: .init(id: id, label: id), error: nil)
     }
 
     func postRemoveMediaAsset(
@@ -26,10 +26,10 @@ struct AdminRemoveMediaAssetDefaultInteractor: AdminRemoveMediaAssetInteractor {
         }
         catch let error as OpenAPIRepositoryError {
             return .init(
-                id: id,
+                item: .init(id: id, label: id),
                 error: "Remove failed: \(error.errorDescription)"
             )
         }
-        return .init(id: id, error: nil)
+        return .init(item: .init(id: id, label: id), error: nil)
     }
 }

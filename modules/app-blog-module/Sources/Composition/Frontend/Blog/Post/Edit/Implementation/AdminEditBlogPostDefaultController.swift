@@ -38,7 +38,7 @@ struct AdminEditBlogPostDefaultController:
                     title: page.title,
                     excerpt: page.excerpt,
                     content: page.content,
-                    imageAssetId: page.imageAssetId,
+                    imageAssetId: page.imageAsset?.id,
                     imageAsset: page.imageAsset,
                     metadata: page.metadata,
                     selectedAuthorIds: page.authorIds,

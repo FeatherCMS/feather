@@ -42,7 +42,7 @@ paths:
     delete:
       tags:
       - ContactForms
-      operationId: contactFormDelete
+      operationId: contactFormRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -127,7 +127,7 @@ paths:
     delete:
       tags:
       - ContactForms
-      operationId: formFieldDelete
+      operationId: formFieldRemove
       parameters:
       - $ref: '#/components/parameters/ContactFormIdParameter'
       requestBody:
@@ -212,7 +212,7 @@ paths:
     delete:
       tags:
       - ContactForms
-      operationId: contactFieldDelete
+      operationId: contactFieldRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -280,7 +280,7 @@ paths:
     delete:
       tags:
       - ContactForms
-      operationId: contactFormSubmissionDelete
+      operationId: contactFormSubmissionRemove
       parameters:
       - $ref: '#/components/parameters/ContactFormIdParameter'
       requestBody:

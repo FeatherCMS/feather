@@ -22,10 +22,9 @@ struct AdminRemoveAuthSessionDefaultController:
         guard context.isCurrentUserAllowed(to: AuthPermissions.Sessions.delete)
         else {
             return try await presenter.errorPage(
+                item: .init(id: sessionId, label: sessionId),
                 identityId: identityId,
-                sessionId: sessionId,
-                error: .forbidden,
-                permissions: context.currentUserPermissions
+                error: .forbidden
             )
         }
 
@@ -35,23 +34,15 @@ struct AdminRemoveAuthSessionDefaultController:
                 sessionId: sessionId
             )
             return try await presenter.renderPage(
-                state: .init(
-                    model: session,
-                    breadcrumb: presenter.breadcrumb(
-                        identityId: identityId,
-                        sessionId: sessionId
-                    ),
-                    nonceToken: nil
-                ),
-                permissions: context.currentUserPermissions
+                item: .init(id: sessionId, label: session.identityEmail),
+                identityId: identityId
             )
         }
         catch let error as OpenAPIRepositoryError {
             return try await presenter.errorPage(
+                item: .init(id: sessionId, label: sessionId),
                 identityId: identityId,
-                sessionId: sessionId,
-                error: error,
-                permissions: context.currentUserPermissions
+                error: error
             )
         }
     }
@@ -67,10 +58,9 @@ struct AdminRemoveAuthSessionDefaultController:
         else {
             return
                 try await presenter.errorPage(
+                    item: .init(id: sessionId, label: sessionId),
                     identityId: identityId,
-                    sessionId: sessionId,
-                    error: .forbidden,
-                    permissions: context.currentUserPermissions
+                    error: .forbidden
                 )
                 .response(from: request, context: context)
         }
@@ -111,10 +101,9 @@ struct AdminRemoveAuthSessionDefaultController:
         catch let error as OpenAPIRepositoryError {
             return
                 try await presenter.errorPage(
+                    item: .init(id: sessionId, label: sessionId),
                     identityId: identityId,
-                    sessionId: sessionId,
-                    error: error,
-                    permissions: context.currentUserPermissions
+                    error: error
                 )
                 .response(from: request, context: context)
         }

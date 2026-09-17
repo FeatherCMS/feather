@@ -36,7 +36,11 @@ struct AdminEditAuthCredentialDefaultPresenter: AdminEditAuthCredentialPresenter
             context: context,
             title: "Edit credential",
             content: AuthCredentialEdit(
-                state: .init(id: id, form: form, breadcrumb: breadcrumb(id: id))
+                state: .init(
+                    id: id,
+                    form: form,
+                    breadcrumb: AuthCredentialRoutes.breadcrumb
+                )
             )
         )
     }
@@ -54,7 +58,7 @@ struct AdminEditAuthCredentialDefaultPresenter: AdminEditAuthCredentialPresenter
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: AuthCredentialRoutes.breadcrumb
                 )
             )
         )
@@ -104,11 +108,4 @@ struct AdminEditAuthCredentialDefaultPresenter: AdminEditAuthCredentialPresenter
         error.errorDescription
     }
 
-    private func breadcrumb(id: String) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Credentials", link: "/admin/auth/credentials/"),
-        ]
-    }
 }

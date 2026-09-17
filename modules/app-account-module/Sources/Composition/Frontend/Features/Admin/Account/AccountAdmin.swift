@@ -1,8 +1,5 @@
-import AccountAppAPI
 import FeatherAdmin
-import Foundation
 import Hummingbird
-import MediaFrontend
 
 public struct AccountAdmin {
     public let renderingEngine: any RenderingEngine
@@ -14,41 +11,6 @@ public struct AccountAdmin {
     public func route(
         on router: Router<DefaultRequestContext>
     ) {
-        router.get(
-            RouterPath(AccountAdminRoutes.profileImage.description + "/")
-        ) { _, context in
-            do {
-                let profile =
-                    try await AdminViewAccountProfileOpenAPIRepository(
-                        api: context.accountAppAPI(),
-                        mediaAPI: context.mediaAdminAPI()
-                    )
-                    .get()
-                guard let asset = profile.profileImageAsset else {
-                    return Response(status: .notFound)
-                }
-                let prefix = "media/assets/"
-                let storageKey =
-                    asset.storageKey.hasPrefix(prefix)
-                    ? String(asset.storageKey.dropFirst(prefix.count))
-                    : asset.storageKey
-                let encodedStorageKey =
-                    storageKey.addingPercentEncoding(
-                        withAllowedCharacters: .urlPathAllowed
-                    ) ?? storageKey
-                return Response(
-                    status: .seeOther,
-                    headers: [
-                        .location:
-                            "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)/media/assets/\(encodedStorageKey)"
-                    ]
-                )
-            }
-            catch {
-                return Response(status: .notFound)
-            }
-        }
-
         AdminViewAccountOverview(
             renderingEngine: renderingEngine
         )

@@ -25,8 +25,7 @@ public enum AuthFrontendRoutes {
         authAppClient: AuthAppAPIClient
     ) {
         AppLoginAuth(
-            repository: AppLoginAuthOpenAPIRepository(appClient: authAppClient),
-            renderingEngine: renderingEngine
+            repository: AppLoginAuthOpenAPIRepository(appClient: authAppClient)
         )
         .controller.route(on: router)
 

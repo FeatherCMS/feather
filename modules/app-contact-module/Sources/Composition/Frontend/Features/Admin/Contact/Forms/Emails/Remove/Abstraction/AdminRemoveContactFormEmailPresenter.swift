@@ -8,14 +8,8 @@ import WebBuilders
 import WebComponents
 
 protocol AdminRemoveContactFormEmailPresenter: Sendable {
-    func renderPage(
+    func renderRemovePage(
         formId: String,
-        mail: AdminContactFormEmail,
-        permissions: Set<String>
-    ) async throws -> HTMLResponse
-    func renderConfirmation(
-        formId: String,
-        selectedIds: [String],
-        permissions: Set<String>
+        items: [NewAdminRemoveItemContext]
     ) async throws -> HTMLResponse
 }

@@ -34,21 +34,14 @@ struct AdminViewBlogAuthorLinkDefaultController:
             )
             return try await runtime.presenter.renderDetailsPage(
                 rule: rule,
-                breadcrumb: runtime.presenter.breadcrumb(
-                    menuId: menuId,
-                    id: id
-                ),
                 permissions: permissions
             )
         }
         catch let error as OpenAPIRepositoryError {
             return try await runtime.presenter.renderErrorPage(
+                menuId: menuId,
                 info: error.errorTitle,
                 message: error.errorDescription,
-                breadcrumb: runtime.presenter.breadcrumb(
-                    menuId: menuId,
-                    id: id
-                ),
                 permissions: permissions
             )
         }

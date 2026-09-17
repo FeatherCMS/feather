@@ -46,7 +46,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.systemPermissionDelete(
+                try await server.systemPermissionRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -137,7 +137,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.systemVariableDelete(
+                try await server.systemVariableRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -331,8 +331,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)`.
-    fileprivate func systemPermissionDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionRemove)`.
+    fileprivate func systemPermissionRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -341,12 +341,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.SystemPermissionDelete.id,
+            forOperation: Operations.SystemPermissionRemove.id,
             using: {
-                APIHandler.systemPermissionDelete($0)
+                APIHandler.systemPermissionRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.SystemPermissionDelete.Input.Headers =
+                let headers: Operations.SystemPermissionRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -376,7 +376,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.SystemPermissionDelete.Input(
+                return Operations.SystemPermissionRemove.Input(
                     headers: headers,
                     body: body
                 )
@@ -933,8 +933,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/variables`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)`.
-    fileprivate func systemVariableDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableRemove)`.
+    fileprivate func systemVariableRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -943,12 +943,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.SystemVariableDelete.id,
+            forOperation: Operations.SystemVariableRemove.id,
             using: {
-                APIHandler.systemVariableDelete($0)
+                APIHandler.systemVariableRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.SystemVariableDelete.Input.Headers =
+                let headers: Operations.SystemVariableRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -978,7 +978,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.SystemVariableDelete.Input(
+                return Operations.SystemVariableRemove.Input(
                     headers: headers,
                     body: body
                 )

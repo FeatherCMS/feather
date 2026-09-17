@@ -28,14 +28,15 @@ struct MediaAssetCreateOperation: MediaAssetOperation {
     }
 }
 
-struct MediaAssetSearchOperation: MediaAssetOperation {
+struct MediaAssetListOperation: MediaAssetOperation {
     var searchQuery: SearchQuerySchema {
         .init(
             items: MediaAssetNodeSearchItemSchema(),
             sortFieldKeys: [
                 "id",
-                "storageKey",
-                "type",
+                "name",
+                "slugPath",
+                "extension",
                 "sizeBytes",
                 "status",
                 "title",
@@ -66,6 +67,18 @@ struct MediaAssetGetOperation: MediaAssetIDOperation {
     }
 }
 
+struct MediaAssetResolveOperation: MediaAssetOperation {
+    var requestBody: RequestBodyRepresentable? {
+        MediaAssetResolveRequestBody().reference()
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: MediaAssetResolveResponse().reference()
+        ]
+    }
+}
+
 struct MediaAssetUpdateOperation: MediaAssetIDOperation {
     var requestBody: RequestBodyRepresentable? {
         MediaAssetPatchRequestBody().reference()
@@ -79,7 +92,7 @@ struct MediaAssetUpdateOperation: MediaAssetIDOperation {
     }
 }
 
-struct MediaAssetNodeDeleteOperation: MediaAssetOperation,
+struct MediaAssetNodeRemoveOperation: MediaAssetOperation,
     DeleteOperation
 {
 }

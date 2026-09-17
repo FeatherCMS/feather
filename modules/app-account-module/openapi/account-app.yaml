@@ -125,16 +125,22 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/UserIdentityIDField'
+        name:
+          $ref: '#/components/schemas/UserIdentityNameField'
         status:
           $ref: '#/components/schemas/UserIdentityStatusField'
         roleIds:
           $ref: '#/components/schemas/UserIdentityRoleIDListSchema'
       required:
       - id
+      - name
       - status
     UserIdentityIDField:
       type: string
       example: usr_a9x1f7Qk2m
+    UserIdentityNameField:
+      type: string
+      example: Root User
     UserIdentityStatusField:
       type: string
       enum:

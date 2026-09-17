@@ -20,7 +20,8 @@ struct AdminEditMediaFolderDefaultInteractor: AdminEditMediaFolderInteractor {
             id: folder.id,
             parentId: folder.parentId,
             name: folder.name,
-            path: folder.path,
+            slug: folder.slug,
+            slugPath: folder.slugPath,
             assetCount: folder.assetCount,
             totalSizeBytes: folder.totalSizeBytes,
             error: nil
@@ -39,7 +40,8 @@ struct AdminEditMediaFolderDefaultInteractor: AdminEditMediaFolderInteractor {
             id: folder.id,
             parentId: folder.parentId,
             name: folder.name,
-            path: folder.path,
+            slug: folder.slug,
+            slugPath: folder.slugPath,
             assetCount: folder.assetCount,
             totalSizeBytes: folder.totalSizeBytes,
             error: nil

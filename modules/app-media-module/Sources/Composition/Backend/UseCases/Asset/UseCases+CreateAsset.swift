@@ -14,7 +14,8 @@ extension UseCases {
         .init(
             authorizer: authorizer,
             transaction: writeTransaction(),
-            storage: mediaStorage
+            storage: storage,
+            storageKeyShard: storageKeyShard
         )
     }
 }

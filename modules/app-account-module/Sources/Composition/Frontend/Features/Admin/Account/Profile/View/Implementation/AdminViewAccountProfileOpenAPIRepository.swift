@@ -21,7 +21,7 @@ struct AdminViewAccountProfileOpenAPIRepository:
                     firstName: body.firstName,
                     lastName: body.lastName,
                     profileImageAssetId: body.profileImageAssetId,
-                    profileImageAsset: try await loadImageAsset(
+                    profileImageAsset: try await mediaAPI.loadImageAsset(
                         assetId: body.profileImageAssetId
                     )
                 )
@@ -36,17 +36,6 @@ struct AdminViewAccountProfileOpenAPIRepository:
                 )
             }
         }
-    }
-
-    private func loadImageAsset(
-        assetId: String?
-    ) async throws -> NewAdminMediaAsset? {
-        guard let assetId, !assetId.isEmpty else { return nil }
-        let asset = try? await AdminViewMediaAssetOpenAPIRepository(
-            api: mediaAPI
-        )
-        .getAsset(id: assetId)
-        return asset.map(NewAdminMediaAsset.init(schema:))
     }
 
 }

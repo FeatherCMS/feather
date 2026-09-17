@@ -10,7 +10,8 @@ import WebBuilders
 import WebComponents
 
 struct AssetRemoveView: Component {
-    let id: String
+    let item: NewAdminRemoveItemContext
+    let nonceToken: String
 
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
@@ -20,10 +21,13 @@ struct AssetRemoveView: Component {
                     title: "Remove media item",
                     description: "Confirm removal of this media item."
                 ),
-                selectedItems: [id],
-                action: MediaAssetRoutes.remove(RouterPath(id)).description,
+                selectedItems: [item.label],
+                action: MediaAssetRoutes.remove(RouterPath(item.id))
+                    .description,
                 cancel: MediaAssetRoutes.list.description,
-                submitLabel: "Remove item"
+                submitLabel: "Remove item",
+                nonceToken: nonceToken,
+                hiddenFields: [.init(name: "ids", value: item.id)]
             )
         )
     }

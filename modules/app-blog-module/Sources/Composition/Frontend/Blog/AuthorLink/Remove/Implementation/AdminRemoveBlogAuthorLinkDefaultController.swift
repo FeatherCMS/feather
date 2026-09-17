@@ -27,14 +27,11 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
-        let permissions = context.currentUserPermissions
         do {
             let rule = try await runtime.interactor.get(menuId: menuId, id: id)
             return try await runtime.presenter.renderRemovePage(
                 menuId: menuId,
-                id: id,
-                label: rule.label,
-                permissions: permissions
+                item: .init(id: id, label: rule.label)
             )
         }
         catch let error as OpenAPIRepositoryError {
@@ -42,8 +39,7 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
                 menuId: menuId,
                 id: id,
                 info: error.errorTitle,
-                message: error.errorDescription,
-                permissions: permissions
+                message: error.errorDescription
             )
         }
     }
@@ -55,7 +51,16 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
-        let permissions = context.currentUserPermissions
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            context: context
+        )
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         do {
             try await runtime.interactor.delete(menuId: menuId, id: id)
             return AdminNotificationFlash.redirect(
@@ -72,8 +77,7 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
                     menuId: menuId,
                     id: id,
                     info: error.errorTitle,
-                    message: error.errorDescription,
-                    permissions: permissions
+                    message: error.errorDescription
                 )
                 .response(from: request, context: context)
         }

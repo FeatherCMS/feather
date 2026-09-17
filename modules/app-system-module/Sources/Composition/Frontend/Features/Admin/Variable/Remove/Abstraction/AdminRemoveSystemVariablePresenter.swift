@@ -17,11 +17,8 @@ protocol AdminRemoveSystemVariablePresenter: Sendable {
         count: Int
     ) -> Response
 
-    func renderRemoveConfirmation(
-        page: Int,
-        search: String?,
-        ids: [String],
-        names: [String],
+    func renderRemovePage(
+        items: [NewAdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse
 

@@ -22,16 +22,6 @@ struct AdminViewAuthMagicLinkDefaultPresenter: AdminViewAuthMagicLinkPresenter {
     let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Magic links", link: "/admin/auth/magic-links/"),
-        ]
-    }
-
     func renderPage(
         link: AuthMagicLinkDetailsModel,
         permissions: Set<String>
@@ -44,7 +34,7 @@ struct AdminViewAuthMagicLinkDefaultPresenter: AdminViewAuthMagicLinkPresenter {
                 state: .init(
                     link: link,
                     permissions: permissions,
-                    breadcrumb: breadcrumb(id: link.id)
+                    breadcrumb: AuthMagicLinkRoutes.breadcrumb
                 )
             )
         )
@@ -63,7 +53,7 @@ struct AdminViewAuthMagicLinkDefaultPresenter: AdminViewAuthMagicLinkPresenter {
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: AuthMagicLinkRoutes.breadcrumb
                 )
             )
         )

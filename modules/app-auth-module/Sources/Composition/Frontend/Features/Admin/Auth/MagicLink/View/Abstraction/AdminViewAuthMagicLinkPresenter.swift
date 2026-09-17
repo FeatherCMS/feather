@@ -19,10 +19,6 @@ import WebComponents
 
 protocol AdminViewAuthMagicLinkPresenter: Sendable {
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link]
-
     func renderPage(
         link: AuthMagicLinkDetailsModel,
         permissions: Set<String>

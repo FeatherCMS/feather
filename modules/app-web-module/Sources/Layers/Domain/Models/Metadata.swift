@@ -54,6 +54,38 @@ public struct Metadata: Model {
         case archived
     }
 
+    public enum Availability: String, Sendable, CaseIterable {
+        case draft
+        case scheduled
+        case live
+        case expired
+        case archived
+
+        public init(
+            status: Metadata.Status,
+            publicationDate: Date,
+            expirationDate: Date?,
+            at date: Date
+        ) {
+            switch status {
+            case .draft:
+                self = .draft
+            case .archived:
+                self = .archived
+            case .published:
+                if publicationDate > date {
+                    self = .scheduled
+                }
+                else if let expirationDate, expirationDate <= date {
+                    self = .expired
+                }
+                else {
+                    self = .live
+                }
+            }
+        }
+    }
+
     public struct Base: Sendable, Equatable {
         public let template: String
         public let slug: String

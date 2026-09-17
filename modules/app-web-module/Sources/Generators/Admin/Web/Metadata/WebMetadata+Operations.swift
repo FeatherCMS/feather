@@ -74,7 +74,19 @@ struct WebMetadataSearchOperation: WebMetadataOperation {
     }
 }
 
-struct WebMetadataDeleteOperation: WebMetadataOperation, DeleteOperation {
+struct WebMetadataResolveOperation: WebMetadataOperation {
+    var requestBody: RequestBodyRepresentable? {
+        WebMetadataResolveRequestBody().reference()
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: WebMetadataResolveResponse().reference()
+        ]
+    }
+}
+
+struct WebMetadataRemoveOperation: WebMetadataOperation, DeleteOperation {
 }
 
 struct WebMetadataGetOperation: WebMetadataIDOperation {

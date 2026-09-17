@@ -66,7 +66,7 @@ struct SystemVariableSearchOperation: SystemVariableOperation {
     }
 }
 
-struct SystemVariableDeleteOperation: SystemVariableOperation,
+struct SystemVariableRemoveOperation: SystemVariableOperation,
     DeleteOperation
 {
 }

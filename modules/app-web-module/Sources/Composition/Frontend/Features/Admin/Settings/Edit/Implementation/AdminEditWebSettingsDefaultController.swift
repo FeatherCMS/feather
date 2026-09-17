@@ -44,7 +44,7 @@ struct AdminEditWebSettingsDefaultController:
                         canEdit: canEdit,
                         error: error.displayMessage
                     ),
-                    breadcrumb: breadcrumb()
+                    breadcrumb: WebSettingsRoutes.breadcrumb
                 ),
                 permissions: permissions
             )
@@ -54,7 +54,7 @@ struct AdminEditWebSettingsDefaultController:
             state: .init(
                 canEdit: canEdit,
                 form: makeFormState(from: settings, canEdit: canEdit),
-                breadcrumb: breadcrumb()
+                breadcrumb: WebSettingsRoutes.breadcrumb
             ),
             permissions: permissions
         )
@@ -112,7 +112,7 @@ struct AdminEditWebSettingsDefaultController:
                     state: .init(
                         canEdit: canEdit,
                         form: form,
-                        breadcrumb: breadcrumb()
+                        breadcrumb: WebSettingsRoutes.breadcrumb
                     ),
                     permissions: permissions
                 )
@@ -151,7 +151,7 @@ struct AdminEditWebSettingsDefaultController:
                     state: .init(
                         canEdit: canEdit,
                         form: form,
-                        breadcrumb: breadcrumb()
+                        breadcrumb: WebSettingsRoutes.breadcrumb
                     ),
                     permissions: permissions
                 )
@@ -355,13 +355,6 @@ struct AdminEditWebSettingsDefaultController:
             canEdit: canEdit,
             error: error
         )
-    }
-
-    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Web", link: "/admin/web/"),
-        ]
     }
 
     private func loadHomePageOptions(

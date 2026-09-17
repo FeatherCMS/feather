@@ -15,6 +15,7 @@ struct WebMenuItemConfirmation: Component {
         let id: String
         let label: String
         let breadcrumb: [NewAdminBreadcrumb.Link]
+        let nonceToken: String
     }
 
     let state: State
@@ -36,7 +37,9 @@ struct WebMenuItemConfirmation: Component {
                     .appendingPath(RouterPath("remove")).description,
                 cancel: WebMenuItemRoutes.list(RouterPath(state.menuId))
                     .description,
-                submitLabel: "Remove item"
+                submitLabel: "Remove item",
+                nonceToken: state.nonceToken,
+                hiddenFields: [.init(name: "ids", value: state.id)]
             )
         )
     }

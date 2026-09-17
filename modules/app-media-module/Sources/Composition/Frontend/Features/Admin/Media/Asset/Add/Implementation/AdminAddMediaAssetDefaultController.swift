@@ -32,7 +32,7 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         model = .init(
             parentId: parentId,
             fileName: "",
-            type: model.type,
+            extension: model.extension,
             title: model.title,
             altText: model.altText,
             data: model.data,
@@ -67,7 +67,7 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
                 let pickerModel = AdminAddMediaAssetModel(
                     parentId: payload.parentId,
                     fileName: "",
-                    type: payload.type,
+                    extension: payload.extension,
                     title: "",
                     altText: "",
                     data: "",
@@ -103,7 +103,7 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         let errorModel = AdminAddMediaAssetModel(
             parentId: model.parentId,
             fileName: model.fileName,
-            type: model.type,
+            extension: model.extension,
             title: model.title,
             altText: model.altText,
             data: model.data,

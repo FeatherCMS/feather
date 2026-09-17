@@ -32,7 +32,7 @@ paths:
     delete:
       tags:
       - SystemPermissions
-      operationId: systemPermissionDelete
+      operationId: systemPermissionRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -153,7 +153,7 @@ paths:
     delete:
       tags:
       - SystemVariables
-      operationId: systemVariableDelete
+      operationId: systemVariableRemove
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:

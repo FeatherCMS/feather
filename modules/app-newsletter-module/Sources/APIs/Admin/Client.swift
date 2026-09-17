@@ -187,13 +187,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignDelete)`.
-    public func newsletterCampaignDelete(
-        _ input: Operations.NewsletterCampaignDelete.Input
-    ) async throws -> Operations.NewsletterCampaignDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignRemove)`.
+    public func newsletterCampaignRemove(
+        _ input: Operations.NewsletterCampaignRemove.Input
+    ) async throws -> Operations.NewsletterCampaignRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.NewsletterCampaignDelete.id,
+            forOperation: Operations.NewsletterCampaignRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/newsletter/campaign",
@@ -569,13 +569,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueDelete)`.
-    public func newsletterIssueDelete(
-        _ input: Operations.NewsletterIssueDelete.Input
-    ) async throws -> Operations.NewsletterIssueDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)`.
+    public func newsletterIssueRemove(
+        _ input: Operations.NewsletterIssueRemove.Input
+    ) async throws -> Operations.NewsletterIssueRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.NewsletterIssueDelete.id,
+            forOperation: Operations.NewsletterIssueRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/newsletter/campaign/{}/issues",
@@ -1141,13 +1141,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberDelete)`.
-    public func newsletterSubscriberDelete(
-        _ input: Operations.NewsletterSubscriberDelete.Input
-    ) async throws -> Operations.NewsletterSubscriberDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)`.
+    public func newsletterSubscriberRemove(
+        _ input: Operations.NewsletterSubscriberRemove.Input
+    ) async throws -> Operations.NewsletterSubscriberRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.NewsletterSubscriberDelete.id,
+            forOperation: Operations.NewsletterSubscriberRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template:

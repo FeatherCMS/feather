@@ -1,27 +1,7 @@
-import AuthAdminAPI
-import AuthAppAPI
-import CSS
 import FeatherAdmin
-import FeatherValidation
-import FeatherValidationFoundation
 import HTML
-import Hummingbird
-import OpenAPIRuntime
-import SGML
-import SystemAdminAPI
-import SystemFrontend
-import UserAdminAPI
-import UserAppAPI
-import UserFrontend
 import WebBuilders
 import WebComponents
-
-//
-//  File.swift
-//  web-app
-//
-//  Addd by Tibor Bödecs on 2026. 03. 01..
-//
 
 struct LoginForm: Component {
 
@@ -39,52 +19,33 @@ struct LoginForm: Component {
     }
 
     var state: State
-
-    func selectors() -> [any Selector] {
-        Class("error") {
-            Color(.red)
-        }
-    }
+    var message: String?
 
     func html(context: inout BuilderContext) -> Form {
-        Form {
-            Input()
-                .type(.hidden)
-                .name("redirect")
-                .value(state.redirectPath)
-            Section {
-                context.build(NewAdminFormFieldInput(state: state.email))
-            }
-            .class("login-field")
-
-            Section {
-                context.build(NewAdminFormFieldInput(state: state.password))
-            }
-            .class("login-field")
-
-            Section {
-                context.build(
-                    NewAdminFormFieldCheckbox(state: state.isPersistent)
-                )
-            }
-            .class("login-checkbox-field")
-
-            Section {
-                Input()
-                    .type(.submit)
-                    .name("button")
-                    .value("Sign in")
-                    .class("login-submit")
-            }
-        }
-        .encType(.urlencoded)
-        .method(.post)
-        .action(
+        let action =
             state.redirectPath == "/"
-                ? "/login/"
-                : "/login/?redirect=\(state.redirectPath.queryEncoded())"
-        )
-        .class("cms-form")
-        .class("login-form")
+            ? "/login/"
+            : "/login/?redirect=\(state.redirectPath.queryEncoded())"
+
+        let form = NewAdminForm(
+            action: action,
+            hiddenFields: [
+                .init(name: "redirect", value: state.redirectPath)
+            ]
+        ) {
+            if let message {
+                P(message).class("new-admin-form__error")
+            }
+            context.build(NewAdminFormFieldInput(state: state.email))
+            context.build(NewAdminFormFieldInput(state: state.password))
+            context.build(
+                NewAdminFormFieldCheckbox(state: state.isPersistent)
+            )
+            Div {
+                context.build(NewAdminSubmitButton("Sign in"))
+            }
+            .class("new-admin-form__actions")
+        }
+        return context.build(form)
     }
 }

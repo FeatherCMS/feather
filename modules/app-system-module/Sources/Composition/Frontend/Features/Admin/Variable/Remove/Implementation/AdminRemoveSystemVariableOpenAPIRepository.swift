@@ -13,7 +13,7 @@ struct AdminRemoveSystemVariableOpenAPIRepository:
         ids: [String]
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.systemVariableDelete(
+            let response = try await client.systemVariableRemove(
                 body: .json(.init(ids: ids, results: false, summary: true))
             )
             switch response {

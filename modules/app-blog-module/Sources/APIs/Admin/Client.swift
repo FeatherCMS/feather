@@ -116,13 +116,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)`.
-    public func blogPostDelete(_ input: Operations.BlogPostDelete.Input)
-        async throws -> Operations.BlogPostDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostRemove)`.
+    public func blogPostRemove(_ input: Operations.BlogPostRemove.Input)
+        async throws -> Operations.BlogPostRemove.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.BlogPostDelete.id,
+            forOperation: Operations.BlogPostRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/blog/posts",
@@ -652,13 +652,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)`.
-    public func blogAuthorDelete(_ input: Operations.BlogAuthorDelete.Input)
-        async throws -> Operations.BlogAuthorDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorRemove)`.
+    public func blogAuthorRemove(_ input: Operations.BlogAuthorRemove.Input)
+        async throws -> Operations.BlogAuthorRemove.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.BlogAuthorDelete.id,
+            forOperation: Operations.BlogAuthorRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/blog/authors",
@@ -1191,13 +1191,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)`.
-    public func blogAuthorLinkDelete(
-        _ input: Operations.BlogAuthorLinkDelete.Input
-    ) async throws -> Operations.BlogAuthorLinkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkRemove)`.
+    public func blogAuthorLinkRemove(
+        _ input: Operations.BlogAuthorLinkRemove.Input
+    ) async throws -> Operations.BlogAuthorLinkRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.BlogAuthorLinkDelete.id,
+            forOperation: Operations.BlogAuthorLinkRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/blog/authors/{}/links",
@@ -1888,13 +1888,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)`.
-    public func blogTagDelete(_ input: Operations.BlogTagDelete.Input)
-        async throws -> Operations.BlogTagDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagRemove)`.
+    public func blogTagRemove(_ input: Operations.BlogTagRemove.Input)
+        async throws -> Operations.BlogTagRemove.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.BlogTagDelete.id,
+            forOperation: Operations.BlogTagRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/blog/tags",

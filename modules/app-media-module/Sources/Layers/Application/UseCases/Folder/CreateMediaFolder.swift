@@ -5,22 +5,11 @@ import Foundation
 import MediaContracts
 import MediaDomain
 
-//
-//  CreateMediaFolder.swift
-//  app-media-module
-//
-//  Created by Binary Birds on 2026. 06. 18.
-
 public struct CreateMediaFolder: UseCase {
     public enum Error: UseCaseError {
-        case invalidName
-        case parentNotFound
-        case duplicatePath
+        case invalidName, parentNotFound, duplicatePath
     }
-
-    struct Action: PermissionAction {
-        let key = MediaPermissions.Assets.create
-    }
+    struct Action: PermissionAction { let key = MediaPermissions.Assets.create }
 
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<WriteMedia>
@@ -36,72 +25,53 @@ public struct CreateMediaFolder: UseCase {
     public struct Input: DTO {
         public let parentId: String?
         public let name: String
-
         public init(parentId: String?, name: String) {
             self.parentId = parentId
             self.name = name
         }
     }
 
-    public func execute(
-        subject: Subject,
-        input: Input
-    ) async throws -> MediaFolderDetail {
+    public func execute(subject: Subject, input: Input) async throws
+        -> MediaFolderDetail
+    {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
-
-        let trimmed = input.name.trimmingCharacters(in: .whitespacesAndNewlines)
-        let slug = normalizedPathComponent(from: trimmed)
-        guard !trimmed.isEmpty, !slug.isEmpty else {
-            throw Error.invalidName
-        }
-
+        let name = input.name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let slug = normalizedSlug(name)
+        guard !name.isEmpty, !slug.isEmpty else { throw Error.invalidName }
         return try await transaction.run { scope in
-            let parent = try await resolveParent(
-                id: input.parentId,
-                folders: scope.folders
-            )
-            let path =
-                parent.map { "\($0.path)/\(slug)" }
-                ?? slug
-
-            if try await scope.folders.find(path: path) != nil {
+            let parent: MediaAssetNodeFolder?
+            if let parentId = input.parentId {
+                parent = try await scope.folders.find(id: parentId)
+                if parent == nil { throw Error.parentNotFound }
+            }
+            else {
+                parent = nil
+            }
+            let slugPath = parent.map { "\($0.slugPath)/\(slug)" } ?? slug
+            if try await scope.folders.find(slugPath: slugPath) != nil {
                 throw Error.duplicatePath
             }
-
             return try await scope.folders
                 .insert(
-                    MediaFolder.create(
+                    MediaAssetNodeFolder.create(
                         parentId: parent?.id,
-                        name: trimmed,
-                        path: path
+                        name: name,
+                        slug: slug,
+                        slugPath: slugPath
                     )
                 )
                 .asDetail
         }
     }
-
-    private func resolveParent(
-        id: String?,
-        folders: any MediaFolderRepository
-    ) async throws -> MediaFolder? {
-        guard let id else { return nil }
-        guard let parent = try await folders.find(id: id) else {
-            throw Error.parentNotFound
-        }
-        return parent
-    }
 }
 
-private func normalizedPathComponent(
-    from value: String
-) -> String {
-    value
-        .lowercased()
+private func normalizedSlug(_ value: String) -> String {
+    value.lowercased()
         .replacingOccurrences(
-            of: #"[^a-z0-9]+"#,
+            of: "[^a-z0-9]+",
             with: "-",
             options: .regularExpression
         )

@@ -116,7 +116,7 @@ struct BlogAuthorLinkPatchOperation: BlogAuthorLinkIDOperation {
     }
 }
 
-struct BlogAuthorLinkDeleteOperation: BlogAuthorLinkMenuOperation,
+struct BlogAuthorLinkRemoveOperation: BlogAuthorLinkMenuOperation,
     DeleteOperation
 {
 }

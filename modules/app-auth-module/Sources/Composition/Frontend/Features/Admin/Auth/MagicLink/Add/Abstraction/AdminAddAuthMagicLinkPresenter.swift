@@ -31,8 +31,6 @@ protocol AdminAddAuthMagicLinkPresenter: Sendable {
         isPersistent: Bool
     ) -> AuthMagicLinkForm.State
 
-    func breadcrumb() -> [NewAdminBreadcrumb.Link]
-
     func format(
         error: OpenAPIRepositoryError
     ) -> String

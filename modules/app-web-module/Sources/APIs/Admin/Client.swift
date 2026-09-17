@@ -117,13 +117,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/metadata`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataDelete)`.
-    public func webMetadataDelete(_ input: Operations.WebMetadataDelete.Input)
-        async throws -> Operations.WebMetadataDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/delete(webMetadataRemove)`.
+    public func webMetadataRemove(_ input: Operations.WebMetadataRemove.Input)
+        async throws -> Operations.WebMetadataRemove.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMetadataDelete.id,
+            forOperation: Operations.WebMetadataRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/metadata",
@@ -314,6 +314,84 @@ public struct Client: APIProtocol {
                         body = try await converter.getResponseBodyAsJSON(
                             Components.Schemas.WebMetadataListItemSearchSchema
                                 .self,
+                            from: responseBody,
+                            transforming: { value in
+                                .json(value)
+                            }
+                        )
+                    default:
+                        preconditionFailure(
+                            "bestContentType chose an invalid content type."
+                        )
+                    }
+                    return .ok(.init(body: body))
+                case 401:
+                    return .unauthorized(.init())
+                case 403:
+                    return .forbidden(.init())
+                default:
+                    return .undocumented(
+                        statusCode: response.status.code,
+                        .init(
+                            headerFields: response.headerFields,
+                            body: responseBody
+                        )
+                    )
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/resolve`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)`.
+    public func webMetadataResolve(_ input: Operations.WebMetadataResolve.Input)
+        async throws -> Operations.WebMetadataResolve.Output
+    {
+        try await client.send(
+            input: input,
+            forOperation: Operations.WebMetadataResolve.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/api/v1/admin/web/metadata/resolve",
+                    parameters: []
+                )
+                var request: HTTPTypes.HTTPRequest = .init(
+                    soar_path: path,
+                    method: .post
+                )
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(
+                    in: &request.headerFields,
+                    contentTypes: input.headers.accept
+                )
+                let body: OpenAPIRuntime.HTTPBody?
+                switch input.body {
+                case .json(let value):
+                    body = try converter.setRequiredRequestBodyAsJSON(
+                        value,
+                        headerFields: &request.headerFields,
+                        contentType: "application/json; charset=utf-8"
+                    )
+                }
+                return (request, body)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(
+                        in: response.headerFields
+                    )
+                    let body:
+                        Components.Responses.WebMetadataResolveResponse.Body
+                    let chosenContentType = try converter.bestContentType(
+                        received: contentType,
+                        options: [
+                            "application/json"
+                        ]
+                    )
+                    switch chosenContentType {
+                    case "application/json":
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.WebMetadataResolveSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -656,13 +734,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/pages`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageDelete)`.
-    public func webPageDelete(_ input: Operations.WebPageDelete.Input)
-        async throws -> Operations.WebPageDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/pages/delete(webPageRemove)`.
+    public func webPageRemove(_ input: Operations.WebPageRemove.Input)
+        async throws -> Operations.WebPageRemove.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.WebPageDelete.id,
+            forOperation: Operations.WebPageRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/pages",
@@ -1191,13 +1269,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuDelete)`.
-    public func webMenuDelete(_ input: Operations.WebMenuDelete.Input)
-        async throws -> Operations.WebMenuDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/delete(webMenuRemove)`.
+    public func webMenuRemove(_ input: Operations.WebMenuRemove.Input)
+        async throws -> Operations.WebMenuRemove.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuDelete.id,
+            forOperation: Operations.WebMenuRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus",
@@ -1729,13 +1807,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/web/menus/{webMenuId}/items`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemDelete)`.
-    public func webMenuItemDelete(_ input: Operations.WebMenuItemDelete.Input)
-        async throws -> Operations.WebMenuItemDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/delete(webMenuItemRemove)`.
+    public func webMenuItemRemove(_ input: Operations.WebMenuItemRemove.Input)
+        async throws -> Operations.WebMenuItemRemove.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMenuItemDelete.id,
+            forOperation: Operations.WebMenuItemRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/web/menus/{}/items",

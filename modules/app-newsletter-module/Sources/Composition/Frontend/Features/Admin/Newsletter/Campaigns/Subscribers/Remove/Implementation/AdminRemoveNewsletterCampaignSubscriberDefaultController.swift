@@ -27,9 +27,7 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
         )
         return try await presenter.render(
             newsletterId: newsletterId,
-            subscriberId: subscriberId,
-            email: item.email,
-            permissions: context.currentUserPermissions
+            item: .init(id: subscriberId, label: item.email)
         )
     }
     func remove(request: Request, context: DefaultRequestContext) async throws
@@ -37,6 +35,16 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
     {
         let (interactor, _) = buildRuntime(request, context)
         let newsletterId = try context.requiredParameter("newsletterId")
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            context: context
+        )
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         try await interactor.remove(
             newsletterId: newsletterId,
             subscriberId: try context.requiredParameter("subscriberId")
@@ -58,10 +66,17 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
     {
         let (interactor, _) = buildRuntime(request, context)
         let newsletterId = try context.requiredParameter("newsletterId")
-        let payload = try await request.decode(
-            as: NewAdminListRemoveFormInput.self,
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
+        let payload = nonceRequest.input
         try await interactor.remove(
             newsletterId: newsletterId,
             subscriberIds: payload.normalizedSelectedIds

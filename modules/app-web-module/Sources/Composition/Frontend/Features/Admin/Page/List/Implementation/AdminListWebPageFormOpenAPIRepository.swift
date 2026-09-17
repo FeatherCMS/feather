@@ -1,6 +1,7 @@
 import FeatherAdmin
 import Foundation
 import Hummingbird
+import MediaFrontend
 import OpenAPIRuntime
 import WebAdminAPI
 
@@ -23,10 +24,8 @@ struct AdminListWebPageFormOpenAPIRepository {
                     title: page.title,
                     excerpt: page.excerpt,
                     content: page.content,
-                    imageAssetId: page.imageAssetId,
-                    imageAsset: try await loadImageAsset(
-                        assetId: page.imageAssetId
-                    ),
+                    imageAsset: try await api.mediaAdminAPI()
+                        .loadImageAsset(assetId: page.imageAssetId),
                     metadata: AdminMetadataSchemaBuilder.formValue(
                         from: page.metadata,
                         fallbackTitle: page.title,
@@ -83,10 +82,4 @@ struct AdminListWebPageFormOpenAPIRepository {
         }
     }
 
-    private func loadImageAsset(
-        assetId: String?
-    ) async throws -> NewAdminMediaAsset? {
-        _ = assetId
-        return nil
-    }
 }

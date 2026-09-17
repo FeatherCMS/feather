@@ -4,7 +4,7 @@ struct NewsletterSubscriberPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { NewsletterSubscriberListOperation() }
     var post: OperationRepresentable? { NewsletterSubscriberCreateOperation() }
     var delete: OperationRepresentable? {
-        NewsletterSubscriberDeleteOperation()
+        NewsletterSubscriberRemoveOperation()
     }
 }
 struct NewsletterSubscriberIDPathItems: PathItemRepresentable {

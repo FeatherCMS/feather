@@ -49,6 +49,20 @@ struct ServerConfigLoader {
                 storageRootPath: mediaReader.string(
                     forKey: "storage_root_path",
                     default: "/tmp/backend-media"
+                ),
+                storageShardDepth: max(
+                    0,
+                    mediaReader.int(
+                        forKey: "storage_shard_depth",
+                        default: 0
+                    )
+                ),
+                storageShardSegmentLength: max(
+                    1,
+                    mediaReader.int(
+                        forKey: "storage_shard_segment_length",
+                        default: 2
+                    )
                 )
             )
         )

@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherValidation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -14,19 +15,21 @@ struct AdminRemoveWebPageDefaultPresenter:
     let renderingEngine: any RenderingEngine
 
     func renderRemovePage(
-        id: String,
-        source: String,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove page",
             content: WebPageConfirmation(
                 state: .init(
-                    id: id,
-                    source: source,
-                    breadcrumb: breadcrumb(id: id)
+                    id: item.id,
+                    source: item.label,
+                    breadcrumb: WebPageRoutes.breadcrumb,
+                    nonceToken: nonceToken
                 )
             )
         )
@@ -35,8 +38,7 @@ struct AdminRemoveWebPageDefaultPresenter:
     func renderErrorPage(
         id: String,
         info: String,
-        message: String,
-        permissions: Set<String>
+        message: String
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
             request: request,
@@ -46,19 +48,10 @@ struct AdminRemoveWebPageDefaultPresenter:
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: WebPageRoutes.breadcrumb
                 )
             )
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Web", link: "/admin/web/"),
-            .init(label: "Pages", link: "/admin/web/pages/"),
-        ]
-    }
 }

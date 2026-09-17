@@ -1,50 +1,35 @@
-import AuthAdminAPI
-import AuthAppAPI
-import CSS
 import FeatherAdmin
-import FeatherValidation
-import FeatherValidationFoundation
-import Foundation
 import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import SystemAdminAPI
-import SystemFrontend
-import UserAdminAPI
-import UserAppAPI
-import UserFrontend
 import WebBuilders
 import WebComponents
 
 struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
-    let request: Request
-    let renderEngine: any RenderingEngine
-
     func renderPage(
         form: LoginForm.State,
         message: String?
     ) -> HTMLResponse {
         var buildContext = BuilderContext()
-        return renderEngine.renderPublicPage(
-            request: request,
+        let component = NewAdminHTML(
             title: "Login",
-            description: "This is the login page for the Feather CMS app",
-            imagePath: "images/logos/logo.png",
-            content: buildContext.build(
-                LoginPage(
+            body: .init(
+                content: LoginPage(
                     state: .init(
                         form: form,
                         message: message
                     )
-                )
-            )
+                ),
+                showsFooter: false,
+                allowsPasswordManagerAutofill: true
+            ),
+            stylesheetPath: nil
         )
+        return .init(buildContext.build(component))
     }
 
     func formState(
-        email: String = "mail.tib@gmail.com",
-        password: String = "root",
+        email: String = "",
+        password: String = "",
         isPersistent: Bool = true,
         redirectPath: String = "/"
     ) -> LoginForm.State {
@@ -54,14 +39,16 @@ struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
                 label: "Email address",
                 value: email,
                 error: nil,
-                type: .email
+                type: .email,
+                isRequired: true
             ),
             password: .init(
                 name: "password",
                 label: "Password",
                 value: password,
                 error: nil,
-                type: .password
+                type: .password,
+                isRequired: true
             ),
             isPersistent: .init(
                 name: "is_persistent",

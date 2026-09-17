@@ -61,7 +61,7 @@ struct AdminRemoveUserRoleOpenAPIRepository: AdminRemoveUserRoleRepository {
         ids: [String]
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.userRoleDelete(
+            let response = try await client.userRoleRemove(
                 body: .json(.init(ids: ids, results: false, summary: true))
             )
             switch response {

@@ -95,11 +95,10 @@ struct AdminListAccountInvitationDefaultController:
             )
         }
         return try await runtime.presenter
-            .renderRemoveConfirmation(
+            .renderRemovePage(
                 page: page,
                 search: search,
-                selectedIds: selectedIds,
-                permissions: context.currentUserPermissions
+                items: selectedIds.map { .init(id: $0, label: $0) }
             )
             .response(from: request, context: context)
     }

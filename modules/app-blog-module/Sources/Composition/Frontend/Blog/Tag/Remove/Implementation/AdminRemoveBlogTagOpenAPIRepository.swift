@@ -33,10 +33,8 @@ struct AdminRemoveBlogTagOpenAPIRepository:
                     title: page.title,
                     excerpt: page.excerpt,
                     content: page.content,
-                    imageAssetId: page.imageAssetId,
-                    imageAsset: try await loadImageAsset(
-                        assetId: page.imageAssetId
-                    ),
+                    imageAsset: try await api.mediaAdminAPI()
+                        .loadImageAsset(assetId: page.imageAssetId),
                     metadata: AdminMetadataSchemaBuilder.formValue(
                         from: page.metadata,
                         fallbackTitle: page.title,
@@ -62,29 +60,10 @@ struct AdminRemoveBlogTagOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.blogTagDelete(
+            _ = try await client.blogTagRemove(
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }
     }
 
-    private func loadImageAsset(
-        assetId: String?
-    ) async throws -> NewAdminMediaAsset? {
-        try await api.withOpenAPIRepositoryErrorMapping {
-            client -> NewAdminMediaAsset? in
-            guard let assetId, !assetId.isEmpty else {
-                return nil as NewAdminMediaAsset?
-            }
-            guard
-                let asset = try? await AdminViewMediaAssetOpenAPIRepository(
-                    api: api
-                )
-                .getAsset(id: assetId)
-            else {
-                return nil as NewAdminMediaAsset?
-            }
-            return .init(schema: asset)
-        }
-    }
 }

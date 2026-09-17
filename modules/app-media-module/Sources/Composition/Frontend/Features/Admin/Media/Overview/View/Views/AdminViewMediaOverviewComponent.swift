@@ -18,13 +18,14 @@ struct AdminViewMediaOverviewComponent: Component {
             title: "Assets",
             description: "Manage uploaded media assets and folders.",
             href: MediaAssetRoutes.list.description,
-            icon: "box"
+            icon: "folder"
         ),
         Destination(
-            title: "Processors",
-            description: "Manage media processing rules and transformations.",
-            href: MediaProcessorRoutes.list.description,
-            icon: "playCircle"
+            title: "Variants",
+            description:
+                "Manage variants and their source-specific processor rules.",
+            href: MediaVariantRoutes.list.description,
+            icon: "crop"
         ),
     ]
 
@@ -75,7 +76,7 @@ struct AdminViewMediaOverviewComponent: Component {
                     state: .init(
                         title: "Media",
                         description:
-                            "Manage media assets, folders, and processors."
+                            "Manage media assets, folders, and variants."
                     )
                 )
             )

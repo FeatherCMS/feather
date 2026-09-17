@@ -37,7 +37,7 @@ struct AdminAddAuthEmailDefaultPresenter: AdminAddAuthEmailPresenter {
             content: AuthEmailAdd(
                 state: .init(
                     form: form,
-                    breadcrumb: breadcrumb()
+                    breadcrumb: AuthEmailRoutes.breadcrumb
                 )
             )
         )
@@ -79,14 +79,6 @@ struct AdminAddAuthEmailDefaultPresenter: AdminAddAuthEmailPresenter {
             error: nil,
             success: nil
         )
-    }
-
-    func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Emails", link: "/admin/auth/emails/"),
-        ]
     }
 
     func format(

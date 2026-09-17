@@ -19,10 +19,6 @@ import WebComponents
 
 protocol AdminViewAuthEmailPresenter: Sendable {
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link]
-
     func renderPage(
         link: AuthEmailDetailsModel,
         permissions: Set<String>

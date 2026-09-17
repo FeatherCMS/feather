@@ -14,10 +14,24 @@ import WebComponents
 
 public struct NewAdminTopBar: Component {
 
-    private let notification: NewAdminNotification?
+    public struct State: Sendable, Equatable {
 
-    public init(notification: NewAdminNotification? = nil) {
+        public let profileImageURL: String?
+
+        public init(profileImageURL: String? = nil) {
+            self.profileImageURL = profileImageURL
+        }
+    }
+
+    private let notification: NewAdminNotification?
+    private let state: State
+
+    public init(
+        notification: NewAdminNotification? = nil,
+        state: State = .init()
+    ) {
         self.notification = notification
+        self.state = state
     }
 
     private func renderMenuTrigger(context: inout BuilderContext) -> Div {
@@ -62,7 +76,12 @@ public struct NewAdminTopBar: Component {
                 .id("accountToggle")
                 .name("accountToggle")
             Label {
-                FeatherIcons.user().class("account-profile-icon")
+                if let profileImageURL = state.profileImageURL {
+                    Img(src: profileImageURL, alt: "")
+                }
+                else {
+                    FeatherIcons.user().class("account-profile-icon")
+                }
                 Span("My profile")
                     .class("sr-only")
             }

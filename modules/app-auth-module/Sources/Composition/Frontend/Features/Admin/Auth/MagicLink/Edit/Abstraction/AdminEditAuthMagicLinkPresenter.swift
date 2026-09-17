@@ -25,10 +25,6 @@ protocol AdminEditAuthMagicLinkPresenter: Sendable {
         isPersistent: Bool
     ) -> AuthMagicLinkForm.State
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link]
-
     func renderPage(
         id: String,
         isEdited: Bool,

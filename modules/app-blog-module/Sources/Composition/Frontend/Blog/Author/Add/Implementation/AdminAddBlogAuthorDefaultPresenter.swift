@@ -27,13 +27,10 @@ struct AdminAddBlogAuthorDefaultPresenter: AdminAddBlogAuthorPresenter {
             content: BlogAuthorAdd(
                 state: .init(
                     form: state,
-                    breadcrumb: breadcrumb()
+                    breadcrumb: BlogAdminRoutes.authorsBreadcrumb
                 )
             )
         )
     }
 
-    func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        BlogAdminRoutes.authorsBreadcrumb
-    }
 }

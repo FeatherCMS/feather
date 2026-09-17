@@ -3,7 +3,7 @@ import FeatherOpenAPI
 struct ContactFieldPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { ContactFieldListOperation() }
     var post: OperationRepresentable? { ContactFieldCreateOperation() }
-    var delete: OperationRepresentable? { ContactFieldDeleteOperation() }
+    var delete: OperationRepresentable? { ContactFieldRemoveOperation() }
 }
 struct ContactFieldIDPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { ContactFieldGetOperation() }
@@ -12,7 +12,7 @@ struct ContactFieldIDPathItems: PathItemRepresentable {
 struct FormFieldPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { FormFieldListOperation() }
     var post: OperationRepresentable? { FormFieldCreateOperation() }
-    var delete: OperationRepresentable? { FormFieldDeleteOperation() }
+    var delete: OperationRepresentable? { FormFieldRemoveOperation() }
 }
 struct FormFieldIDPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { FormFieldGetOperation() }

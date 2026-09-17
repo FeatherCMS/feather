@@ -8,9 +8,33 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
 
-    func renderRemovePage(id: String, source: String, returnTo: String?)
+    func renderRemovePage(items: [NewAdminRemoveItemContext], returnTo: String?)
         async throws -> HTMLResponse
     {
+        guard items.count != 1 else {
+            let item = items[0]
+            let nonceToken = await AdminNonceStore.shared.issue(
+                sessionToken: context.sessionToken
+            )
+            return try await renderingEngine.renderNewAdminPage(
+                request: request,
+                context: context,
+                title: "Remove redirect rule",
+                content: RedirectRuleConfirmation(
+                    id: item.id,
+                    source: item.label,
+                    nonceToken: nonceToken,
+                    returnTo: returnTo
+                )
+            )
+        }
+        return try await renderBulkRemovePage(items: items, returnTo: returnTo)
+    }
+
+    private func renderBulkRemovePage(
+        items: [NewAdminRemoveItemContext],
+        returnTo: String?
+    ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
@@ -18,48 +42,21 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
             request: request,
             context: context,
             title: "Remove redirect rule",
-            content: RedirectRuleConfirmation(
-                id: id,
-                source: source,
-                nonceToken: nonceToken,
-                returnTo: returnTo
-            )
-        )
-    }
-
-    func renderRemoveConfirmation(
-        page: Int,
-        search: String?,
-        ids: [String],
-        names: [String],
-        returnTo: String?
-    ) async throws -> HTMLResponse {
-        let nonceToken = await AdminNonceStore.shared.issue(
-            sessionToken: context.sessionToken
-        )
-        let cancel = NewAdminLocation.removeCancel(
-            path: RedirectRuleRoutes.list.description,
-            returnTo: returnTo
-        )
-        return try await renderingEngine.renderNewAdminPage(
-            request: request,
-            context: context,
-            title: "Manage redirect rules",
             content: NewAdminRemoveConfirmation(
                 breadcrumb: RedirectRuleRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove selected redirect rules",
-                    description: "This action cannot be undone."
+                    description:
+                        "You’re about to permanently remove the selected redirect rules. This action cannot be undone."
                 ),
-                selectedItems: names,
+                selectedItems: items.map(\.label),
                 action: RedirectRuleRoutes.remove.description,
-                cancel: cancel,
-                hiddenFields: ids.map { .init(name: "ids", value: $0) } + [
-                    .init(name: "_nonce", value: nonceToken),
-                    .init(name: "page", value: String(page)),
-                    .init(name: "search", value: search ?? ""),
-                    .init(name: "returnTo", value: cancel),
-                ]
+                cancel: NewAdminLocation.removeCancel(
+                    path: RedirectRuleRoutes.list.description,
+                    returnTo: returnTo
+                ),
+                nonceToken: nonceToken,
+                hiddenFields: items.map { .init(name: "ids", value: $0.id) }
             )
         )
     }

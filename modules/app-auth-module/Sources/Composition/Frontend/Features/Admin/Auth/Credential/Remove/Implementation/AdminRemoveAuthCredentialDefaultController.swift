@@ -3,6 +3,7 @@ import AuthAppAPI
 import AuthContracts
 import CSS
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import FeatherValidationFoundation
 import HTML
@@ -35,22 +36,24 @@ struct AdminRemoveAuthCredentialDefaultController:
             context.isCurrentUserAllowed(to: AuthPermissions.Credential.delete)
         else {
             return try await presenter.renderError(
-                id: id,
-                error: .forbidden,
-                permissions: context.currentUserPermissions
+                item: .init(id: id, label: id),
+                error: .forbidden
             )
         }
         do {
+            let model = try await interactor.get(id: id)
             return try await presenter.renderPage(
-                model: try await interactor.get(id: id),
-                permissions: context.currentUserPermissions
+                item: .init(
+                    id: id,
+                    label: model.email.emptyToNil ?? model.userId
+                ),
+                model: model
             )
         }
         catch let error as OpenAPIRepositoryError {
             return try await presenter.renderError(
-                id: id,
-                error: error,
-                permissions: context.currentUserPermissions
+                item: .init(id: id, label: id),
+                error: error
             )
         }
     }
@@ -65,9 +68,8 @@ struct AdminRemoveAuthCredentialDefaultController:
         else {
             return
                 try await presenter.renderError(
-                    id: id,
-                    error: .forbidden,
-                    permissions: context.currentUserPermissions
+                    item: .init(id: id, label: id),
+                    error: .forbidden
                 )
                 .response(from: request, context: context)
         }

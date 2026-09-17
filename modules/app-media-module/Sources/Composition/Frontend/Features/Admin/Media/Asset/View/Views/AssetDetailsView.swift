@@ -16,29 +16,10 @@ struct AssetDetailsView: Component {
     let variants: [Components.Schemas.MediaAssetVariantListItemSchema]
     let permissions: NewAdminListActions
 
-    private func compactStorageKey(
-        _ key: String
-    ) -> String {
-        let prefix = "media/assets/"
-        guard key.hasPrefix(prefix) else { return key }
-        return String(key.dropFirst(prefix.count))
-    }
-
     private func previewLink(
-        for storageKey: String,
-        isVariant: Bool
+        for url: String
     ) -> String {
-        let normalizedKey = compactStorageKey(storageKey)
-        let allowed = CharacterSet(
-            charactersIn:
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~/"
-        )
-        let encoded =
-            normalizedKey.addingPercentEncoding(withAllowedCharacters: allowed)
-            ?? normalizedKey
-        let prefix = isVariant ? "/media/variants/" : "/media/assets/"
-        return
-            "\(AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString)\(prefix)\(encoded)"
+        NewAdminMediaAsset.mediaURL(path: url)
     }
 
     func html(context: inout BuilderContext) -> some BasicTag {
@@ -60,12 +41,12 @@ struct AssetDetailsView: Component {
             )
             context.build(
                 NewAdminDetailField(
-                    label: "Storage key",
-                    value: item.storageKey
+                    label: "URL",
+                    value: item.url
                 )
             )
             context.build(
-                NewAdminDetailField(label: "Type", value: item._type)
+                NewAdminDetailField(label: "Extension", value: item._extension)
             )
             context.build(
                 NewAdminDetailField(label: "Status", value: item.status)
@@ -89,7 +70,7 @@ struct AssetDetailsView: Component {
             context.build(
                 NewAdminButton(
                     "Open original",
-                    href: previewLink(for: item.storageKey, isVariant: false),
+                    href: previewLink(for: item.url),
                     style: .secondary
                 )
             )
@@ -114,8 +95,8 @@ struct AssetDetailsView: Component {
                             Thead {
                                 Tr {
                                     Th("Name")
-                                    Th("Type")
-                                    Th("Storage key")
+                                    Th("Extension")
+                                    Th("URL")
                                     Th("Preview")
                                 }
                             }
@@ -123,15 +104,14 @@ struct AssetDetailsView: Component {
                                 for variant in variants {
                                     Tr {
                                         Td(variant.name)
-                                        Td(variant._type)
-                                        Td(variant.storageKey)
+                                        Td(variant._extension)
+                                        Td(variant.url)
                                         Td {
                                             context.build(
                                                 NewAdminRowButton(
                                                     "Preview",
                                                     href: previewLink(
-                                                        for: variant.storageKey,
-                                                        isVariant: true
+                                                        for: variant.url
                                                     ),
                                                     style: .ghost(.primary)
                                                 )

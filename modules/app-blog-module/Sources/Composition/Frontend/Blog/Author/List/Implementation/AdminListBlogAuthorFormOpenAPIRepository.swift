@@ -32,9 +32,8 @@ struct AdminListBlogAuthorFormOpenAPIRepository {
                     excerpt: author.excerpt,
                     content: author.content,
                     profileImageAssetId: author.profileImageAssetId,
-                    profileImage: try await loadProfileImage(
-                        assetId: author.profileImageAssetId
-                    ),
+                    profileImage: try await api.mediaAdminAPI()
+                        .loadImageAsset(assetId: author.profileImageAssetId),
                     metadata: AdminMetadataSchemaBuilder.formValue(
                         from: author.metadata,
                         fallbackTitle: author.name,
@@ -93,23 +92,4 @@ struct AdminListBlogAuthorFormOpenAPIRepository {
         }
     }
 
-    private func loadProfileImage(
-        assetId: String?
-    ) async throws -> NewAdminMediaAsset? {
-        try await api.withOpenAPIRepositoryErrorMapping {
-            client -> NewAdminMediaAsset? in
-            guard let assetId, !assetId.isEmpty else {
-                return nil
-            }
-            guard
-                let asset = try? await AdminViewMediaAssetOpenAPIRepository(
-                    api: api
-                )
-                .getAsset(id: assetId)
-            else {
-                return nil
-            }
-            return .init(schema: asset)
-        }
-    }
 }

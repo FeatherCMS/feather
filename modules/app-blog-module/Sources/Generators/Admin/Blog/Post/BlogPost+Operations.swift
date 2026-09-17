@@ -101,7 +101,7 @@ struct BlogPostPatchOperation: BlogPostIDOperation {
     }
 }
 
-struct BlogPostDeleteOperation: BlogPostOperation,
+struct BlogPostRemoveOperation: BlogPostOperation,
     DeleteOperation
 {
 }

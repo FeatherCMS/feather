@@ -59,29 +59,20 @@ public struct AdminMedia {
         )
         .controller.route(on: router)
 
-        AdminListMediaProcessor(
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        AdminListMediaVariant(renderingEngine: renderingEngine)
+            .controller.route(on: router)
 
-        AdminAddMediaProcessor(
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        AdminAddMediaVariant(renderingEngine: renderingEngine)
+            .controller.route(on: router)
 
-        AdminViewMediaProcessor(
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        AdminEditMediaVariant(renderingEngine: renderingEngine)
+            .controller.route(on: router)
 
-        AdminEditMediaProcessor(
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        AdminListMediaVariantProcessors(renderingEngine: renderingEngine)
+            .controller.route(on: router)
 
-        AdminRemoveMediaProcessor(
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
+        AdminRemoveMediaVariant(renderingEngine: renderingEngine)
+            .controller.route(on: router)
+
     }
 }

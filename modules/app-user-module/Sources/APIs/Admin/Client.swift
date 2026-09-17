@@ -121,13 +121,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)`.
-    public func userIdentityDelete(_ input: Operations.UserIdentityDelete.Input)
-        async throws -> Operations.UserIdentityDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)`.
+    public func userIdentityRemove(_ input: Operations.UserIdentityRemove.Input)
+        async throws -> Operations.UserIdentityRemove.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.UserIdentityDelete.id,
+            forOperation: Operations.UserIdentityRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/user/identities",
@@ -660,13 +660,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)`.
-    public func userRoleDelete(_ input: Operations.UserRoleDelete.Input)
-        async throws -> Operations.UserRoleDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)`.
+    public func userRoleRemove(_ input: Operations.UserRoleRemove.Input)
+        async throws -> Operations.UserRoleRemove.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.UserRoleDelete.id,
+            forOperation: Operations.UserRoleRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/user/roles",

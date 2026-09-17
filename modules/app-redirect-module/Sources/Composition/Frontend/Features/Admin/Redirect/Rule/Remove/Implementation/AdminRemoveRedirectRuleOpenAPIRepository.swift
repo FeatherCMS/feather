@@ -15,7 +15,7 @@ struct AdminRemoveRedirectRuleOpenAPIRepository:
 
     func delete(ids: [String]) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.redirectRuleDelete(
+            let response = try await client.redirectRuleRemove(
                 body: .json(.init(ids: ids, results: false, summary: true))
             )
             switch response {

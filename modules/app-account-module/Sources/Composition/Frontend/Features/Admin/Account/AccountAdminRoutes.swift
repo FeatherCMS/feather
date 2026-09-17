@@ -6,7 +6,6 @@ enum AccountAdminRoutes {
     static let account = admin.appendingPath(RouterPath("account"))
     static let profile = account.appendingPath(RouterPath("profile"))
     static let profileEdit = profile.appendingPath(RouterPath("edit"))
-    static let profileImage = profile.appendingPath(RouterPath("image"))
     static let settings = account.appendingPath(RouterPath("settings"))
     static let userSettingsPattern =
         account
@@ -39,10 +38,39 @@ enum AccountAdminRoutes {
             .init(label: "Profile", link: profile.description)
         ]
 
+    static let settingsBreadcrumb: [NewAdminBreadcrumb.Link] =
+        breadcrumb + [
+            .init(label: "Settings", link: settings.description)
+        ]
+
     static let invitationBreadcrumb: [NewAdminBreadcrumb.Link] =
         breadcrumb + [
             .init(label: "Invitations", link: invitations.description)
         ]
+
+    static func invitationDetailsBreadcrumb(
+        _ id: RouterPath
+    ) -> [NewAdminBreadcrumb.Link] {
+        invitationBreadcrumb + [
+            .init(label: "Details", link: invitationDetails(id).description)
+        ]
+    }
+
+    static func invitationEditBreadcrumb(
+        _ id: RouterPath
+    ) -> [NewAdminBreadcrumb.Link] {
+        invitationDetailsBreadcrumb(id) + [
+            .init(label: "Edit", link: invitationEdit(id).description)
+        ]
+    }
+
+    static func invitationRemoveBreadcrumb(
+        _ id: RouterPath
+    ) -> [NewAdminBreadcrumb.Link] {
+        invitationBreadcrumb + [
+            .init(label: "Remove", link: invitationRemove(id).description)
+        ]
+    }
 
     static func invitationDetails(_ id: RouterPath) -> RouterPath {
         invitations.appendingPath(id)

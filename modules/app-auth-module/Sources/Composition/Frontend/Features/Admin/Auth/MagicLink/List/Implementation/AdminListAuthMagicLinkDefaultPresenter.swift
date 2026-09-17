@@ -46,18 +46,17 @@ struct AdminListAuthMagicLinkDefaultPresenter:
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: breadcrumb()
+                    breadcrumb: AuthMagicLinkRoutes.listBreadcrumb
                 )
             )
         )
     }
 
-    func renderRemoveConfirmation(
-        selectedIds: [String],
+    func renderRemovePage(
+        items: [NewAdminRemoveItemContext],
         page: Int,
         search: String?,
-        userID: String?,
-        permissions: Set<String>
+        userID: String?
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -67,12 +66,12 @@ struct AdminListAuthMagicLinkDefaultPresenter:
             context: context,
             title: "Remove selected magic links",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: breadcrumb(),
+                breadcrumb: AuthMagicLinkRoutes.listBreadcrumb,
                 pageHeader: .init(
                     title: "Remove selected magic links",
                     description: "Review the selected links before removal."
                 ),
-                selectedItems: selectedIds,
+                selectedItems: items.map(\.label),
                 action: "/admin/auth/magic-links/remove/",
                 cancel: listLocation(
                     page: page,
@@ -85,8 +84,8 @@ struct AdminListAuthMagicLinkDefaultPresenter:
                     .init(name: "search", value: search ?? ""),
                     .init(name: "userId", value: userID ?? ""),
                 ]
-                    + selectedIds.map {
-                        .init(name: "selectedIds", value: $0)
+                    + items.map {
+                        .init(name: "ids", value: $0.id)
                     }
             )
         )
@@ -106,13 +105,6 @@ struct AdminListAuthMagicLinkDefaultPresenter:
                 icon: FeatherIcons.alertCircle()
             )
         )
-    }
-
-    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-        ]
     }
 
     private func listLocation(page: Int, search: String?, userID: String?)

@@ -12,11 +12,10 @@ protocol AdminListWebMenuItemPresenter: Sendable {
         error: String?
     ) async throws -> HTMLResponse
 
-    func renderRemoveConfirmation(
+    func renderRemovePage(
         menuId: String,
         page: Int,
         search: String?,
-        selectedIds: [String],
-        permissions: Set<String>
+        items: [NewAdminRemoveItemContext]
     ) async throws -> HTMLResponse
 }

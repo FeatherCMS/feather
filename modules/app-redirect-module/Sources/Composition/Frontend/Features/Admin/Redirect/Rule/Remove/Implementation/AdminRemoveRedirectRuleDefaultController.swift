@@ -21,8 +21,7 @@ struct AdminRemoveRedirectRuleDefaultController:
         do {
             let names = try await interactor.names(ids: [id])
             return try await presenter.renderRemovePage(
-                id: id,
-                source: names.first ?? id,
+                items: [.init(id: id, label: names.first ?? id)],
                 returnTo: request.queryString("returnTo")
             )
         }
@@ -101,25 +100,32 @@ struct AdminRemoveRedirectRuleDefaultController:
         let ids = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
+        let returnTo =
+            request.queryString("returnTo")
+            ?? NewAdminLocation.url(
+                path: RedirectRuleRoutes.list.description,
+                page: page,
+                search: search
+            )
         guard !ids.isEmpty else {
             return Response(
                 status: .seeOther,
                 headers: [
                     .location: NewAdminLocation.removeCancel(
                         path: RedirectRuleRoutes.list.description,
-                        returnTo: request.queryString("returnTo")
+                        returnTo: returnTo
                     )
                 ]
             )
         }
         do {
             return
-                try await presenter.renderRemoveConfirmation(
-                    page: page,
-                    search: search,
-                    ids: ids,
-                    names: try await interactor.names(ids: ids),
-                    returnTo: request.queryString("returnTo")
+                try await presenter.renderRemovePage(
+                    items: zip(ids, try await interactor.names(ids: ids))
+                        .map {
+                            .init(id: $0.0, label: $0.1)
+                        },
+                    returnTo: returnTo
                 )
                 .response(from: request, context: context)
         }
@@ -129,7 +135,7 @@ struct AdminRemoveRedirectRuleDefaultController:
                     error: error,
                     cancel: NewAdminLocation.removeCancel(
                         path: RedirectRuleRoutes.list.description,
-                        returnTo: request.queryString("returnTo")
+                        returnTo: returnTo
                     )
                 )
                 .response(from: request, context: context)

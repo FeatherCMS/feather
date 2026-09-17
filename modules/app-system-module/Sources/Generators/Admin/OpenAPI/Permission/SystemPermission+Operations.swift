@@ -65,7 +65,7 @@ struct SystemPermissionSearchOperation: SystemPermissionOperation {
     }
 }
 
-struct SystemPermissionDeleteOperation: SystemPermissionOperation,
+struct SystemPermissionRemoveOperation: SystemPermissionOperation,
     DeleteOperation
 {
 }

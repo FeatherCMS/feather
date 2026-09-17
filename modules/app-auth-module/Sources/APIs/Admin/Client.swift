@@ -412,13 +412,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionDelete)`.
-    public func userIdentitySessionDelete(
-        _ input: Operations.UserIdentitySessionDelete.Input
-    ) async throws -> Operations.UserIdentitySessionDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionRemove)`.
+    public func userIdentitySessionRemove(
+        _ input: Operations.UserIdentitySessionRemove.Input
+    ) async throws -> Operations.UserIdentitySessionRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.UserIdentitySessionDelete.id,
+            forOperation: Operations.UserIdentitySessionRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/user/identities/{}/sessions",
@@ -569,13 +569,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/credentials`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialDelete)`.
-    public func authCredentialDelete(
-        _ input: Operations.AuthCredentialDelete.Input
-    ) async throws -> Operations.AuthCredentialDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialRemove)`.
+    public func authCredentialRemove(
+        _ input: Operations.AuthCredentialRemove.Input
+    ) async throws -> Operations.AuthCredentialRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.AuthCredentialDelete.id,
+            forOperation: Operations.AuthCredentialRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/auth/credentials",
@@ -1109,6 +1109,83 @@ public struct Client: APIProtocol {
             }
         )
     }
+    /// - Remark: HTTP `DELETE /api/v1/admin/auth/emails`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/emails/delete(authEmailRemove)`.
+    public func authEmailRemove(_ input: Operations.AuthEmailRemove.Input)
+        async throws -> Operations.AuthEmailRemove.Output
+    {
+        try await client.send(
+            input: input,
+            forOperation: Operations.AuthEmailRemove.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/api/v1/admin/auth/emails",
+                    parameters: []
+                )
+                var request: HTTPTypes.HTTPRequest = .init(
+                    soar_path: path,
+                    method: .delete
+                )
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(
+                    in: &request.headerFields,
+                    contentTypes: input.headers.accept
+                )
+                let body: OpenAPIRuntime.HTTPBody?
+                switch input.body {
+                case .json(let value):
+                    body = try converter.setRequiredRequestBodyAsJSON(
+                        value,
+                        headerFields: &request.headerFields,
+                        contentType: "application/json; charset=utf-8"
+                    )
+                }
+                return (request, body)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 200:
+                    let contentType = converter.extractContentTypeIfPresent(
+                        in: response.headerFields
+                    )
+                    let body: Components.Responses.DeleteResponse.Body
+                    let chosenContentType = try converter.bestContentType(
+                        received: contentType,
+                        options: [
+                            "application/json"
+                        ]
+                    )
+                    switch chosenContentType {
+                    case "application/json":
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.DeleteResponseSchema.self,
+                            from: responseBody,
+                            transforming: { value in
+                                .json(value)
+                            }
+                        )
+                    default:
+                        preconditionFailure(
+                            "bestContentType chose an invalid content type."
+                        )
+                    }
+                    return .ok(.init(body: body))
+                case 401:
+                    return .unauthorized(.init())
+                case 403:
+                    return .forbidden(.init())
+                default:
+                    return .undocumented(
+                        statusCode: response.status.code,
+                        .init(
+                            headerFields: response.headerFields,
+                            body: responseBody
+                        )
+                    )
+                }
+            }
+        )
+    }
     /// - Remark: HTTP `GET /api/v1/admin/auth/emails/`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/emails//get(authEmailList)`.
     public func authEmailList(_ input: Operations.AuthEmailList.Input)
@@ -1330,85 +1407,6 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/emails/{authEmailId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/emails/{authEmailId}/delete(authEmailDelete)`.
-    public func authEmailDelete(_ input: Operations.AuthEmailDelete.Input)
-        async throws -> Operations.AuthEmailDelete.Output
-    {
-        try await client.send(
-            input: input,
-            forOperation: Operations.AuthEmailDelete.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/auth/emails/{}",
-                    parameters: [
-                        input.path.authEmailId
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .delete
-                )
-                suppressMutabilityWarning(&request)
-                converter.setAcceptHeader(
-                    in: &request.headerFields,
-                    contentTypes: input.headers.accept
-                )
-                let body: OpenAPIRuntime.HTTPBody?
-                switch input.body {
-                case .json(let value):
-                    body = try converter.setRequiredRequestBodyAsJSON(
-                        value,
-                        headerFields: &request.headerFields,
-                        contentType: "application/json; charset=utf-8"
-                    )
-                }
-                return (request, body)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 200:
-                    let contentType = converter.extractContentTypeIfPresent(
-                        in: response.headerFields
-                    )
-                    let body: Components.Responses.DeleteResponse.Body
-                    let chosenContentType = try converter.bestContentType(
-                        received: contentType,
-                        options: [
-                            "application/json"
-                        ]
-                    )
-                    switch chosenContentType {
-                    case "application/json":
-                        body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.DeleteResponseSchema.self,
-                            from: responseBody,
-                            transforming: { value in
-                                .json(value)
-                            }
-                        )
-                    default:
-                        preconditionFailure(
-                            "bestContentType chose an invalid content type."
-                        )
-                    }
-                    return .ok(.init(body: body))
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
     /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/post(authRolePermissionCreate)`.
     public func authRolePermissionCreate(
@@ -1490,13 +1488,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionDelete)`.
-    public func authRolePermissionDelete(
-        _ input: Operations.AuthRolePermissionDelete.Input
-    ) async throws -> Operations.AuthRolePermissionDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionRemove)`.
+    public func authRolePermissionRemove(
+        _ input: Operations.AuthRolePermissionRemove.Input
+    ) async throws -> Operations.AuthRolePermissionRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.AuthRolePermissionDelete.id,
+            forOperation: Operations.AuthRolePermissionRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/auth/role-permissions",
@@ -1726,13 +1724,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/magic-links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkDelete)`.
-    public func authMagicLinkDelete(
-        _ input: Operations.AuthMagicLinkDelete.Input
-    ) async throws -> Operations.AuthMagicLinkDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkRemove)`.
+    public func authMagicLinkRemove(
+        _ input: Operations.AuthMagicLinkRemove.Input
+    ) async throws -> Operations.AuthMagicLinkRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.AuthMagicLinkDelete.id,
+            forOperation: Operations.AuthMagicLinkRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/auth/magic-links",

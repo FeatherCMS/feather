@@ -9,7 +9,9 @@ import PostgresMigrations
 import PostgresNIO
 import Environment
 import FeatherInfrastructure
+import FeatherStorage
 import FeatherStorageFS
+import MediaApplication
 import MediaInfrastructure
 #if canImport(FoundationEssentials)
 import FoundationEssentials
@@ -73,10 +75,10 @@ func buildServer(
             idGenerator: idGenerator,
             events: events,
             jobQueue: jobQueue,
-            mediaStorage: MediaStorageClient(
-                client: StorageClientFS(
-                    rootPath: config.media.storageRootPath
-                )
+            storage: StorageClientFS(rootPath: config.media.storageRootPath),
+            storageKeyShard: .init(
+                depth: config.media.storageShardDepth,
+                segmentLength: config.media.storageShardSegmentLength
             )
         )
     )

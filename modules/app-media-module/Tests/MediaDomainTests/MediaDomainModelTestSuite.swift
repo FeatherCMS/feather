@@ -1,9 +1,3 @@
-//
-//  MediaDomainModelTestSuite.swift
-//  app-media-module
-//
-//  Created by Binary Birds on 2026. 06. 18.
-
 import Foundation
 import Testing
 
@@ -11,31 +5,54 @@ import Testing
 
 @Suite
 struct MediaDomainModelTestSuite {
-
     @Test
     func mediaAssetCreateDefaultsToUploadedStatus() {
-        let new = MediaAsset.create(
-            folderId: nil,
-            storageKey: "media/assets/asset-1",
-            type: "jpeg",
+        let asset = MediaAssetNodeFile.create(
+            folderId: "folder-1",
+            name: "hero",
+            slug: "hero",
+            slugPath: "products/hero",
+            extension: "jpg",
+            contentType: "image/jpeg",
             sizeBytes: 123,
-            title: "title",
-            altText: "alt"
+            title: "Hero",
+            altText: "Product hero"
         )
 
-        #expect(new.status == MediaAsset.Status.uploaded)
-        #expect(new.type == "jpeg")
-        #expect(new.sizeBytes == 123)
+        #expect(asset.status == .uploaded)
+        #expect(asset.slugPath == "products/hero")
     }
 
     @Test
-    func mediaExtensionMatcherPrefersStorageKeyExtension() {
-        let asset = MediaAsset(
+    func mediaAssetVariantStoresVariantAndProcessorIdentity() {
+        let variant = MediaAssetNodeFileVariant.create(
+            nodeId: "asset-1",
+            variantId: "variant-1",
+            variantProcessorId: "processor-1",
+            name: "preview",
+            storageObjectId: "object-2",
+            objectKey: "/media/assets/asset-1/variants/processor-1.webp",
+            extension: "webp"
+        )
+
+        #expect(variant.nodeId == "asset-1")
+        #expect(variant.variantId == "variant-1")
+        #expect(variant.variantProcessorId == "processor-1")
+        #expect(variant.objectKey.hasSuffix(".webp"))
+    }
+
+    @Test
+    func mediaExtensionMatcherMatchesCanonicalExtension() {
+        let asset = MediaAssetNodeFile(
             id: "asset-1",
             folderId: nil,
-            storageKey: "media/assets/asset-1.jpg",
-            baseName: "asset-1",
-            type: "application/octet-stream",
+            name: "hero",
+            slug: "hero",
+            slugPath: "hero",
+            storageObjectId: "object-1",
+            objectKey: "/media/assets/asset-1/original.jpg",
+            extension: "jpg",
+            contentType: "image/jpeg",
             sizeBytes: 123,
             status: .uploaded,
             title: nil,
@@ -44,32 +61,22 @@ struct MediaDomainModelTestSuite {
             updatedAt: .init(),
             deletedAt: nil
         )
-        let processor = MediaProcessor(
+        let processor = MediaVariantProcessor(
             id: "processor-1",
-            name: "image_preview",
+            variantId: "variant-1",
+            name: "preview",
             matchExtensions: "png, jpg",
             commandTemplate: "cp {input.fullname} {output.fullname}",
-            isRequired: false,
             isActive: true,
             createdAt: .init(),
             updatedAt: .init()
         )
 
         #expect(
-            MediaExtensionMatcher.matches(asset: asset, processor: processor)
+            MediaExtensionMatcher.matches(
+                extension: asset.extension,
+                processor: processor
+            )
         )
-    }
-
-    @Test
-    func mediaProcessorAssetCreateStoresStorageKey() {
-        let link = MediaProcessorAsset.create(
-            assetId: "asset-1",
-            processorId: "processor-1",
-            storageKey: "media/assets/asset-1/image_preview.jpeg"
-        )
-
-        #expect(link.assetId == "asset-1")
-        #expect(link.processorId == "processor-1")
-        #expect(link.storageKey == "media/assets/asset-1/image_preview.jpeg")
     }
 }

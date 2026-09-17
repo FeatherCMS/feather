@@ -17,7 +17,7 @@ struct AssetAddView: Component {
     struct FormState {
         var parentId: String = ""
         var fileName: String = ""
-        var type: String = "bin"
+        var `extension`: String = "bin"
         var title: String = ""
         var altText: String = ""
         var data: String = ""
@@ -55,16 +55,22 @@ struct AssetAddView: Component {
                         selectedAsset.id
                     )
                     .data(
-                        "media-picker-selected-storage-key",
-                        selectedAsset.storageKey
+                        "media-picker-selected-url",
+                        NewAdminMediaAsset.mediaURL(path: selectedAsset.url)
                     )
                     .data(
-                        "media-picker-selected-base-name",
-                        selectedAsset.baseName
+                        "media-picker-selected-preview-url",
+                        selectedAsset.previewURL.map {
+                            NewAdminMediaAsset.mediaURL(path: $0)
+                        } ?? ""
                     )
                     .data(
-                        "media-picker-selected-type",
-                        selectedAsset.type
+                        "media-picker-selected-name",
+                        selectedAsset.name
+                    )
+                    .data(
+                        "media-picker-selected-extension",
+                        selectedAsset.extension
                     )
                     .data(
                         "media-picker-selected-title",
@@ -109,12 +115,9 @@ struct AssetAddView: Component {
                         if (lowerMime.indexOf("/") >= 0) { return (lowerMime.split("/")[1] || "bin").toLowerCase(); }
                         return "bin";
                     }
-                    function normalizeType(filename, mime) {
-                        return normalizeExtension(filename, mime);
-                    }
                     function setHiddenFields(file) {
                         if (!file) { return; }
-                        if (typeInput) { typeInput.value = normalizeType(file.name, file.type); }
+                        if (extensionInput) { extensionInput.value = normalizeExtension(file.name, file.type); }
                         if (fileNameInput) { fileNameInput.value = file.name || ""; }
                     }
                     function readFileBase64(file) {
@@ -140,7 +143,7 @@ struct AssetAddView: Component {
                     var form = document.getElementById("mediaAssetAddForm");
                     var fileInput = document.getElementById("file");
                     var dataInput = document.getElementById("data");
-                    var typeInput = document.getElementById("type");
+                    var extensionInput = document.getElementById("extension");
                     var fileNameInput = document.getElementById("fileName");
                     if (!fileInput || !dataInput) { return; }
                     fileInput.addEventListener("change", function () {
@@ -220,9 +223,9 @@ struct AssetAddView: Component {
                 .value(state.form.fileName)
             Input()
                 .type(.hidden)
-                .name("type")
-                .id("type")
-                .value(state.form.type)
+                .name("extension")
+                .id("extension")
+                .value(state.form.extension)
             Input().type(.hidden).name("data").id("data").value(state.form.data)
             Div {
                 context.build(NewAdminSubmitButton("Add asset"))
@@ -240,8 +243,8 @@ struct AssetAddView: Component {
                 .value(state.form.parentId).id("parentId")
             Input().type(.hidden).name("fileName")
                 .value(state.form.fileName).id("fileName")
-            Input().type(.hidden).name("type").value(state.form.type)
-                .id("type")
+            Input().type(.hidden).name("extension").value(state.form.extension)
+                .id("extension")
             Input().type(.hidden).name("view").value(state.form.view)
                 .id("view")
             context.build(

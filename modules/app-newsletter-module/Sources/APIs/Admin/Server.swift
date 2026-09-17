@@ -59,7 +59,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.newsletterCampaignDelete(
+                try await server.newsletterCampaignRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -124,7 +124,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.newsletterIssueDelete(
+                try await server.newsletterIssueRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -228,7 +228,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.newsletterSubscriberDelete(
+                try await server.newsletterSubscriberRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -418,8 +418,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignDelete)`.
-    fileprivate func newsletterCampaignDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/delete(newsletterCampaignRemove)`.
+    fileprivate func newsletterCampaignRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -428,12 +428,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.NewsletterCampaignDelete.id,
+            forOperation: Operations.NewsletterCampaignRemove.id,
             using: {
-                APIHandler.newsletterCampaignDelete($0)
+                APIHandler.newsletterCampaignRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.NewsletterCampaignDelete.Input.Headers =
+                let headers: Operations.NewsletterCampaignRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -463,7 +463,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.NewsletterCampaignDelete.Input(
+                return Operations.NewsletterCampaignRemove.Input(
                     headers: headers,
                     body: body
                 )
@@ -853,8 +853,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueDelete)`.
-    fileprivate func newsletterIssueDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)`.
+    fileprivate func newsletterIssueRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -863,12 +863,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.NewsletterIssueDelete.id,
+            forOperation: Operations.NewsletterIssueRemove.id,
             using: {
-                APIHandler.newsletterIssueDelete($0)
+                APIHandler.newsletterIssueRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.NewsletterIssueDelete.Input.Path = .init(
+                let path: Operations.NewsletterIssueRemove.Input.Path = .init(
                     newsletterCampaignId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "newsletterCampaignId",
@@ -876,7 +876,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                             .self
                     )
                 )
-                let headers: Operations.NewsletterIssueDelete.Input.Headers =
+                let headers: Operations.NewsletterIssueRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -906,7 +906,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.NewsletterIssueDelete.Input(
+                return Operations.NewsletterIssueRemove.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -1567,8 +1567,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberDelete)`.
-    fileprivate func newsletterSubscriberDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)`.
+    fileprivate func newsletterSubscriberRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1577,12 +1577,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.NewsletterSubscriberDelete.id,
+            forOperation: Operations.NewsletterSubscriberRemove.id,
             using: {
-                APIHandler.newsletterSubscriberDelete($0)
+                APIHandler.newsletterSubscriberRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.NewsletterSubscriberDelete.Input.Path =
+                let path: Operations.NewsletterSubscriberRemove.Input.Path =
                     .init(
                         newsletterCampaignId:
                             try converter.getPathParameterAsURI(
@@ -1593,7 +1593,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                             )
                     )
                 let headers:
-                    Operations.NewsletterSubscriberDelete.Input.Headers = .init(
+                    Operations.NewsletterSubscriberRemove.Input.Headers = .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
                         )
@@ -1622,7 +1622,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.NewsletterSubscriberDelete.Input(
+                return Operations.NewsletterSubscriberRemove.Input(
                     path: path,
                     headers: headers,
                     body: body

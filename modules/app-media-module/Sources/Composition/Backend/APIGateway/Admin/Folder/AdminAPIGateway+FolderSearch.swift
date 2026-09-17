@@ -4,9 +4,9 @@ import MediaAdminAPI
 import MediaApplication
 
 extension AdminAPIGateway {
-    public func mediaFolderSearch(
-        _ input: Operations.MediaFolderSearch.Input
-    ) async throws -> Operations.MediaFolderSearch.Output {
+    public func mediaFolderList(
+        _ input: Operations.MediaFolderList.Input
+    ) async throws -> Operations.MediaFolderList.Output {
         let query: Components.Schemas.MediaFolderListItemSearchQuerySchema
         switch input.body {
         case .json(let value):

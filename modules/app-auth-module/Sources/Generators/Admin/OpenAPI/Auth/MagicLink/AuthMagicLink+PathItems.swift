@@ -2,7 +2,7 @@ import FeatherOpenAPI
 
 struct AuthMagicLinkManagementPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { AuthMagicLinkCreateOperation() }
-    var delete: OperationRepresentable? { AuthMagicLinkDeleteOperation() }
+    var delete: OperationRepresentable? { AuthMagicLinkRemoveOperation() }
 }
 
 struct AuthMagicLinkSearchPathItems: PathItemRepresentable {

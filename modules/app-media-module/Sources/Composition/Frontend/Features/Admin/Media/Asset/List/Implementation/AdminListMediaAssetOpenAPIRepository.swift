@@ -69,7 +69,7 @@ struct AdminListMediaAssetOpenAPIRepository {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
-                .mediaFolderSearch(
+                .mediaFolderList(
                     body: .json(
                         .init(
                             page: .init(size: 100, number: 1),
@@ -92,6 +92,12 @@ struct AdminListMediaAssetOpenAPIRepository {
                 )
             }
         }
+    }
+
+    func resolveAssets(
+        ids: [String]
+    ) async throws -> [Components.Schemas.MediaAssetResolveItemSchema] {
+        try await api.resolveAssets(ids: ids)
     }
 
     func getFolder(
@@ -121,38 +127,11 @@ struct AdminListMediaAssetOpenAPIRepository {
         }
     }
 
-    func getVariants(
-        id: String
-    ) async throws -> [Components.Schemas.MediaAssetVariantListItemSchema] {
-        try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response =
-                try await client
-                .mediaAssetVariantSearch(
-                    path: .init(mediaAssetId: id)
-                )
-            switch response {
-            case .ok(let ok):
-                return try ok.body.json.items
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
-        }
-    }
-
     func delete(
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.mediaAssetNodeDelete(
+            _ = try await client.mediaAssetNodeRemove(
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }
@@ -170,7 +149,7 @@ extension AdminListMediaAssetOpenAPIRepository {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
-                .mediaAssetSearch(
+                .mediaAssetList(
                     body: .json(
                         .init(
                             page: .init(size: size, number: page),
@@ -214,7 +193,7 @@ extension AdminListMediaAssetOpenAPIRepository {
             )
             return items.filter { item in
                 guard let asset = item.file else { return true }
-                return allowedExtensions.contains(asset._type.lowercased())
+                return allowedExtensions.contains(asset._extension.lowercased())
             }
         }
     }

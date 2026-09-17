@@ -78,10 +78,7 @@ struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
                 total: result.total,
                 search: search ?? "",
                 userID: userID,
-                breadcrumb: [
-                    .init(label: "Admin", link: "/admin/"),
-                    .init(label: "Auth", link: "/admin/auth/"),
-                ]
+                breadcrumb: AuthEmailRoutes.listBreadcrumb
             )
             return try await presenter.renderPage(state: state)
         }
@@ -117,12 +114,11 @@ struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
             )
         }
         return
-            try await presenter.renderRemoveConfirmation(
-                selectedIds: selectedIds,
+            try await presenter.renderRemovePage(
+                items: selectedIds.map { .init(id: $0, label: $0) },
                 page: page,
                 search: search,
-                userID: userID,
-                permissions: context.currentUserPermissions
+                userID: userID
             )
             .response(from: request, context: context)
     }

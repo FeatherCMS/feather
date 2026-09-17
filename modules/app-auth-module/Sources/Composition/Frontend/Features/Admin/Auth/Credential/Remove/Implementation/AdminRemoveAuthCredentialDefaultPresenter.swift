@@ -23,7 +23,10 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
     let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
-    func renderPage(model: AuthCredentialDetailsModel, permissions: Set<String>)
+    func renderPage(
+        item: NewAdminRemoveItemContext,
+        model: AuthCredentialDetailsModel
+    )
         async throws -> HTMLResponse
     {
         let nonceToken = await AdminNonceStore.shared.issue(
@@ -35,10 +38,11 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
             title: "Remove credential",
             content: AuthCredentialConfirmation(
                 state: .init(
-                    id: model.id,
+                    item: item,
                     identityId: model.userId,
-                    email: model.email,
-                    breadcrumb: breadcrumb(model: model),
+                    breadcrumb: AuthCredentialRoutes.detailsBreadcrumb(
+                        RouterPath(model.userId)
+                    ),
                     nonceToken: nonceToken
                 )
             )
@@ -62,9 +66,8 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
     }
 
     func renderError(
-        id: String,
-        error: OpenAPIRepositoryError,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext,
+        error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
         try await renderEngine.renderNewAdminPage(
             request: request,
@@ -74,34 +77,12 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(label: "Auth", link: "/admin/auth/"),
-                        .init(
-                            label: "Credentials",
-                            link: "/admin/auth/credentials/"
-                        ),
-                        .init(
-                            label: "Remove",
-                            link: "/admin/auth/credentials/\(id)/remove/"
-                        ),
-                    ]
+                    breadcrumb: AuthCredentialRoutes.removeBreadcrumb(
+                        RouterPath(item.id)
+                    )
                 )
             )
         )
     }
 
-    private func breadcrumb(model: AuthCredentialDetailsModel)
-        -> [NewAdminBreadcrumb.Link]
-    {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Credentials", link: "/admin/auth/credentials/"),
-            .init(
-                label: "User",
-                link: "/admin/auth/credentials/\(model.userId)/"
-            ),
-        ]
-    }
 }

@@ -60,9 +60,13 @@ struct BlogAuthorForm: Component {
                         selectedAsset: state.selectedProfileImage.map {
                             .init(
                                 id: $0.id,
-                                storageKey: $0.storageKey,
-                                baseName: $0.baseName,
-                                type: $0.type,
+                                name: $0.name,
+                                slugPath: $0.slugPath,
+                                url: $0.url,
+                                extension: $0.extension,
+                                contentType: $0.contentType,
+                                sizeBytes: $0.sizeBytes,
+                                variants: $0.variants,
                                 title: $0.title,
                                 altText: $0.altText,
                                 status: $0.status

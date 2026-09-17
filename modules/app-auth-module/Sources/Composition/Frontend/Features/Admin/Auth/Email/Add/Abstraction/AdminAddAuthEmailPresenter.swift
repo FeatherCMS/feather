@@ -30,8 +30,6 @@ protocol AdminAddAuthEmailPresenter: Sendable {
         identities: [AuthCredentialIdentityOption]
     ) -> AuthEmailForm.State
 
-    func breadcrumb() -> [NewAdminBreadcrumb.Link]
-
     func format(
         error: OpenAPIRepositoryError
     ) -> String

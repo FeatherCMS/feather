@@ -46,10 +46,10 @@ public protocol APIProtocol: Sendable {
         _ input: Operations.AccountInvitationCreate.Input
     ) async throws -> Operations.AccountInvitationCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/account/invitations`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)`.
-    func accountInvitationDelete(
-        _ input: Operations.AccountInvitationDelete.Input
-    ) async throws -> Operations.AccountInvitationDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationRemove)`.
+    func accountInvitationRemove(
+        _ input: Operations.AccountInvitationRemove.Input
+    ) async throws -> Operations.AccountInvitationRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/account/invitations/`.
     /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations//get(accountInvitationList)`.
     func accountInvitationList(_ input: Operations.AccountInvitationList.Input)
@@ -174,13 +174,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/account/invitations`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)`.
-    public func accountInvitationDelete(
-        headers: Operations.AccountInvitationDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationRemove)`.
+    public func accountInvitationRemove(
+        headers: Operations.AccountInvitationRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.AccountInvitationDelete.Output {
-        try await accountInvitationDelete(
-            Operations.AccountInvitationDelete.Input(
+    ) async throws -> Operations.AccountInvitationRemove.Output {
+        try await accountInvitationRemove(
+            Operations.AccountInvitationRemove.Input(
                 headers: headers,
                 body: body
             )
@@ -2253,15 +2253,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/account/invitations`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)`.
-    public enum AccountInvitationDelete {
-        public static let id: Swift.String = "accountInvitationDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationRemove)`.
+    public enum AccountInvitationRemove {
+        public static let id: Swift.String = "accountInvitationRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AccountInvitationDelete.AcceptableContentType
+                        Operations.AccountInvitationRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -2269,13 +2269,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.AccountInvitationDelete.AcceptableContentType
+                        Operations.AccountInvitationRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.AccountInvitationDelete.Input.Headers
+            public var headers: Operations.AccountInvitationRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -2283,7 +2283,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.AccountInvitationDelete.Input.Headers =
+                headers: Operations.AccountInvitationRemove.Input.Headers =
                     .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
@@ -2294,7 +2294,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -2321,15 +2321,15 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
-                Operations.AccountInvitationDelete.Output.Unauthorized
+                Operations.AccountInvitationRemove.Output.Unauthorized
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -2340,7 +2340,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.AccountInvitationDelete.Output.Unauthorized
+                Operations.AccountInvitationRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -2360,13 +2360,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.AccountInvitationDelete.Output.Forbidden)
+            case forbidden(Operations.AccountInvitationRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -2377,7 +2377,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
             public var forbidden:
-                Operations.AccountInvitationDelete.Output.Forbidden
+                Operations.AccountInvitationRemove.Output.Forbidden
             {
                 get throws {
                     switch self {

@@ -64,7 +64,7 @@ struct AdminEditAuthAccessControlDefaultPresenter:
                     permissions: state.permissions,
                     selectedPairs: state.selectedPairs,
                     search: normalizedSearch,
-                    breadcrumb: breadcrumb(),
+                    breadcrumb: AuthAccessControlRoutes.breadcrumb,
                     nonceToken: nonceToken
                 )
             )
@@ -77,10 +77,4 @@ struct AdminEditAuthAccessControlDefaultPresenter:
         (search ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
-    private func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-        ]
-    }
 }

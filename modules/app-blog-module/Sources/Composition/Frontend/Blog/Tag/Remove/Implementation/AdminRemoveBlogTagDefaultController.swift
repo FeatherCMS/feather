@@ -26,21 +26,17 @@ struct AdminRemoveBlogTagDefaultController:
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
         do {
             let page = try await runtime.interactor.get(id: id)
             return try await runtime.presenter.renderRemovePage(
-                id: id,
-                source: page.title,
-                permissions: permissions
+                item: .init(id: id, label: page.title)
             )
         }
         catch let error as OpenAPIRepositoryError {
             return try await runtime.presenter.renderErrorPage(
                 id: id,
                 info: error.errorTitle,
-                message: error.errorDescription,
-                permissions: permissions
+                message: error.errorDescription
             )
         }
     }
@@ -51,7 +47,16 @@ struct AdminRemoveBlogTagDefaultController:
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let id = try context.requiredID()
-        let permissions = context.currentUserPermissions
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            context: context
+        )
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         do {
             try await runtime.interactor.delete(id: id)
             return AdminNotificationFlash.redirect(
@@ -67,8 +72,7 @@ struct AdminRemoveBlogTagDefaultController:
                 .renderErrorPage(
                     id: id,
                     info: error.errorTitle,
-                    message: error.errorDescription,
-                    permissions: permissions
+                    message: error.errorDescription
                 )
                 .response(from: request, context: context)
         }

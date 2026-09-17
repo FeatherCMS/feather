@@ -59,7 +59,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.contactFormDelete(
+                try await server.contactFormRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -124,7 +124,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.formFieldDelete(
+                try await server.formFieldRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -189,7 +189,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.contactFieldDelete(
+                try await server.contactFieldRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -241,7 +241,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.contactFormSubmissionDelete(
+                try await server.contactFormSubmissionRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -428,8 +428,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormDelete)`.
-    fileprivate func contactFormDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)`.
+    fileprivate func contactFormRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -438,12 +438,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.ContactFormDelete.id,
+            forOperation: Operations.ContactFormRemove.id,
             using: {
-                APIHandler.contactFormDelete($0)
+                APIHandler.contactFormRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.ContactFormDelete.Input.Headers = .init(
+                let headers: Operations.ContactFormRemove.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
@@ -472,7 +472,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.ContactFormDelete.Input(
+                return Operations.ContactFormRemove.Input(
                     headers: headers,
                     body: body
                 )
@@ -850,8 +850,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldDelete)`.
-    fileprivate func formFieldDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)`.
+    fileprivate func formFieldRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -860,19 +860,19 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.FormFieldDelete.id,
+            forOperation: Operations.FormFieldRemove.id,
             using: {
-                APIHandler.formFieldDelete($0)
+                APIHandler.formFieldRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.FormFieldDelete.Input.Path = .init(
+                let path: Operations.FormFieldRemove.Input.Path = .init(
                     contactFormId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "contactFormId",
                         as: Components.Parameters.ContactFormIdParameter.self
                     )
                 )
-                let headers: Operations.FormFieldDelete.Input.Headers = .init(
+                let headers: Operations.FormFieldRemove.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
@@ -901,7 +901,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.FormFieldDelete.Input(
+                return Operations.FormFieldRemove.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -1273,8 +1273,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldDelete)`.
-    fileprivate func contactFieldDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)`.
+    fileprivate func contactFieldRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1283,12 +1283,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.ContactFieldDelete.id,
+            forOperation: Operations.ContactFieldRemove.id,
             using: {
-                APIHandler.contactFieldDelete($0)
+                APIHandler.contactFieldRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.ContactFieldDelete.Input.Headers =
+                let headers: Operations.ContactFieldRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -1318,7 +1318,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.ContactFieldDelete.Input(
+                return Operations.ContactFieldRemove.Input(
                     headers: headers,
                     body: body
                 )
@@ -1606,8 +1606,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionDelete)`.
-    fileprivate func contactFormSubmissionDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)`.
+    fileprivate func contactFormSubmissionRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1616,12 +1616,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.ContactFormSubmissionDelete.id,
+            forOperation: Operations.ContactFormSubmissionRemove.id,
             using: {
-                APIHandler.contactFormSubmissionDelete($0)
+                APIHandler.contactFormSubmissionRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.ContactFormSubmissionDelete.Input.Path =
+                let path: Operations.ContactFormSubmissionRemove.Input.Path =
                     .init(
                         contactFormId: try converter.getPathParameterAsURI(
                             in: metadata.pathParameters,
@@ -1631,7 +1631,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         )
                     )
                 let headers:
-                    Operations.ContactFormSubmissionDelete.Input.Headers =
+                    Operations.ContactFormSubmissionRemove.Input.Headers =
                         .init(
                             accept: try converter.extractAcceptHeaderIfPresent(
                                 in: request.headerFields
@@ -1661,7 +1661,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.ContactFormSubmissionDelete.Input(
+                return Operations.ContactFormSubmissionRemove.Input(
                     path: path,
                     headers: headers,
                     body: body

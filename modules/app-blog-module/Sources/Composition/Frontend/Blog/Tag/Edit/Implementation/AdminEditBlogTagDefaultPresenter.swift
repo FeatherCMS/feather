@@ -29,7 +29,7 @@ struct AdminEditBlogTagDefaultPresenter: AdminEditBlogTagPresenter {
                 state: .init(
                     id: id,
                     form: state,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: BlogAdminRoutes.tagsBreadcrumb
                 )
             )
         )
@@ -49,15 +49,10 @@ struct AdminEditBlogTagDefaultPresenter: AdminEditBlogTagPresenter {
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: BlogAdminRoutes.tagsBreadcrumb
                 )
             )
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        BlogAdminRoutes.tagsBreadcrumb
-    }
 }

@@ -21,9 +21,9 @@ public protocol APIProtocol: Sendable {
     func userIdentityCreate(_ input: Operations.UserIdentityCreate.Input)
         async throws -> Operations.UserIdentityCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)`.
-    func userIdentityDelete(_ input: Operations.UserIdentityDelete.Input)
-        async throws -> Operations.UserIdentityDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)`.
+    func userIdentityRemove(_ input: Operations.UserIdentityRemove.Input)
+        async throws -> Operations.UserIdentityRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/user/identities/`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/identities//get(userIdentityList)`.
     func userIdentityList(_ input: Operations.UserIdentityList.Input)
@@ -49,9 +49,9 @@ public protocol APIProtocol: Sendable {
     func userRoleCreate(_ input: Operations.UserRoleCreate.Input) async throws
         -> Operations.UserRoleCreate.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)`.
-    func userRoleDelete(_ input: Operations.UserRoleDelete.Input) async throws
-        -> Operations.UserRoleDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)`.
+    func userRoleRemove(_ input: Operations.UserRoleRemove.Input) async throws
+        -> Operations.UserRoleRemove.Output
     /// - Remark: HTTP `GET /api/v1/admin/user/roles/`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles//get(userRoleList)`.
     func userRoleList(_ input: Operations.UserRoleList.Input) async throws
@@ -94,13 +94,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)`.
-    public func userIdentityDelete(
-        headers: Operations.UserIdentityDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)`.
+    public func userIdentityRemove(
+        headers: Operations.UserIdentityRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.UserIdentityDelete.Output {
-        try await userIdentityDelete(
-            Operations.UserIdentityDelete.Input(
+    ) async throws -> Operations.UserIdentityRemove.Output {
+        try await userIdentityRemove(
+            Operations.UserIdentityRemove.Input(
                 headers: headers,
                 body: body
             )
@@ -185,13 +185,13 @@ extension APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)`.
-    public func userRoleDelete(
-        headers: Operations.UserRoleDelete.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)`.
+    public func userRoleRemove(
+        headers: Operations.UserRoleRemove.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.UserRoleDelete.Output {
-        try await userRoleDelete(
-            Operations.UserRoleDelete.Input(
+    ) async throws -> Operations.UserRoleRemove.Output {
+        try await userRoleRemove(
+            Operations.UserRoleRemove.Input(
                 headers: headers,
                 body: body
             )
@@ -1474,15 +1474,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)`.
-    public enum UserIdentityDelete {
-        public static let id: Swift.String = "userIdentityDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)`.
+    public enum UserIdentityRemove {
+        public static let id: Swift.String = "userIdentityRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.UserIdentityDelete.AcceptableContentType
+                        Operations.UserIdentityRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -1490,13 +1490,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.UserIdentityDelete.AcceptableContentType
+                        Operations.UserIdentityRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.UserIdentityDelete.Input.Headers
+            public var headers: Operations.UserIdentityRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -1504,7 +1504,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.UserIdentityDelete.Input.Headers = .init(),
+                headers: Operations.UserIdentityRemove.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
@@ -1514,7 +1514,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -1541,13 +1541,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.UserIdentityDelete.Output.Unauthorized)
+            case unauthorized(Operations.UserIdentityRemove.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -1558,7 +1558,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.UserIdentityDelete.Output.Unauthorized
+                Operations.UserIdentityRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -1578,13 +1578,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.UserIdentityDelete.Output.Forbidden)
+            case forbidden(Operations.UserIdentityRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -1594,7 +1594,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.UserIdentityDelete.Output.Forbidden
+            public var forbidden: Operations.UserIdentityRemove.Output.Forbidden
             {
                 get throws {
                     switch self {
@@ -2832,15 +2832,15 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)`.
-    public enum UserRoleDelete {
-        public static let id: Swift.String = "userRoleDelete"
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)`.
+    public enum UserRoleRemove {
+        public static let id: Swift.String = "userRoleRemove"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.UserRoleDelete.AcceptableContentType
+                        Operations.UserRoleRemove.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -2848,13 +2848,13 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.UserRoleDelete.AcceptableContentType
+                        Operations.UserRoleRemove.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.UserRoleDelete.Input.Headers
+            public var headers: Operations.UserRoleRemove.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -2862,7 +2862,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.UserRoleDelete.Input.Headers = .init(),
+                headers: Operations.UserRoleRemove.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
@@ -2872,7 +2872,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -2899,13 +2899,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.UserRoleDelete.Output.Unauthorized)
+            case unauthorized(Operations.UserRoleRemove.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -2916,7 +2916,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.UserRoleDelete.Output.Unauthorized
+                Operations.UserRoleRemove.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -2936,13 +2936,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.UserRoleDelete.Output.Forbidden)
+            case forbidden(Operations.UserRoleRemove.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -2952,7 +2952,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.UserRoleDelete.Output.Forbidden {
+            public var forbidden: Operations.UserRoleRemove.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):

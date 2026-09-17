@@ -19,8 +19,4 @@ protocol AdminEditWebMenuItemPresenter: Sendable {
         permissions: Set<String>
     ) async throws -> HTMLResponse
 
-    func breadcrumb(
-        menuId: String,
-        id: String
-    ) -> [NewAdminBreadcrumb.Link]
 }

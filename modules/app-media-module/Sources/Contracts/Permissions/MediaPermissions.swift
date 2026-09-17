@@ -20,12 +20,30 @@ public enum MediaPermissions: PermissionProvider {
         }
     }
 
-    public enum Processors: PermissionProvider {
-        public static let create = PermissionKey("media:processors:create")
-        public static let read = PermissionKey("media:processors:read")
-        public static let list = PermissionKey("media:processors:list")
-        public static let update = PermissionKey("media:processors:update")
-        public static let delete = PermissionKey("media:processors:delete")
+    public enum Variants: PermissionProvider {
+        public static let create = PermissionKey("media:variants:create")
+        public static let read = PermissionKey("media:variants:read")
+        public static let list = PermissionKey("media:variants:list")
+        public static let update = PermissionKey("media:variants:update")
+        public static let delete = PermissionKey("media:variants:delete")
+
+        public static func allPermissions() -> Set<PermissionKey> {
+            [create, read, list, update, delete]
+        }
+    }
+
+    public enum VariantProcessors: PermissionProvider {
+        public static let create = PermissionKey(
+            "media:variant-processors:create"
+        )
+        public static let read = PermissionKey("media:variant-processors:read")
+        public static let list = PermissionKey("media:variant-processors:list")
+        public static let update = PermissionKey(
+            "media:variant-processors:update"
+        )
+        public static let delete = PermissionKey(
+            "media:variant-processors:delete"
+        )
 
         public static func allPermissions() -> Set<PermissionKey> {
             [create, read, list, update, delete]
@@ -35,7 +53,8 @@ public enum MediaPermissions: PermissionProvider {
     public static func allPermissions() -> Set<PermissionKey> {
         var result: Set<PermissionKey> = .init()
         result.formUnion(Assets.allPermissions())
-        result.formUnion(Processors.allPermissions())
+        result.formUnion(Variants.allPermissions())
+        result.formUnion(VariantProcessors.allPermissions())
         return result
     }
 }

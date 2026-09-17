@@ -44,14 +44,7 @@ struct AdminListAuthCredentialDefaultPresenter: AdminListAuthCredentialPresenter
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: [
-                        .init(label: "Admin", link: "/admin/"),
-                        .init(label: "Auth", link: "/admin/auth/"),
-                        .init(
-                            label: "Credentials",
-                            link: "/admin/auth/credentials/"
-                        ),
-                    ]
+                    breadcrumb: AuthCredentialRoutes.breadcrumb
                 )
             )
         )

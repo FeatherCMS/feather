@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherValidation
 import Hummingbird
 import NewsletterContracts
 
@@ -15,16 +16,9 @@ struct AdminRemoveNewsletterCampaignDefaultController:
     {
         let (_, presenter) = buildRuntime(request, context)
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.delete)
-        else {
-            return try await presenter.render(
-                id: "",
-                permissions: context.currentUserPermissions
-            )
-        }
-        return try await presenter.render(
-            id: try context.requiredParameter("newsletterId"),
-            permissions: context.currentUserPermissions
-        )
+        else { return HTMLResponse(content: "Forbidden", status: .forbidden) }
+        let id = try context.requiredParameter("newsletterId")
+        return try await presenter.render(item: .init(id: id, label: id))
     }
     func remove(request: Request, context: DefaultRequestContext) async throws
         -> Response
@@ -32,6 +26,16 @@ struct AdminRemoveNewsletterCampaignDefaultController:
         let (interactor, _) = buildRuntime(request, context)
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.delete)
         else { return Response(status: .forbidden) }
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            context: context
+        )
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         try await interactor.remove(
             id: try context.requiredParameter("newsletterId")
         )
@@ -47,12 +51,19 @@ struct AdminRemoveNewsletterCampaignDefaultController:
         async throws -> Response
     {
         let (interactor, _) = buildRuntime(request, context)
-        let payload = try await request.decode(
-            as: NewAdminListRemoveFormInput.self,
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
+        let payload = nonceRequest.input
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.delete)
         else { return Response(status: .forbidden) }
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         try await interactor.remove(ids: payload.normalizedSelectedIds)
         return AdminNotificationFlash.redirect(
             to: NewsletterAdminRoutes.campaigns.description,

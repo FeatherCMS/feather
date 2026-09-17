@@ -8,10 +8,9 @@ import WebBuilders
 import WebComponents
 
 protocol AdminRemoveNewsletterSubscribersPresenter: Sendable {
-    func render(
-        ids: [String],
+    func renderRemovePage(
+        items: [NewAdminRemoveItemContext],
         search: String?,
-        campaignId: String?,
-        permissions: Set<String>
+        campaignId: String?
     ) async throws -> HTMLResponse
 }

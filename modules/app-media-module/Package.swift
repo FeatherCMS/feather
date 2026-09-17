@@ -52,7 +52,9 @@ let package = Package(
     ],
     dependencies: [
         // [docc-plugin-placeholder]
+
         .package(url: "https://github.com/feather-framework/feather-storage", exact: "1.0.0-beta.3"),
+        .package(url: "https://github.com/apple/swift-nio.git", from: "2.34.0"),
         .package(url: "https://github.com/swiftlang/swift-subprocess", .upToNextMinor(from: "0.4.0")),
         .package(url: "https://github.com/mattpolzin/OpenAPIKit", from: "5.0.0"),
         .package(url: "https://github.com/jpsim/Yams", from: "6.2.0"),
@@ -89,6 +91,8 @@ let package = Package(
             name: "MediaApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherStorage", package: "feather-storage"),
+                .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "SystemApplication", package: "app-system-module"),
 
                 .target(name: "MediaDomain"),

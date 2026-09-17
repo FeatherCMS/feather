@@ -118,13 +118,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionDelete)`.
-    public func systemPermissionDelete(
-        _ input: Operations.SystemPermissionDelete.Input
-    ) async throws -> Operations.SystemPermissionDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/permissions/delete(systemPermissionRemove)`.
+    public func systemPermissionRemove(
+        _ input: Operations.SystemPermissionRemove.Input
+    ) async throws -> Operations.SystemPermissionRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.SystemPermissionDelete.id,
+            forOperation: Operations.SystemPermissionRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/system/permissions",
@@ -663,13 +663,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/system/variables`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableDelete)`.
-    public func systemVariableDelete(
-        _ input: Operations.SystemVariableDelete.Input
-    ) async throws -> Operations.SystemVariableDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/delete(systemVariableRemove)`.
+    public func systemVariableRemove(
+        _ input: Operations.SystemVariableRemove.Input
+    ) async throws -> Operations.SystemVariableRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.SystemVariableDelete.id,
+            forOperation: Operations.SystemVariableRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/system/variables",

@@ -25,7 +25,7 @@ struct AdminAddAccountInvitationDefaultPresenter:
             content: AccountInvitationAdd(
                 state: .init(
                     form: form,
-                    breadcrumb: breadcrumb()
+                    breadcrumb: AccountAdminRoutes.invitationBreadcrumb
                 )
             )
         )
@@ -53,10 +53,6 @@ struct AdminAddAccountInvitationDefaultPresenter:
             error: nil,
             success: nil
         )
-    }
-
-    func breadcrumb() -> [NewAdminBreadcrumb.Link] {
-        AccountAdminRoutes.invitationBreadcrumb
     }
 
     func format(

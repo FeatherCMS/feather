@@ -22,16 +22,6 @@ struct AdminViewAuthEmailDefaultPresenter: AdminViewAuthEmailPresenter {
     let context: DefaultRequestContext
     let renderEngine: any RenderingEngine
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Auth", link: "/admin/auth/"),
-            .init(label: "Emails", link: "/admin/auth/emails/"),
-        ]
-    }
-
     func renderPage(
         link: AuthEmailDetailsModel,
         permissions: Set<String>
@@ -44,7 +34,7 @@ struct AdminViewAuthEmailDefaultPresenter: AdminViewAuthEmailPresenter {
                 state: .init(
                     link: link,
                     permissions: permissions,
-                    breadcrumb: breadcrumb(id: link.id)
+                    breadcrumb: AuthEmailRoutes.breadcrumb
                 )
             )
         )
@@ -63,7 +53,7 @@ struct AdminViewAuthEmailDefaultPresenter: AdminViewAuthEmailPresenter {
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: AuthEmailRoutes.breadcrumb
                 )
             )
         )

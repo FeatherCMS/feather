@@ -184,13 +184,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormDelete)`.
-    public func contactFormDelete(_ input: Operations.ContactFormDelete.Input)
-        async throws -> Operations.ContactFormDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)`.
+    public func contactFormRemove(_ input: Operations.ContactFormRemove.Input)
+        async throws -> Operations.ContactFormRemove.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.ContactFormDelete.id,
+            forOperation: Operations.ContactFormRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/contact/form",
@@ -563,13 +563,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldDelete)`.
-    public func formFieldDelete(_ input: Operations.FormFieldDelete.Input)
-        async throws -> Operations.FormFieldDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)`.
+    public func formFieldRemove(_ input: Operations.FormFieldRemove.Input)
+        async throws -> Operations.FormFieldRemove.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.FormFieldDelete.id,
+            forOperation: Operations.FormFieldRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/contact/form/{}/field",
@@ -942,13 +942,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldDelete)`.
-    public func contactFieldDelete(_ input: Operations.ContactFieldDelete.Input)
-        async throws -> Operations.ContactFieldDelete.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)`.
+    public func contactFieldRemove(_ input: Operations.ContactFieldRemove.Input)
+        async throws -> Operations.ContactFieldRemove.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.ContactFieldDelete.id,
+            forOperation: Operations.ContactFieldRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/contact/field",
@@ -1245,13 +1245,13 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionDelete)`.
-    public func contactFormSubmissionDelete(
-        _ input: Operations.ContactFormSubmissionDelete.Input
-    ) async throws -> Operations.ContactFormSubmissionDelete.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)`.
+    public func contactFormSubmissionRemove(
+        _ input: Operations.ContactFormSubmissionRemove.Input
+    ) async throws -> Operations.ContactFormSubmissionRemove.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.ContactFormSubmissionDelete.id,
+            forOperation: Operations.ContactFormSubmissionRemove.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/contact/form/{}/submission",

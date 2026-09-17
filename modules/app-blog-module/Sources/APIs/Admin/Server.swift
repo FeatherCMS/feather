@@ -46,7 +46,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogPostDelete(
+                try await server.blogPostRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -137,7 +137,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogAuthorDelete(
+                try await server.blogAuthorRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -228,7 +228,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogAuthorLinkDelete(
+                try await server.blogAuthorLinkRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -345,7 +345,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.blogTagDelete(
+                try await server.blogTagRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -512,8 +512,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/posts`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostDelete)`.
-    fileprivate func blogPostDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/posts/delete(blogPostRemove)`.
+    fileprivate func blogPostRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -522,12 +522,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.BlogPostDelete.id,
+            forOperation: Operations.BlogPostRemove.id,
             using: {
-                APIHandler.blogPostDelete($0)
+                APIHandler.blogPostRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.BlogPostDelete.Input.Headers = .init(
+                let headers: Operations.BlogPostRemove.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
@@ -556,7 +556,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.BlogPostDelete.Input(
+                return Operations.BlogPostRemove.Input(
                     headers: headers,
                     body: body
                 )
@@ -1102,8 +1102,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorDelete)`.
-    fileprivate func blogAuthorDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/delete(blogAuthorRemove)`.
+    fileprivate func blogAuthorRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1112,12 +1112,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.BlogAuthorDelete.id,
+            forOperation: Operations.BlogAuthorRemove.id,
             using: {
-                APIHandler.blogAuthorDelete($0)
+                APIHandler.blogAuthorRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.BlogAuthorDelete.Input.Headers = .init(
+                let headers: Operations.BlogAuthorRemove.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
@@ -1146,7 +1146,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.BlogAuthorDelete.Input(
+                return Operations.BlogAuthorRemove.Input(
                     headers: headers,
                     body: body
                 )
@@ -1702,8 +1702,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/authors/{blogAuthorId}/links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkDelete)`.
-    fileprivate func blogAuthorLinkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/authors/{blogAuthorId}/links/delete(blogAuthorLinkRemove)`.
+    fileprivate func blogAuthorLinkRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1712,12 +1712,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.BlogAuthorLinkDelete.id,
+            forOperation: Operations.BlogAuthorLinkRemove.id,
             using: {
-                APIHandler.blogAuthorLinkDelete($0)
+                APIHandler.blogAuthorLinkRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.BlogAuthorLinkDelete.Input.Path = .init(
+                let path: Operations.BlogAuthorLinkRemove.Input.Path = .init(
                     blogAuthorId: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
                         name: "blogAuthorId",
@@ -1725,7 +1725,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                             .self
                     )
                 )
-                let headers: Operations.BlogAuthorLinkDelete.Input.Headers =
+                let headers: Operations.BlogAuthorLinkRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -1755,7 +1755,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.BlogAuthorLinkDelete.Input(
+                return Operations.BlogAuthorLinkRemove.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -2492,8 +2492,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/blog/tags`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagDelete)`.
-    fileprivate func blogTagDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/blog/tags/delete(blogTagRemove)`.
+    fileprivate func blogTagRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2502,12 +2502,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.BlogTagDelete.id,
+            forOperation: Operations.BlogTagRemove.id,
             using: {
-                APIHandler.blogTagDelete($0)
+                APIHandler.blogTagRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.BlogTagDelete.Input.Headers = .init(
+                let headers: Operations.BlogTagRemove.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
@@ -2536,7 +2536,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.BlogTagDelete.Input(
+                return Operations.BlogTagRemove.Input(
                     headers: headers,
                     body: body
                 )

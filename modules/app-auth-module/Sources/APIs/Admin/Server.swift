@@ -111,7 +111,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userIdentitySessionDelete(
+                try await server.userIdentitySessionRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -137,7 +137,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authCredentialDelete(
+                try await server.authCredentialRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -228,6 +228,19 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.authEmailRemove(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .delete,
+            path: server.apiPathComponentsWithServerPrefix(
+                "/api/v1/admin/auth/emails"
+            )
+        )
+        try transport.register(
+            {
                 try await server.authEmailList(
                     request: $0,
                     body: $1,
@@ -267,19 +280,6 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authEmailDelete(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/auth/emails/{authEmailId}"
-            )
-        )
-        try transport.register(
-            {
                 try await server.authRolePermissionCreate(
                     request: $0,
                     body: $1,
@@ -293,7 +293,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authRolePermissionDelete(
+                try await server.authRolePermissionRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -332,7 +332,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.authMagicLinkDelete(
+                try await server.authMagicLinkRemove(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -798,8 +798,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities/{userIdentityId}/sessions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionDelete)`.
-    fileprivate func userIdentitySessionDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/sessions/delete(userIdentitySessionRemove)`.
+    fileprivate func userIdentitySessionRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -808,12 +808,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.UserIdentitySessionDelete.id,
+            forOperation: Operations.UserIdentitySessionRemove.id,
             using: {
-                APIHandler.userIdentitySessionDelete($0)
+                APIHandler.userIdentitySessionRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.UserIdentitySessionDelete.Input.Path =
+                let path: Operations.UserIdentitySessionRemove.Input.Path =
                     .init(
                         userIdentityId: try converter.getPathParameterAsURI(
                             in: metadata.pathParameters,
@@ -823,7 +823,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         )
                     )
                 let headers:
-                    Operations.UserIdentitySessionDelete.Input.Headers = .init(
+                    Operations.UserIdentitySessionRemove.Input.Headers = .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
                         )
@@ -852,7 +852,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.UserIdentitySessionDelete.Input(
+                return Operations.UserIdentitySessionRemove.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -982,8 +982,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/credentials`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialDelete)`.
-    fileprivate func authCredentialDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/credentials/delete(authCredentialRemove)`.
+    fileprivate func authCredentialRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -992,12 +992,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AuthCredentialDelete.id,
+            forOperation: Operations.AuthCredentialRemove.id,
             using: {
-                APIHandler.authCredentialDelete($0)
+                APIHandler.authCredentialRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthCredentialDelete.Input.Headers =
+                let headers: Operations.AuthCredentialRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -1027,7 +1027,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.AuthCredentialDelete.Input(
+                return Operations.AuthCredentialRemove.Input(
                     headers: headers,
                     body: body
                 )
@@ -1578,6 +1578,92 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
+    /// - Remark: HTTP `DELETE /api/v1/admin/auth/emails`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/emails/delete(authEmailRemove)`.
+    fileprivate func authEmailRemove(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.AuthEmailRemove.id,
+            using: {
+                APIHandler.authEmailRemove($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.AuthEmailRemove.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
+                    )
+                )
+                let contentType = converter.extractContentTypeIfPresent(
+                    in: request.headerFields
+                )
+                let body: Components.RequestBodies.DeleteRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.DeleteRequestSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure(
+                        "bestContentType chose an invalid content type."
+                    )
+                }
+                return Operations.AuthEmailRemove.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case .ok(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case .json(let value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case .unauthorized(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .forbidden(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .undocumented(let statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
     /// - Remark: HTTP `GET /api/v1/admin/auth/emails/`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/emails//get(authEmailList)`.
     fileprivate func authEmailList(
@@ -1810,100 +1896,6 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/auth/emails/{authEmailId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/emails/{authEmailId}/delete(authEmailDelete)`.
-    fileprivate func authEmailDelete(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.AuthEmailDelete.id,
-            using: {
-                APIHandler.authEmailDelete($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.AuthEmailDelete.Input.Path = .init(
-                    authEmailId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "authEmailId",
-                        as: Components.Parameters.AuthEmailIdParameter.self
-                    )
-                )
-                let headers: Operations.AuthEmailDelete.Input.Headers = .init(
-                    accept: try converter.extractAcceptHeaderIfPresent(
-                        in: request.headerFields
-                    )
-                )
-                let contentType = converter.extractContentTypeIfPresent(
-                    in: request.headerFields
-                )
-                let body: Components.RequestBodies.DeleteRequestBody
-                let chosenContentType = try converter.bestContentType(
-                    received: contentType,
-                    options: [
-                        "application/json"
-                    ]
-                )
-                switch chosenContentType {
-                case "application/json":
-                    body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.DeleteRequestSchema.self,
-                        from: requestBody,
-                        transforming: { value in
-                            .json(value)
-                        }
-                    )
-                default:
-                    preconditionFailure(
-                        "bestContentType chose an invalid content type."
-                    )
-                }
-                return Operations.AuthEmailDelete.Input(
-                    path: path,
-                    headers: headers,
-                    body: body
-                )
-            },
-            serializer: { output, request in
-                switch output {
-                case .ok(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case .json(let value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
     /// - Remark: HTTP `POST /api/v1/admin/auth/role-permissions`.
     /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/post(authRolePermissionCreate)`.
     fileprivate func authRolePermissionCreate(
@@ -1992,8 +1984,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/role-permissions`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionDelete)`.
-    fileprivate func authRolePermissionDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/role-permissions/delete(authRolePermissionRemove)`.
+    fileprivate func authRolePermissionRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2002,12 +1994,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AuthRolePermissionDelete.id,
+            forOperation: Operations.AuthRolePermissionRemove.id,
             using: {
-                APIHandler.authRolePermissionDelete($0)
+                APIHandler.authRolePermissionRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthRolePermissionDelete.Input.Headers =
+                let headers: Operations.AuthRolePermissionRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -2037,7 +2029,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.AuthRolePermissionDelete.Input(
+                return Operations.AuthRolePermissionRemove.Input(
                     headers: headers,
                     body: body
                 )
@@ -2255,8 +2247,8 @@ extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/auth/magic-links`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkDelete)`.
-    fileprivate func authMagicLinkDelete(
+    /// - Remark: Generated from `#/paths//api/v1/admin/auth/magic-links/delete(authMagicLinkRemove)`.
+    fileprivate func authMagicLinkRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2265,12 +2257,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.AuthMagicLinkDelete.id,
+            forOperation: Operations.AuthMagicLinkRemove.id,
             using: {
-                APIHandler.authMagicLinkDelete($0)
+                APIHandler.authMagicLinkRemove($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.AuthMagicLinkDelete.Input.Headers =
+                let headers: Operations.AuthMagicLinkRemove.Input.Headers =
                     .init(
                         accept: try converter.extractAcceptHeaderIfPresent(
                             in: request.headerFields
@@ -2300,7 +2292,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.AuthMagicLinkDelete.Input(
+                return Operations.AuthMagicLinkRemove.Input(
                     headers: headers,
                     body: body
                 )

@@ -6,6 +6,7 @@ import NIOSSL
 import PostgresNIO
 import Environment
 import FeatherInfrastructure
+import FeatherStorage
 import FeatherStorageFS
 import Jobs
 import MediaInfrastructure
@@ -41,11 +42,8 @@ func buildTestServer(
             idGenerator: idGenerator,
             events: eventPublisher,
             jobQueue: jobQueue,
-            mediaStorage: MediaStorageClient(
-                client: StorageClientFS(
-                    rootPath: config.media.storageRootPath
-                )
-            )
+            storage: StorageClientFS(rootPath: config.media.storageRootPath),
+            storageKeyShard: .init()
         )
     )
 

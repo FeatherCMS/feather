@@ -25,7 +25,6 @@ struct AdminViewWebMenuDefaultController: AdminViewWebMenuController {
             )
             return try await runtime.presenter.renderDetailsPage(
                 rule: rule,
-                breadcrumb: runtime.presenter.breadcrumb(id: id),
                 permissions: permissions
             )
         }
@@ -33,7 +32,6 @@ struct AdminViewWebMenuDefaultController: AdminViewWebMenuController {
             return try await runtime.presenter.renderErrorPage(
                 info: error.errorTitle,
                 message: error.errorDescription,
-                breadcrumb: runtime.presenter.breadcrumb(id: id),
                 permissions: permissions
             )
         }

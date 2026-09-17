@@ -13,11 +13,14 @@ struct AdminRemoveContactSubmissionsDefaultPresenter:
     let request: Request
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
-    func renderConfirmation(selectedIds: [String], permissions: Set<String>)
+    func renderRemovePage(items: [NewAdminRemoveItemContext])
         async throws
         -> HTMLResponse
     {
-        try await renderingEngine.renderNewAdminPage(
+        let nonceToken = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
+        return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove contact submissions",
@@ -27,11 +30,12 @@ struct AdminRemoveContactSubmissionsDefaultPresenter:
                     title: "Remove contact submissions",
                     description: "This action cannot be undone."
                 ),
-                selectedItems: selectedIds,
+                selectedItems: items.map(\.label),
                 action: ContactAdminRoutes.submissionRemove.description,
                 cancel: ContactAdminRoutes.submissions.description,
-                hiddenFields: selectedIds.map {
-                    .init(name: "selectedIds[]", value: $0)
+                nonceToken: nonceToken,
+                hiddenFields: items.map {
+                    .init(name: "ids", value: $0.id)
                 }
             )
         )

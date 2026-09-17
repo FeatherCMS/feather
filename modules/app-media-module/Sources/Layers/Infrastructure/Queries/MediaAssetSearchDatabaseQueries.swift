@@ -4,15 +4,11 @@ import FeatherDatabase
 import FeatherInfrastructure
 import MediaApplication
 
-extension MediaAssetSearchTable.Row {
+extension MediaAssetNodeTable.SearchRow {
     func asItem() throws -> MediaAssetSearchList.Item {
         switch kind {
         case "folder":
-            guard
-                let path,
-                let assetCount,
-                let totalSizeBytes
-            else {
+            guard let assetCount, let totalSizeBytes else {
                 throw RepositoryError.notFound
             }
             return .folder(
@@ -20,7 +16,8 @@ extension MediaAssetSearchTable.Row {
                     id: id,
                     parentId: parentId,
                     name: name,
-                    path: path,
+                    slug: slug,
+                    slugPath: slugPath,
                     assetCount: assetCount,
                     totalSizeBytes: totalSizeBytes,
                     createdAt: createdAt,
@@ -28,22 +25,23 @@ extension MediaAssetSearchTable.Row {
                 )
             )
         case "file":
-            guard
-                let storageKey,
-                let baseName,
-                let type,
-                let sizeBytes,
-                let status
-            else {
-                throw RepositoryError.notFound
-            }
+            guard objectKey != nil, let `extension`, let contentType,
+                let sizeBytes, let status
+            else { throw RepositoryError.notFound }
             return .asset(
                 .init(
                     id: id,
                     folderId: parentId,
-                    storageKey: storageKey,
-                    baseName: baseName,
-                    type: type,
+                    name: name,
+                    slug: slug,
+                    slugPath: slugPath,
+                    url: mediaAssetPublicURL(
+                        id: id,
+                        slugPath: slugPath,
+                        extension: `extension`
+                    ),
+                    extension: `extension`,
+                    contentType: contentType,
                     sizeBytes: sizeBytes,
                     status: status,
                     title: title,
@@ -52,45 +50,30 @@ extension MediaAssetSearchTable.Row {
                     updatedAt: updatedAt
                 )
             )
-        default:
-            throw RepositoryError.notFound
+        default: throw RepositoryError.notFound
         }
     }
 }
 
 public struct MediaAssetSearchDatabaseQueries: MediaAssetSearchQueries {
     public let context: DatabaseQueryContext
+    public init(context: DatabaseQueryContext) { self.context = context }
 
-    public init(context: DatabaseQueryContext) {
-        self.context = context
-    }
-
-    private func pageSizeOffset(
-        _ page: Search.Page
-    ) -> (size: Int, offset: Int) {
+    private func pageSizeOffset(_ page: Search.Page) -> (size: Int, offset: Int)
+    {
         let size = max(1, page.size)
         let number = max(1, page.number)
         return (size, (number - 1) * size)
     }
 
-    private func sortDirectionSQL(
-        _ direction: Search.SortDirection
-    ) -> String {
-        switch direction {
-        case .asc: "ASC"
-        case .desc: "DESC"
-        }
-    }
-
-    private func orderBy(
-        _ query: MediaAssetList.Query
-    ) -> String {
-        let sortParts = query.sort.map { rule -> String in
+    private func orderBy(_ query: MediaAssetList.Query) -> String {
+        let parts = query.sort.map { rule -> String in
             let column: String
             switch rule.field {
             case .id: column = "id"
-            case .storageKey: column = "storage_key"
-            case .type: column = "type"
+            case .name: column = "name"
+            case .slugPath: column = "slug_path"
+            case .extension: column = "extension"
             case .sizeBytes: column = "size_bytes"
             case .status: column = "status"
             case .title: column = "title"
@@ -98,37 +81,29 @@ public struct MediaAssetSearchDatabaseQueries: MediaAssetSearchQueries {
             case .updatedAt: column = "updated_at"
             }
             return
-                "CASE WHEN kind = 'file' THEN \(column) END \(sortDirectionSQL(rule.direction))"
+                "CASE WHEN kind = 'file' THEN \(column) END \(rule.direction == .asc ? "ASC" : "DESC")"
         }
-        return
-            ([
-                "kind_rank ASC",
-                "LOWER(name) ASC",
-            ] + sortParts + ["id ASC"])
+        return (["kind_rank ASC", "LOWER(name) ASC"] + parts + ["id ASC"])
             .joined(separator: ", ")
     }
 
-    public func list(
-        query: MediaAssetList.Query
-    ) async throws -> MediaAssetSearchList {
+    public func list(query: MediaAssetList.Query) async throws
+        -> MediaAssetSearchList
+    {
         let page = pageSizeOffset(query.page)
-        let rows = try await MediaAssetSearchTable(
-            connection: context.connection
-        )
-        .list(
-            parentId: query.parentId,
-            search: query.search,
-            orderBy: orderBy(query),
-            limit: page.size,
-            offset: page.offset
-        )
+        let rows = try await MediaAssetNodeTable(connection: context.connection)
+            .search(
+                parentId: query.parentId,
+                search: query.search,
+                orderBy: orderBy(query),
+                limit: page.size,
+                offset: page.offset
+            )
         return .init(items: try rows.map { try $0.asItem() })
     }
 
-    public func count(
-        query: MediaAssetList.Query
-    ) async throws -> Int {
-        try await MediaAssetSearchTable(connection: context.connection)
+    public func count(query: MediaAssetList.Query) async throws -> Int {
+        try await MediaAssetNodeTable(connection: context.connection)
             .count(parentId: query.parentId, search: query.search)
     }
 }

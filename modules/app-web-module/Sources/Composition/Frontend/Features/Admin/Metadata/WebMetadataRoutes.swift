@@ -1,4 +1,5 @@
 import FeatherAdmin
+import Foundation
 import Hummingbird
 
 enum WebMetadataRoutes {
@@ -8,6 +9,20 @@ enum WebMetadataRoutes {
         WebAdminRoutes.breadcrumb + [
             .init(label: "Metadata", link: list.description)
         ]
+    }
+
+    static func editBreadcrumb(
+        for requestPath: String
+    ) -> [NewAdminBreadcrumb.Link] {
+        if let marker = requestPath.range(of: "/edit/metadata/") {
+            let detailsPath =
+                String(requestPath[..<marker.lowerBound]) + "/edit/"
+            return [
+                .init(label: "Admin", link: "/admin/"),
+                .init(label: "Details", link: detailsPath),
+            ]
+        }
+        return breadcrumb
     }
 
     static func details(_ id: RouterPath) -> RouterPath {

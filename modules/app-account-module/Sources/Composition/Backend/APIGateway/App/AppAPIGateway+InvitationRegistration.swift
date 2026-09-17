@@ -25,6 +25,7 @@ extension AppAPIGateway {
                     .init(
                         user: .init(
                             id: identity.id,
+                            name: identity.name,
                             status: .init(rawValue: identity.status.rawValue)
                                 ?? .invited
                         ),

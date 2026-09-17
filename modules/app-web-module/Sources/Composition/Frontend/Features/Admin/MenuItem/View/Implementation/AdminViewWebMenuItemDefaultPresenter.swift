@@ -13,7 +13,6 @@ struct AdminViewWebMenuItemDefaultPresenter: AdminViewWebMenuItemPresenter {
 
     func renderDetailsPage(
         rule: WebMenuItemDetailsModel,
-        breadcrumb: [NewAdminBreadcrumb.Link],
         permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
@@ -23,16 +22,18 @@ struct AdminViewWebMenuItemDefaultPresenter: AdminViewWebMenuItemPresenter {
             content: WebMenuItemDetails(
                 state: .init(
                     item: rule,
-                    breadcrumb: breadcrumb
+                    breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
+                        RouterPath(rule.menuId)
+                    )
                 )
             )
         )
     }
 
     func renderErrorPage(
+        menuId: String,
         info: String,
         message: String,
-        breadcrumb: [NewAdminBreadcrumb.Link],
         permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
@@ -43,22 +44,12 @@ struct AdminViewWebMenuItemDefaultPresenter: AdminViewWebMenuItemPresenter {
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: breadcrumb
+                    breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
+                        RouterPath(menuId)
+                    )
                 )
             )
         )
     }
 
-    func breadcrumb(
-        menuId: String,
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Web", link: "/admin/web/"),
-            .init(label: "Menus", link: "/admin/web/menus/"),
-            .init(label: "Menu", link: "/admin/web/menus/\(menuId)/"),
-            .init(label: "Items", link: "/admin/web/menus/\(menuId)/items/"),
-        ]
-    }
 }

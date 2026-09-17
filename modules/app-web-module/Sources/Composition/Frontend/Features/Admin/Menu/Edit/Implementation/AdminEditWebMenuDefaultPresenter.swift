@@ -24,7 +24,7 @@ struct AdminEditWebMenuDefaultPresenter: AdminEditWebMenuPresenter {
                 state: .init(
                     id: id,
                     form: state,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: WebMenuRoutes.breadcrumb
                 )
             )
         )
@@ -44,19 +44,10 @@ struct AdminEditWebMenuDefaultPresenter: AdminEditWebMenuPresenter {
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: breadcrumb(id: id)
+                    breadcrumb: WebMenuRoutes.breadcrumb
                 )
             )
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Web", link: "/admin/web/"),
-            .init(label: "Menus", link: "/admin/web/menus/"),
-        ]
-    }
 }

@@ -4,13 +4,7 @@ import MediaBackend
 struct JobMediaVariantQueue: MediaVariantQueue {
     let queue: any JobQueueProtocol
 
-    func enqueueMediaGenerateVariant(
-        assetId: String,
-        processorId: String
-    ) async throws {
-        try await queue.enqueueMediaGenerateVariant(
-            assetId: assetId,
-            processorId: processorId
-        )
+    func enqueueMediaGenerateVariants(assetId: String) async throws {
+        try await queue.enqueueMediaGenerateVariants(assetId: assetId)
     }
 }

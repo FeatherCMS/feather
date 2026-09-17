@@ -42,7 +42,10 @@ struct AdminListWebPageOpenAPIRepository:
             switch response {
             case .ok(let okResponse):
                 let body = try okResponse.body.json
-                let items = try await loadItems(body.data.items)
+                let items = try await loadItems(
+                    body.data.items,
+                    using: client
+                )
                 return .init(
                     items: items,
                     total: body.data.total,
@@ -63,36 +66,65 @@ struct AdminListWebPageOpenAPIRepository:
     }
 
     private func loadItems(
-        _ items: [Components.Schemas.WebPageListItemSchema]
+        _ items: [Components.Schemas.WebPageListItemSchema],
+        using client: WebAdminAPI.Client
     ) async throws -> [AdminListWebPageItemModel] {
-        try await api.withOpenAPIRepositoryErrorMapping { client in
-            try await withThrowingTaskGroup(
-                of: (Int, AdminListWebPageItemModel).self
-            ) { group in
-                let repository = AdminListWebPageFormOpenAPIRepository(api: api)
-                for (index, item) in items.enumerated() {
-                    group.addTask {
-                        let details = try await repository.load(id: item.id)
-                        return (
-                            index,
-                            .init(
-                                id: item.id,
-                                title: item.title,
-                                metadata: details.metadata
-                            )
-                        )
-                    }
-                }
-
-                var enrichedItems = [AdminListWebPageItemModel?](
-                    repeating: nil,
-                    count: items.count
-                )
-                for try await (index, item) in group {
-                    enrichedItems[index] = item
-                }
-                return enrichedItems.compactMap { $0 }
+        let metadata = try await loadMetadata(
+            using: client,
+            referenceIDs: items.map(\.id)
+        )
+        let metadataByReferenceID = Dictionary(
+            uniqueKeysWithValues: metadata.map {
+                ($0.referenceId, $0)
             }
+        )
+
+        return items.map { item in
+            let metadata = metadataByReferenceID[item.id]
+            return .init(
+                id: item.id,
+                title: item.title,
+                metadata: .init(
+                    slug: metadata?.slug ?? "",
+                    publicationDate: metadata?.publicationDate,
+                    expirationDate: metadata?.expirationDate,
+                    status: metadata?.status ?? "draft"
+                ),
+                availability: .init(
+                    rawValue: metadata?.availability.rawValue ?? "draft"
+                ) ?? .draft
+            )
+        }
+    }
+
+    private func loadMetadata(
+        using client: WebAdminAPI.Client,
+        referenceIDs: [String]
+    ) async throws -> [Components.Schemas.WebMetadataResolveItemSchema] {
+        guard !referenceIDs.isEmpty else { return [] }
+
+        let response = try await client.webMetadataResolve(
+            headers: .init(accept: [.init(contentType: .json)]),
+            body: .json(
+                .init(
+                    referenceType: "web.page",
+                    referenceIds: referenceIDs
+                )
+            )
+        )
+
+        switch response {
+        case .ok(let okResponse):
+            return try okResponse.body.json
+        case .unauthorized:
+            throw OpenAPIRepositoryError.unauthorized
+        case .forbidden:
+            throw OpenAPIRepositoryError.forbidden
+        case .undocumented(let statusCode, let response):
+            throw try await api.failure(
+                statusCode: statusCode,
+                responseBody: response.body
+            )
         }
     }
 
@@ -100,7 +132,7 @@ struct AdminListWebPageOpenAPIRepository:
         id: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.webPageDelete(
+            _ = try await client.webPageRemove(
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }

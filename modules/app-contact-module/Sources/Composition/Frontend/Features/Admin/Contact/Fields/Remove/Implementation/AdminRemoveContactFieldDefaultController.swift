@@ -27,10 +27,8 @@ struct AdminRemoveContactFieldDefaultController:
         }
         let id = try context.requiredParameter("fieldId")
         let field = try? await interactor.get(id: id)
-        return try await presenter.renderConfirmation(
-            fieldId: id,
-            label: field?.label ?? id,
-            permissions: context.currentUserPermissions
+        return try await presenter.renderRemovePage(
+            items: [.init(id: id, label: field?.label ?? id)]
         )
     }
 
@@ -45,6 +43,16 @@ struct AdminRemoveContactFieldDefaultController:
                 .renderForbiddenPage()
                 .response(from: request, context: context)
         }
+        let nonceRequest = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            context: context
+        )
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         try await interactor.remove(
             id: try context.requiredParameter("fieldId")
         )
@@ -69,9 +77,11 @@ struct AdminRemoveContactFieldDefaultController:
         else {
             return try await presenter.renderForbiddenPage()
         }
-        return try await presenter.renderConfirmation(
-            selectedIds: request.queryStrings("selectedIds"),
-            permissions: context.currentUserPermissions
+        return try await presenter.renderRemovePage(
+            items: request.queryStrings("selectedIds")
+                .map {
+                    .init(id: $0, label: $0)
+                }
         )
     }
 
@@ -90,6 +100,14 @@ struct AdminRemoveContactFieldDefaultController:
                 try await presenter
                 .renderForbiddenPage()
                 .response(from: request, context: context)
+        }
+        guard
+            await AdminNonceStore.shared.consume(
+                payload.nonce,
+                sessionToken: context.sessionToken
+            )
+        else {
+            return Response(status: .badRequest)
         }
         try await interactor.remove(ids: payload.normalizedSelectedIds)
         return Response(

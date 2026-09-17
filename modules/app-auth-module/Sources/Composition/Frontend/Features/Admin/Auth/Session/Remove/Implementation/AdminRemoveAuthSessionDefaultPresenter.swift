@@ -11,8 +11,8 @@ struct AdminRemoveAuthSessionDefaultPresenter:
     let renderingEngine: any RenderingEngine
 
     func renderPage(
-        state: AuthSessionRemoveConfirmation.State,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext,
+        identityId: String
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -23,8 +23,11 @@ struct AdminRemoveAuthSessionDefaultPresenter:
             title: "Remove session",
             content: AuthSessionRemoveConfirmation(
                 state: .init(
-                    model: state.model,
-                    breadcrumb: state.breadcrumb,
+                    item: item,
+                    identityId: identityId,
+                    breadcrumb: AuthSessionRoutes.detailsBreadcrumb(
+                        RouterPath(identityId)
+                    ),
                     nonceToken: nonceToken
                 )
             )
@@ -48,10 +51,9 @@ struct AdminRemoveAuthSessionDefaultPresenter:
     }
 
     func errorPage(
+        item: NewAdminRemoveItemContext,
         identityId: String,
-        sessionId: String,
-        error: OpenAPIRepositoryError,
-        permissions: Set<String>
+        error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
             request: request,
@@ -61,27 +63,12 @@ struct AdminRemoveAuthSessionDefaultPresenter:
                 state: .init(
                     info: error.errorTitle,
                     message: error.errorDescription,
-                    breadcrumb: breadcrumb(
-                        identityId: identityId,
-                        sessionId: sessionId
+                    breadcrumb: AuthSessionRoutes.detailsBreadcrumb(
+                        RouterPath(identityId)
                     )
                 )
             )
         )
     }
 
-    func breadcrumb(
-        identityId: String,
-        sessionId: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "User", link: "/admin/user/"),
-            .init(label: "Identities", link: "/admin/user/identities/"),
-            .init(
-                label: "Details",
-                link: "/admin/user/identities/\(identityId)/"
-            ),
-        ]
-    }
 }

@@ -23,7 +23,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
                 form: .init(
                     parentId: model.parentId,
                     fileName: model.fileName,
-                    type: model.type,
+                    extension: model.extension,
                     title: model.title,
                     altText: model.altText,
                     data: model.data,

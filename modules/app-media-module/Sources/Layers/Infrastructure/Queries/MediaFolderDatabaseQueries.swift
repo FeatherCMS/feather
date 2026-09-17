@@ -8,13 +8,14 @@ import FeatherDatabase
 import FeatherInfrastructure
 import MediaApplication
 
-extension MediaFolderTable.Row {
+extension MediaAssetNodeFolderTable.Row {
     var asDetail: MediaFolderDetail {
         .init(
             id: id,
             parentId: parentId,
             name: name,
-            path: path,
+            slug: slug,
+            slugPath: slugPath,
             assetCount: assetCount,
             totalSizeBytes: totalSizeBytes,
             createdAt: createdAt,
@@ -27,7 +28,8 @@ extension MediaFolderTable.Row {
             id: id,
             parentId: parentId,
             name: name,
-            path: path,
+            slug: slug,
+            slugPath: slugPath,
             assetCount: assetCount,
             totalSizeBytes: totalSizeBytes,
             createdAt: createdAt,
@@ -47,10 +49,12 @@ public struct MediaFolderDatabaseQueries: MediaFolderQueries {
         id: String
     ) async throws -> MediaFolderDetail {
         guard
-            let row = try await MediaFolderTable(connection: context.connection)
-                .find(
-                    id: id
-                )
+            let row = try await MediaAssetNodeFolderTable(
+                connection: context.connection
+            )
+            .find(
+                id: id
+            )
         else {
             throw RepositoryError.notFound
         }
@@ -60,10 +64,12 @@ public struct MediaFolderDatabaseQueries: MediaFolderQueries {
     public func list(
         query: MediaFolderList.Query
     ) async throws -> MediaFolderList {
-        let rows = try await MediaFolderTable(connection: context.connection)
-            .list(
-                parentId: query.parentId
-            )
+        let rows = try await MediaAssetNodeFolderTable(
+            connection: context.connection
+        )
+        .list(
+            parentId: query.parentId
+        )
         return .init(items: rows.map(\.asListItem))
     }
 }

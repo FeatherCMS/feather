@@ -32,8 +32,8 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
         let redirectPath = request.queryString("redirect") ?? "/"
         return presenter.renderPage(
             form: presenter.formState(
-                email: "mail.tib@gmail.com",
-                password: "root",
+                email: "",
+                password: "",
                 isPersistent: true,
                 redirectPath: redirectPath
             ),
@@ -100,8 +100,8 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
             }
 
             var state = presenter.formState(
-                email: lastPayload?.email ?? "mail.tib@gmail.com",
-                password: lastPayload?.password ?? "root",
+                email: lastPayload?.email ?? "",
+                password: lastPayload?.password ?? "",
                 isPersistent: lastPayload?.isPersistent.value ?? true,
                 redirectPath: request.queryString("redirect") ?? "/"
             )
@@ -120,12 +120,12 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
                 context: context,
                 presenter: presenter,
                 state: presenter.formState(
-                    email: lastPayload?.email ?? "mail.tib@gmail.com",
-                    password: lastPayload?.password ?? "root",
+                    email: lastPayload?.email ?? "",
+                    password: lastPayload?.password ?? "",
                     isPersistent: lastPayload?.isPersistent.value ?? true,
                     redirectPath: request.queryString("redirect") ?? "/"
                 ),
-                message: error.displayMessage
+                message: "Incorrect email or password."
             )
         }
     }

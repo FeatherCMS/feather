@@ -1,6 +1,7 @@
 import AsyncHTTPClient
 import FeatherAdmin
 import Foundation
+import MediaFrontend
 import NIOCore
 import OpenAPIAsyncHTTPClient
 import OpenAPIRuntime
@@ -9,11 +10,13 @@ import WebAppAPI
 
 public struct WebAdminAPIClient: Sendable {
     public let client: WebAdminAPI.Client
+    public let sessionToken: String?
 
     public init(
         apiBaseURL: URL,
         sessionToken: String? = nil
     ) {
+        self.sessionToken = sessionToken
         self.client = .init(
             serverURL: apiBaseURL,
             transport: AsyncHTTPClientTransport(
@@ -52,6 +55,13 @@ public struct WebAdminAPIClient: Sendable {
         return OpenAPIRepositoryError.parsedFailure(
             statusCode: statusCode,
             responseBody: body
+        )
+    }
+
+    public func mediaAdminAPI() -> MediaAdminAPIClient {
+        .init(
+            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            sessionToken: sessionToken
         )
     }
 }

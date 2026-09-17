@@ -82,10 +82,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
                 deniedInfo: "Forbidden",
                 deniedMessage:
                     "Your identity cannot access user magic links.",
-                breadcrumb: [
-                    .init(label: "Admin", link: "/admin/"),
-                    .init(label: "Auth", link: "/admin/auth/"),
-                ]
+                breadcrumb: AuthMagicLinkRoutes.listBreadcrumb
             )
             return try await presenter.renderPage(state: state)
         }
@@ -122,12 +119,11 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
             )
         }
         return
-            try await presenter.renderRemoveConfirmation(
-                selectedIds: selectedIds,
+            try await presenter.renderRemovePage(
+                items: selectedIds.map { .init(id: $0, label: $0) },
                 page: page,
                 search: search,
-                userID: userID,
-                permissions: context.currentUserPermissions
+                userID: userID
             )
             .response(from: request, context: context)
     }

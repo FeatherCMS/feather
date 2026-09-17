@@ -13,7 +13,6 @@ struct AdminViewWebMetadataDefaultPresenter: AdminViewWebMetadataPresenter {
 
     func renderDetailsPage(
         rule: WebMetadataDetailsModel,
-        breadcrumb: [NewAdminBreadcrumb.Link],
         permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
@@ -23,7 +22,7 @@ struct AdminViewWebMetadataDefaultPresenter: AdminViewWebMetadataPresenter {
             content: WebMetadataDetails(
                 state: .init(
                     rule: rule,
-                    breadcrumb: breadcrumb
+                    breadcrumb: WebMetadataRoutes.breadcrumb
                 )
             )
         )
@@ -32,7 +31,6 @@ struct AdminViewWebMetadataDefaultPresenter: AdminViewWebMetadataPresenter {
     func renderErrorPage(
         info: String,
         message: String,
-        breadcrumb: [NewAdminBreadcrumb.Link],
         permissions: Set<String>
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
@@ -43,19 +41,10 @@ struct AdminViewWebMetadataDefaultPresenter: AdminViewWebMetadataPresenter {
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: breadcrumb
+                    breadcrumb: WebMetadataRoutes.breadcrumb
                 )
             )
         )
     }
 
-    func breadcrumb(
-        id: String
-    ) -> [NewAdminBreadcrumb.Link] {
-        [
-            .init(label: "Admin", link: "/admin/"),
-            .init(label: "Web", link: "/admin/web/"),
-            .init(label: "Metadata", link: "/admin/web/metadata/"),
-        ]
-    }
 }

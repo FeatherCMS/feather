@@ -10,6 +10,7 @@ struct PathCollection: PathCollectionRepresentable {
             "api/v1/admin/web/metadata": WebMetadataPathItems(),
             "api/v1/admin/web/metadata/": WebMetadataListPathItems(),
             "api/v1/admin/web/metadata/search": WebMetadataSearchPathItems(),
+            "api/v1/admin/web/metadata/resolve": WebMetadataResolvePathItems(),
             "api/v1/admin/web/metadata/{webMetadataId}":
                 WebMetadataIdPathItems(),
             "api/v1/admin/web/pages": WebPagePathItems(),

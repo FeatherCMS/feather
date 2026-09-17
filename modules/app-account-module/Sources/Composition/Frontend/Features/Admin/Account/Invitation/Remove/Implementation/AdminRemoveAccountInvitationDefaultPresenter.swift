@@ -11,9 +11,7 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
     let renderEngine: any RenderingEngine
 
     func renderRemovePage(
-        id: String,
-        email: String,
-        permissions: Set<String>
+        item: NewAdminRemoveItemContext
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -24,9 +22,11 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
             title: "Remove user invitation",
             content: AccountInvitationConfirmation(
                 state: .init(
-                    id: id,
-                    email: email,
-                    breadcrumb: breadcrumb(id: id),
+                    id: item.id,
+                    email: item.label,
+                    breadcrumb: AccountAdminRoutes.invitationRemoveBreadcrumb(
+                        RouterPath(item.id)
+                    ),
                     nonceToken: nonceToken
                 )
             )
@@ -36,8 +36,7 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
     func renderErrorPage(
         id: String,
         info: String,
-        message: String,
-        permissions: Set<String>
+        message: String
     ) async throws -> HTMLResponse {
         try await renderEngine.renderNewAdminPage(
             request: request,
@@ -50,13 +49,4 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
         )
     }
 
-    func breadcrumb(id: String) -> [NewAdminBreadcrumb.Link] {
-        AccountAdminRoutes.invitationBreadcrumb + [
-            .init(
-                label: "Remove",
-                link: AccountAdminRoutes.invitationRemove(RouterPath(id))
-                    .description
-            )
-        ]
-    }
 }

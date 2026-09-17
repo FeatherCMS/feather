@@ -125,6 +125,10 @@ let package = Package(
             exact: "1.0.0-beta.2"
         ),
         .package(
+            url: "https://github.com/feather-framework/feather-storage",
+            exact: "1.0.0-beta.3"
+        ),
+        .package(
             url: "https://github.com/soto-project/soto-core",
             from: "7.0.0"
         ),
@@ -197,6 +201,7 @@ let package = Package(
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "FeatherMailSES", package: "feather-mail-ses"),
                 .product(name: "FeatherStorageFS", package: "feather-storage-fs"),
+                .product(name: "FeatherStorage", package: "feather-storage"),
                 .product(name: "SotoCore", package: "soto-core"),
 
                 // kernel & module infrastructure
@@ -286,6 +291,7 @@ let package = Package(
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "FeatherStorageFS", package: "feather-storage-fs"),
+                .product(name: "FeatherStorage", package: "feather-storage"),
 
                 .product(name: "UserAdminAPI", package: "app-user-module"),
                 .product(name: "UserAppAPI", package: "app-user-module"),
@@ -353,6 +359,7 @@ let package = Package(
                 .product(name: "JobsPostgres", package: "swift-jobs-postgres"),
                 .product(name: "PostgresMigrations", package: "postgres-migrations"),
                 .product(name: "FeatherStorageFS", package: "feather-storage-fs"),
+                .product(name: "FeatherStorage", package: "feather-storage"),
                 .product(name: "AccountAdminAPI", package: "app-account-module"),
                 .product(name: "UserAdminAPI", package: "app-user-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),

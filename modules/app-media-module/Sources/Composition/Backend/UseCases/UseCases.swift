@@ -3,6 +3,7 @@ import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherStorage
 import Foundation
 import MediaApplication
 import MediaDomain
@@ -10,41 +11,34 @@ import MediaInfrastructure
 
 public struct UseCases: Sendable {
     public struct AssociatedVariantFile: Sendable {
+        public let assetId: String
         public let variantId: String
         public let name: String
-        public let type: String
-        public let storageKey: String
+        public let `extension`: String
+        public let objectKey: String
     }
 
     let database: any DatabaseClient
     let idGenerator: any IDGenerator
-    let mediaStorage: any MediaStorage
+    let storage: any StorageClient
+    let storageKeyShard: MediaStorageKeyShard
     let variantQueue: any MediaVariantQueue
     let authorizer: any Authorizer
 
     public init(
         database: any DatabaseClient,
         idGenerator: any IDGenerator,
-        mediaStorage: any MediaStorage,
+        storage: any StorageClient,
         authorizer: any Authorizer,
-        variantQueue: any MediaVariantQueue
+        variantQueue: any MediaVariantQueue,
+        storageKeyShard: MediaStorageKeyShard = .init()
     ) {
         self.database = database
         self.idGenerator = idGenerator
-        self.mediaStorage = mediaStorage
+        self.storage = storage
+        self.storageKeyShard = storageKeyShard
         self.variantQueue = variantQueue
         self.authorizer = authorizer
-    }
-}
-
-extension UseCases {
-    var mediaAssetKeyPrefix: String { "media/assets/" }
-
-    func expandAssetStorageKeyIfNeeded(
-        _ key: String
-    ) -> String {
-        key.hasPrefix(mediaAssetKeyPrefix)
-            ? key : "\(mediaAssetKeyPrefix)\(key)"
     }
 
     func writeTransaction() -> DatabaseTransactionExecutor<WriteMedia> {
@@ -53,29 +47,23 @@ extension UseCases {
             idGenerator: idGenerator,
             scope: { context in
                 WriteMedia(
-                    folders: MediaFolderDatabaseRepository(
-                        context: .init(
-                            connection: context.connection,
-                            idGenerator: idGenerator
-                        )
+                    folders: MediaAssetNodeFolderDatabaseRepository(
+                        context: context
                     ),
-                    assets: MediaAssetDatabaseRepository(
-                        context: .init(
-                            connection: context.connection,
-                            idGenerator: idGenerator
-                        )
+                    assets: MediaAssetNodeFileDatabaseRepository(
+                        context: context
                     ),
-                    processors: MediaProcessorDatabaseRepository(
-                        context: .init(
-                            connection: context.connection,
-                            idGenerator: idGenerator
-                        )
+                    storageObjects: MediaAssetStorageObjectDatabaseRepository(
+                        context: context
                     ),
-                    processorAssets: MediaProcessorAssetDatabaseRepository(
-                        context: .init(
-                            connection: context.connection,
-                            idGenerator: idGenerator
-                        )
+                    variants: MediaAssetNodeFileVariantDatabaseRepository(
+                        context: context
+                    ),
+                    variantDefinitions: MediaVariantDatabaseRepository(
+                        context: context
+                    ),
+                    variantProcessors: MediaVariantProcessorDatabaseRepository(
+                        context: context
                     )
                 )
             }
@@ -84,14 +72,10 @@ extension UseCases {
 
     public func enqueueVariantGeneration(
         assetId: String,
-        processors: [MediaProcessor]
+        processors: [MediaVariantProcessor]
     ) async throws {
-        for processor in processors {
-            try await variantQueue.enqueueMediaGenerateVariant(
-                assetId: assetId,
-                processorId: processor.id
-            )
-        }
+        guard !processors.isEmpty else { return }
+        try await variantQueue.enqueueMediaGenerateVariants(assetId: assetId)
     }
 
     public func createAssetAndEnqueue(
@@ -100,123 +84,88 @@ extension UseCases {
     ) async throws -> MediaAssetDetail {
         let result = try await makeCreateAsset()
             .execute(subject: subject, input: input)
-        let matchingProcessors =
-            try await database
-            .withConnection { connection in
-                let processorRepo = MediaProcessorDatabaseRepository(
-                    context: .init(
-                        connection: connection,
-                        idGenerator: idGenerator
-                    )
-                )
-                return try await processorRepo.listActive()
-                    .filter {
-                        MediaExtensionMatcher.matches(
-                            storageKey: result.storageKey,
-                            type: result.type,
-                            processor: $0
-                        )
-                    }
-            }
+        let processors = try await activeVariantProcessors()
+        return try await finalizeAssetCreation(
+            result: result,
+            input: input,
+            processors: processors
+        )
+    }
 
-        guard !matchingProcessors.isEmpty else {
-            return try await database.withConnection {
-                connection in
-                let assetRepo = MediaAssetDatabaseRepository(
-                    context: .init(
-                        connection: connection,
-                        idGenerator: idGenerator
-                    )
-                )
-                guard let asset = try await assetRepo.find(id: result.id) else {
-                    return result
-                }
-                var updated = asset
-                updated.status = .ready
-                return try await assetRepo.update(updated).asDetail
-            }
-        }
+    public func createAssetAndEnqueue(input: CreateMediaAsset.Input)
+        async throws -> MediaAssetDetail
+    {
+        let result = try await makeCreateAsset().execute(input: input)
+        let processors = try await activeVariantProcessors()
+        return try await finalizeAssetCreation(
+            result: result,
+            input: input,
+            processors: processors
+        )
+    }
 
-        let updatedResult = try await database.withConnection {
-            connection in
-            let assetRepo = MediaAssetDatabaseRepository(
-                context: .init(
-                    connection: connection,
-                    idGenerator: idGenerator
-                )
+    public func createAssetAndEnqueue(
+        input: CreateMediaAsset.Input,
+        processors: [MediaVariantProcessor]
+    ) async throws -> MediaAssetDetail {
+        let result = try await makeCreateAsset().execute(input: input)
+        return try await finalizeAssetCreation(
+            result: result,
+            input: input,
+            processors: processors
+        )
+    }
+
+    public func activeVariantProcessors() async throws
+        -> [MediaVariantProcessor]
+    {
+        try await database.withConnection { connection in
+            let repo = MediaVariantProcessorDatabaseRepository(
+                context: .init(connection: connection, idGenerator: idGenerator)
             )
-            guard let asset = try await assetRepo.find(id: result.id) else {
+            return try await repo.listActive()
+        }
+    }
+
+    private func finalizeAssetCreation(
+        result: MediaAssetDetail,
+        input: CreateMediaAsset.Input,
+        processors: [MediaVariantProcessor]
+    ) async throws -> MediaAssetDetail {
+        let matchingProcessors = processors.filter {
+            MediaExtensionMatcher.matches(
+                extension: input.extension,
+                processor: $0
+            )
+        }
+        let updated = try await database.withConnection { connection in
+            let repo = MediaAssetNodeFileDatabaseRepository(
+                context: .init(connection: connection, idGenerator: idGenerator)
+            )
+            guard let asset = try await repo.find(id: result.id) else {
                 return result
             }
-            var updated = asset
-            updated.status = .processing
-            return try await assetRepo.update(updated).asDetail
+            var value = asset
+            value.status = matchingProcessors.isEmpty ? .ready : .processing
+            return try await repo.update(value).asDetail
         }
-
-        do {
+        if !matchingProcessors.isEmpty {
             try await enqueueVariantGeneration(
                 assetId: result.id,
                 processors: matchingProcessors
             )
         }
-        catch {
-            _ = try? await database.withConnection {
-                connection in
-                let assetRepo = MediaAssetDatabaseRepository(
-                    context: .init(
-                        connection: connection,
-                        idGenerator: idGenerator
-                    )
-                )
-                guard let asset = try await assetRepo.find(id: result.id) else {
-                    return result
-                }
-                var reverted = asset
-                reverted.status = .uploaded
-                return try await assetRepo.update(reverted).asDetail
-            }
-            throw error
-        }
-        return updatedResult
+        return updated
     }
 
-    public func deleteAssetNodesAndFiles(
-        subject: Subject,
-        assetIds: [String]
-    ) async throws -> [String] {
-        try await makeDeleteAsset()
-            .execute(
-                subject: subject,
-                input: .init(ids: assetIds)
-            )
+    public func deleteAssetNodesAndFiles(subject: Subject, assetIds: [String])
+        async throws -> [String]
+    {
+        try await makeRemoveAsset()
+            .execute(subject: subject, input: .init(ids: assetIds))
     }
 
-    public func readOriginalAssetFile(
-        storageKey: String
-    ) async throws -> (data: Data, type: String) {
-        let maybeAsset: MediaAssetDetail? =
-            try await database
-            .withConnection { connection -> MediaAssetDetail? in
-                let queries = MediaAssetDatabaseQueries(
-                    context: .init(connection: connection)
-                )
-                if let direct = try await queries.findByStorageKey(storageKey) {
-                    return direct
-                }
-                let expanded = expandAssetStorageKeyIfNeeded(storageKey)
-                guard expanded != storageKey else { return nil }
-                return try await queries.findByStorageKey(expanded)
-            }
-        guard let asset = maybeAsset else {
-            throw RepositoryError.notFound
-        }
-        let data = try await downloadOriginalAssetData(asset: asset)
-        return (data: data, type: asset.type)
-    }
-
-    public func getAssetDetails(
-        id: String
-    ) async throws -> MediaAssetDetail {
+    public func getAssetDetails(id: String) async throws -> MediaAssetDetail {
         try await database.withConnection { connection in
             try await MediaAssetDatabaseQueries(
                 context: .init(connection: connection)
@@ -225,217 +174,93 @@ extension UseCases {
         }
     }
 
-    public func readVariantFile(
-        storageKey: String
-    ) async throws -> Data {
-        do {
-            return try await mediaStorage.download(key: storageKey)
+    public func readOriginalAssetFile(assetId: String) async throws -> (
+        data: Data, type: String, filename: String, slugPath: String
+    ) {
+        let asset = try await database.withConnection { connection in
+            try await MediaAssetDatabaseQueries(
+                context: .init(connection: connection)
+            )
+            .find(id: assetId)
         }
-        catch {
-            let expanded = expandAssetStorageKeyIfNeeded(storageKey)
-            guard expanded != storageKey else { throw error }
-            return try await mediaStorage.download(key: expanded)
-        }
+        return (
+            try await MediaStorageData.download(
+                from: storage,
+                key: storageKeyShard.physicalKey(for: objectKey(for: asset))
+            ),
+            asset.contentType, "\(asset.name).\(asset.extension)",
+            asset.slugPath
+        )
     }
 
-    public func downloadOriginalAssetData(
-        asset: MediaAssetDetail
-    ) async throws -> Data {
-        let storage = mediaStorage
-        var candidates: [String] = [asset.storageKey]
-        if let expanded = expandedOriginalStorageKey(asset: asset),
-            expanded != asset.storageKey
-        {
-            candidates.append(expanded)
+    public func readVariantFile(assetId: String, variantName: String)
+        async throws -> (data: Data, type: String, filename: String)
+    {
+        let variant = try await database.withConnection { connection in
+            let repo = MediaAssetNodeFileVariantDatabaseRepository(
+                context: .init(connection: connection, idGenerator: idGenerator)
+            )
+            guard
+                let value = try await repo.list(nodeId: assetId)
+                    .first(where: { $0.name == variantName })
+            else { throw RepositoryError.notFound }
+            return value
         }
-
-        var lastError: Swift.Error?
-        for candidate in candidates {
-            do {
-                return try await storage.download(key: candidate)
-            }
-            catch {
-                lastError = error
-            }
-        }
-
-        throw lastError ?? RepositoryError.notFound
+        return (
+            try await MediaStorageData.download(
+                from: storage,
+                key: storageKeyShard.physicalKey(for: variant.objectKey)
+            ),
+            mediaType(for: variant.extension),
+            "\(variant.name).\(variant.extension)"
+        )
     }
 
-    public func expandedOriginalStorageKey(
-        asset: MediaAssetDetail
-    ) -> String? {
-        let normalizedType = canonicalExtension(from: asset.type)
-        guard !normalizedType.isEmpty else { return nil }
-        guard storageKeyExtension(asset.storageKey) == nil else { return nil }
-        return "\(asset.storageKey).\(normalizedType)"
-    }
-
-    public func canonicalExtension(
-        from value: String
-    ) -> String {
-        let normalized = value.trimmingCharacters(in: .whitespacesAndNewlines)
-            .lowercased()
-        guard !normalized.isEmpty else { return "" }
-
-        let strippedPrefix =
-            normalized.hasPrefix(".")
-            ? String(normalized.drop(while: { $0 == "." }))
-            : normalized
-        let rawExtension =
-            strippedPrefix.contains("/")
-            ? (strippedPrefix.split(separator: "/").last.map(String.init)
-                ?? strippedPrefix)
-            : strippedPrefix
-
-        switch rawExtension {
-        case "jpg", "jpeg":
-            return "jpeg"
-        default:
-            return rawExtension
-        }
-    }
-
-    public func storageKeyExtension(
-        _ storageKey: String
-    ) -> String? {
-        let fileName =
-            storageKey.split(separator: "/").last.map(String.init) ?? storageKey
-        guard let dotIndex = fileName.lastIndex(of: "."),
-            dotIndex < fileName.index(before: fileName.endIndex)
-        else {
-            return nil
-        }
-        let ext = String(fileName[fileName.index(after: dotIndex)...])
-            .lowercased()
-        return ext.isEmpty ? nil : ext
-    }
-
-    public func listAssociatedVariantFiles(
-        assetId: String
-    ) async throws -> [AssociatedVariantFile] {
+    public func listAssociatedVariantFiles(assetId: String) async throws
+        -> [AssociatedVariantFile]
+    {
         try await database.withConnection { connection in
-            let assetRepo = MediaAssetDatabaseRepository(
-                context: .init(
-                    connection: connection,
-                    idGenerator: idGenerator
-                )
+            let repo = MediaAssetNodeFileVariantDatabaseRepository(
+                context: .init(connection: connection, idGenerator: idGenerator)
             )
-            guard try await assetRepo.find(id: assetId) != nil else {
-                throw RepositoryError.notFound
-            }
-
-            let processorAssetRepo = MediaProcessorAssetDatabaseRepository(
-                context: .init(
-                    connection: connection,
-                    idGenerator: idGenerator
-                )
-            )
-            let processorRepo = MediaProcessorDatabaseRepository(
-                context: .init(
-                    connection: connection,
-                    idGenerator: idGenerator
-                )
-            )
-            let links = try await processorAssetRepo.list(assetId: assetId)
-
-            var results: [AssociatedVariantFile] = []
-            results.reserveCapacity(links.count)
-            for link in links {
-                guard
-                    let processor = try await processorRepo.find(
-                        id: link.processorId
-                    )
-                else {
-                    continue
-                }
-                results.append(
-                    .init(
-                        variantId: processor.id,
-                        name: processor.name,
-                        type: "processor",
-                        storageKey: link.storageKey
-                    )
-                )
-            }
-            return results.sorted { lhs, rhs in
-                lhs.name.localizedCaseInsensitiveCompare(rhs.name)
-                    == .orderedAscending
-            }
-        }
-    }
-
-    public func composeAssetStorageKey(
-        fileName: String,
-        type: String,
-        folderId: String?
-    ) async throws -> (folderId: String?, storageKey: String) {
-        let folder: MediaFolder? =
-            try await database
-            .withConnection { connection -> MediaFolder? in
-                guard let folderId else { return nil }
-                return try await MediaFolderDatabaseRepository(
+            guard
+                try await MediaAssetNodeFileDatabaseRepository(
                     context: .init(
                         connection: connection,
                         idGenerator: idGenerator
                     )
                 )
-                .find(id: folderId)
-            }
+                .find(id: assetId) != nil
+            else { throw RepositoryError.notFound }
+            return try await repo.list(nodeId: assetId)
+                .map {
+                    .init(
+                        assetId: assetId,
+                        variantId: $0.variantId,
+                        name: $0.name,
+                        extension: $0.extension,
+                        objectKey: $0.objectKey
+                    )
+                }
+        }
+    }
 
-        let resolvedExtension =
-            canonicalExtension(from: type)
-            .ifEmpty(
-                fallback: storageKeyExtension(fileName) ?? "bin"
-            )
-        let sanitizedFileName = sanitizeFileName(
-            fileName,
-            fallbackExtension: resolvedExtension
-        )
-        let relativePath =
-            folder.map { "\($0.path)/\(sanitizedFileName)" }
-            ?? sanitizedFileName
-        return (
-            folderId: folder?.id,
-            storageKey: "\(mediaAssetKeyPrefix)\(relativePath)"
+    private func objectKey(for asset: MediaAssetDetail) -> String {
+        MediaStorageObjectKey.original(
+            assetID: asset.id,
+            fileExtension: asset.extension
         )
     }
 }
 
-extension UseCases {
-    fileprivate func sanitizeFileName(
-        _ value: String,
-        fallbackExtension: String
-    ) -> String {
-        let raw = value.trimmingCharacters(in: .whitespacesAndNewlines)
-        let pieces = raw.split(separator: "/").last.map(String.init) ?? raw
-        let dotIndex = pieces.lastIndex(of: ".")
-        let baseName =
-            dotIndex.map { String(pieces[..<$0]) }
-            .flatMap { $0.isEmpty ? nil : $0 }
-            ?? pieces
-        let normalizedBase =
-            baseName
-            .lowercased()
-            .replacingOccurrences(
-                of: #"[^a-z0-9._-]+"#,
-                with: "-",
-                options: .regularExpression
-            )
-            .trimmingCharacters(in: CharacterSet(charactersIn: "-._"))
-        let safeBase = normalizedBase.isEmpty ? "asset" : normalizedBase
-        let ext =
-            storageKeyExtension(pieces)
-            ?? fallbackExtension.trimmingCharacters(in: .whitespacesAndNewlines)
-        return ext.isEmpty ? safeBase : "\(safeBase).\(ext.lowercased())"
-    }
-
-}
-
-extension String {
-    fileprivate func ifEmpty(
-        fallback: String
-    ) -> String {
-        isEmpty ? fallback : self
+private func mediaType(for extension: String) -> String {
+    switch `extension`.lowercased() {
+    case "jpg", "jpeg": "image/jpeg"
+    case "png": "image/png"
+    case "gif": "image/gif"
+    case "webp": "image/webp"
+    case "pdf": "application/pdf"
+    case "mp4": "video/mp4"
+    default: "application/octet-stream"
     }
 }

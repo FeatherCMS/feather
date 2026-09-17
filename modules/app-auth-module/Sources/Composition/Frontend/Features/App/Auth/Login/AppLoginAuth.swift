@@ -20,19 +20,15 @@ struct AppLoginAuth {
     let controller: any AppLoginAuthController
 
     init(
-        repository: any AppLoginAuthRepository,
-        renderingEngine: any RenderingEngine
+        repository: any AppLoginAuthRepository
     ) {
         self.controller = AppLoginAuthDefaultController(
-            buildRuntime: { request, _ in
+            buildRuntime: { _, _ in
                 (
                     interactor: AppLoginAuthDefaultInteractor(
                         repository: repository
                     ),
-                    presenter: AppLoginAuthDefaultPresenter(
-                        request: request,
-                        renderEngine: renderingEngine
-                    )
+                    presenter: AppLoginAuthDefaultPresenter()
                 )
             }
         )
