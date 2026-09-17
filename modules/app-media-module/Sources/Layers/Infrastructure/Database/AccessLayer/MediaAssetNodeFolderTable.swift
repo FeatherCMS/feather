@@ -11,7 +11,10 @@ extension MediaAssetNodeFolderTable.Row {
         slug = try row.decode(column: "slug", as: String.self)
         slugPath = try row.decode(column: "slug_path", as: String.self)
         assetCount = try row.decode(column: "asset_count", as: Int.self)
-        totalSizeBytes = try row.decode(column: "total_size_bytes", as: Int64.self)
+        totalSizeBytes = try row.decode(
+            column: "total_size_bytes",
+            as: Int64.self
+        )
         createdAt = try row.decode(column: "created_at", as: Date.self)
         updatedAt = try row.decode(column: "updated_at", as: Date.self)
         deletedAt = try row.decode(column: "deleted_at", as: Date?.self)
@@ -45,15 +48,16 @@ struct MediaAssetNodeFolderTable {
     let connection: any DatabaseConnection
 
     func create(row: Row.Create) async throws -> Row {
-        _ = try await MediaAssetNodeTable(connection: connection).create(
-            row: .init(
-                id: row.id,
-                parentId: row.parentId,
-                name: row.name,
-                slug: row.slug,
-                slugPath: row.slugPath
+        _ = try await MediaAssetNodeTable(connection: connection)
+            .create(
+                row: .init(
+                    id: row.id,
+                    parentId: row.parentId,
+                    name: row.name,
+                    slug: row.slug,
+                    slugPath: row.slugPath
+                )
             )
-        )
         _ = try await connection.run(
             query: #"""
                 INSERT INTO media_asset_node_folder (node_id, asset_count, total_size_bytes)
@@ -67,15 +71,16 @@ struct MediaAssetNodeFolderTable {
     }
 
     func update(row: Row) async throws -> Row {
-        _ = try await MediaAssetNodeTable(connection: connection).update(
-            row: .init(
-                id: row.id,
-                parentId: row.parentId,
-                name: row.name,
-                slug: row.slug,
-                slugPath: row.slugPath
+        _ = try await MediaAssetNodeTable(connection: connection)
+            .update(
+                row: .init(
+                    id: row.id,
+                    parentId: row.parentId,
+                    name: row.name,
+                    slug: row.slug,
+                    slugPath: row.slugPath
+                )
             )
-        )
         _ = try await connection.run(
             query: #"""
                 UPDATE media_asset_node_folder
@@ -101,7 +106,9 @@ struct MediaAssetNodeFolderTable {
                 LIMIT 1;
                 """#
         ) { sequence in
-            guard let row = try await sequence.collect().first else { return nil }
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
             return try Row(from: row)
         }
     }
@@ -118,7 +125,9 @@ struct MediaAssetNodeFolderTable {
                 LIMIT 1;
                 """#
         ) { sequence in
-            guard let row = try await sequence.collect().first else { return nil }
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
             return try Row(from: row)
         }
     }
@@ -168,7 +177,8 @@ struct MediaAssetNodeFolderTable {
                 RETURNING id;
                 """#
         ) { sequence in
-            try await sequence.collect().map { try $0.decode(column: "id", as: String.self) }
+            try await sequence.collect()
+                .map { try $0.decode(column: "id", as: String.self) }
         }
     }
 }
@@ -177,5 +187,6 @@ private func mediaFolderSQLValues(_ values: [String]) -> String {
     values.map { value in
         let escaped = value.replacingOccurrences(of: "'", with: "''")
         return "'\(escaped)'"
-    }.joined(separator: ", ")
+    }
+    .joined(separator: ", ")
 }

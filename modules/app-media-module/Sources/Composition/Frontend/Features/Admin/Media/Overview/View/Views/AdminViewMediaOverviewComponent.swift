@@ -22,7 +22,8 @@ struct AdminViewMediaOverviewComponent: Component {
         ),
         Destination(
             title: "Variants",
-            description: "Manage variants and their source-specific processor rules.",
+            description:
+                "Manage variants and their source-specific processor rules.",
             href: MediaVariantRoutes.list.description,
             icon: "crop"
         ),

@@ -49,10 +49,12 @@ public struct MediaFolderDatabaseQueries: MediaFolderQueries {
         id: String
     ) async throws -> MediaFolderDetail {
         guard
-            let row = try await MediaAssetNodeFolderTable(connection: context.connection)
-                .find(
-                    id: id
-                )
+            let row = try await MediaAssetNodeFolderTable(
+                connection: context.connection
+            )
+            .find(
+                id: id
+            )
         else {
             throw RepositoryError.notFound
         }
@@ -62,10 +64,12 @@ public struct MediaFolderDatabaseQueries: MediaFolderQueries {
     public func list(
         query: MediaFolderList.Query
     ) async throws -> MediaFolderList {
-        let rows = try await MediaAssetNodeFolderTable(connection: context.connection)
-            .list(
-                parentId: query.parentId
-            )
+        let rows = try await MediaAssetNodeFolderTable(
+            connection: context.connection
+        )
+        .list(
+            parentId: query.parentId
+        )
         return .init(items: rows.map(\.asListItem))
     }
 }

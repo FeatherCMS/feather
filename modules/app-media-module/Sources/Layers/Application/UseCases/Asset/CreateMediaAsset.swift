@@ -14,7 +14,11 @@ public struct CreateMediaAsset: UseCase {
     let transaction: any TransactionExecutor<WriteMedia>
     let storage: any MediaStorage
 
-    public init(authorizer: any Authorizer, transaction: any TransactionExecutor<WriteMedia>, storage: any MediaStorage) {
+    public init(
+        authorizer: any Authorizer,
+        transaction: any TransactionExecutor<WriteMedia>,
+        storage: any MediaStorage
+    ) {
         self.authorizer = authorizer
         self.transaction = transaction
         self.storage = storage
@@ -28,7 +32,14 @@ public struct CreateMediaAsset: UseCase {
         public let altText: String?
         public let data: Data
 
-        public init(folderId: String? = nil, fileName: String, `extension`: String, title: String? = nil, altText: String? = nil, data: Data) {
+        public init(
+            folderId: String? = nil,
+            fileName: String,
+            `extension`: String,
+            title: String? = nil,
+            altText: String? = nil,
+            data: Data
+        ) {
             self.folderId = folderId
             self.fileName = fileName
             self.extension = `extension`
@@ -38,7 +49,9 @@ public struct CreateMediaAsset: UseCase {
         }
     }
 
-    public func execute(subject: Subject, input: Input) async throws -> MediaAssetDetail {
+    public func execute(subject: Subject, input: Input) async throws
+        -> MediaAssetDetail
+    {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
@@ -66,7 +79,8 @@ public struct CreateMediaAsset: UseCase {
                 else {
                     parent = nil
                 }
-                let slugPath = parent.map { "\($0.slugPath)/\(file.slug)" } ?? file.slug
+                let slugPath =
+                    parent.map { "\($0.slugPath)/\(file.slug)" } ?? file.slug
                 let storageObject = try await scope.storageObjects.insert(
                     MediaAssetStorageObject.create(objectKey: objectKey)
                 )
@@ -85,7 +99,12 @@ public struct CreateMediaAsset: UseCase {
                     storageIdentity: storageIdentity,
                     storageObjectId: storageObject.id
                 )
-                try await adjustFolderAggregates(folders: scope.folders, folderId: parent?.id, sizeDelta: Int64(input.data.count), assetCountDelta: 1)
+                try await adjustFolderAggregates(
+                    folders: scope.folders,
+                    folderId: parent?.id,
+                    sizeDelta: Int64(input.data.count),
+                    assetCountDelta: 1
+                )
                 return asset
             }
             return asset.asDetail
@@ -97,28 +116,45 @@ public struct CreateMediaAsset: UseCase {
     }
 }
 
-private extension CreateMediaAsset {
-    struct NormalizedFile {
+extension CreateMediaAsset {
+    fileprivate struct NormalizedFile {
         let name: String
         let slug: String
         let `extension`: String
     }
 
-    func normalizedFile(_ value: String, `extension`: String) -> NormalizedFile {
+    fileprivate func normalizedFile(_ value: String, `extension`: String)
+        -> NormalizedFile
+    {
         let raw = value.split(separator: "/").last.map(String.init) ?? value
         let dot = raw.lastIndex(of: ".")
-        let name = dot.map { String(raw[..<$0]) }.flatMap { $0.isEmpty ? nil : $0 } ?? raw
-        let safeName = name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "asset" : name
+        let name =
+            dot.map { String(raw[..<$0]) }.flatMap { $0.isEmpty ? nil : $0 }
+            ?? raw
+        let safeName =
+            name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            ? "asset" : name
         let slug = normalizedSlug(safeName)
-        let ext = MediaExtensionMatcher.canonicalExtension(from: `extension`) ?? "bin"
-        return .init(name: safeName, slug: slug.isEmpty ? "asset" : slug, extension: ext)
+        let ext =
+            MediaExtensionMatcher.canonicalExtension(from: `extension`) ?? "bin"
+        return .init(
+            name: safeName,
+            slug: slug.isEmpty ? "asset" : slug,
+            extension: ext
+        )
     }
 
-    func normalizedSlug(_ value: String) -> String {
-        value.lowercased().replacingOccurrences(of: "[^a-z0-9]+", with: "-", options: .regularExpression).trimmingCharacters(in: CharacterSet(charactersIn: "-"))
+    fileprivate func normalizedSlug(_ value: String) -> String {
+        value.lowercased()
+            .replacingOccurrences(
+                of: "[^a-z0-9]+",
+                with: "-",
+                options: .regularExpression
+            )
+            .trimmingCharacters(in: CharacterSet(charactersIn: "-"))
     }
 
-    func contentType(for `extension`: String) -> String {
+    fileprivate func contentType(for `extension`: String) -> String {
         switch `extension` {
         case "jpeg", "jpg": return "image/jpeg"
         case "png": return "image/png"
@@ -130,7 +166,12 @@ private extension CreateMediaAsset {
         }
     }
 
-    func adjustFolderAggregates(folders: any MediaAssetNodeFolderRepository, folderId: String?, sizeDelta: Int64, assetCountDelta: Int) async throws {
+    fileprivate func adjustFolderAggregates(
+        folders: any MediaAssetNodeFolderRepository,
+        folderId: String?,
+        sizeDelta: Int64,
+        assetCountDelta: Int
+    ) async throws {
         guard let folderId else { return }
         var current = try await folders.find(id: folderId)
         while let folder = current {

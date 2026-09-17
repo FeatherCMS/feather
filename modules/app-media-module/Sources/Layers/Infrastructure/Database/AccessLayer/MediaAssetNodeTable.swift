@@ -70,13 +70,19 @@ struct MediaAssetNodeTable {
             slugPath = try row.decode(column: "slug_path", as: String.self)
             objectKey = try row.decode(column: "object_key", as: String?.self)
             `extension` = try row.decode(column: "extension", as: String?.self)
-            contentType = try row.decode(column: "content_type", as: String?.self)
+            contentType = try row.decode(
+                column: "content_type",
+                as: String?.self
+            )
             sizeBytes = try row.decode(column: "size_bytes", as: Int64?.self)
             status = try row.decode(column: "status", as: String?.self)
             title = try row.decode(column: "title", as: String?.self)
             altText = try row.decode(column: "alt_text", as: String?.self)
             assetCount = try row.decode(column: "asset_count", as: Int?.self)
-            totalSizeBytes = try row.decode(column: "total_size_bytes", as: Int64?.self)
+            totalSizeBytes = try row.decode(
+                column: "total_size_bytes",
+                as: Int64?.self
+            )
             createdAt = try row.decode(column: "created_at", as: Date.self)
             updatedAt = try row.decode(column: "updated_at", as: Date.self)
         }
@@ -141,7 +147,9 @@ struct MediaAssetNodeTable {
                 LIMIT 1;
                 """#
         ) { sequence in
-            guard let row = try await sequence.collect().first else { return nil }
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
             return try Row(from: row)
         }
     }
@@ -156,7 +164,9 @@ struct MediaAssetNodeTable {
                 LIMIT 1;
                 """#
         ) { sequence in
-            guard let row = try await sequence.collect().first else { return nil }
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
             return try Row(from: row)
         }
     }
@@ -171,7 +181,8 @@ struct MediaAssetNodeTable {
                 RETURNING id;
                 """#
         ) { sequence in
-            try await sequence.collect().map { try $0.decode(column: "id", as: String.self) }
+            try await sequence.collect()
+                .map { try $0.decode(column: "id", as: String.self) }
         }
     }
 
@@ -234,5 +245,6 @@ private func mediaAssetNodeSQLValues(_ values: [String]) -> String {
     values.map { value in
         let escaped = value.replacingOccurrences(of: "'", with: "''")
         return "'\(escaped)'"
-    }.joined(separator: ", ")
+    }
+    .joined(separator: ", ")
 }

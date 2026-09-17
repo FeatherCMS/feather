@@ -35,8 +35,13 @@ struct MediaJobController {
                         folders: MediaAssetNodeFolderDatabaseRepository(
                             context: context
                         ),
-                        assets: MediaAssetNodeFileDatabaseRepository(context: context),
-                        storageObjects: MediaAssetStorageObjectDatabaseRepository(context: context),
+                        assets: MediaAssetNodeFileDatabaseRepository(
+                            context: context
+                        ),
+                        storageObjects:
+                            MediaAssetStorageObjectDatabaseRepository(
+                                context: context
+                            ),
                         variants: MediaAssetNodeFileVariantDatabaseRepository(
                             context: context
                         )

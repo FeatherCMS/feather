@@ -2,8 +2,14 @@ import FeatherAdmin
 import Hummingbird
 
 protocol AdminRemoveMediaVariantController: Sendable {
-    func getRemoveMediaVariants(request: Request, context: DefaultRequestContext) async throws -> Response
-    func postRemoveMediaVariants(request: Request, context: DefaultRequestContext) async throws -> Response
+    func getRemoveMediaVariants(
+        request: Request,
+        context: DefaultRequestContext
+    ) async throws -> Response
+    func postRemoveMediaVariants(
+        request: Request,
+        context: DefaultRequestContext
+    ) async throws -> Response
 }
 
 extension AdminRemoveMediaVariantController {

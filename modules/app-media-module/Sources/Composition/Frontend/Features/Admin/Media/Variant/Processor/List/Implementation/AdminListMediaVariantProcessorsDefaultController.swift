@@ -2,18 +2,25 @@ import FeatherAdmin
 import Hummingbird
 import MediaContracts
 
-struct AdminListMediaVariantProcessorsDefaultController: AdminListMediaVariantProcessorsController {
-    let buildRuntime: @Sendable (Request, DefaultRequestContext) -> (
-        interactor: any AdminListMediaVariantProcessorsInteractor,
-        presenter: any AdminListMediaVariantProcessorsPresenter
-    )
+struct AdminListMediaVariantProcessorsDefaultController:
+    AdminListMediaVariantProcessorsController
+{
+    let buildRuntime:
+        @Sendable (Request, DefaultRequestContext) -> (
+            interactor: any AdminListMediaVariantProcessorsInteractor,
+            presenter: any AdminListMediaVariantProcessorsPresenter
+        )
 
     func getMediaVariantProcessors(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: MediaPermissions.VariantProcessors.list) else {
+        guard
+            context.isCurrentUserAllowed(
+                to: MediaPermissions.VariantProcessors.list
+            )
+        else {
             return try await presenter.renderErrorPage(error: .forbidden)
         }
         do {
@@ -38,9 +45,15 @@ struct AdminListMediaVariantProcessorsDefaultController: AdminListMediaVariantPr
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime(request, context)
-        guard context.isCurrentUserAllowed(to: MediaPermissions.VariantProcessors.create) else {
+        guard
+            context.isCurrentUserAllowed(
+                to: MediaPermissions.VariantProcessors.create
+            )
+        else {
             return try await presenter.renderErrorPage(error: .forbidden)
         }
-        return try await presenter.renderAddPage(variantId: try context.requiredID())
+        return try await presenter.renderAddPage(
+            variantId: try context.requiredID()
+        )
     }
 }

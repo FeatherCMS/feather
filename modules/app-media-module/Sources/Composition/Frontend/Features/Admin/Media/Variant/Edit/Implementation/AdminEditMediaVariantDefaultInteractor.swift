@@ -4,44 +4,99 @@ import MediaAdminAPI
 struct AdminEditMediaVariantDefaultInteractor: AdminEditMediaVariantInteractor {
     let repository: any AdminEditMediaVariantRepository
 
-    func load(id: String) async throws -> MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema {
+    func load(id: String) async throws
+        -> MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema
+    {
         do { return try await repository.load(id: id) }
         catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
-    func loadProcessor(variantId: String, id: String) async throws -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorDetailSchema {
-        do { return try await repository.loadProcessor(variantId: variantId, id: id) }
+    func loadProcessor(variantId: String, id: String) async throws
+        -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorDetailSchema
+    {
+        do {
+            return try await repository.loadProcessor(
+                variantId: variantId,
+                id: id
+            )
+        }
         catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
-    func processorNames(variantId: String, ids: [String]) async throws -> [NewAdminRemoveItemContext] {
-        do { return try await repository.processorNames(variantId: variantId, ids: ids) }
+    func processorNames(variantId: String, ids: [String]) async throws
+        -> [NewAdminRemoveItemContext]
+    {
+        do {
+            return try await repository.processorNames(
+                variantId: variantId,
+                ids: ids
+            )
+        }
         catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
     func update(id: String, input: MediaVariantFormInput) async throws {
         do {
-            try await repository.update(id: id, input: .init(key: input.normalizedKey, name: input.normalizedName, isRequired: input.isRequired.value, isActive: input.isActive.value))
+            try await repository.update(
+                id: id,
+                input: .init(
+                    key: input.normalizedKey,
+                    name: input.normalizedName,
+                    isRequired: input.isRequired.value,
+                    isActive: input.isActive.value
+                )
+            )
         }
         catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
-    func addProcessor(variantId: String, input: MediaVariantProcessorFormInput) async throws {
-        do { try await repository.addProcessor(variantId: variantId, input: .init(name: input.normalizedName, matchExtensions: input.normalizedExtensions, commandTemplate: input.normalizedCommand, isActive: input.isActive.value)) }
+    func addProcessor(variantId: String, input: MediaVariantProcessorFormInput)
+        async throws
+    {
+        do {
+            try await repository.addProcessor(
+                variantId: variantId,
+                input: .init(
+                    name: input.normalizedName,
+                    matchExtensions: input.normalizedExtensions,
+                    commandTemplate: input.normalizedCommand,
+                    isActive: input.isActive.value
+                )
+            )
+        }
         catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
-    func updateProcessor(variantId: String, id: String, input: MediaVariantProcessorFormInput) async throws {
-        do { try await repository.updateProcessor(variantId: variantId, id: id, input: .init(name: input.normalizedName, matchExtensions: input.normalizedExtensions, commandTemplate: input.normalizedCommand, isActive: input.isActive.value)) }
+    func updateProcessor(
+        variantId: String,
+        id: String,
+        input: MediaVariantProcessorFormInput
+    ) async throws {
+        do {
+            try await repository.updateProcessor(
+                variantId: variantId,
+                id: id,
+                input: .init(
+                    name: input.normalizedName,
+                    matchExtensions: input.normalizedExtensions,
+                    commandTemplate: input.normalizedCommand,
+                    isActive: input.isActive.value
+                )
+            )
+        }
         catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
     func removeProcessor(variantId: String, id: String) async throws {
-        do { try await repository.removeProcessor(variantId: variantId, id: id) }
+        do {
+            try await repository.removeProcessor(variantId: variantId, id: id)
+        }
         catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
-    private func map(_ error: OpenAPIRepositoryError) -> AdminEditMediaVariantError {
+    private func map(_ error: OpenAPIRepositoryError)
+        -> AdminEditMediaVariantError
+    {
         switch error {
         case .notFound: .notFound
         case .unauthorized: .unauthorized

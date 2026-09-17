@@ -26,7 +26,8 @@ extension AppAPIGateway {
             .map {
                 PublicContentMediaVariant(
                     id: $0.variantId,
-                    url: "/media/variants/\(asset.id)/\($0.name).\($0.extension)",
+                    url:
+                        "/media/variants/\(asset.id)/\($0.name).\($0.extension)",
                     type: $0.extension,
                     width: nil,
                     height: nil
@@ -43,7 +44,6 @@ extension AppAPIGateway {
             variants: variants
         )
     }
-
 
     func preferredDefaultMediaURL(
         originalURL: String,

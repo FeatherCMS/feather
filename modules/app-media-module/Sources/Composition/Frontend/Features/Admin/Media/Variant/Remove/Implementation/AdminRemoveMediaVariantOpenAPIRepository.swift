@@ -4,7 +4,9 @@ import MediaAdminAPI
 import OpenAPIRuntime
 import WebComponents
 
-struct AdminRemoveMediaVariantOpenAPIRepository: AdminRemoveMediaVariantRepository {
+struct AdminRemoveMediaVariantOpenAPIRepository:
+    AdminRemoveMediaVariantRepository
+{
     let api: MediaAdminAPIClient
 
     func names(ids: [String]) async throws -> [NewAdminRemoveItemContext] {
@@ -18,12 +20,20 @@ struct AdminRemoveMediaVariantOpenAPIRepository: AdminRemoveMediaVariantReposito
                 switch response {
                 case .ok(let result):
                     let variant = try result.body.json
-                    items.append(NewAdminRemoveItemContext(id: id, label: "\(variant.name) (\(variant.key))"))
+                    items.append(
+                        NewAdminRemoveItemContext(
+                            id: id,
+                            label: "\(variant.name) (\(variant.key))"
+                        )
+                    )
                 case .notFound: throw OpenAPIRepositoryError.notFound
                 case .unauthorized: throw OpenAPIRepositoryError.unauthorized
                 case .forbidden: throw OpenAPIRepositoryError.forbidden
                 case .undocumented(let statusCode, let response):
-                    throw try await api.failure(statusCode: statusCode, responseBody: response.body)
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
                 }
             }
             return items
@@ -41,7 +51,10 @@ struct AdminRemoveMediaVariantOpenAPIRepository: AdminRemoveMediaVariantReposito
             case .unauthorized: throw OpenAPIRepositoryError.unauthorized
             case .forbidden: throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
-                throw try await api.failure(statusCode: statusCode, responseBody: response.body)
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
             }
         }
     }

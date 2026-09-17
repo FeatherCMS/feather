@@ -1,16 +1,26 @@
 import FeatherAdmin
 import MediaAdminAPI
 
-struct AdminListMediaVariantProcessorsDefaultInteractor: AdminListMediaVariantProcessorsInteractor {
+struct AdminListMediaVariantProcessorsDefaultInteractor:
+    AdminListMediaVariantProcessorsInteractor
+{
     let repository: any AdminListMediaVariantProcessorsRepository
 
     func list(
         variantId: String,
         page: Int,
         search: String?
-    ) async throws -> NewAdminListModel<MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema> {
+    ) async throws -> NewAdminListModel<
+        MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema
+    > {
         do {
-            let body = try await repository.list(variantId: variantId, page: page, search: search).body.json
+            let body =
+                try await repository.list(
+                    variantId: variantId,
+                    page: page,
+                    search: search
+                )
+                .body.json
             return .init(
                 items: body.data.items,
                 pageState: .init(
@@ -23,9 +33,12 @@ struct AdminListMediaVariantProcessorsDefaultInteractor: AdminListMediaVariantPr
         catch let error as OpenAPIRepositoryError {
             switch error {
             case .notFound: throw AdminListMediaVariantProcessorsError.notFound
-            case .unauthorized: throw AdminListMediaVariantProcessorsError.unauthorized
-            case .forbidden: throw AdminListMediaVariantProcessorsError.forbidden
-            case .conflict, .failure, .transport: throw AdminListMediaVariantProcessorsError.unavailable
+            case .unauthorized:
+                throw AdminListMediaVariantProcessorsError.unauthorized
+            case .forbidden:
+                throw AdminListMediaVariantProcessorsError.forbidden
+            case .conflict, .failure, .transport:
+                throw AdminListMediaVariantProcessorsError.unavailable
             }
         }
     }

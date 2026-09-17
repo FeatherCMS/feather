@@ -17,7 +17,8 @@ struct PathCollection: PathCollectionRepresentable {
                 MediaFolderIdPathItems(),
             "api/v1/admin/media/variants": MediaVariantPathItems(),
             "api/v1/admin/media/variants/list": MediaVariantListPathItems(),
-            "api/v1/admin/media/variants/{mediaVariantId}": MediaVariantIdPathItems(),
+            "api/v1/admin/media/variants/{mediaVariantId}":
+                MediaVariantIdPathItems(),
             "api/v1/admin/media/variants/{mediaVariantId}/processors":
                 MediaVariantProcessorsPathItems(),
             "api/v1/admin/media/variants/{mediaVariantId}/processors/list":

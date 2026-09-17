@@ -9,7 +9,9 @@ struct AdminRemoveMediaVariant {
             buildRuntime: { request, context in
                 (
                     interactor: AdminRemoveMediaVariantDefaultInteractor(
-                        repository: AdminRemoveMediaVariantOpenAPIRepository(api: context.mediaAdminAPI())
+                        repository: AdminRemoveMediaVariantOpenAPIRepository(
+                            api: context.mediaAdminAPI()
+                        )
                     ),
                     presenter: AdminRemoveMediaVariantDefaultPresenter(
                         request: request,

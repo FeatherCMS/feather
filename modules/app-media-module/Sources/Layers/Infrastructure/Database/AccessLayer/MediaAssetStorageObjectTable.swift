@@ -52,7 +52,8 @@ struct MediaAssetStorageObjectTable {
                 RETURNING id;
                 """#
         ) { sequence in
-            try await sequence.collect().map { try $0.decode(column: "id", as: String.self) }
+            try await sequence.collect()
+                .map { try $0.decode(column: "id", as: String.self) }
         }
     }
 }
@@ -61,5 +62,6 @@ private func mediaStorageObjectSQLValues(_ values: [String]) -> String {
     values.map { value in
         let escaped = value.replacingOccurrences(of: "'", with: "''")
         return "'\(escaped)'"
-    }.joined(separator: ", ")
+    }
+    .joined(separator: ", ")
 }

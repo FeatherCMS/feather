@@ -9,8 +9,12 @@ struct MediaVariantFormInput: Decodable, Sendable, Equatable, Hashable {
     let isRequired: NewAdminFormFieldCheckbox.Input
     let isActive: NewAdminFormFieldCheckbox.Input
 
-    var normalizedKey: String { key.trimmingCharacters(in: .whitespacesAndNewlines) }
-    var normalizedName: String { name.trimmingCharacters(in: .whitespacesAndNewlines) }
+    var normalizedKey: String {
+        key.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+    var normalizedName: String {
+        name.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 
     init(
         key: String,
@@ -33,8 +37,14 @@ struct MediaVariantFormInput: Decodable, Sendable, Equatable, Hashable {
                 invocation: .all,
                 rules: [
                     .trimmedNonempty(message: "Key is required."),
-                    .min(length: 2, message: "Key must be at least 2 characters."),
-                    .max(length: 254, message: "Key must be shorter than 255 characters.")
+                    .min(
+                        length: 2,
+                        message: "Key must be at least 2 characters."
+                    ),
+                    .max(
+                        length: 254,
+                        message: "Key must be shorter than 255 characters."
+                    ),
                 ]
             )
             Validator(
@@ -44,9 +54,13 @@ struct MediaVariantFormInput: Decodable, Sendable, Equatable, Hashable {
                 invocation: .all,
                 rules: [
                     .trimmedNonempty(message: "Name is required."),
-                    .max(length: 254, message: "Name must be shorter than 255 characters.")
+                    .max(
+                        length: 254,
+                        message: "Name must be shorter than 255 characters."
+                    ),
                 ]
             )
-        }.validate()
+        }
+        .validate()
     }
 }

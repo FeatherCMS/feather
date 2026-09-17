@@ -14,7 +14,13 @@ protocol AdminListMediaVariantProcessorsController: Sendable {
 
 extension AdminListMediaVariantProcessorsController {
     func route(on router: Router<DefaultRequestContext>) {
-        router.get(MediaVariantRoutes.processorsRoute, use: getMediaVariantProcessors)
-        router.get(MediaVariantRoutes.processorAddRoute, use: getAddMediaVariantProcessor)
+        router.get(
+            MediaVariantRoutes.processorsRoute,
+            use: getMediaVariantProcessors
+        )
+        router.get(
+            MediaVariantRoutes.processorAddRoute,
+            use: getAddMediaVariantProcessor
+        )
     }
 }

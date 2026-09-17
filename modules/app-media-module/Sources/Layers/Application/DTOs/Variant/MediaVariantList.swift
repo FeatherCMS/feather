@@ -9,7 +9,13 @@ public struct MediaVariantList: DTO {
         public let isRequired: Bool
         public let isActive: Bool
 
-        public init(id: String, key: String, name: String, isRequired: Bool, isActive: Bool) {
+        public init(
+            id: String,
+            key: String,
+            name: String,
+            isRequired: Bool,
+            isActive: Bool
+        ) {
             self.id = id
             self.key = key
             self.name = name

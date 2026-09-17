@@ -2,14 +2,19 @@ import FeatherAdmin
 import MediaAdminAPI
 import OpenAPIRuntime
 
-struct AdminListMediaVariantProcessorsOpenAPIRepository: AdminListMediaVariantProcessorsRepository {
+struct AdminListMediaVariantProcessorsOpenAPIRepository:
+    AdminListMediaVariantProcessorsRepository
+{
     let api: MediaAdminAPIClient
 
     func list(
         variantId: String,
         page: Int,
         search: String?
-    ) async throws -> MediaAdminAPI.Components.Responses.MediaVariantProcessorListItemSearchSchemaSearchResponse {
+    ) async throws
+        -> MediaAdminAPI.Components.Responses
+        .MediaVariantProcessorListItemSearchSchemaSearchResponse
+    {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.mediaVariantProcessorList(
                 path: .init(mediaVariantId: variantId),
@@ -28,7 +33,10 @@ struct AdminListMediaVariantProcessorsOpenAPIRepository: AdminListMediaVariantPr
             case .unauthorized: throw OpenAPIRepositoryError.unauthorized
             case .forbidden: throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
-                throw try await api.failure(statusCode: statusCode, responseBody: response.body)
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
             }
         }
     }

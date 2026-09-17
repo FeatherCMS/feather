@@ -5,5 +5,7 @@ protocol AdminListMediaVariantProcessorsRepository: Sendable {
         variantId: String,
         page: Int,
         search: String?
-    ) async throws -> MediaAdminAPI.Components.Responses.MediaVariantProcessorListItemSearchSchemaSearchResponse
+    ) async throws
+        -> MediaAdminAPI.Components.Responses
+        .MediaVariantProcessorListItemSearchSchemaSearchResponse
 }

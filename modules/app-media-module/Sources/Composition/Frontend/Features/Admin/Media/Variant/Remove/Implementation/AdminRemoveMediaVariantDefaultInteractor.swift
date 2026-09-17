@@ -1,6 +1,8 @@
 import FeatherAdmin
 
-struct AdminRemoveMediaVariantDefaultInteractor: AdminRemoveMediaVariantInteractor {
+struct AdminRemoveMediaVariantDefaultInteractor:
+    AdminRemoveMediaVariantInteractor
+{
     let repository: any AdminRemoveMediaVariantRepository
 
     func names(ids: [String]) async throws -> [NewAdminRemoveItemContext] {
@@ -13,7 +15,9 @@ struct AdminRemoveMediaVariantDefaultInteractor: AdminRemoveMediaVariantInteract
         catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
-    private func map(_ error: OpenAPIRepositoryError) -> AdminRemoveMediaVariantError {
+    private func map(_ error: OpenAPIRepositoryError)
+        -> AdminRemoveMediaVariantError
+    {
         switch error {
         case .notFound: .notFound
         case .unauthorized: .unauthorized

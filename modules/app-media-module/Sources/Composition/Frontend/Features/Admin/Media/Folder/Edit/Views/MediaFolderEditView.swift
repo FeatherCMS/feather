@@ -51,7 +51,10 @@ struct MediaFolderEditView: Component {
                 }
 
                 context.build(
-                    NewAdminDetailField(label: "Slug path", value: state.model.slugPath)
+                    NewAdminDetailField(
+                        label: "Slug path",
+                        value: state.model.slugPath
+                    )
                 )
                 context.build(
                     NewAdminDetailField(

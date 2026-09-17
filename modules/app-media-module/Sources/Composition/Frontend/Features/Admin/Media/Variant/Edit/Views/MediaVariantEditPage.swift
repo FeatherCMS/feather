@@ -14,11 +14,17 @@ struct MediaVariantEditPage: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(NewAdminBreadcrumb(links: MediaVariantRoutes.breadcrumb))
-            context.build(NewAdminPageHeader(state: .init(
-                title: "Edit \(detail.name)",
-                description: "Update the media variant details."
-            )))
+            context.build(
+                NewAdminBreadcrumb(links: MediaVariantRoutes.breadcrumb)
+            )
+            context.build(
+                NewAdminPageHeader(
+                    state: .init(
+                        title: "Edit \(detail.name)",
+                        description: "Update the media variant details."
+                    )
+                )
+            )
             context.build(AdminMediaVariantTabs(id: id, active: .details))
             context.build(form)
         }

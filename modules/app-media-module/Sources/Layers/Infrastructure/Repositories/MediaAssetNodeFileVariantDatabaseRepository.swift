@@ -19,35 +19,45 @@ extension MediaAssetVariantTable.Row {
     }
 }
 
-public struct MediaAssetNodeFileVariantDatabaseRepository: MediaAssetNodeFileVariantRepository {
+public struct MediaAssetNodeFileVariantDatabaseRepository:
+    MediaAssetNodeFileVariantRepository
+{
     public let context: DatabaseTransactionContext
 
     public init(context: DatabaseTransactionContext) {
         self.context = context
     }
 
-    public func insert(_ model: MediaAssetNodeFileVariant.New) async throws -> MediaAssetNodeFileVariant {
-        let row = try await MediaAssetVariantTable(connection: context.connection)
-            .create(
-                row: .init(
-                    id: context.idGenerator.generate(),
-                    nodeId: model.nodeId,
-                    variantId: model.variantId,
-                    variantProcessorId: model.variantProcessorId,
-                    name: model.name,
-                    storageObjectId: model.storageObjectId,
-                    extension: model.extension
-                )
+    public func insert(_ model: MediaAssetNodeFileVariant.New) async throws
+        -> MediaAssetNodeFileVariant
+    {
+        let row = try await MediaAssetVariantTable(
+            connection: context.connection
+        )
+        .create(
+            row: .init(
+                id: context.idGenerator.generate(),
+                nodeId: model.nodeId,
+                variantId: model.variantId,
+                variantProcessorId: model.variantProcessorId,
+                name: model.name,
+                storageObjectId: model.storageObjectId,
+                extension: model.extension
             )
+        )
         return row.asDomain
     }
 
-    public func find(nodeId: String, variantId: String) async throws -> MediaAssetNodeFileVariant? {
+    public func find(nodeId: String, variantId: String) async throws
+        -> MediaAssetNodeFileVariant?
+    {
         try await MediaAssetVariantTable(connection: context.connection)
-            .find(nodeId: nodeId, variantId: variantId)?.asDomain
+            .find(nodeId: nodeId, variantId: variantId)?
+            .asDomain
     }
 
-    public func list(nodeId: String) async throws -> [MediaAssetNodeFileVariant] {
+    public func list(nodeId: String) async throws -> [MediaAssetNodeFileVariant]
+    {
         try await MediaAssetVariantTable(connection: context.connection)
             .list(nodeId: nodeId)
             .map(\.asDomain)

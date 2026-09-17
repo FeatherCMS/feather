@@ -8,11 +8,13 @@ struct AdminListMediaVariantProcessors {
         self.controller = AdminListMediaVariantProcessorsDefaultController(
             buildRuntime: { request, context in
                 (
-                    interactor: AdminListMediaVariantProcessorsDefaultInteractor(
-                        repository: AdminListMediaVariantProcessorsOpenAPIRepository(
-                            api: context.mediaAdminAPI()
-                        )
-                    ),
+                    interactor:
+                        AdminListMediaVariantProcessorsDefaultInteractor(
+                            repository:
+                                AdminListMediaVariantProcessorsOpenAPIRepository(
+                                    api: context.mediaAdminAPI()
+                                )
+                        ),
                     presenter: AdminListMediaVariantProcessorsDefaultPresenter(
                         request: request,
                         context: context,

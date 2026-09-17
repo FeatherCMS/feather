@@ -13,7 +13,16 @@ public struct MediaVariantDetail: DTO {
     public let createdAt: Date
     public let updatedAt: Date
 
-    public init(id: String, key: String, name: String, isRequired: Bool, isActive: Bool, processors: [MediaVariantProcessorList.Item], createdAt: Date, updatedAt: Date) {
+    public init(
+        id: String,
+        key: String,
+        name: String,
+        isRequired: Bool,
+        isActive: Bool,
+        processors: [MediaVariantProcessorList.Item],
+        createdAt: Date,
+        updatedAt: Date
+    ) {
         self.id = id
         self.key = key
         self.name = name

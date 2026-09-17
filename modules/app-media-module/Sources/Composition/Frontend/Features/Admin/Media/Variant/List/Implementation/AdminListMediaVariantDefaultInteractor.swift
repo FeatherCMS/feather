@@ -11,7 +11,8 @@ struct AdminListMediaVariantDefaultInteractor: AdminListMediaVariantInteractor {
         MediaAdminAPI.Components.Schemas.MediaVariantListItemSchema
     > {
         do {
-            let body = try await repository
+            let body =
+                try await repository
                 .listMediaVariants(page: page, search: search)
                 .body.json
             return .init(

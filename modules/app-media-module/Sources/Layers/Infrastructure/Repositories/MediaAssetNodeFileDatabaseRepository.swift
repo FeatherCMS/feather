@@ -26,7 +26,8 @@ extension MediaAssetNodeFileTable.Row {
     }
 }
 
-public struct MediaAssetNodeFileDatabaseRepository: MediaAssetNodeFileRepository {
+public struct MediaAssetNodeFileDatabaseRepository: MediaAssetNodeFileRepository
+{
     public let context: DatabaseTransactionContext
 
     public init(context: DatabaseTransactionContext) {
@@ -42,53 +43,61 @@ public struct MediaAssetNodeFileDatabaseRepository: MediaAssetNodeFileRepository
         storageIdentity: MediaAssetNodeFileStorageIdentity,
         storageObjectId: String
     ) async throws -> MediaAssetNodeFile {
-        let row = try await MediaAssetNodeFileTable(connection: context.connection)
-            .create(
-                row: .init(
-                    id: storageIdentity.nodeId,
-                    folderId: model.folderId,
-                    name: model.name,
-                    slug: model.slug,
-                    slugPath: model.slugPath,
-                    storageObjectId: storageObjectId,
-                    extension: model.extension,
-                    contentType: model.contentType,
-                    sizeBytes: model.sizeBytes,
-                    status: model.status.rawValue,
-                    title: model.title,
-                    altText: model.altText
-                )
+        let row = try await MediaAssetNodeFileTable(
+            connection: context.connection
+        )
+        .create(
+            row: .init(
+                id: storageIdentity.nodeId,
+                folderId: model.folderId,
+                name: model.name,
+                slug: model.slug,
+                slugPath: model.slugPath,
+                storageObjectId: storageObjectId,
+                extension: model.extension,
+                contentType: model.contentType,
+                sizeBytes: model.sizeBytes,
+                status: model.status.rawValue,
+                title: model.title,
+                altText: model.altText
             )
+        )
         return row.asDomain
     }
 
-    public func update(_ model: MediaAssetNodeFile) async throws -> MediaAssetNodeFile {
-        let row = try await MediaAssetNodeFileTable(connection: context.connection)
-            .update(
-                row: .init(
-                    id: model.id,
-                    folderId: model.folderId,
-                    name: model.name,
-                    slug: model.slug,
-                    slugPath: model.slugPath,
-                    storageObjectId: model.storageObjectId,
-                    objectKey: model.objectKey,
-                    extension: model.extension,
-                    contentType: model.contentType,
-                    sizeBytes: model.sizeBytes,
-                    status: model.status.rawValue,
-                    title: model.title,
-                    altText: model.altText,
-                    createdAt: model.createdAt,
-                    updatedAt: model.updatedAt,
-                    deletedAt: model.deletedAt
-                )
+    public func update(_ model: MediaAssetNodeFile) async throws
+        -> MediaAssetNodeFile
+    {
+        let row = try await MediaAssetNodeFileTable(
+            connection: context.connection
+        )
+        .update(
+            row: .init(
+                id: model.id,
+                folderId: model.folderId,
+                name: model.name,
+                slug: model.slug,
+                slugPath: model.slugPath,
+                storageObjectId: model.storageObjectId,
+                objectKey: model.objectKey,
+                extension: model.extension,
+                contentType: model.contentType,
+                sizeBytes: model.sizeBytes,
+                status: model.status.rawValue,
+                title: model.title,
+                altText: model.altText,
+                createdAt: model.createdAt,
+                updatedAt: model.updatedAt,
+                deletedAt: model.deletedAt
             )
+        )
         return row.asDomain
     }
 
     public func find(id: String) async throws -> MediaAssetNodeFile? {
-        try await MediaAssetNodeFileTable(connection: context.connection).find(id: id)?.asDomain
+        try await MediaAssetNodeFileTable(connection: context.connection)
+            .find(id: id)?
+            .asDomain
     }
 
     public func list(folderIds: [String]) async throws -> [MediaAssetNodeFile] {
@@ -98,6 +107,7 @@ public struct MediaAssetNodeFileDatabaseRepository: MediaAssetNodeFileRepository
     }
 
     public func delete(ids: [String]) async throws -> [String] {
-        try await MediaAssetNodeFileTable(connection: context.connection).delete(ids: ids)
+        try await MediaAssetNodeFileTable(connection: context.connection)
+            .delete(ids: ids)
     }
 }

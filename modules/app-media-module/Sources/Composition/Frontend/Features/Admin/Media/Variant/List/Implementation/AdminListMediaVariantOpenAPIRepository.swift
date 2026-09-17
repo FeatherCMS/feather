@@ -8,7 +8,8 @@ struct AdminListMediaVariantOpenAPIRepository: AdminListMediaVariantRepository {
     func listMediaVariants(
         page: Int,
         search: String?
-    ) async throws -> MediaAdminAPI.Components.Responses
+    ) async throws
+        -> MediaAdminAPI.Components.Responses
         .MediaVariantListItemSearchSchemaSearchResponse
     {
         try await api.withOpenAPIRepositoryErrorMapping { client in
@@ -16,7 +17,10 @@ struct AdminListMediaVariantOpenAPIRepository: AdminListMediaVariantRepository {
                 headers: .init(accept: [.init(contentType: .json)]),
                 body: .json(
                     .init(
-                        page: .init(size: AdminListMediaVariant.pageSize, number: page),
+                        page: .init(
+                            size: AdminListMediaVariant.pageSize,
+                            number: page
+                        ),
                         sort: [.init(field: .name, direction: .asc)],
                         filters: .init(search: search)
                     )
@@ -27,7 +31,10 @@ struct AdminListMediaVariantOpenAPIRepository: AdminListMediaVariantRepository {
             case .unauthorized: throw OpenAPIRepositoryError.unauthorized
             case .forbidden: throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):
-                throw try await api.failure(statusCode: statusCode, responseBody: response.body)
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
             }
         }
     }

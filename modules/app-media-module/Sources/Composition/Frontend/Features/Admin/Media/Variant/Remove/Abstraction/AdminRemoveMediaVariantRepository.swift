@@ -1,10 +1,9 @@
 import FeatherAdmin
-import MediaAdminAPI
-
 import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
+import MediaAdminAPI
 import WebComponents
 
 protocol AdminRemoveMediaVariantRepository: Sendable {

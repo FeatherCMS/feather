@@ -6,12 +6,14 @@ struct AdminAddMediaVariantDefaultInteractor: AdminAddMediaVariantInteractor {
 
     func add(input: MediaVariantFormInput) async throws {
         do {
-            try await repository.create(input: .init(
-                key: input.normalizedKey,
-                name: input.normalizedName,
-                isRequired: input.isRequired.value,
-                isActive: input.isActive.value
-            ))
+            try await repository.create(
+                input: .init(
+                    key: input.normalizedKey,
+                    name: input.normalizedName,
+                    isRequired: input.isRequired.value,
+                    isActive: input.isActive.value
+                )
+            )
         }
         catch let error as OpenAPIRepositoryError {
             switch error {

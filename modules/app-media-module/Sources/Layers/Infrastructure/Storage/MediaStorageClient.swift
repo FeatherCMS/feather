@@ -64,11 +64,16 @@ extension MediaStorageClient {
     ) -> String {
         guard shardConfiguration.isEnabled else { return key }
 
-        let components = key.split(separator: "/", omittingEmptySubsequences: true).map(String.init)
-        guard let assetsIndex = components.firstIndex(of: "assets"), assetsIndex + 1 < components.count else { return key }
+        let components =
+            key.split(separator: "/", omittingEmptySubsequences: true)
+            .map(String.init)
+        guard let assetsIndex = components.firstIndex(of: "assets"),
+            assetsIndex + 1 < components.count
+        else { return key }
         let assetID = components[assetsIndex + 1]
         let characters = Array(assetID)
-        let requiredLength = shardConfiguration.depth * shardConfiguration.segmentLength
+        let requiredLength =
+            shardConfiguration.depth * shardConfiguration.segmentLength
         guard characters.count > requiredLength else { return key }
 
         var segments = Array(components[..<assetsIndex])

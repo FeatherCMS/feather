@@ -20,7 +20,8 @@ extension AdminAPIGateway {
         let result = try await useCases.createAssetAndEnqueue(
             subject: subject,
             input: .init(
-                folderId: body.parentId.flatMap { $0 }.flatMap { $0.emptyToNil },
+                folderId: body.parentId.flatMap { $0 }
+                    .flatMap { $0.emptyToNil },
                 fileName: body.fileName,
                 extension: body._extension,
                 title: body.title,

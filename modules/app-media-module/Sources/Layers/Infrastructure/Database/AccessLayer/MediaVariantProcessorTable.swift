@@ -8,8 +8,14 @@ extension MediaVariantProcessorTable.Row {
         id = try row.decode(column: "id", as: String.self)
         variantId = try row.decode(column: "variant_id", as: String.self)
         name = try row.decode(column: "name", as: String.self)
-        matchExtensions = try row.decode(column: "match_extensions", as: String.self)
-        commandTemplate = try row.decode(column: "command_template", as: String.self)
+        matchExtensions = try row.decode(
+            column: "match_extensions",
+            as: String.self
+        )
+        commandTemplate = try row.decode(
+            column: "command_template",
+            as: String.self
+        )
         isActive = try row.decode(column: "is_active", as: Bool.self)
         createdAt = try row.decode(column: "created_at", as: Date.self)
         updatedAt = try row.decode(column: "updated_at", as: Date.self)
@@ -52,16 +58,20 @@ struct MediaVariantProcessorTable {
 
     func find(id: String) async throws -> Row? {
         try await connection.run(
-            query: #"SELECT * FROM media_variant_processor WHERE id = \#(id) LIMIT 1;"#
+            query:
+                #"SELECT * FROM media_variant_processor WHERE id = \#(id) LIMIT 1;"#
         ) { sequence in
-            guard let row = try await sequence.collect().first else { return nil }
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
             return try Row(from: row)
         }
     }
 
     func list(variantId: String) async throws -> [Row] {
         try await connection.run(
-            query: #"SELECT * FROM media_variant_processor WHERE variant_id = \#(variantId) ORDER BY name ASC;"#
+            query:
+                #"SELECT * FROM media_variant_processor WHERE variant_id = \#(variantId) ORDER BY name ASC;"#
         ) { sequence in
             try await sequence.collect().map { try Row(from: $0) }
         }
@@ -100,11 +110,15 @@ struct MediaVariantProcessorTable {
 
     func delete(ids: [String]) async throws -> [String] {
         guard !ids.isEmpty else { return [] }
-        let values = ids.map { "'\($0.replacingOccurrences(of: "'", with: "''"))'" }.joined(separator: ", ")
+        let values =
+            ids.map { "'\($0.replacingOccurrences(of: "'", with: "''"))'" }
+            .joined(separator: ", ")
         return try await connection.run(
-            query: #"DELETE FROM media_variant_processor WHERE id IN (\#(unescaped: values)) RETURNING id;"#
+            query:
+                #"DELETE FROM media_variant_processor WHERE id IN (\#(unescaped: values)) RETURNING id;"#
         ) { sequence in
-            try await sequence.collect().map { try $0.decode(column: "id", as: String.self) }
+            try await sequence.collect()
+                .map { try $0.decode(column: "id", as: String.self) }
         }
     }
 }

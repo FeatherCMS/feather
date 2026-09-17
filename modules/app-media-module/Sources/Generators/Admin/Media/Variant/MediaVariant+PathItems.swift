@@ -16,7 +16,9 @@ struct MediaVariantIdPathItems: PathItemRepresentable {
 
 struct MediaVariantProcessorsPathItems: PathItemRepresentable {
     var post: OperationRepresentable? { MediaVariantProcessorCreateOperation() }
-    var delete: OperationRepresentable? { MediaVariantProcessorRemoveOperation() }
+    var delete: OperationRepresentable? {
+        MediaVariantProcessorRemoveOperation()
+    }
 }
 
 struct MediaVariantProcessorsListPathItems: PathItemRepresentable {
@@ -25,5 +27,7 @@ struct MediaVariantProcessorsListPathItems: PathItemRepresentable {
 
 struct MediaVariantProcessorIdPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { MediaVariantProcessorGetOperation() }
-    var patch: OperationRepresentable? { MediaVariantProcessorUpdateOperation() }
+    var patch: OperationRepresentable? {
+        MediaVariantProcessorUpdateOperation()
+    }
 }

@@ -10,7 +10,10 @@ extension MediaAssetNodeFileTable.Row {
         name = try row.decode(column: "name", as: String.self)
         slug = try row.decode(column: "slug", as: String.self)
         slugPath = try row.decode(column: "slug_path", as: String.self)
-        storageObjectId = try row.decode(column: "storage_object_id", as: String.self)
+        storageObjectId = try row.decode(
+            column: "storage_object_id",
+            as: String.self
+        )
         objectKey = try row.decode(column: "object_key", as: String.self)
         `extension` = try row.decode(column: "extension", as: String.self)
         contentType = try row.decode(column: "content_type", as: String.self)
@@ -62,15 +65,16 @@ struct MediaAssetNodeFileTable {
     let connection: any DatabaseConnection
 
     func create(row: Row.Create) async throws -> Row {
-        _ = try await MediaAssetNodeTable(connection: connection).create(
-            row: .init(
-                id: row.id,
-                parentId: row.folderId,
-                name: row.name,
-                slug: row.slug,
-                slugPath: row.slugPath
+        _ = try await MediaAssetNodeTable(connection: connection)
+            .create(
+                row: .init(
+                    id: row.id,
+                    parentId: row.folderId,
+                    name: row.name,
+                    slug: row.slug,
+                    slugPath: row.slugPath
+                )
             )
-        )
         _ = try await connection.run(
             query: #"""
                 INSERT INTO media_asset_node_file (
@@ -96,7 +100,9 @@ struct MediaAssetNodeFileTable {
                 LIMIT 1;
                 """#
         ) { sequence in
-            guard let row = try await sequence.collect().first else { return nil }
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
             return try Row(from: row)
         }
     }
@@ -115,15 +121,16 @@ struct MediaAssetNodeFileTable {
     }
 
     func update(row: Row) async throws -> Row {
-        _ = try await MediaAssetNodeTable(connection: connection).update(
-            row: .init(
-                id: row.id,
-                parentId: row.folderId,
-                name: row.name,
-                slug: row.slug,
-                slugPath: row.slugPath
+        _ = try await MediaAssetNodeTable(connection: connection)
+            .update(
+                row: .init(
+                    id: row.id,
+                    parentId: row.folderId,
+                    name: row.name,
+                    slug: row.slug,
+                    slugPath: row.slugPath
+                )
             )
-        )
         _ = try await connection.run(
             query: #"""
                 UPDATE media_asset_node_file
@@ -148,9 +155,10 @@ struct MediaAssetNodeFileTable {
                 RETURNING id;
                 """#
         ) { sequence in
-            try await sequence.collect().map {
-                try $0.decode(column: "id", as: String.self)
-            }
+            try await sequence.collect()
+                .map {
+                    try $0.decode(column: "id", as: String.self)
+                }
         }
     }
 
@@ -249,5 +257,6 @@ private func mediaAssetNodeFileSQLValues(_ values: [String]) -> String {
     values.map { value in
         let escaped = value.replacingOccurrences(of: "'", with: "''")
         return "'\(escaped)'"
-    }.joined(separator: ", ")
+    }
+    .joined(separator: ", ")
 }

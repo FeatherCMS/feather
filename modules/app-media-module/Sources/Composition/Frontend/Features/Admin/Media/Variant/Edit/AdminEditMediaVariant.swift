@@ -9,7 +9,9 @@ struct AdminEditMediaVariant {
             buildRuntime: { request, context in
                 (
                     interactor: AdminEditMediaVariantDefaultInteractor(
-                        repository: AdminEditMediaVariantOpenAPIRepository(api: context.mediaAdminAPI())
+                        repository: AdminEditMediaVariantOpenAPIRepository(
+                            api: context.mediaAdminAPI()
+                        )
                     ),
                     presenter: AdminEditMediaVariantDefaultPresenter(
                         request: request,

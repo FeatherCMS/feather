@@ -11,5 +11,6 @@ protocol AdminListMediaVariantPresenter: Sendable {
         search: String?
     ) async throws -> HTMLResponse
 
-    func renderErrorPage(error: AdminListMediaVariantError) async throws -> HTMLResponse
+    func renderErrorPage(error: AdminListMediaVariantError) async throws
+        -> HTMLResponse
 }

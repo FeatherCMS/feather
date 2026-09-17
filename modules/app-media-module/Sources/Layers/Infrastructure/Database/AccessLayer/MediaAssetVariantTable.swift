@@ -8,9 +8,15 @@ extension MediaAssetVariantTable.Row {
         id = try row.decode(column: "id", as: String.self)
         nodeId = try row.decode(column: "asset_id", as: String.self)
         variantId = try row.decode(column: "variant_id", as: String.self)
-        variantProcessorId = try row.decode(column: "variant_processor_id", as: String.self)
+        variantProcessorId = try row.decode(
+            column: "variant_processor_id",
+            as: String.self
+        )
         name = try row.decode(column: "name", as: String.self)
-        storageObjectId = try row.decode(column: "storage_object_id", as: String.self)
+        storageObjectId = try row.decode(
+            column: "storage_object_id",
+            as: String.self
+        )
         objectKey = try row.decode(column: "object_key", as: String.self)
         `extension` = try row.decode(column: "extension", as: String.self)
         createdAt = try row.decode(column: "created_at", as: Date.self)
@@ -60,7 +66,12 @@ struct MediaAssetVariantTable {
                 )
                 """#
         ) { _ in }
-        guard let result = try await find(nodeId: row.nodeId, variantId: row.variantId) else {
+        guard
+            let result = try await find(
+                nodeId: row.nodeId,
+                variantId: row.variantId
+            )
+        else {
             throw RepositoryError.notFound
         }
         return result
@@ -77,7 +88,9 @@ struct MediaAssetVariantTable {
                 LIMIT 1;
                 """#
         ) { sequence in
-            guard let row = try await sequence.collect().first else { return nil }
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
             return try Row(from: row)
         }
     }
@@ -97,7 +110,9 @@ struct MediaAssetVariantTable {
         }
     }
 
-    func resolve(nodeIds: [String], variantNames: [String]?) async throws -> [ResolveRow] {
+    func resolve(nodeIds: [String], variantNames: [String]?) async throws
+        -> [ResolveRow]
+    {
         guard !nodeIds.isEmpty else { return [] }
         if let variantNames, variantNames.isEmpty { return [] }
         let nodeValues = mediaVariantSQLValues(nodeIds)
@@ -118,20 +133,31 @@ struct MediaAssetVariantTable {
                 ORDER BY v.asset_id ASC, v.name ASC, v.created_at ASC;
                 """#
         ) { sequence in
-            try await sequence.collect().map { row in
-                .init(
-                    nodeId: try row.decode(column: "asset_id", as: String.self),
-                    name: try row.decode(column: "name", as: String.self),
-                    objectKey: try row.decode(column: "object_key", as: String.self),
-                    extension: try row.decode(column: "extension", as: String.self)
-                )
-            }
+            try await sequence.collect()
+                .map { row in
+                    .init(
+                        nodeId: try row.decode(
+                            column: "asset_id",
+                            as: String.self
+                        ),
+                        name: try row.decode(column: "name", as: String.self),
+                        objectKey: try row.decode(
+                            column: "object_key",
+                            as: String.self
+                        ),
+                        extension: try row.decode(
+                            column: "extension",
+                            as: String.self
+                        )
+                    )
+                }
         }
     }
 
     func deleteAll(nodeId: String) async throws {
         try await connection.run(
-            query: #"DELETE FROM media_asset_variant WHERE asset_id = \#(nodeId);"#
+            query:
+                #"DELETE FROM media_asset_variant WHERE asset_id = \#(nodeId);"#
         ) { _ in }
     }
 }
@@ -140,5 +166,6 @@ private func mediaVariantSQLValues(_ values: [String]) -> String {
     values.map { value in
         let escaped = value.replacingOccurrences(of: "'", with: "''")
         return "'\(escaped)'"
-    }.joined(separator: ", ")
+    }
+    .joined(separator: ", ")
 }

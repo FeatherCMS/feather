@@ -9,7 +9,9 @@ struct AdminListMediaVariantDefaultPresenter: AdminListMediaVariantPresenter {
     let renderingEngine: any RenderingEngine
 
     func renderListPage(
-        model: NewAdminListModel<MediaAdminAPI.Components.Schemas.MediaVariantListItemSchema>,
+        model: NewAdminListModel<
+            MediaAdminAPI.Components.Schemas.MediaVariantListItemSchema
+        >,
         permissions: NewAdminListActions,
         search: String?
     ) async throws -> HTMLResponse {
@@ -28,26 +30,42 @@ struct AdminListMediaVariantDefaultPresenter: AdminListMediaVariantPresenter {
         )
     }
 
-    func renderErrorPage(error: AdminListMediaVariantError) async throws -> HTMLResponse {
+    func renderErrorPage(error: AdminListMediaVariantError) async throws
+        -> HTMLResponse
+    {
         let state: NewAdminStatusView.State
         switch error {
         case .unauthorized:
-            state = .init(title: "Session expired", message: "Please sign in again to view media variants.")
+            state = .init(
+                title: "Session expired",
+                message: "Please sign in again to view media variants."
+            )
         case .forbidden:
-            state = .init(title: "Forbidden", message: "Your account cannot access media variants.")
+            state = .init(
+                title: "Forbidden",
+                message: "Your account cannot access media variants."
+            )
         case .unavailable:
-            state = .init(title: "Media variants unavailable", message: "The request could not be completed. Please try again.")
+            state = .init(
+                title: "Media variants unavailable",
+                message: "The request could not be completed. Please try again."
+            )
         }
         let page = try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Media variants",
-            content: NewAdminStatusView(state: state, icon: FeatherIcons.alertCircle())
+            content: NewAdminStatusView(
+                state: state,
+                icon: FeatherIcons.alertCircle()
+            )
         )
         return HTMLResponse(content: page.content, status: status(for: error))
     }
 
-    private func status(for error: AdminListMediaVariantError) -> HTTPResponse.Status {
+    private func status(for error: AdminListMediaVariantError)
+        -> HTTPResponse.Status
+    {
         switch error {
         case .unauthorized: .unauthorized
         case .forbidden: .forbidden

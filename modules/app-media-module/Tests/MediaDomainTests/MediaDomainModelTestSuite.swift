@@ -72,6 +72,11 @@ struct MediaDomainModelTestSuite {
             updatedAt: .init()
         )
 
-        #expect(MediaExtensionMatcher.matches(extension: asset.extension, processor: processor))
+        #expect(
+            MediaExtensionMatcher.matches(
+                extension: asset.extension,
+                processor: processor
+            )
+        )
     }
 }

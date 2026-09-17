@@ -8,7 +8,13 @@ public struct MediaVariantProcessorCreate: DTO {
     public let commandTemplate: String
     public let isActive: Bool
 
-    public init(variantId: String, name: String, matchExtensions: String, commandTemplate: String, isActive: Bool) {
+    public init(
+        variantId: String,
+        name: String,
+        matchExtensions: String,
+        commandTemplate: String,
+        isActive: Bool
+    ) {
         self.variantId = variantId
         self.name = name
         self.matchExtensions = matchExtensions

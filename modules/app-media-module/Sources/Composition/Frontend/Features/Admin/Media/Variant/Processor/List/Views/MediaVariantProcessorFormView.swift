@@ -10,7 +10,8 @@ struct MediaVariantProcessorFormTokens: Sendable {
 }
 
 struct MediaVariantProcessorFormView: Component {
-    let processor: MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema?
+    let processor:
+        MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema?
     let action: String
     let nonceToken: String
 
@@ -18,11 +19,53 @@ struct MediaVariantProcessorFormView: Component {
         let isNew = processor == nil
         let form = NewAdminForm(action: action, nonceToken: nonceToken) {
             H3(isNew ? "Add processor" : "Edit \(processor?.name ?? "")")
-            context.build(NewAdminFormFieldInput(state: .init(name: "name", label: "Processor", value: processor?.name ?? "", isRequired: true)))
-            context.build(NewAdminFormFieldInput(state: .init(name: "matchExtensions", label: "Input extensions", value: processor?.matchExtensions ?? "", isRequired: true)))
-            context.build(NewAdminFormFieldTextArea(state: .init(name: "commandTemplate", label: "Command template", value: processor?.commandTemplate ?? "", style: .small, isRequired: true)))
-            context.build(NewAdminFormFieldCheckbox(state: .init(name: "isActive", label: "Status", checkboxLabel: "Active processor", isChecked: processor?.isActive ?? true)))
-            context.build(NewAdminSubmitButton(isNew ? "Add processor" : "Save processor", style: .primary))
+            context.build(
+                NewAdminFormFieldInput(
+                    state: .init(
+                        name: "name",
+                        label: "Processor",
+                        value: processor?.name ?? "",
+                        isRequired: true
+                    )
+                )
+            )
+            context.build(
+                NewAdminFormFieldInput(
+                    state: .init(
+                        name: "matchExtensions",
+                        label: "Input extensions",
+                        value: processor?.matchExtensions ?? "",
+                        isRequired: true
+                    )
+                )
+            )
+            context.build(
+                NewAdminFormFieldTextArea(
+                    state: .init(
+                        name: "commandTemplate",
+                        label: "Command template",
+                        value: processor?.commandTemplate ?? "",
+                        style: .small,
+                        isRequired: true
+                    )
+                )
+            )
+            context.build(
+                NewAdminFormFieldCheckbox(
+                    state: .init(
+                        name: "isActive",
+                        label: "Status",
+                        checkboxLabel: "Active processor",
+                        isChecked: processor?.isActive ?? true
+                    )
+                )
+            )
+            context.build(
+                NewAdminSubmitButton(
+                    isNew ? "Add processor" : "Save processor",
+                    style: .primary
+                )
+            )
         }
         return context.build(form)
     }
