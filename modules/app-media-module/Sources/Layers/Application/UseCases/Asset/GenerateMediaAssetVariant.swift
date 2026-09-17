@@ -1,6 +1,7 @@
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
+import FeatherStorage
 import Foundation
 import MediaDomain
 
@@ -18,16 +19,19 @@ public struct GenerateMediaAssetVariant: UseCase {
     }
 
     let transaction: any TransactionExecutor<WriteMedia>
-    let storage: any MediaStorage
+    let storage: any StorageClient
+    let storageKeyShard: MediaStorageKeyShard
     let shellRunner: any MediaShellRunner
 
     public init(
         transaction: any TransactionExecutor<WriteMedia>,
-        storage: any MediaStorage,
+        storage: any StorageClient,
+        storageKeyShard: MediaStorageKeyShard = .init(),
         shellRunner: any MediaShellRunner
     ) {
         self.transaction = transaction
         self.storage = storage
+        self.storageKeyShard = storageKeyShard
         self.shellRunner = shellRunner
     }
 
@@ -94,7 +98,10 @@ public struct GenerateMediaAssetVariant: UseCase {
             return
         }
 
-        let inputData = try await storage.download(key: asset.objectKey)
+        let inputData = try await MediaStorageData.download(
+            from: storage,
+            key: storageKeyShard.physicalKey(for: asset.objectKey)
+        )
         let output = try await runProcessor(
             processor,
             asset: asset,
@@ -105,7 +112,11 @@ public struct GenerateMediaAssetVariant: UseCase {
             variantKey: variant.key,
             fileExtension: output.extension
         )
-        try await storage.upload(key: objectKey, data: output.data)
+        try await MediaStorageData.upload(
+            output.data,
+            to: storage,
+            key: storageKeyShard.physicalKey(for: objectKey)
+        )
         do {
             _ = try await transaction.run { scope in
                 let storageObject = try await scope.storageObjects.insert(
@@ -125,7 +136,10 @@ public struct GenerateMediaAssetVariant: UseCase {
             }
         }
         catch {
-            _ = try? await storage.delete(key: objectKey)
+            _ = try? await MediaStorageData.delete(
+                from: storage,
+                key: storageKeyShard.physicalKey(for: objectKey)
+            )
             throw error
         }
         try await refreshStatus(assetId: asset.id)

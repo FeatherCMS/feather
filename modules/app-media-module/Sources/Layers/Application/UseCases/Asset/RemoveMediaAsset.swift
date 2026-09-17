@@ -1,5 +1,6 @@
 import FeatherApplication
 import FeatherContracts
+import FeatherStorage
 import MediaContracts
 import MediaDomain
 
@@ -7,16 +8,19 @@ public struct RemoveMediaAsset: UseCase {
     struct Action: PermissionAction { let key = MediaPermissions.Assets.delete }
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<WriteMedia>
-    let storage: any MediaStorage
+    let storage: any StorageClient
+    let storageKeyShard: MediaStorageKeyShard
 
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteMedia>,
-        storage: any MediaStorage
+        storage: any StorageClient,
+        storageKeyShard: MediaStorageKeyShard = .init()
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
         self.storage = storage
+        self.storageKeyShard = storageKeyShard
     }
 
     public struct Input: DTO {
@@ -59,10 +63,16 @@ public struct RemoveMediaAsset: UseCase {
             )
         }
         for asset in snapshot.assets {
-            _ = try? await storage.delete(key: asset.objectKey)
+            _ = try? await MediaStorageData.delete(
+                from: storage,
+                key: storageKeyShard.physicalKey(for: asset.objectKey)
+            )
         }
         for variant in snapshot.variants {
-            _ = try? await storage.delete(key: variant.objectKey)
+            _ = try? await MediaStorageData.delete(
+                from: storage,
+                key: storageKeyShard.physicalKey(for: variant.objectKey)
+            )
         }
         return try await transaction.run { scope in
             for asset in snapshot.assets {

@@ -1,5 +1,6 @@
 import FeatherApplication
 import FeatherContracts
+import FeatherStorage
 import FeatherDomain
 import Foundation
 import MediaContracts
@@ -12,16 +13,19 @@ public struct CreateMediaAsset: UseCase {
 
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<WriteMedia>
-    let storage: any MediaStorage
+    let storage: any StorageClient
+    let storageKeyShard: MediaStorageKeyShard
 
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteMedia>,
-        storage: any MediaStorage
+        storage: any StorageClient,
+        storageKeyShard: MediaStorageKeyShard = .init()
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
         self.storage = storage
+        self.storageKeyShard = storageKeyShard
     }
 
     public struct Input: DTO {
@@ -68,7 +72,11 @@ public struct CreateMediaAsset: UseCase {
             assetID: storageIdentity.nodeId,
             fileExtension: file.extension
         )
-        try await storage.upload(key: objectKey, data: input.data)
+        try await MediaStorageData.upload(
+            input.data,
+            to: storage,
+            key: storageKeyShard.physicalKey(for: objectKey)
+        )
 
         do {
             let asset = try await transaction.run { scope in
@@ -110,7 +118,10 @@ public struct CreateMediaAsset: UseCase {
             return asset.asDetail
         }
         catch {
-            _ = try? await storage.delete(key: objectKey)
+            _ = try? await MediaStorageData.delete(
+                from: storage,
+                key: storageKeyShard.physicalKey(for: objectKey)
+            )
             throw error
         }
     }

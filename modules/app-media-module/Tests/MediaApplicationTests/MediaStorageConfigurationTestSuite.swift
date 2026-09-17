@@ -2,10 +2,10 @@ import MediaApplication
 import Testing
 
 @Suite
-struct MediaStorageConfigurationTestSuite {
+struct MediaStorageKeyShardTestSuite {
     @Test
     func disabledShardingIsTheDefault() {
-        let configuration = MediaStorageShardConfiguration()
+        let configuration = MediaStorageKeyShard()
 
         #expect(configuration.depth == 0)
         #expect(configuration.segmentLength == 2)
@@ -14,7 +14,7 @@ struct MediaStorageConfigurationTestSuite {
 
     @Test
     func shardingConfigurationNormalizesInvalidValues() {
-        let configuration = MediaStorageShardConfiguration(
+        let configuration = MediaStorageKeyShard(
             depth: -1,
             segmentLength: 0
         )

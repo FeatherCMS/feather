@@ -106,9 +106,10 @@ struct AppModules: Sendable {
         let media = MediaBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
-            mediaStorage: infrastructure.mediaStorage,
+            storage: infrastructure.storage,
             authorizer: authorizer,
-            variantQueue: JobMediaVariantQueue(queue: infrastructure.jobQueue)
+            variantQueue: JobMediaVariantQueue(queue: infrastructure.jobQueue),
+            storageKeyShard: infrastructure.storageKeyShard
         )
         self.media = media
         let blog = BlogBackend.UseCases(

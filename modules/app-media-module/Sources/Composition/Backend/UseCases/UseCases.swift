@@ -3,6 +3,7 @@ import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherStorage
 import Foundation
 import MediaApplication
 import MediaDomain
@@ -19,20 +20,23 @@ public struct UseCases: Sendable {
 
     let database: any DatabaseClient
     let idGenerator: any IDGenerator
-    let mediaStorage: any MediaStorage
+    let storage: any StorageClient
+    let storageKeyShard: MediaStorageKeyShard
     let variantQueue: any MediaVariantQueue
     let authorizer: any Authorizer
 
     public init(
         database: any DatabaseClient,
         idGenerator: any IDGenerator,
-        mediaStorage: any MediaStorage,
+        storage: any StorageClient,
         authorizer: any Authorizer,
-        variantQueue: any MediaVariantQueue
+        variantQueue: any MediaVariantQueue,
+        storageKeyShard: MediaStorageKeyShard = .init()
     ) {
         self.database = database
         self.idGenerator = idGenerator
-        self.mediaStorage = mediaStorage
+        self.storage = storage
+        self.storageKeyShard = storageKeyShard
         self.variantQueue = variantQueue
         self.authorizer = authorizer
     }
@@ -183,7 +187,10 @@ public struct UseCases: Sendable {
             .find(id: assetId)
         }
         return (
-            try await mediaStorage.download(key: objectKey(for: asset)),
+            try await MediaStorageData.download(
+                from: storage,
+                key: storageKeyShard.physicalKey(for: objectKey(for: asset))
+            ),
             asset.contentType, "\(asset.name).\(asset.extension)",
             asset.slugPath
         )
@@ -203,7 +210,10 @@ public struct UseCases: Sendable {
             return value
         }
         return (
-            try await mediaStorage.download(key: variant.objectKey),
+            try await MediaStorageData.download(
+                from: storage,
+                key: storageKeyShard.physicalKey(for: variant.objectKey)
+            ),
             mediaType(for: variant.extension),
             "\(variant.name).\(variant.extension)"
         )

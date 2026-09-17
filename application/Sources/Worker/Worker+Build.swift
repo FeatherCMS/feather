@@ -3,6 +3,7 @@ import FeatherGeneratedSES
 import FeatherMail
 import FeatherMailSES
 import FeatherInfrastructure
+import FeatherStorage
 import FeatherStorageFS
 import Jobs
 import JobsPostgres
@@ -21,6 +22,7 @@ import FoundationEssentials
 import Foundation
 #endif
 import Foundation
+import MediaApplication
 
 func buildWorker(
     config: WorkerConfig
@@ -144,10 +146,10 @@ func buildWorker(
         queue: jobQueue,
         database: database,
         idGenerator: idGenerator,
-        storage: MediaStorageClient(
-            client: StorageClientFS(
-                rootPath: config.media.storageRootPath
-            )
+        storage: StorageClientFS(rootPath: config.media.storageRootPath),
+        storageKeyShard: .init(
+            depth: config.media.storageShardDepth,
+            segmentLength: config.media.storageShardSegmentLength
         )
     )
 
