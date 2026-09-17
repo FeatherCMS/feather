@@ -4,6 +4,7 @@ import FeatherValidation
 import FeatherValidationFoundation
 import HTML
 import Hummingbird
+import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import SystemAdminAPI
@@ -55,13 +56,32 @@ struct AccountProfileForm: Component {
             }
 
             context.build(
-                NewAdminFormFieldInput(
+                NewAdminFormFieldMediaPicker(
                     state: .init(
-                        name: state.profileImageAssetId.key,
-                        label: state.profileImageAssetId.label,
-                        value: state.profileImageAssetId.value,
-                        error: state.profileImageAssetId.error,
-                        help: "Optional media asset identifier."
+                        field: .init(
+                            key: state.profileImageAssetId.key,
+                            label: state.profileImageAssetId.label,
+                            value: state.profileImageAssetId.value,
+                            error: state.profileImageAssetId.error
+                        ),
+                        selectedAsset: state.selectedImageAsset.map {
+                            .init(
+                                id: $0.id,
+                                name: $0.name,
+                                slugPath: $0.slugPath,
+                                url: $0.url,
+                                extension: $0.extension,
+                                contentType: $0.contentType,
+                                sizeBytes: $0.sizeBytes,
+                                variants: $0.variants,
+                                title: $0.title,
+                                altText: $0.altText,
+                                status: $0.status
+                            )
+                        },
+                        browsePath:
+                            "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
+                        allowedExtensions: ["png", "jpg", "jpeg", "webp"]
                     )
                 )
             )

@@ -63,8 +63,21 @@ public struct MediaAssetNodeFileVariantDatabaseRepository:
             .map(\.asDomain)
     }
 
+    public func list(nodeIds: [String]) async throws
+        -> [MediaAssetNodeFileVariant]
+    {
+        try await MediaAssetVariantTable(connection: context.connection)
+            .list(nodeIds: nodeIds)
+            .map(\.asDomain)
+    }
+
     public func deleteAll(nodeId: String) async throws {
         try await MediaAssetVariantTable(connection: context.connection)
             .deleteAll(nodeId: nodeId)
+    }
+
+    public func deleteAll(nodeIds: [String]) async throws {
+        try await MediaAssetVariantTable(connection: context.connection)
+            .deleteAll(nodeIds: nodeIds)
     }
 }

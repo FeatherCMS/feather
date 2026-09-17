@@ -95,31 +95,58 @@ public struct UseCases: Sendable {
     ) async throws -> MediaAssetDetail {
         let result = try await makeCreateAsset()
             .execute(subject: subject, input: input)
-        return try await finalizeAssetCreation(result: result, input: input)
+        let processors = try await activeVariantProcessors()
+        return try await finalizeAssetCreation(
+            result: result,
+            input: input,
+            processors: processors
+        )
     }
 
     public func createAssetAndEnqueue(input: CreateMediaAsset.Input)
         async throws -> MediaAssetDetail
     {
         let result = try await makeCreateAsset().execute(input: input)
-        return try await finalizeAssetCreation(result: result, input: input)
+        let processors = try await activeVariantProcessors()
+        return try await finalizeAssetCreation(
+            result: result,
+            input: input,
+            processors: processors
+        )
     }
 
-    private func finalizeAssetCreation(
-        result: MediaAssetDetail,
-        input: CreateMediaAsset.Input
+    public func createAssetAndEnqueue(
+        input: CreateMediaAsset.Input,
+        processors: [MediaVariantProcessor]
     ) async throws -> MediaAssetDetail {
-        let processors = try await database.withConnection { connection in
+        let result = try await makeCreateAsset().execute(input: input)
+        return try await finalizeAssetCreation(
+            result: result,
+            input: input,
+            processors: processors
+        )
+    }
+
+    public func activeVariantProcessors() async throws -> [MediaVariantProcessor]
+    {
+        try await database.withConnection { connection in
             let repo = MediaVariantProcessorDatabaseRepository(
                 context: .init(connection: connection, idGenerator: idGenerator)
             )
             return try await repo.listActive()
-                .filter {
-                    MediaExtensionMatcher.matches(
-                        extension: input.extension,
-                        processor: $0
-                    )
-                }
+        }
+    }
+
+    private func finalizeAssetCreation(
+        result: MediaAssetDetail,
+        input: CreateMediaAsset.Input,
+        processors: [MediaVariantProcessor]
+    ) async throws -> MediaAssetDetail {
+        let matchingProcessors = processors.filter {
+            MediaExtensionMatcher.matches(
+                extension: input.extension,
+                processor: $0
+            )
         }
         let updated = try await database.withConnection { connection in
             let repo = MediaAssetNodeFileDatabaseRepository(
@@ -129,13 +156,13 @@ public struct UseCases: Sendable {
                 return result
             }
             var value = asset
-            value.status = processors.isEmpty ? .ready : .processing
+            value.status = matchingProcessors.isEmpty ? .ready : .processing
             return try await repo.update(value).asDetail
         }
-        if !processors.isEmpty {
+        if !matchingProcessors.isEmpty {
             try await enqueueVariantGeneration(
                 assetId: result.id,
-                processors: processors
+                processors: matchingProcessors
             )
         }
         return updated

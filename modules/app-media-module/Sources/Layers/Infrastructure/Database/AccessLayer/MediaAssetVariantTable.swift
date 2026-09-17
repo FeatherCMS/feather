@@ -110,6 +110,23 @@ struct MediaAssetVariantTable {
         }
     }
 
+    func list(nodeIds: [String]) async throws -> [Row] {
+        guard !nodeIds.isEmpty else { return [] }
+        let values = mediaVariantSQLValues(nodeIds)
+        return try await connection.run(
+            query: #"""
+                SELECT v.id, v.asset_id, v.variant_id, v.variant_processor_id, v.name, v.storage_object_id,
+                       o.object_key, v.extension, v.created_at
+                FROM media_asset_variant v
+                JOIN media_asset_storage_object o ON o.id = v.storage_object_id
+                WHERE v.asset_id IN (\#(unescaped: values))
+                ORDER BY v.asset_id ASC, v.created_at ASC, v.id ASC;
+                """#
+        ) { sequence in
+            try await sequence.collect().map { try Row(from: $0) }
+        }
+    }
+
     func resolve(nodeIds: [String], variantNames: [String]?) async throws
         -> [ResolveRow]
     {
@@ -158,6 +175,15 @@ struct MediaAssetVariantTable {
         try await connection.run(
             query:
                 #"DELETE FROM media_asset_variant WHERE asset_id = \#(nodeId);"#
+        ) { _ in }
+    }
+
+    func deleteAll(nodeIds: [String]) async throws {
+        guard !nodeIds.isEmpty else { return }
+        let values = mediaVariantSQLValues(nodeIds)
+        try await connection.run(
+            query:
+                #"DELETE FROM media_asset_variant WHERE asset_id IN (\#(unescaped: values));"#
         ) { _ in }
     }
 }

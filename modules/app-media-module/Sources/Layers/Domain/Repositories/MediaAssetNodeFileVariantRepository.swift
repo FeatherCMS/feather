@@ -11,7 +11,13 @@ public protocol MediaAssetNodeFileVariantRepository: Repository {
     func list(
         nodeId: String
     ) async throws -> [MediaAssetNodeFileVariant]
+    func list(
+        nodeIds: [String]
+    ) async throws -> [MediaAssetNodeFileVariant]
     func deleteAll(
         nodeId: String
+    ) async throws
+    func deleteAll(
+        nodeIds: [String]
     ) async throws
 }
