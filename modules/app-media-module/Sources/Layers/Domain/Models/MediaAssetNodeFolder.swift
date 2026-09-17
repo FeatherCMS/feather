@@ -1,18 +1,13 @@
-//
-//  MediaFolder.swift
-//  app-media-module
-//
-//  Created by Binary Birds on 2026. 06. 18.
-
 import FeatherDomain
 
 import struct Foundation.Date
 
-public struct MediaFolder: Model {
+public struct MediaAssetNodeFolder: Model {
     public struct New: Sendable {
         public let parentId: String?
         public let name: String
-        public let path: String
+        public let slug: String
+        public let slugPath: String
         public let assetCount: Int
         public let totalSizeBytes: Int64
     }
@@ -20,7 +15,8 @@ public struct MediaFolder: Model {
     public let id: String
     public var parentId: String?
     public var name: String
-    public var path: String
+    public var slug: String
+    public var slugPath: String
     public var assetCount: Int
     public var totalSizeBytes: Int64
     public let createdAt: Date
@@ -31,7 +27,8 @@ public struct MediaFolder: Model {
         id: String,
         parentId: String?,
         name: String,
-        path: String,
+        slug: String,
+        slugPath: String,
         assetCount: Int,
         totalSizeBytes: Int64,
         createdAt: Date,
@@ -41,7 +38,8 @@ public struct MediaFolder: Model {
         self.id = id
         self.parentId = parentId
         self.name = name
-        self.path = path
+        self.slug = slug
+        self.slugPath = slugPath
         self.assetCount = assetCount
         self.totalSizeBytes = totalSizeBytes
         self.createdAt = createdAt
@@ -50,16 +48,18 @@ public struct MediaFolder: Model {
     }
 }
 
-extension MediaFolder {
+extension MediaAssetNodeFolder {
     public static func create(
         parentId: String?,
         name: String,
-        path: String
+        slug: String,
+        slugPath: String
     ) -> Self.New {
         .init(
             parentId: parentId,
             name: name,
-            path: path,
+            slug: slug,
+            slugPath: slugPath,
             assetCount: 0,
             totalSizeBytes: 0
         )

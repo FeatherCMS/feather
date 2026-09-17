@@ -17,13 +17,9 @@ struct AssetDetailsView: Component {
     let permissions: NewAdminListActions
 
     private func previewLink(
-        for storageKey: String,
-        isVariant: Bool
+        for url: String
     ) -> String {
-        NewAdminMediaAsset.mediaURL(
-            storageKey: storageKey,
-            isVariant: isVariant
-        )
+        NewAdminMediaAsset.mediaURL(path: url)
     }
 
     func html(context: inout BuilderContext) -> some BasicTag {
@@ -45,12 +41,12 @@ struct AssetDetailsView: Component {
             )
             context.build(
                 NewAdminDetailField(
-                    label: "Storage key",
-                    value: item.storageKey
+                    label: "URL",
+                    value: item.url
                 )
             )
             context.build(
-                NewAdminDetailField(label: "Type", value: item._type)
+                NewAdminDetailField(label: "Extension", value: item._extension)
             )
             context.build(
                 NewAdminDetailField(label: "Status", value: item.status)
@@ -74,7 +70,7 @@ struct AssetDetailsView: Component {
             context.build(
                 NewAdminButton(
                     "Open original",
-                    href: previewLink(for: item.storageKey, isVariant: false),
+                    href: previewLink(for: item.url),
                     style: .secondary
                 )
             )
@@ -99,8 +95,8 @@ struct AssetDetailsView: Component {
                             Thead {
                                 Tr {
                                     Th("Name")
-                                    Th("Type")
-                                    Th("Storage key")
+                                    Th("Extension")
+                                    Th("URL")
                                     Th("Preview")
                                 }
                             }
@@ -108,15 +104,14 @@ struct AssetDetailsView: Component {
                                 for variant in variants {
                                     Tr {
                                         Td(variant.name)
-                                        Td(variant._type)
-                                        Td(variant.storageKey)
+                                        Td(variant._extension)
+                                        Td(variant.url)
                                         Td {
                                             context.build(
                                                 NewAdminRowButton(
                                                     "Preview",
                                                     href: previewLink(
-                                                        for: variant.storageKey,
-                                                        isVariant: true
+                                                        for: variant.url
                                                     ),
                                                     style: .ghost(.primary)
                                                 )

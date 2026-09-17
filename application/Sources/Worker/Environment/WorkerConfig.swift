@@ -24,6 +24,8 @@ struct WorkerConfig: Sendable {
 
     struct MediaConfig: Sendable {
         let storageRootPath: String
+        let storageShardDepth: Int
+        let storageShardSegmentLength: Int
     }
 
     struct SESConfig: Sendable {

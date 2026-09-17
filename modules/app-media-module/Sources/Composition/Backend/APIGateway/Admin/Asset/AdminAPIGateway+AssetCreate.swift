@@ -17,17 +17,12 @@ extension AdminAPIGateway {
 
         let data = Data(base64Encoded: body.data) ?? Data(body.data.utf8)
         let subject = try await CurrentSubject.require()
-        let storage = try await useCases.composeAssetStorageKey(
-            fileName: body.fileName,
-            type: body._type,
-            folderId: body.parentId.flatMap { $0 }.flatMap { $0.emptyToNil }
-        )
         let result = try await useCases.createAssetAndEnqueue(
             subject: subject,
             input: .init(
-                folderId: storage.folderId,
-                storageKey: storage.storageKey,
-                type: body._type,
+                folderId: body.parentId.flatMap { $0 }.flatMap { $0.emptyToNil },
+                fileName: body.fileName,
+                extension: body._extension,
                 title: body.title,
                 altText: body.altText,
                 data: data

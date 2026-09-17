@@ -1,15 +1,8 @@
-//
-//  MediaAsset.swift
-//  app-media-module
-//
-//  Created by Binary Birds on 2026. 06. 18.
-
 import FeatherDomain
 
 import struct Foundation.Date
-import struct Foundation.URL
 
-public struct MediaAsset: Model {
+public struct MediaAssetNodeFile: Model {
 
     public enum Status: String, Sendable {
         case uploaded
@@ -19,9 +12,11 @@ public struct MediaAsset: Model {
 
     public struct New: Sendable {
         public let folderId: String?
-        public let storageKey: String
-        public let baseName: String
-        public let type: String
+        public let name: String
+        public let slug: String
+        public let slugPath: String
+        public let `extension`: String
+        public let contentType: String
         public let sizeBytes: Int64
         public let status: Status
         public let title: String?
@@ -30,10 +25,14 @@ public struct MediaAsset: Model {
 
     public let id: String
     public var folderId: String?
-    public var storageKey: String
-    public var baseName: String
-    public var type: String
-    public var sizeBytes: Int64
+    public var name: String
+    public var slug: String
+    public var slugPath: String
+    public let storageObjectId: String
+    public let objectKey: String
+    public let `extension`: String
+    public let contentType: String
+    public let sizeBytes: Int64
     public var status: Status
     public var title: String?
     public var altText: String?
@@ -44,9 +43,13 @@ public struct MediaAsset: Model {
     package init(
         id: String,
         folderId: String?,
-        storageKey: String,
-        baseName: String,
-        type: String,
+        name: String,
+        slug: String,
+        slugPath: String,
+        storageObjectId: String,
+        objectKey: String,
+        `extension`: String,
+        contentType: String,
         sizeBytes: Int64,
         status: Status,
         title: String?,
@@ -57,9 +60,13 @@ public struct MediaAsset: Model {
     ) {
         self.id = id
         self.folderId = folderId
-        self.storageKey = storageKey
-        self.baseName = baseName
-        self.type = type
+        self.name = name
+        self.slug = slug
+        self.slugPath = slugPath
+        self.storageObjectId = storageObjectId
+        self.objectKey = objectKey
+        self.extension = `extension`
+        self.contentType = contentType
         self.sizeBytes = sizeBytes
         self.status = status
         self.title = title
@@ -70,38 +77,29 @@ public struct MediaAsset: Model {
     }
 }
 
-extension MediaAsset {
+extension MediaAssetNodeFile {
     public static func create(
         folderId: String?,
-        storageKey: String,
-        type: String,
+        name: String,
+        slug: String,
+        slugPath: String,
+        extension ext: String,
+        contentType: String,
         sizeBytes: Int64,
         title: String?,
         altText: String?
     ) -> Self.New {
         .init(
             folderId: folderId,
-            storageKey: storageKey,
-            baseName: fileBaseName(from: storageKey),
-            type: type,
+            name: name,
+            slug: slug,
+            slugPath: slugPath,
+            extension: ext,
+            contentType: contentType,
             sizeBytes: sizeBytes,
             status: .uploaded,
             title: title,
             altText: altText
         )
-    }
-
-    private static func fileBaseName(
-        from storageKey: String
-    ) -> String {
-        let lastPathComponent =
-            storageKey
-            .split(separator: "/")
-            .last
-            .map(String.init)
-            ?? storageKey
-        return URL(fileURLWithPath: lastPathComponent)
-            .deletingPathExtension()
-            .lastPathComponent
     }
 }

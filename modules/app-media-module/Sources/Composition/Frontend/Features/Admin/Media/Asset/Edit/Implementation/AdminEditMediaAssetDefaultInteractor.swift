@@ -18,8 +18,8 @@ struct AdminEditMediaAssetDefaultInteractor: AdminEditMediaAssetInteractor {
         let item = try await repository.getAsset(id: id)
         return .init(
             id: item.id,
-            storageKey: item.storageKey,
-            type: item._type,
+            url: item.url,
+            extension: item._extension,
             status: item.status,
             sizeBytes: item.sizeBytes,
             title: item.title ?? "",
@@ -39,8 +39,8 @@ struct AdminEditMediaAssetDefaultInteractor: AdminEditMediaAssetInteractor {
         )
         return .init(
             id: item.id,
-            storageKey: item.storageKey,
-            type: item._type,
+            url: item.url,
+            extension: item._extension,
             status: item.status,
             sizeBytes: item.sizeBytes,
             title: item.title ?? "",

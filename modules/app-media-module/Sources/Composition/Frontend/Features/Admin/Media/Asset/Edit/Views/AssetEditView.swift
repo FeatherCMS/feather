@@ -57,9 +57,9 @@ struct AssetEditView: Component {
                     context.build(
                         NewAdminFormFieldInput(
                             state: .init(
-                                name: "storageKey",
-                                label: "Storage key",
-                                value: state.model.storageKey,
+                                name: "url",
+                                label: "URL",
+                                value: state.model.url,
                                 isReadOnly: true
                             )
                         )
@@ -67,9 +67,9 @@ struct AssetEditView: Component {
                     context.build(
                         NewAdminFormFieldInput(
                             state: .init(
-                                name: "type",
-                                label: "Type",
-                                value: state.model.type,
+                                name: "extension",
+                                label: "Extension",
+                                value: state.model.extension,
                                 isReadOnly: true
                             )
                         )

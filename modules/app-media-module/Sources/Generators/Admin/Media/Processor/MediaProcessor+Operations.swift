@@ -28,7 +28,7 @@ struct MediaProcessorCreateOperation: MediaProcessorOperation {
     }
 }
 
-struct MediaProcessorSearchOperation: MediaProcessorOperation {
+struct MediaProcessorListOperation: MediaProcessorOperation {
     var searchQuery: SearchQuerySchema {
         .init(
             items: MediaProcessorListItemSchema(),

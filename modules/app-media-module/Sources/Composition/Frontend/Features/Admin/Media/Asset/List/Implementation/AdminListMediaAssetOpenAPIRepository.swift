@@ -69,7 +69,7 @@ struct AdminListMediaAssetOpenAPIRepository {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
-                .mediaFolderSearch(
+                .mediaFolderList(
                     body: .json(
                         .init(
                             page: .init(size: 100, number: 1),
@@ -149,7 +149,7 @@ extension AdminListMediaAssetOpenAPIRepository {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
-                .mediaAssetSearch(
+                .mediaAssetList(
                     body: .json(
                         .init(
                             page: .init(size: size, number: page),
@@ -193,7 +193,7 @@ extension AdminListMediaAssetOpenAPIRepository {
             )
             return items.filter { item in
                 guard let asset = item.file else { return true }
-                return allowedExtensions.contains(asset._type.lowercased())
+                return allowedExtensions.contains(asset._extension.lowercased())
             }
         }
     }

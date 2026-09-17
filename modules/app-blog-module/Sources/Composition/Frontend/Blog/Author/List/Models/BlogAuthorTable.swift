@@ -151,7 +151,7 @@ private struct BlogAuthorTableContent: Component {
                                                             {
                                                                 Img(
                                                                     src:
-                                                                        "/media/\(image.storageKey)",
+                                                                        image.originalURL,
                                                                     alt: image
                                                                         .altText
                                                                         ?? image

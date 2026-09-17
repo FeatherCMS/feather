@@ -18,10 +18,7 @@ extension AppAPIGateway {
         else {
             return nil
         }
-        let originalURL = publicMediaURL(
-            storageKey: asset.storageKey,
-            isVariant: false
-        )
+        let originalURL = asset.url
         let variants =
             ((try? await useCases.media.listAssociatedVariantFiles(
                 assetId: assetId
@@ -29,11 +26,8 @@ extension AppAPIGateway {
             .map {
                 PublicContentMediaVariant(
                     id: $0.variantId,
-                    url: publicMediaURL(
-                        storageKey: $0.storageKey,
-                        isVariant: true
-                    ),
-                    type: publicMediaType(from: $0.storageKey),
+                    url: "/media/variants/\(asset.id)/\($0.name).\($0.extension)",
+                    type: $0.extension,
                     width: nil,
                     height: nil
                 )
@@ -50,45 +44,6 @@ extension AppAPIGateway {
         )
     }
 
-    func publicMediaURL(
-        storageKey: String,
-        isVariant: Bool
-    ) -> String {
-        let prefix = isVariant ? "/media/variants/" : "/media/assets/"
-        return "\(prefix)\(publicEncodedStorageKey(storageKey))"
-    }
-
-    func publicEncodedStorageKey(
-        _ key: String
-    ) -> String {
-        let raw = publicCompactStorageKey(key)
-        let allowed = CharacterSet(
-            charactersIn:
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~/"
-        )
-        return raw.addingPercentEncoding(withAllowedCharacters: allowed) ?? raw
-    }
-
-    func publicCompactStorageKey(
-        _ key: String
-    ) -> String {
-        let prefix = "media/assets/"
-        guard key.hasPrefix(prefix) else { return key }
-        return String(key.dropFirst(prefix.count))
-    }
-
-    func publicMediaType(
-        from storageKey: String
-    ) -> String {
-        let fileName =
-            storageKey.split(separator: "/").last.map(String.init) ?? storageKey
-        guard let dotIndex = fileName.lastIndex(of: "."),
-            dotIndex < fileName.index(before: fileName.endIndex)
-        else {
-            return "bin"
-        }
-        return String(fileName[fileName.index(after: dotIndex)...]).lowercased()
-    }
 
     func preferredDefaultMediaURL(
         originalURL: String,

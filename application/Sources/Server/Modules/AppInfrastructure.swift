@@ -4,6 +4,7 @@ import FeatherApplication
 import FeatherDomain
 import FeatherInfrastructure
 import Jobs
+import MediaApplication
 
 struct AppInfrastructure: Sendable {
     let database: any DatabaseClient
@@ -11,4 +12,5 @@ struct AppInfrastructure: Sendable {
     let events: any EventPublisher
     let jobQueue: any JobQueueProtocol
     let mediaStorageRootPath: String
+    let mediaStorageShardConfiguration: MediaStorageShardConfiguration
 }

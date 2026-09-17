@@ -442,19 +442,15 @@ extension AssetListView {
     }
 
     fileprivate func previewLink(
-        for storageKey: String,
-        isVariant: Bool
+        for url: String
     ) -> String {
-        NewAdminMediaAsset.mediaURL(
-            storageKey: storageKey,
-            isVariant: isVariant
-        )
+        NewAdminMediaAsset.mediaURL(path: url)
     }
 
     fileprivate func assetOriginalLink(
         for item: Components.Schemas.MediaAssetListItemSchema
     ) -> String {
-        previewLink(for: item.storageKey, isVariant: false)
+        previewLink(for: item.url)
     }
 
     fileprivate func displayTitle(
@@ -466,7 +462,7 @@ extension AssetListView {
     fileprivate func fileName(
         for item: Components.Schemas.MediaAssetListItemSchema
     ) -> String {
-        item._type.isEmpty ? item.baseName : "\(item.baseName).\(item._type)"
+        item._extension.isEmpty ? item.name : "\(item.name).\(item._extension)"
     }
 
     fileprivate func folderEditPath(
@@ -828,8 +824,7 @@ extension AssetListView {
         let detailsURL =
             "\(MediaAssetRoutes.details(RouterPath(item.asset.id)).description)\(actionSuffix)"
         let previewURL = previewLink(
-            for: item.preview?.storageKey ?? item.asset.storageKey,
-            isVariant: item.preview != nil
+            for: item.preview?.url ?? item.asset.url
         )
         let originalURL = assetOriginalLink(for: item.asset)
         return Div {
@@ -856,19 +851,15 @@ extension AssetListView {
                 .data("picker-select", item.asset.id)
                 .data("picker-field", field)
                 .data(
-                    "picker-storage-key",
-                    NewAdminMediaAsset.normalizedStorageKey(
-                        item.asset.storageKey
-                    )
+                        "picker-url",
+                    item.asset.url
                 )
                 .data(
-                    "picker-preview-storage-key",
-                    NewAdminMediaAsset.normalizedStorageKey(
-                        item.preview?.storageKey ?? ""
-                    )
+                        "picker-preview-url",
+                    item.preview?.url ?? ""
                 )
-                .data("picker-base-name", item.asset.baseName)
-                .data("picker-type", item.asset._type)
+                .data("picker-name", item.asset.name)
+                .data("picker-extension", item.asset._extension)
                 .data("picker-title", item.asset.title ?? "")
                 .data("picker-alt-text", item.asset.altText ?? "")
                 .data("picker-status", item.asset.status)
@@ -912,19 +903,15 @@ extension AssetListView {
                     .data("picker-select", item.asset.id)
                     .data("picker-field", field)
                     .data(
-                        "picker-storage-key",
-                        NewAdminMediaAsset.normalizedStorageKey(
-                            item.asset.storageKey
-                        )
+                        "picker-url",
+                        item.asset.url
                     )
                     .data(
-                        "picker-preview-storage-key",
-                        NewAdminMediaAsset.normalizedStorageKey(
-                            item.preview?.storageKey ?? ""
-                        )
+                        "picker-preview-url",
+                        item.preview?.url ?? ""
                     )
-                    .data("picker-base-name", item.asset.baseName)
-                    .data("picker-type", item.asset._type)
+                    .data("picker-name", item.asset.name)
+                    .data("picker-extension", item.asset._extension)
                     .data("picker-title", item.asset.title ?? "")
                     .data("picker-alt-text", item.asset.altText ?? "")
                     .data("picker-status", item.asset.status)
@@ -1077,8 +1064,7 @@ extension AssetListView {
     ) -> some BasicTag {
 
         let previewURL = previewLink(
-            for: item.preview?.storageKey ?? item.asset.storageKey,
-            isVariant: item.preview != nil
+            for: item.preview?.url ?? item.asset.url
         )
         let originalURL = assetOriginalLink(for: item.asset)
         return Tr {
@@ -1098,8 +1084,8 @@ extension AssetListView {
                 originalURL: originalURL,
                 context: &context
             )
-            Td(item.asset._type)
-                .data("label", "Type")
+            Td(item.asset._extension)
+                .data("label", "Extension")
             Td(fileSizeLabel(bytes: item.asset.sizeBytes))
                 .data("label", "Size")
             if state.picker.isEnabled, let field = state.picker.field {
@@ -1116,24 +1102,20 @@ extension AssetListView {
                     )
                     .data("picker-field", field)
                     .data(
-                        "picker-storage-key",
-                        NewAdminMediaAsset.normalizedStorageKey(
-                            item.asset.storageKey
-                        )
+                        "picker-url",
+                        item.asset.url
                     )
                     .data(
-                        "picker-preview-storage-key",
-                        NewAdminMediaAsset.normalizedStorageKey(
-                            item.preview?.storageKey ?? ""
-                        )
+                        "picker-preview-url",
+                        item.preview?.url ?? ""
                     )
                     .data(
-                        "picker-base-name",
-                        item.asset.baseName
+                        "picker-name",
+                        item.asset.name
                     )
                     .data(
-                        "picker-type",
-                        item.asset._type
+                        "picker-extension",
+                        item.asset._extension
                     )
                     .data(
                         "picker-title",

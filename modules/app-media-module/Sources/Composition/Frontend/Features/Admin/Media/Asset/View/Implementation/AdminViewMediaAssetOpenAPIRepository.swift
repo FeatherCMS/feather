@@ -58,7 +58,8 @@ public struct AdminViewMediaAssetOpenAPIRepository: Sendable {
             .map {
                 NewAdminMediaAssetVariant(
                     name: $0.name,
-                    storageKey: $0.storageKey
+                    url: $0.url,
+                    extension: $0._extension
                 )
             } ?? []
         return .init(

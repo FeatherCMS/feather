@@ -4,9 +4,9 @@ import MediaAdminAPI
 import MediaApplication
 
 extension AdminAPIGateway {
-    public func mediaProcessorSearch(
-        _ input: Operations.MediaProcessorSearch.Input
-    ) async throws -> Operations.MediaProcessorSearch.Output {
+    public func mediaProcessorList(
+        _ input: Operations.MediaProcessorList.Input
+    ) async throws -> Operations.MediaProcessorList.Output {
         let query: Components.Schemas.MediaProcessorListItemSearchQuerySchema
         switch input.body {
         case .json(let value):

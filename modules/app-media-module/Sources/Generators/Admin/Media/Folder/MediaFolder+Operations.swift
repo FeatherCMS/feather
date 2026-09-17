@@ -28,7 +28,7 @@ struct MediaFolderCreateOperation: MediaFolderOperation {
     }
 }
 
-struct MediaFolderSearchOperation: MediaFolderOperation {
+struct MediaFolderListOperation: MediaFolderOperation {
     var searchQuery: SearchQuerySchema {
         .init(
             items: MediaFolderListItemSchema(),

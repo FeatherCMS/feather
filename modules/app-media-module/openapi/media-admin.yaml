@@ -45,11 +45,11 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/media/assets/search:
+  /api/v1/admin/media/assets/list:
     post:
       tags:
       - MediaAssets
-      operationId: mediaAssetSearch
+      operationId: mediaAssetList
       requestBody:
         content:
           application/json:
@@ -152,11 +152,11 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/media/folders/search:
+  /api/v1/admin/media/folders/list:
     post:
       tags:
       - MediaFolders
-      operationId: mediaFolderSearch
+      operationId: mediaFolderList
       requestBody:
         content:
           application/json:
@@ -240,11 +240,11 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/media/processors/search:
+  /api/v1/admin/media/processors/list:
     post:
       tags:
       - MediaProcessors
-      operationId: mediaProcessorSearch
+      operationId: mediaProcessorList
       requestBody:
         content:
           application/json:
@@ -308,7 +308,7 @@ components:
         fileName:
           type: string
           example: cover-image.jpg
-        type:
+        extension:
           type: string
           example: jpeg
         title:
@@ -322,7 +322,7 @@ components:
           example: AQID
       required:
       - fileName
-      - type
+      - extension
       - data
     MediaAssetDetailSchema:
       type: object
@@ -332,15 +332,24 @@ components:
         folderId:
           type: string
           nullable: true
-        storageKey:
+        name:
           type: string
-          example: media/assets/asset-1
-        baseName:
+          example: cover-image.jpg
+        slug:
           type: string
-          example: asset-1
-        type:
+          example: cover-image
+        slugPath:
+          type: string
+          example: posts/cover-image
+        url:
+          type: string
+          example: /media/assets/media_asset_1/cover-image.jpg
+        extension:
           type: string
           example: jpeg
+        contentType:
+          type: string
+          example: image/jpeg
         sizeBytes:
           type: integer
           format: int64
@@ -363,9 +372,12 @@ components:
           example: 1.717171717e+9
       required:
       - id
-      - storageKey
-      - baseName
-      - type
+      - name
+      - slug
+      - slugPath
+      - url
+      - extension
+      - contentType
       - sizeBytes
       - status
       - createdAt
@@ -446,8 +458,9 @@ components:
                 type: string
                 enum:
                 - id
-                - storageKey
-                - type
+                - name
+                - slugPath
+                - extension
                 - sizeBytes
                 - status
                 - title
@@ -533,15 +546,24 @@ components:
         folderId:
           type: string
           nullable: true
-        storageKey:
+        name:
           type: string
-          example: media/assets/asset-1
-        baseName:
+          example: cover-image.jpg
+        slug:
           type: string
-          example: asset-1
-        type:
+          example: cover-image
+        slugPath:
+          type: string
+          example: posts/cover-image
+        url:
+          type: string
+          example: /media/assets/media_asset_1/cover-image.jpg
+        extension:
           type: string
           example: jpeg
+        contentType:
+          type: string
+          example: image/jpeg
         sizeBytes:
           type: integer
           format: int64
@@ -564,9 +586,12 @@ components:
           example: 1.717171717e+9
       required:
       - id
-      - storageKey
-      - baseName
-      - type
+      - name
+      - slug
+      - slugPath
+      - url
+      - extension
+      - contentType
       - sizeBytes
       - status
       - createdAt
@@ -582,7 +607,10 @@ components:
         name:
           type: string
           example: Posts
-        path:
+        slug:
+          type: string
+          example: posts
+        slugPath:
           type: string
           example: blog/posts
         assetCount:
@@ -602,7 +630,8 @@ components:
       required:
       - id
       - name
-      - path
+      - slug
+      - slugPath
       - assetCount
       - totalSizeBytes
       - createdAt
@@ -636,10 +665,10 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/MediaAssetIdField'
-        storageKey:
+        url:
           type: string
-          example: media/assets/asset-1
-        type:
+          example: /media/assets/media_asset_1/cover-image.jpg
+        extension:
           type: string
           example: jpeg
         title:
@@ -654,8 +683,8 @@ components:
             $ref: '#/components/schemas/MediaAssetResolveVariantSchema'
       required:
       - id
-      - storageKey
-      - type
+      - url
+      - extension
       - variants
     MediaAssetResolveVariantSchema:
       type: object
@@ -663,12 +692,16 @@ components:
         name:
           type: string
           example: thumb
-        storageKey:
+        url:
           type: string
-          example: media/assets/asset-1
+          example: /media/assets/media_asset_1/cover-image.jpg
+        extension:
+          type: string
+          example: jpeg
       required:
       - name
-      - storageKey
+      - url
+      - extension
     MediaAssetPatchSchema:
       type: object
       properties:
@@ -698,17 +731,17 @@ components:
         name:
           type: string
           example: thumb
-        type:
+        extension:
           type: string
-          example: processor
-        storageKey:
+          example: jpeg
+        url:
           type: string
-          example: media/assets/asset-1
+          example: /media/assets/media_asset_1/cover-image.jpg
       required:
       - variantId
       - name
-      - type
-      - storageKey
+      - extension
+      - url
     MediaFolderCreateSchema:
       type: object
       properties:
@@ -731,7 +764,10 @@ components:
         name:
           type: string
           example: Posts
-        path:
+        slug:
+          type: string
+          example: posts
+        slugPath:
           type: string
           example: blog/posts
         assetCount:
@@ -751,7 +787,8 @@ components:
       required:
       - id
       - name
-      - path
+      - slug
+      - slugPath
       - assetCount
       - totalSizeBytes
       - createdAt

@@ -31,6 +31,8 @@ extension AdminAPIGateway {
                 return .notFound(.init())
             case .invalidName:
                 throw error
+            case .duplicatePath:
+                throw error
             }
         }
     }

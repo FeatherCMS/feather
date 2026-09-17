@@ -45,11 +45,11 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/media/assets/search:
+  /api/v1/admin/media/assets/list:
     post:
       tags:
       - MediaAssets
-      operationId: mediaAssetSearch
+      operationId: mediaAssetList
       requestBody:
         content:
           application/json:
@@ -152,11 +152,11 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/media/folders/search:
+  /api/v1/admin/media/folders/list:
     post:
       tags:
       - MediaFolders
-      operationId: mediaFolderSearch
+      operationId: mediaFolderList
       requestBody:
         content:
           application/json:
@@ -240,11 +240,11 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/media/processors/search:
+  /api/v1/admin/media/processors/list:
     post:
       tags:
       - MediaProcessors
-      operationId: mediaProcessorSearch
+      operationId: mediaProcessorList
       requestBody:
         content:
           application/json:
@@ -310,7 +310,7 @@ components:
           type: string
           examples:
           - cover-image.jpg
-        type:
+        extension:
           type: string
           examples:
           - jpeg
@@ -328,7 +328,7 @@ components:
           - AQID
       required:
       - fileName
-      - type
+      - extension
       - data
       minProperties: 3
     MediaAssetDetailSchema:
@@ -340,18 +340,30 @@ components:
           type:
           - string
           - 'null'
-        storageKey:
+        name:
           type: string
           examples:
-          - media/assets/asset-1
-        baseName:
+          - cover-image.jpg
+        slug:
           type: string
           examples:
-          - asset-1
-        type:
+          - cover-image
+        slugPath:
+          type: string
+          examples:
+          - posts/cover-image
+        url:
+          type: string
+          examples:
+          - /media/assets/media_asset_1/cover-image.jpg
+        extension:
           type: string
           examples:
           - jpeg
+        contentType:
+          type: string
+          examples:
+          - image/jpeg
         sizeBytes:
           type: integer
           format: int64
@@ -379,14 +391,17 @@ components:
           - 1.717171717e+9
       required:
       - id
-      - storageKey
-      - baseName
-      - type
+      - name
+      - slug
+      - slugPath
+      - url
+      - extension
+      - contentType
       - sizeBytes
       - status
       - createdAt
       - updatedAt
-      minProperties: 8
+      minProperties: 11
     MediaAssetIdField:
       type: string
       examples:
@@ -480,8 +495,9 @@ components:
                 type: string
                 enum:
                 - id
-                - storageKey
-                - type
+                - name
+                - slugPath
+                - extension
                 - sizeBytes
                 - status
                 - title
@@ -586,18 +602,30 @@ components:
           type:
           - string
           - 'null'
-        storageKey:
+        name:
           type: string
           examples:
-          - media/assets/asset-1
-        baseName:
+          - cover-image.jpg
+        slug:
           type: string
           examples:
-          - asset-1
-        type:
+          - cover-image
+        slugPath:
+          type: string
+          examples:
+          - posts/cover-image
+        url:
+          type: string
+          examples:
+          - /media/assets/media_asset_1/cover-image.jpg
+        extension:
           type: string
           examples:
           - jpeg
+        contentType:
+          type: string
+          examples:
+          - image/jpeg
         sizeBytes:
           type: integer
           format: int64
@@ -625,14 +653,17 @@ components:
           - 1.717171717e+9
       required:
       - id
-      - storageKey
-      - baseName
-      - type
+      - name
+      - slug
+      - slugPath
+      - url
+      - extension
+      - contentType
       - sizeBytes
       - status
       - createdAt
       - updatedAt
-      minProperties: 8
+      minProperties: 11
     MediaFolderListItemSchema:
       type: object
       properties:
@@ -646,7 +677,11 @@ components:
           type: string
           examples:
           - Posts
-        path:
+        slug:
+          type: string
+          examples:
+          - posts
+        slugPath:
           type: string
           examples:
           - blog/posts
@@ -670,12 +705,13 @@ components:
       required:
       - id
       - name
-      - path
+      - slug
+      - slugPath
       - assetCount
       - totalSizeBytes
       - createdAt
       - updatedAt
-      minProperties: 7
+      minProperties: 8
     MediaFolderIdField:
       type: string
       examples:
@@ -715,11 +751,11 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/MediaAssetIdField'
-        storageKey:
+        url:
           type: string
           examples:
-          - media/assets/asset-1
-        type:
+          - /media/assets/media_asset_1/cover-image.jpg
+        extension:
           type: string
           examples:
           - jpeg
@@ -739,8 +775,8 @@ components:
           uniqueItems: false
       required:
       - id
-      - storageKey
-      - type
+      - url
+      - extension
       - variants
       minProperties: 4
     MediaAssetResolveVariantSchema:
@@ -750,14 +786,19 @@ components:
           type: string
           examples:
           - thumb
-        storageKey:
+        url:
           type: string
           examples:
-          - media/assets/asset-1
+          - /media/assets/media_asset_1/cover-image.jpg
+        extension:
+          type: string
+          examples:
+          - jpeg
       required:
       - name
-      - storageKey
-      minProperties: 2
+      - url
+      - extension
+      minProperties: 3
     MediaAssetPatchSchema:
       type: object
       properties:
@@ -795,19 +836,19 @@ components:
           type: string
           examples:
           - thumb
-        type:
+        extension:
           type: string
           examples:
-          - processor
-        storageKey:
+          - jpeg
+        url:
           type: string
           examples:
-          - media/assets/asset-1
+          - /media/assets/media_asset_1/cover-image.jpg
       required:
       - variantId
       - name
-      - type
-      - storageKey
+      - extension
+      - url
       minProperties: 4
     MediaFolderCreateSchema:
       type: object
@@ -836,7 +877,11 @@ components:
           type: string
           examples:
           - Posts
-        path:
+        slug:
+          type: string
+          examples:
+          - posts
+        slugPath:
           type: string
           examples:
           - blog/posts
@@ -860,12 +905,13 @@ components:
       required:
       - id
       - name
-      - path
+      - slug
+      - slugPath
       - assetCount
       - totalSizeBytes
       - createdAt
       - updatedAt
-      minProperties: 7
+      minProperties: 8
     MediaFolderListItemSearchQuerySchema:
       type: object
       properties:

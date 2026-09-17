@@ -2,47 +2,11 @@ import FeatherApplication
 import FeatherContracts
 
 public struct MediaAssetResolve: DTO {
-    public struct Variant: Sendable {
-        public let name: String
-        public let storageKey: String
-
-        public init(
-            name: String,
-            storageKey: String
-        ) {
-            self.name = name
-            self.storageKey = storageKey
-        }
-    }
-
+    public struct Variant: Sendable { public let name: String; public let url: String; public let `extension`: String; public init(name: String, url: String, `extension`: String) { self.name = name; self.url = url; self.extension = `extension` } }
     public struct Item: Sendable {
-        public let id: String
-        public let storageKey: String
-        public let type: String
-        public let title: String?
-        public let altText: String?
-        public let variants: [Variant]
-
-        public init(
-            id: String,
-            storageKey: String,
-            type: String,
-            title: String?,
-            altText: String?,
-            variants: [Variant]
-        ) {
-            self.id = id
-            self.storageKey = storageKey
-            self.type = type
-            self.title = title
-            self.altText = altText
-            self.variants = variants
-        }
+        public let id: String; public let url: String; public let `extension`: String; public let title: String?; public let altText: String?; public let variants: [Variant]
+        public init(id: String, url: String, `extension`: String, title: String?, altText: String?, variants: [Variant]) { self.id = id; self.url = url; self.extension = `extension`; self.title = title; self.altText = altText; self.variants = variants }
     }
-
     public let items: [Item]
-
-    public init(items: [Item]) {
-        self.items = items
-    }
+    public init(items: [Item]) { self.items = items }
 }

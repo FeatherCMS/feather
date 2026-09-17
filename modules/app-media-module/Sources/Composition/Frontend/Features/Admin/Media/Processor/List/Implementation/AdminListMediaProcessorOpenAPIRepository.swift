@@ -33,7 +33,7 @@ struct AdminMediaProcessorOpenAPIRepository {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
-                .mediaProcessorSearch(
+                .mediaProcessorList(
                     body: .json(
                         .init(
                             page: .init(size: 100, number: page),

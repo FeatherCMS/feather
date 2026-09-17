@@ -28,14 +28,15 @@ struct MediaAssetCreateOperation: MediaAssetOperation {
     }
 }
 
-struct MediaAssetSearchOperation: MediaAssetOperation {
+struct MediaAssetListOperation: MediaAssetOperation {
     var searchQuery: SearchQuerySchema {
         .init(
             items: MediaAssetNodeSearchItemSchema(),
             sortFieldKeys: [
                 "id",
-                "storageKey",
-                "type",
+                "name",
+                "slugPath",
+                "extension",
                 "sizeBytes",
                 "status",
                 "title",

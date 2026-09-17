@@ -5,8 +5,8 @@ struct MediaAssetPathItems: PathItemRepresentable {
     var delete: OperationRepresentable? { MediaAssetNodeRemoveOperation() }
 }
 
-struct MediaAssetSearchPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { MediaAssetSearchOperation() }
+struct MediaAssetListPathItems: PathItemRepresentable {
+    var post: OperationRepresentable? { MediaAssetListOperation() }
 }
 
 struct MediaAssetResolvePathItems: PathItemRepresentable {

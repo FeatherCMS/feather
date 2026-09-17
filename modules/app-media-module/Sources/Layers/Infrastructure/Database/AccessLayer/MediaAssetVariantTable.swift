@@ -1,0 +1,141 @@
+import FeatherDatabase
+import FeatherInfrastructure
+
+import struct Foundation.Date
+
+extension MediaAssetVariantTable.Row {
+    init(from row: DatabaseRow) throws {
+        id = try row.decode(column: "id", as: String.self)
+        nodeId = try row.decode(column: "asset_id", as: String.self)
+        processorId = try row.decode(column: "processor_id", as: String.self)
+        name = try row.decode(column: "name", as: String.self)
+        storageObjectId = try row.decode(column: "storage_object_id", as: String.self)
+        objectKey = try row.decode(column: "object_key", as: String.self)
+        `extension` = try row.decode(column: "extension", as: String.self)
+        createdAt = try row.decode(column: "created_at", as: Date.self)
+    }
+}
+
+struct MediaAssetVariantTable {
+    struct ResolveRow {
+        let nodeId: String
+        let name: String
+        let objectKey: String
+        let `extension`: String
+    }
+
+    struct Row {
+        struct Create {
+            let id: String
+            let nodeId: String
+            let processorId: String
+            let name: String
+            let storageObjectId: String
+            let `extension`: String
+        }
+
+        let id: String
+        let nodeId: String
+        let processorId: String
+        let name: String
+        let storageObjectId: String
+        let objectKey: String
+        let `extension`: String
+        let createdAt: Date
+    }
+
+    let connection: any DatabaseConnection
+
+    func create(row: Row.Create) async throws -> Row {
+        _ = try await connection.run(
+            query: #"""
+                INSERT INTO media_asset_variant (
+                    id, asset_id, processor_id, name, storage_object_id, extension, created_at
+                ) VALUES (
+                    \#(row.id), \#(row.nodeId), \#(row.processorId), \#(row.name),
+                    \#(row.storageObjectId), \#(row.extension), NOW()
+                )
+                """#
+        ) { _ in }
+        guard let result = try await find(nodeId: row.nodeId, processorId: row.processorId) else {
+            throw RepositoryError.notFound
+        }
+        return result
+    }
+
+    func find(nodeId: String, processorId: String) async throws -> Row? {
+        try await connection.run(
+            query: #"""
+                SELECT v.id, v.asset_id, v.processor_id, v.name, v.storage_object_id,
+                       o.object_key, v.extension, v.created_at
+                FROM media_asset_variant v
+                JOIN media_asset_storage_object o ON o.id = v.storage_object_id
+                WHERE v.asset_id = \#(nodeId) AND v.processor_id = \#(processorId)
+                LIMIT 1;
+                """#
+        ) { sequence in
+            guard let row = try await sequence.collect().first else { return nil }
+            return try Row(from: row)
+        }
+    }
+
+    func list(nodeId: String) async throws -> [Row] {
+        try await connection.run(
+            query: #"""
+                SELECT v.id, v.asset_id, v.processor_id, v.name, v.storage_object_id,
+                       o.object_key, v.extension, v.created_at
+                FROM media_asset_variant v
+                JOIN media_asset_storage_object o ON o.id = v.storage_object_id
+                WHERE v.asset_id = \#(nodeId)
+                ORDER BY v.created_at ASC, v.id ASC;
+                """#
+        ) { sequence in
+            try await sequence.collect().map { try Row(from: $0) }
+        }
+    }
+
+    func resolve(nodeIds: [String], variantNames: [String]?) async throws -> [ResolveRow] {
+        guard !nodeIds.isEmpty else { return [] }
+        if let variantNames, variantNames.isEmpty { return [] }
+        let nodeValues = mediaVariantSQLValues(nodeIds)
+        let variantFilter: String
+        if let variantNames {
+            let values = mediaVariantSQLValues(variantNames)
+            variantFilter = "AND v.name IN (\(values))"
+        }
+        else {
+            variantFilter = ""
+        }
+        return try await connection.run(
+            query: #"""
+                SELECT v.asset_id, v.name, o.object_key, v.extension
+                FROM media_asset_variant v
+                JOIN media_asset_storage_object o ON o.id = v.storage_object_id
+                WHERE v.asset_id IN (\#(unescaped: nodeValues)) \#(unescaped: variantFilter)
+                ORDER BY v.asset_id ASC, v.name ASC, v.created_at ASC;
+                """#
+        ) { sequence in
+            try await sequence.collect().map { row in
+                .init(
+                    nodeId: try row.decode(column: "asset_id", as: String.self),
+                    name: try row.decode(column: "name", as: String.self),
+                    objectKey: try row.decode(column: "object_key", as: String.self),
+                    extension: try row.decode(column: "extension", as: String.self)
+                )
+            }
+        }
+    }
+
+    func deleteAll(nodeId: String) async throws {
+        try await connection.run(
+            query: #"DELETE FROM media_asset_variant WHERE asset_id = \#(nodeId);"#
+        ) { _ in }
+    }
+}
+
+private func mediaVariantSQLValues(_ values: [String]) -> String {
+    values.map { value in
+        let escaped = value.replacingOccurrences(of: "'", with: "''")
+        return "'\(escaped)'"
+    }.joined(separator: ", ")
+}

@@ -18,7 +18,4 @@ public protocol MediaAssetQueries: Sendable {
     func count(
         query: MediaAssetList.Query
     ) async throws -> Int
-    func findByStorageKey(
-        _ storageKey: String
-    ) async throws -> MediaAssetDetail?
 }

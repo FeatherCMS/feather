@@ -30,7 +30,7 @@ struct AdminAddMediaAssetOpenAPIRepository {
                             fileName: payload.fileName.trimmingCharacters(
                                 in: .whitespacesAndNewlines
                             ),
-                            _type: payload.type.trimmingCharacters(
+                            _extension: payload.extension.trimmingCharacters(
                                 in: .whitespacesAndNewlines
                             ),
                             title: payload.title.emptyToNil,

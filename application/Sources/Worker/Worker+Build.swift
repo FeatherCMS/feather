@@ -6,6 +6,7 @@ import FeatherInfrastructure
 import Jobs
 import JobsPostgres
 import Logging
+import MediaApplication
 import FeatherDatabasePostgres
 import NIOSSL
 import PostgresMigrations
@@ -142,7 +143,11 @@ func buildWorker(
         queue: jobQueue,
         database: database,
         idGenerator: idGenerator,
-        storageRootPath: config.media.storageRootPath
+        storageRootPath: config.media.storageRootPath,
+        storageShardConfiguration: .init(
+            depth: config.media.storageShardDepth,
+            segmentLength: config.media.storageShardSegmentLength
+        )
     )
 
     var jobSchedule = JobSchedule()

@@ -21,9 +21,12 @@ extension NewAdminMediaAsset {
     ) {
         self.init(
             id: schema.id,
-            storageKey: schema.storageKey,
-            baseName: schema.baseName,
-            type: schema._type,
+            name: schema.name,
+            slugPath: schema.slugPath,
+            url: schema.url,
+            extension: schema._extension,
+            contentType: schema.contentType,
+            sizeBytes: schema.sizeBytes,
             variants: variants,
             title: schema.title,
             altText: schema.altText,

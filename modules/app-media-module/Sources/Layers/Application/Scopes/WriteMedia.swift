@@ -9,20 +9,23 @@ import FeatherContracts
 import MediaDomain
 
 public struct WriteMedia: Scope {
-    public let folders: any MediaFolderRepository
-    public let assets: any MediaAssetRepository
+    public let folders: any MediaAssetNodeFolderRepository
+    public let assets: any MediaAssetNodeFileRepository
+    public let storageObjects: any MediaAssetStorageObjectRepository
     public let processors: any MediaProcessorRepository
-    public let processorAssets: any MediaProcessorAssetRepository
+    public let variants: any MediaAssetNodeFileVariantRepository
 
     public init(
-        folders: any MediaFolderRepository,
-        assets: any MediaAssetRepository,
+        folders: any MediaAssetNodeFolderRepository,
+        assets: any MediaAssetNodeFileRepository,
+        storageObjects: any MediaAssetStorageObjectRepository,
         processors: any MediaProcessorRepository,
-        processorAssets: any MediaProcessorAssetRepository
+        variants: any MediaAssetNodeFileVariantRepository
     ) {
         self.folders = folders
         self.assets = assets
+        self.storageObjects = storageObjects
         self.processors = processors
-        self.processorAssets = processorAssets
+        self.variants = variants
     }
 }

@@ -21,7 +21,8 @@ struct MediaJobController {
         queue: some JobQueueProtocol,
         database: any DatabaseClient,
         idGenerator: any IDGenerator,
-        storageRootPath: String
+        storageRootPath: String,
+        storageShardConfiguration: MediaStorageShardConfiguration = .init()
     ) {
         queue.registerJob(parameters: GenerateVariantJob.self) {
             parameters,
@@ -31,14 +32,15 @@ struct MediaJobController {
                 idGenerator: idGenerator,
                 scope: { context in
                     return WriteMedia(
-                        folders: MediaFolderDatabaseRepository(
+                        folders: MediaAssetNodeFolderDatabaseRepository(
                             context: context
                         ),
-                        assets: MediaAssetDatabaseRepository(context: context),
+                        assets: MediaAssetNodeFileDatabaseRepository(context: context),
+                        storageObjects: MediaAssetStorageObjectDatabaseRepository(context: context),
                         processors: MediaProcessorDatabaseRepository(
                             context: context
                         ),
-                        processorAssets: MediaProcessorAssetDatabaseRepository(
+                        variants: MediaAssetNodeFileVariantDatabaseRepository(
                             context: context
                         )
                     )
@@ -48,7 +50,8 @@ struct MediaJobController {
             let useCase = GenerateMediaAssetVariant(
                 transaction: transaction,
                 storage: MediaStorageClient(
-                    client: StorageClientFS(rootPath: storageRootPath)
+                    client: StorageClientFS(rootPath: storageRootPath),
+                    shardConfiguration: storageShardConfiguration
                 ),
                 shellRunner: SubprocessMediaShellRunner()
             )

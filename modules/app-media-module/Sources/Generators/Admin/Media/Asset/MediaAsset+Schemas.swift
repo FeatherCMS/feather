@@ -6,16 +6,24 @@ struct MediaAssetIdField: StringSchemaRepresentable {
     var example: String? = "media_asset_1"
 }
 
-struct MediaAssetStorageKeyField: StringSchemaRepresentable {
-    var example: String? = "media/assets/asset-1"
-}
-
-struct MediaAssetBaseNameField: StringSchemaRepresentable {
-    var example: String? = "asset-1"
+struct MediaAssetURLField: StringSchemaRepresentable {
+    var example: String? = "/media/assets/media_asset_1/cover-image.jpg"
 }
 
 struct MediaAssetTypeField: StringSchemaRepresentable {
     var example: String? = "jpeg"
+}
+
+struct MediaAssetContentTypeField: StringSchemaRepresentable {
+    var example: String? = "image/jpeg"
+}
+
+struct MediaAssetSlugField: StringSchemaRepresentable {
+    var example: String? = "cover-image"
+}
+
+struct MediaAssetSlugPathField: StringSchemaRepresentable {
+    var example: String? = "posts/cover-image"
 }
 
 struct MediaAssetFileNameField: StringSchemaRepresentable {
@@ -88,7 +96,7 @@ struct MediaAssetCreateSchema: ObjectSchemaRepresentable {
         [
             "parentId": MediaFolderNullableIdField(),
             "fileName": MediaAssetFileNameField(),
-            "type": MediaAssetTypeField(),
+            "extension": MediaAssetTypeField(),
             "title": MediaAssetNullableTextField(required: false),
             "altText": MediaAssetNullableTextField(required: false),
             "data": MediaAssetDataField(),
@@ -137,9 +145,12 @@ struct MediaAssetDetailSchema: ObjectSchemaRepresentable {
         [
             "id": MediaAssetIdField().reference(),
             "folderId": MediaFolderNullableIdField(),
-            "storageKey": MediaAssetStorageKeyField(),
-            "baseName": MediaAssetBaseNameField(),
-            "type": MediaAssetTypeField(),
+            "name": MediaAssetFileNameField(),
+            "slug": MediaAssetSlugField(),
+            "slugPath": MediaAssetSlugPathField(),
+            "url": MediaAssetURLField(),
+            "extension": MediaAssetTypeField(),
+            "contentType": MediaAssetContentTypeField(),
             "sizeBytes": MediaAssetSizeBytesField(),
             "status": MediaAssetStatusField(),
             "title": MediaAssetNullableTextField(required: false),
@@ -155,9 +166,12 @@ struct MediaAssetListItemSchema: ObjectSchemaRepresentable {
         [
             "id": MediaAssetIdField().reference(),
             "folderId": MediaFolderNullableIdField(),
-            "storageKey": MediaAssetStorageKeyField(),
-            "baseName": MediaAssetBaseNameField(),
-            "type": MediaAssetTypeField(),
+            "name": MediaAssetFileNameField(),
+            "slug": MediaAssetSlugField(),
+            "slugPath": MediaAssetSlugPathField(),
+            "url": MediaAssetURLField(),
+            "extension": MediaAssetTypeField(),
+            "contentType": MediaAssetContentTypeField(),
             "sizeBytes": MediaAssetSizeBytesField(),
             "status": MediaAssetStatusField(),
             "title": MediaAssetNullableTextField(required: false),
@@ -183,8 +197,8 @@ struct MediaAssetVariantListItemSchema: ObjectSchemaRepresentable {
         [
             "variantId": MediaAssetVariantIdField(),
             "name": MediaAssetVariantNameField(),
-            "type": MediaAssetVariantTypeField(),
-            "storageKey": MediaAssetStorageKeyField(),
+            "extension": MediaAssetTypeField(),
+            "url": MediaAssetURLField(),
         ]
     }
 }
@@ -201,8 +215,8 @@ struct MediaAssetResolveItemSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "id": MediaAssetIdField().reference(),
-            "storageKey": MediaAssetStorageKeyField(),
-            "type": MediaAssetTypeField(),
+            "url": MediaAssetURLField(),
+            "extension": MediaAssetTypeField(),
             "title": MediaAssetNullableTextField(required: false),
             "altText": MediaAssetNullableTextField(required: false),
             "variants": MediaAssetResolveVariantListField(),
@@ -214,7 +228,8 @@ struct MediaAssetResolveVariantSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "name": MediaAssetVariantNameField(),
-            "storageKey": MediaAssetStorageKeyField(),
+            "url": MediaAssetURLField(),
+            "extension": MediaAssetTypeField(),
         ]
     }
 }
