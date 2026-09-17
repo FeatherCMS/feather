@@ -3,7 +3,6 @@ import FeatherDomain
 import Environment
 import FeatherDatabase
 import FeatherDatabasePostgres
-import FeatherStorageFS
 import FeatherInfrastructure
 import Jobs
 import MediaApplication
@@ -21,8 +20,7 @@ struct MediaJobController {
         queue: some JobQueueProtocol,
         database: any DatabaseClient,
         idGenerator: any IDGenerator,
-        storageRootPath: String,
-        storageShardConfiguration: MediaStorageShardConfiguration = .init()
+        storage: any MediaStorage
     ) {
         queue.registerJob(parameters: GenerateVariantJob.self) {
             parameters,
@@ -44,6 +42,12 @@ struct MediaJobController {
                             ),
                         variants: MediaAssetNodeFileVariantDatabaseRepository(
                             context: context
+                        ),
+                        variantDefinitions: MediaVariantDatabaseRepository(
+                            context: context
+                        ),
+                        variantProcessors: MediaVariantProcessorDatabaseRepository(
+                            context: context
                         )
                     )
                 }
@@ -51,17 +55,14 @@ struct MediaJobController {
 
             let useCase = GenerateMediaAssetVariant(
                 transaction: transaction,
-                storage: MediaStorageClient(
-                    client: StorageClientFS(rootPath: storageRootPath),
-                    shardConfiguration: storageShardConfiguration
-                ),
+                storage: storage,
                 shellRunner: SubprocessMediaShellRunner()
             )
 
             try await useCase.execute(
                 input: .init(
                     assetId: parameters.assetId,
-                    processorId: parameters.processorId
+                    variantProcessorId: parameters.processorId
                 )
             )
         }

@@ -6,7 +6,9 @@ import NIOSSL
 import PostgresNIO
 import Environment
 import FeatherInfrastructure
+import FeatherStorageFS
 import Jobs
+import MediaInfrastructure
 #if canImport(FoundationEssentials)
 import FoundationEssentials
 #else
@@ -39,7 +41,11 @@ func buildTestServer(
             idGenerator: idGenerator,
             events: eventPublisher,
             jobQueue: jobQueue,
-            mediaStorageRootPath: config.media.storageRootPath
+            mediaStorage: MediaStorageClient(
+                client: StorageClientFS(
+                    rootPath: config.media.storageRootPath
+                )
+            )
         )
     )
 

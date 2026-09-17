@@ -2,7 +2,6 @@ import FeatherContracts
 import FeatherApplication
 import FeatherInfrastructure
 import FeatherDatabase
-import MediaApplication
 import AuthApplication
 import AuthInfrastructure
 import UserInfrastructure
@@ -107,11 +106,9 @@ struct AppModules: Sendable {
         let media = MediaBackend.UseCases(
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
-            mediaStorageRootPath: infrastructure.mediaStorageRootPath,
+            mediaStorage: infrastructure.mediaStorage,
             authorizer: authorizer,
-            variantQueue: JobMediaVariantQueue(queue: infrastructure.jobQueue),
-            storageShardConfiguration:
-                infrastructure.mediaStorageShardConfiguration
+            variantQueue: JobMediaVariantQueue(queue: infrastructure.jobQueue)
         )
         self.media = media
         let blog = BlogBackend.UseCases(

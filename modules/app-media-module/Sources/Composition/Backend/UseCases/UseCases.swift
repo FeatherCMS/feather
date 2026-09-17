@@ -3,7 +3,6 @@ import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
-import FeatherStorageFS
 import Foundation
 import MediaApplication
 import MediaDomain
@@ -20,32 +19,22 @@ public struct UseCases: Sendable {
 
     let database: any DatabaseClient
     let idGenerator: any IDGenerator
-    let mediaStorageRootPath: String
-    let storageShardConfiguration: MediaStorageShardConfiguration
+    let mediaStorage: any MediaStorage
     let variantQueue: any MediaVariantQueue
     let authorizer: any Authorizer
 
     public init(
         database: any DatabaseClient,
         idGenerator: any IDGenerator,
-        mediaStorageRootPath: String,
+        mediaStorage: any MediaStorage,
         authorizer: any Authorizer,
-        variantQueue: any MediaVariantQueue,
-        storageShardConfiguration: MediaStorageShardConfiguration = .init()
+        variantQueue: any MediaVariantQueue
     ) {
         self.database = database
         self.idGenerator = idGenerator
-        self.mediaStorageRootPath = mediaStorageRootPath
-        self.storageShardConfiguration = storageShardConfiguration
+        self.mediaStorage = mediaStorage
         self.variantQueue = variantQueue
         self.authorizer = authorizer
-    }
-
-    func storage() -> any MediaStorage {
-        MediaStorageClient(
-            client: StorageClientFS(rootPath: mediaStorageRootPath),
-            shardConfiguration: storageShardConfiguration
-        )
     }
 
     func writeTransaction() -> DatabaseTransactionExecutor<WriteMedia> {
@@ -194,7 +183,7 @@ public struct UseCases: Sendable {
             .find(id: assetId)
         }
         return (
-            try await storage().download(key: objectKey(for: asset)),
+            try await mediaStorage.download(key: objectKey(for: asset)),
             asset.contentType, "\(asset.name).\(asset.extension)",
             asset.slugPath
         )
@@ -214,7 +203,7 @@ public struct UseCases: Sendable {
             return value
         }
         return (
-            try await storage().download(key: variant.objectKey),
+            try await mediaStorage.download(key: variant.objectKey),
             mediaType(for: variant.extension),
             "\(variant.name).\(variant.extension)"
         )

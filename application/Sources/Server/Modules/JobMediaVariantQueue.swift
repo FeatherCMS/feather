@@ -6,11 +6,11 @@ struct JobMediaVariantQueue: MediaVariantQueue {
 
     func enqueueMediaGenerateVariant(
         assetId: String,
-        processorId: String
+        variantProcessorId: String
     ) async throws {
         try await queue.enqueueMediaGenerateVariant(
             assetId: assetId,
-            processorId: processorId
+            processorId: variantProcessorId
         )
     }
 }

@@ -11,6 +11,5 @@ struct AppInfrastructure: Sendable {
     let idGenerator: any IDGenerator
     let events: any EventPublisher
     let jobQueue: any JobQueueProtocol
-    let mediaStorageRootPath: String
-    let mediaStorageShardConfiguration: MediaStorageShardConfiguration
+    let mediaStorage: any MediaStorage
 }

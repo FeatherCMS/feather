@@ -3,7 +3,6 @@ import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
-import FeatherStorageFS
 import Foundation
 import MediaApplication
 import MediaDomain
@@ -15,7 +14,7 @@ extension UseCases {
         .init(
             authorizer: authorizer,
             transaction: writeTransaction(),
-            storage: storage()
+            storage: mediaStorage
         )
     }
 }
