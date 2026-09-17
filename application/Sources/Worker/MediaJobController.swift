@@ -3,7 +3,6 @@ import FeatherDomain
 import Environment
 import FeatherDatabase
 import FeatherDatabasePostgres
-import FeatherStorageFS
 import FeatherInfrastructure
 import Jobs
 import MediaApplication
@@ -21,7 +20,7 @@ struct MediaJobController {
         queue: some JobQueueProtocol,
         database: any DatabaseClient,
         idGenerator: any IDGenerator,
-        storageRootPath: String
+        storage: any MediaStorage
     ) {
         queue.registerJob(parameters: GenerateVariantJob.self) {
             parameters,
@@ -47,9 +46,7 @@ struct MediaJobController {
 
             let useCase = GenerateMediaAssetVariant(
                 transaction: transaction,
-                storage: MediaStorageClient(
-                    client: StorageClientFS(rootPath: storageRootPath)
-                ),
+                storage: storage,
                 shellRunner: SubprocessMediaShellRunner()
             )
 

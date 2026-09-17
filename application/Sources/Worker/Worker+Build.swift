@@ -3,6 +3,7 @@ import FeatherGeneratedSES
 import FeatherMail
 import FeatherMailSES
 import FeatherInfrastructure
+import FeatherStorageFS
 import Jobs
 import JobsPostgres
 import Logging
@@ -13,6 +14,7 @@ import PostgresNIO
 import ServiceLifecycle
 import SotoCore
 import UnixSignals
+import MediaInfrastructure
 #if canImport(FoundationEssentials)
 import FoundationEssentials
 #else
@@ -142,7 +144,11 @@ func buildWorker(
         queue: jobQueue,
         database: database,
         idGenerator: idGenerator,
-        storageRootPath: config.media.storageRootPath
+        storage: MediaStorageClient(
+            client: StorageClientFS(
+                rootPath: config.media.storageRootPath
+            )
+        )
     )
 
     var jobSchedule = JobSchedule()

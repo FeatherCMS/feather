@@ -52,9 +52,7 @@ let package = Package(
     ],
     dependencies: [
         // [docc-plugin-placeholder]
-
-        .package(url: "https://github.com/feather-framework/feather-storage", exact: "1.0.0-beta.2"),
-        .package(url: "https://github.com/feather-framework/feather-storage-fs", exact: "1.0.0-beta.1"),
+        .package(url: "https://github.com/feather-framework/feather-storage", exact: "1.0.0-beta.3"),
         .package(url: "https://github.com/swiftlang/swift-subprocess", .upToNextMinor(from: "0.4.0")),
         .package(url: "https://github.com/mattpolzin/OpenAPIKit", from: "5.0.0"),
         .package(url: "https://github.com/jpsim/Yams", from: "6.2.0"),
@@ -104,7 +102,6 @@ let package = Package(
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
 
                 .product(name: "FeatherStorage", package: "feather-storage"),
-                .product(name: "FeatherStorageFS", package: "feather-storage-fs"),
                 .product(name: "Subprocess", package: "swift-subprocess"),
 
                 .target(name: "MediaApplication"),
@@ -136,6 +133,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
 
+                .target(name: "MediaApplication"),
                 .target(name: "MediaInfrastructure"),
                 .target(name: "MediaAdminAPI"),
             ],

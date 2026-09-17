@@ -121,6 +121,10 @@ let package = Package(
             exact: "1.0.0-rc.1"
         ),
         .package(
+            url: "https://github.com/feather-framework/feather-storage-fs",
+            exact: "1.0.0-beta.2"
+        ),
+        .package(
             url: "https://github.com/soto-project/soto-core",
             from: "7.0.0"
         ),
@@ -192,6 +196,7 @@ let package = Package(
 
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "FeatherMailSES", package: "feather-mail-ses"),
+                .product(name: "FeatherStorageFS", package: "feather-storage-fs"),
                 .product(name: "SotoCore", package: "soto-core"),
 
                 // kernel & module infrastructure
@@ -205,6 +210,7 @@ let package = Package(
 
                 .product(name: "UserInfrastructure", package: "app-user-module"),
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
+                .product(name: "MediaApplication", package: "app-media-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "ContactInfrastructure", package: "app-contact-module"),
                 .product(name: "NewsletterInfrastructure", package: "app-newsletter-module"),
@@ -279,6 +285,7 @@ let package = Package(
                 .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "FeatherBackend", package: "feather-core"),
+                .product(name: "FeatherStorageFS", package: "feather-storage-fs"),
 
                 .product(name: "UserAdminAPI", package: "app-user-module"),
                 .product(name: "UserAppAPI", package: "app-user-module"),
@@ -302,6 +309,7 @@ let package = Package(
                 .product(name: "ContactBackend", package: "app-contact-module"),
                 .product(name: "MediaAdminAPI", package: "app-media-module"),
                 .product(name: "MediaBackend", package: "app-media-module"),
+                .product(name: "MediaApplication", package: "app-media-module"),
                 .product(name: "BlogAdminAPI", package: "app-blog-module"),
                 .product(name: "BlogAppAPI", package: "app-blog-module"),
                 .product(name: "BlogBackend", package: "app-blog-module"),
@@ -344,8 +352,10 @@ let package = Package(
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
                 .product(name: "JobsPostgres", package: "swift-jobs-postgres"),
                 .product(name: "PostgresMigrations", package: "postgres-migrations"),
+                .product(name: "FeatherStorageFS", package: "feather-storage-fs"),
                 .product(name: "AccountAdminAPI", package: "app-account-module"),
                 .product(name: "UserAdminAPI", package: "app-user-module"),
+                .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .target(name: "Server"),
             ],
             swiftSettings: defaultSwiftSettings

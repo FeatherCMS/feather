@@ -1,5 +1,5 @@
 {
-  "originHash" : "93f0478f3ac936ef2212760161442f9d19ec01f1b4bb883bc8e68b8ff4e16e70",
+  "originHash" : "6fd875d93ab4997bbae28df70dc3db2bc5d2cb485e721d9ed463ae2e94f53d02",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -42,17 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-storage",
       "state" : {
-        "revision" : "d9cf9f07b3b270d34b5ac34fcbbbe765a85b17b8",
-        "version" : "1.0.0-beta.2"
-      }
-    },
-    {
-      "identity" : "feather-storage-fs",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-storage-fs",
-      "state" : {
-        "revision" : "d8ba920af6e6d02740f978ae2f3997a996827125",
-        "version" : "1.0.0-beta.1"
+        "revision" : "bf6d985e4f077296d26373f204f634cbdcddfa21",
+        "version" : "1.0.0-beta.3"
       }
     },
     {
@@ -350,6 +341,15 @@
       "state" : {
         "revision" : "704705c5c51156ede21172a38654d522ce487074",
         "version" : "1.8.0"
+      }
+    },
+    {
+      "identity" : "swift-web-standards",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/BinaryBirds/swift-web-standards",
+      "state" : {
+        "revision" : "c5a7f7e7e4eb674e3ab63e99b757b774b96fbcaf",
+        "version" : "1.0.0-beta.4"
       }
     },
     {
