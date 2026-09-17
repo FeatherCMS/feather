@@ -48,6 +48,23 @@ public struct MediaAssetNodeFileVariantDatabaseRepository:
         return row.asDomain
     }
 
+    public func insert(_ models: [MediaAssetNodeFileVariant.New]) async throws {
+        guard !models.isEmpty else { return }
+        let rows = models.map {
+            MediaAssetVariantTable.Row.Create(
+                id: context.idGenerator.generate(),
+                nodeId: $0.nodeId,
+                variantId: $0.variantId,
+                variantProcessorId: $0.variantProcessorId,
+                name: $0.name,
+                storageObjectId: $0.storageObjectId,
+                extension: $0.extension
+            )
+        }
+        try await MediaAssetVariantTable(connection: context.connection)
+            .create(rows: rows)
+    }
+
     public func find(nodeId: String, variantId: String) async throws
         -> MediaAssetNodeFileVariant?
     {

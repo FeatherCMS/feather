@@ -17,15 +17,11 @@ extension JobQueueProtocol {
         )
     }
 
-    func enqueueMediaGenerateVariant(
-        assetId: String,
-        processorId: String
-    ) async throws {
+    func enqueueMediaGenerateVariants(assetId: String) async throws {
         _ = try await push(
             .init(MediaGenerateVariantJobPayload.jobName),
             parameters: MediaGenerateVariantJobPayload(
-                assetId: assetId,
-                processorId: processorId
+                assetId: assetId
             )
         )
     }

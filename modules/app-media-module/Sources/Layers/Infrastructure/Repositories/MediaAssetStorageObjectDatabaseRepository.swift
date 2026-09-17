@@ -38,6 +38,23 @@ public struct MediaAssetStorageObjectDatabaseRepository:
         return row.asDomain
     }
 
+    public func insert(_ models: [MediaAssetStorageObject.New]) async throws
+        -> [MediaAssetStorageObject]
+    {
+        guard !models.isEmpty else { return [] }
+        let rows = models.map {
+            MediaAssetStorageObjectTable.Row.Create(
+                id: context.idGenerator.generate(),
+                objectKey: $0.objectKey
+            )
+        }
+        return try await MediaAssetStorageObjectTable(
+            connection: context.connection
+        )
+        .create(rows: rows)
+        .map(\.asDomain)
+    }
+
     public func delete(ids: [String]) async throws -> [String] {
         try await MediaAssetStorageObjectTable(connection: context.connection)
             .delete(ids: ids)

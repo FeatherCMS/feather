@@ -42,6 +42,23 @@ struct MediaAssetStorageObjectTable {
         }
     }
 
+    func create(rows: [Row.Create]) async throws -> [Row] {
+        guard !rows.isEmpty else { return [] }
+        let values = rows.map { row in
+            let id = row.id.replacingOccurrences(of: "'", with: "''")
+            let objectKey = row.objectKey.replacingOccurrences(
+                of: "'",
+                with: "''"
+            )
+            return "('\(id)', '\(objectKey)', NOW())"
+        }.joined(separator: ", ")
+        return try await connection.run(
+            query: #"INSERT INTO media_asset_storage_object (id, object_key, created_at) VALUES \#(unescaped: values) RETURNING *;"#
+        ) { sequence in
+            try await sequence.collect().map { try Row(from: $0) }
+        }
+    }
+
     func delete(ids: [String]) async throws -> [String] {
         guard !ids.isEmpty else { return [] }
         let values = mediaStorageObjectSQLValues(ids)

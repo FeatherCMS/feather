@@ -94,6 +94,14 @@ public struct MediaAssetNodeFileDatabaseRepository: MediaAssetNodeFileRepository
         return row.asDomain
     }
 
+    public func updateStatus(
+        id: String,
+        status: MediaAssetNodeFile.Status
+    ) async throws {
+        try await MediaAssetNodeFileTable(connection: context.connection)
+            .updateStatus(id: id, status: status.rawValue)
+    }
+
     public func find(id: String) async throws -> MediaAssetNodeFile? {
         try await MediaAssetNodeFileTable(connection: context.connection)
             .find(id: id)?

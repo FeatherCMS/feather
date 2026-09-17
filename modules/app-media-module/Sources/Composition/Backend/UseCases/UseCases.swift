@@ -74,12 +74,8 @@ public struct UseCases: Sendable {
         assetId: String,
         processors: [MediaVariantProcessor]
     ) async throws {
-        for processor in processors {
-            try await variantQueue.enqueueMediaGenerateVariant(
-                assetId: assetId,
-                variantProcessorId: processor.id
-            )
-        }
+        guard !processors.isEmpty else { return }
+        try await variantQueue.enqueueMediaGenerateVariants(assetId: assetId)
     }
 
     public func createAssetAndEnqueue(

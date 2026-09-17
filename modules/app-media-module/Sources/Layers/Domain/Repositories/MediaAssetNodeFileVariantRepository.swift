@@ -4,6 +4,9 @@ public protocol MediaAssetNodeFileVariantRepository: Repository {
     func insert(
         _ model: MediaAssetNodeFileVariant.New
     ) async throws -> MediaAssetNodeFileVariant
+    func insert(
+        _ models: [MediaAssetNodeFileVariant.New]
+    ) async throws
     func find(
         nodeId: String,
         variantId: String

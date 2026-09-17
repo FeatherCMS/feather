@@ -14,7 +14,6 @@ struct MediaJobController {
     struct GenerateVariantJob: JobParameters {
         static let jobName = MediaGenerateVariantJobPayload.jobName
         let assetId: String
-        let processorId: String
     }
 
     init(
@@ -55,19 +54,14 @@ struct MediaJobController {
                 }
             )
 
-            let useCase = GenerateMediaAssetVariant(
+            let useCase = GenerateMediaAssetVariants(
                 transaction: transaction,
                 storage: storage,
                 storageKeyShard: storageKeyShard,
                 shellRunner: SubprocessMediaShellRunner()
             )
 
-            try await useCase.execute(
-                input: .init(
-                    assetId: parameters.assetId,
-                    variantProcessorId: parameters.processorId
-                )
-            )
+            try await useCase.execute(input: .init(assetId: parameters.assetId))
         }
     }
 }

@@ -18,6 +18,10 @@ public protocol MediaAssetNodeFileRepository: Repository {
     func update(
         _ model: MediaAssetNodeFile
     ) async throws -> MediaAssetNodeFile
+    func updateStatus(
+        id: String,
+        status: MediaAssetNodeFile.Status
+    ) async throws
     func find(
         id: String
     ) async throws -> MediaAssetNodeFile?
