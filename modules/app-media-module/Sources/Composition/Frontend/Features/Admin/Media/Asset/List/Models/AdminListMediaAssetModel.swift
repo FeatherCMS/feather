@@ -25,7 +25,7 @@ struct AdminListMediaAssetModel: Sendable {
 
     struct AssetItem: Sendable {
         let asset: Components.Schemas.MediaAssetListItemSchema
-        let preview: Components.Schemas.MediaAssetLookupVariantSchema?
+        let preview: Components.Schemas.MediaAssetResolveVariantSchema?
     }
 
     enum EntryItem: Sendable {

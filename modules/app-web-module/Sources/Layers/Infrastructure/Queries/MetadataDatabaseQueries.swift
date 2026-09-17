@@ -171,13 +171,13 @@ public struct MetadataDatabaseQueries: MetadataQueries {
         return .init(items: items)
     }
 
-    public func lookup(
+    public func resolve(
         referenceType: String,
         referenceIDs: [String]
     ) async throws -> [MetadataList.Item] {
         let table = WebMetadataTable(connection: context.connection)
         return
-            try await table.lookup(
+            try await table.resolve(
                 referenceType: referenceType,
                 referenceIDs: referenceIDs
             )

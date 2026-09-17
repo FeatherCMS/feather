@@ -66,14 +66,14 @@ struct MediaAssetGetOperation: MediaAssetIDOperation {
     }
 }
 
-struct MediaAssetLookupOperation: MediaAssetOperation {
+struct MediaAssetResolveOperation: MediaAssetOperation {
     var requestBody: RequestBodyRepresentable? {
-        MediaAssetLookupRequestBody().reference()
+        MediaAssetResolveRequestBody().reference()
     }
 
     var responseMap: ResponseMap {
         [
-            200: MediaAssetLookupResponse().reference()
+            200: MediaAssetResolveResponse().reference()
         ]
     }
 }

@@ -10,8 +10,8 @@ struct MediaAssetPatchRequestBody: JSONRequestBodyRepresentable {
     var schema: some SchemaRepresentable { MediaAssetPatchSchema().reference() }
 }
 
-struct MediaAssetLookupRequestBody: JSONRequestBodyRepresentable {
+struct MediaAssetResolveRequestBody: JSONRequestBodyRepresentable {
     var schema: some SchemaRepresentable {
-        MediaAssetLookupRequestSchema().reference()
+        MediaAssetResolveRequestSchema().reference()
     }
 }

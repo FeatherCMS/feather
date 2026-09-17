@@ -65,16 +65,16 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/media/assets/lookup:
+  /api/v1/admin/media/assets/resolve:
     post:
       tags:
       - MediaAssets
-      operationId: mediaAssetLookup
+      operationId: mediaAssetResolve
       requestBody:
-        $ref: '#/components/requestBodies/MediaAssetLookupRequestBody'
+        $ref: '#/components/requestBodies/MediaAssetResolveRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/MediaAssetLookupResponse'
+          $ref: '#/components/responses/MediaAssetResolveResponse'
         401:
           description: Unauthorized
         403:
@@ -610,7 +610,7 @@ components:
     MediaFolderIdField:
       type: string
       example: media_folder_blog_posts
-    MediaAssetLookupRequestSchema:
+    MediaAssetResolveRequestSchema:
       type: object
       properties:
         ids:
@@ -619,19 +619,19 @@ components:
             type: string
             example: media_asset_1
         variants:
-          $ref: '#/components/schemas/MediaAssetLookupVariantsField'
+          $ref: '#/components/schemas/MediaAssetResolveVariantsField'
       required:
       - ids
-    MediaAssetLookupVariantsField:
+    MediaAssetResolveVariantsField:
       type: array
       items:
         type: string
         example: thumb
-    MediaAssetLookupSchema:
+    MediaAssetResolveSchema:
       type: array
       items:
-        $ref: '#/components/schemas/MediaAssetLookupItemSchema'
-    MediaAssetLookupItemSchema:
+        $ref: '#/components/schemas/MediaAssetResolveItemSchema'
+    MediaAssetResolveItemSchema:
       type: object
       properties:
         id:
@@ -651,13 +651,13 @@ components:
         variants:
           type: array
           items:
-            $ref: '#/components/schemas/MediaAssetLookupVariantSchema'
+            $ref: '#/components/schemas/MediaAssetResolveVariantSchema'
       required:
       - id
       - storageKey
       - type
       - variants
-    MediaAssetLookupVariantSchema:
+    MediaAssetResolveVariantSchema:
       type: object
       properties:
         name:
@@ -986,12 +986,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MediaAssetNodeSearchItemSearchSchema'
-    MediaAssetLookupResponse:
-      description: MediaAsset lookup response
+    MediaAssetResolveResponse:
+      description: MediaAsset resolve response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/MediaAssetLookupSchema'
+            $ref: '#/components/schemas/MediaAssetResolveSchema'
     MediaAssetVariantListResponse:
       description: MediaAsset variant list response
       content:
@@ -1057,11 +1057,11 @@ components:
           schema:
             $ref: '#/components/schemas/DeleteRequestSchema'
       required: true
-    MediaAssetLookupRequestBody:
+    MediaAssetResolveRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/MediaAssetLookupRequestSchema'
+            $ref: '#/components/schemas/MediaAssetResolveRequestSchema'
       required: true
     MediaAssetPatchRequestBody:
       content:

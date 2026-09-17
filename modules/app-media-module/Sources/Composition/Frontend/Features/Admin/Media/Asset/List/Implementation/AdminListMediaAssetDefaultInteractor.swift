@@ -112,9 +112,9 @@ extension AdminListMediaAssetDefaultInteractor {
         _ items: [Components.Schemas.MediaAssetNodeSearchItemSchema]
     ) async throws -> [AdminListMediaAssetModel.EntryItem] {
         let assetIDs = items.compactMap { $0.file?.id }
-        let assets = try await repository.lookupAssets(ids: assetIDs)
+        let assets = try await repository.resolveAssets(ids: assetIDs)
         let assetsByID = assets.reduce(
-            into: [String: Components.Schemas.MediaAssetLookupItemSchema]()
+            into: [String: Components.Schemas.MediaAssetResolveItemSchema]()
         ) { result, asset in
             result[asset.id] = asset
         }
@@ -144,8 +144,8 @@ extension AdminListMediaAssetDefaultInteractor {
     }
 
     private func preferredPreview(
-        from variants: [Components.Schemas.MediaAssetLookupVariantSchema]
-    ) -> Components.Schemas.MediaAssetLookupVariantSchema? {
+        from variants: [Components.Schemas.MediaAssetResolveVariantSchema]
+    ) -> Components.Schemas.MediaAssetResolveVariantSchema? {
         variants.first(where: {
             $0.name.localizedCaseInsensitiveContains("preview")
                 || $0.name.localizedCaseInsensitiveContains("display")

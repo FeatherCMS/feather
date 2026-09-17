@@ -334,7 +334,7 @@ metadata availability fields or media asset variants.
 ## Batch retrieval
 
 Batch retrieval that needs enriched records uses `resolve` rather than a
-`lookup`, `search`, or `query` route or suffix.
+legacy `search` or `query` route or suffix.
 
 ```text
 POST /api/v1/admin/web/metadata/resolve
@@ -357,8 +357,8 @@ OpenAPI generator and client names follow the route name:
 {Resource}Resolve
 ```
 
-Use `List`, not `Lookup`, `Search`, or `Query`, for general collection reads.
-Use `References` for relation lookups and collections queried to populate
+Use `List`, not `Search` or `Query`, for general collection reads.
+Use `References` for relation resolution and collections queried to populate
 select or option controls. Collection HTTP endpoints use `list` and
 `references`. Use `Resolve` for enriching records identified by IDs or
 references.
@@ -422,7 +422,7 @@ When converting an existing collection API:
    meet their result-size requirements.
 4. Move batch hydration callers to resource-specific `/resolve` routes.
 5. Replace `/search` and `/query` routes with `/list` routes.
-6. Replace `/lookup` routes with `/resolve` routes.
+6. Replace legacy batch-resolution routes with `/resolve` routes.
 7. Remove collection GET routes from the admin contract.
 8. Move deletion to the collection-level bulk DELETE operation.
 9. Keep detail GET routes and singleton read endpoints where they are

@@ -6,16 +6,16 @@ import WebApplication
 
 extension AdminAPIGateway {
 
-    public func webMetadataLookup(
-        _ input: Operations.WebMetadataLookup.Input
-    ) async throws -> Operations.WebMetadataLookup.Output {
-        let query: Components.Schemas.WebMetadataLookupRequestSchema
+    public func webMetadataResolve(
+        _ input: Operations.WebMetadataResolve.Input
+    ) async throws -> Operations.WebMetadataResolve.Output {
+        let query: Components.Schemas.WebMetadataResolveRequestSchema
         switch input.body {
         case .json(let value):
             query = value
         }
 
-        let useCase = useCases.makeLookupMetadata()
+        let useCase = useCases.makeResolveMetadata()
         let subject = try await CurrentSubject.require()
         let items = try await useCase.execute(
             subject: subject,
@@ -30,7 +30,7 @@ extension AdminAPIGateway {
             .init(
                 body: .json(
                     items.map {
-                        useCases.mapLookupMetadata($0, at: now)
+                        useCases.mapResolveMetadata($0, at: now)
                     }
                 )
             )

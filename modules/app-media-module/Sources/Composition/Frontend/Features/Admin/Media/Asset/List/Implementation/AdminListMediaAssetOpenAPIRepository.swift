@@ -94,10 +94,10 @@ struct AdminListMediaAssetOpenAPIRepository {
         }
     }
 
-    func lookupAssets(
+    func resolveAssets(
         ids: [String]
-    ) async throws -> [Components.Schemas.MediaAssetLookupItemSchema] {
-        try await api.lookupAssets(ids: ids)
+    ) async throws -> [Components.Schemas.MediaAssetResolveItemSchema] {
+        try await api.resolveAssets(ids: ids)
     }
 
     func getFolder(

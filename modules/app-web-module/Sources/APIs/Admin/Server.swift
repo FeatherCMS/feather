@@ -85,7 +85,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.webMetadataLookup(
+                try await server.webMetadataResolve(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -93,7 +93,7 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/web/metadata/lookup"
+                "/api/v1/admin/web/metadata/resolve"
             )
         )
         try transport.register(
@@ -769,9 +769,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/lookup`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)`.
-    fileprivate func webMetadataLookup(
+    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/resolve`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)`.
+    fileprivate func webMetadataResolve(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -780,20 +780,21 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.WebMetadataLookup.id,
+            forOperation: Operations.WebMetadataResolve.id,
             using: {
-                APIHandler.webMetadataLookup($0)
+                APIHandler.webMetadataResolve($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.WebMetadataLookup.Input.Headers = .init(
-                    accept: try converter.extractAcceptHeaderIfPresent(
-                        in: request.headerFields
+                let headers: Operations.WebMetadataResolve.Input.Headers =
+                    .init(
+                        accept: try converter.extractAcceptHeaderIfPresent(
+                            in: request.headerFields
+                        )
                     )
-                )
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.WebMetadataLookupRequestBody
+                let body: Components.RequestBodies.WebMetadataResolveRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -803,7 +804,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.WebMetadataLookupRequestSchema.self,
+                        Components.Schemas.WebMetadataResolveRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -814,7 +815,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.WebMetadataLookup.Input(
+                return Operations.WebMetadataResolve.Input(
                     headers: headers,
                     body: body
                 )

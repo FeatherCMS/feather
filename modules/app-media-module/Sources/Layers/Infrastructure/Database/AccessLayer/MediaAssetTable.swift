@@ -115,7 +115,7 @@ struct MediaAssetTable {
         }
     }
 
-    func lookup(
+    func resolve(
         ids: [String]
     ) async throws -> [Row] {
         guard !ids.isEmpty else { return [] }

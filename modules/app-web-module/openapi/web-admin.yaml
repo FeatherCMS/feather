@@ -83,16 +83,16 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/web/metadata/lookup:
+  /api/v1/admin/web/metadata/resolve:
     post:
       tags:
       - WebMetadata
-      operationId: webMetadataLookup
+      operationId: webMetadataResolve
       requestBody:
-        $ref: '#/components/requestBodies/WebMetadataLookupRequestBody'
+        $ref: '#/components/requestBodies/WebMetadataResolveRequestBody'
       responses:
         200:
-          $ref: '#/components/responses/WebMetadataLookupResponse'
+          $ref: '#/components/responses/WebMetadataResolveResponse'
         401:
           description: Unauthorized
         403:
@@ -923,7 +923,7 @@ components:
       required:
       - query
       - data
-    WebMetadataLookupRequestSchema:
+    WebMetadataResolveRequestSchema:
       type: object
       properties:
         referenceType:
@@ -937,11 +937,11 @@ components:
       required:
       - referenceType
       - referenceIds
-    WebMetadataLookupSchema:
+    WebMetadataResolveSchema:
       type: array
       items:
-        $ref: '#/components/schemas/WebMetadataLookupItemSchema'
-    WebMetadataLookupItemSchema:
+        $ref: '#/components/schemas/WebMetadataResolveItemSchema'
+    WebMetadataResolveItemSchema:
       type: object
       properties:
         referenceId:
@@ -1720,12 +1720,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/WebMetadataListItemSearchSchema'
-    WebMetadataLookupResponse:
-      description: WebMetadata lookup response
+    WebMetadataResolveResponse:
+      description: WebMetadata resolve response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataLookupSchema'
+            $ref: '#/components/schemas/WebMetadataResolveSchema'
     WebPageDetailResponse:
       description: WebPage response
       content:
@@ -1835,11 +1835,11 @@ components:
           schema:
             $ref: '#/components/schemas/DeleteRequestSchema'
       required: true
-    WebMetadataLookupRequestBody:
+    WebMetadataResolveRequestBody:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/WebMetadataLookupRequestSchema'
+            $ref: '#/components/schemas/WebMetadataResolveRequestSchema'
       required: true
     WebMetadataUpdateRequestBody:
       content:

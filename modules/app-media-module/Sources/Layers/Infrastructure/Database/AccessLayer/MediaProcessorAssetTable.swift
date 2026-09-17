@@ -23,7 +23,7 @@ extension MediaProcessorAssetTable.Row {
 }
 
 struct MediaProcessorAssetTable {
-    struct LookupRow {
+    struct ResolveRow {
         let assetId: String
         let name: String
         let storageKey: String
@@ -98,10 +98,10 @@ struct MediaProcessorAssetTable {
         }
     }
 
-    func lookup(
+    func resolve(
         assetIDs: [String],
         variantNames: [String]?
-    ) async throws -> [LookupRow] {
+    ) async throws -> [ResolveRow] {
         guard !assetIDs.isEmpty else { return [] }
         if let variantNames, variantNames.isEmpty { return [] }
         let assetValues =

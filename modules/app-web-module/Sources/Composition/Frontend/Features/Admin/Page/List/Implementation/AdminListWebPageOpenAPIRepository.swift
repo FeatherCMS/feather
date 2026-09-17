@@ -100,10 +100,10 @@ struct AdminListWebPageOpenAPIRepository:
     private func loadMetadata(
         using client: WebAdminAPI.Client,
         referenceIDs: [String]
-    ) async throws -> [Components.Schemas.WebMetadataLookupItemSchema] {
+    ) async throws -> [Components.Schemas.WebMetadataResolveItemSchema] {
         guard !referenceIDs.isEmpty else { return [] }
 
-        let response = try await client.webMetadataLookup(
+        let response = try await client.webMetadataResolve(
             headers: .init(accept: [.init(contentType: .json)]),
             body: .json(
                 .init(

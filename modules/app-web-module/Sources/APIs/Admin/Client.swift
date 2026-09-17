@@ -341,17 +341,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/lookup`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)`.
-    public func webMetadataLookup(_ input: Operations.WebMetadataLookup.Input)
-        async throws -> Operations.WebMetadataLookup.Output
+    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/resolve`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)`.
+    public func webMetadataResolve(_ input: Operations.WebMetadataResolve.Input)
+        async throws -> Operations.WebMetadataResolve.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.WebMetadataLookup.id,
+            forOperation: Operations.WebMetadataResolve.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/web/metadata/lookup",
+                    template: "/api/v1/admin/web/metadata/resolve",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -381,7 +381,7 @@ public struct Client: APIProtocol {
                         in: response.headerFields
                     )
                     let body:
-                        Components.Responses.WebMetadataLookupResponse.Body
+                        Components.Responses.WebMetadataResolveResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -391,7 +391,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.WebMetadataLookupSchema.self,
+                            Components.Schemas.WebMetadataResolveSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)

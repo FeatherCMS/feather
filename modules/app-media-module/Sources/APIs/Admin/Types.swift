@@ -24,10 +24,10 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/search/post(mediaAssetSearch)`.
     func mediaAssetSearch(_ input: Operations.MediaAssetSearch.Input)
         async throws -> Operations.MediaAssetSearch.Output
-    /// - Remark: HTTP `POST /api/v1/admin/media/assets/lookup`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/lookup/post(mediaAssetLookup)`.
-    func mediaAssetLookup(_ input: Operations.MediaAssetLookup.Input)
-        async throws -> Operations.MediaAssetLookup.Output
+    /// - Remark: HTTP `POST /api/v1/admin/media/assets/resolve`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)`.
+    func mediaAssetResolve(_ input: Operations.MediaAssetResolve.Input)
+        async throws -> Operations.MediaAssetResolve.Output
     /// - Remark: HTTP `GET /api/v1/admin/media/assets/{mediaAssetId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/{mediaAssetId}/get(mediaAssetGet)`.
     func mediaAssetGet(_ input: Operations.MediaAssetGet.Input) async throws
@@ -120,14 +120,14 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/assets/lookup`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/lookup/post(mediaAssetLookup)`.
-    public func mediaAssetLookup(
-        headers: Operations.MediaAssetLookup.Input.Headers = .init(),
-        body: Components.RequestBodies.MediaAssetLookupRequestBody
-    ) async throws -> Operations.MediaAssetLookup.Output {
-        try await mediaAssetLookup(
-            Operations.MediaAssetLookup.Input(
+    /// - Remark: HTTP `POST /api/v1/admin/media/assets/resolve`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)`.
+    public func mediaAssetResolve(
+        headers: Operations.MediaAssetResolve.Input.Headers = .init(),
+        body: Components.RequestBodies.MediaAssetResolveRequestBody
+    ) async throws -> Operations.MediaAssetResolve.Output {
+        try await mediaAssetResolve(
+            Operations.MediaAssetResolve.Input(
                 headers: headers,
                 body: body
             )
@@ -928,22 +928,23 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/MediaFolderIdField`.
         public typealias MediaFolderIdField = Swift.String
-        /// - Remark: Generated from `#/components/schemas/MediaAssetLookupRequestSchema`.
-        public struct MediaAssetLookupRequestSchema: Codable, Hashable, Sendable
+        /// - Remark: Generated from `#/components/schemas/MediaAssetResolveRequestSchema`.
+        public struct MediaAssetResolveRequestSchema: Codable, Hashable,
+            Sendable
         {
-            /// - Remark: Generated from `#/components/schemas/MediaAssetLookupRequestSchema/ids`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveRequestSchema/ids`.
             public var ids: [Swift.String]
-            /// - Remark: Generated from `#/components/schemas/MediaAssetLookupRequestSchema/variants`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveRequestSchema/variants`.
             public var variants:
-                Components.Schemas.MediaAssetLookupVariantsField?
-            /// Creates a new `MediaAssetLookupRequestSchema`.
+                Components.Schemas.MediaAssetResolveVariantsField?
+            /// Creates a new `MediaAssetResolveRequestSchema`.
             ///
             /// - Parameters:
             ///   - ids:
             ///   - variants:
             public init(
                 ids: [Swift.String],
-                variants: Components.Schemas.MediaAssetLookupVariantsField? =
+                variants: Components.Schemas.MediaAssetResolveVariantsField? =
                     nil
             ) {
                 self.ids = ids
@@ -954,27 +955,27 @@ public enum Components {
                 case variants
             }
         }
-        /// - Remark: Generated from `#/components/schemas/MediaAssetLookupVariantsField`.
-        public typealias MediaAssetLookupVariantsField = [Swift.String]
-        /// - Remark: Generated from `#/components/schemas/MediaAssetLookupSchema`.
-        public typealias MediaAssetLookupSchema = [Components.Schemas
-            .MediaAssetLookupItemSchema]
-        /// - Remark: Generated from `#/components/schemas/MediaAssetLookupItemSchema`.
-        public struct MediaAssetLookupItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MediaAssetLookupItemSchema/id`.
+        /// - Remark: Generated from `#/components/schemas/MediaAssetResolveVariantsField`.
+        public typealias MediaAssetResolveVariantsField = [Swift.String]
+        /// - Remark: Generated from `#/components/schemas/MediaAssetResolveSchema`.
+        public typealias MediaAssetResolveSchema = [Components.Schemas
+            .MediaAssetResolveItemSchema]
+        /// - Remark: Generated from `#/components/schemas/MediaAssetResolveItemSchema`.
+        public struct MediaAssetResolveItemSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveItemSchema/id`.
             public var id: Components.Schemas.MediaAssetIdField
-            /// - Remark: Generated from `#/components/schemas/MediaAssetLookupItemSchema/storageKey`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveItemSchema/storageKey`.
             public var storageKey: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaAssetLookupItemSchema/type`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveItemSchema/type`.
             public var _type: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaAssetLookupItemSchema/title`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveItemSchema/title`.
             public var title: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/MediaAssetLookupItemSchema/altText`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveItemSchema/altText`.
             public var altText: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/MediaAssetLookupItemSchema/variants`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveItemSchema/variants`.
             public var variants:
-                [Components.Schemas.MediaAssetLookupVariantSchema]
-            /// Creates a new `MediaAssetLookupItemSchema`.
+                [Components.Schemas.MediaAssetResolveVariantSchema]
+            /// Creates a new `MediaAssetResolveItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
@@ -989,7 +990,7 @@ public enum Components {
                 _type: Swift.String,
                 title: Swift.String? = nil,
                 altText: Swift.String? = nil,
-                variants: [Components.Schemas.MediaAssetLookupVariantSchema]
+                variants: [Components.Schemas.MediaAssetResolveVariantSchema]
             ) {
                 self.id = id
                 self.storageKey = storageKey
@@ -1007,14 +1008,15 @@ public enum Components {
                 case variants
             }
         }
-        /// - Remark: Generated from `#/components/schemas/MediaAssetLookupVariantSchema`.
-        public struct MediaAssetLookupVariantSchema: Codable, Hashable, Sendable
+        /// - Remark: Generated from `#/components/schemas/MediaAssetResolveVariantSchema`.
+        public struct MediaAssetResolveVariantSchema: Codable, Hashable,
+            Sendable
         {
-            /// - Remark: Generated from `#/components/schemas/MediaAssetLookupVariantSchema/name`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveVariantSchema/name`.
             public var name: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaAssetLookupVariantSchema/storageKey`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveVariantSchema/storageKey`.
             public var storageKey: Swift.String
-            /// Creates a new `MediaAssetLookupVariantSchema`.
+            /// Creates a new `MediaAssetResolveVariantSchema`.
             ///
             /// - Parameters:
             ///   - name:
@@ -1674,10 +1676,10 @@ public enum Components {
             /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody/content/application\/json`.
             case json(Components.Schemas.DeleteRequestSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/MediaAssetLookupRequestBody`.
-        @frozen public enum MediaAssetLookupRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/MediaAssetLookupRequestBody/content/application\/json`.
-            case json(Components.Schemas.MediaAssetLookupRequestSchema)
+        /// - Remark: Generated from `#/components/requestBodies/MediaAssetResolveRequestBody`.
+        @frozen public enum MediaAssetResolveRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MediaAssetResolveRequestBody/content/application\/json`.
+            case json(Components.Schemas.MediaAssetResolveRequestSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/MediaAssetPatchRequestBody`.
         @frozen public enum MediaAssetPatchRequestBody: Sendable, Hashable {
@@ -1800,16 +1802,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct MediaAssetLookupResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/MediaAssetLookupResponse/content`.
+        public struct MediaAssetResolveResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/MediaAssetResolveResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/MediaAssetLookupResponse/content/application\/json`.
-                case json(Components.Schemas.MediaAssetLookupSchema)
+                /// - Remark: Generated from `#/components/responses/MediaAssetResolveResponse/content/application\/json`.
+                case json(Components.Schemas.MediaAssetResolveSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.MediaAssetLookupSchema {
+                public var json: Components.Schemas.MediaAssetResolveSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -1819,13 +1821,13 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.MediaAssetLookupResponse.Body
-            /// Creates a new `MediaAssetLookupResponse`.
+            public var body: Components.Responses.MediaAssetResolveResponse.Body
+            /// Creates a new `MediaAssetResolveResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(
-                body: Components.Responses.MediaAssetLookupResponse.Body
+                body: Components.Responses.MediaAssetResolveResponse.Body
             ) {
                 self.body = body
             }
@@ -2527,16 +2529,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/assets/lookup`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/lookup/post(mediaAssetLookup)`.
-    public enum MediaAssetLookup {
-        public static let id: Swift.String = "mediaAssetLookup"
+    /// - Remark: HTTP `POST /api/v1/admin/media/assets/resolve`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)`.
+    public enum MediaAssetResolve {
+        public static let id: Swift.String = "mediaAssetResolve"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/lookup/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/resolve/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaAssetLookup.AcceptableContentType
+                        Operations.MediaAssetResolve.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -2544,40 +2546,40 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.MediaAssetLookup.AcceptableContentType
+                        Operations.MediaAssetResolve.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.MediaAssetLookup.Input.Headers
+            public var headers: Operations.MediaAssetResolve.Input.Headers
             public var body:
-                Components.RequestBodies.MediaAssetLookupRequestBody
+                Components.RequestBodies.MediaAssetResolveRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.MediaAssetLookup.Input.Headers = .init(),
-                body: Components.RequestBodies.MediaAssetLookupRequestBody
+                headers: Operations.MediaAssetResolve.Input.Headers = .init(),
+                body: Components.RequestBodies.MediaAssetResolveRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// MediaAsset lookup response
+            /// MediaAsset resolve response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/lookup/post(mediaAssetLookup)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.MediaAssetLookupResponse)
+            case ok(Components.Responses.MediaAssetResolveResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.MediaAssetLookupResponse {
+            public var ok: Components.Responses.MediaAssetResolveResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -2596,13 +2598,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/lookup/post(mediaAssetLookup)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.MediaAssetLookup.Output.Unauthorized)
+            case unauthorized(Operations.MediaAssetResolve.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/lookup/post(mediaAssetLookup)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -2613,7 +2615,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.MediaAssetLookup.Output.Unauthorized
+                Operations.MediaAssetResolve.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -2633,13 +2635,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/lookup/post(mediaAssetLookup)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.MediaAssetLookup.Output.Forbidden)
+            case forbidden(Operations.MediaAssetResolve.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/lookup/post(mediaAssetLookup)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -2649,7 +2651,8 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.MediaAssetLookup.Output.Forbidden {
+            public var forbidden: Operations.MediaAssetResolve.Output.Forbidden
+            {
                 get throws {
                     switch self {
                     case .forbidden(let response):

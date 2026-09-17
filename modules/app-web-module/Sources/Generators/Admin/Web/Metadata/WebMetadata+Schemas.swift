@@ -129,7 +129,7 @@ public struct WebMetadataReferenceIDsSchema: ArraySchemaRepresentable {
     }
 }
 
-public struct WebMetadataLookupRequestSchema: ObjectSchemaRepresentable {
+public struct WebMetadataResolveRequestSchema: ObjectSchemaRepresentable {
     public init() {}
     public var propertyMap: SchemaMap {
         [
@@ -139,7 +139,7 @@ public struct WebMetadataLookupRequestSchema: ObjectSchemaRepresentable {
     }
 }
 
-public struct WebMetadataLookupItemSchema: ObjectSchemaRepresentable {
+public struct WebMetadataResolveItemSchema: ObjectSchemaRepresentable {
     public init() {}
     public var propertyMap: SchemaMap {
         [
@@ -155,10 +155,10 @@ public struct WebMetadataLookupItemSchema: ObjectSchemaRepresentable {
     }
 }
 
-public struct WebMetadataLookupSchema: ArraySchemaRepresentable {
+public struct WebMetadataResolveSchema: ArraySchemaRepresentable {
     public init() {}
     public var items: SchemaRepresentable? {
-        WebMetadataLookupItemSchema().reference()
+        WebMetadataResolveItemSchema().reference()
     }
 }
 

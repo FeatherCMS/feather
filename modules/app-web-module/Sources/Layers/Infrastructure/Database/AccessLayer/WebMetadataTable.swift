@@ -209,7 +209,7 @@ struct WebMetadataTable {
         }
     }
 
-    func lookup(
+    func resolve(
         referenceType: String,
         referenceIDs: [String]
     ) async throws -> [Row] {

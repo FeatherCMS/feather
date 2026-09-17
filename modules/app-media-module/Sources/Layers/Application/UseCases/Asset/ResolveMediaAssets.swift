@@ -2,7 +2,7 @@ import FeatherApplication
 import FeatherContracts
 import MediaContracts
 
-public struct LookupMediaAssets: UseCase {
+public struct ResolveMediaAssets: UseCase {
     struct Action: PermissionAction {
         let key = MediaPermissions.Assets.list
     }
@@ -34,14 +34,14 @@ public struct LookupMediaAssets: UseCase {
     public func execute(
         subject: Subject,
         input: Input
-    ) async throws -> MediaAssetLookup {
+    ) async throws -> MediaAssetResolve {
         let action = Action()
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
         return try await query.run { scope in
-            try await scope.assets.lookup(
+            try await scope.assets.resolve(
                 ids: input.ids,
                 variants: input.variants
             )

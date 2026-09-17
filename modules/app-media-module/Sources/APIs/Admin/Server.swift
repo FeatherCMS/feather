@@ -72,7 +72,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.mediaAssetLookup(
+                try await server.mediaAssetResolve(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -80,7 +80,7 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/media/assets/lookup"
+                "/api/v1/admin/media/assets/resolve"
             )
         )
         try transport.register(
@@ -503,9 +503,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/assets/lookup`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/lookup/post(mediaAssetLookup)`.
-    fileprivate func mediaAssetLookup(
+    /// - Remark: HTTP `POST /api/v1/admin/media/assets/resolve`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)`.
+    fileprivate func mediaAssetResolve(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -514,12 +514,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.MediaAssetLookup.id,
+            forOperation: Operations.MediaAssetResolve.id,
             using: {
-                APIHandler.mediaAssetLookup($0)
+                APIHandler.mediaAssetResolve($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.MediaAssetLookup.Input.Headers = .init(
+                let headers: Operations.MediaAssetResolve.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
@@ -527,7 +527,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.MediaAssetLookupRequestBody
+                let body: Components.RequestBodies.MediaAssetResolveRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -537,7 +537,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.MediaAssetLookupRequestSchema.self,
+                        Components.Schemas.MediaAssetResolveRequestSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)
@@ -548,7 +548,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                         "bestContentType chose an invalid content type."
                     )
                 }
-                return Operations.MediaAssetLookup.Input(
+                return Operations.MediaAssetResolve.Input(
                     headers: headers,
                     body: body
                 )

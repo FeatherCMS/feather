@@ -8,10 +8,10 @@ public protocol MediaAssetQueries: Sendable {
     func find(
         id: String
     ) async throws -> MediaAssetDetail
-    func lookup(
+    func resolve(
         ids: [String],
         variants: [String]?
-    ) async throws -> MediaAssetLookup
+    ) async throws -> MediaAssetResolve
     func list(
         query: MediaAssetList.Query
     ) async throws -> MediaAssetList

@@ -12,7 +12,7 @@ import WebInfrastructure
 
 extension UseCases {
 
-    func makeLookupMetadata() -> LookupMetadata {
+    func makeResolveMetadata() -> ResolveMetadata {
         let query = DatabaseQueryExecutor(
             database: database,
             scope: { context in

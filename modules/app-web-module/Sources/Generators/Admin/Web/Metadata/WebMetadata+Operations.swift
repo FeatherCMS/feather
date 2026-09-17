@@ -74,14 +74,14 @@ struct WebMetadataSearchOperation: WebMetadataOperation {
     }
 }
 
-struct WebMetadataLookupOperation: WebMetadataOperation {
+struct WebMetadataResolveOperation: WebMetadataOperation {
     var requestBody: RequestBodyRepresentable? {
-        WebMetadataLookupRequestBody().reference()
+        WebMetadataResolveRequestBody().reference()
     }
 
     var responseMap: ResponseMap {
         [
-            200: WebMetadataLookupResponse().reference()
+            200: WebMetadataResolveResponse().reference()
         ]
     }
 }

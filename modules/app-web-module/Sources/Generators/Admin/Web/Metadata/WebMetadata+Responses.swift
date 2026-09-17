@@ -12,7 +12,7 @@ struct WebMetadataListResponse: JSONResponseRepresentable {
     var schema = WebMetadataListSchema().reference()
 }
 
-struct WebMetadataLookupResponse: JSONResponseRepresentable {
-    var description: String = "WebMetadata lookup response"
-    var schema = WebMetadataLookupSchema().reference()
+struct WebMetadataResolveResponse: JSONResponseRepresentable {
+    var description: String = "WebMetadata resolve response"
+    var schema = WebMetadataResolveSchema().reference()
 }

@@ -47,12 +47,12 @@ public struct AdminViewMediaAssetOpenAPIRepository: Sendable {
         id: String
     ) async throws -> NewAdminMediaAsset {
         let asset = try await getAsset(id: id)
-        let lookup = try await api.lookupAssets(
+        let resolve = try await api.resolveAssets(
             ids: [id],
             variants: ["image_preview"]
         )
         let variants =
-            lookup
+            resolve
             .first(where: { $0.id == id })?
             .variants
             .map {

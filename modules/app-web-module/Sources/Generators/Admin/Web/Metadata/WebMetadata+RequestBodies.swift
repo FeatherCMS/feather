@@ -26,10 +26,10 @@ struct WebMetadataPatchRequestBody: RequestBodyRepresentable {
     }
 }
 
-struct WebMetadataLookupRequestBody: RequestBodyRepresentable {
+struct WebMetadataResolveRequestBody: RequestBodyRepresentable {
     var contentMap: ContentMap {
         [
-            .json: Content(WebMetadataLookupRequestSchema().reference())
+            .json: Content(WebMetadataResolveRequestSchema().reference())
         ]
     }
 }

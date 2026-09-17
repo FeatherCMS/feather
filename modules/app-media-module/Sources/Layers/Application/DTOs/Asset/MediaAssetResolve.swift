@@ -1,7 +1,7 @@
 import FeatherApplication
 import FeatherContracts
 
-public struct MediaAssetLookup: DTO {
+public struct MediaAssetResolve: DTO {
     public struct Variant: Sendable {
         public let name: String
         public let storageKey: String

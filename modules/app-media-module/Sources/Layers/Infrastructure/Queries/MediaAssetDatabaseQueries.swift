@@ -44,7 +44,7 @@ extension MediaAssetTable.Row {
         )
     }
 
-    var asLookupItem: MediaAssetLookup.Item {
+    var asResolveItem: MediaAssetResolve.Item {
         .init(
             id: id,
             storageKey: storageKey,
@@ -110,22 +110,22 @@ public struct MediaAssetDatabaseQueries: MediaAssetQueries {
         return row.asDetail
     }
 
-    public func lookup(
+    public func resolve(
         ids: [String],
         variants: [String]?
-    ) async throws -> MediaAssetLookup {
+    ) async throws -> MediaAssetResolve {
         let assetRows = try await MediaAssetTable(
             connection: context.connection
         )
-        .lookup(ids: ids)
+        .resolve(ids: ids)
         let variantRows = try await MediaProcessorAssetTable(
             connection: context.connection
         )
-        .lookup(
+        .resolve(
             assetIDs: ids,
             variantNames: variants
         )
-        var variantsByAssetID: [String: [MediaAssetLookup.Variant]] = [:]
+        var variantsByAssetID: [String: [MediaAssetResolve.Variant]] = [:]
         for variant in variantRows {
             variantsByAssetID[variant.assetId, default: []]
                 .append(

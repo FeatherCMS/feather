@@ -227,10 +227,10 @@ extension UseCases {
         )
     }
 
-    func mapLookupMetadata(
+    func mapResolveMetadata(
         _ item: MetadataList.Item,
         at date: Date
-    ) -> WebAdminAPI.Components.Schemas.WebMetadataLookupItemSchema {
+    ) -> WebAdminAPI.Components.Schemas.WebMetadataResolveItemSchema {
         .init(
             referenceId: item.referenceID,
             slug: item.slug,

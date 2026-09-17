@@ -28,10 +28,10 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/search/post(webMetadataSearch)`.
     func webMetadataSearch(_ input: Operations.WebMetadataSearch.Input)
         async throws -> Operations.WebMetadataSearch.Output
-    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/lookup`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)`.
-    func webMetadataLookup(_ input: Operations.WebMetadataLookup.Input)
-        async throws -> Operations.WebMetadataLookup.Output
+    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/resolve`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)`.
+    func webMetadataResolve(_ input: Operations.WebMetadataResolve.Input)
+        async throws -> Operations.WebMetadataResolve.Output
     /// - Remark: HTTP `GET /api/v1/admin/web/metadata/{webMetadataId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/{webMetadataId}/get(webMetadataGet)`.
     func webMetadataGet(_ input: Operations.WebMetadataGet.Input) async throws
@@ -192,14 +192,14 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/lookup`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)`.
-    public func webMetadataLookup(
-        headers: Operations.WebMetadataLookup.Input.Headers = .init(),
-        body: Components.RequestBodies.WebMetadataLookupRequestBody
-    ) async throws -> Operations.WebMetadataLookup.Output {
-        try await webMetadataLookup(
-            Operations.WebMetadataLookup.Input(
+    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/resolve`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)`.
+    public func webMetadataResolve(
+        headers: Operations.WebMetadataResolve.Input.Headers = .init(),
+        body: Components.RequestBodies.WebMetadataResolveRequestBody
+    ) async throws -> Operations.WebMetadataResolve.Output {
+        try await webMetadataResolve(
+            Operations.WebMetadataResolve.Input(
                 headers: headers,
                 body: body
             )
@@ -1261,15 +1261,15 @@ public enum Components {
                 case data
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMetadataLookupRequestSchema`.
-        public struct WebMetadataLookupRequestSchema: Codable, Hashable,
+        /// - Remark: Generated from `#/components/schemas/WebMetadataResolveRequestSchema`.
+        public struct WebMetadataResolveRequestSchema: Codable, Hashable,
             Sendable
         {
-            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupRequestSchema/referenceType`.
+            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveRequestSchema/referenceType`.
             public var referenceType: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupRequestSchema/referenceIds`.
+            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveRequestSchema/referenceIds`.
             public var referenceIds: [Swift.String]
-            /// Creates a new `WebMetadataLookupRequestSchema`.
+            /// Creates a new `WebMetadataResolveRequestSchema`.
             ///
             /// - Parameters:
             ///   - referenceType:
@@ -1286,25 +1286,26 @@ public enum Components {
                 case referenceIds
             }
         }
-        /// - Remark: Generated from `#/components/schemas/WebMetadataLookupSchema`.
-        public typealias WebMetadataLookupSchema = [Components.Schemas
-            .WebMetadataLookupItemSchema]
-        /// - Remark: Generated from `#/components/schemas/WebMetadataLookupItemSchema`.
-        public struct WebMetadataLookupItemSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupItemSchema/referenceId`.
+        /// - Remark: Generated from `#/components/schemas/WebMetadataResolveSchema`.
+        public typealias WebMetadataResolveSchema = [Components.Schemas
+            .WebMetadataResolveItemSchema]
+        /// - Remark: Generated from `#/components/schemas/WebMetadataResolveItemSchema`.
+        public struct WebMetadataResolveItemSchema: Codable, Hashable, Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveItemSchema/referenceId`.
             public var referenceId: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupItemSchema/slug`.
+            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveItemSchema/slug`.
             public var slug: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupItemSchema/publicationDate`.
+            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveItemSchema/publicationDate`.
             public var publicationDate: Swift.Double
-            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupItemSchema/expirationDate`.
+            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveItemSchema/expirationDate`.
             public var expirationDate: Swift.Double?
-            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupItemSchema/status`.
+            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveItemSchema/status`.
             public var status: Swift.String
-            /// - Remark: Generated from `#/components/schemas/WebMetadataLookupItemSchema/availability`.
+            /// - Remark: Generated from `#/components/schemas/WebMetadataResolveItemSchema/availability`.
             public var availability:
                 Components.Schemas.WebMetadataAvailabilityField
-            /// Creates a new `WebMetadataLookupItemSchema`.
+            /// Creates a new `WebMetadataResolveItemSchema`.
             ///
             /// - Parameters:
             ///   - referenceId:
@@ -2799,10 +2800,10 @@ public enum Components {
             /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody/content/application\/json`.
             case json(Components.Schemas.DeleteRequestSchema)
         }
-        /// - Remark: Generated from `#/components/requestBodies/WebMetadataLookupRequestBody`.
-        @frozen public enum WebMetadataLookupRequestBody: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/requestBodies/WebMetadataLookupRequestBody/content/application\/json`.
-            case json(Components.Schemas.WebMetadataLookupRequestSchema)
+        /// - Remark: Generated from `#/components/requestBodies/WebMetadataResolveRequestBody`.
+        @frozen public enum WebMetadataResolveRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/WebMetadataResolveRequestBody/content/application\/json`.
+            case json(Components.Schemas.WebMetadataResolveRequestSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/WebMetadataUpdateRequestBody`.
         @frozen public enum WebMetadataUpdateRequestBody: Sendable, Hashable {
@@ -2996,16 +2997,16 @@ public enum Components {
                 self.body = body
             }
         }
-        public struct WebMetadataLookupResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/WebMetadataLookupResponse/content`.
+        public struct WebMetadataResolveResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/WebMetadataResolveResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/WebMetadataLookupResponse/content/application\/json`.
-                case json(Components.Schemas.WebMetadataLookupSchema)
+                /// - Remark: Generated from `#/components/responses/WebMetadataResolveResponse/content/application\/json`.
+                case json(Components.Schemas.WebMetadataResolveSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.WebMetadataLookupSchema {
+                public var json: Components.Schemas.WebMetadataResolveSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -3015,13 +3016,14 @@ public enum Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.WebMetadataLookupResponse.Body
-            /// Creates a new `WebMetadataLookupResponse`.
+            public var body:
+                Components.Responses.WebMetadataResolveResponse.Body
+            /// Creates a new `WebMetadataResolveResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
             public init(
-                body: Components.Responses.WebMetadataLookupResponse.Body
+                body: Components.Responses.WebMetadataResolveResponse.Body
             ) {
                 self.body = body
             }
@@ -4027,16 +4029,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/lookup`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)`.
-    public enum WebMetadataLookup {
-        public static let id: Swift.String = "webMetadataLookup"
+    /// - Remark: HTTP `POST /api/v1/admin/web/metadata/resolve`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)`.
+    public enum WebMetadataResolve {
+        public static let id: Swift.String = "webMetadataResolve"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/lookup/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/web/metadata/resolve/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebMetadataLookup.AcceptableContentType
+                        Operations.WebMetadataResolve.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -4044,40 +4046,40 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.WebMetadataLookup.AcceptableContentType
+                        Operations.WebMetadataResolve.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.WebMetadataLookup.Input.Headers
+            public var headers: Operations.WebMetadataResolve.Input.Headers
             public var body:
-                Components.RequestBodies.WebMetadataLookupRequestBody
+                Components.RequestBodies.WebMetadataResolveRequestBody
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.WebMetadataLookup.Input.Headers = .init(),
-                body: Components.RequestBodies.WebMetadataLookupRequestBody
+                headers: Operations.WebMetadataResolve.Input.Headers = .init(),
+                body: Components.RequestBodies.WebMetadataResolveRequestBody
             ) {
                 self.headers = headers
                 self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// WebMetadata lookup response
+            /// WebMetadata resolve response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.WebMetadataLookupResponse)
+            case ok(Components.Responses.WebMetadataResolveResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.WebMetadataLookupResponse {
+            public var ok: Components.Responses.WebMetadataResolveResponse {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -4096,13 +4098,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.WebMetadataLookup.Output.Unauthorized)
+            case unauthorized(Operations.WebMetadataResolve.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -4113,7 +4115,7 @@ public enum Operations {
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.WebMetadataLookup.Output.Unauthorized
+                Operations.WebMetadataResolve.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -4133,13 +4135,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.WebMetadataLookup.Output.Forbidden)
+            case forbidden(Operations.WebMetadataResolve.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/lookup/post(webMetadataLookup)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/web/metadata/resolve/post(webMetadataResolve)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -4149,7 +4151,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.WebMetadataLookup.Output.Forbidden
+            public var forbidden: Operations.WebMetadataResolve.Output.Forbidden
             {
                 get throws {
                     switch self {

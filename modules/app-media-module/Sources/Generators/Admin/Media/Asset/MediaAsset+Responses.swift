@@ -14,9 +14,9 @@ struct MediaAssetVariantListResponse: JSONResponseRepresentable {
     }
 }
 
-struct MediaAssetLookupResponse: JSONResponseRepresentable {
-    var description: String = "MediaAsset lookup response"
+struct MediaAssetResolveResponse: JSONResponseRepresentable {
+    var description: String = "MediaAsset resolve response"
     var schema: some SchemaRepresentable {
-        MediaAssetLookupSchema().reference()
+        MediaAssetResolveSchema().reference()
     }
 }

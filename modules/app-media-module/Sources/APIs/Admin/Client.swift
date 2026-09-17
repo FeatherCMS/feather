@@ -273,17 +273,17 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/media/assets/lookup`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/lookup/post(mediaAssetLookup)`.
-    public func mediaAssetLookup(_ input: Operations.MediaAssetLookup.Input)
-        async throws -> Operations.MediaAssetLookup.Output
+    /// - Remark: HTTP `POST /api/v1/admin/media/assets/resolve`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/resolve/post(mediaAssetResolve)`.
+    public func mediaAssetResolve(_ input: Operations.MediaAssetResolve.Input)
+        async throws -> Operations.MediaAssetResolve.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.MediaAssetLookup.id,
+            forOperation: Operations.MediaAssetResolve.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/media/assets/lookup",
+                    template: "/api/v1/admin/media/assets/resolve",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -312,7 +312,8 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.MediaAssetLookupResponse.Body
+                    let body:
+                        Components.Responses.MediaAssetResolveResponse.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -322,7 +323,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.MediaAssetLookupSchema.self,
+                            Components.Schemas.MediaAssetResolveSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)

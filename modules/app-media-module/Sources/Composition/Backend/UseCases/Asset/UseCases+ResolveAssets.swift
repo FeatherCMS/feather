@@ -11,7 +11,7 @@ import MediaInfrastructure
 
 extension UseCases {
 
-    public func makeLookupAssets() -> LookupMediaAssets {
+    public func makeResolveAssets() -> ResolveMediaAssets {
         let query = DatabaseQueryExecutor(
             database: database,
             scope: { context in

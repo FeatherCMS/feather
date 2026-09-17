@@ -4,7 +4,7 @@ import FeatherDomain
 import WebContracts
 import WebDomain
 
-public struct LookupMetadata: UseCase {
+public struct ResolveMetadata: UseCase {
     struct Action: PermissionAction {
         let key = WebPermissions.Metadata.list
     }
@@ -44,7 +44,7 @@ public struct LookupMetadata: UseCase {
         }
 
         return try await query.run { scope in
-            try await scope.metadata.lookup(
+            try await scope.metadata.resolve(
                 referenceType: input.referenceType,
                 referenceIDs: input.referenceIDs
             )

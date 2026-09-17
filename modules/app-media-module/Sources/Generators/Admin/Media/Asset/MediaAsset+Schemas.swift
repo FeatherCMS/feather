@@ -114,21 +114,21 @@ struct MediaAssetPatchSchema: ObjectSchemaRepresentable {
     }
 }
 
-struct MediaAssetLookupIDsField: ArraySchemaRepresentable {
+struct MediaAssetResolveIDsField: ArraySchemaRepresentable {
     var items: SchemaRepresentable? { MediaAssetIdField() }
 }
 
-struct MediaAssetLookupRequestSchema: ObjectSchemaRepresentable {
+struct MediaAssetResolveRequestSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
-            "ids": MediaAssetLookupIDsField(),
-            "variants": MediaAssetLookupVariantsField()
+            "ids": MediaAssetResolveIDsField(),
+            "variants": MediaAssetResolveVariantsField()
                 .reference(required: false),
         ]
     }
 }
 
-struct MediaAssetLookupVariantsField: ArraySchemaRepresentable {
+struct MediaAssetResolveVariantsField: ArraySchemaRepresentable {
     var items: SchemaRepresentable? { MediaAssetVariantNameField() }
 }
 
@@ -197,7 +197,7 @@ struct MediaAssetVariantListSchema: ObjectSchemaRepresentable {
     }
 }
 
-struct MediaAssetLookupItemSchema: ObjectSchemaRepresentable {
+struct MediaAssetResolveItemSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "id": MediaAssetIdField().reference(),
@@ -205,12 +205,12 @@ struct MediaAssetLookupItemSchema: ObjectSchemaRepresentable {
             "type": MediaAssetTypeField(),
             "title": MediaAssetNullableTextField(required: false),
             "altText": MediaAssetNullableTextField(required: false),
-            "variants": MediaAssetLookupVariantListField(),
+            "variants": MediaAssetResolveVariantListField(),
         ]
     }
 }
 
-struct MediaAssetLookupVariantSchema: ObjectSchemaRepresentable {
+struct MediaAssetResolveVariantSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "name": MediaAssetVariantNameField(),
@@ -219,14 +219,14 @@ struct MediaAssetLookupVariantSchema: ObjectSchemaRepresentable {
     }
 }
 
-struct MediaAssetLookupVariantListField: ArraySchemaRepresentable {
+struct MediaAssetResolveVariantListField: ArraySchemaRepresentable {
     var items: SchemaRepresentable? {
-        MediaAssetLookupVariantSchema().reference()
+        MediaAssetResolveVariantSchema().reference()
     }
 }
 
-struct MediaAssetLookupSchema: ArraySchemaRepresentable {
+struct MediaAssetResolveSchema: ArraySchemaRepresentable {
     var items: SchemaRepresentable? {
-        MediaAssetLookupItemSchema().reference()
+        MediaAssetResolveItemSchema().reference()
     }
 }

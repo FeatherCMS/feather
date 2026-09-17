@@ -29,7 +29,7 @@ public protocol MetadataQueries: Sendable {
         query: MetadataList.Query
     ) async throws -> MetadataList
 
-    func lookup(
+    func resolve(
         referenceType: String,
         referenceIDs: [String]
     ) async throws -> [MetadataList.Item]

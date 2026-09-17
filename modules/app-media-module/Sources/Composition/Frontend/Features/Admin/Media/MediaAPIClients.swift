@@ -47,16 +47,16 @@ public struct MediaAdminAPIClient: Sendable {
         )
     }
 
-    public func lookupAssets(
+    public func resolveAssets(
         ids: [String],
         variants: [String]? = nil
     ) async throws -> [MediaAdminAPI.Components.Schemas
-        .MediaAssetLookupItemSchema]
+        .MediaAssetResolveItemSchema]
     {
         guard !ids.isEmpty else { return [] }
 
         return try await withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.mediaAssetLookup(
+            let response = try await client.mediaAssetResolve(
                 .init(
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(.init(ids: ids, variants: variants))
