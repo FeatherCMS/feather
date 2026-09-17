@@ -48,8 +48,14 @@ public struct TableMigration: DatabaseMigration {
             ON media_asset_node (parent_id);
             """#,
             #"""
-            CREATE INDEX IF NOT EXISTS media_asset_node_slug_path_idx
-            ON media_asset_node (slug_path);
+            CREATE INDEX IF NOT EXISTS media_asset_node_parent_name_idx
+            ON media_asset_node (parent_id, LOWER(name), id)
+            WHERE deleted_at IS NULL;
+            """#,
+            #"""
+            CREATE INDEX IF NOT EXISTS media_asset_node_slug_path_pattern_idx
+            ON media_asset_node (slug_path text_pattern_ops)
+            WHERE deleted_at IS NULL;
             """#,
 
             #"""
@@ -100,6 +106,11 @@ public struct TableMigration: DatabaseMigration {
             );
             """#,
             #"""
+            CREATE INDEX IF NOT EXISTS media_variant_active_name_idx
+            ON media_variant (name)
+            WHERE is_active IS TRUE;
+            """#,
+            #"""
             CREATE TABLE IF NOT EXISTS media_variant_processor (
                 id TEXT PRIMARY KEY,
                 variant_id TEXT NOT NULL REFERENCES media_variant(id) ON DELETE CASCADE,
@@ -113,8 +124,9 @@ public struct TableMigration: DatabaseMigration {
             );
             """#,
             #"""
-            CREATE INDEX IF NOT EXISTS media_variant_processor_variant_id_idx
-            ON media_variant_processor (variant_id);
+            CREATE INDEX IF NOT EXISTS media_variant_processor_active_name_idx
+            ON media_variant_processor (name)
+            WHERE is_active IS TRUE;
             """#,
             #"""
             CREATE TABLE IF NOT EXISTS media_asset_variant (
@@ -131,12 +143,16 @@ public struct TableMigration: DatabaseMigration {
             );
             """#,
             #"""
-            CREATE INDEX IF NOT EXISTS media_asset_variant_asset_id_idx
-            ON media_asset_variant (asset_id);
+            CREATE INDEX IF NOT EXISTS media_asset_variant_asset_created_idx
+            ON media_asset_variant (asset_id, created_at, id);
             """#,
             #"""
             CREATE INDEX IF NOT EXISTS media_asset_variant_variant_id_idx
             ON media_asset_variant (variant_id);
+            """#,
+            #"""
+            CREATE INDEX IF NOT EXISTS media_asset_variant_processor_id_idx
+            ON media_asset_variant (variant_processor_id);
             """#,
         ]
 
