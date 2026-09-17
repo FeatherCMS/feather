@@ -104,14 +104,15 @@ public struct DefaultRenderingEngine: RenderingEngine {
             events: adminEvents
         )
         let notification = AdminNotificationFlash.notification(from: request)
-        var context = BuilderContext()
+        var builderContext = BuilderContext()
         let layout = NewAdminBaseLayout(
             content: content,
             menuGroups: menuGroups,
-            notification: notification
+            notification: notification,
+            accountTopBarState: context.accountTopBarState
         )
         return .init(
-            context.build(
+            builderContext.build(
                 NewAdminHTML(title: title, body: .init(content: layout))
             )
         )

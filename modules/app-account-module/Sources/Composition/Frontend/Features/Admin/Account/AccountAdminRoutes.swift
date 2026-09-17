@@ -6,7 +6,6 @@ enum AccountAdminRoutes {
     static let account = admin.appendingPath(RouterPath("account"))
     static let profile = account.appendingPath(RouterPath("profile"))
     static let profileEdit = profile.appendingPath(RouterPath("edit"))
-    static let profileImage = profile.appendingPath(RouterPath("image"))
     static let settings = account.appendingPath(RouterPath("settings"))
     static let userSettingsPattern =
         account
