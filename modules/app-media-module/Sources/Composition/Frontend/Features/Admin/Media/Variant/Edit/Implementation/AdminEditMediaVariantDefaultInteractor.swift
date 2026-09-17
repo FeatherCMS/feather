@@ -9,6 +9,16 @@ struct AdminEditMediaVariantDefaultInteractor: AdminEditMediaVariantInteractor {
         catch let error as OpenAPIRepositoryError { throw map(error) }
     }
 
+    func loadProcessor(variantId: String, id: String) async throws -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorDetailSchema {
+        do { return try await repository.loadProcessor(variantId: variantId, id: id) }
+        catch let error as OpenAPIRepositoryError { throw map(error) }
+    }
+
+    func processorNames(variantId: String, ids: [String]) async throws -> [NewAdminRemoveItemContext] {
+        do { return try await repository.processorNames(variantId: variantId, ids: ids) }
+        catch let error as OpenAPIRepositoryError { throw map(error) }
+    }
+
     func update(id: String, input: MediaVariantFormInput) async throws {
         do {
             try await repository.update(id: id, input: .init(key: input.normalizedKey, name: input.normalizedName, isRequired: input.isRequired.value, isActive: input.isActive.value))

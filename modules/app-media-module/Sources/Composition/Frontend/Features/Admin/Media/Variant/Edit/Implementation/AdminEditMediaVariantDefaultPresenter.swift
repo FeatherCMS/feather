@@ -11,14 +11,6 @@ struct AdminEditMediaVariantDefaultPresenter: AdminEditMediaVariantPresenter {
 
     func renderEditPage(id: String, detail: MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema, state: MediaVariantFormView.State, permissions: NewAdminListActions) async throws -> HTMLResponse {
         let variantNonce = await AdminNonceStore.shared.issue(sessionToken: context.sessionToken)
-        let addProcessorNonce = await AdminNonceStore.shared.issue(sessionToken: context.sessionToken)
-        var processorTokens: [String: MediaVariantProcessorFormTokens] = [:]
-        for processor in detail.processors {
-            processorTokens[processor.id] = .init(
-                edit: await AdminNonceStore.shared.issue(sessionToken: context.sessionToken),
-                remove: await AdminNonceStore.shared.issue(sessionToken: context.sessionToken)
-            )
-        }
         return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
@@ -35,10 +27,61 @@ struct AdminEditMediaVariantDefaultPresenter: AdminEditMediaVariantPresenter {
                     removeHref: permissions.allows(MediaPermissions.Variants.delete)
                         ? NewAdminLocation.remove(path: MediaVariantRoutes.remove.description, ids: [id], returnTo: MediaVariantRoutes.edit(RouterPath(id)).description)
                         : nil
+                )
+            )
+        )
+    }
+
+    func renderProcessorEditPage(variantId: String, processor: MediaAdminAPI.Components.Schemas.MediaVariantProcessorDetailSchema, permissions: NewAdminListActions) async throws -> HTMLResponse {
+        let processorNonce = await AdminNonceStore.shared.issue(sessionToken: context.sessionToken)
+        return try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Edit media variant processor",
+            content: MediaVariantProcessorEditPage(
+                variantId: variantId,
+                processor: processor,
+                form: MediaVariantProcessorFormView(
+                    processor: .init(
+                        id: processor.id,
+                        name: processor.name,
+                        matchExtensions: processor.matchExtensions,
+                        commandTemplate: processor.commandTemplate,
+                        isActive: processor.isActive
+                    ),
+                    action: MediaVariantRoutes.processorEdit(
+                        RouterPath(variantId),
+                        processorId: RouterPath(processor.id)
+                    ).description,
+                    nonceToken: processorNonce
+                )
+            )
+        )
+    }
+
+    func renderProcessorRemovePage(variantId: String, items: [NewAdminRemoveItemContext], returnTo: String?) async throws -> HTMLResponse {
+        let nonce = await AdminNonceStore.shared.issue(sessionToken: context.sessionToken)
+        let cancel = NewAdminLocation.removeCancel(
+            path: MediaVariantRoutes.processors(RouterPath(variantId)).description,
+            returnTo: returnTo
+        )
+        return try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Remove media variant processors",
+            content: NewAdminRemoveConfirmation(
+                breadcrumb: MediaVariantRoutes.breadcrumb,
+                pageHeader: .init(
+                    title: "Remove selected processors",
+                    description: "You’re about to permanently remove the selected processors. This action cannot be undone."
                 ),
-                processorTokens: processorTokens,
-                addProcessorNonce: addProcessorNonce,
-                permissions: permissions
+                selectedItems: items.map(\.label),
+                action: MediaVariantRoutes.processorRemove(RouterPath(variantId)).description,
+                cancel: cancel,
+                hiddenFields: items.map { .init(name: "ids", value: $0.id) } + [
+                    .init(name: "_nonce", value: nonce),
+                    .init(name: "returnTo", value: cancel)
+                ]
             )
         )
     }

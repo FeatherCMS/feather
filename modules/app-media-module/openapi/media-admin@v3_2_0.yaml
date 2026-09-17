@@ -350,6 +350,8 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/MediaVariantProcessorListItemSearchSchemaSearchResponse'
+        404:
+          description: Media variant not found
         401:
           description: Unauthorized
         403:

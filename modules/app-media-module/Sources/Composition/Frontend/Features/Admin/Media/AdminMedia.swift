@@ -68,6 +68,9 @@ public struct AdminMedia {
         AdminEditMediaVariant(renderingEngine: renderingEngine)
             .controller.route(on: router)
 
+        AdminListMediaVariantProcessors(renderingEngine: renderingEngine)
+            .controller.route(on: router)
+
         AdminRemoveMediaVariant(renderingEngine: renderingEngine)
             .controller.route(on: router)
 

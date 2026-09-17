@@ -1,7 +1,10 @@
+import FeatherAdmin
 import MediaAdminAPI
 
 protocol AdminEditMediaVariantRepository: Sendable {
     func load(id: String) async throws -> MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema
+    func loadProcessor(variantId: String, id: String) async throws -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorDetailSchema
+    func processorNames(variantId: String, ids: [String]) async throws -> [NewAdminRemoveItemContext]
     func update(id: String, input: MediaAdminAPI.Components.Schemas.MediaVariantCreateSchema) async throws
     func addProcessor(variantId: String, input: MediaAdminAPI.Components.Schemas.MediaVariantProcessorCreateSchema) async throws
     func updateProcessor(variantId: String, id: String, input: MediaAdminAPI.Components.Schemas.MediaVariantProcessorCreateSchema) async throws

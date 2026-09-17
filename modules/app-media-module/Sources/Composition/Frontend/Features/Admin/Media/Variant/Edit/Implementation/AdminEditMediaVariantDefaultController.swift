@@ -69,6 +69,52 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
         }
     }
 
+    func getEditMediaVariantProcessor(request: Request, context: DefaultRequestContext) async throws -> Response {
+        let runtime = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: MediaPermissions.VariantProcessors.update) else {
+            return try await runtime.presenter.renderErrorPage(error: .forbidden)
+                .response(from: request, context: context)
+        }
+        let variantId = try context.requiredID()
+        let processorId = try context.requiredParameter("processorId")
+        do {
+            let processor = try await runtime.interactor.loadProcessor(variantId: variantId, id: processorId)
+            return try await runtime.presenter.renderProcessorEditPage(
+                variantId: variantId,
+                processor: processor,
+                permissions: context.currentUserAdminListActions
+            ).response(from: request, context: context)
+        }
+        catch let error as AdminEditMediaVariantError {
+            return try await runtime.presenter.renderErrorPage(error: error)
+                .response(from: request, context: context)
+        }
+    }
+
+    func getRemoveMediaVariantProcessors(request: Request, context: DefaultRequestContext) async throws -> Response {
+        let runtime = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: MediaPermissions.VariantProcessors.delete) else {
+            return try await runtime.presenter.renderErrorPage(error: .forbidden)
+                .response(from: request, context: context)
+        }
+        let variantId = try context.requiredID()
+        let ids = request.queryStrings("ids")
+        guard !ids.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: MediaVariantRoutes.processors(RouterPath(variantId)).description])
+        }
+        do {
+            return try await runtime.presenter.renderProcessorRemovePage(
+                variantId: variantId,
+                items: try await runtime.interactor.processorNames(variantId: variantId, ids: ids),
+                returnTo: request.queryString("returnTo")
+            ).response(from: request, context: context)
+        }
+        catch let error as AdminEditMediaVariantError {
+            return try await runtime.presenter.renderErrorPage(error: error)
+                .response(from: request, context: context)
+        }
+    }
+
     func postAddMediaVariantProcessor(request: Request, context: DefaultRequestContext) async throws -> Response {
         let runtime = buildRuntime(request, context)
         guard context.isCurrentUserAllowed(to: MediaPermissions.VariantProcessors.create) else { return Response(status: .forbidden) }
@@ -78,7 +124,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
             guard await AdminNonceStore.shared.consume(payload.nonce, sessionToken: context.sessionToken) else { return Response(status: .badRequest) }
             try await payload.input.validate()
             try await runtime.interactor.addProcessor(variantId: id, input: payload.input)
-            return AdminNotificationFlash.redirect(to: MediaVariantRoutes.edit(RouterPath(id)).description, notification: .init(title: "Added", message: "Processor added successfully."))
+            return AdminNotificationFlash.redirect(to: MediaVariantRoutes.processors(RouterPath(id)).description, notification: .init(title: "Added", message: "Processor added successfully."))
         }
         catch { return try await runtime.presenter.renderErrorPage(error: map(error)).response(from: request, context: context) }
     }
@@ -93,7 +139,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
             guard await AdminNonceStore.shared.consume(payload.nonce, sessionToken: context.sessionToken) else { return Response(status: .badRequest) }
             try await payload.input.validate()
             try await runtime.interactor.updateProcessor(variantId: id, id: processorId, input: payload.input)
-            return AdminNotificationFlash.redirect(to: MediaVariantRoutes.edit(RouterPath(id)).description, notification: .init(title: "Saved", message: "Processor saved successfully."))
+            return AdminNotificationFlash.redirect(to: MediaVariantRoutes.processors(RouterPath(id)).description, notification: .init(title: "Saved", message: "Processor saved successfully."))
         }
         catch { return try await runtime.presenter.renderErrorPage(error: map(error)).response(from: request, context: context) }
     }
@@ -105,9 +151,13 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
         do {
             let payload = try await request.decode(as: NonceRequest<NewAdminListRemoveFormInput>.self, context: context)
             guard await AdminNonceStore.shared.consume(payload.nonce, sessionToken: context.sessionToken) else { return Response(status: .badRequest) }
-            guard let processorId = payload.input.normalizedIds.first else { return Response(status: .badRequest) }
-            try await runtime.interactor.removeProcessor(variantId: id, id: processorId)
-            return AdminNotificationFlash.redirect(to: MediaVariantRoutes.edit(RouterPath(id)).description, notification: .init(title: "Removed", message: "Processor removed successfully."))
+            let processorIds = payload.input.normalizedIds
+            guard !processorIds.isEmpty else { return Response(status: .badRequest) }
+            for processorId in processorIds {
+                try await runtime.interactor.removeProcessor(variantId: id, id: processorId)
+            }
+            let message = processorIds.count == 1 ? "Processor removed successfully." : "\(processorIds.count) processors removed successfully."
+            return AdminNotificationFlash.redirect(to: MediaVariantRoutes.processors(RouterPath(id)).description, notification: .init(title: "Removed", message: message))
         }
         catch { return try await runtime.presenter.renderErrorPage(error: map(error)).response(from: request, context: context) }
     }

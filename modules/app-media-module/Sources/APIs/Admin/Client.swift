@@ -1370,6 +1370,8 @@ public struct Client: APIProtocol {
                         preconditionFailure("bestContentType chose an invalid content type.")
                     }
                     return .ok(.init(body: body))
+                case 404:
+                    return .notFound(.init())
                 case 401:
                     return .unauthorized(.init())
                 case 403:

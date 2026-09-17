@@ -62,7 +62,12 @@ struct MediaVariantProcessorCreateOperation: MediaVariantIDOperation {
 struct MediaVariantProcessorListOperation: MediaVariantIDOperation {
     var searchQuery: SearchQuerySchema { .init(items: MediaVariantProcessorListItemSchema(), sortFieldKeys: ["id", "name", "matchExtensions", "commandTemplate", "isActive"], filters: SearchFilterSchema()) }
     var requestBody: RequestBodyRepresentable? { SearchRequestBody(query: searchQuery) }
-    var responseMap: ResponseMap { [200: SearchResponse(query: searchQuery).reference()] }
+    var responseMap: ResponseMap {
+        [
+            200: SearchResponse(query: searchQuery).reference(),
+            404: CustomResponse(description: "Media variant not found"),
+        ]
+    }
 }
 
 struct MediaVariantProcessorGetOperation: MediaVariantProcessorIDOperation {

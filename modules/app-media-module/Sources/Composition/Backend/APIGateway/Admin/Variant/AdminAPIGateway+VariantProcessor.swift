@@ -48,9 +48,14 @@ extension AdminAPIGateway {
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeSearchVariantProcessors()
         let objectQuery = map(query)
-        let list = try await useCase.execute(subject: subject, input: .init(variantId: input.path.mediaVariantId, query: objectQuery))
-        let total = try await useCase.count(subject: subject, input: .init(variantId: input.path.mediaVariantId, query: objectQuery))
-        return .ok(.init(body: .json(.init(query: query, data: .init(items: list.items.map(map), total: total)))))
+        do {
+            let list = try await useCase.execute(subject: subject, input: .init(variantId: input.path.mediaVariantId, query: objectQuery))
+            let total = try await useCase.count(subject: subject, input: .init(variantId: input.path.mediaVariantId, query: objectQuery))
+            return .ok(.init(body: .json(.init(query: query, data: .init(items: list.items.map(map), total: total)))))
+        }
+        catch SearchMediaVariantProcessors.Error.variantNotFound {
+            return .notFound
+        }
     }
 
     public func mediaVariantProcessorRemove(_ input: Operations.MediaVariantProcessorRemove.Input) async throws -> Operations.MediaVariantProcessorRemove.Output {

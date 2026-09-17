@@ -19,6 +19,31 @@ struct AdminEditMediaVariantOpenAPIRepository: AdminEditMediaVariantRepository {
         }
     }
 
+    func loadProcessor(variantId: String, id: String) async throws -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorDetailSchema {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response = try await client.mediaVariantProcessorGet(
+                path: .init(mediaVariantId: variantId, mediaVariantProcessorId: id),
+                headers: .init(accept: [.init(contentType: .json)])
+            )
+            switch response {
+            case .ok(let result): return try result.body.json
+            case .notFound: throw OpenAPIRepositoryError.notFound
+            case .unauthorized: throw OpenAPIRepositoryError.unauthorized
+            case .forbidden: throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response): throw try await api.failure(statusCode: statusCode, responseBody: response.body)
+            }
+        }
+    }
+
+    func processorNames(variantId: String, ids: [String]) async throws -> [NewAdminRemoveItemContext] {
+        var items: [NewAdminRemoveItemContext] = []
+        for id in ids {
+            let processor = try await loadProcessor(variantId: variantId, id: id)
+            items.append(.init(id: id, label: "\(processor.name) (\(id))"))
+        }
+        return items
+    }
+
     func update(id: String, input: MediaAdminAPI.Components.Schemas.MediaVariantCreateSchema) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.mediaVariantUpdate(path: .init(mediaVariantId: id), headers: .init(accept: [.init(contentType: .json)]), body: .json(input))
