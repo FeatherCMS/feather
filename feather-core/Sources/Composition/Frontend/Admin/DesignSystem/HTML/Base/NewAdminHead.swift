@@ -16,15 +16,18 @@ public struct NewAdminHead: Component {
     let title: String
     let stylesheet: String
     let scripts: [String]
+    let stylesheetPath: String?
 
     public init(
         title: String,
         stylesheet: String = "",
-        scripts: [String] = []
+        scripts: [String] = [],
+        stylesheetPath: String? = "/admin/style.css"
     ) {
         self.title = title
         self.stylesheet = stylesheet
         self.scripts = scripts
+        self.stylesheetPath = stylesheetPath
     }
 
     public func html(context: inout BuilderContext) -> Head {
@@ -35,7 +38,9 @@ public struct NewAdminHead: Component {
 
             Title(title)
 
-            Link(rel: .stylesheet).href("/admin/style.css")
+            if let stylesheetPath {
+                Link(rel: .stylesheet).href(stylesheetPath)
+            }
 
             if !stylesheet.isEmpty {
                 Style(stylesheet)

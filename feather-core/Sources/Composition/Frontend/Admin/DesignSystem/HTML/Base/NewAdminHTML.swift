@@ -16,16 +16,19 @@ public struct NewAdminHTML<T: Component>: Component where T.HTML: FlowContent {
     let title: String
     let language: String
     let body: NewAdminBody<T>
+    let stylesheetPath: String?
 
     private let cssRenderer: CSSRenderer
     public init(
         title: String,
         language: String = "en-US",
-        body: NewAdminBody<T>
+        body: NewAdminBody<T>,
+        stylesheetPath: String? = "/admin/style.css"
     ) {
         self.title = title
         self.language = language
         self.body = body
+        self.stylesheetPath = stylesheetPath
 
         #if DEBUG
         self.cssRenderer = .init(minify: false)
@@ -44,7 +47,8 @@ public struct NewAdminHTML<T: Component>: Component where T.HTML: FlowContent {
             NewAdminHead(
                 title: title,
                 stylesheet: css,
-                scripts: scripts
+                scripts: scripts,
+                stylesheetPath: stylesheetPath
             )
         )
 
