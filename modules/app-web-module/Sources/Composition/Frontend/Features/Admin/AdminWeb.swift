@@ -48,11 +48,11 @@ public struct AdminWeb {
         )
         .controller.route(on: router)
 
-        AdminWebPageMetadataRoutes.register(
-            router: router,
+        AdminEditWebPageMetadata(
             renderingEngine: renderingEngine,
             events: adminEvents
         )
+        .controller.route(on: router)
 
         AdminRemoveWebPage(
             renderingEngine: renderingEngine

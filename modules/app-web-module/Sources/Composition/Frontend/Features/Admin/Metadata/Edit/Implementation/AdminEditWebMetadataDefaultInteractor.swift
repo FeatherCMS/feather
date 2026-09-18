@@ -1,11 +1,24 @@
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import OpenAPIRuntime
+import WebContracts
 
 struct AdminEditWebMetadataDefaultInteractor:
     AdminEditWebMetadataInteractor
 {
     let repository: any AdminEditWebMetadataRepository
+    let events: any EventPublisher
+
+    func getTemplateOptions() async throws -> [WebPageTemplateOption] {
+        let providers = try await events.trigger(
+            event: WebTemplateProviderEvent(),
+            using: WebEventContext()
+        )
+        return providers
+            .flatMap(\.templates)
+            .map { .init(value: $0.id, title: $0.title) }
+    }
 
     func load(
         id: String

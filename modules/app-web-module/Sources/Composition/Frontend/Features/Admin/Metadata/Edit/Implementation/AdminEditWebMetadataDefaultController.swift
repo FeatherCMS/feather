@@ -9,7 +9,6 @@ import WebContracts
 struct AdminEditWebMetadataDefaultController:
     Sendable
 {
-    let templateOptions: [WebPageTemplateOption]
     let buildRuntime:
         @Sendable (Request, DefaultRequestContext) -> (
             interactor: any AdminEditWebMetadataInteractor,
@@ -19,15 +18,11 @@ struct AdminEditWebMetadataDefaultController:
     func getEditWebMetadataForContent(
         request: Request,
         context: DefaultRequestContext,
-        referenceType: String,
-        navigationTabs: [NewAdminTabBar.Link],
-        configuration: AdminWebMetadataEditConfiguration?
+        configuration: AdminWebMetadataEditConfiguration
     ) async throws -> HTMLResponse {
         try await renderEditWebMetadata(
             request: request,
             context: context,
-            referenceType: referenceType,
-            navigationTabs: navigationTabs,
             configuration: configuration
         )
     }
@@ -35,15 +30,11 @@ struct AdminEditWebMetadataDefaultController:
     func postEditWebMetadataForContent(
         request: Request,
         context: DefaultRequestContext,
-        referenceType: String,
-        navigationTabs: [NewAdminTabBar.Link],
-        configuration: AdminWebMetadataEditConfiguration?
+        configuration: AdminWebMetadataEditConfiguration
     ) async throws -> Response {
         try await renderPostEditWebMetadata(
             request: request,
             context: context,
-            referenceType: referenceType,
-            navigationTabs: navigationTabs,
             configuration: configuration
         )
     }
@@ -51,9 +42,7 @@ struct AdminEditWebMetadataDefaultController:
     private func renderEditWebMetadata(
         request: Request,
         context: DefaultRequestContext,
-        referenceType: String?,
-        navigationTabs: [NewAdminTabBar.Link],
-        configuration: AdminWebMetadataEditConfiguration?
+        configuration: AdminWebMetadataEditConfiguration
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime(request, context)
         let id = try metadataID(context: context)
@@ -63,8 +52,10 @@ struct AdminEditWebMetadataDefaultController:
                 runtime: runtime,
                 id: id,
                 context: context,
-                referenceType: referenceType
+                referenceType: configuration.referenceType
             )
+            let templateOptions = try await runtime.interactor
+                .getTemplateOptions()
             return try await runtime.presenter.renderEditPage(
                 id: id,
                 state: formState(
@@ -88,7 +79,7 @@ struct AdminEditWebMetadataDefaultController:
                         .structuredDataCodeInjection
                 ),
                 permissions: permissions,
-                navigationTabs: navigationTabs,
+                navigationTabs: configuration.navigationTabs,
                 configuration: configuration
             )
         }
@@ -106,9 +97,7 @@ struct AdminEditWebMetadataDefaultController:
     private func renderPostEditWebMetadata(
         request: Request,
         context: DefaultRequestContext,
-        referenceType: String?,
-        navigationTabs: [NewAdminTabBar.Link],
-        configuration: AdminWebMetadataEditConfiguration?
+        configuration: AdminWebMetadataEditConfiguration
     ) async throws -> Response {
         let runtime = buildRuntime(request, context)
         let id = try metadataID(context: context)
@@ -117,9 +106,11 @@ struct AdminEditWebMetadataDefaultController:
             runtime: runtime,
             id: id,
             context: context,
-            referenceType: referenceType
+            referenceType: configuration.referenceType
         )
         let metadataID = entry.id
+        let templateOptions = try await runtime.interactor
+            .getTemplateOptions()
         var lastPayload: WebMetadataFormInput?
 
         do {
@@ -171,7 +162,7 @@ struct AdminEditWebMetadataDefaultController:
                     id: id,
                     state: state,
                     permissions: permissions,
-                    navigationTabs: navigationTabs,
+                    navigationTabs: configuration.navigationTabs,
                     configuration: configuration
                 )
                 .response(from: request, context: context)
@@ -204,7 +195,7 @@ struct AdminEditWebMetadataDefaultController:
                     id: id,
                     state: state,
                     permissions: permissions,
-                    navigationTabs: navigationTabs,
+                    navigationTabs: configuration.navigationTabs,
                     configuration: configuration
                 )
                 .response(from: request, context: context)
@@ -237,7 +228,7 @@ struct AdminEditWebMetadataDefaultController:
                     id: id,
                     state: state,
                     permissions: permissions,
-                    navigationTabs: navigationTabs,
+                    navigationTabs: configuration.navigationTabs,
                     configuration: configuration
                 )
                 .response(from: request, context: context)

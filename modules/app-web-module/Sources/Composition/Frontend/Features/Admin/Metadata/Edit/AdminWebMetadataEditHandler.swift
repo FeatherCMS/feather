@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import Hummingbird
 import WebContracts
@@ -8,16 +9,16 @@ public struct AdminWebMetadataEditHandler: Sendable {
 
     public init(
         renderingEngine: any RenderingEngine,
-        templateOptions: [WebPageTemplateOption] = []
+        adminEvents: any EventPublisher
     ) {
         controller = AdminEditWebMetadataDefaultController(
-            templateOptions: templateOptions,
             buildRuntime: { request, context in
                 (
                     interactor: AdminEditWebMetadataDefaultInteractor(
                         repository: AdminEditWebMetadataOpenAPIRepository(
                             api: context.webAdminAPI()
-                        )
+                        ),
+                        events: adminEvents
                     ),
                     presenter: AdminEditWebMetadataDefaultPresenter(
                         request: request,
@@ -32,19 +33,11 @@ public struct AdminWebMetadataEditHandler: Sendable {
     public func get(
         request: Request,
         context: DefaultRequestContext,
-        referenceType: String,
-        navigationTabs: [NewAdminTabBar.Link] = [],
-        configuration: AdminWebMetadataEditConfiguration? = nil
+        configuration: AdminWebMetadataEditConfiguration
     ) async throws -> HTMLResponse {
-        let tabs =
-            navigationTabs.isEmpty
-            ? defaultNavigationTabs(request: request)
-            : navigationTabs
-        return try await controller.getEditWebMetadataForContent(
+        try await controller.getEditWebMetadataForContent(
             request: request,
             context: context,
-            referenceType: referenceType,
-            navigationTabs: tabs,
             configuration: configuration
         )
     }
@@ -52,34 +45,12 @@ public struct AdminWebMetadataEditHandler: Sendable {
     public func post(
         request: Request,
         context: DefaultRequestContext,
-        referenceType: String,
-        navigationTabs: [NewAdminTabBar.Link] = [],
-        configuration: AdminWebMetadataEditConfiguration? = nil
+        configuration: AdminWebMetadataEditConfiguration
     ) async throws -> Response {
-        let tabs =
-            navigationTabs.isEmpty
-            ? defaultNavigationTabs(request: request)
-            : navigationTabs
-        return try await controller.postEditWebMetadataForContent(
+        try await controller.postEditWebMetadataForContent(
             request: request,
             context: context,
-            referenceType: referenceType,
-            navigationTabs: tabs,
             configuration: configuration
         )
-    }
-
-    private func defaultNavigationTabs(
-        request: Request
-    ) -> [NewAdminTabBar.Link] {
-        let path = request.uri.path
-        guard let marker = path.range(of: "/edit/metadata/") else {
-            return []
-        }
-        let detailsPath = String(path[..<marker.lowerBound]) + "/edit/"
-        return [
-            .init(label: "Details", href: detailsPath, isCurrent: false),
-            .init(label: "Metadata", href: path, isCurrent: true),
-        ]
     }
 }

@@ -1,8 +1,11 @@
 import FeatherAdmin
 import Foundation
 import OpenAPIRuntime
+import WebContracts
 
 protocol AdminEditWebMetadataInteractor: Sendable {
+
+    func getTemplateOptions() async throws -> [WebPageTemplateOption]
 
     func load(
         id: String
