@@ -5,7 +5,8 @@ protocol AdminListSystemJobPresenter: Sendable {
     func renderListPage(
         model: AdminListSystemJobModel,
         permissions: NewAdminListActions,
-        search: String?
+        search: String?,
+        status: Int?
     ) async throws -> HTMLResponse
 
     func renderErrorPage(

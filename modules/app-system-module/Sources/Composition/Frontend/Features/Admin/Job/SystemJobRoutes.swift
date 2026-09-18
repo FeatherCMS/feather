@@ -22,7 +22,11 @@ enum SystemJobRoutes {
         list.appendingPath(id)
     }
 
-    static func listURL(page: Int? = nil, search: String? = nil) -> String {
+    static func listURL(
+        page: Int? = nil,
+        search: String? = nil,
+        status: Int? = nil
+    ) -> String {
         var query: [String] = []
         if let page, page > 1 {
             query.append("page=\(page)")
@@ -31,6 +35,9 @@ enum SystemJobRoutes {
             query.append(
                 "search=\(search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? search)"
             )
+        }
+        if let status {
+            query.append("status=\(status)")
         }
         let path = list.description + "/"
         return query.isEmpty ? path : "\(path)?\(query.joined(separator: "&"))"

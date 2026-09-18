@@ -10,7 +10,8 @@ struct AdminListSystemJobDefaultPresenter: AdminListSystemJobPresenter {
     func renderListPage(
         model: AdminListSystemJobModel,
         permissions: NewAdminListActions,
-        search: String?
+        search: String?,
+        status: Int?
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
             request: request,
@@ -21,7 +22,8 @@ struct AdminListSystemJobDefaultPresenter: AdminListSystemJobPresenter {
                     jobs: model.items,
                     permissions: permissions,
                     pageState: model.pageState,
-                    search: search
+                    search: search,
+                    status: status
                 )
             )
         )

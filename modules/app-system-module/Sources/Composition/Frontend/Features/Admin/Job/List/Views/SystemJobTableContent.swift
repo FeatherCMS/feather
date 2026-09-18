@@ -13,13 +13,14 @@ struct SystemJobTableContent: Component {
     let permissions: NewAdminListActions
     let pageState: NewAdminListPageState
     let search: String?
+    let status: Int?
 
     private var searchValue: String {
         search ?? ""
     }
 
     func html(context: inout BuilderContext) -> Div {
-        let hasActiveQuery = !(search?.isEmpty ?? true)
+        let hasActiveQuery = !(search?.isEmpty ?? true) || status != nil
 
         return context.build(
             NewAdminList(
@@ -37,12 +38,12 @@ struct SystemJobTableContent: Component {
                             context.build(
                                 NewAdminListNoResultsState(
                                     message:
-                                        "No worker jobs match your search.",
+                                        "No worker jobs match your filters.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         context.build(
                                             NewAdminButton(
-                                                "Reset search",
+                                                "Reset filters",
                                                 href: SystemJobRoutes.list
                                                     .description,
                                                 style: .secondary
@@ -69,7 +70,7 @@ struct SystemJobTableContent: Component {
                                     columns: [
                                         .fraction(1),
                                         .fraction(2),
-                                        .fixed(100),
+                                        .fixed(140),
                                         .fixed(220),
                                     ]
                                 ),
@@ -105,7 +106,24 @@ struct SystemJobTableContent: Component {
                                 action: SystemJobRoutes.list.description,
                                 placeholder: "Quick search worker jobs",
                                 search: searchValue
-                            )
+                            ),
+                            additionalFields: {
+                                Select {
+                                    Option("All statuses")
+                                        .value("")
+                                        .if(status == nil) { $0.selected() }
+                                    for option in SystemJobStatus.options {
+                                        Option(option.label)
+                                            .value(String(option.value))
+                                            .if(status == option.value) {
+                                                $0.selected()
+                                            }
+                                    }
+                                }
+                                .name("status")
+                                .ariaLabel("Filter by status")
+                                .onChange("this.form.requestSubmit()")
+                            }
                         )
                     )
                 },
@@ -115,7 +133,10 @@ struct SystemJobTableContent: Component {
                             state: .init(
                                 path: SystemJobRoutes.list.description,
                                 pageState: pageState,
-                                search: searchValue
+                                search: searchValue,
+                                queryItems: status.map {
+                                    [.init(name: "status", value: String($0))]
+                                } ?? []
                             )
                         )
                     )

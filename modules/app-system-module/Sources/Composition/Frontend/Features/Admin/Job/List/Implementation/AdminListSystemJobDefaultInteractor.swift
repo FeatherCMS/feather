@@ -8,7 +8,8 @@ struct AdminListSystemJobDefaultInteractor: AdminListSystemJobInteractor {
 
     func list(
         page: Int,
-        search: String?
+        search: String?,
+        status: Int?
     ) async throws -> AdminListSystemJobModel {
         let allJobs: [Components.Schemas.SystemJobSchema]
         do {
@@ -23,11 +24,10 @@ struct AdminListSystemJobDefaultInteractor: AdminListSystemJobInteractor {
             }
         }
         let normalizedSearch = search?.emptyToNil ?? ""
-        let filteredJobs =
-            normalizedSearch.isEmpty
-            ? allJobs
-            : allJobs.filter { job in
-                [
+        let filteredJobs = allJobs.filter { job in
+            guard status == nil || job.status == status else { return false }
+            guard !normalizedSearch.isEmpty else { return true }
+            return [
                     job.id,
                     job.queueName,
                     job.workerId ?? "",
@@ -37,14 +37,26 @@ struct AdminListSystemJobDefaultInteractor: AdminListSystemJobInteractor {
                 .contains {
                     $0.localizedCaseInsensitiveContains(normalizedSearch)
                 }
+        }
+        let sortedJobs = filteredJobs.sorted { lhs, rhs in
+            let left = SystemJobPayload(job: lhs).queuedAtTimestamp
+            let right = SystemJobPayload(job: rhs).queuedAtTimestamp
+            switch (left, right) {
+            case let (left?, right?):
+                if left != right { return left > right }
+                return lhs.id > rhs.id
+            case (_?, nil): return true
+            case (nil, _?): return false
+            case (nil, nil): return lhs.id > rhs.id
             }
+        }
         let pageSize = AdminListSystemJob.pageSize
         let normalizedPage = max(1, page)
         let start = (normalizedPage - 1) * pageSize
         let items =
-            start < filteredJobs.count
+            start < sortedJobs.count
             ? Array(
-                filteredJobs[start..<min(start + pageSize, filteredJobs.count)]
+                sortedJobs[start..<min(start + pageSize, sortedJobs.count)]
             )
             : []
         return .init(
@@ -52,7 +64,7 @@ struct AdminListSystemJobDefaultInteractor: AdminListSystemJobInteractor {
             pageState: .init(
                 page: normalizedPage,
                 pageSize: pageSize,
-                total: filteredJobs.count
+                total: sortedJobs.count
             )
         )
     }

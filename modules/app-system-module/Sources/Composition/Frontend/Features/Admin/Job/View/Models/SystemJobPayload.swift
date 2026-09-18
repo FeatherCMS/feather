@@ -10,6 +10,11 @@ struct SystemJobPayload {
     let nextScheduledAt: String?
     let traceContext: String?
 
+    var queuedAtTimestamp: Double? {
+        guard let queuedAt else { return nil }
+        return Double(queuedAt)
+    }
+
     init(job: Components.Schemas.SystemJobSchema) {
         guard
             let data = job.payload.data(using: .utf8),

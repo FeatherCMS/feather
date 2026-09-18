@@ -30,7 +30,9 @@ struct SystemJobRow: Component {
                 .data("label", "Job")
             Td(payload.parameterSummary.emptyToNil ?? "—")
                 .data("label", "Parameters")
-            Td(statusLabel(job.status))
+            Td {
+                context.build(statusChip(job.status))
+            }
                 .data("label", "Status")
             context.build(
                 NewAdminListRowActions(
@@ -42,14 +44,15 @@ struct SystemJobRow: Component {
         }
     }
 
-    private func statusLabel(_ status: Int) -> String {
+    private func statusChip(_ status: Int) -> NewAdminChip {
         switch status {
-        case 0: "Pending"
-        case 1: "Processing"
-        case 2: "Failed"
-        case 3: "Cancelled"
-        case 5: "Completed"
-        default: "Unknown (\(status))"
+        case 0: .init(label: "Pending", color: .blue)
+        case 1: .init(label: "Processing", color: .yellow)
+        case 2: .init(label: "Failed", color: .red)
+        case 3: .init(label: "Cancelled", color: .gray)
+        case 4: .init(label: "Paused", color: .purple)
+        case 5: .init(label: "Completed", color: .green)
+        default: .init(label: "Unknown (\(status))", color: .gray)
         }
     }
 }

@@ -14,6 +14,7 @@ struct SystemJobTable: Component {
         let permissions: NewAdminListActions
         let pageState: NewAdminListPageState
         let search: String?
+        let status: Int?
     }
 
     let state: State
@@ -36,7 +37,8 @@ struct SystemJobTable: Component {
                     jobs: state.jobs,
                     permissions: state.permissions,
                     pageState: state.pageState,
-                    search: state.search
+                    search: state.search,
+                    status: state.status
                 )
             )
         }
