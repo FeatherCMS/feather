@@ -562,6 +562,8 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/MediaAssetIdField`.
         public typealias MediaAssetIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MediaAssetKeyField`.
+        public typealias MediaAssetKeyField = Swift.String
         /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
         public struct DeleteRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
@@ -1153,6 +1155,8 @@ public enum Components {
         public struct MediaAssetResolveVariantSchema: Codable, Hashable,
             Sendable
         {
+            /// - Remark: Generated from `#/components/schemas/MediaAssetResolveVariantSchema/key`.
+            public var key: Components.Schemas.MediaAssetKeyField
             /// - Remark: Generated from `#/components/schemas/MediaAssetResolveVariantSchema/name`.
             public var name: Swift.String
             /// - Remark: Generated from `#/components/schemas/MediaAssetResolveVariantSchema/url`.
@@ -1162,19 +1166,23 @@ public enum Components {
             /// Creates a new `MediaAssetResolveVariantSchema`.
             ///
             /// - Parameters:
+            ///   - key:
             ///   - name:
             ///   - url:
             ///   - _extension:
             public init(
+                key: Components.Schemas.MediaAssetKeyField,
                 name: Swift.String,
                 url: Swift.String,
                 _extension: Swift.String
             ) {
+                self.key = key
                 self.name = name
                 self.url = url
                 self._extension = _extension
             }
             public enum CodingKeys: String, CodingKey {
+                case key
                 case name
                 case url
                 case _extension = "extension"

@@ -6,6 +6,10 @@ struct MediaAssetIdField: StringSchemaRepresentable {
     var example: String? = "media_asset_1"
 }
 
+struct MediaAssetKeyField: StringSchemaRepresentable {
+    var example: String? = "preview"
+}
+
 struct MediaAssetURLField: StringSchemaRepresentable {
     var example: String? = "/media/assets/media_asset_1/cover-image.jpg"
 }
@@ -227,6 +231,7 @@ struct MediaAssetResolveItemSchema: ObjectSchemaRepresentable {
 struct MediaAssetResolveVariantSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
+            "key": MediaAssetKeyField().reference(),
             "name": MediaAssetVariantNameField(),
             "url": MediaAssetURLField(),
             "extension": MediaAssetTypeField(),

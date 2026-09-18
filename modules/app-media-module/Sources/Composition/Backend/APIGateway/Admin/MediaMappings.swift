@@ -81,7 +81,12 @@ extension AdminAPIGateway {
             title: item.title,
             altText: item.altText,
             variants: item.variants.map {
-                .init(name: $0.name, url: $0.url, _extension: $0.extension)
+                .init(
+                    key: $0.key,
+                    name: $0.name,
+                    url: $0.url,
+                    _extension: $0.extension
+                )
             }
         )
     }

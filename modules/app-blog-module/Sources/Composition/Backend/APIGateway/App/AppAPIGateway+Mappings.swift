@@ -25,12 +25,9 @@ extension AppAPIGateway {
             )) ?? [])
             .map {
                 PublicContentMediaVariant(
-                    id: $0.variantId,
+                    key: $0.key,
                     url:
-                        "/media/variants/\(asset.id)/\($0.name).\($0.extension)",
-                    type: $0.extension,
-                    width: nil,
-                    height: nil
+                        "/media/variants/\(asset.id)/\($0.key).\($0.extension)"
                 )
             }
         let defaultURL = preferredDefaultMediaURL(
@@ -50,10 +47,7 @@ extension AppAPIGateway {
         variants: [PublicContentMediaVariant]
     ) -> String {
         if let preview = variants.first(where: {
-            $0.id.localizedCaseInsensitiveContains("preview")
-                || $0.url.localizedCaseInsensitiveContains("preview")
-                || $0.id.localizedCaseInsensitiveContains("display")
-                || $0.url.localizedCaseInsensitiveContains("display")
+            $0.key == "preview" || $0.key == "display"
         }) {
             return preview.url
         }
@@ -198,11 +192,8 @@ extension AppAPIGateway {
             defaultURL: media.defaultURL,
             variants: media.variants.map {
                 .init(
-                    id: $0.id,
-                    url: $0.url,
-                    _type: $0.type,
-                    width: $0.width.map(Int64.init),
-                    height: $0.height.map(Int64.init)
+                    key: $0.key,
+                    url: $0.url
                 )
             }
         )

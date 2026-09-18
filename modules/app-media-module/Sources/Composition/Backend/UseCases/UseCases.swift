@@ -13,6 +13,7 @@ public struct UseCases: Sendable {
     public struct AssociatedVariantFile: Sendable {
         public let assetId: String
         public let variantId: String
+        public let key: String
         public let name: String
         public let `extension`: String
         public let objectKey: String
@@ -223,6 +224,16 @@ public struct UseCases: Sendable {
             let repo = MediaAssetNodeFileVariantDatabaseRepository(
                 context: .init(connection: connection, idGenerator: idGenerator)
             )
+            let variantDefinitions = Dictionary(
+                uniqueKeysWithValues: try await MediaVariantDatabaseRepository(
+                    context: .init(
+                        connection: connection,
+                        idGenerator: idGenerator
+                    )
+                )
+                .list()
+                .map { ($0.id, $0.key) }
+            )
             guard
                 try await MediaAssetNodeFileDatabaseRepository(
                     context: .init(
@@ -237,6 +248,7 @@ public struct UseCases: Sendable {
                     .init(
                         assetId: assetId,
                         variantId: $0.variantId,
+                        key: variantDefinitions[$0.variantId] ?? $0.name,
                         name: $0.name,
                         extension: $0.extension,
                         objectKey: $0.objectKey

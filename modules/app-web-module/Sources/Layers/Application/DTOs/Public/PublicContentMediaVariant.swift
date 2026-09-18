@@ -8,23 +8,14 @@ import FeatherApplication
 import FeatherContracts
 
 public struct PublicContentMediaVariant: DTO {
-    public let id: String
+    public let key: String
     public let url: String
-    public let type: String
-    public let width: Int?
-    public let height: Int?
 
     public init(
-        id: String,
-        url: String,
-        type: String,
-        width: Int?,
-        height: Int?
+        key: String,
+        url: String
     ) {
-        self.id = id
+        self.key = key
         self.url = url
-        self.type = type
-        self.width = width
-        self.height = height
     }
 }

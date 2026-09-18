@@ -476,6 +476,8 @@ public enum Components {
         }
         /// - Remark: Generated from `#/components/schemas/MediaAssetIdField`.
         public typealias MediaAssetIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/MediaAssetKeyField`.
+        public typealias MediaAssetKeyField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MediaAssetURLField`.
         public typealias MediaAssetURLField = Swift.String
         /// - Remark: Generated from `#/components/schemas/MediaAssetVariantListSchema`.
@@ -483,47 +485,27 @@ public enum Components {
             .MediaAssetVariantSchema]
         /// - Remark: Generated from `#/components/schemas/MediaAssetVariantSchema`.
         public struct MediaAssetVariantSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MediaAssetVariantSchema/id`.
-            public var id: Components.Schemas.MediaAssetIdField
+            /// - Remark: Generated from `#/components/schemas/MediaAssetVariantSchema/key`.
+            public var key: Components.Schemas.MediaAssetKeyField
             /// - Remark: Generated from `#/components/schemas/MediaAssetVariantSchema/url`.
             public var url: Components.Schemas.MediaAssetURLField
-            /// - Remark: Generated from `#/components/schemas/MediaAssetVariantSchema/type`.
-            public var _type: Components.Schemas.MediaAssetTypeField
-            /// - Remark: Generated from `#/components/schemas/MediaAssetVariantSchema/width`.
-            public var width: Swift.Int64?
-            /// - Remark: Generated from `#/components/schemas/MediaAssetVariantSchema/height`.
-            public var height: Swift.Int64?
             /// Creates a new `MediaAssetVariantSchema`.
             ///
             /// - Parameters:
-            ///   - id:
+            ///   - key:
             ///   - url:
-            ///   - _type:
-            ///   - width:
-            ///   - height:
             public init(
-                id: Components.Schemas.MediaAssetIdField,
+                key: Components.Schemas.MediaAssetKeyField,
                 url: Components.Schemas.MediaAssetURLField,
-                _type: Components.Schemas.MediaAssetTypeField,
-                width: Swift.Int64? = nil,
-                height: Swift.Int64? = nil
             ) {
-                self.id = id
+                self.key = key
                 self.url = url
-                self._type = _type
-                self.width = width
-                self.height = height
             }
             public enum CodingKeys: String, CodingKey {
-                case id
+                case key
                 case url
-                case _type = "type"
-                case width
-                case height
             }
         }
-        /// - Remark: Generated from `#/components/schemas/MediaAssetTypeField`.
-        public typealias MediaAssetTypeField = Swift.String
         /// - Remark: Generated from `#/components/schemas/WebMetadataContentSchema`.
         public struct WebMetadataContentSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/WebMetadataContentSchema/slug`.

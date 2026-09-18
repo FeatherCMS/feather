@@ -109,10 +109,12 @@ public struct MediaAssetDatabaseQueries: MediaAssetQueries {
             variantsByAsset[variant.nodeId, default: []]
                 .append(
                     .init(
+                        id: variant.id,
+                        key: variant.key,
                         name: variant.name,
                         url: mediaVariantPublicURL(
                             assetId: variant.nodeId,
-                            name: variant.name,
+                            name: variant.key,
                             extension: variant.extension
                         ),
                         extension: variant.extension

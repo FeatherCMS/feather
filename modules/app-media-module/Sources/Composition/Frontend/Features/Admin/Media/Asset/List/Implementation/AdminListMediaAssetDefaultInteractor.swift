@@ -147,8 +147,7 @@ extension AdminListMediaAssetDefaultInteractor {
         from variants: [Components.Schemas.MediaAssetResolveVariantSchema]
     ) -> Components.Schemas.MediaAssetResolveVariantSchema? {
         variants.first(where: {
-            $0.name.localizedCaseInsensitiveContains("preview")
-                || $0.name.localizedCaseInsensitiveContains("display")
+            $0.key == "preview" || $0.key == "display"
         }) ?? variants.first
     }
 }
