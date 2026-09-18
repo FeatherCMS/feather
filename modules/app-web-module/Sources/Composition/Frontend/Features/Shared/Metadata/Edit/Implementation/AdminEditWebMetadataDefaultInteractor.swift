@@ -15,7 +15,8 @@ struct AdminEditWebMetadataDefaultInteractor:
             event: WebTemplateProviderEvent(),
             using: WebEventContext()
         )
-        return providers
+        return
+            providers
             .flatMap(\.templates)
             .map { .init(value: $0.id, title: $0.title) }
     }

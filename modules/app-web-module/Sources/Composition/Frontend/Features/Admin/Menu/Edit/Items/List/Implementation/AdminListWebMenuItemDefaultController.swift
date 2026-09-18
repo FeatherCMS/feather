@@ -74,9 +74,11 @@ struct AdminListWebMenuItemDefaultController:
                 status: .seeOther,
                 headers: [
                     .location: NewAdminLocation.url(
-                        path: WebMenuItemRoutes.list(
-                            RouterPath(menuId)
-                        ).description,
+                        path:
+                            WebMenuItemRoutes.list(
+                                RouterPath(menuId)
+                            )
+                            .description,
                         page: page,
                         search: search
                     )

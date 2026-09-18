@@ -53,7 +53,8 @@ struct WebMenuItemConfirmation: Component {
                     links: AdminWebMenuTabs(
                         menuID: state.menuId,
                         active: .items
-                    ).links
+                    )
+                    .links
                 ),
                 sectionHeader: .init(
                     title: "Remove item",

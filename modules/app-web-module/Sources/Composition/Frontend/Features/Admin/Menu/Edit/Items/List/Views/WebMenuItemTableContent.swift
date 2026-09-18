@@ -173,8 +173,8 @@ struct WebMenuItemTableContent: Component {
                                     table: context.build(
                                         NewAdminListShell(
                                             layout: .init(
-                                                    name: "web-menu-items",
-                                                    columns: canReorder
+                                                name: "web-menu-items",
+                                                columns: canReorder
                                                     ? [
                                                         .fixed(140),
                                                         .fraction(2),

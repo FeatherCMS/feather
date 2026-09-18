@@ -26,11 +26,19 @@ struct WebMenuItemRow: Component {
                         Span("⠿").class("web-menu-item-drag")
                         Div {
                             Button("↑").type(.button)
-                                .class("button", "secondary-ghost", "row-button")
+                                .class(
+                                    "button",
+                                    "secondary-ghost",
+                                    "row-button"
+                                )
                                 .data("web-menu-item-move", "up")
                                 .ariaLabel("Move \(item.label) up")
                             Button("↓").type(.button)
-                                .class("button", "secondary-ghost", "row-button")
+                                .class(
+                                    "button",
+                                    "secondary-ghost",
+                                    "row-button"
+                                )
                                 .data("web-menu-item-move", "down")
                                 .ariaLabel("Move \(item.label) down")
                         }

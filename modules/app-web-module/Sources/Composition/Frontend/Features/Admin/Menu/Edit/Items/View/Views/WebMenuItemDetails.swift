@@ -111,10 +111,12 @@ struct WebMenuItemDetails: Component {
                         context.build(
                             NewAdminButton(
                                 "Edit item",
-                                href: WebMenuItemRoutes.edit(
-                                    RouterPath(state.item.menuId),
-                                    RouterPath(state.item.id)
-                                ).description,
+                                href:
+                                    WebMenuItemRoutes.edit(
+                                        RouterPath(state.item.menuId),
+                                        RouterPath(state.item.id)
+                                    )
+                                    .description,
                                 style: .primary
                             )
                         )

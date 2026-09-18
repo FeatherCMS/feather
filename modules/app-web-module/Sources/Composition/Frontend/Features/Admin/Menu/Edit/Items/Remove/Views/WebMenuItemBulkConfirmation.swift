@@ -34,13 +34,17 @@ struct WebMenuItemBulkConfirmation: Component {
                         "Update the navigation menu configuration."
                 ),
                 selectedItems: state.items.map(\.label),
-                action: WebMenuItemRoutes.remove(
-                    RouterPath(state.menuId)
-                ).description,
-                cancel: NewAdminLocation.url(
-                    path: WebMenuItemRoutes.list(
+                action:
+                    WebMenuItemRoutes.remove(
                         RouterPath(state.menuId)
-                    ).description,
+                    )
+                    .description,
+                cancel: NewAdminLocation.url(
+                    path:
+                        WebMenuItemRoutes.list(
+                            RouterPath(state.menuId)
+                        )
+                        .description,
                     page: state.page,
                     search: state.search
                 ),
@@ -52,7 +56,8 @@ struct WebMenuItemBulkConfirmation: Component {
                     links: AdminWebMenuTabs(
                         menuID: state.menuId,
                         active: .items
-                    ).links
+                    )
+                    .links
                 ),
                 sectionHeader: .init(
                     title: "Remove selected items",

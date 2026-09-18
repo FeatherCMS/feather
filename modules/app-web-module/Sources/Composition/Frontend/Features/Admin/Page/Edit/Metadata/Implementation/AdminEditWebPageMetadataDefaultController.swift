@@ -22,10 +22,11 @@ struct AdminEditWebPageMetadataDefaultController:
         context: DefaultRequestContext
     ) throws -> AdminWebMetadataEditConfiguration {
         let pageID = try context.requiredID()
-        let metadataID = context.parameters.get(
-            "metadataID",
-            as: String.self
-        ) ?? ""
+        let metadataID =
+            context.parameters.get(
+                "metadataID",
+                as: String.self
+            ) ?? ""
         return .init(
             referenceType: "web.page",
             title: "Edit page",
@@ -39,10 +40,12 @@ struct AdminEditWebPageMetadataDefaultController:
                 ),
                 .init(
                     label: "Metadata",
-                    href: WebPageRoutes.metadata(
-                        RouterPath(pageID),
-                        RouterPath(metadataID)
-                    ).description,
+                    href:
+                        WebPageRoutes.metadata(
+                            RouterPath(pageID),
+                            RouterPath(metadataID)
+                        )
+                        .description,
                     isCurrent: true
                 ),
             ]

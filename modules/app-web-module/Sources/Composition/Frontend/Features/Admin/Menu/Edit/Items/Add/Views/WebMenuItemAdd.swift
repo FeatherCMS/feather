@@ -48,9 +48,11 @@ struct WebMenuItemAdd: Component {
                     context.build(
                         WebMenuItemForm(
                             state: state.form,
-                            action: WebMenuItemRoutes.add(
-                                RouterPath(state.menuId)
-                            ).description,
+                            action:
+                                WebMenuItemRoutes.add(
+                                    RouterPath(state.menuId)
+                                )
+                                .description,
                             submitLabel: "Add item"
                         )
                     )
