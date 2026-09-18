@@ -4,6 +4,7 @@ import HTML
 import Hummingbird
 import OpenAPIRuntime
 import SGML
+import SystemContracts
 import WebBuilders
 import WebComponents
 import WebContracts
@@ -25,10 +26,9 @@ struct AdminListWebMetadataDefaultPresenter:
     ) async throws -> HTMLResponse {
         let actions = NewAdminListActions(
             Set(
-                WebPermissions.Metadata.allPermissions()
-                    .filter {
-                        permissions.contains($0.rawValue)
-                    }
+                permissions.contains(SystemPermissions.Admin.access.rawValue)
+                    ? [SystemPermissions.Admin.access]
+                    : []
             )
         )
         if let error {
@@ -45,7 +45,7 @@ struct AdminListWebMetadataDefaultPresenter:
                 )
             )
         }
-        guard actions.allows(WebPermissions.Metadata.list) else {
+        guard actions.allows(SystemPermissions.Admin.access) else {
             return try await renderEngine.renderNewAdminPage(
                 request: request,
                 context: context,

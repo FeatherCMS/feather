@@ -4,6 +4,7 @@ import Foundation
 import HTML
 import Hummingbird
 import SGML
+import SystemContracts
 import WebAdminAPI
 import WebBuilders
 import WebComponents
@@ -32,7 +33,7 @@ struct WebMetadataRow: Component {
                                 )
                                 .description,
                             style: .ghost(.primary),
-                            permission: WebPermissions.Metadata.read
+                            permission: SystemPermissions.Admin.access
                         ),
                         .init(
                             "Edit",
@@ -40,7 +41,7 @@ struct WebMetadataRow: Component {
                                 WebMetadataRoutes.edit(RouterPath(metadata.id))
                                 .description,
                             style: .ghost(.secondary),
-                            permission: WebPermissions.Metadata.update
+                            permission: SystemPermissions.Admin.access
                         ),
                     ],
                     permissions: permissions

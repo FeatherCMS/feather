@@ -43,7 +43,7 @@ public enum WebAdminMenuEventHandlers {
                     label: "Metadata",
                     icon: "bookOpen",
                     link: "/admin/web/metadata/",
-                    permission: "web:metadata:list"
+                    permission: SystemPermissions.Admin.access.rawValue
                 ),
                 .init(
                     menuKey: "web",

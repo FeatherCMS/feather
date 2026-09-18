@@ -1,12 +1,13 @@
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
+import SystemContracts
 import WebContracts
 import WebDomain
 
 public struct ResolveMetadata: UseCase {
     struct Action: PermissionAction {
-        let key = WebPermissions.Metadata.list
+        let key = SystemPermissions.Admin.access
     }
 
     let authorizer: any Authorizer

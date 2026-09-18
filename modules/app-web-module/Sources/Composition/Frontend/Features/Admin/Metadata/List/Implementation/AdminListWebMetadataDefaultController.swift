@@ -2,6 +2,7 @@ import FeatherAdmin
 import Foundation
 import Hummingbird
 import OpenAPIRuntime
+import SystemContracts
 import WebContracts
 
 struct AdminListWebMetadataDefaultController:
@@ -28,7 +29,7 @@ struct AdminListWebMetadataDefaultController:
             : referenceType
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: WebPermissions.Metadata.list
+            to: SystemPermissions.Admin.access
         )
         let emptyModel = AdminListWebMetadataModel(
             items: [],

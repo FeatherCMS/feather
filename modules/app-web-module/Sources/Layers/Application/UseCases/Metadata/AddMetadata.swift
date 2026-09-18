@@ -1,6 +1,7 @@
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
+import SystemContracts
 import WebContracts
 import WebDomain
 
@@ -15,7 +16,7 @@ import struct Foundation.Date
 public struct AddMetadata: UseCase {
 
     struct Action: PermissionAction {
-        let key = WebPermissions.Metadata.create
+        let key = SystemPermissions.Admin.access
     }
 
     let authorizer: any Authorizer
