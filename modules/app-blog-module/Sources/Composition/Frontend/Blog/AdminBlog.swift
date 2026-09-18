@@ -1,6 +1,7 @@
 import BlogAdminAPI
 import BlogAppAPI
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -9,19 +10,17 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
-import WebContracts
-import WebFrontend
 
 public struct AdminBlog {
     public let renderingEngine: any RenderingEngine
-    public let templateOptions: [WebPageTemplateOption]
+    public let adminEvents: any EventPublisher
 
     public init(
         renderingEngine: any RenderingEngine,
-        templateOptions: [WebPageTemplateOption] = []
+        adminEvents: any EventPublisher
     ) {
         self.renderingEngine = renderingEngine
-        self.templateOptions = templateOptions
+        self.adminEvents = adminEvents
     }
 
     public func route(
@@ -140,7 +139,7 @@ public struct AdminBlog {
         AdminBlogMetadataRoutes.register(
             router: router,
             renderingEngine: renderingEngine,
-            templateOptions: templateOptions
+            events: adminEvents
         )
     }
 }

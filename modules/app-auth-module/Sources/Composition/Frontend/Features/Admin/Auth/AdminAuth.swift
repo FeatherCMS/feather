@@ -16,10 +16,14 @@ import UserFrontend
 import WebBuilders
 import WebComponents
 
-struct AdminAuth {
-    let renderingEngine: any RenderingEngine
+public struct AdminAuth {
+    private let renderingEngine: any RenderingEngine
 
-    func route(
+    public init(renderingEngine: any RenderingEngine) {
+        self.renderingEngine = renderingEngine
+    }
+
+    public func route(
         on router: Router<DefaultRequestContext>
     ) {
         AdminViewAuthOverview(
@@ -78,5 +82,12 @@ struct AdminAuth {
             renderingEngine: renderingEngine
         )
         .route(on: router)
+
+        AdminListAuthSession(renderingEngine: renderingEngine)
+            .controller
+            .route(on: router)
+        AdminRemoveAuthSession(renderingEngine: renderingEngine)
+            .controller
+            .route(on: router)
     }
 }

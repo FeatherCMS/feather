@@ -1,18 +1,18 @@
 import FeatherAdmin
+import FeatherContracts
 import Hummingbird
 import OpenAPIRuntime
-import WebContracts
 
 public struct AdminWeb {
     public let renderingEngine: any RenderingEngine
-    public let templateOptions: [WebPageTemplateOption]
+    public let adminEvents: any EventPublisher
 
     public init(
         renderingEngine: any RenderingEngine,
-        templateOptions: [WebPageTemplateOption] = []
+        adminEvents: any EventPublisher
     ) {
         self.renderingEngine = renderingEngine
-        self.templateOptions = templateOptions
+        self.adminEvents = adminEvents
     }
 
     public func route(
@@ -51,7 +51,7 @@ public struct AdminWeb {
         AdminWebPageMetadataRoutes.register(
             router: router,
             renderingEngine: renderingEngine,
-            templateOptions: templateOptions
+            events: adminEvents
         )
 
         AdminRemoveWebPage(

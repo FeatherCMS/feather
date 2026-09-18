@@ -1,17 +1,29 @@
 import FeatherAdmin
+import FeatherContracts
 import Hummingbird
 import WebContracts
 
 enum AdminWebPageMetadataRoutes {
+    private struct AdminWebPageMetadataDefaultInteractor {
+        let events: any EventPublisher
+
+        func getTemplateOptions() async throws -> [WebPageTemplateOption] {
+            let providers = try await events.trigger(
+                event: WebTemplateProviderEvent(),
+                using: WebEventContext()
+            )
+            return providers
+                .flatMap(\.templates)
+                .map { .init(value: $0.id, title: $0.title) }
+        }
+    }
+
     static func register(
         router: Router<DefaultRequestContext>,
         renderingEngine: any RenderingEngine,
-        templateOptions: [WebPageTemplateOption]
+        events: any EventPublisher
     ) {
-        let handler = AdminWebMetadataEditHandler(
-            renderingEngine: renderingEngine,
-            templateOptions: templateOptions
-        )
+        let interactor = AdminWebPageMetadataDefaultInteractor(events: events)
         let configuration = AdminWebMetadataEditConfiguration(
             title: "Edit page",
             breadcrumb: WebPageRoutes.breadcrumb,
@@ -19,7 +31,11 @@ enum AdminWebPageMetadataRoutes {
         )
         let path = "/admin/web/pages/{id}/edit/metadata/{metadataID}/"
         router.get(RouterPath(path)) { request, context in
-            try await handler.get(
+            let handler = AdminWebMetadataEditHandler(
+                renderingEngine: renderingEngine,
+                templateOptions: try await interactor.getTemplateOptions()
+            )
+            return try await handler.get(
                 request: request,
                 context: context,
                 referenceType: "web.page",
@@ -27,7 +43,11 @@ enum AdminWebPageMetadataRoutes {
             )
         }
         router.post(RouterPath(path)) { request, context in
-            try await handler.post(
+            let handler = AdminWebMetadataEditHandler(
+                renderingEngine: renderingEngine,
+                templateOptions: try await interactor.getTemplateOptions()
+            )
+            return try await handler.post(
                 request: request,
                 context: context,
                 referenceType: "web.page",

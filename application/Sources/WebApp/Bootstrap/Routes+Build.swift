@@ -50,6 +50,9 @@ func buildRouter(
         apiBaseURL: environment.apiBaseURL
     )
     var adminEvents = EventRegistry()
+    WebFrontend.WebEventHandlers.register(in: &adminEvents)
+    BlogFrontend.BlogEventHandlers.register(in: &adminEvents)
+    NewsFrontend.NewsEventHandlers.register(in: &adminEvents)
     BlogAdminDashboardEventHandlers.register(in: &adminEvents)
     WebAdminDashboardEventHandlers.register(in: &adminEvents)
     RedirectAdminDashboardEventHandlers.register(in: &adminEvents)
@@ -126,7 +129,6 @@ func buildRouter(
     buildAdminRoutes(
         router: adminRouter,
         renderingEngine: renderingEngine,
-        templateOptions: templateOptions,
         adminEvents: adminEvents
     )
 

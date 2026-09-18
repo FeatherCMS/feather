@@ -1,18 +1,30 @@
 import FeatherAdmin
+import FeatherContracts
 import Hummingbird
 import WebContracts
 import WebFrontend
 
 enum AdminBlogMetadataRoutes {
+    private struct AdminBlogMetadataDefaultInteractor {
+        let events: any EventPublisher
+
+        func getTemplateOptions() async throws -> [WebPageTemplateOption] {
+            let providers = try await events.trigger(
+                event: WebTemplateProviderEvent(),
+                using: WebEventContext()
+            )
+            return providers
+                .flatMap(\.templates)
+                .map { .init(value: $0.id, title: $0.title) }
+        }
+    }
+
     static func register(
         router: Router<DefaultRequestContext>,
         renderingEngine: any RenderingEngine,
-        templateOptions: [WebPageTemplateOption]
+        events: any EventPublisher
     ) {
-        let handler = AdminWebMetadataEditHandler(
-            renderingEngine: renderingEngine,
-            templateOptions: templateOptions
-        )
+        let interactor = AdminBlogMetadataDefaultInteractor(events: events)
         for route in [
             (
                 "/admin/blog/posts/{id}/edit/metadata/{metadataID}/",
@@ -28,14 +40,22 @@ enum AdminBlogMetadataRoutes {
             ),
         ] {
             router.get(RouterPath(route.0)) { request, context in
-                try await handler.get(
+                let handler = AdminWebMetadataEditHandler(
+                    renderingEngine: renderingEngine,
+                    templateOptions: try await interactor.getTemplateOptions()
+                )
+                return try await handler.get(
                     request: request,
                     context: context,
                     referenceType: route.1
                 )
             }
             router.post(RouterPath(route.0)) { request, context in
-                try await handler.post(
+                let handler = AdminWebMetadataEditHandler(
+                    renderingEngine: renderingEngine,
+                    templateOptions: try await interactor.getTemplateOptions()
+                )
+                return try await handler.post(
                     request: request,
                     context: context,
                     referenceType: route.1

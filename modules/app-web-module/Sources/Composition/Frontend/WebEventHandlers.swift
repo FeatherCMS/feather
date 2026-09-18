@@ -37,7 +37,7 @@ public enum WebEventHandlers {
                         "# Welcome\n\nThis page is provided by the web module.",
                     metadata: .init(
                         template: "default",
-                        slug: "web.welcome",
+                        slug: "welcome",
                         status: .published
                     )
                 )

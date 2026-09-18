@@ -37,16 +37,4 @@ public enum AuthFrontendRoutes {
         AppMagicLink(renderingEngine: renderingEngine).route(on: router)
     }
 
-    public static func registerAdminRoutes(
-        router: Router<DefaultRequestContext>,
-        renderingEngine: any RenderingEngine
-    ) {
-        AdminAuth(renderingEngine: renderingEngine).route(on: router)
-        AdminListAuthSession(renderingEngine: renderingEngine)
-            .controller
-            .route(on: router)
-        AdminRemoveAuthSession(renderingEngine: renderingEngine)
-            .controller
-            .route(on: router)
-    }
 }

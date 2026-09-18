@@ -60,7 +60,7 @@ public enum EventHandlers {
                         """#,
                     metadata: .init(
                         template: "default",
-                        slug: "web.welcome",
+                        slug: "welcome",
                         status: .published
                     )
                 )
