@@ -35,8 +35,17 @@ struct WebMenuItemEdit: Component {
             )
             context.build(
                 WebMenuItemGroup {
-                    H2("Edit item")
-                    P("Update the navigation menu link.")
+                    context.build(
+                        NewAdminPageHeader(
+                            state: .init(
+                                title: "Edit item",
+                                description:
+                                    "Update the navigation menu link.",
+                                level: 2,
+                                showSeparator: true
+                            )
+                        )
+                    )
                     context.build(
                         WebMenuItemForm(
                             state: state.form,

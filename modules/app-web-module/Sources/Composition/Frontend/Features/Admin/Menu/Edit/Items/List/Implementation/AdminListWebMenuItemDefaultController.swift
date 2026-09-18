@@ -1,6 +1,7 @@
 import FeatherAdmin
 import Hummingbird
 import OpenAPIRuntime
+import WebAdminAPI
 import WebContracts
 
 struct AdminListWebMenuItemDefaultController:
@@ -63,7 +64,7 @@ struct AdminListWebMenuItemDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (_, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime(request, context)
         let menuId = try context.requiredID()
         let selectedIds = request.queryStrings("ids")
         let page = request.queryPage()
@@ -82,12 +83,30 @@ struct AdminListWebMenuItemDefaultController:
                 ]
             )
         }
+        let labels: [String: String]
+        do {
+            let model = try await interactor.listWebMenuItems(
+                menuId: menuId,
+                page: page,
+                search: search
+            )
+            labels = Dictionary(
+                uniqueKeysWithValues: model.items.map {
+                    ($0.id, $0.label)
+                }
+            )
+        }
+        catch {
+            labels = [:]
+        }
         return
             try await presenter.renderRemovePage(
                 menuId: menuId,
                 page: page,
                 search: search,
-                items: selectedIds.map { .init(id: $0, label: $0) }
+                items: selectedIds.map {
+                    .init(id: $0, label: labels[$0] ?? $0)
+                }
             )
             .response(from: request, context: context)
     }

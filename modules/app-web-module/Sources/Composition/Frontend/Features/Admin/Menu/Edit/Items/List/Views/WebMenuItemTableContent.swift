@@ -46,15 +46,25 @@ struct WebMenuItemTableContent: Component {
                 Gap(8.px)
             },
             Custom(".web-menu-item-row.is-drop-before") {
-                UnsafeRawProperty(
-                    name: "box-shadow",
-                    value: "inset 0 3px 0 var(--cms-link-hover)"
+                BoxShadow(
+                    0.px,
+                    3.px,
+                    color: CSSColor(
+                        stringLiteral:
+                            "var(--\(TokenKey.Colors.Accents.Primary.border.propertyName))"
+                    ),
+                    type: .inset
                 )
             },
             Custom(".web-menu-item-row.is-drop-after") {
-                UnsafeRawProperty(
-                    name: "box-shadow",
-                    value: "inset 0 -3px 0 var(--cms-link-hover)"
+                BoxShadow(
+                    0.px,
+                    (-3).px,
+                    color: CSSColor(
+                        stringLiteral:
+                            "var(--\(TokenKey.Colors.Accents.Primary.border.propertyName))"
+                    ),
+                    type: .inset
                 )
             },
             Class("web-menu-item-actions") {
@@ -163,21 +173,19 @@ struct WebMenuItemTableContent: Component {
                                     table: context.build(
                                         NewAdminListShell(
                                             layout: .init(
-                                                name: "web-menu-items",
-                                                columns: canReorder
+                                                    name: "web-menu-items",
+                                                    columns: canReorder
                                                     ? [
-                                                        .fixed(100),
+                                                        .fixed(140),
                                                         .fraction(2),
                                                         .fraction(2),
-                                                        .fixed(100),
-                                                        .fraction(2),
+                                                        .fixed(140),
                                                         .fixed(250),
                                                     ]
                                                     : [
                                                         .fraction(2),
                                                         .fraction(2),
-                                                        .fixed(100),
-                                                        .fraction(2),
+                                                        .fixed(140),
                                                         .fixed(250),
                                                     ]
                                             ),
@@ -195,8 +203,7 @@ struct WebMenuItemTableContent: Component {
                                                         }
                                                         Th("Label")
                                                         Th("URL")
-                                                        Th("Blank")
-                                                        Th("Permission")
+                                                        Th("Target")
                                                         Th("Actions")
                                                     }
                                                 }

@@ -27,6 +27,7 @@ public struct NewAdminRemoveConfirmation: Component {
     public let tabBar: NewAdminTabBar?
     public let sectionTitle: String?
     public let sectionDescription: String?
+    public let sectionHeader: NewAdminPageHeader.State?
     public let contentClass: String?
 
     public init(
@@ -42,6 +43,7 @@ public struct NewAdminRemoveConfirmation: Component {
         tabBar: NewAdminTabBar? = nil,
         sectionTitle: String? = nil,
         sectionDescription: String? = nil,
+        sectionHeader: NewAdminPageHeader.State? = nil,
         contentClass: String? = nil
     ) {
         self.breadcrumb = breadcrumb
@@ -56,6 +58,7 @@ public struct NewAdminRemoveConfirmation: Component {
         self.tabBar = tabBar
         self.sectionTitle = sectionTitle
         self.sectionDescription = sectionDescription
+        self.sectionHeader = sectionHeader
         self.contentClass = contentClass
     }
 
@@ -92,11 +95,14 @@ public struct NewAdminRemoveConfirmation: Component {
                 context.build(tabBar)
             }
             Div {
-                if let sectionTitle {
-                    H2(sectionTitle)
+                if let sectionHeader {
+                    context.build(NewAdminPageHeader(state: sectionHeader))
                 }
-                if let sectionDescription {
-                    P(sectionDescription)
+                else if let sectionTitle {
+                    H2(sectionTitle)
+                    if let sectionDescription {
+                        P(sectionDescription)
+                    }
                 }
                 if !selectedItems.isEmpty {
                     Div {

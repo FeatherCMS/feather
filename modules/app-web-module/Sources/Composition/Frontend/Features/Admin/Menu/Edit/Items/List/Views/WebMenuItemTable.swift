@@ -34,8 +34,17 @@ struct WebMenuItemTable: Component {
             )
             context.build(
                 WebMenuItemGroup {
-                    H2("Menu items")
-                    P("Manage the links and order in this navigation menu.")
+                    context.build(
+                        NewAdminPageHeader(
+                            state: .init(
+                                title: "Menu items",
+                                description:
+                                    "Manage the links and order in this navigation menu.",
+                                level: 2,
+                                showSeparator: true
+                            )
+                        )
+                    )
                     context.build(
                         WebMenuItemTableContent(
                             state: .init(

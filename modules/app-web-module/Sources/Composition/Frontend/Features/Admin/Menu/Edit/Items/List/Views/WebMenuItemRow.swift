@@ -25,10 +25,12 @@ struct WebMenuItemRow: Component {
                     Div {
                         Span("⠿").class("web-menu-item-drag")
                         Div {
-                            Button("↑").type(.button).class("row-btn", "edit")
+                            Button("↑").type(.button)
+                                .class("button", "secondary-ghost", "row-button")
                                 .data("web-menu-item-move", "up")
                                 .ariaLabel("Move \(item.label) up")
-                            Button("↓").type(.button).class("row-btn", "edit")
+                            Button("↓").type(.button)
+                                .class("button", "secondary-ghost", "row-button")
                                 .data("web-menu-item-move", "down")
                                 .ariaLabel("Move \(item.label) down")
                         }
@@ -39,8 +41,15 @@ struct WebMenuItemRow: Component {
             }
             Td(item.label).data("label", "Label")
             Td(item.url).data("label", "URL")
-            Td(item.isBlank ? "Yes" : "No").data("label", "Blank")
-            Td(item.permission).data("label", "Permission")
+            Td {
+                context.build(
+                    NewAdminChip(
+                        label: item.isBlank ? "New tab" : "Same tab",
+                        color: item.isBlank ? .green : .blue
+                    )
+                )
+            }
+            .data("label", "Target")
             context.build(
                 NewAdminListRowActions(
                     label: "Actions",

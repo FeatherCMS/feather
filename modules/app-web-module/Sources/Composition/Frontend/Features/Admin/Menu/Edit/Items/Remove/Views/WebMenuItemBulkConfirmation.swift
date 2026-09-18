@@ -54,8 +54,12 @@ struct WebMenuItemBulkConfirmation: Component {
                         active: .items
                     ).links
                 ),
-                sectionTitle: "Remove selected items",
-                sectionDescription: "This action cannot be undone.",
+                sectionHeader: .init(
+                    title: "Remove selected items",
+                    description: "This action cannot be undone.",
+                    level: 2,
+                    showSeparator: true
+                ),
                 contentClass: "web-menu-item-group"
             )
         )

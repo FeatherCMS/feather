@@ -70,8 +70,17 @@ struct WebMenuItemDetails: Component {
             )
             context.build(
                 WebMenuItemGroup {
-                    H2("View item")
-                    P("Review the navigation menu link.")
+                    context.build(
+                        NewAdminPageHeader(
+                            state: .init(
+                                title: "View item",
+                                description:
+                                    "Review the navigation menu link.",
+                                level: 2,
+                                showSeparator: true
+                            )
+                        )
+                    )
                     Div {
                         detailField(label: "ID", value: state.item.id)
                         detailField(label: "Label", value: state.item.label)
