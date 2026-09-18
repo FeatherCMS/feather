@@ -103,7 +103,7 @@ public struct MediaAssetDatabaseQueries: MediaAssetQueries {
         let variantRows = try await MediaAssetVariantTable(
             connection: context.connection
         )
-        .resolve(nodeIds: ids, variantNames: variants)
+        .resolve(nodeIds: ids, variantKeys: variants)
         var variantsByAsset: [String: [MediaAssetResolve.Variant]] = [:]
         for variant in variantRows {
             variantsByAsset[variant.nodeId, default: []]

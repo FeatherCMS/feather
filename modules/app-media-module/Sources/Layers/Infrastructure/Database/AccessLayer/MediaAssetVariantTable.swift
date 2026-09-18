@@ -165,16 +165,16 @@ struct MediaAssetVariantTable {
         }
     }
 
-    func resolve(nodeIds: [String], variantNames: [String]?) async throws
+    func resolve(nodeIds: [String], variantKeys: [String]?) async throws
         -> [ResolveRow]
     {
         guard !nodeIds.isEmpty else { return [] }
-        if let variantNames, variantNames.isEmpty { return [] }
+        if let variantKeys, variantKeys.isEmpty { return [] }
         let nodeValues = mediaVariantSQLValues(nodeIds)
         let variantFilter: String
-        if let variantNames {
-            let values = mediaVariantSQLValues(variantNames)
-            variantFilter = "AND v.name IN (\(values))"
+        if let variantKeys {
+            let values = mediaVariantSQLValues(variantKeys)
+            variantFilter = "AND mv.variant_key IN (\(values))"
         }
         else {
             variantFilter = ""

@@ -789,6 +789,8 @@ components:
     MediaAssetResolveVariantSchema:
       type: object
       properties:
+        key:
+          $ref: '#/components/schemas/MediaAssetKeyField'
         name:
           type: string
           example: thumb
@@ -799,9 +801,13 @@ components:
           type: string
           example: jpeg
       required:
+      - key
       - name
       - url
       - extension
+    MediaAssetKeyField:
+      type: string
+      example: preview
     MediaAssetPatchSchema:
       type: object
       properties:
