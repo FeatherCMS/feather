@@ -6,7 +6,7 @@ protocol AdminEditWebPageRepository: Sendable {
 
     func load(
         id: String
-    ) async throws -> WebPageDetailsModel
+    ) async throws -> WebPageEditDetailsModel
 
     func update(
         id: String,

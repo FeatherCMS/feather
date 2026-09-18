@@ -29,11 +29,6 @@ struct AdminViewWebPageOpenAPIRepository: AdminViewWebPageRepository {
                     content: page.content,
                     imageAsset: try await mediaAPI.loadImageAsset(
                         assetId: page.imageAssetId
-                    ),
-                    metadata: AdminMetadataSchemaBuilder.formValue(
-                        from: page.metadata,
-                        fallbackTitle: page.title,
-                        fallbackExcerpt: page.excerpt
                     )
                 )
             case .notFound:

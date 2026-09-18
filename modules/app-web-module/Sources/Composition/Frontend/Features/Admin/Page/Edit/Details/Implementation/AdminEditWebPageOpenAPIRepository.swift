@@ -11,7 +11,7 @@ struct AdminEditWebPageOpenAPIRepository: AdminEditWebPageRepository {
 
     func load(
         id: String
-    ) async throws -> WebPageDetailsModel {
+    ) async throws -> WebPageEditDetailsModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.webPageGet(
                 path: .init(webPageId: id),

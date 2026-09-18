@@ -28,11 +28,6 @@ struct AdminRemoveWebPageOpenAPIRepository:
                     content: page.content,
                     imageAsset: try await api.mediaAdminAPI()
                         .loadImageAsset(assetId: page.imageAssetId),
-                    metadata: AdminMetadataSchemaBuilder.formValue(
-                        from: page.metadata,
-                        fallbackTitle: page.title,
-                        fallbackExcerpt: page.excerpt
-                    )
                 )
             case .notFound:
                 throw OpenAPIRepositoryError.notFound

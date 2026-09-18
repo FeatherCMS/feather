@@ -9,7 +9,7 @@ struct AdminEditWebPageDefaultInteractor:
 
     func load(
         id: String
-    ) async throws -> WebPageDetailsModel {
+    ) async throws -> WebPageEditDetailsModel {
         try await repository.load(id: id)
     }
 

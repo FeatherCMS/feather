@@ -10,7 +10,7 @@ struct AdminListWebPageFormOpenAPIRepository {
 
     func load(
         id: String
-    ) async throws -> WebPageDetailsModel {
+    ) async throws -> AdminMetadataFormValue {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.webPageGet(
                 path: .init(webPageId: id),
@@ -19,18 +19,10 @@ struct AdminListWebPageFormOpenAPIRepository {
             switch response {
             case .ok(let okResponse):
                 let page = try okResponse.body.json
-                return .init(
-                    id: page.id,
-                    title: page.title,
-                    excerpt: page.excerpt,
-                    content: page.content,
-                    imageAsset: try await api.mediaAdminAPI()
-                        .loadImageAsset(assetId: page.imageAssetId),
-                    metadata: AdminMetadataSchemaBuilder.formValue(
-                        from: page.metadata,
-                        fallbackTitle: page.title,
-                        fallbackExcerpt: page.excerpt
-                    )
+                return AdminMetadataSchemaBuilder.formValue(
+                    from: page.metadata,
+                    fallbackTitle: page.title,
+                    fallbackExcerpt: page.excerpt
                 )
             case .notFound:
                 throw OpenAPIRepositoryError.notFound

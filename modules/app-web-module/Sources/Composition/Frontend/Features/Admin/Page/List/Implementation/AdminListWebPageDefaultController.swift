@@ -133,10 +133,10 @@ struct AdminListWebPageDefaultController:
         let repository = AdminListWebPageFormOpenAPIRepository(
             api: context.webAdminAPI()
         )
-        let details = try await repository.load(id: id)
+        let metadata = try await repository.load(id: id)
         let targetStatus = resolvedStatus(
             from: payload,
-            current: details.metadata
+            current: metadata
         )
         try await AdminWebMetadataStatusUpdater(
             api: context.webAdminAPI()
@@ -149,18 +149,6 @@ struct AdminListWebPageDefaultController:
         return AdminNotificationFlash.redirect(
             to: payload.normalizedReturnTo ?? "/admin/web/pages/",
             notification: statusNotification(for: targetStatus)
-        )
-    }
-
-    private func makeFormInput(
-        from details: WebPageDetailsModel
-    ) -> WebPageFormInput {
-        .init(
-            title: details.title,
-            excerpt: details.excerpt,
-            content: details.content,
-            imageAssetId: details.imageAsset?.id,
-            submitAction: nil
         )
     }
 

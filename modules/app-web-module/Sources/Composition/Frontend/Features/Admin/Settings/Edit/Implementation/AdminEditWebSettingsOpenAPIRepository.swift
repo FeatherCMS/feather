@@ -196,7 +196,7 @@ struct AdminEditWebSettingsOpenAPIRepository:
                             .init(
                                 id: item.id,
                                 title: item.title,
-                                slug: details.metadata.slug
+                                slug: details.slug
                             )
                         )
                     }
