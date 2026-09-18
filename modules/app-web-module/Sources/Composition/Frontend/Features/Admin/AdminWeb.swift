@@ -5,16 +5,13 @@ import WebContracts
 
 public struct AdminWeb {
     public let renderingEngine: any RenderingEngine
-    public let referenceTypeOptions: [WebMetadataReferenceTypeOption]
     public let templateOptions: [WebPageTemplateOption]
 
     public init(
         renderingEngine: any RenderingEngine,
-        referenceTypeOptions: [WebMetadataReferenceTypeOption] = [],
         templateOptions: [WebPageTemplateOption] = []
     ) {
         self.renderingEngine = renderingEngine
-        self.referenceTypeOptions = referenceTypeOptions
         self.templateOptions = templateOptions
     }
 
@@ -59,23 +56,6 @@ public struct AdminWeb {
 
         AdminRemoveWebPage(
             renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-
-        AdminListWebMetadata(
-            renderingEngine: renderingEngine,
-            referenceTypeOptions: referenceTypeOptions
-        )
-        .controller.route(on: router)
-
-        AdminViewWebMetadata(
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-
-        AdminEditWebMetadata(
-            renderingEngine: renderingEngine,
-            templateOptions: templateOptions
         )
         .controller.route(on: router)
 

@@ -1,6 +1,5 @@
 import FeatherAdmin
 import FeatherContracts
-import SystemContracts
 
 public enum WebAdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {
@@ -37,13 +36,6 @@ public enum WebAdminMenuEventHandlers {
                     icon: "menu",
                     link: "/admin/web/menus/",
                     permission: "web:menus:list"
-                ),
-                .init(
-                    menuKey: "web",
-                    label: "Metadata",
-                    icon: "bookOpen",
-                    link: "/admin/web/metadata/",
-                    permission: SystemPermissions.Admin.access.rawValue
                 ),
                 .init(
                     menuKey: "web",

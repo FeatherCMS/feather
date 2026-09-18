@@ -22,7 +22,6 @@ import WebApplication
 
 func buildRouter(
     environment: AppEnvironment,
-    referenceTypeOptions: [WebMetadataReferenceTypeOption],
     templateOptions: [WebPageTemplateOption],
     templateDefinitions: [WebTemplateDefinition],
     templatePaths: [URL]
@@ -127,7 +126,6 @@ func buildRouter(
     buildAdminRoutes(
         router: adminRouter,
         renderingEngine: renderingEngine,
-        referenceTypeOptions: referenceTypeOptions,
         templateOptions: templateOptions,
         adminEvents: adminEvents
     )

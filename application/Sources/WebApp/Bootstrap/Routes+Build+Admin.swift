@@ -20,7 +20,6 @@ import WebApplication
 func buildAdminRoutes(
     router: Router<DefaultRequestContext>,
     renderingEngine: any RenderingEngine,
-    referenceTypeOptions: [WebMetadataReferenceTypeOption],
     templateOptions: [WebPageTemplateOption],
     adminEvents: any EventPublisher
 ) {
@@ -46,7 +45,6 @@ func buildAdminRoutes(
 
     AdminWeb(
         renderingEngine: renderingEngine,
-        referenceTypeOptions: referenceTypeOptions,
         templateOptions: templateOptions
     )
     .route(on: router)

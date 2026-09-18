@@ -28,10 +28,7 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
                 state: .init(
                     id: id,
                     form: state,
-                    breadcrumb: configuration?.breadcrumb
-                        ?? WebMetadataRoutes.editBreadcrumb(
-                            for: request.uri.path
-                        ),
+                    breadcrumb: breadcrumb(for: configuration),
                     action: request.uri.path,
                     navigationTabs: navigationTabs,
                     pageHeader: .init(
@@ -61,13 +58,27 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: configuration?.breadcrumb
-                        ?? WebMetadataRoutes.editBreadcrumb(
-                            for: request.uri.path
-                        )
+                    breadcrumb: breadcrumb(for: configuration)
                 )
             )
         )
+    }
+
+    private func breadcrumb(
+        for configuration: AdminWebMetadataEditConfiguration?
+    ) -> [NewAdminBreadcrumb.Link] {
+        if let breadcrumb = configuration?.breadcrumb {
+            return breadcrumb
+        }
+        if let marker = request.uri.path.range(of: "/edit/metadata/") {
+            let detailsPath =
+                String(request.uri.path[..<marker.lowerBound]) + "/edit/"
+            return [
+                .init(label: "Admin", link: "/admin/"),
+                .init(label: "Details", link: detailsPath),
+            ]
+        }
+        return WebAdminRoutes.breadcrumb
     }
 
     private func previewPath(for state: WebMetadataForm.State) -> String? {

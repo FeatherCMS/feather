@@ -7,7 +7,7 @@ import OpenAPIRuntime
 import WebContracts
 
 struct AdminEditWebMetadataDefaultController:
-    AdminEditWebMetadataController
+    Sendable
 {
     let templateOptions: [WebPageTemplateOption]
     let buildRuntime:
@@ -45,19 +45,6 @@ struct AdminEditWebMetadataDefaultController:
             referenceType: referenceType,
             navigationTabs: navigationTabs,
             configuration: configuration
-        )
-    }
-
-    func getEditWebMetadata(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> HTMLResponse {
-        try await renderEditWebMetadata(
-            request: request,
-            context: context,
-            referenceType: nil,
-            navigationTabs: [],
-            configuration: nil
         )
     }
 
@@ -114,19 +101,6 @@ struct AdminEditWebMetadataDefaultController:
                 configuration: configuration
             )
         }
-    }
-
-    func postEditWebMetadata(
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> Response {
-        try await renderPostEditWebMetadata(
-            request: request,
-            context: context,
-            referenceType: nil,
-            navigationTabs: [],
-            configuration: nil
-        )
     }
 
     private func renderPostEditWebMetadata(
