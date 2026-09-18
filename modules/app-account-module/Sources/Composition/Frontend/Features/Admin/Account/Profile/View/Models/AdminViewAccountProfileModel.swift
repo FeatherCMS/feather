@@ -23,6 +23,7 @@ struct AdminViewAccountProfileModel: Sendable {
     let firstName: String?
     let lastName: String?
     let profileImageAssetId: String?
+    let profileImageAsset: NewAdminMediaAsset?
 
     init(
         account: AccountModel,
@@ -35,5 +36,6 @@ struct AdminViewAccountProfileModel: Sendable {
         self.firstName = accountProfile.firstName
         self.lastName = accountProfile.lastName
         self.profileImageAssetId = accountProfile.profileImageAssetId
+        self.profileImageAsset = accountProfile.profileImageAsset
     }
 }

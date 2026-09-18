@@ -44,7 +44,7 @@ struct AccountProfileForm: Component {
 
     var state: State
     var action: String = "/admin/account/profile/edit/"
-    var submitLabel: String = "Edit profile"
+    var submitLabel: String = "Save changes"
 
     func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action, nonceToken: state.nonceToken) {
@@ -110,6 +110,13 @@ struct AccountProfileForm: Component {
             Section {
                 Div {
                     context.build(NewAdminSubmitButton(submitLabel))
+                    context.build(
+                        NewAdminButton(
+                            "View profile",
+                            href: AccountAdminRoutes.profile.description,
+                            style: .secondary
+                        )
+                    )
                 }
                 .class("new-admin-form__actions")
             }

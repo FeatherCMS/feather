@@ -11,6 +11,7 @@ struct UserIdentityDetails: Component {
     let permissions: NewAdminListActions
 
     func html(context: inout BuilderContext) -> Section {
+        let statusChip = UserIdentityStatusChip.make(status: identity.status)
         var actions: [NewAdminDetailView.Action] = []
         if permissions.allows(UserPermissions.Identities.update) {
             actions.append(
@@ -44,7 +45,10 @@ struct UserIdentityDetails: Component {
                     .init(label: "Name", value: identity.name),
                     .init(
                         label: "Status",
-                        value: identity.status.emptyToNil ?? "—"
+                        chip: .init(
+                            label: statusChip.label,
+                            color: statusChip.color
+                        )
                     ),
                     .init(
                         label: "Roles",
