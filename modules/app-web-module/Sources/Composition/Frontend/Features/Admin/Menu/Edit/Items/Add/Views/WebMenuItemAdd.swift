@@ -24,8 +24,8 @@ struct WebMenuItemAdd: Component {
             context.build(
                 NewAdminPageHeader(
                     state: .init(
-                        title: "Add item",
-                        description: "Add a link to the navigation menu."
+                        title: "Edit menu",
+                        description: "Update the navigation menu configuration."
                     )
                 )
             )
@@ -33,12 +33,19 @@ struct WebMenuItemAdd: Component {
                 AdminWebMenuTabs(menuID: state.menuId, active: .items)
             )
             context.build(
-                WebMenuItemForm(
-                    state: state.form,
-                    action: WebMenuItemRoutes.add(RouterPath(state.menuId))
-                        .description,
-                    submitLabel: "Add item"
-                )
+                WebMenuItemGroup {
+                    H2("Add item")
+                    P("Add a link to the navigation menu.")
+                    context.build(
+                        WebMenuItemForm(
+                            state: state.form,
+                            action: WebMenuItemRoutes.add(
+                                RouterPath(state.menuId)
+                            ).description,
+                            submitLabel: "Add item"
+                        )
+                    )
+                }
             )
         }
         .class("cms-section")

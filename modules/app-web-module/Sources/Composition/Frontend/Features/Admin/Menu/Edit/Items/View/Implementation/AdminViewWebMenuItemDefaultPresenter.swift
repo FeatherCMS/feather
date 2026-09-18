@@ -18,13 +18,11 @@ struct AdminViewWebMenuItemDefaultPresenter: AdminViewWebMenuItemPresenter {
         try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
-            title: "Item details",
+            title: "Edit menu",
             content: WebMenuItemDetails(
                 state: .init(
                     item: rule,
-                    breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
-                        RouterPath(rule.menuId)
-                    )
+                    breadcrumb: WebMenuRoutes.breadcrumb
                 )
             )
         )
@@ -39,14 +37,12 @@ struct AdminViewWebMenuItemDefaultPresenter: AdminViewWebMenuItemPresenter {
         try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
-            title: "Item details",
+            title: "Edit menu",
             content: WebMenuItemError(
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
-                        RouterPath(menuId)
-                    )
+                    breadcrumb: WebMenuRoutes.breadcrumb
                 )
             )
         )

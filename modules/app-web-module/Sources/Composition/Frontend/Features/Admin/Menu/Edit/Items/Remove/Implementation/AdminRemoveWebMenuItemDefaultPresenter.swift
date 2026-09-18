@@ -16,7 +16,8 @@ struct AdminRemoveWebMenuItemDefaultPresenter:
 
     func renderRemovePage(
         menuId: String,
-        item: NewAdminRemoveItemContext
+        item: NewAdminRemoveItemContext,
+        origin: WebMenuItemRoutes.RemoveOrigin
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -24,16 +25,15 @@ struct AdminRemoveWebMenuItemDefaultPresenter:
         return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
-            title: "Remove item",
+            title: "Edit menu",
             content: WebMenuItemConfirmation(
                 state: .init(
                     menuId: menuId,
                     id: item.id,
                     label: item.label,
-                    breadcrumb: WebMenuItemRoutes.breadcrumb(
-                        RouterPath(menuId)
-                    ),
-                    nonceToken: nonceToken
+                    breadcrumb: WebMenuRoutes.breadcrumb,
+                    nonceToken: nonceToken,
+                    origin: origin
                 )
             )
         )
@@ -43,19 +43,18 @@ struct AdminRemoveWebMenuItemDefaultPresenter:
         menuId: String,
         id: String,
         info: String,
-        message: String
+        message: String,
+        origin: WebMenuItemRoutes.RemoveOrigin
     ) async throws -> HTMLResponse {
         try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
-            title: "Remove item",
+            title: "Edit menu",
             content: WebMenuItemError(
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: WebMenuItemRoutes.breadcrumb(
-                        RouterPath(menuId)
-                    )
+                    breadcrumb: WebMenuRoutes.breadcrumb
                 )
             )
         )

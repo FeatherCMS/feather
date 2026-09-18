@@ -19,12 +19,12 @@ struct AdminAddWebMenuItemDefaultPresenter: AdminAddWebMenuItemPresenter {
         try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
-            title: "Add item",
+            title: "Edit menu",
             content: WebMenuItemAdd(
                 state: .init(
                     menuId: menuId,
                     form: state,
-                    breadcrumb: WebMenuItemRoutes.breadcrumb(RouterPath(menuId))
+                    breadcrumb: WebMenuRoutes.breadcrumb
                 )
             )
         )

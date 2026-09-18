@@ -20,13 +20,13 @@ struct AdminEditWebMenuItemDefaultPresenter: AdminEditWebMenuItemPresenter {
         try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
-            title: "Edit item",
+            title: "Edit menu",
             content: WebMenuItemEdit(
                 state: .init(
                     menuId: menuId,
                     id: id,
                     form: state,
-                    breadcrumb: WebMenuItemRoutes.breadcrumb(RouterPath(menuId))
+                    breadcrumb: WebMenuRoutes.breadcrumb
                 )
             )
         )
@@ -42,12 +42,12 @@ struct AdminEditWebMenuItemDefaultPresenter: AdminEditWebMenuItemPresenter {
         try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
-            title: "Edit item",
+            title: "Edit menu",
             content: WebMenuItemError(
                 state: .init(
                     info: info,
                     message: message,
-                    breadcrumb: WebMenuItemRoutes.breadcrumb(RouterPath(menuId))
+                    breadcrumb: WebMenuRoutes.breadcrumb
                 )
             )
         )

@@ -34,14 +34,12 @@ struct AdminListWebMenuItemDefaultPresenter:
             return try await renderEngine.renderNewAdminPage(
                 request: request,
                 context: context,
-                title: "Manage items",
+                title: "Edit menu",
                 content: WebMenuItemError(
                     state: .init(
                         info: "Unable to load web menu items.",
                         message: error,
-                        breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
-                            RouterPath(menuId)
-                        )
+                        breadcrumb: WebMenuRoutes.breadcrumb
                     )
                 )
             )
@@ -50,14 +48,12 @@ struct AdminListWebMenuItemDefaultPresenter:
             return try await renderEngine.renderNewAdminPage(
                 request: request,
                 context: context,
-                title: "Manage items",
+                title: "Edit menu",
                 content: WebMenuItemError(
                     state: .init(
                         info: "Forbidden",
                         message: "Your account cannot access web menu items.",
-                        breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
-                            RouterPath(menuId)
-                        )
+                        breadcrumb: WebMenuRoutes.breadcrumb
                     )
                 )
             )
@@ -65,7 +61,7 @@ struct AdminListWebMenuItemDefaultPresenter:
         return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
-            title: "Manage items",
+            title: "Edit menu",
             content: WebMenuItemTable(
                 state: .init(
                     menuId: menuId,
@@ -77,9 +73,7 @@ struct AdminListWebMenuItemDefaultPresenter:
                         total: model.total
                     ),
                     search: search,
-                    breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
-                        RouterPath(menuId)
-                    )
+                    breadcrumb: WebMenuRoutes.breadcrumb
                 )
             )
         )
@@ -97,28 +91,15 @@ struct AdminListWebMenuItemDefaultPresenter:
         return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
-            title: "Remove selected items",
-            content: NewAdminRemoveConfirmation(
-                breadcrumb: WebMenuItemRoutes.menuBreadcrumb(
-                    RouterPath(menuId)
-                ),
-                pageHeader: .init(
-                    title: "Remove selected items",
-                    description: "This action cannot be undone."
-                ),
-                selectedItems: items.map(\.label),
-                action: WebMenuItemRoutes.remove(RouterPath(menuId))
-                    .description,
-                cancel: NewAdminLocation.url(
-                    path: WebMenuItemRoutes.list(RouterPath(menuId))
-                        .description,
+            title: "Edit menu",
+            content: WebMenuItemBulkConfirmation(
+                state: .init(
+                    menuId: menuId,
                     page: page,
-                    search: search
-                ),
-                nonceToken: nonceToken,
-                hiddenFields: items.map {
-                    .init(name: "ids", value: $0.id)
-                }
+                    search: search,
+                    items: items,
+                    nonceToken: nonceToken
+                )
             )
         )
     }

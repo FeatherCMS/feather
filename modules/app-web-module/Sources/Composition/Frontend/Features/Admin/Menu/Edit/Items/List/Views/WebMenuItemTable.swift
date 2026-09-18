@@ -23,9 +23,9 @@ struct WebMenuItemTable: Component {
             context.build(
                 NewAdminPageHeader(
                     state: .init(
-                        title: "Menu items",
+                        title: "Edit menu",
                         description:
-                            "Manage the links and order in this navigation menu."
+                            "Update the navigation menu configuration."
                     )
                 )
             )
@@ -33,15 +33,21 @@ struct WebMenuItemTable: Component {
                 AdminWebMenuTabs(menuID: state.menuId, active: .items)
             )
             context.build(
-                WebMenuItemTableContent(
-                    state: .init(
-                        menuId: state.menuId,
-                        permissions: state.permissions,
-                        items: state.items,
-                        pageState: state.pageState,
-                        search: state.search
+                WebMenuItemGroup {
+                    H2("Menu items")
+                    P("Manage the links and order in this navigation menu.")
+                    context.build(
+                        WebMenuItemTableContent(
+                            state: .init(
+                                menuId: state.menuId,
+                                permissions: state.permissions,
+                                items: state.items,
+                                pageState: state.pageState,
+                                search: state.search
+                            )
+                        )
                     )
-                )
+                }
             )
         }
         .class("cms-section")

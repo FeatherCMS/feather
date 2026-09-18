@@ -25,8 +25,8 @@ struct WebMenuItemEdit: Component {
             context.build(
                 NewAdminPageHeader(
                     state: .init(
-                        title: "Edit item",
-                        description: "Update the navigation menu link."
+                        title: "Edit menu",
+                        description: "Update the navigation menu configuration."
                     )
                 )
             )
@@ -34,23 +34,29 @@ struct WebMenuItemEdit: Component {
                 AdminWebMenuTabs(menuID: state.menuId, active: .items)
             )
             context.build(
-                WebMenuItemForm(
-                    state: state.form,
-                    action:
-                        WebMenuItemRoutes.edit(
-                            RouterPath(state.menuId),
-                            RouterPath(state.id)
+                WebMenuItemGroup {
+                    H2("Edit item")
+                    P("Update the navigation menu link.")
+                    context.build(
+                        WebMenuItemForm(
+                            state: state.form,
+                            action:
+                                WebMenuItemRoutes.edit(
+                                    RouterPath(state.menuId),
+                                    RouterPath(state.id)
+                                )
+                                .description,
+                            submitLabel: "Edit item",
+                            removeHref:
+                                WebMenuItemRoutes.itemRemove(
+                                    RouterPath(state.menuId),
+                                    RouterPath(state.id),
+                                    origin: .edit
+                                ),
+                            removeLabel: "Remove item"
                         )
-                        .description,
-                    submitLabel: "Edit item",
-                    removeHref:
-                        WebMenuItemRoutes.details(
-                            RouterPath(state.menuId),
-                            RouterPath(state.id)
-                        )
-                        .appendingPath(RouterPath("remove")).description,
-                    removeLabel: "Remove item"
-                )
+                    )
+                }
             )
         }
         .class("cms-section")

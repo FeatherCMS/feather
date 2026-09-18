@@ -73,7 +73,9 @@ struct AdminListWebMenuItemDefaultController:
                 status: .seeOther,
                 headers: [
                     .location: NewAdminLocation.url(
-                        path: "/admin/web/menus/\(menuId)/",
+                        path: WebMenuItemRoutes.list(
+                            RouterPath(menuId)
+                        ).description,
                         page: page,
                         search: search
                     )
@@ -114,7 +116,7 @@ struct AdminListWebMenuItemDefaultController:
             )
         }
         let location = NewAdminLocation.url(
-            path: "/admin/web/menus/\(menuId)/",
+            path: WebMenuItemRoutes.list(RouterPath(menuId)).description,
             page: payload.normalizedPage,
             search: payload.normalizedSearch
         )

@@ -19,11 +19,15 @@ struct AdminRemoveWebMenuItemDefaultController:
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
+        let origin = WebMenuItemRoutes.removeOrigin(
+            request.queryString("origin")
+        )
         do {
             let rule = try await runtime.interactor.get(menuId: menuId, id: id)
             return try await runtime.presenter.renderRemovePage(
                 menuId: menuId,
-                item: .init(id: id, label: rule.label)
+                item: .init(id: id, label: rule.label),
+                origin: origin
             )
         }
         catch let error as OpenAPIRepositoryError {
@@ -31,7 +35,8 @@ struct AdminRemoveWebMenuItemDefaultController:
                 menuId: menuId,
                 id: id,
                 info: error.errorTitle,
-                message: error.errorDescription
+                message: error.errorDescription,
+                origin: origin
             )
         }
     }
@@ -43,6 +48,9 @@ struct AdminRemoveWebMenuItemDefaultController:
         let runtime = buildRuntime(request, context)
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
+        let origin = WebMenuItemRoutes.removeOrigin(
+            request.queryString("origin")
+        )
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
@@ -56,7 +64,7 @@ struct AdminRemoveWebMenuItemDefaultController:
         do {
             try await runtime.interactor.delete(menuId: menuId, id: id)
             return AdminNotificationFlash.redirect(
-                to: "/admin/web/menus/\(menuId)/items/",
+                to: WebMenuItemRoutes.list(RouterPath(menuId)).description,
                 notification: .init(
                     title: "Removed",
                     message: "Item removed successfully."
@@ -69,7 +77,8 @@ struct AdminRemoveWebMenuItemDefaultController:
                     menuId: menuId,
                     id: id,
                     info: error.errorTitle,
-                    message: error.errorDescription
+                    message: error.errorDescription,
+                    origin: origin
                 )
                 .response(from: request, context: context)
         }
