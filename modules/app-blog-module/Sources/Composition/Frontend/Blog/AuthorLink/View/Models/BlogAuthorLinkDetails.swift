@@ -26,7 +26,6 @@ struct BlogAuthorLinkDetails: Component {
                         description: "Review this author link."
                     ),
                     fields: [
-                        .init(label: "ID", value: state.rule.id),
                         .init(label: "Label", value: state.rule.label),
                         .init(label: "URL", value: state.rule.url),
                         .init(

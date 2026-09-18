@@ -33,7 +33,6 @@ struct AccountProfileDetails: Component {
                     description: "Inspect the current administrator profile."
                 ),
                 fields: [
-                    .init(label: "ID", value: state.profile.id),
                     .init(
                         label: "Profile image",
                         value: state.profile.profileImageAssetId ?? "—"

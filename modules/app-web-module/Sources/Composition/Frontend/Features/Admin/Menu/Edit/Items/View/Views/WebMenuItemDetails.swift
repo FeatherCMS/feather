@@ -82,7 +82,6 @@ struct WebMenuItemDetails: Component {
                         )
                     )
                     Div {
-                        detailField(label: "ID", value: state.item.id)
                         detailField(label: "Label", value: state.item.label)
                         detailField(label: "URL", value: state.item.url)
                         detailField(

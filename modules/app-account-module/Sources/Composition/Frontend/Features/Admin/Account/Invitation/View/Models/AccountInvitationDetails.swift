@@ -23,7 +23,6 @@ struct AccountInvitationDetails: Component {
                             "Review invitation status and assigned roles."
                     ),
                     fields: [
-                        .init(label: "ID", value: state.invitation.id),
                         .init(label: "Email", value: state.invitation.email),
                         .init(
                             label: "Roles",

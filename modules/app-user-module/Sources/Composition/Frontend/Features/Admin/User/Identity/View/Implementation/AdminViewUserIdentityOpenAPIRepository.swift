@@ -26,6 +26,7 @@ struct AdminViewUserIdentityOpenAPIRepository: AdminViewUserIdentityRepository {
                 let identity = try okResponse.body.json
                 return .init(
                     id: identity.id,
+                    name: identity.name,
                     status: identity.status.rawValue,
                     roleIds: Array(identity.roleIds ?? [])
                 )

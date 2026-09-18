@@ -19,7 +19,6 @@ struct AnalyticsLogDetails: Component {
                         description: "Inspect the recorded request metadata."
                     ),
                     fields: [
-                        .init(label: "ID", value: log.id),
                         .init(
                             label: "Account ID",
                             value: display(log.accountId)

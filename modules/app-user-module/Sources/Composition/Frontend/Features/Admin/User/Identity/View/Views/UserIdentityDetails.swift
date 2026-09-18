@@ -41,6 +41,7 @@ struct UserIdentityDetails: Component {
                 ),
                 fields: [
                     .init(label: "ID", value: identity.id),
+                    .init(label: "Name", value: identity.name),
                     .init(
                         label: "Status",
                         value: identity.status.emptyToNil ?? "—"

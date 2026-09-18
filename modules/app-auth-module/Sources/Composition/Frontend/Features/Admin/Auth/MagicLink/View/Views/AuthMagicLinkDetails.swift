@@ -24,7 +24,6 @@ struct AuthMagicLinkDetails: Component {
                     description: "Inspect this sign-in magic link."
                 ),
                 fields: [
-                    .init(label: "ID", value: state.link.id),
                     .init(
                         label: "Credential ID",
                         value: state.link.credentialId

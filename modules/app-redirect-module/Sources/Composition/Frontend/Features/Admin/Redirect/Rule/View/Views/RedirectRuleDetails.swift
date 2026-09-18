@@ -19,7 +19,6 @@ struct RedirectRuleDetails: Component {
                         description: "Review the redirect rule configuration."
                     ),
                     fields: [
-                        .init(label: "ID", value: rule.id),
                         .init(label: "Source", value: rule.source),
                         .init(label: "Destination", value: rule.destination),
                         .init(
