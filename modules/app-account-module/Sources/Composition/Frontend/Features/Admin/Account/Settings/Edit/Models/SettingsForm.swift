@@ -41,10 +41,11 @@ struct SettingsForm: Component {
                     state: .init(
                         name: state.language.key,
                         label: state.language.label,
-                        value: state.language.value,
+                        values: state.language.value.map { [$0] } ?? [],
                         error: state.language.error,
                         isRequired: true,
-                        isDisabled: !state.canEdit
+                        isDisabled: !state.canEdit,
+                        selectionMode: .single
                     )
                 )
             )
