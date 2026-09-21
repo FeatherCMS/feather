@@ -36,6 +36,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
         public let isRequired: Bool
         public let isDisabled: Bool
         public let selectionMode: SelectionMode
+        public let submitsValues: Bool
 
         public init(
             name: String,
@@ -45,7 +46,8 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
             error: String? = nil,
             isRequired: Bool = false,
             isDisabled: Bool = false,
-            selectionMode: SelectionMode = .single
+            selectionMode: SelectionMode = .single,
+            submitsValues: Bool = true
         ) {
             self.name = name
             self.label = label
@@ -55,6 +57,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
             self.isRequired = isRequired
             self.isDisabled = isDisabled
             self.selectionMode = selectionMode
+            self.submitsValues = submitsValues
         }
     }
 
@@ -347,8 +350,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                                 $0.ariaErrorMessage(errorID)
                             }
                             .if(
-                                state.isRequired
-                                    && state.selectionMode == .single
+                                state.isRequired && selectedOptions.isEmpty
                             ) { $0.required() }
                             .if(state.isDisabled) { $0.disabled() }
                             .if(
@@ -386,9 +388,9 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
             for selected in selectedOptions {
                 Input()
                     .type(.hidden)
-                    .name(state.name)
                     .value(selected.value)
                     .class("new-admin-autocomplete__value")
+                    .if(state.submitsValues) { $0.name(state.name) }
             }
             Div {}
                 .class("new-admin-autocomplete__status")
@@ -406,6 +408,8 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
         .class("new-admin-autocomplete")
         .data("name", state.name)
         .data("mode", state.selectionMode.rawValue)
+        .data("required", state.isRequired ? "true" : "false")
+        .data("submits-values", state.submitsValues ? "true" : "false")
         .data("error-id", errorID)
     }
 
@@ -425,6 +429,8 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                     var source = root.querySelector(".new-admin-autocomplete__options");
                     if (!input || !toggle || !list || !source) { return; }
                     var multiple = root.dataset.mode === "multiple";
+                    var required = root.dataset.required === "true";
+                    var submitsValues = root.dataset.submitsValues === "true";
                     var options = [];
                     try { options = JSON.parse(source.textContent || "[]"); } catch (_) { options = []; }
                     var selectedValues = Array.prototype.map.call(
@@ -454,11 +460,21 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                         selectedValues.forEach(function (value) {
                             var hidden = document.createElement("input");
                             hidden.type = "hidden";
-                            hidden.name = root.dataset.name || "";
+                            if (submitsValues) {
+                                hidden.name = root.dataset.name || "";
+                            }
                             hidden.value = value;
                             hidden.className = "new-admin-autocomplete__value";
                             root.appendChild(hidden);
                         });
+                    }
+
+                    function updateRequired() {
+                        var isMissing = required && selectedValues.length === 0;
+                        input.required = isMissing;
+                        input.setCustomValidity(
+                            isMissing ? "Select an option from the list." : ""
+                        );
                     }
 
                     function renderSelected() {
@@ -524,6 +540,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                             active = -1;
                             syncHiddenInputs();
                             renderSelected();
+                            updateRequired();
                             if (status) { status.textContent = item.label + " selected."; }
                             setOpen(true);
                             return;
@@ -531,6 +548,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                         input.value = item.label;
                         selectedValues = [item.value];
                         syncHiddenInputs();
+                        updateRequired();
                         if (status) { status.textContent = item.label + " selected."; }
                         setOpen(true);
                     }
@@ -539,6 +557,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                         selectedValues = selectedValues.filter(function (item) { return item !== value; });
                         syncHiddenInputs();
                         renderSelected();
+                        updateRequired();
                         var removed = options.find(function (item) { return item.value === value; });
                         if (status && removed) { status.textContent = removed.label + " removed."; }
                     }
@@ -548,6 +567,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                         if (!multiple) {
                             selectedValues = [];
                             syncHiddenInputs();
+                            updateRequired();
                         }
                         active = 0;
                         setOpen(true);
@@ -584,9 +604,32 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                         setOpen(!open);
                         if (open) { input.focus(); }
                     });
+                    root.addEventListener("new-admin-autocomplete-set-values", function (event) {
+                        var values = event.detail && Array.isArray(event.detail.values)
+                            ? event.detail.values
+                            : [];
+                        selectedValues = values.filter(function (value, index) {
+                            return options.some(function (item) { return item.value === value; })
+                                && values.indexOf(value) === index;
+                        });
+                        if (!multiple) {
+                            selectedValues = selectedValues.slice(0, 1);
+                            var selected = selectedOptions()[0];
+                            input.value = selected ? selected.label : "";
+                        }
+                        else {
+                            input.value = "";
+                        }
+                        syncHiddenInputs();
+                        renderSelected();
+                        updateRequired();
+                        active = -1;
+                        setOpen(false);
+                    });
                     document.addEventListener("mousedown", function (event) { if (!root.contains(event.target)) { setOpen(false); } });
                     renderSelected();
                     syncHiddenInputs();
+                    updateRequired();
                 }
 
                 function initializeAll() { document.querySelectorAll(".new-admin-autocomplete").forEach(initialize); }

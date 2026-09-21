@@ -4,30 +4,46 @@ import SGML
 import WebBuilders
 import WebComponents
 
-/// A select-based form field containing language codes and their display names.
+/// An autocomplete form field containing language codes and display names.
 public struct NewAdminFormFieldLanguage: Component {
+    public typealias Option = NewAdminFormFieldSelectAutocomplete.Option
+    public typealias SelectionMode =
+        NewAdminFormFieldSelectAutocomplete.SelectionMode
+
     public struct State: Sendable {
         public var name: String
         public var label: String
-        public var value: String?
+        public var values: [String]
+        public var options: [Option]?
+        public var placeholder: String?
         public var error: String?
         public var isRequired: Bool
         public var isDisabled: Bool
+        public var selectionMode: SelectionMode
+        public var submitsValues: Bool
 
         public init(
             name: String,
             label: String,
-            value: String? = nil,
+            values: [String] = [],
+            options: [Option]? = nil,
+            placeholder: String? = nil,
             error: String? = nil,
             isRequired: Bool = false,
-            isDisabled: Bool = false
+            isDisabled: Bool = false,
+            selectionMode: SelectionMode = .single,
+            submitsValues: Bool = true
         ) {
             self.name = name
             self.label = label
-            self.value = value
+            self.values = values
+            self.options = options
+            self.placeholder = placeholder
             self.error = error
             self.isRequired = isRequired
             self.isDisabled = isDisabled
+            self.selectionMode = selectionMode
+            self.submitsValues = submitsValues
         }
     }
 
@@ -42,26 +58,51 @@ public struct NewAdminFormFieldLanguage: Component {
     }
 
     public func html(context: inout BuilderContext) -> Section {
-        context.build(
-            NewAdminFormFieldSelect(
+        let selectedValues = Set(
+            state.selectionMode == .single
+                ? Array(state.values.prefix(1))
+                : state.values
+        )
+        let options = (state.options ?? Self.options).map {
+            Option(
+                label: $0.label,
+                value: $0.value,
+                isSelected: selectedValues.contains($0.value)
+                    || selectedValues.contains($0.label)
+            )
+        }
+        return context.build(
+            NewAdminFormFieldSelectAutocomplete(
                 state: .init(
                     name: state.name,
                     label: state.label,
-                    value: state.value,
-                    options: Self.options,
+                    placeholder: state.placeholder
+                        ?? defaultPlaceholder,
+                    options: options,
                     error: state.error,
                     isRequired: state.isRequired,
-                    isDisabled: state.isDisabled
+                    isDisabled: state.isDisabled,
+                    selectionMode: state.selectionMode,
+                    submitsValues: state.submitsValues
                 )
             )
         )
     }
 
-    public static var options: [NewAdminFormFieldSelect.SelectOption] {
+    public static var options: [Option] {
         languageOptions
     }
 
-    private static let languageOptions: [NewAdminFormFieldSelect.SelectOption] =
+    private var defaultPlaceholder: String {
+        switch state.selectionMode {
+        case .single:
+            "Select a language"
+        case .multiple:
+            "Select one or more languages"
+        }
+    }
+
+    private static let languageOptions: [Option] =
         [
             .init(label: "Afrikaans", value: "af"),
             .init(label: "Albanian - (Shqip)", value: "sq"),
