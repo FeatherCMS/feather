@@ -113,18 +113,18 @@ public struct TableSeedMigration: DatabaseMigration {
 
         let coverDefinitions:
             [(name: String, extensions: String, command: String)] =
-            [
-                (
-                    "ImageMagick",
-                    "png,jpg,jpeg,bmp",
-                    "magick -define jpeg:size=2560x1280 {input.fullname} -filter Triangle -resize 1920x960^ -gravity center -extent 1920x960 -strip -quality 82 -define webp:method=3 {output.dirname}/{output.basename}.webp"
-                ),
-                (
-                    "FFmpeg",
-                    "mp4,mov,avi",
-                    "ffmpeg -y -ss 00:00:01 -i \"{input.fullname}\" -frames:v 1 -vf \"scale=1920:960:force_original_aspect_ratio=increase,crop=1920:960\" \"{output.dirname}/{output.basename}.png\""
-                ),
-            ]
+                [
+                    (
+                        "ImageMagick",
+                        "png,jpg,jpeg,bmp",
+                        "magick -define jpeg:size=2560x1280 {input.fullname} -filter Triangle -resize 1920x960^ -gravity center -extent 1920x960 -strip -quality 82 -define webp:method=3 {output.dirname}/{output.basename}.webp"
+                    ),
+                    (
+                        "FFmpeg",
+                        "mp4,mov,avi",
+                        "ffmpeg -y -ss 00:00:01 -i \"{input.fullname}\" -frames:v 1 -vf \"scale=1920:960:force_original_aspect_ratio=increase,crop=1920:960\" \"{output.dirname}/{output.basename}.png\""
+                    ),
+                ]
 
         let existingCoverProcessors = try await processorRepository.list(
             variantId: coverVariant.id

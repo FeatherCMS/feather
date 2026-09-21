@@ -26,7 +26,8 @@ struct ArticleCategoryTable {
         articleIDs: [String]
     ) async throws -> [String: [String]] {
         guard !articleIDs.isEmpty else { return [:] }
-        let values = articleIDs
+        let values =
+            articleIDs
             .map {
                 "'\($0.replacingOccurrences(of: "'", with: "''"))'"
             }

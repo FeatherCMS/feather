@@ -88,9 +88,10 @@ public struct NewAdminDetailView: Component {
                     Div {
                         P(field.label).class("admin-detail-view-field-label")
                         if let imageURL = field.imageURL {
-                            Img(src: imageURL, alt: field.label).class(
-                                "admin-detail-view-field-image"
-                            )
+                            Img(src: imageURL, alt: field.label)
+                                .class(
+                                    "admin-detail-view-field-image"
+                                )
                         }
                         else if let chips = field.chips {
                             Div {
@@ -114,9 +115,10 @@ public struct NewAdminDetailView: Component {
                             )
                         }
                         else {
-                            P(field.value).class(
-                                "admin-detail-view-field-value"
-                            )
+                            P(field.value)
+                                .class(
+                                    "admin-detail-view-field-value"
+                                )
                         }
                     }
                     .class("admin-detail-view-field")

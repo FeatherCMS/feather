@@ -28,21 +28,21 @@ struct AdminListSystemJobDefaultInteractor: AdminListSystemJobInteractor {
             guard status == nil || job.status == status else { return false }
             guard !normalizedSearch.isEmpty else { return true }
             return [
-                    job.id,
-                    job.queueName,
-                    job.workerId ?? "",
-                    String(job.status),
-                    job.payload,
-                ]
-                .contains {
-                    $0.localizedCaseInsensitiveContains(normalizedSearch)
-                }
+                job.id,
+                job.queueName,
+                job.workerId ?? "",
+                String(job.status),
+                job.payload,
+            ]
+            .contains {
+                $0.localizedCaseInsensitiveContains(normalizedSearch)
+            }
         }
         let sortedJobs = filteredJobs.sorted { lhs, rhs in
             let left = SystemJobPayload(job: lhs).queuedAtTimestamp
             let right = SystemJobPayload(job: rhs).queuedAtTimestamp
             switch (left, right) {
-            case let (left?, right?):
+            case (let left?, let right?):
                 if left != right { return left > right }
                 return lhs.id > rhs.id
             case (_?, nil): return true

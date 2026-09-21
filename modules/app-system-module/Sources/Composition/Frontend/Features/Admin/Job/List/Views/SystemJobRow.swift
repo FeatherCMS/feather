@@ -33,7 +33,7 @@ struct SystemJobRow: Component {
             Td {
                 context.build(statusChip(job.status))
             }
-                .data("label", "Status")
+            .data("label", "Status")
             context.build(
                 NewAdminListRowActions(
                     label: "Actions",

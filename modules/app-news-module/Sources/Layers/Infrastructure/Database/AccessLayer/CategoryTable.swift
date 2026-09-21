@@ -108,7 +108,8 @@ struct CategoryTable {
         ids: [String]
     ) async throws -> [Row] {
         guard !ids.isEmpty else { return [] }
-        let values = ids
+        let values =
+            ids
             .map {
                 "'\($0.replacingOccurrences(of: "'", with: "''"))'"
             }

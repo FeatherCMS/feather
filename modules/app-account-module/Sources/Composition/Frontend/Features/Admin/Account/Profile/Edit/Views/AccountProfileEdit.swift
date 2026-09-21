@@ -42,11 +42,11 @@ struct AccountProfileEdit: Component {
             }
 
             context.build(
-                    AccountProfileForm(
-                        state: state.form,
-                        action: "/admin/account/profile/edit/",
-                        submitLabel: "Save changes"
-                    )
+                AccountProfileForm(
+                    state: state.form,
+                    action: "/admin/account/profile/edit/",
+                    submitLabel: "Save changes"
+                )
             )
         }
         .class("cms-section")

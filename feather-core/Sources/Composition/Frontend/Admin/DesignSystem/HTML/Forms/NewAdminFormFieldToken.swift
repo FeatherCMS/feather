@@ -139,7 +139,9 @@ public struct NewAdminFormFieldToken: Component {
                 Color(.red)
                 FontSize(0.86.rem)
             },
-            Custom(".new-admin-token-field.has-error .new-admin-token-field__control") {
+            Custom(
+                ".new-admin-token-field.has-error .new-admin-token-field__control"
+            ) {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Secondary.border)
                 )

@@ -48,7 +48,7 @@ public struct ListPublicArticles {
                         title: item.title,
                         excerpt: item.excerpt,
                         imageAssetId: item.imageAssetId,
-                    imageURL: "",
+                        imageURL: "",
                         media: nil,
                         metadata: metadata,
                         readingTime: NewsReadingTime.minutes(for: item.content),
