@@ -104,6 +104,27 @@ struct CategoryTable {
         }
     }
 
+    func list(
+        ids: [String]
+    ) async throws -> [Row] {
+        guard !ids.isEmpty else { return [] }
+        let values = ids
+            .map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
+        return try await connection.run(
+            query: #"""
+                SELECT *
+                FROM news_category
+                WHERE id IN (\#(unescaped: values))
+                ORDER BY id ASC;
+                """#
+        ) { sequence in
+            try await sequence.collect().map { try Row(from: $0) }
+        }
+    }
+
     func count(
         search: String?
     ) async throws -> Int {

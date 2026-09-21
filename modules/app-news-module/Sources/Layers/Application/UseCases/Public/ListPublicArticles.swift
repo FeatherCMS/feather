@@ -28,6 +28,9 @@ public struct ListPublicArticles {
                     sort: [.init(field: .createdAt, direction: .desc)]
                 )
             )
+            let categoryIDsByArticleID = try await scope.article.categoryIDs(
+                for: articles.items.map(\.id)
+            )
             var result: [PublicNewsArticleSummary] = []
             for item in articles.items {
                 guard
@@ -45,9 +48,11 @@ public struct ListPublicArticles {
                         title: item.title,
                         excerpt: item.excerpt,
                         imageAssetId: item.imageAssetId,
-                        imageURL: "",
+                    imageURL: "",
                         media: nil,
-                        metadata: metadata
+                        metadata: metadata,
+                        readingTime: NewsReadingTime.minutes(for: item.content),
+                        categoryIDs: categoryIDsByArticleID[item.id] ?? []
                     )
                 )
             }

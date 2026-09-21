@@ -59,6 +59,7 @@ public struct ListArticles: UseCase {
                         id: item.id,
                         title: item.title,
                         excerpt: item.excerpt,
+                        content: item.content,
                         imageAssetId: item.imageAssetId,
                         createdAt: item.createdAt,
                         updatedAt: item.updatedAt

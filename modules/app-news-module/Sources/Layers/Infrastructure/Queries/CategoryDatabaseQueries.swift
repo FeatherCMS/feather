@@ -110,6 +110,25 @@ public struct CategoryDatabaseQueries: CategoryQueries {
         return row.asDetail(metadata: metadata)
     }
 
+    public func find(
+        ids: [String]
+    ) async throws -> [CategoryDetail] {
+        guard !ids.isEmpty else { return [] }
+        let rows = try await CategoryTable(connection: context.connection)
+            .list(ids: ids)
+        let details = try await metadata.resolveDetails(
+            referenceType: "news.category",
+            referenceIDs: ids
+        )
+        let metadataByID = Dictionary(
+            uniqueKeysWithValues: details.map { ($0.referenceID, $0) }
+        )
+        return rows.compactMap { row in
+            guard let detail = metadataByID[row.id] else { return nil }
+            return row.asDetail(metadata: detail)
+        }
+    }
+
     public func list(
         query: CategoryList.Query
     ) async throws -> CategoryList {

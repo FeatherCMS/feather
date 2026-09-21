@@ -99,7 +99,9 @@ extension GetPublicCategory {
                     imageAssetId: article.imageAssetId,
                     imageURL: "",
                     media: nil,
-                    metadata: metadata
+                    metadata: metadata,
+                    readingTime: NewsReadingTime.minutes(for: article.content),
+                    categoryIDs: article.categoryIds
                 )
             )
         }

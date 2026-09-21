@@ -10,6 +10,10 @@ public protocol CategoryQueries: Sendable {
         id: String
     ) async throws -> CategoryDetail
 
+    func find(
+        ids: [String]
+    ) async throws -> [CategoryDetail]
+
     func list(
         query: CategoryList.Query
     ) async throws -> CategoryList

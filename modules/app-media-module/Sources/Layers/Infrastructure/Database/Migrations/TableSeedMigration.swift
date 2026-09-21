@@ -72,7 +72,7 @@ public struct TableSeedMigration: DatabaseMigration {
                 (
                     "ImageMagick",
                     "png,jpg,jpeg,bmp",
-                    "convert {input.fullname} -resize 256x256^ -gravity center -extent 256x256 {output.dirname}/{output.basename}.webp"
+                    "magick -define jpeg:size=512x512 {input.fullname} -filter Triangle -resize 256x256^ -gravity center -extent 256x256 -strip -quality 82 -define webp:method=3 {output.dirname}/{output.basename}.webp"
                 ),
                 (
                     "Ghostscript",
@@ -117,7 +117,7 @@ public struct TableSeedMigration: DatabaseMigration {
                 (
                     "ImageMagick",
                     "png,jpg,jpeg,bmp",
-                    "convert {input.fullname} -resize 1920x960^ -gravity center -extent 1920x960 {output.dirname}/{output.basename}.webp"
+                    "magick -define jpeg:size=2560x1280 {input.fullname} -filter Triangle -resize 1920x960^ -gravity center -extent 1920x960 -strip -quality 82 -define webp:method=3 {output.dirname}/{output.basename}.webp"
                 ),
                 (
                     "FFmpeg",
