@@ -141,9 +141,10 @@ struct WebSettingsForm: Component {
                             state: .init(
                                 name: state.locale.key,
                                 label: state.locale.label,
-                                value: state.locale.value,
+                                values: state.locale.value.map { [$0] } ?? [],
                                 error: state.locale.error,
-                                isDisabled: !state.canEdit
+                                isDisabled: !state.canEdit,
+                                selectionMode: .single
                             )
                         )
                     )
