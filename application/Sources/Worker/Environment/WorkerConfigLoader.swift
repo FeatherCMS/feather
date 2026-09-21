@@ -130,7 +130,7 @@ struct WorkerConfigLoader {
                     1,
                     mediaScope.int(
                         forKey: "max_concurrent_processing",
-                        default: 4
+                        default: 1
                     )
                 )
             ),

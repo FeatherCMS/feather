@@ -26,7 +26,6 @@ struct WebMenuDetails: Component {
                         description: "Review the navigation menu configuration."
                     ),
                     fields: [
-                        .init(label: "ID", value: state.menu.id),
                         .init(label: "Key", value: state.menu.key),
                         .init(label: "Name", value: state.menu.name),
                         .init(label: "Notes", value: state.menu.notes ?? "—"),

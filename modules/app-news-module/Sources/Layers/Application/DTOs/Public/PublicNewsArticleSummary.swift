@@ -6,7 +6,20 @@
 
 import FeatherApplication
 import FeatherContracts
+import Foundation
 import WebApplication
+
+public enum NewsReadingTime {
+    public static func minutes(for content: String) -> Int {
+        let plainText = content.replacingOccurrences(
+            of: "<[^>]+>",
+            with: " ",
+            options: .regularExpression
+        )
+        let wordCount = plainText.split { $0.isWhitespace }.count
+        return max(1, (wordCount + 199) / 200)
+    }
+}
 
 public struct PublicNewsArticleSummary: DTO {
     public let id: String
@@ -16,6 +29,8 @@ public struct PublicNewsArticleSummary: DTO {
     public let imageURL: String
     public let media: PublicContentMedia?
     public let metadata: MetadataDetail
+    public let readingTime: Int
+    public let categoryIDs: [String]
 
     public init(
         id: String,
@@ -24,7 +39,9 @@ public struct PublicNewsArticleSummary: DTO {
         imageAssetId: String?,
         imageURL: String,
         media: PublicContentMedia?,
-        metadata: MetadataDetail
+        metadata: MetadataDetail,
+        readingTime: Int,
+        categoryIDs: [String]
     ) {
         self.id = id
         self.title = title
@@ -33,5 +50,7 @@ public struct PublicNewsArticleSummary: DTO {
         self.imageURL = imageURL
         self.media = media
         self.metadata = metadata
+        self.readingTime = readingTime
+        self.categoryIDs = categoryIDs
     }
 }

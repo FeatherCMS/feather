@@ -1,6 +1,7 @@
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
+import SystemContracts
 import WebContracts
 import WebDomain
 
@@ -12,7 +13,7 @@ import WebDomain
 
 public struct RemoveMetadata: UseCase {
     struct Action: PermissionAction {
-        let key = WebPermissions.Metadata.delete
+        let key = SystemPermissions.Admin.access
     }
 
     let authorizer: any Authorizer

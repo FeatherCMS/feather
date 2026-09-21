@@ -26,7 +26,6 @@ struct SystemJobDetailsView: Component {
                 ),
                 fields: [
                     .init(label: "Job", value: payload.name.emptyToNil ?? "—"),
-                    .init(label: "ID", value: job.id),
                     .init(
                         label: "Queue",
                         value: job.queueName.emptyToNil ?? "—"

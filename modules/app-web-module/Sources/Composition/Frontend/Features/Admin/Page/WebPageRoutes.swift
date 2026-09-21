@@ -24,6 +24,15 @@ enum WebPageRoutes {
         details(id).appendingPath(RouterPath("edit"))
     }
 
+    static func metadata(
+        _ id: RouterPath,
+        _ metadataID: RouterPath
+    ) -> RouterPath {
+        edit(id)
+            .appendingPath(RouterPath("metadata"))
+            .appendingPath(metadataID)
+    }
+
     static func status(_ id: RouterPath) -> RouterPath {
         details(id).appendingPath(RouterPath("status"))
     }

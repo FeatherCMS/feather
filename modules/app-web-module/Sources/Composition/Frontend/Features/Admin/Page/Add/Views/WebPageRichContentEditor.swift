@@ -6,12 +6,24 @@ import SGML
 import WebBuilders
 import WebComponents
 
-struct WebPageRichContentEditor: Component {
-    struct State: Sendable {
-        let key: String
-        let label: String
-        let value: String?
-        let error: String?
+public struct WebPageRichContentEditor: Component {
+    public struct State: Sendable {
+        public let key: String
+        public let label: String
+        public let value: String?
+        public let error: String?
+
+        public init(
+            key: String,
+            label: String,
+            value: String?,
+            error: String?
+        ) {
+            self.key = key
+            self.label = label
+            self.value = value
+            self.error = error
+        }
     }
 
     struct BlockDefinition: Sendable {
@@ -20,7 +32,11 @@ struct WebPageRichContentEditor: Component {
         let type: String
     }
 
-    let state: State
+    public let state: State
+
+    public init(state: State) {
+        self.state = state
+    }
 
     private let blockDefinitions: [BlockDefinition] = [
         .init(title: "Heading", icon: "H", type: "heading"),
@@ -30,16 +46,16 @@ struct WebPageRichContentEditor: Component {
         .init(title: "Unordered list", icon: "•", type: "ul"),
         .init(title: "Ordered list", icon: "1.", type: "ol"),
         .init(title: "Separator", icon: "—", type: "separator"),
+        .init(title: "Grid", icon: "▦", type: "grid"),
         .init(title: "Blockquote", icon: "“", type: "blockquote"),
-        .init(title: "Code block", icon: "</>", type: "code"),
+        .init(title: "Code block", icon: "{}", type: "code"),
         .init(title: "HTML", icon: "<>", type: "html"),
         .init(title: "Newsletter", icon: "✉", type: "newsletter"),
         .init(title: "Contact form", icon: "☏", type: "contact-form"),
-        .init(title: "Grid", icon: "▦", type: "grid"),
         .init(title: "Custom block", icon: "✦", type: "custom"),
     ]
 
-    func rules() -> [any CSS.Rule] {
+    public func rules() -> [any CSS.Rule] {
         let root = ".new-admin-web-page-rich-content-editor"
 
         let baseSelectors: [any CSS.Selector] = [
@@ -308,8 +324,8 @@ struct WebPageRichContentEditor: Component {
                 Outline(0)
             },
             Custom("\(root) .block textarea") {
-                MinHeight(62.px)
-                Resize(.vertical)
+                UnsafeRawProperty(name: "min-height", value: "12lh")
+                Resize(.none)
             },
             Custom(
                 "\(root) .block input:focus, \(root) .block textarea:focus, \(root) #markdownInput:focus"
@@ -352,7 +368,9 @@ struct WebPageRichContentEditor: Component {
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
                 Color(.variable(TokenKey.Colors.Link.default))
             },
-            Custom("\(root) .media-picker-button") {
+            Custom(
+                "\(root) .media-picker-button, \(root) .embed-picker-button"
+            ) {
                 Display(.inlineFlex)
                 AlignItems(.center)
                 JustifyContent(.center)
@@ -373,7 +391,9 @@ struct WebPageRichContentEditor: Component {
                 Cursor(.pointer)
                 TextDecoration(.none)
             },
-            Custom("\(root) .media-picker-button:hover") {
+            Custom(
+                "\(root) .media-picker-button:hover, \(root) .embed-picker-button:hover"
+            ) {
                 Background(
                     .variable(TokenKey.Colors.Buttons.Ghost.Primary.hover)
                 )
@@ -384,8 +404,8 @@ struct WebPageRichContentEditor: Component {
             Custom("\(root) #markdownInput") {
                 Display(.block)
                 Width(100.percent)
-                MinHeight(560.px)
-                Resize(.vertical)
+                UnsafeRawProperty(name: "min-height", value: "12lh")
+                Resize(.none)
                 Border(
                     1.px,
                     .solid,
@@ -597,7 +617,7 @@ struct WebPageRichContentEditor: Component {
         ]
     }
 
-    func html(context: inout BuilderContext) -> Section {
+    public func html(context: inout BuilderContext) -> Section {
         Section {
             context.build(NewAdminFormFieldLabel(text: state.label))
             Div {
@@ -663,17 +683,17 @@ struct WebPageRichContentEditor: Component {
                                     name: "data-mode",
                                     value: "visual"
                                 )
-                            Button("Preview")
-                                .type(.button)
-                                .setAttribute(
-                                    name: "data-mode",
-                                    value: "preview"
-                                )
                             Button("Markdown")
                                 .type(.button)
                                 .setAttribute(
                                     name: "data-mode",
                                     value: "raw"
+                                )
+                            Button("Preview")
+                                .type(.button)
+                                .setAttribute(
+                                    name: "data-mode",
+                                    value: "preview"
                                 )
                         }
                         .class("mode-switch")

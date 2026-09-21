@@ -31,7 +31,6 @@ struct BlogPostDetails: Component {
                         description: "Review the blog post configuration."
                     ),
                     fields: [
-                        .init(label: "ID", value: state.rule.id),
                         .init(label: "Title", value: state.rule.title),
                         .init(
                             label: "Status",

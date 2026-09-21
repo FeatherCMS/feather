@@ -29,7 +29,6 @@ struct BlogTagDetails: Component {
                         description: "Review the blog tag configuration."
                     ),
                     fields: [
-                        .init(label: "ID", value: state.rule.id),
                         .init(label: "Title", value: state.rule.title),
                         .init(
                             label: "Status",

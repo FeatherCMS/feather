@@ -30,7 +30,6 @@ struct BlogAuthorDetails: Component {
                             "Review the author profile and publishing settings."
                     ),
                     fields: [
-                        .init(label: "ID", value: state.author.id),
                         .init(label: "Name", value: state.author.name),
                         .init(
                             label: "Status",

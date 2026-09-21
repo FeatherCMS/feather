@@ -6,11 +6,15 @@ struct MediaAssetIdField: StringSchemaRepresentable {
     var example: String? = "media_asset_1"
 }
 
+struct MediaAssetKeyField: StringSchemaRepresentable {
+    var example: String? = "preview"
+}
+
 struct MediaAssetURLField: StringSchemaRepresentable {
     var example: String? = "/media/assets/example.png"
 }
 
-struct MediaAssetTypeField: StringSchemaRepresentable {
+struct MediaAssetExtensionField: StringSchemaRepresentable {
     var example: String? = "png"
 }
 
@@ -25,11 +29,8 @@ struct MediaAssetPixelSizeField: SchemaRepresentable {
 struct MediaAssetVariantSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
-            "id": MediaAssetIdField().reference(),
+            "key": MediaAssetKeyField().reference(),
             "url": MediaAssetURLField().reference(),
-            "type": MediaAssetTypeField().reference(),
-            "width": MediaAssetPixelSizeField(required: false),
-            "height": MediaAssetPixelSizeField(required: false),
         ]
     }
 }

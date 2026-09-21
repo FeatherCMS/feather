@@ -20,7 +20,7 @@ struct AccountProfileDetails: Component {
             actions.append(
                 .init(
                     label: "Edit profile",
-                    href: "/admin/account/profile/edit/",
+                    href: AccountAdminRoutes.profileEdit.description,
                     style: .primary
                 )
             )
@@ -33,11 +33,16 @@ struct AccountProfileDetails: Component {
                     description: "Inspect the current administrator profile."
                 ),
                 fields: [
-                    .init(label: "ID", value: state.profile.id),
-                    .init(
-                        label: "Profile image",
-                        value: state.profile.profileImageAssetId ?? "—"
-                    ),
+                    state.profile.profileImageAsset.flatMap { asset in
+                        (asset.previewURL ?? asset.originalURL).isEmpty
+                            ? nil
+                            : .init(
+                                label: "Profile image",
+                                imageURL: NewAdminMediaAsset.mediaURL(
+                                    path: asset.previewURL ?? asset.originalURL
+                                )
+                            )
+                    } ?? .init(label: "Profile image", value: "—"),
                     .init(
                         label: "First name",
                         value: state.profile.firstName?.emptyToNil ?? "—"
@@ -50,12 +55,6 @@ struct AccountProfileDetails: Component {
                         label: "Roles",
                         value: state.profile.roles.isEmpty
                             ? "—" : state.profile.roles.joined(separator: ", ")
-                    ),
-                    .init(
-                        label: "Permissions",
-                        value: state.profile.permissions.isEmpty
-                            ? "—"
-                            : state.profile.permissions.joined(separator: ", ")
                     ),
                 ],
                 actions: actions

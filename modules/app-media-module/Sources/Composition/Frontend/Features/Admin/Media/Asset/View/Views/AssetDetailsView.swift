@@ -37,9 +37,6 @@ struct AssetDetailsView: Component {
                 )
             )
             context.build(
-                NewAdminDetailField(label: "ID", value: item.id)
-            )
-            context.build(
                 NewAdminDetailField(
                     label: "URL",
                     value: item.url

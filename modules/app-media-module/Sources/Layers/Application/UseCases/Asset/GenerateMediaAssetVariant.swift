@@ -71,6 +71,22 @@ public struct GenerateMediaAssetVariants: UseCase {
 
     public func execute(input: Input) async throws {
         let prepared = try await prepare(assetID: input.assetId)
+        do {
+            try await execute(prepared: prepared)
+        }
+        catch {
+            // A failed job must not leave the asset looking permanently busy.
+            // The queue can retry the job, and the uploaded state accurately
+            // describes that the original file is still available.
+            try? await updateStatus(
+                assetID: prepared.asset.id,
+                status: .uploaded
+            )
+            throw error
+        }
+    }
+
+    private func execute(prepared: Prepared) async throws {
         guard !prepared.plans.isEmpty else {
             try await updateStatus(
                 assetID: prepared.asset.id,

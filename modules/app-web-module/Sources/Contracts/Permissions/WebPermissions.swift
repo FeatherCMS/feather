@@ -20,18 +20,6 @@ public enum WebPermissions: PermissionProvider {
         }
     }
 
-    public enum Metadata: PermissionProvider {
-        public static let create = PermissionKey("web:metadata:create")
-        public static let read = PermissionKey("web:metadata:read")
-        public static let update = PermissionKey("web:metadata:update")
-        public static let list = PermissionKey("web:metadata:list")
-        public static let delete = PermissionKey("web:metadata:delete")
-
-        public static func allPermissions() -> Set<PermissionKey> {
-            [create, read, update, list, delete]
-        }
-    }
-
     public enum Menus: PermissionProvider {
         public static let create = PermissionKey("web:menus:create")
         public static let read = PermissionKey("web:menus:read")
@@ -67,7 +55,6 @@ public enum WebPermissions: PermissionProvider {
 
     public static func allPermissions() -> Set<PermissionKey> {
         Pages.allPermissions()
-            .union(Metadata.allPermissions())
             .union(Menus.allPermissions())
             .union(MenuItems.allPermissions())
             .union(Settings.allPermissions())

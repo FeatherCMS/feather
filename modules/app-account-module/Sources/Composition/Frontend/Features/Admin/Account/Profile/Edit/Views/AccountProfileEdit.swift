@@ -45,7 +45,7 @@ struct AccountProfileEdit: Component {
                 AccountProfileForm(
                     state: state.form,
                     action: "/admin/account/profile/edit/",
-                    submitLabel: "Edit profile"
+                    submitLabel: "Save changes"
                 )
             )
         }

@@ -1,10 +1,17 @@
 public struct NewAdminMediaAssetVariant: Sendable, Equatable, Codable, Hashable
 {
+    public let key: String
     public let name: String
     public let url: String
     public let `extension`: String
 
-    public init(name: String, url: String, `extension`: String) {
+    public init(
+        key: String,
+        name: String,
+        url: String,
+        `extension`: String
+    ) {
+        self.key = key
         self.name = name
         self.url = url
         self.extension = `extension`
@@ -53,6 +60,6 @@ public struct NewAdminMediaAsset: Sendable, Equatable, Codable, Hashable {
     public var originalURL: String { url }
 
     public var previewURL: String? {
-        variants.first { $0.name == "preview" }?.url
+        variants.first { $0.key == "preview" }?.url
     }
 }

@@ -44,30 +44,20 @@ public struct GetPublicArticle {
             }
 
             let article = try await scope.article.find(id: id)
-            var categories: [PublicNewsCategorySummary] = []
-            for categoryID in article.categoryIds {
-                guard
-                    let categoryMetadata = try await scope.metadata.find(
-                        referenceType: "news.category",
-                        referenceID: categoryID
-                    ),
-                    categoryMetadata.isPublic(at: now)
-                else {
-                    continue
-                }
-                let category = try await scope.category.find(id: categoryID)
-                categories.append(
-                    .init(
-                        id: category.id,
-                        title: category.title,
-                        excerpt: category.excerpt,
-                        imageAssetId: category.imageAssetId,
+            let categories = try await scope.category
+                .find(ids: article.categoryIds)
+                .filter { $0.metadata.isPublic(at: now) }
+                .map {
+                    PublicNewsCategorySummary(
+                        id: $0.id,
+                        title: $0.title,
+                        excerpt: $0.excerpt,
+                        imageAssetId: $0.imageAssetId,
                         imageURL: "",
                         media: nil,
-                        metadata: categoryMetadata
+                        metadata: $0.metadata
                     )
-                )
-            }
+                }
 
             return .init(
                 id: article.id,

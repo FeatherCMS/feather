@@ -1,6 +1,5 @@
 import FeatherContracts
 import WebApplication
-import WebContracts
 import BlogFrontend
 import MediaFrontend
 import ContactFrontend
@@ -20,14 +19,12 @@ import WebApplication
 func buildAdminRoutes(
     router: Router<DefaultRequestContext>,
     renderingEngine: any RenderingEngine,
-    referenceTypeOptions: [WebMetadataReferenceTypeOption],
-    templateOptions: [WebPageTemplateOption],
     adminEvents: any EventPublisher
 ) {
-    AuthFrontendRoutes.registerAdminRoutes(
-        router: router,
+    AuthFrontend.AdminAuth(
         renderingEngine: renderingEngine
     )
+    .route(on: router)
     AccountAdmin(renderingEngine: renderingEngine)
         .route(on: router)
     AdminUser(renderingEngine: renderingEngine)
@@ -40,14 +37,13 @@ func buildAdminRoutes(
         .route(on: router)
     AdminBlog(
         renderingEngine: renderingEngine,
-        templateOptions: templateOptions
+        adminEvents: adminEvents
     )
     .route(on: router)
 
     AdminWeb(
         renderingEngine: renderingEngine,
-        referenceTypeOptions: referenceTypeOptions,
-        templateOptions: templateOptions
+        adminEvents: adminEvents
     )
     .route(on: router)
     AdminMedia(renderingEngine: renderingEngine)

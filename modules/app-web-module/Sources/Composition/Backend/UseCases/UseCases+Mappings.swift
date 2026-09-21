@@ -22,11 +22,8 @@ extension UseCases {
             defaultURL: media.defaultURL,
             variants: media.variants.map {
                 .init(
-                    id: $0.id,
-                    url: $0.url,
-                    _type: $0.type,
-                    width: $0.width.map(Int64.init),
-                    height: $0.height.map(Int64.init)
+                    key: $0.key,
+                    url: $0.url
                 )
             }
         )

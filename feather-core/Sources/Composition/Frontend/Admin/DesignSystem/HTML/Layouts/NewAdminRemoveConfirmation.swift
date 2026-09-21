@@ -24,6 +24,11 @@ public struct NewAdminRemoveConfirmation: Component {
     public let cancelLabel: String
     public let nonceToken: String?
     public let hiddenFields: [HiddenField]
+    public let tabBar: NewAdminTabBar?
+    public let sectionTitle: String?
+    public let sectionDescription: String?
+    public let sectionHeader: NewAdminPageHeader.State?
+    public let contentClass: String?
 
     public init(
         breadcrumb: [NewAdminBreadcrumb.Link],
@@ -34,7 +39,12 @@ public struct NewAdminRemoveConfirmation: Component {
         submitLabel: String = "Remove",
         cancelLabel: String = "Cancel",
         nonceToken: String? = nil,
-        hiddenFields: [HiddenField] = []
+        hiddenFields: [HiddenField] = [],
+        tabBar: NewAdminTabBar? = nil,
+        sectionTitle: String? = nil,
+        sectionDescription: String? = nil,
+        sectionHeader: NewAdminPageHeader.State? = nil,
+        contentClass: String? = nil
     ) {
         self.breadcrumb = breadcrumb
         self.pageHeader = pageHeader
@@ -45,6 +55,11 @@ public struct NewAdminRemoveConfirmation: Component {
         self.cancelLabel = cancelLabel
         self.nonceToken = nonceToken
         self.hiddenFields = hiddenFields
+        self.tabBar = tabBar
+        self.sectionTitle = sectionTitle
+        self.sectionDescription = sectionDescription
+        self.sectionHeader = sectionHeader
+        self.contentClass = contentClass
     }
 
     @Builder<CSS.Rule>
@@ -72,45 +87,60 @@ public struct NewAdminRemoveConfirmation: Component {
         }
     }
 
-    public func html(context: inout BuilderContext) -> some BasicTag {
+    public func html(context: inout BuilderContext) -> Section {
         Section {
             context.build(NewAdminBreadcrumb(links: breadcrumb))
             context.build(NewAdminPageHeader(state: pageHeader))
-            if !selectedItems.isEmpty {
-                Div {
-                    Ul {
-                        for item in selectedItems.prefix(20) { Li(item) }
-                        if selectedItems.count > 20 {
-                            Li("And \(selectedItems.count - 20) more.")
-                        }
+            if let tabBar {
+                context.build(tabBar)
+            }
+            Div {
+                if let sectionHeader {
+                    context.build(NewAdminPageHeader(state: sectionHeader))
+                }
+                else if let sectionTitle {
+                    H2(sectionTitle)
+                    if let sectionDescription {
+                        P(sectionDescription)
                     }
                 }
-                .class("admin-confirmation-items")
-            }
-            Form {
-                if let nonceToken {
-                    Input().type(.hidden).name("_nonce").value(nonceToken)
+                if !selectedItems.isEmpty {
+                    Div {
+                        Ul {
+                            for item in selectedItems.prefix(20) { Li(item) }
+                            if selectedItems.count > 20 {
+                                Li("And \(selectedItems.count - 20) more.")
+                            }
+                        }
+                    }
+                    .class("admin-confirmation-items")
                 }
-                for field in hiddenFields {
-                    Input()
-                        .type(.hidden)
-                        .name(field.name)
-                        .value(field.value)
-                }
-                context.build(
-                    NewAdminSubmitButton(submitLabel, style: .destructive)
-                )
-                context.build(
-                    NewAdminButton(
-                        cancelLabel,
-                        href: cancel,
-                        style: .ghost(.primary)
+                Form {
+                    if let nonceToken {
+                        Input().type(.hidden).name("_nonce").value(nonceToken)
+                    }
+                    for field in hiddenFields {
+                        Input()
+                            .type(.hidden)
+                            .name(field.name)
+                            .value(field.value)
+                    }
+                    context.build(
+                        NewAdminSubmitButton(submitLabel, style: .destructive)
                     )
-                )
+                    context.build(
+                        NewAdminButton(
+                            cancelLabel,
+                            href: cancel,
+                            style: .ghost(.primary)
+                        )
+                    )
+                }
+                .method(.post)
+                .action(action)
+                .class("button-row")
             }
-            .method(.post)
-            .action(action)
-            .class("button-row")
+            .if(contentClass != nil) { $0.class(contentClass ?? "") }
         }
         .class("cms-section")
     }

@@ -24,8 +24,7 @@ struct AuthEmailDetails: Component {
                     description: "Inspect this user email."
                 ),
                 fields: [
-                    .init(label: "ID", value: state.link.id),
-                    .init(label: "Identity ID", value: state.link.identityId),
+                    .init(label: "Identity ID", value: state.link.identityId)
                 ],
                 actions: actions
             )

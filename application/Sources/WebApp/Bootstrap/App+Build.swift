@@ -36,7 +36,6 @@ func buildApplication(
 
     let router = try await buildRouter(
         environment: environment,
-        referenceTypeOptions: webMetadataExtensions.referenceTypes,
         templateOptions: webMetadataExtensions.templates,
         templateDefinitions: webMetadataExtensions.templateDefinitions,
         templatePaths: webMetadataExtensions.templatePaths

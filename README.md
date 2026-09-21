@@ -97,7 +97,7 @@ Settings → General, then restart Docker Desktop and run `make <any>` again.
 
 The worker keeps its general job concurrency at `WORKER_NUM_WORKERS` (16 by
 default), while ImageMagick/FFmpeg asset processing is limited separately by
-`MEDIA_MAX_CONCURRENT_PROCESSING` (4 by default). Duplicate media jobs for the
+`MEDIA_MAX_CONCURRENT_PROCESSING` (1 by default). Duplicate media jobs for the
 same asset are ignored while that asset is already being processed. Media jobs
 waiting for a processing slot still occupy worker handlers, so a large media
 backlog can temporarily reduce capacity for other job types.

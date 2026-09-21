@@ -13,6 +13,7 @@ public struct NewAdminChip: Component {
         case yellow
         case orange
         case purple
+        case gray
     }
 
     public let label: String
@@ -81,6 +82,13 @@ public struct NewAdminChip: Component {
                 )
                 BorderColor(.variable(TokenKey.Colors.Palette.Purple.border))
                 Color(.variable(TokenKey.Colors.Palette.Purple.text))
+            },
+            Class("new-admin-chip-gray") {
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
+                BorderColor(
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
             },
         ]
     }

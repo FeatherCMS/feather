@@ -26,6 +26,8 @@ extension MediaAssetVariantTable.Row {
 struct MediaAssetVariantTable {
     struct ResolveRow {
         let nodeId: String
+        let id: String
+        let key: String
         let name: String
         let objectKey: String
         let `extension`: String
@@ -163,24 +165,25 @@ struct MediaAssetVariantTable {
         }
     }
 
-    func resolve(nodeIds: [String], variantNames: [String]?) async throws
+    func resolve(nodeIds: [String], variantKeys: [String]?) async throws
         -> [ResolveRow]
     {
         guard !nodeIds.isEmpty else { return [] }
-        if let variantNames, variantNames.isEmpty { return [] }
+        if let variantKeys, variantKeys.isEmpty { return [] }
         let nodeValues = mediaVariantSQLValues(nodeIds)
         let variantFilter: String
-        if let variantNames {
-            let values = mediaVariantSQLValues(variantNames)
-            variantFilter = "AND v.name IN (\(values))"
+        if let variantKeys {
+            let values = mediaVariantSQLValues(variantKeys)
+            variantFilter = "AND mv.variant_key IN (\(values))"
         }
         else {
             variantFilter = ""
         }
         return try await connection.run(
             query: #"""
-                SELECT v.asset_id, v.name, o.object_key, v.extension
+                SELECT v.asset_id, v.variant_id, mv.variant_key, v.name, o.object_key, v.extension
                 FROM media_asset_variant v
+                JOIN media_variant mv ON mv.id = v.variant_id
                 JOIN media_asset_storage_object o ON o.id = v.storage_object_id
                 WHERE v.asset_id IN (\#(unescaped: nodeValues)) \#(unescaped: variantFilter)
                 ORDER BY v.asset_id ASC, v.name ASC, v.created_at ASC;
@@ -191,6 +194,14 @@ struct MediaAssetVariantTable {
                     .init(
                         nodeId: try row.decode(
                             column: "asset_id",
+                            as: String.self
+                        ),
+                        id: try row.decode(
+                            column: "variant_id",
+                            as: String.self
+                        ),
+                        key: try row.decode(
+                            column: "variant_key",
                             as: String.self
                         ),
                         name: try row.decode(column: "name", as: String.self),

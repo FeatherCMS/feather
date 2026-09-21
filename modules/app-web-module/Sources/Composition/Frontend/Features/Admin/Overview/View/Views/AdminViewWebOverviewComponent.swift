@@ -28,12 +28,6 @@ struct AdminViewWebOverviewComponent: Component {
             icon: "menu"
         ),
         Destination(
-            title: "Metadata",
-            description: "Manage web routes and page metadata.",
-            href: WebMetadataRoutes.list.description,
-            icon: "tag"
-        ),
-        Destination(
             title: "Settings",
             description: "Manage the public web settings.",
             href: WebSettingsRoutes.edit.description,
@@ -92,7 +86,7 @@ struct AdminViewWebOverviewComponent: Component {
                     state: .init(
                         title: "Web",
                         description:
-                            "Manage pages, menus, metadata, and web settings."
+                            "Manage pages, menus, and web settings."
                     )
                 )
             )

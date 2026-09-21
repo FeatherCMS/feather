@@ -18,6 +18,7 @@ extension ArticleTable.Row {
             id: id,
             title: title,
             excerpt: excerpt,
+            content: content,
             imageAssetId: imageAssetId,
             createdAt: createdAt,
             updatedAt: updatedAt
@@ -123,6 +124,13 @@ public struct ArticleDatabaseQueries: ArticleQueries {
             metadata: metadata,
             categoryIds: categoryIds
         )
+    }
+
+    public func categoryIDs(
+        for articleIDs: [String]
+    ) async throws -> [String: [String]] {
+        try await ArticleCategoryTable(connection: context.connection)
+            .listCategoryIDs(articleIDs: articleIDs)
     }
 
     public func list(

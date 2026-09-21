@@ -3,10 +3,20 @@ import FeatherContracts
 
 public struct MediaAssetResolve: DTO {
     public struct Variant: Sendable {
+        public let id: String
+        public let key: String
         public let name: String
         public let url: String
         public let `extension`: String
-        public init(name: String, url: String, `extension`: String) {
+        public init(
+            id: String,
+            key: String,
+            name: String,
+            url: String,
+            `extension`: String
+        ) {
+            self.id = id
+            self.key = key
             self.name = name
             self.url = url
             self.extension = `extension`

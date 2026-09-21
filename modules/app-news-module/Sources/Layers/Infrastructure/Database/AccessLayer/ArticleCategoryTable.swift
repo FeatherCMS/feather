@@ -1,4 +1,5 @@
 import FeatherDatabase
+import Foundation
 
 struct ArticleCategoryTable {
     let connection: any DatabaseConnection
@@ -18,6 +19,40 @@ struct ArticleCategoryTable {
                 .map {
                     try $0.decode(column: "category_id", as: String.self)
                 }
+        }
+    }
+
+    func listCategoryIDs(
+        articleIDs: [String]
+    ) async throws -> [String: [String]] {
+        guard !articleIDs.isEmpty else { return [:] }
+        let values =
+            articleIDs
+            .map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
+        return try await connection.run(
+            query: #"""
+                SELECT article_id, category_id
+                FROM news_article_category
+                WHERE article_id IN (\#(unescaped: values))
+                ORDER BY article_id ASC, category_id ASC;
+                """#
+        ) { sequence in
+            var result: [String: [String]] = [:]
+            for row in try await sequence.collect() {
+                let articleID = try row.decode(
+                    column: "article_id",
+                    as: String.self
+                )
+                let categoryID = try row.decode(
+                    column: "category_id",
+                    as: String.self
+                )
+                result[articleID, default: []].append(categoryID)
+            }
+            return result
         }
     }
 

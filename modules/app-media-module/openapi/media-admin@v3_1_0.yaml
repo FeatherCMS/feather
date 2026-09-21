@@ -882,6 +882,8 @@ components:
     MediaAssetResolveVariantSchema:
       type: object
       properties:
+        key:
+          $ref: '#/components/schemas/MediaAssetKeyField'
         name:
           type: string
           examples:
@@ -895,10 +897,15 @@ components:
           examples:
           - jpeg
       required:
+      - key
       - name
       - url
       - extension
-      minProperties: 3
+      minProperties: 4
+    MediaAssetKeyField:
+      type: string
+      examples:
+      - preview
     MediaAssetPatchSchema:
       type: object
       properties:

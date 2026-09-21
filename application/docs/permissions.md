@@ -126,12 +126,6 @@ This file documents the backend permission keys and what they allow a user to do
 - `web:pages:list`: List and search pages.
 - `web:pages:delete`: Delete a page.
 
-- `web:metadata:create`: Create a web metadata.
-- `web:metadata:read`: View a single web metadata.
-- `web:metadata:update`: Edit a web metadata.
-- `web:metadata:list`: List and search web metadata.
-- `web:metadata:delete`: Delete a web metadata.
-
 - `web:menus:create`: Create a menu.
 - `web:menus:read`: View a single menu.
 - `web:menus:update`: Edit a menu.
@@ -185,5 +179,3 @@ This file documents the backend permission keys and what they allow a user to do
 - `root` is still treated as a backend superuser and bypasses granular permission checks in the authorizer.
 - `user:accounts:me` is not a dead permission. The backend authorizer uses it to derive effective self-service profile and settings access.
 - `auth:sessions:create` and `auth:sessions:update` are potential cleanup candidates. They are declared today, but the current server surface does not appear to expose admin routes that use them directly.
-- `web:metadata:create` and `web:metadata:delete` are backend-only capabilities at the moment. The web-app no longer exposes metadata add/remove feature modules, but backend admin APIs still exist for create/delete operations.
-- If metadata add/remove should be gone as a product capability, remove the related backend endpoints, use cases, and permissions too. If API-level management should remain available, keep these permissions.

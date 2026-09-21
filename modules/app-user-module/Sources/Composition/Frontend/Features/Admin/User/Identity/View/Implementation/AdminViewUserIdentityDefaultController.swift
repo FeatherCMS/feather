@@ -28,6 +28,7 @@ struct AdminViewUserIdentityDefaultController: AdminViewUserIdentityController {
             let model = AdminViewUserIdentityModel(
                 details: .init(
                     id: identity.id,
+                    name: identity.name,
                     status: identity.status,
                     roleIds: identity.roleIds
                 ),

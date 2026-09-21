@@ -72,7 +72,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
-            from: "2.26.0"
+            from: "2.27.0"
         ),
         .package(
             url: "https://github.com/swift-server/async-http-client",
@@ -126,6 +126,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
 
+                .product(name: "SystemContracts", package: "app-system-module"),
                 .product(name: "SystemApplication", package: "app-system-module"),
 
                 .target(name: "WebDomain"),

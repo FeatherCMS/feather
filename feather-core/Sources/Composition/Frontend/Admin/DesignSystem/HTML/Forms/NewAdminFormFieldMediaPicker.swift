@@ -481,6 +481,23 @@ extension NewAdminFormFieldMediaPicker {
             if (modal) { modal.classList.remove("is-visible"); }
           }
 
+          function detachedFormID(field) {
+            return "newAdminMediaPickerDetachedForm-" + String(field || "").replace(/[^A-Za-z0-9_-]/g, "-");
+          }
+
+          function isolatePanelControls(field, panel) {
+            var id = detachedFormID(field);
+            if (!document.getElementById(id)) {
+              var form = document.createElement("form");
+              form.id = id;
+              form.hidden = true;
+              document.body.appendChild(form);
+            }
+            panel.querySelectorAll("[name]").forEach(function(element) {
+              element.setAttribute("form", id);
+            });
+          }
+
           function browsePath(modal) {
             return modal.getAttribute("data-media-picker-browse-path") || "";
           }
@@ -648,6 +665,7 @@ extension NewAdminFormFieldMediaPicker {
             if (style.parentNode !== document.head) { document.head.appendChild(style); }
             panel.innerHTML = section.outerHTML;
             executeScripts(panel, section);
+            isolatePanelControls(field, panel);
             applyMarker(field, panel);
           }
 
