@@ -77,7 +77,7 @@ struct AnalyticsDateRangeFilter: Component {
                 )
                 context.build(
                     NewAdminSubmitButton(
-                        "Apply range",
+                        "Apply",
                         style: .ghost(.primary),
                         isRowButton: true
                     )
