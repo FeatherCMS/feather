@@ -71,10 +71,11 @@ public struct AdminEditWebSettingsFormInput: Codable, Sendable, Equatable,
                 String.self,
                 forKey: .homePageId
             ) ?? ""
-        self.locale = try container.decodeIfPresent(
-            String.self,
-            forKey: .locale
-        ) ?? WebSettingsVariableKey.locale.defaultValue
+        self.locale =
+            try container.decodeIfPresent(
+                String.self,
+                forKey: .locale
+            ) ?? WebSettingsVariableKey.locale.defaultValue
         self.timezone = try container.decode(String.self, forKey: .timezone)
         self.title = try container.decode(String.self, forKey: .title)
         self.excerpt = try container.decode(String.self, forKey: .excerpt)
