@@ -19,15 +19,15 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        let selectedIds = request.queryStrings("selectedIds")
-        guard selectedIds.count == 1, let formId = selectedIds.first else {
+        let keys = request.queryStrings("ids")
+        guard keys.count == 1, let formKey = keys.first else {
             return try await presenter.renderRemovePage(
-                items: selectedIds.map { .init(id: $0, label: $0) }
+                items: keys.map { .init(id: $0, label: $0) }
             )
         }
-        let item = try await interactor.get(id: formId)
+        let item = try await interactor.get(key: formKey)
         return try await presenter.renderRemovePage(
-            items: [.init(id: formId, label: item.name)]
+            items: [.init(id: formKey, label: item.name)]
         )
     }
 
@@ -35,7 +35,7 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
         -> Response
     {
         let payload = try await request.decode(
-            as: NewAdminListRemoveFormInput.self,
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -45,14 +45,14 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
             )
         else { return Response(status: .badRequest) }
         let (interactor, _) = buildRuntime(request, context)
-        try await interactor.remove(ids: payload.normalizedSelectedIds)
+        try await interactor.remove(keys: payload.input.normalizedIds)
         return Response(
             status: .seeOther,
             headers: [
                 .location: AdminListRemoveRedirect.location(
                     path: "/admin/contact/forms/",
-                    page: payload.normalizedPage,
-                    search: payload.normalizedSearch,
+                    page: payload.input.normalizedPage,
+                    search: payload.input.normalizedSearch,
                     title: "Removed",
                     message: "Contact forms removed successfully."
                 )

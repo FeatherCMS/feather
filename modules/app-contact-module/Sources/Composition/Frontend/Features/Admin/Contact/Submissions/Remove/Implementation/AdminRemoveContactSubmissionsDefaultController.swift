@@ -21,7 +21,7 @@ struct AdminRemoveContactSubmissionsDefaultController:
     {
         let (_, presenter) = buildRuntime(request, context)
         return try await presenter.renderRemovePage(
-            items: request.queryStrings("selectedIds")
+            items: request.queryStrings("ids")
                 .map {
                     .init(id: $0, label: $0)
                 }
@@ -32,7 +32,7 @@ struct AdminRemoveContactSubmissionsDefaultController:
         -> Response
     {
         let payload = try await request.decode(
-            as: NewAdminListRemoveFormInput.self,
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -42,14 +42,14 @@ struct AdminRemoveContactSubmissionsDefaultController:
             )
         else { return Response(status: .badRequest) }
         let (interactor, _) = buildRuntime(request, context)
-        try await interactor.remove(ids: payload.normalizedSelectedIds)
+        try await interactor.remove(ids: payload.input.normalizedIds)
         return Response(
             status: .seeOther,
             headers: [
                 .location: AdminListRemoveRedirect.location(
                     path: "/admin/contact/submissions/",
-                    page: payload.normalizedPage,
-                    search: payload.normalizedSearch,
+                    page: payload.input.normalizedPage,
+                    search: payload.input.normalizedSearch,
                     title: "Removed",
                     message: "Contact submissions removed successfully."
                 )

@@ -20,9 +20,9 @@ struct AdminRemoveContactFormEmailDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        let formId = try context.requiredParameter("formId")
-        let selectedIds = request.queryStrings("selectedIds")
-        if selectedIds.count == 1, let mailId = selectedIds.first {
+        let formId = try context.requiredParameter("formKey")
+        let ids = request.queryStrings("ids")
+        if ids.count == 1, let mailId = ids.first {
             let form = try await interactor.get(id: formId)
             guard let mail = form.mails.first(where: { $0.id == mailId }) else {
                 throw HTTPError(.notFound)
@@ -34,7 +34,7 @@ struct AdminRemoveContactFormEmailDefaultController:
         }
         return try await presenter.renderRemovePage(
             formId: formId,
-            items: request.queryStrings("selectedIds")
+            items: ids
                 .map {
                     .init(id: $0, label: $0)
                 }
@@ -45,11 +45,11 @@ struct AdminRemoveContactFormEmailDefaultController:
         -> Response
     {
         let payload = try await request.decode(
-            as: NewAdminListRemoveFormInput.self,
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
         let (interactor, _) = buildRuntime(request, context)
-        let formId = try context.requiredParameter("formId")
+        let formId = try context.requiredParameter("formKey")
         guard
             await AdminNonceStore.shared.consume(
                 payload.nonce,
@@ -58,15 +58,15 @@ struct AdminRemoveContactFormEmailDefaultController:
         else { return Response(status: .badRequest) }
         try await interactor.remove(
             id: formId,
-            emailIds: payload.normalizedSelectedIds
+            emailIds: payload.input.normalizedIds
         )
         return Response(
             status: .seeOther,
             headers: [
                 .location: AdminListRemoveRedirect.location(
                     path: "/admin/contact/forms/\(formId)/emails/",
-                    page: payload.normalizedPage,
-                    search: payload.normalizedSearch,
+                    page: payload.input.normalizedPage,
+                    search: payload.input.normalizedSearch,
                     title: "Removed",
                     message: "Contact form emails removed successfully."
                 )
