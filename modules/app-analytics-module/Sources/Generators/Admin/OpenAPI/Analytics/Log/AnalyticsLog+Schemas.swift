@@ -175,6 +175,8 @@ struct AnalyticsLogFilterSchema: ObjectSchemaRepresentable {
             "method": AnalyticsLogMethodField().reference(required: false),
             "responseCode":
                 AnalyticsLogResponseCodeField().reference(required: false),
+            "from": AnalyticsLogOverviewDateField().reference(required: false),
+            "to": AnalyticsLogOverviewDateField().reference(required: false),
         ]
     }
 

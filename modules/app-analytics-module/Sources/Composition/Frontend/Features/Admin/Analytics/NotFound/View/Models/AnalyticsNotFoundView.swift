@@ -1,4 +1,5 @@
 import AnalyticsAdminAPI
+import CSS
 import FeatherAdmin
 import Foundation
 import HTML
@@ -9,6 +10,23 @@ import WebComponents
 
 struct AnalyticsNotFoundView: Component {
     let model: AdminViewAnalyticsNotFoundModel
+
+    func rules() -> [any Rule] {
+        Media {
+            Custom(".analytics-not-found") {
+                Display(.grid)
+                Gap(32.px)
+            }
+            Custom(
+                ".analytics-not-found .breadcrumb, "
+                    + ".analytics-not-found .admin-page-header, "
+                    + ".analytics-not-found .new-admin-form"
+            ) {
+                MarginTop(0.px)
+                MarginBottom(0.px)
+            }
+        }
+    }
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
@@ -23,28 +41,16 @@ struct AnalyticsNotFoundView: Component {
                     )
                 )
             )
-            let form = NewAdminForm(
-                action: AnalyticsAdminRoutes.notFound.description,
-                method: .get
-            ) {
-                context.build(
-                    NewAdminFormFieldSelect(
-                        state: .init(
-                            name: "range",
-                            label: "Date range",
-                            value: model.selectedRange.rawValue,
-                            options: [
-                                .init(label: "Last 24 hours", value: "24h"),
-                                .init(label: "Last 7 days", value: "7d"),
-                                .init(label: "Last 30 days", value: "30d"),
-                            ]
-                        )
+            context.build(
+                AnalyticsDateRangeFilter(
+                    state: .init(
+                        action: AnalyticsAdminRoutes.notFound.description,
+                        from: model.from,
+                        to: model.to,
+                        queryItems: []
                     )
                 )
-                Div { context.build(NewAdminSubmitButton("Update")) }
-                    .class("new-admin-form__actions")
-            }
-            context.build(form)
+            )
             context.build(
                 NewAdminChartCard(
                     title: "Daily traffic",
@@ -73,7 +79,7 @@ struct AnalyticsNotFoundView: Component {
                 )
             )
         }
-        .class("cms-section")
+        .class("analytics-not-found")
     }
 
     private func dateLabel(for timestamp: Double) -> String {
@@ -81,7 +87,9 @@ struct AnalyticsNotFoundView: Component {
         formatter.locale = .init(identifier: "en_US_POSIX")
         formatter.timeZone = .current
         formatter.dateFormat =
-            model.selectedRange == .last24Hours ? "HH:mm" : "MMM d"
+            model.overview.query.to - model.overview.query.from <= 86_400
+            ? "HH:mm"
+            : "MMM d"
         return formatter.string(from: Date(timeIntervalSince1970: timestamp))
     }
 }

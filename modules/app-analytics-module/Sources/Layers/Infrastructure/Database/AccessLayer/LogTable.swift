@@ -231,6 +231,8 @@ struct LogTable {
         source: String?,
         method: String?,
         responseCode: Int?,
+        from: Double?,
+        to: Double?,
         orderBy: String,
         limit: Int,
         offset: Int
@@ -255,6 +257,14 @@ struct LogTable {
                     \#(responseCode == nil)
                     OR response_code = \#(responseCode ?? 0)
                 )
+                AND (
+                    \#(from == nil)
+                    OR created_at >= TO_TIMESTAMP(\#(from ?? 0))
+                )
+                AND (
+                    \#(to == nil)
+                    OR created_at < TO_TIMESTAMP(\#(to ?? 0))
+                )
                 ORDER BY \#(unescaped: orderBy)
                 LIMIT \#(limit)
                 OFFSET \#(offset);
@@ -268,7 +278,9 @@ struct LogTable {
         search: String?,
         source: String?,
         method: String?,
-        responseCode: Int?
+        responseCode: Int?,
+        from: Double?,
+        to: Double?
     ) async throws -> Int {
         try await connection.run(
             query: #"""
@@ -289,6 +301,14 @@ struct LogTable {
                 AND (
                     \#(responseCode == nil)
                     OR response_code = \#(responseCode ?? 0)
+                )
+                AND (
+                    \#(from == nil)
+                    OR created_at >= TO_TIMESTAMP(\#(from ?? 0))
+                )
+                AND (
+                    \#(to == nil)
+                    OR created_at < TO_TIMESTAMP(\#(to ?? 0))
                 );
                 """#
         ) { sequence in

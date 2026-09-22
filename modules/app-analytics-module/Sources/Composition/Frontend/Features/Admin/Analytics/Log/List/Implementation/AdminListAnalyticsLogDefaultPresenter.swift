@@ -17,6 +17,8 @@ struct AdminListAnalyticsLogDefaultPresenter:
         source: String?,
         method: String?,
         responseCode: String?,
+        from: String,
+        to: String,
         error: String?
     ) async throws -> HTMLResponse {
         let canAccess = permissions.contains(
@@ -42,6 +44,8 @@ struct AdminListAnalyticsLogDefaultPresenter:
                     source: source ?? model.source,
                     method: method ?? model.method,
                     responseCode: responseCode ?? model.responseCode,
+                    from: from,
+                    to: to,
                     error: error
                 )
             )

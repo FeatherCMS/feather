@@ -343,9 +343,9 @@ components:
         filters:
           type: object
           examples:
-          - method: GET
-            source: web_app
+          - source: web_app
             search: /articles/hello-world/
+            method: GET
           properties:
             search:
               $ref: '#/components/schemas/AnalyticsLogPathField'
@@ -355,6 +355,10 @@ components:
               $ref: '#/components/schemas/AnalyticsLogMethodField'
             responseCode:
               $ref: '#/components/schemas/AnalyticsLogResponseCodeField'
+            from:
+              $ref: '#/components/schemas/AnalyticsLogOverviewDateField'
+            to:
+              $ref: '#/components/schemas/AnalyticsLogOverviewDateField'
           minProperties: 0
       required:
       - page
@@ -402,6 +406,11 @@ components:
       type: integer
       examples:
       - 200
+    AnalyticsLogOverviewDateField:
+      type: number
+      format: double
+      examples:
+      - 1.717171717e+9
     AnalyticsLogListItemSearchSchema:
       type: object
       properties:

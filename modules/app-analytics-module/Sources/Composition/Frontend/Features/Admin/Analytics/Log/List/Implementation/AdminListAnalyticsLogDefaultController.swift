@@ -1,6 +1,7 @@
 import AnalyticsContracts
 import FeatherAdmin
 import FeatherContracts
+import Foundation
 import Hummingbird
 
 struct AdminListAnalyticsLogDefaultController:
@@ -31,6 +32,31 @@ struct AdminListAnalyticsLogDefaultController:
             ? nil
             : responseCode
         let statusCode = normalizedResponseCode.flatMap(Int.init)
+        let dateFormatter = DateFormatter()
+        dateFormatter.calendar = Calendar(identifier: .gregorian)
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+        dateFormatter.isLenient = false
+        let requestedFromValue = request.queryString("from")?
+            .whitespaceTrimmed
+            .emptyToNil
+        let requestedToValue = request.queryString("to")?
+            .whitespaceTrimmed
+            .emptyToNil
+        let fromDate = requestedFromValue.flatMap(dateFormatter.date(from:))
+        let toDate = requestedToValue.flatMap(dateFormatter.date(from:))
+        let isValidRange: Bool
+        if let fromDate, let toDate {
+            isValidRange = fromDate < toDate
+        }
+        else {
+            isValidRange = true
+        }
+        let selectedFrom = isValidRange ? fromDate : nil
+        let selectedTo = isValidRange ? toDate : nil
+        let fromValue = fromDate == nil ? "" : requestedFromValue ?? ""
+        let toValue = toDate == nil ? "" : requestedToValue ?? ""
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
             to: AnalyticsPermissions.Logs.list
@@ -53,7 +79,11 @@ struct AdminListAnalyticsLogDefaultController:
                     search: search,
                     source: source,
                     method: normalizedMethod,
-                    responseCode: statusCode
+                    responseCode: statusCode,
+                    from: selectedFrom?.timeIntervalSince1970,
+                    to: selectedTo.map {
+                        $0.addingTimeInterval(60).timeIntervalSince1970
+                    }
                 )
                 error = nil
             }
@@ -73,6 +103,8 @@ struct AdminListAnalyticsLogDefaultController:
             source: source,
             method: normalizedMethod,
             responseCode: normalizedResponseCode,
+            from: fromValue,
+            to: toValue,
             error: error
         )
     }

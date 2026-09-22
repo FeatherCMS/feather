@@ -26,7 +26,7 @@ public struct NewAdminStatCard: Component {
                     .variable(TokenKey.Colors.Materials.Primary.border)
                 )
                 BorderRadius(12.px)
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             }
             Custom(".new-admin-stat-card__label") {
                 Margin(0)

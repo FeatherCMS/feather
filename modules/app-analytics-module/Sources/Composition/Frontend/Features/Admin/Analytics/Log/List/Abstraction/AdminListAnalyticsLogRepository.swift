@@ -5,6 +5,8 @@ protocol AdminListAnalyticsLogRepository: Sendable {
         search: String?,
         source: String?,
         method: String?,
-        responseCode: Int?
+        responseCode: Int?,
+        from: Double?,
+        to: Double?
     ) async throws -> AdminListAnalyticsLogModel
 }

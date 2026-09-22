@@ -60,7 +60,9 @@ extension AdminAPIGateway {
             search: (query.filters.search ?? "").emptyToNil,
             source: (query.filters.source ?? "").emptyToNil,
             method: (query.filters.method ?? "").emptyToNil,
-            responseCode: query.filters.responseCode
+            responseCode: query.filters.responseCode,
+            from: query.filters.from,
+            to: query.filters.to
         )
     }
 

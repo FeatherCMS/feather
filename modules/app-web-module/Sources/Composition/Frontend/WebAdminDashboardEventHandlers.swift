@@ -23,14 +23,6 @@ public enum WebAdminDashboardEventHandlers {
                 operation: { try await countPages(using: api) },
                 to: &contentStats
             )
-            await appendCount(
-                label: "Web menus",
-                permission: "web:menus:list",
-                permissions: context.permissions,
-                operation: { try await countMenus(using: api) },
-                to: &contentStats
-            )
-
             return [
                 .init(
                     contentStats: contentStats,
@@ -47,34 +39,6 @@ public enum WebAdminDashboardEventHandlers {
     {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.webPageSearch(
-                headers: .init(accept: [.init(contentType: .json)]),
-                body: .json(
-                    .init(
-                        page: .init(size: 1, number: 1),
-                        filters: .init(search: nil)
-                    )
-                )
-            )
-            switch response {
-            case .ok(let value): return try value.body.json.data.total
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
-        }
-    }
-
-    private static func countMenus(using api: WebAdminAPIClient) async throws
-        -> Int
-    {
-        try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.webMenuSearch(
                 headers: .init(accept: [.init(contentType: .json)]),
                 body: .json(
                     .init(

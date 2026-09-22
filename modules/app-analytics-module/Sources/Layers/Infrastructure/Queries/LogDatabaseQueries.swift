@@ -116,6 +116,8 @@ public struct LogDatabaseQueries: LogQueries {
                 source: query.source,
                 method: query.method,
                 responseCode: query.responseCode,
+                from: query.from,
+                to: query.to,
                 orderBy: orderByAnalyticsLog(query),
                 limit: page.size,
                 offset: page.offset
@@ -133,7 +135,9 @@ public struct LogDatabaseQueries: LogQueries {
             search: query.search,
             source: query.source,
             method: query.method,
-            responseCode: query.responseCode
+            responseCode: query.responseCode,
+            from: query.from,
+            to: query.to
         )
     }
 

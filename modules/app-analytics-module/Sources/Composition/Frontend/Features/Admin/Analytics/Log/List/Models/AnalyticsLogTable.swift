@@ -17,6 +17,8 @@ struct AnalyticsLogTable: Component {
         let source: String
         let method: String
         let responseCode: String
+        let from: String
+        let to: String
         let error: String?
     }
 
@@ -48,6 +50,24 @@ struct AnalyticsLogTable: Component {
                         )
                     )
                 )
+                context.build(
+                    AnalyticsDateRangeFilter(
+                        state: .init(
+                            action: AnalyticsAdminRoutes.logs.description,
+                            from: state.from,
+                            to: state.to,
+                            queryItems: [
+                                .init(name: "search", value: state.search),
+                                .init(name: "source", value: state.source),
+                                .init(name: "method", value: state.method),
+                                .init(
+                                    name: "responseCode",
+                                    value: state.responseCode
+                                ),
+                            ]
+                        )
+                    )
+                )
                 if let error = state.error {
                     P(error).class("new-admin-form__error")
                 }
@@ -61,6 +81,7 @@ struct AnalyticsLogTable: Component {
         let hasActiveQuery =
             !state.search.isEmpty || !state.source.isEmpty
             || !state.method.isEmpty || !state.responseCode.isEmpty
+            || !state.from.isEmpty || !state.to.isEmpty
         return NewAdminList(
             table: {
                 if state.pageState.isPageOutOfRange {
@@ -151,7 +172,7 @@ struct AnalyticsLogTable: Component {
                                                     label: "Actions",
                                                     actions: [
                                                         .init(
-                                                            "Details",
+                                                            "View",
                                                             href:
                                                                 AnalyticsAdminRoutes
                                                                 .log(
@@ -160,6 +181,9 @@ struct AnalyticsLogTable: Component {
                                                                     )
                                                                 )
                                                                 .description,
+                                                            style: .ghost(
+                                                                .primary
+                                                            ),
                                                             permission:
                                                                 AnalyticsPermissions
                                                                 .Logs.list
@@ -192,6 +216,8 @@ struct AnalyticsLogTable: Component {
                                     name: "responseCode",
                                     value: state.responseCode
                                 ),
+                                .init(name: "from", value: state.from),
+                                .init(name: "to", value: state.to),
                             ]
                         ),
                         additionalFields: { filters }
@@ -212,6 +238,8 @@ struct AnalyticsLogTable: Component {
                                     name: "responseCode",
                                     value: state.responseCode
                                 ),
+                                .init(name: "from", value: state.from),
+                                .init(name: "to", value: state.to),
                             ]
                         )
                     )

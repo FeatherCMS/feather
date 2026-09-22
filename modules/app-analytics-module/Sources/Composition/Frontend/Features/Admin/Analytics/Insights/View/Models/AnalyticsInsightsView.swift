@@ -1,4 +1,5 @@
 import AnalyticsAdminAPI
+import CSS
 import FeatherAdmin
 import Foundation
 import HTML
@@ -8,6 +9,23 @@ import WebComponents
 
 struct AnalyticsInsightsView: Component {
     let page: AdminAnalyticsInsightsPage
+
+    func rules() -> [any Rule] {
+        Media {
+            Custom(".analytics-insights") {
+                Display(.grid)
+                Gap(32.px)
+            }
+            Custom(
+                ".analytics-insights .breadcrumb, "
+                    + ".analytics-insights .admin-page-header, "
+                    + ".analytics-insights .new-admin-form"
+            ) {
+                MarginTop(0.px)
+                MarginBottom(0.px)
+            }
+        }
+    }
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
@@ -20,35 +38,16 @@ struct AnalyticsInsightsView: Component {
                     )
                 )
             )
-            let form = NewAdminForm(action: page.source.pagePath, method: .get)
-            {
-                context.build(
-                    NewAdminFormFieldSelect(
-                        state: .init(
-                            name: "range",
-                            label: "Date range",
-                            value: page.selectedRange.rawValue,
-                            options: [
-                                .init(label: "Last 24 hours", value: "24h"),
-                                .init(label: "Last 7 days", value: "7d"),
-                                .init(label: "Last 30 days", value: "30d"),
-                            ]
-                        )
+            context.build(
+                AnalyticsDateRangeFilter(
+                    state: .init(
+                        action: page.source.pagePath,
+                        from: page.from,
+                        to: page.to,
+                        queryItems: []
                     )
                 )
-                Div {
-                    context.build(NewAdminSubmitButton("Update"))
-                    context.build(
-                        NewAdminButton(
-                            "View logs",
-                            href: page.source.logsPath,
-                            style: .secondary
-                        )
-                    )
-                }
-                .class("new-admin-form__actions")
-            }
-            context.build(form)
+            )
             Div {
                 for item in metrics {
                     context.build(
@@ -77,7 +76,7 @@ struct AnalyticsInsightsView: Component {
             }
             .class("grid", "grid-321")
         }
-        .class("cms-section")
+        .class("analytics-insights")
     }
 
     private var breadcrumb: [NewAdminBreadcrumb.Link] {
@@ -160,7 +159,9 @@ struct AnalyticsInsightsView: Component {
         formatter.locale = .init(identifier: "en_US_POSIX")
         formatter.timeZone = .current
         formatter.dateFormat =
-            page.selectedRange == .last24Hours ? "HH:mm" : "MMM d"
+            page.overview.query.to - page.overview.query.from <= 86_400
+            ? "HH:mm"
+            : "MMM d"
         return formatter.string(from: Date(timeIntervalSince1970: timestamp))
     }
 }

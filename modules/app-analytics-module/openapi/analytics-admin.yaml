@@ -313,6 +313,10 @@ components:
               $ref: '#/components/schemas/AnalyticsLogMethodField'
             responseCode:
               $ref: '#/components/schemas/AnalyticsLogResponseCodeField'
+            from:
+              $ref: '#/components/schemas/AnalyticsLogOverviewDateField'
+            to:
+              $ref: '#/components/schemas/AnalyticsLogOverviewDateField'
       required:
       - page
       - filters
@@ -350,6 +354,10 @@ components:
     AnalyticsLogResponseCodeField:
       type: integer
       example: 200
+    AnalyticsLogOverviewDateField:
+      type: number
+      format: double
+      example: 1.717171717e+9
     AnalyticsLogListItemSearchSchema:
       type: object
       properties:
