@@ -122,10 +122,13 @@ public enum WebPublicContentEventHandlers {
         navigation: [[String: any Sendable]]
     ) -> [String: any Sendable] {
         var context: [String: any Sendable] = [
-            "name": settings.title.emptyToNil ?? "Feather CMS",
             "navigation": navigation,
             "noIndex": settings.noIndex,
         ]
+
+        if let name = settings.title.emptyToNil {
+            context["name"] = name
+        }
 
         let values = [
             "language": settings.locale,
