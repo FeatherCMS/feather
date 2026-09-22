@@ -61,19 +61,13 @@ struct ContactFormSubmissionDetailsView: Component {
                 )
             }
             else {
-                Table {
-                    Tbody {
-                        for (key, value) in state.item.values.sorted(by: {
-                            $0.key < $1.key
-                        }) {
-                            Tr {
-                                Th(key)
-                                Td(value).data("label", key)
-                            }
-                        }
-                    }
+                for (key, value) in state.item.values.sorted(by: {
+                    $0.key < $1.key
+                }) {
+                    context.build(
+                        NewAdminDetailField(label: key, value: value)
+                    )
                 }
-                .class("cms-table")
             }
             if canUpdate {
                 let form = NewAdminForm(
