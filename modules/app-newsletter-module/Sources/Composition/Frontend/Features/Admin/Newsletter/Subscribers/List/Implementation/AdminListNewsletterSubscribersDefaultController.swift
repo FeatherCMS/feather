@@ -61,4 +61,38 @@ struct AdminListNewsletterSubscribersDefaultController:
             )
         }
     }
+
+    func viewSubscriber(
+        request: Request,
+        context: DefaultRequestContext
+    ) async throws -> HTMLResponse {
+        let (interactor, presenter) = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: Permissions.Subscribers.read)
+        else {
+            return try await presenter.renderDetailsErrorPage(
+                message: "Your account cannot view newsletter subscribers.",
+                status: .forbidden
+            )
+        }
+        do {
+            return try await presenter.renderDetailsPage(
+                item: try await interactor.get(
+                    id: try context.requiredParameter("subscriberId")
+                ),
+                permissions: context.currentUserPermissions
+            )
+        }
+        catch let error as OpenAPIRepositoryError {
+            return try await presenter.renderDetailsErrorPage(
+                message: error.displayMessage,
+                status: error.httpStatus
+            )
+        }
+        catch {
+            return try await presenter.renderDetailsErrorPage(
+                message: error.displayMessage,
+                status: .internalServerError
+            )
+        }
+    }
 }

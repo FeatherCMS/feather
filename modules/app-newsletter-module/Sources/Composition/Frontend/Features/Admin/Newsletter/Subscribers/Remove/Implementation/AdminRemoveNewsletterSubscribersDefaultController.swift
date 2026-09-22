@@ -3,6 +3,7 @@ import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
+import NewsletterContracts
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -20,12 +21,23 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
     func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
-        let (_, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: Permissions.Subscribers.delete)
+        else {
+            return HTMLResponse(content: "Forbidden", status: .forbidden)
+        }
+        let ids = request.queryStrings("ids")
+        guard !ids.isEmpty else {
+            return HTMLResponse(
+                content: "No subscribers selected.",
+                status: .badRequest
+            )
+        }
+        let names = try await interactor.names(ids: ids)
         return try await presenter.renderRemovePage(
-            items: request.queryStrings("selectedIds")
-                .map {
-                    .init(id: $0, label: $0)
-                },
+            items: zip(ids, names).map {
+                .init(id: $0.0, label: $0.1)
+            },
             search: request.querySearch(),
             campaignId: request.queryString("campaignId")
         )
@@ -35,6 +47,8 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
         -> Response
     {
         let (interactor, _) = buildRuntime(request, context)
+        guard context.isCurrentUserAllowed(to: Permissions.Subscribers.delete)
+        else { return Response(status: .forbidden) }
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context

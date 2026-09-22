@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -32,7 +33,10 @@ struct AdminViewNewsletterCampaignDefaultPresenter:
                         error: error,
                         success: nil
                     ),
-                    isDetails: true
+                    isDetails: true,
+                    permissions: NewAdminListActions(
+                        Set(permissions.map(PermissionKey.init))
+                    )
                 )
             )
         )

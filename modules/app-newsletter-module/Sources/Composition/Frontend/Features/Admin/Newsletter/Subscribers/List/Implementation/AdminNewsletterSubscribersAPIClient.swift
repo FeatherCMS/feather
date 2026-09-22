@@ -79,6 +79,21 @@ struct AdminNewsletterSubscribersAPIClient {
         }
     }
 
+    func get(id: String) async throws -> AdminNewsletterSubscriberListItem {
+        guard let item = try await list().first(where: { $0.id == id }) else {
+            throw OpenAPIRepositoryError.notFound
+        }
+        return item
+    }
+
+    func names(ids: [String]) async throws -> [String] {
+        let items = try await list()
+        let namesByID = Dictionary(
+            uniqueKeysWithValues: items.map { ($0.id, $0.email) }
+        )
+        return ids.map { namesByID[$0] ?? $0 }
+    }
+
     func remove(subscriberIds: [String], campaignId: String?) async throws {
         let items = try await list()
         for item in items where subscriberIds.contains(item.id) {

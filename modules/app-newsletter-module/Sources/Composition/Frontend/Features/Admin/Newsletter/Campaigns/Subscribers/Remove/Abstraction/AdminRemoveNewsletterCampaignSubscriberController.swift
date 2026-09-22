@@ -10,6 +10,10 @@ import WebComponents
 protocol AdminRemoveNewsletterCampaignSubscriberController: Sendable {
     func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
+    func confirmSelected(
+        request: Request,
+        context: DefaultRequestContext
+    ) async throws -> Response
     func remove(request: Request, context: DefaultRequestContext) async throws
         -> Response
     func removeSelected(request: Request, context: DefaultRequestContext)
@@ -17,6 +21,10 @@ protocol AdminRemoveNewsletterCampaignSubscriberController: Sendable {
 }
 extension AdminRemoveNewsletterCampaignSubscriberController {
     func route(on router: Router<DefaultRequestContext>) {
+        router.get(
+            NewsletterAdminRoutes.campaignSubscriberRemoveSelectedRoute,
+            use: confirmSelected
+        )
         router.get(
             NewsletterAdminRoutes.campaignSubscriberRemoveRoute,
             use: confirm

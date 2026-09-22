@@ -10,10 +10,15 @@ import WebComponents
 protocol AdminListNewsletterSubscribersController: Sendable {
     func list(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
+    func viewSubscriber(
+        request: Request,
+        context: DefaultRequestContext
+    ) async throws -> HTMLResponse
 }
 
 extension AdminListNewsletterSubscribersController {
     func route(on router: Router<DefaultRequestContext>) {
         router.get(NewsletterAdminRoutes.subscribers, use: list)
+        router.get(NewsletterAdminRoutes.subscriberDetailsRoute, use: viewSubscriber)
     }
 }

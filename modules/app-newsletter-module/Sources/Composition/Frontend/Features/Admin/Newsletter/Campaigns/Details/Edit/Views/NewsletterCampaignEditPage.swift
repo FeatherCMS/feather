@@ -1,4 +1,5 @@
 import FeatherAdmin
+import NewsletterContracts
 import HTML
 import Hummingbird
 import SGML
@@ -10,6 +11,7 @@ struct NewsletterCampaignEditPage: Component {
         let id: String
         let form: NewsletterCampaignForm.State
         let isDetails: Bool
+        let permissions: NewAdminListActions
     }
     let state: State
 
@@ -71,29 +73,45 @@ struct NewsletterCampaignEditPage: Component {
             )
             if state.isDetails {
                 Div {
-                    Div {
-                        P("Key")
-                        P(state.form.key)
-                    }
-                    .class("admin-detail-view-field")
-                    Div {
-                        P("Name")
-                        P(state.form.name)
-                    }
-                    .class("admin-detail-view-field")
-                    Div {
-                        P("From email")
-                        P(state.form.fromEmail)
-                    }
-                    .class("admin-detail-view-field")
-                }
-                .class("admin-detail-view-fields")
-                Div {
                     context.build(
-                        NewAdminButton("Edit", href: editPath, style: .primary)
+                        NewAdminDetailField(label: "Key", value: state.form.key)
+                    )
+                    context.build(
+                        NewAdminDetailField(label: "Name", value: state.form.name)
+                    )
+                    context.build(
+                        NewAdminDetailField(
+                            label: "From email",
+                            value: state.form.fromEmail
+                        )
                     )
                 }
+                .class("admin-detail-view-fields")
+                .style("display:grid;gap:12px;")
+                Div {
+                    if state.permissions.allows(Permissions.Campaigns.update) {
+                        context.build(
+                            NewAdminButton("Edit", href: editPath, style: .primary)
+                        )
+                    }
+                    if state.permissions.allows(Permissions.Campaigns.delete) {
+                        context.build(
+                            NewAdminButton(
+                                "Remove",
+                                href: NewAdminLocation.remove(
+                                    path: NewsletterAdminRoutes.campaignRemove.description,
+                                    ids: [state.id],
+                                    returnTo: NewsletterAdminRoutes.campaignDetails(
+                                        RouterPath(state.id)
+                                    ).description
+                                ),
+                                style: .destructive
+                            )
+                        )
+                    }
+                }
                 .class("new-admin-detail-actions")
+                .style("display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;")
             }
             else {
                 context.build(

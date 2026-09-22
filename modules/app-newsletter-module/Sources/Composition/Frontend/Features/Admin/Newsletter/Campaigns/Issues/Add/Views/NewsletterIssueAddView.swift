@@ -113,12 +113,11 @@ struct NewsletterIssueAddView: Component {
                     )
                 )
                 context.build(
-                    NewAdminFormFieldInput(
+                    NewAdminFormFieldDatePicker(
                         state: .init(
                             name: "scheduledAt",
                             label: "Schedule",
-                            value: state.scheduledAt,
-                            help: "Optional Unix timestamp."
+                            value: state.scheduledAt
                         )
                     )
                 )

@@ -37,8 +37,9 @@ struct NewsletterSubscriberRow: Component {
                     actions: [
                         .init(
                             "View",
-                            href: NewsletterAdminRoutes.subscribers.description
-                                + "/\(item.id)/",
+                            href: NewsletterAdminRoutes.subscriberDetails(
+                                RouterPath(item.id)
+                            ).description,
                             style: .ghost(.primary),
                             permission: Permissions.Subscribers.read
                         ),

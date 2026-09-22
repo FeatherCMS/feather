@@ -41,4 +41,40 @@ struct AdminListNewsletterSubscribersDefaultPresenter:
             )
         )
     }
+
+    func renderDetailsPage(
+        item: AdminNewsletterSubscriberListItem,
+        permissions: Set<String>
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Subscriber details",
+            content: NewsletterSubscriberDetails(
+                item: item,
+                permissions: NewAdminListActions(
+                    Set(permissions.map(PermissionKey.init))
+                )
+            )
+        )
+    }
+
+    func renderDetailsErrorPage(
+        message: String,
+        status: HTTPResponse.Status
+    ) async throws -> HTMLResponse {
+        let page = try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Subscriber details",
+            content: NewAdminStatusView(
+                state: .init(
+                    title: "Subscriber unavailable",
+                    message: message
+                ),
+                icon: FeatherIcons.alertCircle()
+            )
+        )
+        return HTMLResponse(content: page.content, status: status)
+    }
 }

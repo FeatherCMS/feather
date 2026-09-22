@@ -1,5 +1,6 @@
 import FeatherAdmin
 import FeatherValidation
+import Foundation
 import HTML
 import Hummingbird
 import NewsletterAdminAPI
@@ -27,7 +28,14 @@ struct AdminEditNewsletterIssueOpenAPIRepository {
                     subject: issue.subject,
                     content: issue.content,
                     scheduledAt: issue.scheduledAt.map {
-                        String(describing: $0)
+                        let formatter = DateFormatter()
+                        formatter.locale = Locale(identifier: "en_US_POSIX")
+                        formatter.calendar = Calendar(identifier: .gregorian)
+                        formatter.timeZone = .current
+                        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+                        return formatter.string(
+                            from: Date(timeIntervalSince1970: $0)
+                        )
                     } ?? "",
                     newsletterId: newsletterId,
                     error: nil
@@ -61,7 +69,7 @@ struct AdminEditNewsletterIssueOpenAPIRepository {
                     .init(
                         subject: form.normalizedSubject,
                         content: form.content,
-                        scheduledAt: Double(form.scheduledAt)
+                        scheduledAt: form.scheduledAtTimestamp
                     )
                 )
             )

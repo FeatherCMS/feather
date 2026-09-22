@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -21,15 +22,13 @@ struct AdminViewNewsletterIssueDefaultPresenter:
         try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,
-            title: "Campaign issue",
-            content: NewsletterIssueAddView(
-                state: .init(
-                    subject: model.subject,
-                    content: model.content,
-                    scheduledAt: model.scheduledAt,
-                    newsletterId: model.newsletterId,
-                    issueId: issueId,
-                    error: nil
+            title: "Campaign issue details",
+            content: NewsletterIssueDetailsView(
+                newsletterId: model.newsletterId,
+                issueId: issueId,
+                model: model,
+                permissions: NewAdminListActions(
+                    Set(permissions.map(PermissionKey.init))
                 )
             )
         )

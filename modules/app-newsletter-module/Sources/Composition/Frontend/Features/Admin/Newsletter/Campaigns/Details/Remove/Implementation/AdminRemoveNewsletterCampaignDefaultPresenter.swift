@@ -9,11 +9,17 @@ struct AdminRemoveNewsletterCampaignDefaultPresenter:
     let request: Request
     let context: DefaultRequestContext
     let renderingEngine: any RenderingEngine
-    func render(item: NewAdminRemoveItemContext) async throws
-        -> HTMLResponse
+    func renderRemovePage(
+        items: [NewAdminRemoveItemContext],
+        returnTo: String?
+    ) async throws -> HTMLResponse
     {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
+        )
+        let cancel = NewAdminLocation.removeCancel(
+            path: NewsletterAdminRoutes.campaigns.description,
+            returnTo: returnTo
         )
         return try await renderingEngine.renderNewAdminPage(
             request: request,
@@ -30,14 +36,14 @@ struct AdminRemoveNewsletterCampaignDefaultPresenter:
                     title: "Remove campaign",
                     description: "This action cannot be undone."
                 ),
-                selectedItems: [item.label],
-                action:
-                    NewsletterAdminRoutes.campaignRemove(RouterPath(item.id))
-                    .description,
-                cancel: NewsletterAdminRoutes.campaigns.description,
+                selectedItems: items.map(\.label),
+                action: NewsletterAdminRoutes.campaignRemove.description,
+                cancel: cancel,
                 submitLabel: "Remove campaign",
                 nonceToken: nonceToken,
-                hiddenFields: [.init(name: "ids", value: item.id)]
+                hiddenFields: items.map {
+                    .init(name: "ids", value: $0.id)
+                } + [.init(name: "returnTo", value: cancel)]
             )
         )
     }

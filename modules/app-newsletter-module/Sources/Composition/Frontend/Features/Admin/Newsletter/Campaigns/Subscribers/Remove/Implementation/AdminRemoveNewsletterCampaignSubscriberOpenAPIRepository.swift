@@ -16,6 +16,20 @@ struct AdminRemoveNewsletterCampaignSubscriberOpenAPIRepository {
         try await AdminNewsletterCampaignSubscribersAPIClient(api: api)
             .get(newsletterId: newsletterId, subscriberId: subscriberId)
     }
+    func names(newsletterId: String, subscriberIds: [String]) async throws
+        -> [String]
+    {
+        var names: [String] = []
+        for subscriberId in subscriberIds {
+            names.append(
+                try await get(
+                    newsletterId: newsletterId,
+                    subscriberId: subscriberId
+                ).email
+            )
+        }
+        return names
+    }
     func remove(newsletterId: String, subscriberId: String) async throws {
         try await AdminNewsletterCampaignSubscribersAPIClient(api: api)
             .remove(newsletterId: newsletterId, subscriberId: subscriberId)
