@@ -294,6 +294,7 @@ public struct NewAdminFormFieldDatePicker: Component {
             .id(displayID)
             .if(state.value != nil) { $0.value(state.value) }
             .readOnly()
+            .ariaLabel(state.label)
             .ariaHasPopup(.dialog)
             .ariaControls(pickerID)
             .ariaExpanded("false")

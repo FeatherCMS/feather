@@ -29,8 +29,14 @@ struct AnalyticsDateRangeFilter: Component {
                         .fraction(1.fr), .fraction(1.fr), .auto,
                     ])
                 )
-                AlignItems(.flexEnd)
+                AlignItems(.center)
                 Gap(16.px)
+            }
+            Custom(
+                ".analytics-date-range-filter__fields "
+                    + ".new-admin-date-picker .new-admin-form-field-label"
+            ) {
+                Display(.none)
             }
         }
         Media(.maxWidth(768.px)) {
