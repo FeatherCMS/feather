@@ -1,4 +1,3 @@
-
 struct AdminRemoveAccountInvitationDefaultInteractor:
     AdminRemoveAccountInvitationInteractor
 {

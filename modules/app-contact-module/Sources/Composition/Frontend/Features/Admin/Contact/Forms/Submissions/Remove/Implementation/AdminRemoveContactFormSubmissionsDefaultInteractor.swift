@@ -1,4 +1,3 @@
-
 struct AdminRemoveContactFormSubmissionsDefaultInteractor:
     AdminRemoveContactFormSubmissionsInteractor
 {

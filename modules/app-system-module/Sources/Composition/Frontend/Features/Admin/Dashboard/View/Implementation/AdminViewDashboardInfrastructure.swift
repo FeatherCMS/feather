@@ -1,2 +1,1 @@
-
 struct AdminViewDashboardInfrastructure: Sendable {}

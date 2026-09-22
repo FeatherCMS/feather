@@ -1,4 +1,3 @@
-
 protocol AdminResendAccountInvitationRepository: Sendable {
 
     func resend(

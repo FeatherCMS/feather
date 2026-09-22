@@ -1,4 +1,3 @@
-
 struct AppLoginAuthModel: Sendable {
     let email: String
     let password: String

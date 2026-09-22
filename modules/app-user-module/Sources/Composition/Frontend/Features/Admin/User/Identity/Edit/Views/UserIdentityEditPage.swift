@@ -2,8 +2,8 @@ import FeatherAdmin
 import HTML
 import Hummingbird
 import UserContracts
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct UserIdentityEditPage: Component {
     let id: String

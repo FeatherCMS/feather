@@ -4,8 +4,8 @@ import FeatherAdmin
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AccountInvitationTable: Component {
     struct State {

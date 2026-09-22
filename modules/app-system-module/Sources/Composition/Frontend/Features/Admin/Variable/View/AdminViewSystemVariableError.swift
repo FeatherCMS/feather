@@ -1,4 +1,3 @@
-
 enum AdminViewSystemVariableError: Error, Sendable {
     case notFound
     case unauthorized

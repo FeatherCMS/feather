@@ -1,7 +1,6 @@
+import Foundation
 import NewsAppAPI
 import NewsApplication
-import Foundation
-
 import WebApplication
 import WebDomain
 

@@ -1,4 +1,3 @@
-
 struct AdminListContactSubmissionsDefaultInteractor:
     AdminListContactSubmissionsInteractor
 {

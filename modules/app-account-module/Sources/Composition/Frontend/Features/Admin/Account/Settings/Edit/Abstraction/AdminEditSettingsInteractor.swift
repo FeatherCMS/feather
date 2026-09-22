@@ -1,4 +1,3 @@
-
 protocol AdminEditSettingsInteractor: Sendable {
 
     func loadSettings() async throws -> AdminEditSettingsModel

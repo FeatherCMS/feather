@@ -1,4 +1,3 @@
-
 protocol AdminListAnalyticsLogInteractor: Sendable {
 
     func listAnalyticsLogs(

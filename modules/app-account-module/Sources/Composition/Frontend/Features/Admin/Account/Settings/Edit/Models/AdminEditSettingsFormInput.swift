@@ -1,4 +1,3 @@
-
 public struct AdminEditSettingsFormInput: Codable, Sendable, Equatable,
     Hashable
 {

@@ -4,7 +4,6 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-
 public protocol SessionQueries: Sendable {
 
     func find(

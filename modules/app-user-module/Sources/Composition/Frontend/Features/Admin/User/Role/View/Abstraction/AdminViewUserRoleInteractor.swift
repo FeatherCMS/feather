@@ -1,4 +1,3 @@
-
 protocol AdminViewUserRoleInteractor: Sendable {
 
     func load(

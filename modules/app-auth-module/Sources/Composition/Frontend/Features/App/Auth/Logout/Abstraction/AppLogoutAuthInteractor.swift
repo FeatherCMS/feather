@@ -1,4 +1,3 @@
-
 protocol AppLogoutAuthInteractor: Sendable {
 
     func execute(

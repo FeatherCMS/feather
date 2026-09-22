@@ -3,8 +3,8 @@ import HTML
 import Hummingbird
 import UserAdminAPI
 import UserContracts
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct UserRoleRow: Component {
     let role: Components.Schemas.UserRoleListItemSchema

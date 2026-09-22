@@ -1,4 +1,3 @@
-
 struct AdminViewRedirectOverviewDefaultInteractor:
     AdminViewRedirectOverviewInteractor
 {

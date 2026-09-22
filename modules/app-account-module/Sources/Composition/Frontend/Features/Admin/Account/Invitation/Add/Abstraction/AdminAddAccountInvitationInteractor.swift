@@ -1,4 +1,3 @@
-
 protocol AdminAddAccountInvitationInteractor: Sendable {
 
     func execute(

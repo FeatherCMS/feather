@@ -1,4 +1,3 @@
-
 public struct AdminEditAccountProfileFormInput: Codable, Sendable, Equatable,
     Hashable
 {

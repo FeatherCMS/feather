@@ -1,4 +1,3 @@
-
 struct AdminAddNewsletterCampaignModel: Sendable {
     let name: String
     let fromEmail: String

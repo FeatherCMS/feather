@@ -1,4 +1,3 @@
-
 struct AppLogoutAuthDefaultInteractor: AppLogoutAuthInteractor {
     private let repository: any AppLogoutAuthRepository
 

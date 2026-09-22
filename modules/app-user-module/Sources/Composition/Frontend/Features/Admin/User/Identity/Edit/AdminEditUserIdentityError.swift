@@ -1,4 +1,3 @@
-
 enum AdminEditUserIdentityError: Error, Sendable {
     case notFound
     case unauthorized

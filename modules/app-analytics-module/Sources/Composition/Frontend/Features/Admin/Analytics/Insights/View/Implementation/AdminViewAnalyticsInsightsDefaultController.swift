@@ -1,7 +1,7 @@
 import AnalyticsContracts
 import FeatherAdmin
-import Hummingbird
 import Foundation
+import Hummingbird
 
 struct AdminViewAnalyticsInsightsDefaultController:
     AdminViewAnalyticsInsightsController

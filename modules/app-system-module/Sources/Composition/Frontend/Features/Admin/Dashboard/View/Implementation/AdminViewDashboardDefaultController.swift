@@ -1,6 +1,6 @@
 import FeatherAdmin
-import Hummingbird
 import Foundation
+import Hummingbird
 
 struct AdminViewDashboardDefaultController: AdminViewDashboardController {
     let buildRuntime:

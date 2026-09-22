@@ -1,4 +1,3 @@
-
 protocol AdminEditUserIdentityRepository: Sendable {
 
     func load(

@@ -1,4 +1,3 @@
-
 enum AdminRemoveMediaVariantError: Error, Sendable {
     case notFound
     case unauthorized

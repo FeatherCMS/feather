@@ -3,7 +3,6 @@ import AuthApplication
 import FeatherApplication
 import Foundation
 
-
 extension AdminAPIGateway {
     public func mapSortDirection(
         _ direction: AuthAdminAPI.Components.Schemas.SortDirection

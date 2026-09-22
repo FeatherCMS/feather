@@ -1,4 +1,3 @@
-
 protocol AdminAddNewsletterCampaignInteractor: Sendable {
     func getAddNewsletterCampaign() async throws
         -> AdminAddNewsletterCampaignModel

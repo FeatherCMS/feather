@@ -1,4 +1,3 @@
-
 protocol AdminViewRedirectRuleInteractor: Sendable {
 
     func load(

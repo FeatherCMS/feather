@@ -1,4 +1,3 @@
-
 struct AdminContactSubmissionDirectoryItem: Sendable {
     let id: String
     let formId: String

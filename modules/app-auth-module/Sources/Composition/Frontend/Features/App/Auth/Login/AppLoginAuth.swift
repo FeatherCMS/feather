@@ -1,4 +1,3 @@
-
 struct AppLoginAuth {
     let controller: any AppLoginAuthController
 

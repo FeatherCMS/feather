@@ -1,6 +1,6 @@
 import FeatherAdmin
-import Hummingbird
 import FeatherContracts
+import Hummingbird
 
 struct AdminViewContactFormSubmissionDefaultPresenter:
     AdminViewContactFormSubmissionPresenter

@@ -1,4 +1,3 @@
-
 protocol AdminEditAccountInvitationRepository: Sendable {
 
     func get(

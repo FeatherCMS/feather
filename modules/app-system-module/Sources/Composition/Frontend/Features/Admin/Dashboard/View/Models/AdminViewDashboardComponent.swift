@@ -2,8 +2,8 @@ import FeatherAdmin
 import Foundation
 import HTML
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AdminViewDashboardComponent: Component {
     let model: AdminViewDashboardModel

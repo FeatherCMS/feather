@@ -1,4 +1,3 @@
-
 enum AdminAddMediaVariantError: Error, Sendable {
     case unauthorized
     case forbidden

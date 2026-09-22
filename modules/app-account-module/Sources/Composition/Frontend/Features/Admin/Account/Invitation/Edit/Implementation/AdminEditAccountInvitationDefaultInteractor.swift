@@ -1,4 +1,3 @@
-
 struct AdminEditAccountInvitationDefaultInteractor:
     AdminEditAccountInvitationInteractor
 {

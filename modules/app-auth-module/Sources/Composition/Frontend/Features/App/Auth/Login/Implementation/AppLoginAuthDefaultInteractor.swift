@@ -1,4 +1,3 @@
-
 struct AppLoginAuthDefaultInteractor: AppLoginAuthInteractor {
     let repository: any AppLoginAuthRepository
 

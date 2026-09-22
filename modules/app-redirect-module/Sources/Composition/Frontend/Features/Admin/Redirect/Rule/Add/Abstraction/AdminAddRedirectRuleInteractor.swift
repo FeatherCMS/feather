@@ -1,4 +1,3 @@
-
 protocol AdminAddRedirectRuleInteractor: Sendable {
 
     func add(

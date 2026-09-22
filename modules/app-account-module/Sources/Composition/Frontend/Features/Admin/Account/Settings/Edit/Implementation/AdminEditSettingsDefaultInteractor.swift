@@ -1,4 +1,3 @@
-
 struct AdminEditSettingsDefaultInteractor:
     AdminEditSettingsInteractor
 {

@@ -3,8 +3,8 @@ import HTML
 import Hummingbird
 import NewsletterContracts
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct NewsletterCampaignsTableContent: Component {
     let items: [AdminNewsletterCampaignItem]

@@ -2,8 +2,8 @@ import FeatherAdmin
 import HTML
 import RedirectAdminAPI
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct RedirectRuleTable: Component {
     struct State {

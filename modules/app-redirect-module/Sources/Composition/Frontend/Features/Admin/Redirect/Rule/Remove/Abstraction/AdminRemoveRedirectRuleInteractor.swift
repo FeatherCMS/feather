@@ -1,4 +1,3 @@
-
 protocol AdminRemoveRedirectRuleInteractor: Sendable {
 
     func names(ids: [String]) async throws -> [String]

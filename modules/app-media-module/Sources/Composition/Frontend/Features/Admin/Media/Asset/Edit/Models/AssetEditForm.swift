@@ -1,6 +1,6 @@
 import FeatherAdmin
-import FeatherValidation
 import FeatherContracts
+import FeatherValidation
 import HTML
 import Hummingbird
 import MediaAdminAPI

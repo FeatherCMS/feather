@@ -4,11 +4,11 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
+import FeatherContracts
 import FeatherDomain
 
 import struct Foundation.CharacterSet
 import struct Foundation.Date
-import FeatherContracts
 
 public struct MenuItem: Model {
 

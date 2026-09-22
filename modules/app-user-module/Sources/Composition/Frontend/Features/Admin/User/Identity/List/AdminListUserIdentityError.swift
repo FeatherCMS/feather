@@ -1,4 +1,3 @@
-
 enum AdminListUserIdentityError: Error, Sendable {
     case unauthorized
     case forbidden

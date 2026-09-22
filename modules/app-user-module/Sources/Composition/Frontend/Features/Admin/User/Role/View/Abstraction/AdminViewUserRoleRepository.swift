@@ -1,4 +1,3 @@
-
 protocol AdminViewUserRoleRepository: Sendable {
 
     func load(

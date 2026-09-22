@@ -1,4 +1,3 @@
-
 protocol AdminAddUserIdentityInteractor: Sendable {
 
     func loadRoleOptions() async throws -> [UserIdentityAddRoleOptionModel]

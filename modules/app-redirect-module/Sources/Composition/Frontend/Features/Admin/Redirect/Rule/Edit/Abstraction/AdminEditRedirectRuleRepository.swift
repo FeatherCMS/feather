@@ -1,4 +1,3 @@
-
 protocol AdminEditRedirectRuleRepository: Sendable {
 
     func load(

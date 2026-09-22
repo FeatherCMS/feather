@@ -1,4 +1,3 @@
-
 struct AdminRemoveNewsletterCampaignDefaultInteractor:
     AdminRemoveNewsletterCampaignInteractor
 {

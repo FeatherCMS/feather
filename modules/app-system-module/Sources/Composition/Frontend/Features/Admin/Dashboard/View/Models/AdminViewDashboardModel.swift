@@ -1,4 +1,3 @@
-
 public struct AdminViewDashboardOverview: Sendable {
     public struct DailyPoint: Sendable {
         public let bucket: Double

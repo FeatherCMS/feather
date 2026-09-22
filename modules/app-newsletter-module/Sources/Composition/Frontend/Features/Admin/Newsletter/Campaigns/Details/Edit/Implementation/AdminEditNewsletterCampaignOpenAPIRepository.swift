@@ -1,4 +1,3 @@
-
 struct AdminEditNewsletterCampaignOpenAPIRepository {
     let api: NewsletterAdminAPIClient
     func get(id: String) async throws -> AdminNewsletterCampaignItem {

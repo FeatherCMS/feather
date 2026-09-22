@@ -1,4 +1,3 @@
-
 protocol AdminRemoveUserRoleInteractor: Sendable {
 
     func names(

@@ -1,4 +1,3 @@
-
 enum AdminListMediaVariantProcessorsError: Error, Sendable {
     case notFound
     case unauthorized

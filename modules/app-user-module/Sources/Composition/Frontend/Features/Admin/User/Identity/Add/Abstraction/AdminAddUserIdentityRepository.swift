@@ -1,4 +1,3 @@
-
 protocol AdminAddUserIdentityRepository: Sendable {
 
     func create(

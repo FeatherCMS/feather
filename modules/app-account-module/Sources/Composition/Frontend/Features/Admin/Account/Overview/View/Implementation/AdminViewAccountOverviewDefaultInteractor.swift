@@ -1,4 +1,3 @@
-
 struct AdminViewAccountOverviewDefaultInteractor:
     AdminViewAccountOverviewInteractor
 {

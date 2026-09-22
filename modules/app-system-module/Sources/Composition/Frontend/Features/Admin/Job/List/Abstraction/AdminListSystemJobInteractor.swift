@@ -1,4 +1,3 @@
-
 protocol AdminListSystemJobInteractor: Sendable {
     func list(
         page: Int,

@@ -1,4 +1,3 @@
-
 struct AdminListNewsletterCampaignsOpenAPIRepository {
     let api: NewsletterAdminAPIClient
 

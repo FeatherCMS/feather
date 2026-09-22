@@ -1,7 +1,6 @@
 import AccountAppAPI
-import Foundation
-
 import AccountApplication
+import Foundation
 import UserApplication
 
 extension AppAPIGateway {

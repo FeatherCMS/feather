@@ -3,8 +3,8 @@ import HTML
 import Hummingbird
 import RedirectContracts
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct RedirectRuleTableContent: Component {
     let state: RedirectRuleTable.State

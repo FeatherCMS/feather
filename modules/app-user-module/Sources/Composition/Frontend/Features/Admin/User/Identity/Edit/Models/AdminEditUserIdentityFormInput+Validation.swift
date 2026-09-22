@@ -1,5 +1,5 @@
-import FeatherValidation
 import FeatherContracts
+import FeatherValidation
 
 enum AdminEditUserIdentityFormFieldValidator {
 

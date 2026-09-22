@@ -1,4 +1,3 @@
-
 protocol AdminEditAccountInvitationInteractor: Sendable {
 
     func get(

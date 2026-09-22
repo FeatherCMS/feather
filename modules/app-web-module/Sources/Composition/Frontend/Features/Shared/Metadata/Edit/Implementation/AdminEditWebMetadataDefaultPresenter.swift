@@ -1,7 +1,6 @@
-import Foundation
-
 import FeatherAdmin
 import FeatherContracts
+import Foundation
 import HTML
 import Hummingbird
 import OpenAPIRuntime

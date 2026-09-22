@@ -1,4 +1,3 @@
-
 protocol AdminEditUserIdentityInteractor: Sendable {
 
     func load(

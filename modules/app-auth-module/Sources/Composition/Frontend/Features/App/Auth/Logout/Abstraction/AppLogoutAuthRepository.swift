@@ -1,4 +1,3 @@
-
 protocol AppLogoutAuthRepository: Sendable {
 
     func logout(

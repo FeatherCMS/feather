@@ -1,4 +1,3 @@
-
 protocol AdminAddRedirectRuleRepository: Sendable {
 
     func create(

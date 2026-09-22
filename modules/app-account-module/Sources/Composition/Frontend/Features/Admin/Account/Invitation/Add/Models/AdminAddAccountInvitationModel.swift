@@ -1,4 +1,3 @@
-
 struct AdminAddAccountInvitationModel: Sendable {
     let email: String
     let roleIDs: [String]

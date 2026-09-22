@@ -1,4 +1,3 @@
-
 protocol AdminViewAnalyticsLogInteractor: Sendable {
 
     func execute(

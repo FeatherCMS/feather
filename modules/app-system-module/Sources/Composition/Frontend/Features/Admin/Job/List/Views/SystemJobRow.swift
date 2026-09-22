@@ -4,8 +4,8 @@ import HTML
 import Hummingbird
 import SystemAdminAPI
 import SystemContracts
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct SystemJobRow: Component {
     let job: Components.Schemas.SystemJobSchema

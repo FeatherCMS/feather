@@ -4,8 +4,8 @@ import Foundation
 import HTML
 import Hummingbird
 import SGML
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct AnalyticsNotFoundView: Component {
     let model: AdminViewAnalyticsNotFoundModel

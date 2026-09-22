@@ -1,4 +1,3 @@
-
 protocol AdminViewDashboardInteractor: Sendable {
     func getHome(
         context: AdminDashboardEventContext

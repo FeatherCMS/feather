@@ -1,4 +1,3 @@
-
 struct AdminRemoveNewsletterCampaignOpenAPIRepository {
     let api: NewsletterAdminAPIClient
     func remove(id: String) async throws {

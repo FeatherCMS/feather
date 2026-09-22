@@ -1,4 +1,3 @@
-
 struct AdminViewAnalyticsLogDefaultInteractor: AdminViewAnalyticsLogInteractor {
     private let repository: any AdminViewAnalyticsLogRepository
 

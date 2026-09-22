@@ -1,4 +1,3 @@
-
 public protocol NewsArticleExtension: Sendable {
     associatedtype CreateInput: Sendable
     associatedtype UpdateInput: Sendable

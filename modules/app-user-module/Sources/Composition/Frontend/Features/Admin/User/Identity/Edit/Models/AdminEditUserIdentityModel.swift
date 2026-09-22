@@ -1,4 +1,3 @@
-
 struct AdminEditUserIdentityModel: Sendable {
     let id: String
     let name: String

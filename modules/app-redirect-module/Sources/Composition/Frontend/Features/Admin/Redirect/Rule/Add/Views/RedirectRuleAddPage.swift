@@ -1,8 +1,8 @@
 import FeatherAdmin
 import HTML
 import Hummingbird
-import WebComponents
 import WebBuilders
+import WebComponents
 
 struct RedirectRuleAddPage: Component {
     let form: RedirectRuleAddForm.State

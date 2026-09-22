@@ -1,4 +1,3 @@
-
 protocol AdminRemoveUserRoleRepository: Sendable {
 
     func names(ids: [String]) async throws -> [String]
