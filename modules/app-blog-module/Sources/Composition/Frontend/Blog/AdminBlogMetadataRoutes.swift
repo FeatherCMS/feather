@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import Hummingbird
 import WebFrontend
 
@@ -10,38 +11,83 @@ enum AdminBlogMetadataRoutes {
     ) {
         for route in [
             (
-                "/admin/blog/posts/{id}/edit/metadata/{metadataID}/",
-                "blog.post"
+                path: "/admin/blog/posts/{id}/edit/metadata/{metadataID}/",
+                referenceType: "blog.post",
+                title: "Edit post",
+                breadcrumb: BlogAdminRoutes.postsBreadcrumb,
+                detailsPath: "/admin/blog/posts/"
             ),
             (
-                "/admin/blog/authors/{id}/edit/metadata/{metadataID}/",
-                "blog.author"
+                path: "/admin/blog/authors/{id}/edit/metadata/{metadataID}/",
+                referenceType: "blog.author",
+                title: "Edit author",
+                breadcrumb: BlogAdminRoutes.authorsBreadcrumb,
+                detailsPath: "/admin/blog/authors/"
             ),
             (
-                "/admin/blog/tags/{id}/edit/metadata/{metadataID}/",
-                "blog.tag"
+                path: "/admin/blog/tags/{id}/edit/metadata/{metadataID}/",
+                referenceType: "blog.tag",
+                title: "Edit tag",
+                breadcrumb: BlogAdminRoutes.tagsBreadcrumb,
+                detailsPath: "/admin/blog/tags/"
             ),
         ] {
-            router.get(RouterPath(route.0)) { request, context in
+            router.get(RouterPath(route.path)) { request, context in
                 let handler = AdminWebMetadataEditHandler(
                     renderingEngine: renderingEngine,
                     adminEvents: events
+                )
+                let id = try context.requiredID()
+                let configuration = AdminWebMetadataEditConfiguration(
+                    referenceType: route.referenceType,
+                    title: route.title,
+                    breadcrumb: route.breadcrumb,
+                    navigationTabs: [
+                        .init(
+                            label: "Details",
+                            href: route.detailsPath + id + "/edit/",
+                            isCurrent: false
+                        ),
+                        .init(
+                            label: "Metadata",
+                            href: request.uri.path,
+                            isCurrent: true
+                        ),
+                    ]
                 )
                 return try await handler.get(
                     request: request,
                     context: context,
-                    referenceType: route.1
+                    configuration: configuration
                 )
             }
-            router.post(RouterPath(route.0)) { request, context in
+            router.post(RouterPath(route.path)) { request, context in
                 let handler = AdminWebMetadataEditHandler(
                     renderingEngine: renderingEngine,
                     adminEvents: events
                 )
+                let id = try context.requiredID()
+                let configuration = AdminWebMetadataEditConfiguration(
+                    referenceType: route.referenceType,
+                    title: route.title,
+                    breadcrumb: route.breadcrumb,
+                    navigationTabs: [
+                        .init(
+                            label: "Details",
+                            href: route.detailsPath + id + "/edit/",
+                            isCurrent: false
+                        ),
+                        .init(
+                            label: "Metadata",
+                            href: request.uri.path,
+                            isCurrent: true
+                        ),
+                    ]
+                )
                 return try await handler.post(
                     request: request,
                     context: context,
-                    referenceType: route.1
+                    configuration: configuration
                 )
             }
         }
