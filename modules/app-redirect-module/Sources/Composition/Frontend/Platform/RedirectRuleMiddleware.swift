@@ -102,52 +102,41 @@ public struct RedirectRuleMiddleware: RouterMiddleware {
         api: RedirectAppAPIClient,
         path: String
     ) async throws -> RedirectAppAPI.Components.Schemas.RedirectRuleSchema? {
-        for candidate in redirectSourceCandidates(for: path) {
-            let response: RedirectAppAPI.Operations.RedirectRuleGet.Output
-            do {
-                response = try await api.withOpenAPIRepositoryErrorMapping {
-                    client in
-                    try await client.redirectRuleGet(
-                        .init(query: .init(source: candidate))
+        let response: RedirectAppAPI.Operations.RedirectRuleGet.Output
+        do {
+            response = try await api.withOpenAPIRepositoryErrorMapping {
+                client in
+                try await client.redirectRuleGet(
+                    .init(
+                        query: .init(
+                            source: normalizedRedirectSource(for: path)
+                        )
                     )
-                }
-            }
-            catch {
-                return nil
-            }
-
-            switch response {
-            case .ok(let ok):
-                return try ok.body.json
-            case .notFound, .undocumented:
-                continue
+                )
             }
         }
-        return nil
+        catch {
+            return nil
+        }
+
+        switch response {
+        case .ok(let ok):
+            return try ok.body.json
+        case .notFound, .undocumented:
+            return nil
+        }
     }
 
-    private func redirectSourceCandidates(
+    private func normalizedRedirectSource(
         for path: String
-    ) -> [String] {
+    ) -> String {
         let trimmed = path.trimmingCharacters(
             in: CharacterSet(charactersIn: "/")
         )
         guard !trimmed.isEmpty else {
-            return ["/"]
+            return "/"
         }
-
-        var candidates: [String] = []
-        let forms = [
-            "/\(trimmed)/",
-            "/\(trimmed)",
-            "\(trimmed)/",
-            trimmed,
-        ]
-
-        for candidate in forms where !candidates.contains(candidate) {
-            candidates.append(candidate)
-        }
-        return candidates
+        return "/\(trimmed)"
     }
 
     private func normalizedDestination(

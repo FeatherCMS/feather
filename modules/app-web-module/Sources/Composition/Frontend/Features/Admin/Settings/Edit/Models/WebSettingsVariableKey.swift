@@ -96,7 +96,7 @@ enum WebSettingsVariableKey: String, CaseIterable, Sendable {
     var defaultValue: String {
         switch self {
         case .locale:
-            "en_us"
+            "en-US"
         case .timezone:
             "utc"
         case .noIndex:

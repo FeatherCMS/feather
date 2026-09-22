@@ -173,7 +173,8 @@ struct RuleTable {
             query: #"""
                 SELECT *
                 FROM redirect_rule
-                WHERE source=\#(source)
+                WHERE TRIM(BOTH '/' FROM source) =
+                    TRIM(BOTH '/' FROM \#(source))
                 LIMIT 1;
                 """#
         ) { sequence in

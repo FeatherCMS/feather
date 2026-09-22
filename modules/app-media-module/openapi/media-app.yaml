@@ -1,0 +1,90 @@
+openapi: 3.0.0
+info:
+  title: App API
+  version: 0.1.0
+tags:
+- name: MediaAssets
+  description: Public media assets.
+servers:
+- url: http://127.0.0.1:8080/
+paths:
+  /api/v1/media/assets/resolve:
+    post:
+      tags:
+      - MediaAssets
+      operationId: mediaAssetResolve
+      requestBody:
+        $ref: '#/components/requestBodies/MediaAssetResolveRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/MediaAssetResolveResponse'
+components:
+  schemas:
+    MediaAssetResolveRequestSchema:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            example: media_asset_1
+        variants:
+          $ref: '#/components/schemas/MediaAssetResolveVariantsField'
+      required:
+      - ids
+    MediaAssetResolveVariantsField:
+      type: array
+      items:
+        type: string
+        example: preview
+    MediaAssetResolveSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/MediaAssetResolveItemSchema'
+    MediaAssetResolveItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/MediaAssetIdField'
+        url:
+          type: string
+          example: /media/assets/media_asset_1/cover-image.jpg
+        variants:
+          type: array
+          items:
+            $ref: '#/components/schemas/MediaAssetResolveVariantSchema'
+      required:
+      - id
+      - url
+      - variants
+    MediaAssetIdField:
+      type: string
+      example: media_asset_1
+    MediaAssetResolveVariantSchema:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/MediaAssetKeyField'
+        url:
+          type: string
+          example: /media/assets/media_asset_1/cover-image.jpg
+      required:
+      - key
+      - url
+    MediaAssetKeyField:
+      type: string
+      example: preview
+  responses:
+    MediaAssetResolveResponse:
+      description: MediaAsset resolve response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MediaAssetResolveSchema'
+  requestBodies:
+    MediaAssetResolveRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MediaAssetResolveRequestSchema'
+      required: true

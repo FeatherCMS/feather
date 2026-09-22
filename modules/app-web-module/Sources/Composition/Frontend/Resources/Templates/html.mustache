@@ -9,16 +9,16 @@
     {{#page.prev}}<link rel="prev" href="{{permalink}}">{{/page.prev}}
     {{#page.next}}<link rel="next" href="{{permalink}}">{{/page.next}}
 
-    <title>{{page.title}} - {{site.name}}</title>
+    <title>{{page.title}}{{#site.name}} - {{site.name}}{{/site.name}}</title>
     <meta name="description" content="{{page.description}}">
 
     <meta property="og:url" content="{{page.permalink}}">
-    <meta property="og:title" content="{{page.title}} - {{site.name}}">
+    <meta property="og:title" content="{{page.title}}{{#site.name}} - {{site.name}}{{/site.name}}">
     <meta property="og:description" content="{{page.description}}">
     {{#page.image}}<meta property="og:image" content="{{.}}" />{{/page.image}}
 
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="{{page.title}} - {{site.name}}">
+    <meta name="twitter:title" content="{{page.title}}{{#site.name}} - {{site.name}}{{/site.name}}">
     <meta name="twitter:description" content="{{page.description}}">
     {{#page.image}}<meta name="twitter:image" content="{{.}}">{{/page.image}}
 

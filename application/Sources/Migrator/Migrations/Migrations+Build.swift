@@ -52,7 +52,8 @@ public func buildMigrations(
             idGenerator: idGenerator
         ),
         MediaInfrastructure.TableSeedMigration(
-            connection: connection
+            connection: connection,
+            idGenerator: idGenerator
         ),
         WebInfrastructure.TableSeedMigration(
             connection: connection,

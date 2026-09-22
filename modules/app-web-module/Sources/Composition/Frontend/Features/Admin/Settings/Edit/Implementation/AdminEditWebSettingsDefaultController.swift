@@ -285,7 +285,7 @@ struct AdminEditWebSettingsDefaultController:
             locale: .init(
                 key: WebSettingsVariableKey.locale.fieldKey,
                 label: WebSettingsVariableKey.locale.label,
-                value: locale,
+                value: Self.normalizeLocale(locale),
                 error: nil
             ),
             timezone: .init(
@@ -328,6 +328,15 @@ struct AdminEditWebSettingsDefaultController:
             error: error,
             success: nil
         )
+    }
+
+    private static func normalizeLocale(_ value: String) -> String {
+        switch value {
+        case "en_us":
+            "en-US"
+        default:
+            value
+        }
     }
 
     private func makeFormState(

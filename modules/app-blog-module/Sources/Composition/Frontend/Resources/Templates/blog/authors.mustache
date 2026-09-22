@@ -2,12 +2,14 @@
 
 <div id="authors" class="wrapper">
 
+    {{#empty(authors)}}
+    <p>Empty.</p>
+    {{/empty(authors)}}
+    {{^empty(authors)}}
     <div class="grid grid-221">
     {{#authors}}
         {{> partials/blog/author}}
     {{/authors}}
     </div>
-    {{^authors}}
-    <p>Empty.</p>
-    {{/authors}}
+    {{/empty(authors)}}
 </div>

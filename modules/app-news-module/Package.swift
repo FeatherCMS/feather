@@ -162,6 +162,7 @@ let package = Package(
 
                 .product(name: "SystemContracts", package: "app-system-module"),
                 .product(name: "WebContracts", package: "app-web-module"),
+                .product(name: "WebFrontend", package: "app-web-module"),
                 .target(name: "NewsContracts"),
                 .target(name: "NewsAppAPI"),
             ],

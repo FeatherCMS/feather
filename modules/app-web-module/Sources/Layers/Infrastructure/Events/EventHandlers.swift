@@ -134,7 +134,7 @@ public enum EventHandlers {
                 ),
                 .init(
                     key: "web-settings-locale",
-                    value: "en_us",
+                    value: "en-US",
                     name: "Website locale",
                     notes: "Default locale of the website"
                 ),

@@ -106,7 +106,7 @@ components:
       example: A concise site description.
     WebSiteSettingsLocaleField:
       type: string
-      example: en_us
+      example: en-US
     WebSiteSettingsNoIndexField:
       type: boolean
       example: false

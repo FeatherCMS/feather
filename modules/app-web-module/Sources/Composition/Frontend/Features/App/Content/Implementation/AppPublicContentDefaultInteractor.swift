@@ -27,7 +27,6 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
         let payload = try await resolveModuleContent(
             path: slug,
             templateIdentifier: metadata.template,
-            referenceType: metadata.referenceType,
             referenceID: metadata.referenceId
         )
         return .init(
@@ -45,9 +44,7 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
     ) async throws -> AppPublicResolvedContent? {
         let payload = try await resolveModuleContent(
             path: path,
-            templateIdentifier: templateIdentifier,
-            referenceType: "",
-            referenceID: ""
+            templateIdentifier: templateIdentifier
         )
         return .init(
             moduleContext: .init(
@@ -61,27 +58,27 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
     private func resolveModuleContent(
         path: String,
         templateIdentifier: String?,
-        referenceType: String,
-        referenceID: String
+        referenceID: String? = nil
     ) async throws -> [String: any Sendable] {
-        let request = WebPublicContentEventContext(
+        let context = WebPublicContentEventContext(
             path: path,
             templateIdentifier: templateIdentifier,
-            sessionToken: sessionToken,
-            referenceType: referenceType,
-            referenceID: referenceID
+            referenceID: referenceID,
+            sessionToken: sessionToken
         )
         let results = try await events.trigger(
-            event: WebPublicContentProvider(request: request),
-            using: request
+            event: WebPublicContentProvider(),
+            using: context
         )
-        var context: [String: any Sendable] = [:]
+        // TODO: add global context stuff... base urls, etc.
+        // WebPublicContentResult -> getPayload function
+        var payload: [String: any Sendable] = [:]
         for result in results.compactMap({ $0 }) {
             for (key, value) in result.payload {
-                context[key] = value
+                payload[key] = value
             }
         }
-        return await renderContent(in: context, requestPath: path)
+        return await renderContent(in: payload, requestPath: path)
     }
 
     private func renderContent(

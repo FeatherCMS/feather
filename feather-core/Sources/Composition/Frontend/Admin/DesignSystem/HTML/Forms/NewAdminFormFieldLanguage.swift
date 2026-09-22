@@ -63,14 +63,15 @@ public struct NewAdminFormFieldLanguage: Component {
                 ? Array(state.values.prefix(1))
                 : state.values
         )
-        let options = (state.options ?? Self.options).map {
-            Option(
-                label: $0.label,
-                value: $0.value,
-                isSelected: selectedValues.contains($0.value)
-                    || selectedValues.contains($0.label)
-            )
-        }
+        let options = (state.options ?? Self.options)
+            .map {
+                Option(
+                    label: $0.label,
+                    value: $0.value,
+                    isSelected: selectedValues.contains($0.value)
+                        || selectedValues.contains($0.label)
+                )
+            }
         return context.build(
             NewAdminFormFieldSelectAutocomplete(
                 state: .init(

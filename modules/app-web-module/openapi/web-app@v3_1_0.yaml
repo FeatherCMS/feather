@@ -110,7 +110,7 @@ components:
     WebSiteSettingsLocaleField:
       type: string
       examples:
-      - en_us
+      - en-US
     WebSiteSettingsNoIndexField:
       type: boolean
       examples:

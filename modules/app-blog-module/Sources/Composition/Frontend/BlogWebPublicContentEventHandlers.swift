@@ -5,6 +5,7 @@ import Foundation
 import OpenAPIRuntime
 import SystemContracts
 import WebContracts
+import WebFrontend
 
 public enum BlogWebPublicContentEventHandlers {
     public static func register(
@@ -13,60 +14,71 @@ public enum BlogWebPublicContentEventHandlers {
         registry.register(
             event: WebPublicContentProvider.self,
             context: WebPublicContentEventContext.self
-        ) { event, _ in
-            try await resolve(event.request)
+        ) { _, context in
+            try await resolve(context)
         }
     }
 
     private static func resolve(
-        _ request: WebPublicContentEventContext
+        _ context: WebPublicContentEventContext
     ) async throws -> WebPublicContentResult? {
         let api = BlogAppAPIClient(
             apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: request.sessionToken
+            sessionToken: context.sessionToken
         )
 
-        if let kind = kind(for: request) {
+        if let kind = kind(for: context) {
             return try await resolveList(kind: kind, api: api)
         }
-        guard !request.referenceID.isEmpty else { return nil }
-        switch request.referenceType {
+        switch context.templateIdentifier {
         case "blog.post":
-            let response = try await api.withOpenAPIRepositoryErrorMapping {
-                client in
-                try await client.blogPostGet(
-                    .init(path: .init(id: request.referenceID))
-                )
-            }
-            guard case .ok(let value) = response else { return nil }
-            return .init(
-                payload: ["page": pageContext(try value.body.json)]
-            )
+            return try await resolvePost(context: context, api: api)
         case "blog.author":
-            let response = try await api.withOpenAPIRepositoryErrorMapping {
-                client in
-                try await client.blogAuthorGet(
-                    .init(path: .init(id: request.referenceID))
-                )
-            }
-            guard case .ok(let value) = response else { return nil }
-            return .init(
-                payload: ["page": pageContext(try value.body.json)]
-            )
+            return try await resolveAuthor(context: context, api: api)
         case "blog.tag":
-            let response = try await api.withOpenAPIRepositoryErrorMapping {
-                client in
-                try await client.blogTagGet(
-                    .init(path: .init(id: request.referenceID))
-                )
-            }
-            guard case .ok(let value) = response else { return nil }
-            return .init(
-                payload: ["page": pageContext(try value.body.json)]
-            )
+            return try await resolveTag(context: context, api: api)
         default:
             return nil
         }
+    }
+
+    private static func resolvePost(
+        context: WebPublicContentEventContext,
+        api: BlogAppAPIClient
+    ) async throws -> WebPublicContentResult? {
+        guard let referenceID = context.referenceID else { return nil }
+        let response = try await api.withOpenAPIRepositoryErrorMapping {
+            client in
+            try await client.blogPostGet(.init(path: .init(id: referenceID)))
+        }
+        guard case .ok(let value) = response else { return nil }
+        return .init(payload: ["page": pageContext(try value.body.json)])
+    }
+
+    private static func resolveAuthor(
+        context: WebPublicContentEventContext,
+        api: BlogAppAPIClient
+    ) async throws -> WebPublicContentResult? {
+        guard let referenceID = context.referenceID else { return nil }
+        let response = try await api.withOpenAPIRepositoryErrorMapping {
+            client in
+            try await client.blogAuthorGet(.init(path: .init(id: referenceID)))
+        }
+        guard case .ok(let value) = response else { return nil }
+        return .init(payload: ["page": pageContext(try value.body.json)])
+    }
+
+    private static func resolveTag(
+        context: WebPublicContentEventContext,
+        api: BlogAppAPIClient
+    ) async throws -> WebPublicContentResult? {
+        guard let referenceID = context.referenceID else { return nil }
+        let response = try await api.withOpenAPIRepositoryErrorMapping {
+            client in
+            try await client.blogTagGet(.init(path: .init(id: referenceID)))
+        }
+        guard case .ok(let value) = response else { return nil }
+        return .init(payload: ["page": pageContext(try value.body.json)])
     }
 
     private static func resolveList(
@@ -135,9 +147,9 @@ public enum BlogWebPublicContentEventHandlers {
     }
 
     private static func kind(
-        for request: WebPublicContentEventContext
+        for context: WebPublicContentEventContext
     ) -> Kind? {
-        switch request.templateIdentifier {
+        switch context.templateIdentifier {
         case "blog.posts":
             return .posts
         case "blog.authors":

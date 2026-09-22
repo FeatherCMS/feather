@@ -42,7 +42,7 @@ struct WebSettingsHomePageIDField: StringSchemaRepresentable {
 }
 
 struct WebSettingsLocaleField: StringSchemaRepresentable {
-    var example: String? = "en_us"
+    var example: String? = "en-US"
 }
 
 struct WebSettingsTimezoneField: StringSchemaRepresentable {

@@ -13,9 +13,9 @@ SWIFT_OPENAPI_GENERATOR_BUILD_CONFIGURATION="${SWIFT_OPENAPI_GENERATOR_BUILD_CON
 SWIFT_OPENAPI_GENERATOR_BIN="${SWIFT_OPENAPI_GENERATOR_BIN:-${SWIFT_OPENAPI_GENERATOR_CLONE_DIR}/.build/${SWIFT_OPENAPI_GENERATOR_BUILD_CONFIGURATION}/swift-openapi-generator}"
 OPENAPI_GENERATOR_CONFIG_PATH="${OPENAPI_GENERATOR_CONFIG_PATH:-${SCRIPT_DIR}/openapi-generator-config.yml}"
 
-GENERATOR_TARGETS=("MediaAdminOpenAPIGenerator")
-SPECIFICATIONS=("media-admin.yaml")
-OUTPUT_DIRECTORIES=("Sources/APIs/Admin")
+GENERATOR_TARGETS=("MediaAdminOpenAPIGenerator" "MediaAppOpenAPIGenerator")
+SPECIFICATIONS=("media-admin.yaml" "media-app.yaml")
+OUTPUT_DIRECTORIES=("Sources/APIs/Admin" "Sources/APIs/App")
 
 ensure_swift_openapi_generator_bin() {
     if [[ ! -d "${SWIFT_OPENAPI_GENERATOR_CLONE_DIR}" ]]; then
@@ -79,4 +79,3 @@ case "${1:-run}" in
         exit 1
         ;;
 esac
-
