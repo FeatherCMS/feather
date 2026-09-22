@@ -113,6 +113,26 @@ public struct WebAppAPIClient: Sendable {
             responseBody: body
         )
     }
+
+    public func resolveRouteReferenceID(
+        path: String
+    ) async throws -> String? {
+        let response = try await client.webMetadataGet(
+            path: .init(slug: path),
+            headers: .init(accept: [.init(contentType: .json)])
+        )
+        switch response {
+        case .ok(let value):
+            return try value.body.json.referenceId
+        case .notFound:
+            return nil
+        case .undocumented(let statusCode, let response):
+            throw try await failure(
+                statusCode: statusCode,
+                responseBody: response.body
+            )
+        }
+    }
 }
 
 extension DefaultRequestContext {

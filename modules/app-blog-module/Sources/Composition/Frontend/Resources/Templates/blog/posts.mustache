@@ -2,12 +2,14 @@
 
 <div id="posts" class="wrapper">
 
+    {{#empty(posts)}}
+    <p>Empty.</p>
+    {{/empty(posts)}}
+    {{^empty(posts)}}
     <div class="grid grid-321">
     {{#posts}}
         {{> partials/blog/post}}
     {{/posts}}
     </div>
-    {{^posts}}
-    <p>Empty.</p>
-    {{/posts}}
+    {{/empty(posts)}}
 </div>

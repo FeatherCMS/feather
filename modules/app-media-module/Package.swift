@@ -46,7 +46,9 @@ let package = Package(
         .library(name: "MediaApplication", targets: ["MediaApplication"]),
         .library(name: "MediaInfrastructure", targets: ["MediaInfrastructure"]),
         .library(name: "MediaAdminAPI", targets: ["MediaAdminAPI"]),
+        .library(name: "MediaAppAPI", targets: ["MediaAppAPI"]),
         .executable(name: "MediaAdminOpenAPIGenerator", targets: ["MediaAdminOpenAPIGenerator"]),
+        .executable(name: "MediaAppOpenAPIGenerator", targets: ["MediaAppOpenAPIGenerator"]),
         .library(name: "MediaBackend", targets: ["MediaBackend"]),
         .library(name: "MediaFrontend", targets: ["MediaFrontend"]),
     ],
@@ -121,6 +123,14 @@ let package = Package(
             path: "Sources/APIs/Admin",
             swiftSettings: defaultSwiftSettings
         ),
+        .target(
+            name: "MediaAppAPI",
+            dependencies: [
+                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+            ],
+            path: "Sources/APIs/App",
+            swiftSettings: defaultSwiftSettings
+        ),
         .executableTarget(
             name: "MediaAdminOpenAPIGenerator",
             dependencies: [
@@ -132,6 +142,17 @@ let package = Package(
             path: "Sources/Generators/Admin",
             swiftSettings: defaultSwiftSettings
         ),
+        .executableTarget(
+            name: "MediaAppOpenAPIGenerator",
+            dependencies: [
+                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+
+                .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
+                .product(name: "Yams", package: "Yams"),
+            ],
+            path: "Sources/Generators/App",
+            swiftSettings: defaultSwiftSettings
+        ),
         .target(
             name: "MediaBackend",
             dependencies: [
@@ -140,6 +161,7 @@ let package = Package(
                 .target(name: "MediaApplication"),
                 .target(name: "MediaInfrastructure"),
                 .target(name: "MediaAdminAPI"),
+                .target(name: "MediaAppAPI"),
             ],
             path: "Sources/Composition/Backend",
             swiftSettings: defaultSwiftSettings

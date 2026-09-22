@@ -8,6 +8,7 @@ import OpenAPIAsyncHTTPClient
 import OpenAPIRuntime
 import SystemContracts
 import WebContracts
+import WebFrontend
 
 public enum NewsWebPublicContentEventHandlers {
     public static func register(
@@ -16,13 +17,13 @@ public enum NewsWebPublicContentEventHandlers {
         registry.register(
             event: WebPublicContentProvider.self,
             context: WebPublicContentEventContext.self
-        ) { event, _ in
-            try await resolve(event.request)
+        ) { _, context in
+            try await resolve(context)
         }
     }
 
     private static func resolve(
-        _ request: WebPublicContentEventContext
+        _ context: WebPublicContentEventContext
     ) async throws -> WebPublicContentResult? {
         let client = NewsAppAPI.Client(
             serverURL: FeatherAdmin.AppEnvironmentStore.current.apiBaseURL,
@@ -31,12 +32,12 @@ public enum NewsWebPublicContentEventHandlers {
             ),
             middlewares: [
                 FeatherAdmin.ClientAPIAuthMiddleware(
-                    sessionToken: request.sessionToken
+                    sessionToken: context.sessionToken
                 )
             ]
         )
 
-        switch request.templateIdentifier {
+        switch context.templateIdentifier {
         case "news.categories":
             let response = try await client.newsCategoryList(.init())
             switch response {
@@ -61,36 +62,57 @@ public enum NewsWebPublicContentEventHandlers {
             case .undocumented:
                 return nil
             }
-        default:
-            return try await resolveDetail(request, client: client)
-        }
-    }
-
-    private static func resolveDetail(
-        _ request: WebPublicContentEventContext,
-        client: NewsAppAPI.Client
-    ) async throws -> WebPublicContentResult? {
-        guard !request.referenceID.isEmpty else { return nil }
-        switch request.referenceType {
         case "news.article":
-            let response = try await client.newsArticleGet(
-                .init(path: .init(id: request.referenceID))
-            )
-            guard case .ok(let value) = response else { return nil }
-            return .init(
-                payload: ["page": pageContext(try value.body.json)]
-            )
+            return try await resolveArticle(context: context, client: client)
         case "news.category":
-            let response = try await client.newsCategoryGet(
-                .init(path: .init(id: request.referenceID))
-            )
-            guard case .ok(let value) = response else { return nil }
-            return .init(
-                payload: ["page": pageContext(try value.body.json)]
-            )
+            return try await resolveCategory(context: context, client: client)
         default:
             return nil
         }
+    }
+
+    private static func resolveArticle(
+        context: WebPublicContentEventContext,
+        client: NewsAppAPI.Client
+    ) async throws -> WebPublicContentResult? {
+        let webAPI = WebAppAPIClient(
+            apiBaseURL: FeatherAdmin.AppEnvironmentStore.current.apiBaseURL,
+            sessionToken: context.sessionToken
+        )
+        guard let referenceID = try await webAPI.resolveRouteReferenceID(
+            path: context.path
+        ) else {
+            return nil
+        }
+        let response = try await client.newsArticleGet(
+            .init(path: .init(id: referenceID))
+        )
+        guard case .ok(let value) = response else { return nil }
+        return .init(
+            payload: ["page": pageContext(try value.body.json)]
+        )
+    }
+
+    private static func resolveCategory(
+        context: WebPublicContentEventContext,
+        client: NewsAppAPI.Client
+    ) async throws -> WebPublicContentResult? {
+        let webAPI = WebAppAPIClient(
+            apiBaseURL: FeatherAdmin.AppEnvironmentStore.current.apiBaseURL,
+            sessionToken: context.sessionToken
+        )
+        guard let referenceID = try await webAPI.resolveRouteReferenceID(
+            path: context.path
+        ) else {
+            return nil
+        }
+        let response = try await client.newsCategoryGet(
+            .init(path: .init(id: referenceID))
+        )
+        guard case .ok(let value) = response else { return nil }
+        return .init(
+            payload: ["page": pageContext(try value.body.json)]
+        )
     }
 
     private static func summaryContext(

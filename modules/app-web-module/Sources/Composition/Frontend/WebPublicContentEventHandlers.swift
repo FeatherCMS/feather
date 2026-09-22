@@ -13,17 +13,17 @@ public enum WebPublicContentEventHandlers {
         registry.register(
             event: WebPublicContentProvider.self,
             context: WebPublicContentEventContext.self
-        ) { event, _ in
-            try await resolve(event.request)
+        ) { _, context in
+            try await resolve(context)
         }
     }
 
     private static func resolve(
-        _ request: WebPublicContentEventContext
+        _ context: WebPublicContentEventContext
     ) async throws -> WebPublicContentResult? {
         let api = WebAppAPIClient(
             apiBaseURL: FeatherAdmin.AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: request.sessionToken
+            sessionToken: context.sessionToken
         )
         let siteSettings = try await api.withOpenAPIRepositoryErrorMapping {
             client in
@@ -71,13 +71,17 @@ public enum WebPublicContentEventHandlers {
                 )
             ],
         ]
-        if request.referenceType == "web.page",
-            !request.referenceID.isEmpty
-        {
+        switch context.templateIdentifier {
+        case "web.page":
+            guard let referenceID = try await api.resolveRouteReferenceID(
+                path: context.path
+            ) else {
+                return nil
+            }
             let response = try await api.withOpenAPIRepositoryErrorMapping {
                 client in
                 try await client.webPageGet(
-                    .init(path: .init(id: request.referenceID))
+                    .init(path: .init(id: referenceID))
                 )
             }
             switch response {
@@ -85,7 +89,7 @@ public enum WebPublicContentEventHandlers {
                 let page = try value.body.json
                 payload["page"] = pageContext(
                     page: page,
-                    requestPath: request.path,
+                    requestPath: context.path,
                     siteSettings: siteSettings,
                     siteBaseURL: origins.siteBaseURL
                 )
@@ -97,8 +101,7 @@ public enum WebPublicContentEventHandlers {
                     responseBody: response.body
                 )
             }
-        }
-        else if request.templateIdentifier == "not-found" {
+        case "not-found":
             payload["page"] =
                 [
                     "title": "Page not found",
@@ -106,12 +109,14 @@ public enum WebPublicContentEventHandlers {
                         "The page you requested does not exist or is not available.",
                     "permalink": normalizedURL(
                         base: origins.siteBaseURL,
-                        path: request.path
+                        path: context.path
                     ),
                     "noindex": true,
                     "css": [String](),
                     "js": [String](),
                 ] as [String: any Sendable]
+        default:
+            break
         }
         return .init(payload: payload)
     }
