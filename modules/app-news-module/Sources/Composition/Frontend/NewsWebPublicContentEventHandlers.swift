@@ -75,15 +75,7 @@ public enum NewsWebPublicContentEventHandlers {
         context: WebPublicContentEventContext,
         client: NewsAppAPI.Client
     ) async throws -> WebPublicContentResult? {
-        let webAPI = WebAppAPIClient(
-            apiBaseURL: FeatherAdmin.AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: context.sessionToken
-        )
-        guard let referenceID = try await webAPI.resolveRouteReferenceID(
-            path: context.path
-        ) else {
-            return nil
-        }
+        guard let referenceID = context.referenceID else { return nil }
         let response = try await client.newsArticleGet(
             .init(path: .init(id: referenceID))
         )
@@ -97,15 +89,7 @@ public enum NewsWebPublicContentEventHandlers {
         context: WebPublicContentEventContext,
         client: NewsAppAPI.Client
     ) async throws -> WebPublicContentResult? {
-        let webAPI = WebAppAPIClient(
-            apiBaseURL: FeatherAdmin.AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: context.sessionToken
-        )
-        guard let referenceID = try await webAPI.resolveRouteReferenceID(
-            path: context.path
-        ) else {
-            return nil
-        }
+        guard let referenceID = context.referenceID else { return nil }
         let response = try await client.newsCategoryGet(
             .init(path: .init(id: referenceID))
         )

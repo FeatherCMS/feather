@@ -26,7 +26,8 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
 
         let payload = try await resolveModuleContent(
             path: slug,
-            templateIdentifier: metadata.template
+            templateIdentifier: metadata.template,
+            referenceID: metadata.referenceId
         )
         return .init(
             moduleContext: .init(
@@ -56,11 +57,13 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
 
     private func resolveModuleContent(
         path: String,
-        templateIdentifier: String?
+        templateIdentifier: String?,
+        referenceID: String? = nil
     ) async throws -> [String: any Sendable] {
         let context = WebPublicContentEventContext(
             path: path,
             templateIdentifier: templateIdentifier,
+            referenceID: referenceID,
             sessionToken: sessionToken
         )
         let results = try await events.trigger(

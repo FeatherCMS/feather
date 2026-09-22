@@ -73,11 +73,7 @@ public enum WebPublicContentEventHandlers {
         ]
         switch context.templateIdentifier {
         case "web.page":
-            guard let referenceID = try await api.resolveRouteReferenceID(
-                path: context.path
-            ) else {
-                return nil
-            }
+            guard let referenceID = context.referenceID else { return nil }
             let response = try await api.withOpenAPIRepositoryErrorMapping {
                 client in
                 try await client.webPageGet(

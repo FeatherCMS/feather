@@ -46,13 +46,7 @@ public enum BlogWebPublicContentEventHandlers {
         context: WebPublicContentEventContext,
         api: BlogAppAPIClient
     ) async throws -> WebPublicContentResult? {
-        let webAPI = WebAppAPIClient(
-            apiBaseURL: FeatherAdmin.AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: context.sessionToken
-        )
-        guard let referenceID = try await webAPI.resolveRouteReferenceID(
-            path: context.path
-        ) else { return nil }
+        guard let referenceID = context.referenceID else { return nil }
         let response = try await api.withOpenAPIRepositoryErrorMapping {
             client in
             try await client.blogPostGet(.init(path: .init(id: referenceID)))
@@ -65,13 +59,7 @@ public enum BlogWebPublicContentEventHandlers {
         context: WebPublicContentEventContext,
         api: BlogAppAPIClient
     ) async throws -> WebPublicContentResult? {
-        let webAPI = WebAppAPIClient(
-            apiBaseURL: FeatherAdmin.AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: context.sessionToken
-        )
-        guard let referenceID = try await webAPI.resolveRouteReferenceID(
-            path: context.path
-        ) else { return nil }
+        guard let referenceID = context.referenceID else { return nil }
         let response = try await api.withOpenAPIRepositoryErrorMapping {
             client in
             try await client.blogAuthorGet(.init(path: .init(id: referenceID)))
@@ -84,13 +72,7 @@ public enum BlogWebPublicContentEventHandlers {
         context: WebPublicContentEventContext,
         api: BlogAppAPIClient
     ) async throws -> WebPublicContentResult? {
-        let webAPI = WebAppAPIClient(
-            apiBaseURL: FeatherAdmin.AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: context.sessionToken
-        )
-        guard let referenceID = try await webAPI.resolveRouteReferenceID(
-            path: context.path
-        ) else { return nil }
+        guard let referenceID = context.referenceID else { return nil }
         let response = try await api.withOpenAPIRepositoryErrorMapping {
             client in
             try await client.blogTagGet(.init(path: .init(id: referenceID)))
