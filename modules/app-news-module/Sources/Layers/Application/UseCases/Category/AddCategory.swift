@@ -1,7 +1,6 @@
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
-import Foundation
 import NewsContracts
 import NewsDomain
 import SystemApplication

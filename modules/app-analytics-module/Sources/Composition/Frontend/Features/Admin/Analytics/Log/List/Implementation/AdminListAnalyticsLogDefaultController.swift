@@ -1,6 +1,6 @@
 import AnalyticsContracts
 import FeatherAdmin
-import Foundation
+import FeatherContracts
 import Hummingbird
 
 struct AdminListAnalyticsLogDefaultController:
@@ -20,11 +20,11 @@ struct AdminListAnalyticsLogDefaultController:
         let page = request.queryPage()
         let search = request.querySearch()
         let source = request.queryString("source")?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
         let method = request.queryString("method")?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
         let responseCode = request.queryString("responseCode")?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
         let normalizedMethod = method?.isEmpty == true ? nil : method
         let normalizedResponseCode =
             responseCode?.isEmpty == true

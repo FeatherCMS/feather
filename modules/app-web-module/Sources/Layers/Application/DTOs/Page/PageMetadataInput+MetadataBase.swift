@@ -1,6 +1,7 @@
 import FeatherContracts
-import FeatherDomain
 import Foundation
+
+import FeatherDomain
 import WebDomain
 
 extension PageMetadataInput {

@@ -108,7 +108,7 @@ extension Article {
             base: metadata
                 ?? .init(
                     template: "news.article",
-                    slug: title.slugify()
+                    slug: title.slugified
                 )
         )
 

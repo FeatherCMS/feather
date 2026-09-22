@@ -84,7 +84,7 @@ public struct AdminMetadataSchemaBuilder {
     public static func parseTimestamp(
         _ value: String
     ) -> Double? {
-        parseDate(value.trimmingCharacters(in: .whitespacesAndNewlines))
+        parseDate(value.whitespaceTrimmed)
     }
 
     private static func parseDate(
@@ -118,12 +118,8 @@ public struct AdminMetadataSchemaBuilder {
         _ value: String,
         fallback: String
     ) -> String {
-        let normalizedValue = value.trimmingCharacters(
-            in: .whitespacesAndNewlines
-        )
-        let normalizedFallback = fallback.trimmingCharacters(
-            in: .whitespacesAndNewlines
-        )
+        let normalizedValue = value.whitespaceTrimmed
+        let normalizedFallback = fallback.whitespaceTrimmed
         guard normalizedValue == normalizedFallback else {
             return value
         }

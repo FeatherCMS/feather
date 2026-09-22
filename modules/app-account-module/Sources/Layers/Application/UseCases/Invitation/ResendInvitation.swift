@@ -62,7 +62,7 @@ public struct ResendInvitation: UseCase {
             )
             let configuredPublicBaseURL =
                 try await scope.variable.get("web-settings-public-base-url")?
-                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .whitespaceTrimmed
             let publicBaseURL =
                 configuredPublicBaseURL?.isEmpty == false
                 ? configuredPublicBaseURL!

@@ -1,6 +1,6 @@
 import FeatherAdmin
 import FeatherValidation
-import Foundation
+import FeatherContracts
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -13,6 +13,6 @@ struct MediaFolderEditForm: Decodable {
     var name: String = ""
 
     var normalizedName: String {
-        name.trimmingCharacters(in: .whitespacesAndNewlines)
+        name.whitespaceTrimmed
     }
 }

@@ -64,7 +64,7 @@ public struct RequestMagicLink: UseCase {
                     try await scope.variable.get(
                         "web-settings-public-base-url"
                     )?
-                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .whitespaceTrimmed
                 let publicBaseURL =
                     configuredPublicBaseURL.flatMap {
                         $0.isEmpty ? nil : $0

@@ -112,7 +112,7 @@ extension Post {
             base: metadata
                 ?? .init(
                     template: "blog.post",
-                    slug: title.slugify()
+                    slug: title.slugified
                 )
         )
 

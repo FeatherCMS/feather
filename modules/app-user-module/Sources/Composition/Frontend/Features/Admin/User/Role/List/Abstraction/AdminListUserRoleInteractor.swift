@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 import UserAdminAPI
 
 protocol AdminListUserRoleInteractor: Sendable {

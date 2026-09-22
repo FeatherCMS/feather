@@ -2,6 +2,7 @@ import BlogAdminAPI
 import BlogAppAPI
 import FeatherAdmin
 import FeatherValidation
+import FeatherContracts
 import Foundation
 import HTML
 import Hummingbird
@@ -104,7 +105,7 @@ public struct AdminEditBlogSettingsFormInput: Codable, Sendable, Equatable,
         _ value: String
     ) -> String {
         value
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
             .trimmingCharacters(in: CharacterSet(charactersIn: "/"))
     }
 }

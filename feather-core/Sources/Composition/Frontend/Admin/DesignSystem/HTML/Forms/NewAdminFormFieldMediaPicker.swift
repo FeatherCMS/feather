@@ -1,10 +1,9 @@
+import FeatherContracts
 import CSS
 import HTML
 import SGML
 import WebBuilders
 import WebComponents
-
-import struct Foundation.CharacterSet
 
 public struct NewAdminFormFieldMediaPicker: Component {
     public enum OutputMode: String, Sendable {
@@ -797,7 +796,7 @@ extension NewAdminFormFieldMediaPicker {
     }
 
     fileprivate func displayTitle(_ asset: NewAdminMediaAsset) -> String {
-        let title = asset.title?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let title = asset.title?.whitespaceTrimmed
         return title?.isEmpty == false ? title! : asset.name
     }
 

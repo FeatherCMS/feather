@@ -103,7 +103,7 @@ extension Category {
             base: metadata
                 ?? .init(
                     template: "news.category",
-                    slug: title.slugify()
+                    slug: title.slugified
                 )
         )
 

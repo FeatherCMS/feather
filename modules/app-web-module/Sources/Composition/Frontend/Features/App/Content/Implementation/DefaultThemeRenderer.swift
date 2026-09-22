@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 import Mustache
 
 public struct DefaultThemeRenderer: PublicThemeRenderer {

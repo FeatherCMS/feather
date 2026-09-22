@@ -1,4 +1,4 @@
-import Foundation
+import FeatherContracts
 
 public struct AdminMetadataFormValue: Sendable, Equatable, Hashable {
     public let slug: String
@@ -49,58 +49,56 @@ public struct AdminMetadataFormValue: Sendable, Equatable, Hashable {
     }
 
     public var normalizedSlug: String {
-        slug.trimmingCharacters(in: .whitespacesAndNewlines)
+        slug.whitespaceTrimmed
     }
 
     public var normalizedTemplate: String {
-        template.trimmingCharacters(in: .whitespacesAndNewlines)
+        template.whitespaceTrimmed
     }
 
     public var normalizedPublicationDate: String {
-        publicationDate.trimmingCharacters(in: .whitespacesAndNewlines)
+        publicationDate.whitespaceTrimmed
     }
 
     public var normalizedExpirationDate: String {
-        expirationDate.trimmingCharacters(in: .whitespacesAndNewlines)
+        expirationDate.whitespaceTrimmed
     }
 
     public var normalizedStatus: String {
         status
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
             .lowercased()
     }
 
     public var normalizedTitle: String {
-        title.trimmingCharacters(in: .whitespacesAndNewlines)
+        title.whitespaceTrimmed
     }
 
     public var normalizedExcerpt: String {
-        excerpt.trimmingCharacters(in: .whitespacesAndNewlines)
+        excerpt.whitespaceTrimmed
     }
 
     public var normalizedImageUrl: String {
-        imageUrl.trimmingCharacters(in: .whitespacesAndNewlines)
+        imageUrl.whitespaceTrimmed
     }
 
     public var normalizedCanonicalUrl: String {
-        canonicalUrl.trimmingCharacters(in: .whitespacesAndNewlines)
+        canonicalUrl.whitespaceTrimmed
     }
 
     public var normalizedPrimaryKeyword: String {
-        primaryKeyword.trimmingCharacters(in: .whitespacesAndNewlines)
+        primaryKeyword.whitespaceTrimmed
     }
 
     public var normalizedCSSCodeInjection: String {
-        cssCodeInjection.trimmingCharacters(in: .whitespacesAndNewlines)
+        cssCodeInjection.whitespaceTrimmed
     }
 
     public var normalizedJavaScriptCodeInjection: String {
-        javascriptCodeInjection.trimmingCharacters(in: .whitespacesAndNewlines)
+        javascriptCodeInjection.whitespaceTrimmed
     }
 
     public var normalizedStructuredDataCodeInjection: String {
-        structuredDataCodeInjection.trimmingCharacters(
-            in: .whitespacesAndNewlines
-        )
+        structuredDataCodeInjection.whitespaceTrimmed
     }
 }

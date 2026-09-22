@@ -1,7 +1,6 @@
 import FeatherAdmin
 import FeatherContracts
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -26,7 +25,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
         let page = request.queryPage()
         let search = request.querySearch()
         let parentId = request.queryString("parent_id")?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
             .emptyToNil
         let view =
             AdminListMediaAssetModel.ViewMode(
@@ -38,7 +37,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
             allowedExtensions: request.queryString("extensions")?
                 .split(separator: ",")
                 .map {
-                    $0.trimmingCharacters(in: .whitespacesAndNewlines)
+                    $0.whitespaceTrimmed
                         .lowercased()
                 }
                 .filter { !$0.isEmpty } ?? [],

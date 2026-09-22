@@ -1,5 +1,4 @@
 import FeatherContracts
-import Foundation
 
 public struct SystemVariableEditFormInput: Decodable, Sendable, Equatable,
     Hashable

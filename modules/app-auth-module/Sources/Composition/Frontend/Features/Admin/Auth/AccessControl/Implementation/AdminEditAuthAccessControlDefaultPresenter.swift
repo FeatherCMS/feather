@@ -4,7 +4,7 @@ import CSS
 import FeatherAdmin
 import FeatherValidation
 import FeatherValidationFoundation
-import Foundation
+import FeatherContracts
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -74,7 +74,7 @@ struct AdminEditAuthAccessControlDefaultPresenter:
     private func normalizedSearch(
         _ search: String?
     ) -> String {
-        (search ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        (search ?? "").whitespaceTrimmed
     }
 
 }

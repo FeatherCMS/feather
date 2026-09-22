@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 
 struct AdminListNewsletterIssuesDefaultInteractor:
@@ -12,7 +13,7 @@ struct AdminListNewsletterIssuesDefaultInteractor:
         search: String?
     ) async throws -> NewAdminListModel<AdminNewsletterIssueItem> {
         let query =
-            search?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            search?.whitespaceTrimmed ?? ""
         let allItems = try await repository.list(newsletterId: newsletterId)
             .filter {
                 query.isEmpty

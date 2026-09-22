@@ -1,6 +1,5 @@
 import FeatherApplication
 import FeatherContracts
-import Foundation
 import WebAdminAPI
 import WebApplication
 

@@ -1,5 +1,4 @@
 import FeatherContracts
-import Foundation
 
 public struct NewAdminListRemoveFormInput: Decodable, Sendable {
     public var ids: [String]?

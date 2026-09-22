@@ -1,7 +1,17 @@
+#if canImport(FoundationEssentials)
+import FoundationEssentials
+#else
 import Foundation
+#endif
+
+extension StringProtocol {
+    public var whitespaceTrimmed: String {
+        trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+}
 
 extension String {
-    public func slugify() -> String {
+    public var slugified: String {
         var result = ""
         var needsSeparator = false
 

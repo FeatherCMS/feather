@@ -1,6 +1,6 @@
 import FeatherAdmin
 import FeatherValidation
-import Foundation
+import FeatherContracts
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -13,10 +13,10 @@ struct NewsletterCampaignAddForm: Decodable {
     var fromEmail: String = ""
 
     var normalizedName: String {
-        name.trimmingCharacters(in: .whitespacesAndNewlines)
+        name.whitespaceTrimmed
     }
 
     var normalizedFromEmail: String {
-        fromEmail.trimmingCharacters(in: .whitespacesAndNewlines)
+        fromEmail.whitespaceTrimmed
     }
 }

@@ -1,6 +1,5 @@
 import AccountAdminAPI
 import FeatherAdmin
-import Foundation
 
 struct AdminListAccountInvitationModel: Sendable {
     let items: [Components.Schemas.AccountInvitationListItemSchema]

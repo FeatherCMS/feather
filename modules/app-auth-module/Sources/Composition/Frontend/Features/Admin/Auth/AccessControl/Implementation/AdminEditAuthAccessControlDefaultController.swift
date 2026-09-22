@@ -126,9 +126,7 @@ struct AdminEditAuthAccessControlDefaultController:
             case .edited:
                 let search =
                     payload.search?
-                    .trimmingCharacters(
-                        in: .whitespacesAndNewlines
-                    ) ?? ""
+                    .whitespaceTrimmed ?? ""
                 let query =
                     search.isEmpty
                     ? [] : [URLQueryItem(name: "search", value: search)]
@@ -149,9 +147,7 @@ struct AdminEditAuthAccessControlDefaultController:
                         state: state,
                         permissions: permissions,
                         search: payload.search?
-                            .trimmingCharacters(
-                                in: .whitespacesAndNewlines
-                            ) ?? ""
+                            .whitespaceTrimmed ?? ""
                     )
                     .response(from: request, context: context)
             }
@@ -168,9 +164,7 @@ struct AdminEditAuthAccessControlDefaultController:
                     state: state,
                     permissions: permissions,
                     search: payload.search?
-                        .trimmingCharacters(
-                            in: .whitespacesAndNewlines
-                        ) ?? ""
+                        .whitespaceTrimmed ?? ""
                 )
                 .response(from: request, context: context)
         }

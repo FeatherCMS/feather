@@ -4,6 +4,7 @@ import CSS
 import FeatherAdmin
 import FeatherValidation
 import FeatherValidationFoundation
+import FeatherContracts
 import Foundation
 import HTML
 import Hummingbird
@@ -71,9 +72,7 @@ struct AdminEditAuthAccessControlDefaultInteractor:
     ) async throws -> AdminEditAuthAccessControlSaveResult {
         let search =
             input.search?
-            .trimmingCharacters(
-                in: .whitespacesAndNewlines
-            ) ?? ""
+            .whitespaceTrimmed ?? ""
         let permissions = try await repository.fetchPermissions()
         let visiblePermissionIds = Set(
             permissions

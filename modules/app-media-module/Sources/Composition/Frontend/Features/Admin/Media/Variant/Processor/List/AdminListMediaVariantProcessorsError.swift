@@ -1,4 +1,3 @@
-import Foundation
 
 enum AdminListMediaVariantProcessorsError: Error, Sendable {
     case notFound

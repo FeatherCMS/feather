@@ -1,5 +1,5 @@
 import FeatherAdmin
-import Foundation
+import FeatherContracts
 import OpenAPIRuntime
 
 public struct WebMenuItemFormInput: Codable, Sendable, Equatable, Hashable {
@@ -59,23 +59,23 @@ public struct WebMenuItemFormInput: Codable, Sendable, Equatable, Hashable {
     }
 
     var normalizedLabel: String {
-        label.trimmingCharacters(in: .whitespacesAndNewlines)
+        label.whitespaceTrimmed
     }
 
     var normalizedURL: String {
-        url.trimmingCharacters(in: .whitespacesAndNewlines)
+        url.whitespaceTrimmed
     }
 
     var normalizedPriority: String {
-        priority.trimmingCharacters(in: .whitespacesAndNewlines)
+        priority.whitespaceTrimmed
     }
 
     var normalizedAuthentication: String {
-        authentication.trimmingCharacters(in: .whitespacesAndNewlines)
+        authentication.whitespaceTrimmed
     }
 
     var normalizedNotes: String {
-        notes.trimmingCharacters(in: .whitespacesAndNewlines)
+        notes.whitespaceTrimmed
     }
 
     var parsedPriority: Int? {

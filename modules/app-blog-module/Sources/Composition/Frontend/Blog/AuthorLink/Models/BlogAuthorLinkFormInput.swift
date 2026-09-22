@@ -2,7 +2,7 @@ import BlogAdminAPI
 import BlogAppAPI
 import FeatherAdmin
 import FeatherValidation
-import Foundation
+import FeatherContracts
 import HTML
 import Hummingbird
 import MediaFrontend
@@ -61,23 +61,23 @@ public struct BlogAuthorLinkFormInput: Codable, Sendable, Equatable, Hashable {
     }
 
     var normalizedLabel: String {
-        label.trimmingCharacters(in: .whitespacesAndNewlines)
+        label.whitespaceTrimmed
     }
 
     var normalizedURL: String {
-        url.trimmingCharacters(in: .whitespacesAndNewlines)
+        url.whitespaceTrimmed
     }
 
     var normalizedPriority: String {
-        priority.trimmingCharacters(in: .whitespacesAndNewlines)
+        priority.whitespaceTrimmed
     }
 
     var normalizedPermission: String {
-        permission.trimmingCharacters(in: .whitespacesAndNewlines)
+        permission.whitespaceTrimmed
     }
 
     var normalizedNotes: String {
-        notes.trimmingCharacters(in: .whitespacesAndNewlines)
+        notes.whitespaceTrimmed
     }
 
     var parsedPriority: Int? {

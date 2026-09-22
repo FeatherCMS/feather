@@ -1,6 +1,5 @@
 import FeatherAdmin
 import FeatherContracts
-import Foundation
 import Hummingbird
 import RedirectContracts
 
@@ -22,7 +21,7 @@ struct AdminListRedirectRuleDefaultController: AdminListRedirectRuleController {
 
         let search = request.querySearch()
         let rawStatusCode = request.queryString("statusCode")?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
         let statusCode = rawStatusCode.flatMap(Int.init)
             .flatMap(StatusCode.init(rawValue:))
         do {

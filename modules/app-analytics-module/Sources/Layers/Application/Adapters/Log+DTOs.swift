@@ -4,8 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import AnalyticsDomain
 import Foundation
+
+import AnalyticsDomain
 
 extension Log {
     public var asListItem: LogList.Item {

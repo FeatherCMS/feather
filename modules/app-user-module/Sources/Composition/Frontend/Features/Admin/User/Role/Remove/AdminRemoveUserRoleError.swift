@@ -1,4 +1,3 @@
-import Foundation
 
 enum AdminRemoveUserRoleError: Error, Sendable {
     case notFound

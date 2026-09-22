@@ -4,7 +4,7 @@ import CSS
 import FeatherAdmin
 import FeatherValidation
 import FeatherValidationFoundation
-import Foundation
+import FeatherContracts
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -30,11 +30,11 @@ public struct AdminEditAuthEmailFormInput: Codable, Sendable, Equatable,
     public let email: String
 
     public var normalizedIdentityId: String {
-        identityId.trimmingCharacters(in: .whitespacesAndNewlines)
+        identityId.whitespaceTrimmed
     }
 
     public var normalizedEmail: String {
-        email.trimmingCharacters(in: .whitespacesAndNewlines)
+        email.whitespaceTrimmed
     }
 
     public init(

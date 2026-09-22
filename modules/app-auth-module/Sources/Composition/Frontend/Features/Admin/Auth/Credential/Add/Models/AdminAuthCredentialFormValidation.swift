@@ -4,7 +4,7 @@ import CSS
 import FeatherAdmin
 import FeatherValidation
 import FeatherValidationFoundation
-import Foundation
+import FeatherContracts
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -66,7 +66,7 @@ extension AdminAuthCredentialFormInput {
             AdminAuthCredentialFormValidation.email(email)
             AdminAuthCredentialFormValidation.password(
                 requiredPassword
-                    || !password.trimmingCharacters(in: .whitespacesAndNewlines)
+                    || !password.whitespaceTrimmed
                         .isEmpty
                     ? password
                     : nil,

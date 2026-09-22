@@ -1,6 +1,5 @@
 import AccountAdminAPI
 import FeatherAdmin
-import Foundation
 import Hummingbird
 
 struct AdminListAccountInvitationDefaultInteractor:

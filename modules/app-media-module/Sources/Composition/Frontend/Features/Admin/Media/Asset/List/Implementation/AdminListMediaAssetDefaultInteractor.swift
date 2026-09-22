@@ -1,5 +1,6 @@
 import FeatherAdmin
 import FeatherValidation
+import FeatherContracts
 import Foundation
 import HTML
 import Hummingbird
@@ -76,7 +77,7 @@ extension AdminListMediaAssetDefaultInteractor {
         let components =
             path
             .split(separator: "/")
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .map { $0.whitespaceTrimmed }
             .filter { !$0.isEmpty }
         guard !components.isEmpty else {
             return nil

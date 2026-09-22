@@ -1,5 +1,5 @@
 import FeatherAdmin
-import Foundation
+import FeatherContracts
 import Hummingbird
 import NewsletterContracts
 
@@ -17,7 +17,7 @@ struct AdminListNewsletterSubscribersDefaultController:
     {
         let (interactor, presenter) = buildRuntime(request, context)
         let campaignId = request.queryString("campaignId")?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
         let permissions = context.currentUserAdminListActions
         guard permissions.allows(Permissions.Subscribers.list) else {
             return try await presenter.render(

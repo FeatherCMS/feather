@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 import Hummingbird
 
 protocol AdminViewRedirectOverviewPresenter: Sendable {

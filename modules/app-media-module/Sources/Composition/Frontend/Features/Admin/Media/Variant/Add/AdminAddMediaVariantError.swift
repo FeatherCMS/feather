@@ -1,4 +1,3 @@
-import Foundation
 
 enum AdminAddMediaVariantError: Error, Sendable {
     case unauthorized

@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 
 struct AdminAddRedirectRuleDefaultInteractor: AdminAddRedirectRuleInteractor {
     let repository: any AdminAddRedirectRuleRepository

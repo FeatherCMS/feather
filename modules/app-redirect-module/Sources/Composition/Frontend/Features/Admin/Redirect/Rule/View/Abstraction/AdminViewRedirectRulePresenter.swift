@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 import HTML
 
 protocol AdminViewRedirectRulePresenter: Sendable {

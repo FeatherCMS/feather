@@ -64,7 +64,7 @@ public struct TableSeedMigration: DatabaseMigration {
                 }
                     ?? .init(
                         template: "default",
-                        slug: definition.title.slugify(),
+                        slug: definition.title.slugified,
                         status: .published
                     )
             )

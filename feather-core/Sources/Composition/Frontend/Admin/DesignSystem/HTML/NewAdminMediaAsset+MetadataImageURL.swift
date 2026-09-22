@@ -1,3 +1,4 @@
+import FeatherContracts
 import Foundation
 
 extension NewAdminMediaAsset {
@@ -6,7 +7,7 @@ extension NewAdminMediaAsset {
     ) -> NewAdminMediaAsset? {
         guard
             let rawValue = value?
-                .trimmingCharacters(in: .whitespacesAndNewlines),
+                .whitespaceTrimmed,
             rawValue.isEmpty == false,
             let url = URL(string: rawValue)
         else {

@@ -1,4 +1,3 @@
-import Foundation
 
 enum AdminViewUserRoleError: Error, Sendable {
     case notFound

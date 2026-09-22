@@ -6,7 +6,6 @@
 //
 
 import FeatherContracts
-import Foundation
 import Hummingbird
 import OpenAPIRuntime
 

@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 
 struct SystemVariableEditModel: Sendable {
     let id: String

@@ -7,6 +7,7 @@ import OpenAPIRuntime
 //#else
 //import Foundation
 //#endif
+import FeatherContracts
 import Foundation
 
 struct ErrorMiddleware: ServerMiddleware {
@@ -79,7 +80,7 @@ struct ErrorMiddleware: ServerMiddleware {
                 component
                     .split(separator: ";", maxSplits: 1)
                     .first?
-                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .whitespaceTrimmed
                     .lowercased() ?? ""
             }
 

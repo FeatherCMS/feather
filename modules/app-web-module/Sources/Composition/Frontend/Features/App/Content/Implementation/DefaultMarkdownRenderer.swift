@@ -82,7 +82,7 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
             requestPath: requestPath
         )
         if output.isEmpty
-            && !markdown.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            && !markdown.whitespaceTrimmed.isEmpty
         {
             Logger.current.warning(
                 "Markdown rendering produced empty output.",

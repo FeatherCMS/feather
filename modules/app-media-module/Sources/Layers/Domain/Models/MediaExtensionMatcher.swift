@@ -4,6 +4,7 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
+import FeatherContracts
 import Foundation
 
 public enum MediaExtensionMatcher {
@@ -22,7 +23,7 @@ public enum MediaExtensionMatcher {
     public static func canonicalExtension(
         from value: String
     ) -> String? {
-        let normalized = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        let normalized = value.whitespaceTrimmed
             .lowercased()
         guard !normalized.isEmpty else { return nil }
 

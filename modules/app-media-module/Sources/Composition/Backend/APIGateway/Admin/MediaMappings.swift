@@ -1,8 +1,9 @@
 import FeatherApplication
 import FeatherContracts
 import FeatherDomain
-import Foundation
 import MediaAdminAPI
+import Foundation
+
 import MediaApplication
 import MediaDomain
 

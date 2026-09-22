@@ -1,5 +1,5 @@
 import FeatherAdmin
-import Foundation
+import FeatherContracts
 
 public struct AdminEditAccountInvitationFormInput: Codable, Sendable, Equatable,
     Hashable
@@ -14,13 +14,13 @@ public struct AdminEditAccountInvitationFormInput: Codable, Sendable, Equatable,
     }
 
     var normalizedEmail: String {
-        email.trimmingCharacters(in: .whitespacesAndNewlines)
+        email.whitespaceTrimmed
     }
 
     var normalizedRoleIDs: [String] {
         (roleIds ?? [])
             .map {
-                $0.trimmingCharacters(in: .whitespacesAndNewlines)
+                $0.whitespaceTrimmed
             }
             .filter { !$0.isEmpty }
     }

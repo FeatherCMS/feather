@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import HTTPTypes
 import Hummingbird
@@ -143,9 +144,7 @@ public struct RedirectRuleMiddleware: RouterMiddleware {
         from destination: String,
         siteBaseURL: String
     ) -> String {
-        let trimmed = destination.trimmingCharacters(
-            in: .whitespacesAndNewlines
-        )
+        let trimmed = destination.whitespaceTrimmed
         guard !trimmed.isEmpty else {
             return normalizedAbsolutePath("/", siteBaseURL: siteBaseURL)
         }

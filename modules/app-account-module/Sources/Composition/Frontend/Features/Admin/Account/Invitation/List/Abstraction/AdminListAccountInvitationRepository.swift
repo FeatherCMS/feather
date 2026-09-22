@@ -1,6 +1,5 @@
 import AccountAdminAPI
 import FeatherAdmin
-import Foundation
 import Hummingbird
 
 protocol AdminListAccountInvitationRepository: Sendable {

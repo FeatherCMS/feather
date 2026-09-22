@@ -21,7 +21,6 @@ import FoundationEssentials
 #else
 import Foundation
 #endif
-import Foundation
 import MediaApplication
 
 func buildWorker(

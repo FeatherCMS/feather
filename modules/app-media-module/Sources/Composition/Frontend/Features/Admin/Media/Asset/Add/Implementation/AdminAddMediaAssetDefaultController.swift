@@ -24,7 +24,7 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         let (interactor, presenter) = buildRuntime(request, context)
         let parentId =
             request.queryString("parent_id")?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
             .emptyToNil ?? ""
         let view = request.queryString("view") ?? "grid"
         let picker = pickerState(request: request)
@@ -142,7 +142,7 @@ extension AdminAddMediaAssetDefaultController {
             allowedExtensions: request.queryString("extensions")?
                 .split(separator: ",")
                 .map {
-                    $0.trimmingCharacters(in: .whitespacesAndNewlines)
+                    $0.whitespaceTrimmed
                         .lowercased()
                 }
                 .filter { !$0.isEmpty } ?? [],

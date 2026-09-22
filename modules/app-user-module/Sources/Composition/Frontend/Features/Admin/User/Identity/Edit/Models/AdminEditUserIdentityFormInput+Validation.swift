@@ -1,7 +1,7 @@
 import FeatherAdmin
 import FeatherValidation
 import FeatherValidationFoundation
-import Foundation
+import FeatherContracts
 
 enum AdminEditUserIdentityFormFieldValidator {
 
@@ -20,9 +20,7 @@ enum AdminEditUserIdentityFormFieldValidator {
         required: Bool
     ) -> Validator<String> {
         let hasValue = !(value ?? "")
-            .trimmingCharacters(
-                in: .whitespacesAndNewlines
-            )
+            .whitespaceTrimmed
             .isEmpty
         return .init(
             key: "status",

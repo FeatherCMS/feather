@@ -1,5 +1,3 @@
-import Foundation
-
 /// Decodes a flat form payload while keeping its one-time nonce separate from
 /// the feature input.
 public struct NonceRequest<Input: Decodable & Sendable>:

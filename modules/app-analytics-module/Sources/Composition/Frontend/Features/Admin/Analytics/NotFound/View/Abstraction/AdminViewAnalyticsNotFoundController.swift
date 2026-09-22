@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 import Hummingbird
 
 public protocol AdminViewAnalyticsNotFoundController: Sendable {

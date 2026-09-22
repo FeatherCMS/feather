@@ -6,7 +6,6 @@
 
 import FeatherApplication
 import FeatherContracts
-import Foundation
 import WebDomain
 
 public struct ListPublicMenus: Sendable {

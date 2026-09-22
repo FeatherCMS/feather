@@ -1,4 +1,3 @@
-import Foundation
 
 enum AdminRemoveMediaVariantError: Error, Sendable {
     case notFound

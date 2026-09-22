@@ -2,8 +2,9 @@ import AuthAdminAPI
 import AuthApplication
 import AuthDomain
 import FeatherApplication
-import FeatherContracts
 import Foundation
+
+import FeatherContracts
 import UserApplication
 
 extension AdminAPIGateway {

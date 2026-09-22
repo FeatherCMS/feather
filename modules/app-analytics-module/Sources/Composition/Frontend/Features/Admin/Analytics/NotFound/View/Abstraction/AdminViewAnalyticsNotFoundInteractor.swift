@@ -1,6 +1,5 @@
 import AnalyticsAdminAPI
 import FeatherAdmin
-import Foundation
 
 protocol AdminViewAnalyticsNotFoundInteractor: Sendable {
 

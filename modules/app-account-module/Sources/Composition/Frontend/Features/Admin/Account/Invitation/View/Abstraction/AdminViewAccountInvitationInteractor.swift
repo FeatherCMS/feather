@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 
 protocol AdminViewAccountInvitationInteractor: Sendable {
     func roleNames(for ids: [String]) async -> [String]

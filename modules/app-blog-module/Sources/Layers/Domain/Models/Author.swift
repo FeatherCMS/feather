@@ -102,7 +102,7 @@ extension Author {
             base: metadata
                 ?? .init(
                     template: "blog.author",
-                    slug: name.slugify()
+                    slug: name.slugified
                 )
         )
 

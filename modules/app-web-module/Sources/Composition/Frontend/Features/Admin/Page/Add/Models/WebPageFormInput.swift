@@ -1,6 +1,5 @@
 import FeatherAdmin
 import FeatherContracts
-import Foundation
 import OpenAPIRuntime
 
 public struct WebPageFormInput: Codable, Sendable, Equatable, Hashable {
@@ -49,20 +48,20 @@ public struct WebPageFormInput: Codable, Sendable, Equatable, Hashable {
     }
 
     var normalizedTitle: String {
-        title.trimmingCharacters(in: .whitespacesAndNewlines)
+        title.whitespaceTrimmed
     }
 
     var normalizedContent: String {
-        content.trimmingCharacters(in: .whitespacesAndNewlines)
+        content.whitespaceTrimmed
     }
 
     var normalizedExcerpt: String {
-        excerpt.trimmingCharacters(in: .whitespacesAndNewlines)
+        excerpt.whitespaceTrimmed
     }
 
     var normalizedImageAssetId: String? {
         imageAssetId?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
             .emptyToNil
     }
 

@@ -8,6 +8,7 @@ import FeatherDomain
 
 import struct Foundation.CharacterSet
 import struct Foundation.Date
+import FeatherContracts
 
 public struct MenuItem: Model {
 
@@ -95,7 +96,7 @@ extension MenuItem {
     private static func normalizePermission(
         _ permission: String
     ) -> String {
-        permission.trimmingCharacters(in: .whitespacesAndNewlines)
+        permission.whitespaceTrimmed
     }
 
     private static func validate(

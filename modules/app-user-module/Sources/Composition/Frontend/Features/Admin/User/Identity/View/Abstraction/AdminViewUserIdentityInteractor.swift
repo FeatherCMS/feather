@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 
 protocol AdminViewUserIdentityInteractor: Sendable {
     func roleNames(for ids: [String]) async throws -> [String]

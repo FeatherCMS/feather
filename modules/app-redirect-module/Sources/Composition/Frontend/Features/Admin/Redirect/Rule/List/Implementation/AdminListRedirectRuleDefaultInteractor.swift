@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 import Hummingbird
 import RedirectAdminAPI
 import RedirectContracts

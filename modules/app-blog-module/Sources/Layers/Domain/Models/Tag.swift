@@ -102,7 +102,7 @@ extension Tag {
             base: metadata
                 ?? .init(
                     template: "blog.tag",
-                    slug: title.slugify()
+                    slug: title.slugified
                 )
         )
 

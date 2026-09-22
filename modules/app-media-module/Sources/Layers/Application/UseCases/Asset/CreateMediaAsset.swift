@@ -143,7 +143,7 @@ extension CreateMediaAsset {
             dot.map { String(raw[..<$0]) }.flatMap { $0.isEmpty ? nil : $0 }
             ?? raw
         let safeName =
-            name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            name.whitespaceTrimmed.isEmpty
             ? "asset" : name
         let slug = normalizedSlug(safeName)
         let ext =

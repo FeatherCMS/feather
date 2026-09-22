@@ -1,6 +1,6 @@
 import FeatherAdmin
 import FeatherValidation
-import Foundation
+import FeatherContracts
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -43,7 +43,7 @@ public struct ContactFieldFormInput: Decodable, Sendable {
     var position: String = "0"
     var normalizedAllowedValues: [String] {
         allowedValues.split(separator: "\n")
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .map { $0.whitespaceTrimmed }
             .filter { !$0.isEmpty }
     }
     var normalizedPosition: Int { Int(position) ?? 0 }

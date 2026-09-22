@@ -1,4 +1,3 @@
-import Foundation
 
 enum AdminRemoveSystemVariableError: Error, Sendable {
     case notFound

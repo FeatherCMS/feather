@@ -1,6 +1,6 @@
 import FeatherAdmin
 import FeatherValidation
-import Foundation
+import FeatherContracts
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -29,7 +29,7 @@ struct AdminAddNewsletterSubscriberDefaultInteractor:
     {
         let campaigns = try await repository.listCampaigns()
         guard
-            !form.email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            !form.email.whitespaceTrimmed.isEmpty
         else {
             return .init(
                 email: form.email,

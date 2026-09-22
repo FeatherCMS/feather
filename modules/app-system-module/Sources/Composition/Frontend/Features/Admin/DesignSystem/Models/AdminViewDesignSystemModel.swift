@@ -1,4 +1,3 @@
-import Foundation
 
 struct AdminViewDesignSystemModel: Sendable {
     let title: String

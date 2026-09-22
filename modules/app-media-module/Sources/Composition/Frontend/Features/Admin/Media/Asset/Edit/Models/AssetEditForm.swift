@@ -1,6 +1,6 @@
 import FeatherAdmin
 import FeatherValidation
-import Foundation
+import FeatherContracts
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -14,12 +14,12 @@ struct AssetEditForm: Decodable {
     var altText: String = ""
 
     var normalizedTitle: String? {
-        let value = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        let value = title.whitespaceTrimmed
         return value.isEmpty ? nil : value
     }
 
     var normalizedAltText: String? {
-        let value = altText.trimmingCharacters(in: .whitespacesAndNewlines)
+        let value = altText.whitespaceTrimmed
         return value.isEmpty ? nil : value
     }
 }

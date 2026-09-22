@@ -1,4 +1,3 @@
-import Foundation
 
 enum AdminAddSystemPermissionError: Error, Sendable {
     case unauthorized

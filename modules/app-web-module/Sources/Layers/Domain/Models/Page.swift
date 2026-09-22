@@ -102,7 +102,7 @@ extension Page {
             base: metadata
                 ?? .init(
                     template: "default",
-                    slug: title.slugify(),
+                    slug: title.slugified,
                     status: .published
                 )
         )

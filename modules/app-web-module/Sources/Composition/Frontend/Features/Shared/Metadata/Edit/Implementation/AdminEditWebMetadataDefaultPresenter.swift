@@ -1,5 +1,7 @@
-import FeatherAdmin
 import Foundation
+
+import FeatherAdmin
+import FeatherContracts
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -83,9 +85,7 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
 
     private func previewPath(for state: WebMetadataForm.State) -> String? {
         guard let slug = state.slug.value else { return nil }
-        let normalizedSlug = slug.trimmingCharacters(
-            in: .whitespacesAndNewlines
-        )
+        let normalizedSlug = slug.whitespaceTrimmed
         return normalizedSlug.isEmpty ? nil : "/\(normalizedSlug)/"
     }
 }
