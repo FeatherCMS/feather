@@ -1587,7 +1587,7 @@ components:
           $ref: '#/components/schemas/WebSettingsHomePageIDField'
         locale:
           type: string
-          example: en_us
+          example: en-US
         timezone:
           type: string
           example: utc
@@ -1659,7 +1659,7 @@ components:
           $ref: '#/components/schemas/WebSettingsHomePageIDField'
         locale:
           type: string
-          example: en_us
+          example: en-US
         timezone:
           type: string
           example: utc

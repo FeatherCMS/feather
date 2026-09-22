@@ -59,7 +59,7 @@ public struct SettingsDatabaseQueries: SettingsQueries {
         let secondaryFont = pairs["web-settings-secondary-font"] ?? ""
         let homePageId = pairs["web-settings-home-page-id"]
             .flatMap { $0.isEmpty ? nil : $0 }
-        let locale = pairs["web-settings-locale"] ?? "en_us"
+        let locale = pairs["web-settings-locale"] ?? "en-US"
         let timezone = pairs["web-settings-timezone"] ?? "utc"
         let title = pairs["web-settings-title"] ?? ""
         let excerpt = pairs["web-settings-excerpt"] ?? ""
