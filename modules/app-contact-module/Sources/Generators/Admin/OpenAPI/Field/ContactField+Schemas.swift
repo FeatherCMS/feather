@@ -5,7 +5,7 @@ struct ContactLabelField: StringSchemaRepresentable {}
 struct ContactKeyField: StringSchemaRepresentable {}
 struct ContactTypeField: StringSchemaRepresentable {
     var enumValues: [String]? = [
-        "text", "textarea", "select", "radio", "toggle",
+        "text", "textarea", "select", "radio", "toggle", "hidden",
     ]
 }
 struct ContactAllowedValueField: StringSchemaRepresentable {}

@@ -30,7 +30,9 @@ public struct GetPublicForm {
             }
             let fields = try await scope.field.listBy(formId: value.id)
                 .map(\.asDetail)
-            return value.asDetail(fields: fields)
+            let mails = try await scope.mail.listBy(formId: value.id)
+                .map(\.asDetail)
+            return value.asDetail(fields: fields, mails: mails)
         }
     }
 

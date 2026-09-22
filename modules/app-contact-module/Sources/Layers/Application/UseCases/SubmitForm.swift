@@ -107,6 +107,12 @@ public struct SubmitForm: UseCase {
                         "Invalid value for form field: \(field.key)"
                     )
                 }
+            case .hidden:
+                guard value is String else {
+                    throw Error.invalidValues(
+                        "Invalid value for form field: \(field.key)"
+                    )
+                }
             }
         }
     }

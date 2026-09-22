@@ -28,6 +28,7 @@ struct ContactFieldForm: Component {
                             .init(label: "Select", value: "select"),
                             .init(label: "Radio", value: "radio"),
                             .init(label: "Toggle", value: "toggle"),
+                            .init(label: "Hidden", value: "hidden"),
                         ],
                         isRequired: true
                     )

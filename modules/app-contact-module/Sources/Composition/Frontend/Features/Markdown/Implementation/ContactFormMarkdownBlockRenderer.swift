@@ -67,6 +67,9 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
         case "toggle":
             return
                 "<label class=\"contact-form-field\"><input type=\"checkbox\" id=\"contact-form-\(escape(field.key))\" name=\"values[\(escape(field.key))]\" value=\"true\"\(required)>\(escape(field.label))</label>"
+        case "hidden":
+            return
+                "<input type=\"hidden\" id=\"contact-form-\(escape(field.key))\" name=\"values[\(escape(field.key))]\" value=\"true\">"
         default:
             return
                 "<div class=\"contact-form-field\">\(label)<input type=\"text\" id=\"contact-form-\(escape(field.key))\" name=\"values[\(escape(field.key))]\"\(required)></div>"

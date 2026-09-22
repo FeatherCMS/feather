@@ -10,6 +10,7 @@ public struct FormField: Model {
         case select
         case radio
         case toggle
+        case hidden
     }
 
     public struct Option: Codable, Sendable, Equatable {
@@ -96,7 +97,7 @@ extension FormField {
         switch type {
         case .select, .radio:
             guard !allowedValues.isEmpty else { throw .optionsRequired }
-        case .text, .textarea, .toggle:
+        case .text, .textarea, .toggle, .hidden:
             guard allowedValues.isEmpty else { throw .optionsNotAllowed }
         }
     }

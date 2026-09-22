@@ -51,7 +51,7 @@ public struct ContactFieldFormInput: Decodable, Sendable {
         case "select", "radio":
             guard normalizedAllowedValues.isEmpty else { return nil }
             return "Allowed values are required for select and radio fields."
-        case "text", "textarea", "toggle":
+        case "text", "textarea", "toggle", "hidden":
             guard !normalizedAllowedValues.isEmpty else { return nil }
             return "Allowed values can only be used with select and radio fields."
         default:

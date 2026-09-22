@@ -44,6 +44,21 @@ struct ContactDomainTestSuite {
     }
 
     @Test
+    func hiddenFieldCanBeCreatedWithoutAllowedValues() throws {
+        let field = try FormField.create(
+            formId: "form-1",
+            key: "patient",
+            type: .hidden,
+            label: "Patient inquiry marker",
+            isRequired: true
+        )
+
+        #expect(field.type == .hidden)
+        #expect(field.allowedValues.isEmpty)
+        #expect(field.isRequired)
+    }
+
+    @Test
     func submissionPreservesPayloadAndSnapshot() {
         let submission = Submission.create(
             formId: "form-1",
