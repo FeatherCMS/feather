@@ -1,7 +1,5 @@
 import FeatherAdmin
-import FeatherValidation
 import Hummingbird
-import WebComponents
 
 struct AdminRemoveNewsletterCampaignDefaultPresenter:
     AdminRemoveNewsletterCampaignPresenter

@@ -1,7 +1,6 @@
 import FeatherAdmin
 import FeatherContracts
 import Hummingbird
-import SystemContracts
 
 public enum UserAdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {

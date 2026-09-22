@@ -1,6 +1,5 @@
 import AccountApplication
 import AccountDomain
-import FeatherDatabase
 import FeatherInfrastructure
 
 public struct AccountProfileDatabaseQueries: AccountProfileQueries {

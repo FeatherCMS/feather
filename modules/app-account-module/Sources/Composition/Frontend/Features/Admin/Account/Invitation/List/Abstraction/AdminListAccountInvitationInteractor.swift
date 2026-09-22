@@ -1,5 +1,4 @@
 import AccountAdminAPI
-import FeatherAdmin
 
 protocol AdminListAccountInvitationInteractor: Sendable {
 

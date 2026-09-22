@@ -1,8 +1,6 @@
-import FeatherInfrastructure
 import RedirectAppAPI
 import RedirectApplication
 import RedirectContracts
-import RedirectDomain
 
 extension AppAPIGateway {
     public func redirectRuleGet(

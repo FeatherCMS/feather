@@ -1,7 +1,5 @@
-import FeatherApplication
 import FeatherContracts
 import NewsletterAdminAPI
-import NewsletterApplication
 import NewsletterContracts
 
 extension AdminAPIGateway {

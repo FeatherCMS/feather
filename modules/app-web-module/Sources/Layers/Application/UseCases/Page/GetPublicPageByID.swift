@@ -6,9 +6,7 @@
 
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 import Foundation
-import WebDomain
 
 public struct GetPublicPageByID {
     public struct Error: UseCaseError {

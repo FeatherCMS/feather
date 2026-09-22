@@ -3,9 +3,8 @@ import HTML
 import Hummingbird
 import RedirectAdminAPI
 import RedirectContracts
-import SGML
-import WebBuilders
 import WebComponents
+import WebBuilders
 
 struct RedirectRuleRow: Component {
     let rule: RedirectAdminAPI.Components.Schemas.RedirectRuleListItemSchema

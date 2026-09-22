@@ -1,4 +1,3 @@
-import FeatherAdmin
 
 protocol AdminAddAccountInvitationRepository: Sendable {
 

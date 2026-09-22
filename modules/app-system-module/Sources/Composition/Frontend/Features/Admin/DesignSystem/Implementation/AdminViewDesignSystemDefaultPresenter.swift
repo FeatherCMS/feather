@@ -1,6 +1,6 @@
 import FeatherAdmin
-import FeatherContracts
 import Hummingbird
+import FeatherContracts
 import WebComponents
 
 struct AdminViewDesignSystemDefaultPresenter: AdminViewDesignSystemPresenter {

@@ -1,6 +1,5 @@
 import AnalyticsAdminAPI
 import FeatherAdmin
-import Hummingbird
 import OpenAPIRuntime
 
 struct AdminViewAnalyticsLogOpenAPIRepository: AdminViewAnalyticsLogRepository {

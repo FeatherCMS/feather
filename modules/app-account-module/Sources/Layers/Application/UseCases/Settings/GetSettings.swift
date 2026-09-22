@@ -1,5 +1,4 @@
 import AccountContracts
-import AccountDomain
 import FeatherApplication
 import FeatherContracts
 

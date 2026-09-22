@@ -1,5 +1,4 @@
 import ContactDomain
-import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
 

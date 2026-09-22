@@ -1,5 +1,4 @@
 import FeatherAdmin
-import HTML
 import Hummingbird
 
 struct AdminViewAnalyticsLogDefaultController: AdminViewAnalyticsLogController {

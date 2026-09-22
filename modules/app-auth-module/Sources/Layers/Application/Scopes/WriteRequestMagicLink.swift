@@ -1,5 +1,4 @@
 import AuthDomain
-import FeatherApplication
 import FeatherContracts
 import SystemApplication
 

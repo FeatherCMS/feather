@@ -5,9 +5,6 @@ import FeatherContracts
 //
 
 import AccountInfrastructure
-import FeatherApplication
-import FeatherInfrastructure
-import FeatherDomain
 
 func buildAppEventPublisher() -> any EventPublisher {
     var events = EventRegistry()

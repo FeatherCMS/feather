@@ -1,7 +1,6 @@
 import FeatherApplication
 import FeatherContracts
 import MediaContracts
-import MediaDomain
 
 //
 //  GetMediaFolder.swift

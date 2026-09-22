@@ -1,11 +1,5 @@
-import AnalyticsAdminAPI
-import AnalyticsAppAPI
 import AnalyticsApplication
 import AnalyticsInfrastructure
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
 import FeatherInfrastructure
 
 extension UseCases {

@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminListUserIdentity {
     static let pageSize = 20

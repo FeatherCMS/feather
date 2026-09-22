@@ -18,7 +18,6 @@ import HummingbirdAuth
 import AuthFrontend
 import AccountFrontend
 import Logging
-import WebApplication
 
 func buildRouter(
     environment: AppEnvironment,

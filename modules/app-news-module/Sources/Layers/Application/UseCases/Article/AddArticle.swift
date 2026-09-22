@@ -1,11 +1,9 @@
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 import NewsContracts
 import NewsDomain
 import SystemApplication
 import WebApplication
-import WebDomain
 
 //
 //  AddArticle.swift

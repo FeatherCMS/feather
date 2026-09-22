@@ -1,4 +1,3 @@
-import FeatherAdmin
 
 struct AdminViewDesignSystemDefaultInteractor: AdminViewDesignSystemInteractor {
 

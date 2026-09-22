@@ -1,4 +1,3 @@
-import FeatherApplication
 import FeatherContracts
 import FeatherDatabase
 import FeatherDomain

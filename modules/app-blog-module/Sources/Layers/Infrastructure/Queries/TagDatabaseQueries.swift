@@ -6,11 +6,8 @@
 
 import BlogApplication
 import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
 import FeatherInfrastructure
 import WebApplication
-import WebDomain
 
 extension TagTable.Row {
 

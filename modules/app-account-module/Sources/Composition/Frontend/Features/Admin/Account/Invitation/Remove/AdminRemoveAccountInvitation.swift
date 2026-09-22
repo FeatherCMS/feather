@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminRemoveAccountInvitation {
     let controller: any AdminRemoveAccountInvitationController

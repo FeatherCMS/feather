@@ -2,7 +2,6 @@ import BlogContracts
 import BlogDomain
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 
 //
 //  RemoveAuthorLink.swift

@@ -1,6 +1,5 @@
 import FeatherAdmin
 import FeatherContracts
-import Hummingbird
 
 struct AdminViewDesignSystem {
     let controller: any AdminViewDesignSystemController

@@ -4,8 +4,8 @@ import Hummingbird
 import SGML
 import UserAdminAPI
 import UserContracts
-import WebBuilders
 import WebComponents
+import WebBuilders
 
 struct UserRoleTableContent: Component {
     let roles: [Components.Schemas.UserRoleListItemSchema]

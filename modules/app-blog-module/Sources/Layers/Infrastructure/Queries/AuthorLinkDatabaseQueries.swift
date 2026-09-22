@@ -6,8 +6,6 @@
 
 import BlogApplication
 import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
 import FeatherInfrastructure
 
 extension AuthorLinkTable.Row {

@@ -6,7 +6,6 @@
 
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 import Foundation
 
 public struct ResolveWebRoute {

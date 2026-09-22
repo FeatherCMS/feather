@@ -6,7 +6,6 @@
 
 import AuthDomain
 import FeatherApplication
-import FeatherContracts
 import UserDomain
 
 public struct AuthDetail: DTO {

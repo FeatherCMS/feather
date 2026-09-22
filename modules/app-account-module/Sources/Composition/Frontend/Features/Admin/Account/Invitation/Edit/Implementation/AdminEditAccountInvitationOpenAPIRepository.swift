@@ -1,6 +1,5 @@
 import AccountAdminAPI
 import FeatherAdmin
-import Hummingbird
 import OpenAPIRuntime
 
 struct AdminEditAccountInvitationOpenAPIRepository:

@@ -1,12 +1,6 @@
-import FeatherApplication
 import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
-import FeatherInfrastructure
-import UserAdminAPI
-import UserAppAPI
-import UserApplication
-import UserInfrastructure
 
 public struct UseCases: Sendable {
     let database: any DatabaseClient

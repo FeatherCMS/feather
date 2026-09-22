@@ -1,6 +1,5 @@
 import FeatherDatabase
 import FeatherInfrastructure
-import NewsletterDomain
 
 import struct Foundation.Date
 

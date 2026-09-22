@@ -1,6 +1,6 @@
 import FeatherAdmin
-import FeatherContracts
 import Hummingbird
+import FeatherContracts
 import RedirectContracts
 
 struct AdminListRedirectRuleDefaultController: AdminListRedirectRuleController {

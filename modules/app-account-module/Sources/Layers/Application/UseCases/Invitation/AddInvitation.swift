@@ -2,7 +2,6 @@ import AccountContracts
 import AccountDomain
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 import SystemApplication
 import UserApplication
 import UserDomain

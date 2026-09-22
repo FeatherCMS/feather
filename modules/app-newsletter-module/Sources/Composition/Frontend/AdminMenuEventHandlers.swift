@@ -1,6 +1,5 @@
 import FeatherAdmin
 import FeatherContracts
-import SystemApplication
 
 public enum NewsletterAdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {

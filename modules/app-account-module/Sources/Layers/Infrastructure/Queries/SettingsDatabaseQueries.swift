@@ -6,7 +6,6 @@
 
 import AccountApplication
 import AccountDomain
-import FeatherDatabase
 import FeatherInfrastructure
 
 public struct SettingsDatabaseQueries: SettingsQueries {

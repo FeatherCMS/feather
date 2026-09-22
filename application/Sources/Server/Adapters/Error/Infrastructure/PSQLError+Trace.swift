@@ -6,8 +6,6 @@
 //
 
 import PostgresNIO
-import NIOHTTP1
-import OpenAPIRuntime
 
 extension PSQLError: ErrorTraceRepresentable {
 

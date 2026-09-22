@@ -3,7 +3,6 @@ import FeatherAdmin
 import Foundation
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
 import RedirectAppAPI
 
 public struct RedirectAppAPIClient: Sendable {

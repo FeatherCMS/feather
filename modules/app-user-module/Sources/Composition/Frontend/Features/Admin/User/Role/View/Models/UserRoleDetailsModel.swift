@@ -1,4 +1,3 @@
-import FeatherAdmin
 
 struct UserRoleDetailsModel: Sendable {
     let id: String

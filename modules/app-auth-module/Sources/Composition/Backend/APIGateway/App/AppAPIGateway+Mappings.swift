@@ -1,11 +1,8 @@
 import AuthAdminAPI
 import AuthApplication
-import AuthDomain
 import FeatherApplication
 import Foundation
 
-import FeatherContracts
-import UserApplication
 
 extension AdminAPIGateway {
     public func mapSortDirection(

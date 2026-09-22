@@ -1,6 +1,5 @@
 import FeatherAdmin
 import Hummingbird
-import WebComponents
 
 struct AdminRemoveMediaVariantDefaultPresenter: AdminRemoveMediaVariantPresenter
 {

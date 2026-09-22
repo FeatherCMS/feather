@@ -1,4 +1,3 @@
-import ContactDomain
 import FeatherDatabase
 import FeatherInfrastructure
 

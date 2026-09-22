@@ -1,5 +1,4 @@
 import AccountDomain
-import HTTPTypes
 import NIOHTTP1
 import OpenAPIRuntime
 

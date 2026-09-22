@@ -1,8 +1,8 @@
 import FeatherAdmin
 import HTML
 import Hummingbird
-import WebBuilders
 import WebComponents
+import WebBuilders
 
 struct UserIdentityAddPage: Component {
     let form: UserIdentityAddForm.State

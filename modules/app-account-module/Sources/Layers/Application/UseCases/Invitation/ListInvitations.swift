@@ -1,8 +1,6 @@
 import AccountContracts
-import AccountDomain
 import FeatherApplication
 import FeatherContracts
-import UserDomain
 
 //
 //  ListInvitations.swift

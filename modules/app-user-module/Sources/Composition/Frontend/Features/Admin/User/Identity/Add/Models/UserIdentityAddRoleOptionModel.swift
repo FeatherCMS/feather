@@ -1,4 +1,3 @@
-import FeatherAdmin
 
 struct UserIdentityAddRoleOptionModel: Sendable {
     let id: String

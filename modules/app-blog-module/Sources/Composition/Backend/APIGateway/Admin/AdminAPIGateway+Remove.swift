@@ -1,7 +1,5 @@
 import BlogAdminAPI
 import BlogApplication
-import FeatherApplication
-import FeatherBackend
 import FeatherContracts
 
 extension AdminAPIGateway {

@@ -6,8 +6,6 @@
 //
 
 import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
 import FeatherInfrastructure
 import SystemApplication
 

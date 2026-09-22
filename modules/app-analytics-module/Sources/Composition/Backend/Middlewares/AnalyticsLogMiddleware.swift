@@ -1,7 +1,5 @@
 import AnalyticsApplication
 import AnalyticsDomain
-import FeatherApplication
-import FeatherContracts
 import HTTPTypes
 import Hummingbird
 

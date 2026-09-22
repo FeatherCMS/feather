@@ -1,5 +1,4 @@
 import FeatherAdmin
-import FeatherContracts
 import Hummingbird
 
 struct AdminRemoveAccountInvitationDefaultPresenter:

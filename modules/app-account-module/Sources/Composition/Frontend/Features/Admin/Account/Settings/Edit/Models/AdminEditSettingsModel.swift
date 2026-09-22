@@ -1,4 +1,3 @@
-import FeatherAdmin
 
 struct AdminEditSettingsModel: Sendable {
     let language: String

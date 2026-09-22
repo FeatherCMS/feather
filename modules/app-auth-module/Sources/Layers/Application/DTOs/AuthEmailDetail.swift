@@ -1,7 +1,5 @@
 import AuthDomain
 import FeatherApplication
-import FeatherContracts
-import FeatherDomain
 
 public struct AuthEmailDetail: DTO, Sendable {
     public let id: String

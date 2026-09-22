@@ -1,5 +1,4 @@
 import AnalyticsAdminAPI
-import FeatherAdmin
 import Foundation
 
 enum AdminAnalyticsNotFoundRange: String, Sendable {

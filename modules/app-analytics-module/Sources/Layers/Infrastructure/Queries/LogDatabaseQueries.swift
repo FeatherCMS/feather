@@ -6,7 +6,6 @@
 
 import AnalyticsApplication
 import FeatherApplication
-import FeatherContracts
 import FeatherDatabase
 import FeatherInfrastructure
 import Foundation

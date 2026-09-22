@@ -1,10 +1,8 @@
-import FeatherApplication
 import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
 import NewsletterApplication
-import NewsletterContracts
 import NewsletterDomain
 import NewsletterInfrastructure
 

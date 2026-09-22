@@ -1,5 +1,4 @@
 import FeatherApplication
-import FeatherContracts
 import Foundation
 import UserAdminAPI
 import UserApplication

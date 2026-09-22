@@ -1,4 +1,3 @@
-import FeatherAdmin
 
 protocol AdminEditRedirectRuleRepository: Sendable {
 

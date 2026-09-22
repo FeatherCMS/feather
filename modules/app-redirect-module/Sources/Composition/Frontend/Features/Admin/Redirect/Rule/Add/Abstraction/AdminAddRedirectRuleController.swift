@@ -1,5 +1,4 @@
 import FeatherAdmin
-import HTML
 import Hummingbird
 
 protocol AdminAddRedirectRuleController: Sendable {

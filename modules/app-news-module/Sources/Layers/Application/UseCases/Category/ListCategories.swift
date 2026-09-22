@@ -1,9 +1,6 @@
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 import NewsContracts
-import NewsDomain
-import WebApplication
 
 //
 //  ListCategories.swift

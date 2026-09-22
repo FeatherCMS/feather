@@ -4,8 +4,8 @@ import Hummingbird
 import MediaAdminAPI
 import MediaContracts
 import SGML
-import WebBuilders
 import WebComponents
+import WebBuilders
 
 struct MediaVariantProcessorsPage: Component {
     let variantId: String

@@ -1,11 +1,10 @@
 import FeatherAdmin
 import HTML
 import Hummingbird
-import RedirectAdminAPI
 import RedirectContracts
 import SGML
-import WebBuilders
 import WebComponents
+import WebBuilders
 
 struct RedirectRuleTableContent: Component {
     let state: RedirectRuleTable.State

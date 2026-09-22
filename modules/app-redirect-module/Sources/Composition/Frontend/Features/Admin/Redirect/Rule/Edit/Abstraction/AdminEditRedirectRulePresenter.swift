@@ -1,6 +1,5 @@
 import FeatherAdmin
 import FeatherValidation
-import HTML
 import Hummingbird
 
 protocol AdminEditRedirectRulePresenter: Sendable {

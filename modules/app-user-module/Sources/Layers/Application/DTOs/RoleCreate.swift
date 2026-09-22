@@ -6,7 +6,6 @@
 //
 
 import FeatherApplication
-import FeatherContracts
 
 public struct RoleCreate: DTO {
     public let name: String?

@@ -3,7 +3,6 @@ import FeatherContracts
 import WebApplication
 import BlogFrontend
 import NewsFrontend
-import WebApplication
 import WebFrontend
 import WebContracts
 

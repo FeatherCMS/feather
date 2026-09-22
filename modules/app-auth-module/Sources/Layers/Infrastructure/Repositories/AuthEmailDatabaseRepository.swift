@@ -1,5 +1,4 @@
 import AuthDomain
-import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
 

@@ -6,8 +6,6 @@
 
 import AuthApplication
 import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
 import FeatherInfrastructure
 
 import struct Foundation.Date

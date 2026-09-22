@@ -1,4 +1,3 @@
-import ContactAppAPI
 import FeatherContracts
 import WebFrontend
 

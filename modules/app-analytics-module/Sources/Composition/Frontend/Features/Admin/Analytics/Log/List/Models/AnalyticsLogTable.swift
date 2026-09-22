@@ -1,12 +1,11 @@
 import AnalyticsAdminAPI
 import AnalyticsContracts
 import FeatherAdmin
-import FeatherContracts
 import HTML
 import Hummingbird
 import SGML
-import WebBuilders
 import WebComponents
+import WebBuilders
 
 struct AnalyticsLogTable: Component {
     struct State {

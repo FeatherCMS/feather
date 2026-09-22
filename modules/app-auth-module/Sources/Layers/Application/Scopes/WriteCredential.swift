@@ -1,5 +1,4 @@
 import AuthDomain
-import FeatherApplication
 import FeatherContracts
 
 public struct WriteCredentialLink: Scope {

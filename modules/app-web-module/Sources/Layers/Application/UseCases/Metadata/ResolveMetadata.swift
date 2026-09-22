@@ -1,9 +1,6 @@
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 import SystemContracts
-import WebContracts
-import WebDomain
 
 public struct ResolveMetadata: UseCase {
     struct Action: PermissionAction {

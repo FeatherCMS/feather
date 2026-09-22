@@ -1,7 +1,7 @@
 import AnalyticsContracts
 import FeatherAdmin
-import Foundation
 import Hummingbird
+import Foundation
 
 struct AdminViewAnalyticsNotFoundDefaultController:
     AdminViewAnalyticsNotFoundController

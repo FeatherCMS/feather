@@ -5,7 +5,6 @@ import AuthInfrastructure
 import BlogInfrastructure
 import ContactInfrastructure
 import FeatherDatabase
-import FeatherApplication
 import FeatherDomain
 import FeatherInfrastructure
 import MediaInfrastructure

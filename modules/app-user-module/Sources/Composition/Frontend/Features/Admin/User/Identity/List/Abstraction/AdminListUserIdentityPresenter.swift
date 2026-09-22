@@ -1,6 +1,5 @@
 import FeatherAdmin
 import FeatherContracts
-import Hummingbird
 import UserAdminAPI
 
 protocol AdminListUserIdentityPresenter: Sendable {

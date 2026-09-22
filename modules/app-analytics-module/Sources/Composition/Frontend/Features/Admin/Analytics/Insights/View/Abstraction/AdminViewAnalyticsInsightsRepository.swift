@@ -1,5 +1,4 @@
 import AnalyticsAdminAPI
-import FeatherAdmin
 
 protocol AdminViewAnalyticsInsightsRepository: Sendable {
     func getOverview(

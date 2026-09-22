@@ -1,5 +1,4 @@
 import FeatherApplication
-import FeatherContracts
 
 public struct SubmissionMailInput: DTO {
     public let mailFrom: String

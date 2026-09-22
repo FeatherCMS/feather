@@ -1,4 +1,3 @@
-import FeatherAdmin
 import FeatherContracts
 
 public struct AdminAddAccountInvitationFormInput: Codable, Sendable, Equatable,

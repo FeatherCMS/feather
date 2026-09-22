@@ -1,6 +1,4 @@
 import FeatherContracts
-import FeatherInfrastructure
-import NewsletterApplication
 import NewsletterContracts
 import SystemApplication
 

@@ -1,7 +1,6 @@
 import FeatherAdmin
 import FeatherValidation
 import Hummingbird
-import UserContracts
 import WebComponents
 
 struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {

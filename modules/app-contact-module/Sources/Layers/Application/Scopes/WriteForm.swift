@@ -1,5 +1,4 @@
 import ContactDomain
-import FeatherApplication
 import FeatherContracts
 
 public struct WriteForm: Scope {

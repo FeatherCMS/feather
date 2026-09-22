@@ -1,4 +1,3 @@
-import FeatherAdmin
 import RedirectContracts
 
 struct RedirectRuleDetailsModel: Sendable {

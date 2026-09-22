@@ -2,7 +2,6 @@ import ContactContracts
 import ContactDomain
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 
 public struct CreateFormField: UseCase {
     struct Action: PermissionAction {

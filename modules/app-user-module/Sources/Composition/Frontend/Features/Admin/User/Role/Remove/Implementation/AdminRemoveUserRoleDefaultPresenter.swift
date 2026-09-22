@@ -1,7 +1,5 @@
 import FeatherAdmin
 import Hummingbird
-import UserContracts
-import WebComponents
 
 struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
     let request: Request

@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Hummingbird
 import RedirectAdminAPI
 
 protocol AdminListRedirectRulePresenter: Sendable {

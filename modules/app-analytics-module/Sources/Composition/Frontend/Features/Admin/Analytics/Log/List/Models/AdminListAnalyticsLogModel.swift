@@ -1,5 +1,4 @@
 import AnalyticsAdminAPI
-import FeatherAdmin
 
 struct AdminListAnalyticsLogModel: Sendable {
     let items: [Components.Schemas.AnalyticsLogListItemSchema]

@@ -6,7 +6,6 @@
 //
 
 import FeatherApplication
-import FeatherContracts
 import UserApplication
 
 public struct CurrentUserDetail: DTO {

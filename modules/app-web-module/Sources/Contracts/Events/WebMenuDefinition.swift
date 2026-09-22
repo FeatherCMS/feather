@@ -1,4 +1,3 @@
-import FeatherContracts
 
 public struct WebMenuDefinition: Sendable, Hashable, Codable {
     public let key: String

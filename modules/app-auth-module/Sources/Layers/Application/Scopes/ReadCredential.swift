@@ -1,5 +1,3 @@
-import AuthDomain
-import FeatherApplication
 import FeatherContracts
 
 public struct ReadCredentialLink: Scope {

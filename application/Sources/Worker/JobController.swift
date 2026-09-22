@@ -7,7 +7,6 @@
 
 import FeatherMail
 import FeatherDatabase
-import FeatherDomain
 import FeatherInfrastructure
 import Environment
 import FeatherContracts

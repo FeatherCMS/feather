@@ -1,5 +1,3 @@
-import FeatherAdmin
-import Hummingbird
 
 protocol AdminListAnalyticsLogInteractor: Sendable {
 

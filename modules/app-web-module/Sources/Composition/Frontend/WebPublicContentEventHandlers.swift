@@ -2,7 +2,6 @@ import FeatherAdmin
 import FeatherContracts
 import Foundation
 import OpenAPIRuntime
-import SystemContracts
 import WebAppAPI
 import WebContracts
 

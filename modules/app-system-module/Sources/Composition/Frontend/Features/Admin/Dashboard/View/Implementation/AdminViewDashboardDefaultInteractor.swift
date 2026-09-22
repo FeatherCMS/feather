@@ -1,4 +1,3 @@
-import FeatherAdmin
 import FeatherContracts
 
 struct AdminViewDashboardDefaultInteractor: AdminViewDashboardInteractor {

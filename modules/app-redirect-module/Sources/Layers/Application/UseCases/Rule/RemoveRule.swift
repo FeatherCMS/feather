@@ -1,6 +1,5 @@
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 import RedirectContracts
 import RedirectDomain
 

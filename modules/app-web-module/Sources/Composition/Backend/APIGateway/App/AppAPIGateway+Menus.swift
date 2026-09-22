@@ -1,4 +1,3 @@
-import FeatherApplication
 import FeatherContracts
 import WebAppAPI
 import WebApplication

@@ -1,5 +1,3 @@
-import AccountDomain
-import FeatherApplication
 import FeatherContracts
 
 public struct ReadAccountProfile: Scope {

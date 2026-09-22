@@ -1,7 +1,7 @@
 import AnalyticsContracts
 import FeatherAdmin
-import FeatherContracts
 import Hummingbird
+import FeatherContracts
 
 struct AdminListAnalyticsLogDefaultController:
     AdminListAnalyticsLogController

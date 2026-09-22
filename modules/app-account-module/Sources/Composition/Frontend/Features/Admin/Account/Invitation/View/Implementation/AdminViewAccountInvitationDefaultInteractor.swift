@@ -1,4 +1,3 @@
-import FeatherAdmin
 
 struct AdminViewAccountInvitationDefaultInteractor:
     AdminViewAccountInvitationInteractor

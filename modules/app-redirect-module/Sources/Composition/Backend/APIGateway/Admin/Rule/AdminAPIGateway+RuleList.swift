@@ -1,5 +1,4 @@
 import RedirectAdminAPI
-import RedirectApplication
 
 extension AdminAPIGateway {
 

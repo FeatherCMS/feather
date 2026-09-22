@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminEditUserIdentity {
     let controller: any AdminEditUserIdentityController

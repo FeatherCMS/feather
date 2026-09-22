@@ -1,5 +1,4 @@
 import BlogDomain
-import FeatherApplication
 import FeatherContracts
 
 public struct WriteSettings: Scope {

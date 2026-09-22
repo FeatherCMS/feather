@@ -1,7 +1,6 @@
 import AccountContracts
 import FeatherAdmin
 import Hummingbird
-import OpenAPIRuntime
 
 struct AdminListAccountInvitationDefaultController:
     AdminListAccountInvitationController

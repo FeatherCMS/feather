@@ -1,6 +1,5 @@
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 import FeatherStorage
 import Foundation
 import MediaContracts

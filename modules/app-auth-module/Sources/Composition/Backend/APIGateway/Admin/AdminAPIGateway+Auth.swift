@@ -1,10 +1,8 @@
 import AuthAdminAPI
 import AuthApplication
 import AuthDomain
-import FeatherApplication
 import FeatherContracts
 import UserApplication
-import UserBackend
 // @TODO: do not import domain
 import UserDomain
 

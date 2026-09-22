@@ -1,4 +1,3 @@
-import FeatherAdmin
 
 public struct AdminEditSettingsFormInput: Codable, Sendable, Equatable,
     Hashable

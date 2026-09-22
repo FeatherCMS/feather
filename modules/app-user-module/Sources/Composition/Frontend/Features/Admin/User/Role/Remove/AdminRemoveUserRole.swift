@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminRemoveUserRole {
     let controller: any AdminRemoveUserRoleController

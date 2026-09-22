@@ -3,8 +3,8 @@ import FeatherAdmin
 import Foundation
 import HTML
 import SGML
-import WebBuilders
 import WebComponents
+import WebBuilders
 
 struct AnalyticsInsightsView: Component {
     let page: AdminAnalyticsInsightsPage

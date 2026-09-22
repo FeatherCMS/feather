@@ -3,7 +3,6 @@
 //  feather-core
 //
 
-import FeatherApplication
 import FeatherContracts
 import FeatherDatabase
 

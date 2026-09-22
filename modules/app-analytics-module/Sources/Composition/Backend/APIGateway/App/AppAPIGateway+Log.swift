@@ -1,7 +1,6 @@
 import AnalyticsAppAPI
 import AnalyticsApplication
 import AnalyticsDomain
-import FeatherApplication
 import FeatherContracts
 
 extension AppAPIGateway {

@@ -7,7 +7,6 @@
 import AuthDomain
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 import Foundation
 import UserDomain
 

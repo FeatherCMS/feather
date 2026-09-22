@@ -1,4 +1,3 @@
-import FeatherAdmin
 
 struct UserIdentityAddFormPayloadModel: Sendable {
     let name: String

@@ -1,9 +1,6 @@
 import AuthAdminAPI
 import AuthApplication
-import FeatherApplication
 import FeatherContracts
-import UserApplication
-import UserBackend
 
 extension AdminAPIGateway {
 

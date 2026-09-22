@@ -1,5 +1,4 @@
 import AccountDomain
-import FeatherApplication
 import FeatherContracts
 
 public struct WriteAccountProfile: Scope {

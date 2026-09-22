@@ -5,8 +5,6 @@
 //  Created by Binary Birds on 2026. 07. 16.
 
 import AccountDomain
-import FeatherApplication
-import FeatherContracts
 
 public protocol SettingsQueries: Sendable {
 

@@ -1,6 +1,5 @@
 import AnalyticsAdminAPI
 import AnalyticsApplication
-import FeatherApplication
 import FeatherContracts
 
 extension AdminAPIGateway {

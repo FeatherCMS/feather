@@ -1,8 +1,5 @@
 import FeatherAdmin
-import HTML
 import Hummingbird
-import NewsletterContracts
-import WebComponents
 
 struct AdminListNewsletterCampaignsDefaultPresenter:
     AdminListNewsletterCampaignsPresenter

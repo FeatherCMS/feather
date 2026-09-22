@@ -1,13 +1,10 @@
 import FeatherContracts
-import FeatherApplication
 import FeatherInfrastructure
-import FeatherDatabase
 import AuthApplication
 import AuthInfrastructure
 import UserInfrastructure
 import MediaBackend
 import AnalyticsBackend
-import WebInfrastructure
 import WebBackend
 import NewsletterBackend
 import RedirectBackend

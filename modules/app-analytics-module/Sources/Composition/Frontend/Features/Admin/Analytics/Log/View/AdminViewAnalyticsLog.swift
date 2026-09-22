@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminViewAnalyticsLog {
     let controller: any AdminViewAnalyticsLogController

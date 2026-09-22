@@ -6,9 +6,7 @@
 
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 import Foundation
-import NewsDomain
 import WebApplication
 
 public struct GetPublicArticle {

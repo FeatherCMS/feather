@@ -1,4 +1,3 @@
-import FeatherDatabase
 import FeatherInfrastructure
 import NewsletterDomain
 

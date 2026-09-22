@@ -6,8 +6,6 @@
 
 import AccountApplication
 import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
 import FeatherInfrastructure
 
 extension InvitationTable.Row {

@@ -7,10 +7,8 @@
 import AuthDomain
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 import Foundation
 import SystemApplication
-import UserDomain
 
 public struct RequestMagicLink: UseCase {
     let transaction: any TransactionExecutor<WriteRequestMagicLink>

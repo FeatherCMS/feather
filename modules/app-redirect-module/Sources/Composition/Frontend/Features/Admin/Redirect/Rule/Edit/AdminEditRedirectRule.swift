@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminEditRedirectRule {
     let controller: any AdminEditRedirectRuleController

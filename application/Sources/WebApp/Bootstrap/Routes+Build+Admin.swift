@@ -14,7 +14,6 @@ import AuthFrontend
 import FeatherAdmin
 import FeatherApplication
 import Hummingbird
-import WebApplication
 
 func buildAdminRoutes(
     router: Router<DefaultRequestContext>,

@@ -1,8 +1,6 @@
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 import SystemContracts
-import SystemDomain
 
 //
 //  ListVariables.swift

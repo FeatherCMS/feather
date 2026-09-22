@@ -1,4 +1,3 @@
-import Configuration
 import Hummingbird
 import Logging
 

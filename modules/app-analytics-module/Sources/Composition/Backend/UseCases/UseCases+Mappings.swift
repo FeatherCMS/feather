@@ -2,7 +2,6 @@ import AnalyticsAdminAPI
 import AnalyticsApplication
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 
 extension AdminAPIGateway {
 

@@ -1,7 +1,6 @@
 import ContactDomain
 import FeatherApplication
 import FeatherContracts
-import FeatherDomain
 import Foundation
 
 import struct Foundation.Date

@@ -1,4 +1,3 @@
-import AccountDomain
 import Foundation
 
 import FeatherApplication

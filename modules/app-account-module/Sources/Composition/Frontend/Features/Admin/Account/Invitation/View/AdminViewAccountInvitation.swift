@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Hummingbird
 import OpenAPIRuntime
 import UserAdminAPI
 import UserFrontend

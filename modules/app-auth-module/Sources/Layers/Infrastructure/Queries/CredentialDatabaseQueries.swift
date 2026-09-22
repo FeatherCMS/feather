@@ -1,7 +1,5 @@
 import AuthApplication
 import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
 import FeatherInfrastructure
 
 extension CredentialTable.Row {

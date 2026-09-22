@@ -1,11 +1,10 @@
 import FeatherAdmin
-import FeatherContracts
 import HTML
 import Hummingbird
 import NewsletterContracts
 import SGML
-import WebBuilders
 import WebComponents
+import WebBuilders
 
 struct NewsletterCampaignsTableContent: Component {
     let items: [AdminNewsletterCampaignItem]

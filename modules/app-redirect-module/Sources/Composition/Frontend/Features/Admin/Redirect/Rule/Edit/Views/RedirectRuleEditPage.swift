@@ -2,8 +2,8 @@ import FeatherAdmin
 import HTML
 import Hummingbird
 import RedirectContracts
-import WebBuilders
 import WebComponents
+import WebBuilders
 
 struct RedirectRuleEditPage: Component {
     let id: String

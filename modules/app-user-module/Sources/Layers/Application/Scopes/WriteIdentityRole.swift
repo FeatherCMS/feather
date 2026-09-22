@@ -5,7 +5,6 @@
 //  Created by Tibor Bödecs on 2026. 08. 11..
 //
 
-import FeatherApplication
 import FeatherContracts
 import UserDomain
 

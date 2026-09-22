@@ -1,7 +1,5 @@
-import ContactApplication
 import ContactContracts
 import FeatherContracts
-import FeatherInfrastructure
 import SystemApplication
 
 public enum EventHandlers {

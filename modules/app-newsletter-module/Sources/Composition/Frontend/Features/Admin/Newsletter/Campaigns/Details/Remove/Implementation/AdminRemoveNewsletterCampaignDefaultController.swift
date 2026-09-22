@@ -1,5 +1,4 @@
 import FeatherAdmin
-import FeatherValidation
 import Hummingbird
 import NewsletterContracts
 

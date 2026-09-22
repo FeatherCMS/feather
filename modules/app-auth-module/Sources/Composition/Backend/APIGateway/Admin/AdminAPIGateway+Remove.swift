@@ -1,10 +1,6 @@
 import AuthAdminAPI
 import AuthApplication
-import FeatherApplication
-import FeatherBackend
 import FeatherContracts
-import UserApplication
-import UserBackend
 
 extension AdminAPIGateway {
     public func authRolePermissionRemove(
