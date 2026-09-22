@@ -16,10 +16,10 @@ public struct RemoveSubscriber: UseCase {
         self.transaction = transaction
     }
     public struct Input: DTO {
-        public let newsletterId: String
+        public let campaignKey: String
         public let emails: [String]
-        public init(newsletterId: String, emails: [String]) {
-            self.newsletterId = newsletterId
+        public init(campaignKey: String, emails: [String]) {
+            self.campaignKey = campaignKey
             self.emails = emails
         }
     }
@@ -31,10 +31,17 @@ public struct RemoveSubscriber: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            try await scope.subscriber.delete(
-                newsletterId: input.newsletterId,
+            guard
+                let campaign = try await scope.newsletter.findBy(
+                    key: input.campaignKey
+                )
+            else { throw Error.campaignNotFound }
+            return try await scope.subscriber.delete(
+                newsletterId: campaign.id,
                 emails: input.emails
             )
         }
     }
+
+    public enum Error: UseCaseError { case campaignNotFound }
 }

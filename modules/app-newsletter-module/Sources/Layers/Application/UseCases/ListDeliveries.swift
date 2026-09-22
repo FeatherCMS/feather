@@ -17,9 +17,14 @@ public struct ListDeliveries: UseCase {
     }
 
     public struct Input: DTO {
+        public let campaignKey: String
         public let issueId: String
 
-        public init(issueId: String) {
+        public init(
+            campaignKey: String,
+            issueId: String
+        ) {
+            self.campaignKey = campaignKey
             self.issueId = issueId
         }
     }
@@ -33,8 +38,17 @@ public struct ListDeliveries: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            try await scope.delivery.list(issueId: input.issueId)
+            guard
+                let campaign = try await scope.newsletter.findBy(
+                    key: input.campaignKey
+                ),
+                let issue = try await scope.issue.findBy(id: input.issueId),
+                issue.newsletterId == campaign.id
+            else { throw Error.notFound }
+            return try await scope.delivery.list(issueId: input.issueId)
                 .map(DeliveryDetail.init)
         }
     }
+
+    public enum Error: UseCaseError { case notFound }
 }

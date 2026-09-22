@@ -7,18 +7,14 @@ struct PathCollection: PathCollectionRepresentable {
     var pathMap: PathMap {
         [
             "api/v1/admin/contact/form": ContactFormPathItems(),
-            "api/v1/admin/contact/form/{contactFormId}":
+            "api/v1/admin/contact/form/{contactFormKey}":
                 ContactFormIDPathItems(),
-            "api/v1/admin/contact/form/{contactFormId}/field":
-                FormFieldPathItems(),
-            "api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}":
-                FormFieldIDPathItems(),
             "api/v1/admin/contact/field": ContactFieldPathItems(),
             "api/v1/admin/contact/field/{formFieldId}":
                 ContactFieldIDPathItems(),
-            "api/v1/admin/contact/form/{contactFormId}/submission":
+            "api/v1/admin/contact/form/{contactFormKey}/submission":
                 ContactFormSubmissionPathItems(),
-            "api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}":
+            "api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}":
                 ContactFormSubmissionIDPathItems(),
         ]
     }

@@ -12,10 +12,16 @@ extension AdminAPIGateway {
             .execute(
                 subject: subject,
                 input: .init(
-                    newsletterId: input.path.newsletterCampaignId,
+                    campaignKey: input.path.newsletterCampaignKey,
                     email: input.path.email
                 )
             )
-        return .ok(.init(body: .json(map(result))))
+        return .ok(
+            .init(
+                body: .json(
+                    map(result, campaignKey: input.path.newsletterCampaignKey)
+                )
+            )
+        )
     }
 }

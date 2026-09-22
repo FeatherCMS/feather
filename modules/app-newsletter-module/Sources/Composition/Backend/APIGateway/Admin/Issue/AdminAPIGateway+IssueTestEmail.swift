@@ -25,7 +25,10 @@ extension AdminAPIGateway {
         let issue = try await self.useCases.makeGetNewsletterIssue()
             .execute(
                 subject: subject,
-                input: .init(id: input.path.newsletterIssueId)
+                input: .init(
+                    campaignKey: input.path.newsletterCampaignKey,
+                    id: input.path.newsletterIssueId
+                )
             )
         try await useCases.enqueueIssueTestEmail(
             issue: issue,

@@ -18,8 +18,8 @@ public struct RemoveForm: UseCase {
         self.transaction = transaction
     }
     public struct Input: DTO {
-        public let ids: [String]
-        public init(ids: [String]) { self.ids = ids }
+        public let keys: [String]
+        public init(keys: [String]) { self.keys = keys }
     }
     public func execute(
         subject: Subject,
@@ -30,7 +30,19 @@ public struct RemoveForm: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            try await scope.form.delete(ids: input.ids)
+            var ids: [String] = []
+            var keys: [String] = []
+            for key in input.keys {
+                guard let form = try await scope.form.findBy(key: key) else {
+                    continue
+                }
+                ids.append(form.id)
+                keys.append(form.key)
+            }
+            let deletedIds = try await scope.form.delete(ids: ids)
+            return zip(ids, keys).compactMap { id, key in
+                deletedIds.contains(id) ? key : nil
+            }
         }
     }
 }

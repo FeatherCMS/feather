@@ -20,7 +20,7 @@ struct AdminListContactSubmissionsOpenAPIRepository {
             for form in try formsValue.body.json {
                 let submissionsResponse =
                     try await client.contactFormSubmissionList(
-                        path: .init(contactFormId: form.id)
+                        path: .init(contactFormKey: form.key)
                     )
                 guard case .ok(let submissionsValue) = submissionsResponse
                 else {
@@ -31,7 +31,7 @@ struct AdminListContactSubmissionsOpenAPIRepository {
                         let values = $0.values.additionalProperties
                         return .init(
                             id: $0.id,
-                            formId: form.id,
+                            formId: form.key,
                             formName: form.name,
                             status: $0.status,
                             createdAt: DateFormatting.formatUnixTimestamp(

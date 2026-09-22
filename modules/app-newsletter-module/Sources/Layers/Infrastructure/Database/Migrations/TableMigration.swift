@@ -23,12 +23,14 @@ public struct TableMigration: DatabaseMigration {
             #"""
             CREATE TABLE IF NOT EXISTS newsletter_campaign (
                 id TEXT PRIMARY KEY,
+                key TEXT NOT NULL UNIQUE,
                 name TEXT NOT NULL,
                 from_email TEXT NOT NULL,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
             );
             """#,
+            #"CREATE INDEX IF NOT EXISTS newsletter_campaign_key_idx ON newsletter_campaign (key);"#,
             #"""
             CREATE TABLE IF NOT EXISTS newsletter_subscriber (
                 newsletter_id TEXT NOT NULL,

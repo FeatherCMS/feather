@@ -28,10 +28,10 @@ public struct ContactFieldFormInput: Decodable, Sendable {
         key = try container.decode(String.self, forKey: .key)
         type = try container.decode(String.self, forKey: .type)
         label = try container.decode(String.self, forKey: .label)
-        allowedValues = try container.decode(
-            String.self,
+        allowedValues = try container.decodeIfPresent(
+            [String].self,
             forKey: .allowedValues
-        )
+        )?.joined(separator: "\n") ?? ""
         isRequired =
             try container.decodeIfPresent(
                 NewAdminFormFieldCheckbox.Input.self,
@@ -45,6 +45,18 @@ public struct ContactFieldFormInput: Decodable, Sendable {
         allowedValues.split(separator: "\n")
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { !$0.isEmpty }
+    }
+    var allowedValuesValidationError: String? {
+        switch type {
+        case "select", "radio":
+            guard normalizedAllowedValues.isEmpty else { return nil }
+            return "Allowed values are required for select and radio fields."
+        case "text", "textarea", "toggle":
+            guard !normalizedAllowedValues.isEmpty else { return nil }
+            return "Allowed values can only be used with select and radio fields."
+        default:
+            return nil
+        }
     }
     var normalizedPosition: Int { Int(position) ?? 0 }
 }

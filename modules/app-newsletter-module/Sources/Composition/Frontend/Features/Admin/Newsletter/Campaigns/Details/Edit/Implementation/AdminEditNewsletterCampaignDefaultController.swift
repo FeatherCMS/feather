@@ -30,12 +30,8 @@ struct AdminEditNewsletterCampaignDefaultController:
                 permissions: context.currentUserPermissions
             )
         }
-        catch {
-            return try await presenter.render(
-                item: .init(id: id, name: "", fromEmail: ""),
-                error: error.displayMessage,
-                permissions: context.currentUserPermissions
-            )
+        catch let error as AdminEditNewsletterCampaignError {
+            return try await presenter.renderErrorPage(error: error)
         }
     }
     func update(request: Request, context: DefaultRequestContext) async throws
@@ -54,6 +50,7 @@ struct AdminEditNewsletterCampaignDefaultController:
         do {
             try await interactor.update(
                 id: id,
+                newKey: form.key,
                 name: form.name,
                 fromEmail: form.fromEmail
             )
@@ -65,15 +62,16 @@ struct AdminEditNewsletterCampaignDefaultController:
                 )
             )
         }
-        catch {
+        catch let error as AdminEditNewsletterCampaignError {
             return
-                try await presenter.render(
+                try await presenter.renderEditError(
+                    id: id,
                     item: .init(
-                        id: id,
+                        id: form.key,
                         name: form.name,
                         fromEmail: form.fromEmail
                     ),
-                    error: error.displayMessage,
+                    error: error,
                     permissions: context.currentUserPermissions
                 )
                 .response(from: request, context: context)

@@ -26,6 +26,7 @@ public struct CreateForm: UseCase {
     }
 
     public struct Input: DTO {
+        public let key: String
         public let name: String
         public let successMessage: String
         public let failureMessage: String
@@ -34,6 +35,7 @@ public struct CreateForm: UseCase {
         public let mails: [SubmissionMailInput]
 
         public init(
+            key: String,
             name: String,
             successMessage: String = "",
             failureMessage: String = "",
@@ -41,6 +43,7 @@ public struct CreateForm: UseCase {
             fieldIds: [String] = [],
             mails: [SubmissionMailInput] = []
         ) {
+            self.key = key
             self.name = name
             self.successMessage = successMessage
             self.failureMessage = failureMessage
@@ -86,6 +89,7 @@ public struct CreateForm: UseCase {
         }
         return try await transaction.run { scope in
             let model = try Form.create(
+                key: input.key,
                 name: input.name,
                 successMessage: input.successMessage,
                 failureMessage: input.failureMessage,

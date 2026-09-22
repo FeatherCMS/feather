@@ -7,6 +7,7 @@ extension CampaignTable.Row {
     var asDomain: Campaign {
         .init(
             id: id,
+            key: key,
             name: name,
             fromEmail: fromEmail,
             createdAt: createdAt,
@@ -34,6 +35,7 @@ public struct CampaignDatabaseRepository: CampaignRepository {
         let saved = try await table.create(
             row: .init(
                 id: context.idGenerator.generate(),
+                key: model.key,
                 name: model.name,
                 fromEmail: model.fromEmail
             )
@@ -48,12 +50,20 @@ public struct CampaignDatabaseRepository: CampaignRepository {
         return try await table.find(id: id)?.asDomain
     }
 
+    public func findBy(
+        key: String
+    ) async throws -> Campaign? {
+        let table = CampaignTable(connection: context.connection)
+        return try await table.find(key: key)?.asDomain
+    }
+
     public func update(
         _ model: Campaign
     ) async throws -> Campaign {
         let table = CampaignTable(connection: context.connection)
         let updated = try await table.update(
             id: model.id,
+            key: model.key,
             name: model.name,
             fromEmail: model.fromEmail
         )

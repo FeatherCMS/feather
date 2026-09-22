@@ -23,7 +23,6 @@ struct FormFieldSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "id": ContactIdField(),
-            "formId": ContactIdField(),
             "key": ContactKeyField(),
             "type": ContactTypeField(),
             "label": ContactLabelField(),

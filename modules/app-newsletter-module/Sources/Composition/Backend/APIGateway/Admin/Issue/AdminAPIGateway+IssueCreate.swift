@@ -18,7 +18,7 @@ extension AdminAPIGateway {
             .execute(
                 subject: subject,
                 input: .init(
-                    newsletterId: input.path.newsletterCampaignId,
+                    campaignKey: input.path.newsletterCampaignKey,
                     subject: body.subject,
                     content: body.content
                 )
@@ -39,6 +39,12 @@ extension AdminAPIGateway {
             try await useCases.enqueueIssueEmails(issue: result)
         }
 
-        return .created(.init(body: .json(map(result))))
+        return .created(
+            .init(
+                body: .json(
+                    map(result, campaignKey: input.path.newsletterCampaignKey)
+                )
+            )
+        )
     }
 }

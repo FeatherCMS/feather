@@ -16,6 +16,7 @@ extension AdminAPIGateway {
                 subject: try await CurrentSubject.require(),
                 input:
                     .init(
+                        key: body.key,
                         name: body.name,
                         successMessage: body.successMessage ?? "",
                         failureMessage: body.failureMessage ?? "",

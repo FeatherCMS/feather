@@ -28,6 +28,7 @@ struct AdminAddNewsletterCampaignDefaultController:
         else {
             return try await presenter.renderPage(
                 model: .init(
+                    key: "",
                     name: "",
                     fromEmail: "",
                     error: "Your account cannot create newsletter campaigns."
@@ -53,6 +54,7 @@ struct AdminAddNewsletterCampaignDefaultController:
             return
                 try await presenter.renderPage(
                     model: .init(
+                        key: "",
                         name: "",
                         fromEmail: "",
                         error:
@@ -66,10 +68,10 @@ struct AdminAddNewsletterCampaignDefaultController:
             as: NewsletterCampaignAddForm.self,
             context: context
         )
-        let model = try await interactor.postAddNewsletterCampaign(
-            payload: payload
-        )
-        if model.error == nil {
+        do {
+            _ = try await interactor.postAddNewsletterCampaign(
+                payload: payload
+            )
             return AdminNotificationFlash.redirect(
                 to: NewsletterAdminRoutes.campaigns.description,
                 notification: .init(
@@ -78,11 +80,13 @@ struct AdminAddNewsletterCampaignDefaultController:
                 )
             )
         }
-        return
-            try await presenter.renderPage(
-                model: model,
+        catch let error as AdminAddNewsletterCampaignError {
+            return try await presenter.renderAddError(
+                input: payload,
+                error: error,
                 permissions: context.currentUserPermissions
             )
             .response(from: request, context: context)
+        }
     }
 }

@@ -1,5 +1,5 @@
 {
-  "originHash" : "9b2f2b66ec3bd88295b4ad7739fa6117b1030b621232bfec9c18ac8fe79ad4bc",
+  "originHash" : "4b94755f6d2e78b04fe3fc780ac312474fb0e5be55dfeb2cf1e5603891a24e8d",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -114,8 +114,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hummingbird-project/hummingbird",
       "state" : {
-        "revision" : "55bc9025a4825ee2a234b1f82b51b87be6ef74e4",
-        "version" : "2.26.0"
+        "revision" : "bb1f427eca980a1280a83aee0079cd4371455de6",
+        "version" : "2.27.0"
       }
     },
     {
@@ -274,7 +274,7 @@
     {
       "identity" : "swift-configuration",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-configuration",
+      "location" : "https://github.com/apple/swift-configuration.git",
       "state" : {
         "revision" : "b4768bd68d8a6fb356bd372cb41905046244fcae",
         "version" : "1.0.2"
@@ -373,7 +373,7 @@
     {
       "identity" : "swift-mustache",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/hummingbird-project/swift-mustache",
+      "location" : "https://github.com/hummingbird-project/swift-mustache.git",
       "state" : {
         "revision" : "0b91b3127baee1d97c45a7390a49779256b4295d",
         "version" : "2.1.0"
@@ -382,7 +382,7 @@
     {
       "identity" : "swift-nanoid",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/binarybirds/swift-nanoid",
+      "location" : "https://github.com/BinaryBirds/swift-nanoid",
       "state" : {
         "revision" : "cb73f19b3a25cc5aa14512fa43b08f2ff63002db",
         "version" : "1.1.1"

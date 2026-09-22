@@ -15,7 +15,10 @@ struct AdminViewContactFormSubmissionOpenAPIRepository {
     {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.contactFormSubmissionGet(
-                path: .init(contactFormId: formId, contactFormSubmissionId: id)
+                path: .init(
+                    contactFormKey: formId,
+                    contactFormSubmissionId: id
+                )
             )
             switch response {
             case .ok(let value):
@@ -23,7 +26,7 @@ struct AdminViewContactFormSubmissionOpenAPIRepository {
                 let values = item.values.additionalProperties
                 return .init(
                     id: item.id,
-                    formId: item.formId,
+                    formId: item.formKey,
                     status: item.status,
                     createdAt: DateFormatting.formatUnixTimestamp(
                         item.createdAt

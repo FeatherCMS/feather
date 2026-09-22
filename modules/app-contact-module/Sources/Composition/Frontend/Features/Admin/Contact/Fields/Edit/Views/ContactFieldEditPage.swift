@@ -9,6 +9,7 @@ struct ContactFieldEditPage: Component {
     struct State {
         let field: AdminContactFieldRow
         let error: String?
+        let fieldErrors: [String: String]
         let breadcrumb: [NewAdminBreadcrumb.Link]
     }
 
@@ -25,16 +26,15 @@ struct ContactFieldEditPage: Component {
                     )
                 )
             )
-            if let error = state.error {
-                P(error).class("new-admin-form__error")
-            }
             context.build(
                 ContactFieldForm(
                     field: state.field,
                     action: ContactAdminRoutes.fields
                         .appendingPath(RouterPath(state.field.id))
                         .appendingPath(RouterPath("edit")).description,
-                    submitLabel: "Save changes"
+                    submitLabel: "Save changes",
+                    error: state.error,
+                    fieldErrors: state.fieldErrors
                 )
             )
         }

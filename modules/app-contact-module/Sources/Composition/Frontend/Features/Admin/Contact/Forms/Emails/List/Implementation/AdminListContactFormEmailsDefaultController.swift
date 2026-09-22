@@ -20,7 +20,7 @@ struct AdminListContactFormEmailsDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        let formId = try context.requiredParameter("formId")
+        let formId = try context.requiredParameter("formKey")
         do {
             return try await presenter.renderPage(
                 item: try await interactor.get(id: formId),
@@ -31,7 +31,7 @@ struct AdminListContactFormEmailsDefaultController:
         catch {
             return try await presenter.renderPage(
                 item: .init(
-                    id: formId,
+                    key: formId,
                     name: "",
                     successMessage: "",
                     failureMessage: "",

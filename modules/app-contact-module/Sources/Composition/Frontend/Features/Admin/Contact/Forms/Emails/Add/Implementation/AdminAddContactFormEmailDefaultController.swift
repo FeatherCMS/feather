@@ -20,7 +20,7 @@ struct AdminAddContactFormEmailDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        let formId = try context.requiredParameter("formId")
+        let formId = try context.requiredParameter("formKey")
         do {
             let form = try await interactor.get(id: formId)
             let fields = form.availableFields.filter {
@@ -47,7 +47,7 @@ struct AdminAddContactFormEmailDefaultController:
         -> Response
     {
         let (interactor, _) = buildRuntime(request, context)
-        let formId = try context.requiredParameter("formId")
+        let formId = try context.requiredParameter("formKey")
         let input = try await request.decode(
             as: SubmissionMailFormInput.self,
             context: context

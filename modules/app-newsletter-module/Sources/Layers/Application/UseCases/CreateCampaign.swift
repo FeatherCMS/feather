@@ -18,13 +18,16 @@ public struct CreateCampaign: UseCase {
     }
 
     public struct Input: DTO {
+        public let key: String
         public let name: String
         public let fromEmail: String
 
         public init(
+            key: String,
             name: String,
             fromEmail: String = ""
         ) {
+            self.key = key
             self.name = name
             self.fromEmail = fromEmail
         }
@@ -40,6 +43,7 @@ public struct CreateCampaign: UseCase {
         }
         return try await transaction.run { scope in
             let model = try Campaign.create(
+                key: input.key,
                 name: input.name,
                 fromEmail: input.fromEmail
             )

@@ -12,12 +12,15 @@ struct AdminAddNewsletterCampaignOpenAPIRepository {
     let api: NewsletterAdminAPIClient
 
     func createNewsletter(
+        key: String,
         name: String,
         fromEmail: String
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.newsletterCampaignCreate(
-                body: .json(.init(name: name, fromEmail: fromEmail))
+                body: .json(
+                    .init(key: key, name: name, fromEmail: fromEmail)
+                )
             )
             switch response {
             case .created: return

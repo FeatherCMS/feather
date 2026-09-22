@@ -13,5 +13,11 @@ protocol AdminAddContactFieldPresenter: Sendable {
         permissions: Set<String>
     ) async throws -> HTMLResponse
 
+    func renderAddError(
+        input: ContactFieldFormInput,
+        error: AdminAddContactFieldError,
+        permissions: Set<String>
+    ) async throws -> HTMLResponse
+
     func renderForbiddenPage() async throws -> HTMLResponse
 }

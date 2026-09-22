@@ -15,7 +15,10 @@ extension AdminAPIGateway {
         }
         let deletedIds = try await useCase.execute(
             subject: try await CurrentSubject.require(),
-            input: .init(ids: body.ids)
+            input: .init(
+                formKey: input.path.contactFormKey,
+                ids: body.ids
+            )
         )
         let results = body.ids.map {
             Components.Schemas.DeleteResultListSchemaPayload(

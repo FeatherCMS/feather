@@ -16,7 +16,11 @@ extension AdminAPIGateway {
         let result = try await self.useCases.makeCreateNewsletterCampaign()
             .execute(
                 subject: subject,
-                input: .init(name: body.name, fromEmail: body.fromEmail)
+                input: .init(
+                    key: body.key,
+                    name: body.name,
+                    fromEmail: body.fromEmail
+                )
             )
 
         return .created(.init(body: .json(map(result))))

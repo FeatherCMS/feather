@@ -15,7 +15,7 @@ public struct Subscribe: UseCase {
     }
 
     public struct Input: DTO {
-        public let newsletterId: String
+        public let campaignKey: String
         public let email: String
         public let firstName: String
         public let lastName: String
@@ -23,14 +23,14 @@ public struct Subscribe: UseCase {
         public let source: String?
 
         public init(
-            newsletterId: String,
+            campaignKey: String,
             email: String,
             firstName: String = "",
             lastName: String = "",
             unsubscribeToken: String? = nil,
             source: String? = nil
         ) {
-            self.newsletterId = newsletterId
+            self.campaignKey = campaignKey
             self.email = email
             self.firstName = firstName
             self.lastName = lastName
@@ -44,8 +44,13 @@ public struct Subscribe: UseCase {
     ) async throws -> SubscriberDetail {
         let now = Date()
         return try await transaction.run { scope in
+            guard
+                let campaign = try await scope.newsletter.findBy(
+                    key: input.campaignKey
+                )
+            else { throw Error.campaignNotFound }
             if var model = try await scope.subscriber.findBy(
-                newsletterId: input.newsletterId,
+                newsletterId: campaign.id,
                 email: input.email
             ) {
                 model.subscribe(at: now)
@@ -55,7 +60,7 @@ public struct Subscribe: UseCase {
             }
 
             let newModel = try Subscriber.create(
-                newsletterId: input.newsletterId,
+                newsletterId: campaign.id,
                 email: input.email,
                 subscriptionDate: now,
                 firstName: input.firstName,
@@ -66,4 +71,6 @@ public struct Subscribe: UseCase {
             return (try await scope.subscriber.insert(newModel)).asDetail
         }
     }
+
+    public enum Error: UseCaseError { case campaignNotFound }
 }

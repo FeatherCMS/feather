@@ -11,6 +11,7 @@ extension Form {
     ) -> FormDetail {
         .init(
             id: id,
+            key: key,
             name: name,
             successMessage: successMessage,
             failureMessage: failureMessage,

@@ -9,7 +9,7 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     func render(
         request: WebMarkdownBlockRendererRequest
     ) async -> String? {
-        guard let identifier = request.arguments["id"] else {
+        guard let identifier = request.arguments["key"] else {
             return nil
         }
         do {
@@ -17,7 +17,7 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
                 try await api.withOpenAPIRepositoryErrorMapping {
                     client in
                     try await client.appContactFormGet(
-                        path: .init(contactFormId: identifier)
+                        path: .init(contactFormKey: identifier)
                     )
                 }
             guard case .ok(let value) = response else { return nil }
@@ -35,7 +35,7 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
         let fields = form.items.sorted { $0.position < $1.position }
             .map(renderField).joined()
         return
-            "<form method=\"post\" action=\"/contact/forms/\(escape(form.id))/submissions\" class=\"contact-form\">\(fields)<button type=\"submit\">Submit</button></form>"
+            "<form method=\"post\" action=\"/contact/forms/\(escape(form.key))/submissions\" class=\"contact-form\">\(fields)<button type=\"submit\">Submit</button></form>"
     }
 
     private func renderField(

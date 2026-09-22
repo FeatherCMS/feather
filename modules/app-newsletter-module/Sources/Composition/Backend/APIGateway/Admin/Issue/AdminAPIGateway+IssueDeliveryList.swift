@@ -11,7 +11,10 @@ extension AdminAPIGateway {
         let result = try await self.useCases.makeListNewsletterDeliveries()
             .execute(
                 subject: subject,
-                input: .init(issueId: input.path.newsletterIssueId)
+                input: .init(
+                    campaignKey: input.path.newsletterCampaignKey,
+                    issueId: input.path.newsletterIssueId
+                )
             )
         return .ok(.init(body: .json(result.map(map))))
     }

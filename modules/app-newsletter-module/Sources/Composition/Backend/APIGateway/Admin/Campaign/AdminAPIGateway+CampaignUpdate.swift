@@ -15,13 +15,14 @@ extension AdminAPIGateway {
         let current = try await self.useCases.makeGetNewsletterCampaign()
             .execute(
                 subject: subject,
-                input: .init(id: input.path.newsletterCampaignId)
+                input: .init(key: input.path.newsletterCampaignKey)
             )
         let result = try await self.useCases.makeUpdateNewsletterCampaign()
             .execute(
                 subject: subject,
                 input: .init(
-                    id: current.id,
+                    key: current.key,
+                    newKey: body.key ?? current.key,
                     name: body.name ?? current.name,
                     fromEmail: body.fromEmail ?? current.fromEmail
                 )

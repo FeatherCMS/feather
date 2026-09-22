@@ -23,7 +23,7 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
         try await useCases.enqueueIssueTestEmail(
-            newsletterId: input.path.newsletterCampaignId,
+            newsletterKey: input.path.newsletterCampaignKey,
             email: body.email,
             subject: body.subject,
             content: body.content

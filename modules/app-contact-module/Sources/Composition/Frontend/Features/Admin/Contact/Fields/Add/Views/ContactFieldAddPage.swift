@@ -14,6 +14,7 @@ struct ContactFieldAddPage: Component {
         let isRequired: Bool
         let position: String
         let error: String?
+        let fieldErrors: [String: String]
         let breadcrumb: [NewAdminBreadcrumb.Link]
     }
 
@@ -31,9 +32,6 @@ struct ContactFieldAddPage: Component {
                     )
                 )
             )
-            if let error = state.error {
-                P(error).class("new-admin-form__error")
-            }
             context.build(
                 ContactFieldForm(
                     field: .init(
@@ -46,7 +44,9 @@ struct ContactFieldAddPage: Component {
                         position: state.position
                     ),
                     action: ContactAdminRoutes.fieldAdd.description,
-                    submitLabel: "Add field"
+                    submitLabel: "Add field",
+                    error: state.error,
+                    fieldErrors: state.fieldErrors
                 )
             )
         }

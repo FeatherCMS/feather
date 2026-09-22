@@ -7,6 +7,7 @@ extension FormTable.Row {
 
     init(from row: DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
+        self.key = try row.decode(column: "key", as: String.self)
         self.name = try row.decode(column: "name", as: String.self)
         self.successMessage = try row.decode(
             column: "success_message",
@@ -31,6 +32,7 @@ struct FormTable {
 
         struct Create {
             let id: String
+            let key: String
             let name: String
             let successMessage: String
             let failureMessage: String
@@ -38,6 +40,7 @@ struct FormTable {
         }
 
         let id: String
+        let key: String
         let name: String
         let successMessage: String
         let failureMessage: String
@@ -55,6 +58,7 @@ struct FormTable {
             query: #"""
                 INSERT INTO contact_form (
                     id,
+                    key,
                     name,
                     success_message,
                     failure_message,
@@ -64,6 +68,7 @@ struct FormTable {
                 )
                 VALUES (
                     \#(row.id),
+                    \#(row.key),
                     \#(row.name),
                     \#(row.successMessage),
                     \#(row.failureMessage),
@@ -96,6 +101,21 @@ struct FormTable {
         }
     }
 
+    func find(
+        key: String
+    ) async throws -> Row? {
+        try await connection.run(
+            query: #"""
+                SELECT *
+                FROM contact_form
+                WHERE key = \#(key)
+                LIMIT 1;
+                """#
+        ) { sequence in
+            try await sequence.collect().first.map { try Row(from: $0) }
+        }
+    }
+
     func list() async throws -> [Row] {
         try await connection.run(
             query: #"SELECT * FROM contact_form ORDER BY name ASC, id ASC;"#
@@ -112,6 +132,7 @@ struct FormTable {
             query: #"""
                 UPDATE contact_form
                 SET
+                    key = \#(row.key),
                     name = \#(row.name),
                     success_message = \#(row.successMessage),
                     failure_message = \#(row.failureMessage),

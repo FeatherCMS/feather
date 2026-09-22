@@ -1,8 +1,8 @@
 import FeatherOpenAPI
 
-struct NewsletterCampaignIdParameter: PathParameterRepresentable {
-    var name: String { "newsletterCampaignId" }
+struct NewsletterCampaignKeyParameter: PathParameterRepresentable {
+    var name: String { "newsletterCampaignKey" }
     var schema: any OpenAPISchemaRepresentable {
-        NewsletterIdField().reference()
+        NewsletterKeyField().reference()
     }
 }

@@ -10,11 +10,12 @@ import WebComponents
 
 struct AdminEditContactFormOpenAPIRepository {
     let api: ContactAdminAPIClient
-    func get(id: String) async throws -> AdminContactFormDetailsItem {
-        try await AdminViewContactFormOpenAPIRepository(api: api).get(id: id)
+    func get(key: String) async throws -> AdminContactFormDetailsItem {
+        try await AdminViewContactFormOpenAPIRepository(api: api).get(key: key)
     }
     func update(
-        id: String,
+        key: String,
+        newKey: String,
         name: String,
         successMessage: String,
         failureMessage: String,
@@ -24,9 +25,10 @@ struct AdminEditContactFormOpenAPIRepository {
     ) async throws -> AdminContactFormDetailsItem {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.contactFormUpdate(
-                path: .init(contactFormId: id),
+                path: .init(contactFormKey: key),
                 body: .json(
                     .init(
+                        key: newKey,
                         name: name,
                         successMessage: successMessage,
                         failureMessage: failureMessage,
@@ -48,7 +50,7 @@ struct AdminEditContactFormOpenAPIRepository {
             case .ok(let value):
                 let item = try value.body.json
                 return .init(
-                    id: item.id,
+                    key: item.key,
                     name: item.name,
                     successMessage: item.successMessage,
                     failureMessage: item.failureMessage,

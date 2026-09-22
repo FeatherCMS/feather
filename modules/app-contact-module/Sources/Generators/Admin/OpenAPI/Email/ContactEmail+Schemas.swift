@@ -5,7 +5,6 @@ struct SubmissionMailSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "id": ContactIdField(),
-            "formId": ContactIdField(),
             "mailFrom": ContactEmailField(),
             "mailTo": ContactEmailField(),
             "subject": ContactSubjectField(),

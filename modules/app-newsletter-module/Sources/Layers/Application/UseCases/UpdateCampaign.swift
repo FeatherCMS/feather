@@ -15,16 +15,19 @@ public struct UpdateCampaign: UseCase {
         self.transaction = transaction
     }
     public struct Input: DTO {
-        public let id: String
+        public let key: String
+        public let newKey: String
         public let name: String
         public let fromEmail: String
 
         public init(
-            id: String,
+            key: String,
+            newKey: String,
             name: String,
             fromEmail: String
         ) {
-            self.id = id
+            self.key = key
+            self.newKey = newKey
             self.name = name
             self.fromEmail = fromEmail
         }
@@ -37,9 +40,13 @@ public struct UpdateCampaign: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            guard var value = try await scope.newsletter.findBy(id: input.id)
+            guard var value = try await scope.newsletter.findBy(key: input.key)
             else { throw Error.notFound }
-            try value.update(name: input.name, fromEmail: input.fromEmail)
+            try value.update(
+                key: input.newKey,
+                name: input.name,
+                fromEmail: input.fromEmail
+            )
             return (try await scope.newsletter.update(value)).asDetail
         }
     }

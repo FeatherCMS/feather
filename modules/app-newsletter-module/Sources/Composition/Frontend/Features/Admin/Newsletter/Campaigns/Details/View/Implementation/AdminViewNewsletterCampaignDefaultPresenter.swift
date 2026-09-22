@@ -26,6 +26,7 @@ struct AdminViewNewsletterCampaignDefaultPresenter:
                 state: .init(
                     id: item.id,
                     form: .init(
+                        key: item.id,
                         name: item.name,
                         fromEmail: item.fromEmail,
                         error: error,

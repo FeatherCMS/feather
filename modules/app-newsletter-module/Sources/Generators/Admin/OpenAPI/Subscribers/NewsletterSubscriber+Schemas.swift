@@ -9,7 +9,7 @@ struct NewsletterSubscriberSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "id": NewsletterIdField(),
-            "newsletterId": NewsletterIdField(),
+            "campaignKey": NewsletterKeyField(),
             "email": NewsletterEmailField(),
             "status": NewsletterDeliveryStatusField(),
             "subscriptionDate": NewsletterTimestampField(),

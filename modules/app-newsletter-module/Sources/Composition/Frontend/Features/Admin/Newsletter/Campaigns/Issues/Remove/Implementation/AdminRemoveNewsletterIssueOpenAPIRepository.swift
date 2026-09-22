@@ -13,7 +13,7 @@ struct AdminRemoveNewsletterIssueOpenAPIRepository {
     func remove(newsletterId: String, issueId: String) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.newsletterIssueRemove(
-                path: .init(newsletterCampaignId: newsletterId),
+                path: .init(newsletterCampaignKey: newsletterId),
                 body: .json(
                     .init(ids: [issueId], results: false, summary: true)
                 )

@@ -13,7 +13,7 @@ struct NewsletterIssueSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "id": NewsletterIdField(),
-            "newsletterId": NewsletterIdField(),
+            "campaignKey": NewsletterKeyField(),
             "subject": NewsletterSubjectField(),
             "content": NewsletterContentField(),
             "status": NewsletterIssueStatusField(),

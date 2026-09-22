@@ -12,12 +12,12 @@ public struct GetPublicForm {
     }
 
     public struct Input: DTO {
-        public let id: String
+        public let key: String
 
         public init(
-            id: String
+            key: String
         ) {
-            self.id = id
+            self.key = key
         }
     }
 
@@ -25,16 +25,16 @@ public struct GetPublicForm {
         _ input: Input
     ) async throws -> FormDetail {
         try await transaction.run { scope in
-            guard let value = try await scope.form.findBy(id: input.id) else {
-                throw Error.notFound
+            guard let value = try await scope.form.findBy(key: input.key) else {
+                throw Error.formNotFound
             }
-            let fields = try await scope.field.listBy(formId: input.id)
+            let fields = try await scope.field.listBy(formId: value.id)
                 .map(\.asDetail)
             return value.asDetail(fields: fields)
         }
     }
 
     public enum Error: UseCaseError {
-        case notFound
+        case formNotFound
     }
 }

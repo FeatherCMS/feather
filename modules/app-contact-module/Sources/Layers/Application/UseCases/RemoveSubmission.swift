@@ -20,9 +20,16 @@ public struct RemoveSubmission: UseCase {
     }
 
     public struct Input: DTO {
+        public let formKey: String
         public let ids: [String]
 
-        public init(ids: [String]) { self.ids = ids }
+        public init(
+            formKey: String,
+            ids: [String]
+        ) {
+            self.formKey = formKey
+            self.ids = ids
+        }
     }
 
     public func execute(
@@ -34,7 +41,17 @@ public struct RemoveSubmission: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            try await scope.submission.delete(ids: input.ids)
+            guard let form = try await scope.form.findBy(key: input.formKey)
+            else { return [] }
+            var ids: [String] = []
+            for id in input.ids {
+                guard
+                    let submission = try await scope.submission.findBy(id: id),
+                    submission.formId == form.id
+                else { continue }
+                ids.append(id)
+            }
+            return try await scope.submission.delete(ids: ids)
         }
     }
 }

@@ -8,9 +8,10 @@ import WebBuilders
 import WebComponents
 
 protocol AdminEditContactFormInteractor: Sendable {
-    func get(id: String) async throws -> AdminContactFormDetailsItem
+    func get(key: String) async throws -> AdminContactFormDetailsItem
     func update(
-        id: String,
+        key: String,
+        newKey: String,
         name: String,
         successMessage: String,
         failureMessage: String,

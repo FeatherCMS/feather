@@ -19,12 +19,25 @@ struct AdminAddContactFieldDefaultInteractor:
             allowedValues: "",
             isRequired: false,
             position: "0",
-            error: nil
+            error: nil,
+            fieldErrors: [:]
         )
     }
     func postAddContactField(payload: ContactFieldFormInput)
         async throws -> AdminAddContactFieldModel
     {
+        if let error = payload.allowedValuesValidationError {
+            return .init(
+                key: payload.key,
+                type: payload.type,
+                label: payload.label,
+                allowedValues: payload.allowedValues,
+                isRequired: payload.isRequiredValue,
+                position: payload.position,
+                error: nil,
+                fieldErrors: ["allowedValues": error]
+            )
+        }
         do {
             try await repository.createField(form: payload)
             return .init(
@@ -34,19 +47,21 @@ struct AdminAddContactFieldDefaultInteractor:
                 allowedValues: "",
                 isRequired: false,
                 position: "0",
-                error: nil
+                error: nil,
+                fieldErrors: [:]
             )
         }
         catch let error as OpenAPIRepositoryError {
-            return .init(
-                key: payload.key,
-                type: payload.type,
-                label: payload.label,
-                allowedValues: payload.allowedValues,
-                isRequired: payload.isRequiredValue,
-                position: payload.position,
-                error: error.errorDescription
-            )
+            switch error {
+            case .unauthorized:
+                throw AdminAddContactFieldError.unauthorized
+            case .forbidden:
+                throw AdminAddContactFieldError.forbidden
+            case .conflict:
+                throw AdminAddContactFieldError.conflict
+            case .notFound, .failure, .transport:
+                throw AdminAddContactFieldError.unavailable
+            }
         }
     }
 }

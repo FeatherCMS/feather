@@ -21,7 +21,7 @@ struct AdminAddContactFormDefaultController: AdminAddContactFormController {
         let availableFields = (try? await interactor.availableFields()) ?? []
         return try await presenter.renderPage(
             item: .init(
-                id: "",
+                key: "",
                 name: "",
                 successMessage: "",
                 failureMessage: "",
@@ -38,28 +38,50 @@ struct AdminAddContactFormDefaultController: AdminAddContactFormController {
     func create(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime(request, context)
         let form = try await request.decode(
             as: ContactFormEditForm.self,
             context: context
         )
-        _ = try await interactor.create(
-            name: form.name,
-            successMessage: form.successMessage ?? "",
-            failureMessage: form.failureMessage ?? "",
-            redirectUrl: form.redirectUrl,
-            fieldIDs: form.fieldIds ?? [],
-            mails: form.mails
-        )
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminNotificationRedirect.location(
-                    defaultPath: "/admin/contact/forms/",
-                    title: "Added",
-                    message: "Contact form added successfully."
-                )
-            ]
-        )
+        do {
+            _ = try await interactor.create(
+                key: form.key,
+                name: form.name,
+                successMessage: form.successMessage ?? "",
+                failureMessage: form.failureMessage ?? "",
+                redirectUrl: form.redirectUrl,
+                fieldIDs: form.fieldIds ?? [],
+                mails: form.mails
+            )
+            return Response(
+                status: .seeOther,
+                headers: [
+                    .location: AdminNotificationRedirect.location(
+                        defaultPath: "/admin/contact/forms/",
+                        title: "Added",
+                        message: "Contact form added successfully."
+                    )
+                ]
+            )
+        }
+        catch let error as AdminAddContactFormError {
+            let availableFields =
+                (try? await interactor.availableFields()) ?? []
+            return try await presenter.renderAddError(
+                item: .init(
+                    key: form.key,
+                    name: form.name,
+                    successMessage: form.successMessage ?? "",
+                    failureMessage: form.failureMessage ?? "",
+                    redirectUrl: form.redirectUrl,
+                    selectedFieldIDs: form.fieldIds ?? [],
+                    availableFields: availableFields,
+                    mails: form.mails
+                ),
+                error: error,
+                permissions: context.currentUserPermissions
+            )
+            .response(from: request, context: context)
+        }
     }
 }

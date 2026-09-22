@@ -10,13 +10,14 @@ struct ContactDomainTestSuite {
     @Test
     func formRejectsEmptyName() {
         #expect(throws: Form.Error.nameTooShort) {
-            try Form.create(name: "")
+            try Form.create(key: "contact", name: "")
         }
     }
 
     @Test
     func formCreatePreservesMessagesAndRedirect() throws {
         let form = try Form.create(
+            key: "contact",
             name: "Contact",
             successMessage: "Thanks",
             failureMessage: "Try again",

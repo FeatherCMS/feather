@@ -6,9 +6,9 @@ struct PathCollection: PathCollectionRepresentable {
 
     var pathMap: PathMap {
         [
-            "api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe":
+            "api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe":
                 AppNewsletterCampaignSubscribePathItems(),
-            "api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe":
+            "api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe":
                 AppNewsletterCampaignUnsubscribePathItems(),
         ]
     }

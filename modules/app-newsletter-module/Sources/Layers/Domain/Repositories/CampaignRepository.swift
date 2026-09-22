@@ -8,6 +8,10 @@ public protocol CampaignRepository: Repository {
         id: String
     ) async throws -> Campaign?
 
+    func findBy(
+        key: String
+    ) async throws -> Campaign?
+
     func insert(
         _ model: Campaign.New
     ) async throws -> Campaign

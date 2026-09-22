@@ -15,4 +15,5 @@ struct AdminAddContactFieldModel: Sendable {
     let isRequired: Bool
     let position: String
     let error: String?
+    let fieldErrors: [String: String]
 }

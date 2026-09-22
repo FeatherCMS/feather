@@ -18,60 +18,76 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        let formId = try context.requiredParameter("formId")
+        let formKey = try context.requiredParameter("formKey")
         do {
             return try await presenter.renderPage(
-                item: try await interactor.get(id: formId),
+                item: try await interactor.get(key: formKey),
                 error: nil,
                 permissions: context.currentUserPermissions
             )
         }
-        catch {
-            return try await presenter.renderPage(
-                item: .init(
-                    id: formId,
-                    name: "",
-                    successMessage: "",
-                    failureMessage: "",
-                    redirectUrl: nil,
-                    selectedFieldIDs: [],
-                    availableFields: [],
-                    mails: []
-                ),
-                error: error.displayMessage,
-                permissions: context.currentUserPermissions
-            )
+        catch let error as AdminEditContactFormError {
+            return try await presenter.renderErrorPage(error: error)
         }
     }
 
     func update(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime(request, context)
-        let formId = try context.requiredParameter("formId")
+        let (interactor, presenter) = buildRuntime(request, context)
+        let formKey = try context.requiredParameter("formKey")
         let form = try await request.decode(
             as: ContactFormEditForm.self,
             context: context
         )
-        let current = try await interactor.get(id: formId)
-        _ = try await interactor.update(
-            id: formId,
-            name: form.name,
-            successMessage: form.successMessage ?? "",
-            failureMessage: form.failureMessage ?? "",
-            redirectUrl: form.redirectUrl,
-            fieldIDs: form.fieldIds ?? [],
-            mails: form.mails.isEmpty ? current.mails : form.mails
-        )
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminNotificationRedirect.location(
-                    defaultPath: "/admin/contact/forms/\(formId)/edit/",
-                    title: "Saved",
-                    message: "Contact form updated successfully."
-                )
-            ]
-        )
+        let current: AdminContactFormDetailsItem
+        do {
+            current = try await interactor.get(key: formKey)
+        }
+        catch let error as AdminEditContactFormError {
+            return try await presenter
+                .renderErrorPage(error: error)
+                .response(from: request, context: context)
+        }
+        do {
+            _ = try await interactor.update(
+                key: formKey,
+                newKey: form.key,
+                name: form.name,
+                successMessage: form.successMessage ?? "",
+                failureMessage: form.failureMessage ?? "",
+                redirectUrl: form.redirectUrl,
+                fieldIDs: form.fieldIds ?? [],
+                mails: form.mails.isEmpty ? current.mails : form.mails
+            )
+            return Response(
+                status: .seeOther,
+                headers: [
+                    .location: AdminNotificationRedirect.location(
+                        defaultPath: "/admin/contact/forms/\(form.key)/edit/",
+                        title: "Saved",
+                        message: "Contact form updated successfully."
+                    )
+                ]
+            )
+        }
+        catch let error as AdminEditContactFormError {
+            return try await presenter.renderEditError(
+                key: formKey,
+                item: .init(
+                    key: form.key,
+                    name: form.name,
+                    successMessage: form.successMessage ?? "",
+                    failureMessage: form.failureMessage ?? "",
+                    redirectUrl: form.redirectUrl,
+                    selectedFieldIDs: form.fieldIds ?? [],
+                    availableFields: current.availableFields,
+                    mails: form.mails.isEmpty ? current.mails : form.mails
+                ),
+                error: error,
+                permissions: context.currentUserPermissions
+            )
+            .response(from: request, context: context)
+        }
     }
 }

@@ -17,9 +17,16 @@ public struct RemoveIssue: UseCase {
     }
 
     public struct Input: DTO {
+        public let campaignKey: String
         public let ids: [String]
 
-        public init(ids: [String]) { self.ids = ids }
+        public init(
+            campaignKey: String,
+            ids: [String]
+        ) {
+            self.campaignKey = campaignKey
+            self.ids = ids
+        }
     }
 
     public func execute(
@@ -31,7 +38,20 @@ public struct RemoveIssue: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            try await scope.issue.delete(ids: input.ids)
+            guard
+                let campaign = try await scope.newsletter.findBy(
+                    key: input.campaignKey
+                )
+            else { return [] }
+            var ids: [String] = []
+            for id in input.ids {
+                guard
+                    let issue = try await scope.issue.findBy(id: id),
+                    issue.newsletterId == campaign.id
+                else { continue }
+                ids.append(id)
+            }
+            return try await scope.issue.delete(ids: ids)
         }
     }
 }

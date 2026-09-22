@@ -78,4 +78,47 @@ public struct NewAdminForm: Component {
     public func html(context: inout BuilderContext) -> Form {
         form
     }
+
+    public func scripts() -> [String] {
+        [
+            #"""
+            (function () {
+                var documentRoot = document.documentElement;
+                if (documentRoot.dataset.newAdminFormErrorScrollBound === "1") {
+                    return;
+                }
+                documentRoot.dataset.newAdminFormErrorScrollBound = "1";
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    requestAnimationFrame(function () {
+                        var error = document.querySelector(
+                            ".new-admin-form .field-error"
+                        );
+                        if (!error) { return; }
+
+                        var field = error.closest(".has-error") || error;
+                        var control = field.querySelector(
+                            "input:not([type='hidden']):not([disabled]), select:not([disabled]), textarea:not([disabled])"
+                        );
+                        control = control || field.querySelector(
+                            "button:not([disabled])"
+                        );
+                        if (control) {
+                            control.focus({ preventScroll: true });
+                        }
+
+                        var behavior = window.matchMedia(
+                            "(prefers-reduced-motion: reduce)"
+                        ).matches ? "auto" : "smooth";
+                        field.scrollIntoView({
+                            behavior: behavior,
+                            block: "center",
+                            inline: "nearest"
+                        });
+                    });
+                });
+            }());
+            """#
+        ]
+    }
 }

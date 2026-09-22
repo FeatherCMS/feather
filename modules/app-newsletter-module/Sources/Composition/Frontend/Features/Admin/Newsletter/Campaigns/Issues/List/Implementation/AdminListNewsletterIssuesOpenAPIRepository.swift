@@ -17,7 +17,7 @@ struct AdminListNewsletterIssuesOpenAPIRepository {
     {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.newsletterIssueList(
-                path: .init(newsletterCampaignId: newsletterId)
+                path: .init(newsletterCampaignKey: newsletterId)
             )
             switch response {
             case .ok(let value):
@@ -66,7 +66,7 @@ struct AdminListNewsletterIssuesOpenAPIRepository {
             client in
             try await client.newsletterIssueDeliveryList(
                 path: .init(
-                    newsletterCampaignId: newsletterId,
+                    newsletterCampaignKey: newsletterId,
                     newsletterIssueId: issueId
                 )
             )

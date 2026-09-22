@@ -1,5 +1,5 @@
 {
-  "originHash" : "6342b606db7b8d31f3a0ddc7b2c66ee87e0a62760b0327ad1eb20213c22fc3f9",
+  "originHash" : "4beb7188387816d0b235f79165fc4ca12f9a258c602b21dced94e90f9f79e4b9",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hummingbird-project/hummingbird",
       "state" : {
-        "revision" : "55bc9025a4825ee2a234b1f82b51b87be6ef74e4",
-        "version" : "2.26.0"
+        "revision" : "bb1f427eca980a1280a83aee0079cd4371455de6",
+        "version" : "2.27.0"
       }
     },
     {
@@ -220,7 +220,7 @@
     {
       "identity" : "swift-nanoid",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/BinaryBirds/swift-nanoid",
+      "location" : "https://github.com/binarybirds/swift-nanoid",
       "state" : {
         "revision" : "cb73f19b3a25cc5aa14512fa43b08f2ff63002db",
         "version" : "1.1.1"

@@ -16,7 +16,7 @@ struct AdminEditNewsletterIssueOpenAPIRepository {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.newsletterIssueGet(
                 path: .init(
-                    newsletterCampaignId: newsletterId,
+                    newsletterCampaignKey: newsletterId,
                     newsletterIssueId: issueId
                 )
             )
@@ -54,7 +54,7 @@ struct AdminEditNewsletterIssueOpenAPIRepository {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.newsletterIssueUpdate(
                 path: .init(
-                    newsletterCampaignId: newsletterId,
+                    newsletterCampaignKey: newsletterId,
                     newsletterIssueId: issueId
                 ),
                 body: .json(

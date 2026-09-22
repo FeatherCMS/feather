@@ -8,9 +8,14 @@ struct ContactFieldForm: Component {
     let field: AdminContactFieldRow
     let action: String
     let submitLabel: String
+    let error: String?
+    let fieldErrors: [String: String]
 
     func html(context: inout BuilderContext) -> Form {
         let form = NewAdminForm(action: action) {
+            if let error {
+                P(error).class("new-admin-form__error")
+            }
             context.build(
                 NewAdminFormFieldSelect(
                     state: .init(
@@ -49,13 +54,16 @@ struct ContactFieldForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldTextArea(
+                NewAdminFormFieldMultiInput(
                     state: .init(
-                        name: "allowedValues",
+                        name: "allowedValues[]",
                         label: "Allowed values",
-                        value: field.allowedValues,
-                        help: "One value per line.",
-                        style: .small
+                        values: field.allowedValues
+                            .split(whereSeparator: \.isNewline)
+                            .map(String.init),
+                        error: fieldErrors["allowedValues"],
+                        help:
+                            "Required for select and radio fields. Type a value and press Enter or comma to add it."
                     )
                 )
             )

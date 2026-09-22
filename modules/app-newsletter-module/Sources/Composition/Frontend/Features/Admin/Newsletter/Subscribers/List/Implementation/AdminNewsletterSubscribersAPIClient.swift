@@ -18,7 +18,7 @@ struct AdminNewsletterSubscribersAPIClient {
             switch response {
             case .ok(let value):
                 return try value.body.json.map {
-                    .init(id: $0.id, name: $0.name)
+                    .init(id: $0.key, name: $0.name)
                 }
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized
@@ -42,7 +42,7 @@ struct AdminNewsletterSubscribersAPIClient {
             var grouped: [String: AdminNewsletterSubscriberListItem] = [:]
             for newsletter in try newslettersValue.body.json {
                 let response = try await client.newsletterSubscriberList(
-                    path: .init(newsletterCampaignId: newsletter.id)
+                    path: .init(newsletterCampaignKey: newsletter.key)
                 )
                 guard case .ok(let value) = response else { continue }
                 for subscriber in try value.body.json {
@@ -64,7 +64,7 @@ struct AdminNewsletterSubscribersAPIClient {
                             ? subscriber.email : current.name,
                         newsletters: current.newsletters + [
                             .init(
-                                id: newsletter.id,
+                                id: newsletter.key,
                                 name: newsletter.name,
                                 status: subscriber.status
                             )
@@ -89,7 +89,7 @@ struct AdminNewsletterSubscribersAPIClient {
             for newsletter in newsletters {
                 try await api.withOpenAPIRepositoryErrorMapping { client in
                     _ = try await client.newsletterSubscriberRemove(
-                        path: .init(newsletterCampaignId: newsletter.id),
+                        path: .init(newsletterCampaignKey: newsletter.id),
                         body: .json(
                             .init(
                                 ids: [item.email],

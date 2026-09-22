@@ -8,25 +8,25 @@ tags:
 servers:
 - url: http://127.0.0.1:8080/
 paths:
-  /api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe:
+  /api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe:
     post:
       tags:
       - Newsletter
       operationId: appNewsletterCampaignSubscribe
       parameters:
-      - $ref: '#/components/parameters/AppNewsletterCampaignIdParameter'
+      - $ref: '#/components/parameters/AppNewsletterCampaignKeyParameter'
       requestBody:
         $ref: '#/components/requestBodies/AppNewsletterCampaignSubscriptionRequestBody'
       responses:
         204:
           description: Subscriber added
-  /api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe:
+  /api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe:
     post:
       tags:
       - Newsletter
       operationId: appNewsletterCampaignUnsubscribe
       parameters:
-      - $ref: '#/components/parameters/AppNewsletterCampaignIdParameter'
+      - $ref: '#/components/parameters/AppNewsletterCampaignKeyParameter'
       requestBody:
         $ref: '#/components/requestBodies/AppNewsletterCampaignSubscriptionRequestBody'
       responses:
@@ -34,7 +34,7 @@ paths:
           description: Subscriber unsubscribed
 components:
   schemas:
-    AppNewsletterIdField:
+    AppNewsletterKeyField:
       type: string
     AppNewsletterCampaignSubscriptionSchema:
       type: object
@@ -51,12 +51,12 @@ components:
     AppNewsletterNameField:
       type: string
   parameters:
-    AppNewsletterCampaignIdParameter:
-      name: newsletterCampaignId
+    AppNewsletterCampaignKeyParameter:
+      name: newsletterCampaignKey
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/AppNewsletterIdField'
+        $ref: '#/components/schemas/AppNewsletterKeyField'
   requestBodies:
     AppNewsletterCampaignSubscriptionRequestBody:
       content:

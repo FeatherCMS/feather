@@ -130,14 +130,14 @@ public struct UseCases: Sendable {
     }
 
     func enqueueIssueTestEmail(
-        newsletterId: String,
+        newsletterKey: String,
         email: String,
         subject: String,
         content: String
     ) async throws {
         let authSubject = try await CurrentSubject.require()
         let newsletter = try await makeGetNewsletterCampaign()
-            .execute(subject: authSubject, input: .init(id: newsletterId))
+            .execute(subject: authSubject, input: .init(key: newsletterKey))
         guard !newsletter.fromEmail.isEmpty else { return }
         try await mailQueue.enqueue(
             mailFrom: newsletter.fromEmail,

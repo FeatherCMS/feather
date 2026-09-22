@@ -11,7 +11,7 @@ import WebComponents
 struct AdminRemoveContactFormEmailOpenAPIRepository {
     let api: ContactAdminAPIClient
     func get(id: String) async throws -> AdminContactFormDetailsItem {
-        try await AdminViewContactFormOpenAPIRepository(api: api).get(id: id)
+        try await AdminViewContactFormOpenAPIRepository(api: api).get(key: id)
     }
     func update(
         id: String,
@@ -24,7 +24,8 @@ struct AdminRemoveContactFormEmailOpenAPIRepository {
     ) async throws -> AdminContactFormDetailsItem {
         try await AdminEditContactFormOpenAPIRepository(api: api)
             .update(
-                id: id,
+                key: id,
+                newKey: id,
                 name: name,
                 successMessage: successMessage,
                 failureMessage: failureMessage,

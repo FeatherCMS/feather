@@ -7,6 +7,7 @@ extension FormTable.Row {
     var asDomain: Form {
         .init(
             id: id,
+            key: key,
             name: name,
             successMessage: successMessage,
             failureMessage: failureMessage,
@@ -36,6 +37,7 @@ public struct FormDatabaseRepository: FormRepository {
         let saved = try await table.create(
             row: .init(
                 id: context.idGenerator.generate(),
+                key: model.key,
                 name: model.name,
                 successMessage: model.successMessage,
                 failureMessage: model.failureMessage,
@@ -52,6 +54,13 @@ public struct FormDatabaseRepository: FormRepository {
         return try await table.find(id: id)?.asDomain
     }
 
+    public func findBy(
+        key: String
+    ) async throws -> Form? {
+        let table = FormTable(connection: context.connection)
+        return try await table.find(key: key)?.asDomain
+    }
+
     public func update(
         _ model: Form
     ) async throws -> Form {
@@ -60,6 +69,7 @@ public struct FormDatabaseRepository: FormRepository {
             id: model.id,
             row: .init(
                 id: model.id,
+                key: model.key,
                 name: model.name,
                 successMessage: model.successMessage,
                 failureMessage: model.failureMessage,

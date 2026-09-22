@@ -72,6 +72,11 @@ struct NewsletterCampaignEditPage: Component {
             if state.isDetails {
                 Div {
                     Div {
+                        P("Key")
+                        P(state.form.key)
+                    }
+                    .class("admin-detail-view-field")
+                    Div {
                         P("Name")
                         P(state.form.name)
                     }

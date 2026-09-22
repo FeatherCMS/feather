@@ -17,6 +17,7 @@ public struct TableMigration: DatabaseMigration {
             #"""
             CREATE TABLE IF NOT EXISTS contact_form (
                 id TEXT PRIMARY KEY,
+                key TEXT NOT NULL UNIQUE,
                 name TEXT NOT NULL,
                 success_message TEXT NOT NULL DEFAULT '',
                 failure_message TEXT NOT NULL DEFAULT '',
@@ -25,6 +26,7 @@ public struct TableMigration: DatabaseMigration {
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
             );
             """#,
+            #"CREATE INDEX IF NOT EXISTS contact_form_key_idx ON contact_form (key);"#,
             #"""
             CREATE TABLE IF NOT EXISTS contact_form_mail (
                 id TEXT PRIMARY KEY,

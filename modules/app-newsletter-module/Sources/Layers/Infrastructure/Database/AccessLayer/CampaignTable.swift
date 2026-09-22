@@ -8,6 +8,7 @@ extension CampaignTable.Row {
 
     init(from row: DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
+        self.key = try row.decode(column: "key", as: String.self)
         self.name = try row.decode(column: "name", as: String.self)
         self.fromEmail = try row.decode(column: "from_email", as: String.self)
         self.createdAt = try row.decode(column: "created_at", as: Date.self)
@@ -21,11 +22,13 @@ struct CampaignTable {
 
         struct Create {
             let id: String
+            let key: String
             let name: String
             let fromEmail: String
         }
 
         let id: String
+        let key: String
         let name: String
         let fromEmail: String
         let createdAt: Date
@@ -41,6 +44,7 @@ struct CampaignTable {
             query: #"""
                 INSERT INTO newsletter_campaign (
                     id,
+                    key,
                     name,
                     from_email,
                     created_at,
@@ -48,6 +52,7 @@ struct CampaignTable {
                 )
                 VALUES (
                     \#(row.id),
+                    \#(row.key),
                     \#(row.name),
                     \#(row.fromEmail),
                     NOW(),
@@ -78,6 +83,21 @@ struct CampaignTable {
         }
     }
 
+    func find(
+        key: String
+    ) async throws -> Row? {
+        try await connection.run(
+            query: #"""
+                SELECT *
+                FROM newsletter_campaign
+                WHERE key = \#(key)
+                LIMIT 1;
+                """#
+        ) { sequence in
+            try await sequence.collect().first.map { try Row(from: $0) }
+        }
+    }
+
     func list() async throws -> [Row] {
         try await connection.run(
             query:
@@ -89,13 +109,14 @@ struct CampaignTable {
 
     func update(
         id: String,
+        key: String,
         name: String,
         fromEmail: String
     ) async throws -> Row {
         try await connection.run(
             query: #"""
                 UPDATE newsletter_campaign
-                SET name = \#(name), from_email = \#(fromEmail), updated_at = NOW()
+                SET key = \#(key), name = \#(name), from_email = \#(fromEmail), updated_at = NOW()
                 WHERE id = \#(id)
                 RETURNING *;
                 """#

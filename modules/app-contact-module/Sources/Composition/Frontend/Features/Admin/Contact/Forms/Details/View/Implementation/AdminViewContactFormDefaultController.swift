@@ -18,10 +18,10 @@ struct AdminViewContactFormDefaultController: AdminViewContactFormController {
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime(request, context)
-        let formId = try context.requiredParameter("formId")
+        let formKey = try context.requiredParameter("formKey")
         do {
             return try await presenter.renderDetailsPage(
-                item: try await interactor.get(id: formId),
+                item: try await interactor.get(key: formKey),
                 error: nil,
                 permissions: context.currentUserPermissions
             )
@@ -29,7 +29,7 @@ struct AdminViewContactFormDefaultController: AdminViewContactFormController {
         catch {
             return try await presenter.renderDetailsPage(
                 item: .init(
-                    id: formId,
+                    key: formKey,
                     name: "",
                     successMessage: "",
                     failureMessage: "",

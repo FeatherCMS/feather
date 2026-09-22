@@ -10,12 +10,18 @@ import WebComponents
 struct AdminEditContactFormDefaultInteractor: AdminEditContactFormInteractor {
     let repository: AdminEditContactFormOpenAPIRepository
 
-    func get(id: String) async throws -> AdminContactFormDetailsItem {
-        try await repository.get(id: id)
+    func get(key: String) async throws -> AdminContactFormDetailsItem {
+        do {
+            return try await repository.get(key: key)
+        }
+        catch let error as OpenAPIRepositoryError {
+            throw map(error)
+        }
     }
 
     func update(
-        id: String,
+        key: String,
+        newKey: String,
         name: String,
         successMessage: String,
         failureMessage: String,
@@ -23,14 +29,37 @@ struct AdminEditContactFormDefaultInteractor: AdminEditContactFormInteractor {
         fieldIDs: [String],
         mails: [AdminContactFormEmail]
     ) async throws {
-        _ = try await repository.update(
-            id: id,
-            name: name,
-            successMessage: successMessage,
-            failureMessage: failureMessage,
-            redirectUrl: redirectUrl,
-            fieldIDs: fieldIDs,
-            mails: mails
-        )
+        do {
+            _ = try await repository.update(
+                key: key,
+                newKey: newKey,
+                name: name,
+                successMessage: successMessage,
+                failureMessage: failureMessage,
+                redirectUrl: redirectUrl,
+                fieldIDs: fieldIDs,
+                mails: mails
+            )
+        }
+        catch let error as OpenAPIRepositoryError {
+            throw map(error)
+        }
+    }
+
+    private func map(
+        _ error: OpenAPIRepositoryError
+    ) -> AdminEditContactFormError {
+        switch error {
+        case .notFound:
+            .notFound
+        case .unauthorized:
+            .unauthorized
+        case .forbidden:
+            .forbidden
+        case .conflict:
+            .conflict
+        case .failure, .transport:
+            .unavailable
+        }
     }
 }
