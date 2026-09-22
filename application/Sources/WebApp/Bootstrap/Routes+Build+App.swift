@@ -1,3 +1,4 @@
+import Foundation
 import FeatherContracts
 import BlogFrontend
 import MediaFrontend
