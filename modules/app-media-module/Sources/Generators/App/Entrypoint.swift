@@ -1,8 +1,8 @@
 import FeatherOpenAPI
 import Foundation
 import OpenAPIKit
-import OpenAPIKitCompat
 import OpenAPIKit30
+import OpenAPIKitCompat
 import Yams
 
 @main

@@ -107,7 +107,11 @@ public struct RedirectRuleMiddleware: RouterMiddleware {
             response = try await api.withOpenAPIRepositoryErrorMapping {
                 client in
                 try await client.redirectRuleGet(
-                    .init(query: .init(source: normalizedRedirectSource(for: path)))
+                    .init(
+                        query: .init(
+                            source: normalizedRedirectSource(for: path)
+                        )
+                    )
                 )
             }
         }
