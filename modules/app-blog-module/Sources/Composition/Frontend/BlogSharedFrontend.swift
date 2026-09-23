@@ -17,7 +17,7 @@ extension AdminViewMediaAssetOpenAPIRepository {
     init(api: BlogAdminAPIClient) {
         self.init(
             api: MediaAdminAPIClient(
-                apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+                apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
                 sessionToken: api.sessionToken
             )
         )

@@ -267,7 +267,7 @@ struct AnalyticsInsightsView: Component {
         if page.source == .web {
             return [
                 ("Requests", "\(kpis.totalRequests)"),
-                ("Avg/day", String(format: "%.1f", kpis.averageRequestsPerDay)),
+                ("Avg/day", unsafe String(format: "%.1f", kpis.averageRequestsPerDay)),
                 ("Signed-in", "\(kpis.authenticatedRequests)"),
                 ("404s", "\(kpis.notFoundRequests)"),
                 ("4xx", "\(kpis.clientErrorRequests)"),
@@ -276,9 +276,9 @@ struct AnalyticsInsightsView: Component {
         }
         return [
             ("Requests", "\(kpis.totalRequests)"),
-            ("Avg/day", String(format: "%.1f", kpis.averageRequestsPerDay)),
-            ("Success rate", String(format: "%.1f%%", successRate)),
-            ("Error rate", String(format: "%.1f%%", errorRate)),
+            ("Avg/day", unsafe String(format: "%.1f", kpis.averageRequestsPerDay)),
+            ("Success rate", unsafe String(format: "%.1f%%", successRate)),
+            ("Error rate", unsafe String(format: "%.1f%%", errorRate)),
             ("4xx errors", "\(kpis.clientErrorRequests)"),
             ("5xx errors", "\(kpis.serverErrorRequests)"),
         ]

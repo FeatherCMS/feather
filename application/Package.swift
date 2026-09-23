@@ -1,7 +1,7 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-var defaultSwiftSettings: [SwiftSetting] = [
+var swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
     .treatAllWarnings(as: .error),
@@ -148,7 +148,7 @@ let package = Package(
                 .product(name: "Jobs", package: "swift-jobs"),
                 .product(name: "FeatherContracts", package: "feather-core")
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
 
         .executableTarget(
@@ -178,7 +178,7 @@ let package = Package(
                 .product(name: "AccountInfrastructure", package: "app-account-module"),
                 .target(name: "Environment"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
 
         .executableTarget(
@@ -216,7 +216,7 @@ let package = Package(
                 .target(name: "Environment"),
                 .product(name: "FeatherContracts", package: "feather-core")
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
 
         .executableTarget(
@@ -228,7 +228,7 @@ let package = Package(
                 .product(name: "ServiceLifecycle", package: "swift-service-lifecycle"),
                 .product(name: "SystemPackage", package: "swift-system"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
 
         .executableTarget(
@@ -265,7 +265,7 @@ let package = Package(
             resources: [
                 .copy("Resources/Templates"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
 
         .executableTarget(
@@ -338,7 +338,7 @@ let package = Package(
 
                 .target(name: "Environment"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
 
         .testTarget(
@@ -358,7 +358,7 @@ let package = Package(
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .target(name: "Server"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
 
         .testTarget(
@@ -369,7 +369,7 @@ let package = Package(
                 .product(name: "FeatherMailEphemeral", package: "feather-mail-ephemeral"),
                 .target(name: "Environment"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
 
         .testTarget(
@@ -382,7 +382,7 @@ let package = Package(
                 .product(name: "WebFrontend", package: "app-web-module"),
                 .target(name: "WebApp"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
     ]
 )

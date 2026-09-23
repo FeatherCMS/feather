@@ -719,7 +719,7 @@ public struct WebPageRichContentEditor: Component {
                             .setAttribute(name: "spellcheck", value: "false")
                             .setAttribute(
                                 name: "data-media-base-url",
-                                value: AppEnvironmentStore.current.publicOrigins
+                                value: unsafe AppEnvironmentStore.current.publicOrigins
                                     .mediaBaseURL.absoluteString
                             )
                             .class("markdown-source")
@@ -738,7 +738,7 @@ public struct WebPageRichContentEditor: Component {
             .data("markdown-video-picker", "markdown-video-url")
             .data(
                 "markdown-media-base-url",
-                AppEnvironmentStore.current.publicOrigins.mediaBaseURL
+                unsafe AppEnvironmentStore.current.publicOrigins.mediaBaseURL
                     .absoluteString
             )
             context.build(
@@ -784,7 +784,7 @@ public struct WebPageRichContentEditor: Component {
             }
             Script()
                 .src(
-                    "\(AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/markdown-editor.js"
+                    "\(unsafe AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/markdown-editor.js"
                 )
                 .defer()
         }

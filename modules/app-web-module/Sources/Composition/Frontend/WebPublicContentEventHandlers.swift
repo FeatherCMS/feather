@@ -45,7 +45,7 @@ public enum WebPublicContentEventHandlers {
                 )
             }
         }
-        let origins = FeatherAdmin.AppEnvironmentStore.current.publicOrigins
+        let origins = unsafe FeatherAdmin.AppEnvironmentStore.current.publicOrigins
         let navigation =
             menus
             .first(where: { $0.key == "main" })?
@@ -128,7 +128,7 @@ public enum WebPublicContentEventHandlers {
             context["name"] = name
         }
 
-        let resolver = AppEnvironmentStore.current.mediaResolver
+        let resolver = unsafe AppEnvironmentStore.current.mediaResolver
         let values = [
             "language": settings.locale,
             "description": settings.excerpt,
@@ -165,7 +165,7 @@ public enum WebPublicContentEventHandlers {
         let description =
             page.metadata.excerpt.isEmpty
             ? siteSettings.excerpt : page.metadata.excerpt
-        let resolver = AppEnvironmentStore.current.mediaResolver
+        let resolver = unsafe AppEnvironmentStore.current.mediaResolver
         let image: String?
         if let imageURL = page.metadata.imageURL.emptyToNil {
             image = resolver.resolve(imagePath: imageURL)

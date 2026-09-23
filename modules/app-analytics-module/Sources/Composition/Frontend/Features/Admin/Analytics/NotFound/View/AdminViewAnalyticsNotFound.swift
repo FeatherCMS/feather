@@ -11,7 +11,7 @@ public struct AdminViewAnalyticsNotFound {
                     interactor: AdminViewAnalyticsNotFoundDefaultInteractor(
                         repository: AdminViewAnalyticsNotFoundOpenAPIRepository(
                             api: AnalyticsAdminAPIClient(
-                                apiBaseURL: AppEnvironmentStore.current
+                                apiBaseURL: unsafe AppEnvironmentStore.current
                                     .apiBaseURL,
                                 sessionToken: context.sessionToken
                             )

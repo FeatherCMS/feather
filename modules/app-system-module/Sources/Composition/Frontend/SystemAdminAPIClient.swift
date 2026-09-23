@@ -100,7 +100,7 @@ extension SystemAdminAPI.Client {
 extension DefaultRequestContext {
     public func systemAdminAPI() -> SystemAdminAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }
@@ -158,7 +158,7 @@ public struct SystemAppAPIClient: Sendable {
 extension DefaultRequestContext {
     public func systemAppAPI() -> SystemAppAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }

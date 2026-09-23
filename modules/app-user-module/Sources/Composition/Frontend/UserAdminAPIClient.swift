@@ -61,7 +61,7 @@ public struct UserAdminAPIClient: Sendable {
 extension DefaultRequestContext {
     public func userAdminAPI() -> UserAdminAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }

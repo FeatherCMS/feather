@@ -17,7 +17,7 @@ struct AdminViewAnalyticsInsights {
                     interactor: AdminViewAnalyticsInsightsDefaultInteractor(
                         repository: AdminViewAnalyticsInsightsOpenAPIRepository(
                             api: AnalyticsAdminAPIClient(
-                                apiBaseURL: AppEnvironmentStore.current
+                                apiBaseURL: unsafe AppEnvironmentStore.current
                                     .apiBaseURL,
                                 sessionToken: context.sessionToken
                             )

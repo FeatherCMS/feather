@@ -1,7 +1,7 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-var defaultSwiftSettings: [SwiftSetting] = [
+var swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
     .treatAllWarnings(as: .error),
@@ -100,7 +100,7 @@ let package = Package(
                 .product(name: "FeatherContracts", package: "feather-core")
             ],
             path: "Sources/Contracts",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "BlogDomain",
@@ -111,7 +111,7 @@ let package = Package(
                 .target(name: "BlogContracts"),
             ],
             path: "Sources/Layers/Domain",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "BlogApplication",
@@ -123,7 +123,7 @@ let package = Package(
                 .target(name: "BlogDomain"),
             ],
             path: "Sources/Layers/Application",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "BlogInfrastructure",
@@ -135,7 +135,7 @@ let package = Package(
                 .target(name: "BlogApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         // MARK: -
         .target(
@@ -144,7 +144,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "BlogAppAPI",
@@ -152,7 +152,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/App",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         // MARK: -
         .target(
@@ -161,7 +161,7 @@ let package = Package(
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
             ],
             path: "Sources/Generators/Shared",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .executableTarget(
             name: "BlogAdminOpenAPIGenerator",
@@ -173,7 +173,7 @@ let package = Package(
                 .target(name: "BlogSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/Admin",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .executableTarget(
             name: "BlogAppOpenAPIGenerator",
@@ -185,7 +185,7 @@ let package = Package(
                 .target(name: "BlogSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/App",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         // MARK: -
         .target(
@@ -203,7 +203,7 @@ let package = Package(
                 .target(name: "BlogAppAPI"),
             ],
             path: "Sources/Composition/Backend",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "BlogFrontend",
@@ -224,7 +224,7 @@ let package = Package(
             resources: [
                 .copy("Resources/Templates")
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         // MARK: -
         .testTarget(
@@ -232,21 +232,21 @@ let package = Package(
             dependencies: [
                 .target(name: "BlogDomain"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "BlogApplicationTests",
             dependencies: [
                 .target(name: "BlogApplication"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "BlogInfrastructureTests",
             dependencies: [
                 .target(name: "BlogInfrastructure"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
     ]
 )

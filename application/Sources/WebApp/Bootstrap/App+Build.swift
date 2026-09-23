@@ -30,7 +30,7 @@ func buildApplication(
             )!
         )
     )
-    AppEnvironmentStore.current = environment
+    unsafe AppEnvironmentStore.current = environment
 
     let webMetadataExtensions = try await buildWebMetadataExtensions()
 

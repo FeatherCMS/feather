@@ -1,7 +1,7 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-var defaultSwiftSettings: [SwiftSetting] = [
+var swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
     .treatAllWarnings(as: .error),
@@ -69,7 +69,7 @@ let package = Package(
                 .product(name: "FeatherContracts", package: "feather-core"),
             ],
             path: "Sources/Contracts",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "MediaDomain",
@@ -79,7 +79,7 @@ let package = Package(
                 .target(name: "MediaContracts"),
             ],
             path: "Sources/Layers/Domain",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "MediaApplication",
@@ -92,7 +92,7 @@ let package = Package(
                 .target(name: "MediaDomain"),
             ],
             path: "Sources/Layers/Application",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "MediaInfrastructure",
@@ -105,7 +105,7 @@ let package = Package(
                 .target(name: "MediaApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "MediaAdminAPI",
@@ -113,7 +113,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "MediaAppAPI",
@@ -121,7 +121,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/App",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .executableTarget(
             name: "MediaAdminOpenAPIGenerator",
@@ -132,7 +132,7 @@ let package = Package(
                 .product(name: "Yams", package: "Yams"),
             ],
             path: "Sources/Generators/Admin",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .executableTarget(
             name: "MediaAppOpenAPIGenerator",
@@ -143,7 +143,7 @@ let package = Package(
                 .product(name: "Yams", package: "Yams"),
             ],
             path: "Sources/Generators/App",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "MediaBackend",
@@ -156,7 +156,7 @@ let package = Package(
                 .target(name: "MediaAppAPI"),
             ],
             path: "Sources/Composition/Backend",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "MediaFrontend",
@@ -168,21 +168,21 @@ let package = Package(
                 .target(name: "MediaAdminAPI"),
             ],
             path: "Sources/Composition/Frontend",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "MediaDomainTests",
             dependencies: [
                 .target(name: "MediaDomain"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "MediaApplicationTests",
             dependencies: [
                 .target(name: "MediaApplication"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "MediaInfrastructureTests",
@@ -193,7 +193,7 @@ let package = Package(
 
                 .target(name: "MediaInfrastructure"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
     ]
 )

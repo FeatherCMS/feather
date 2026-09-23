@@ -135,14 +135,14 @@ public struct NewsletterAppAPIClient: Sendable {
 extension DefaultRequestContext {
     public func newsletterAdminAPI() -> NewsletterAdminAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }
 
     public func newsletterApplicationAPI() -> NewsletterAppAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }

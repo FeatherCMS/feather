@@ -316,7 +316,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
         }
     }
 
-    private func map(_ error: Error) -> AdminEditMediaVariantError {
+    private func map(_ error: any Error) -> AdminEditMediaVariantError {
         if let error = error as? AdminEditMediaVariantError { return error }
         if let error = error as? ValidationError {
             _ = error

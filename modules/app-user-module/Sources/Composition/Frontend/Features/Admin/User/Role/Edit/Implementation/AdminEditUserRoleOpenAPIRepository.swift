@@ -12,7 +12,7 @@ struct AdminEditUserRoleOpenAPIRepository: AdminEditUserRoleRepository {
 
     init() {
         self.api = UserAdminAPIClient(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: nil
         )
     }

@@ -1,7 +1,7 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-var defaultSwiftSettings: [SwiftSetting] = [
+var swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
     .treatAllWarnings(as: .error),
@@ -93,7 +93,7 @@ let package = Package(
                 .product(name: "FeatherContracts", package: "feather-core")
             ],
             path: "Sources/Contracts",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "UserDomain",
@@ -103,7 +103,7 @@ let package = Package(
                 .target(name: "UserContracts"),
             ],
             path: "Sources/Layers/Domain",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "UserApplication",
@@ -114,7 +114,7 @@ let package = Package(
                 .target(name: "UserDomain"),
             ],
             path: "Sources/Layers/Application",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "UserInfrastructure",
@@ -126,7 +126,7 @@ let package = Package(
                 .target(name: "UserApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         // MARK: -
         .target(
@@ -135,7 +135,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "UserAppAPI",
@@ -143,7 +143,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/App",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         // MARK: -
         .target(
@@ -152,7 +152,7 @@ let package = Package(
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
             ],
             path: "Sources/Generators/Shared",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .executableTarget(
             name: "UserAdminOpenAPIGenerator",
@@ -163,7 +163,7 @@ let package = Package(
                 .target(name: "UserSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/Admin",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .executableTarget(
             name: "UserAppOpenAPIGenerator",
@@ -174,7 +174,7 @@ let package = Package(
                 .target(name: "UserSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/App",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         // MARK: -
         .target(
@@ -188,7 +188,7 @@ let package = Package(
                 .target(name: "UserAppAPI"),
             ],
             path: "Sources/Composition/Backend",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "UserFrontend",
@@ -201,7 +201,7 @@ let package = Package(
                 .target(name: "UserAppAPI"),
             ],
             path: "Sources/Composition/Frontend",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         // MARK: -
         .testTarget(
@@ -209,14 +209,14 @@ let package = Package(
             dependencies: [
                 .target(name: "UserDomain")
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "UserApplicationTests",
             dependencies: [
                 .target(name: "UserApplication"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "UserInfrastructureTests",
@@ -227,7 +227,7 @@ let package = Package(
 
                 .target(name: "UserInfrastructure"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
     ]
 )

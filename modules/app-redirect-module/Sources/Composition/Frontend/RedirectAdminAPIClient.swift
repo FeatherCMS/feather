@@ -58,7 +58,7 @@ public struct RedirectAdminAPIClient: Sendable {
 extension DefaultRequestContext {
     public func redirectAdminAPI() -> RedirectAdminAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }

@@ -1,7 +1,7 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-var defaultSwiftSettings: [SwiftSetting] = [
+var swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
     .treatAllWarnings(as: .error),
@@ -79,7 +79,7 @@ let package = Package(
                 .product(name: "FeatherContracts", package: "feather-core")
             ],
             path: "Sources/Contracts",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "NewsDomain",
@@ -90,7 +90,7 @@ let package = Package(
                 .target(name: "NewsContracts"),
             ],
             path: "Sources/Layers/Domain",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "NewsApplication",
@@ -102,7 +102,7 @@ let package = Package(
                 .target(name: "NewsDomain"),
             ],
             path: "Sources/Layers/Application",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "NewsInfrastructure",
@@ -114,7 +114,7 @@ let package = Package(
                 .target(name: "NewsApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         // MARK: -
         .target(
@@ -123,7 +123,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/App",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         // MARK: -
         .target(
@@ -132,7 +132,7 @@ let package = Package(
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
             ],
             path: "Sources/Generators/Shared",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         // MARK: -
         .target(
@@ -146,7 +146,7 @@ let package = Package(
                 .target(name: "NewsAppAPI"),
             ],
             path: "Sources/Composition/Backend",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "NewsFrontend",
@@ -163,7 +163,7 @@ let package = Package(
             resources: [
                 .copy("Resources/Templates")
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         // MARK: - tests
         .testTarget(
@@ -172,7 +172,7 @@ let package = Package(
                 .target(name: "NewsApplication"),
                 .target(name: "NewsDomain"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
     ]
 )

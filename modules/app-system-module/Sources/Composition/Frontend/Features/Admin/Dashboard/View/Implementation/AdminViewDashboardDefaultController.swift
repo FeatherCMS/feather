@@ -18,7 +18,7 @@ struct AdminViewDashboardDefaultController: AdminViewDashboardController {
         let model = try await interactor.getHome(
             context: .init(
                 // TODO: pass api instead of these. AdminDashboardEventContext should have DefaultRequestContext
-                apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+                apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
                 sessionToken: context.sessionToken,
                 permissions: context.currentUserPermissions,
                 from: now - (7 * 24 * 60 * 60),

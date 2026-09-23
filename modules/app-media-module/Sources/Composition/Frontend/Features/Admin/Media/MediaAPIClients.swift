@@ -90,7 +90,7 @@ public struct MediaAdminAPIClient: Sendable {
 extension DefaultRequestContext {
     public func mediaAdminAPI() -> MediaAdminAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }

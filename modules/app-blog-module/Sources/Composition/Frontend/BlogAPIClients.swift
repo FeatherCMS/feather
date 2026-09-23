@@ -53,7 +53,7 @@ public struct BlogAdminAPIClient: Sendable {
 
     public func mediaAdminAPI() -> MediaAdminAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }
@@ -97,14 +97,14 @@ public struct BlogAppAPIClient: Sendable {
 extension DefaultRequestContext {
     public func blogAdminAPI() -> BlogAdminAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }
 
     public func blogApplicationAPI() -> BlogAppAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }

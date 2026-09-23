@@ -1,7 +1,7 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-var defaultSwiftSettings: [SwiftSetting] = [
+var swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
     .treatAllWarnings(as: .error),
@@ -94,7 +94,7 @@ let package = Package(
                 .product(name: "FeatherContracts", package: "feather-core")
             ],
             path: "Sources/Contracts",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "AuthDomain",
@@ -104,7 +104,7 @@ let package = Package(
                 .target(name: "AuthContracts"),
             ],
             path: "Sources/Layers/Domain",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "AuthApplication",
@@ -118,7 +118,7 @@ let package = Package(
                 .target(name: "AuthDomain"),
             ],
             path: "Sources/Layers/Application",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "AuthInfrastructure",
@@ -130,7 +130,7 @@ let package = Package(
                 .target(name: "AuthApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "AuthAdminAPI",
@@ -138,7 +138,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "AuthAppAPI",
@@ -146,7 +146,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/App",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "AuthSharedOpenAPIGenerator",
@@ -155,7 +155,7 @@ let package = Package(
                 .product(name: "UserSharedOpenAPIGenerator", package: "app-user-module"),
             ],
             path: "Sources/Generators/Shared",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .executableTarget(
             name: "AuthAdminOpenAPIGenerator",
@@ -166,7 +166,7 @@ let package = Package(
                 .target(name: "AuthSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/Admin",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .executableTarget(
             name: "AuthAppOpenAPIGenerator",
@@ -177,7 +177,7 @@ let package = Package(
                 .target(name: "AuthSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/App",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "AuthBackend",
@@ -193,7 +193,7 @@ let package = Package(
                 .target(name: "AuthAppAPI"),
             ],
             path: "Sources/Composition/Backend",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "AuthFrontend",
@@ -210,14 +210,14 @@ let package = Package(
                 .target(name: "AuthAppAPI"),
             ],
             path: "Sources/Composition/Frontend",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "AuthDomainTests",
             dependencies: [
                 .target(name: "AuthDomain"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "AuthApplicationTests",
@@ -228,7 +228,7 @@ let package = Package(
 
                 .target(name: "AuthApplication"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "AuthInfrastructureTests",
@@ -242,7 +242,7 @@ let package = Package(
 
                 .target(name: "AuthInfrastructure"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
     ]
 )

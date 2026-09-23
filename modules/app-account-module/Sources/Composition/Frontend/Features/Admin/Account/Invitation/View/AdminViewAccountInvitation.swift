@@ -16,7 +16,7 @@ struct AdminViewAccountInvitation {
                         ),
                         roleNamesProvider: { roleIDs in
                             let userAPI = UserAdminAPIClient(
-                                apiBaseURL: AppEnvironmentStore.current
+                                apiBaseURL: unsafe AppEnvironmentStore.current
                                     .apiBaseURL,
                                 sessionToken: context.sessionToken
                             )

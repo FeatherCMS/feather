@@ -55,7 +55,7 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
                 expires: Date().addingTimeInterval(oneDay),
                 maxAge: Int(oneDay),
                 path: "/",
-                secure: AppEnvironmentStore.current.publicOrigins
+                secure: unsafe AppEnvironmentStore.current.publicOrigins
                     .usesSecureCookies,
                 httpOnly: true,
                 sameSite: .lax

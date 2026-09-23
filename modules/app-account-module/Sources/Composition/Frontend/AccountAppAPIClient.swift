@@ -54,7 +54,7 @@ public struct AccountAppAPIClient: Sendable {
 extension DefaultRequestContext {
     public func accountAppAPI() -> AccountAppAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }

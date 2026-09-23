@@ -1,7 +1,7 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-var defaultSwiftSettings: [SwiftSetting] = [
+var swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     .strictMemorySafety(),
     .treatAllWarnings(as: .error),
@@ -143,7 +143,7 @@ let package = Package(
 
             ],
             path: "Sources/Contracts",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "FeatherDomain",
@@ -151,7 +151,7 @@ let package = Package(
                 .target(name: "FeatherContracts")
             ],
             path: "Sources/Layers/Domain",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "FeatherApplication",
@@ -159,7 +159,7 @@ let package = Package(
                 .target(name: "FeatherDomain"),
             ],
             path: "Sources/Layers/Application",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "FeatherInfrastructure",
@@ -174,7 +174,7 @@ let package = Package(
                 .target(name: "FeatherDomain"),
             ],
             path: "Sources/Layers/Infrastructure",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "FeatherBackend",
@@ -185,7 +185,7 @@ let package = Package(
                 .target(name: "FeatherInfrastructure"),
             ],
             path: "Sources/Composition/Backend",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "FeatherOpenAPIGenerator",
@@ -194,7 +194,7 @@ let package = Package(
                 .product(name: "OpenAPIKit", package: "OpenAPIKit"),
             ],
             path: "Sources/OpenAPIGenerator",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "FeatherAdmin",
@@ -216,28 +216,28 @@ let package = Package(
                 .target(name: "FeatherApplication"),
             ],
             path: "Sources/Composition/Frontend/Admin",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "DomainTests",
             dependencies: [
                 .target(name: "FeatherDomain")
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "ApplicationTests",
             dependencies: [
                 .target(name: "FeatherApplication")
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "InfrastructureTests",
             dependencies: [
                 .target(name: "FeatherInfrastructure")
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
     ]
 )

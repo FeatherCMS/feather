@@ -86,14 +86,14 @@ public struct ContactAppAPIClient: Sendable {
 extension DefaultRequestContext {
     public func contactAdminAPI() -> ContactAdminAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }
 
     public func contactApplicationAPI() -> ContactAppAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }

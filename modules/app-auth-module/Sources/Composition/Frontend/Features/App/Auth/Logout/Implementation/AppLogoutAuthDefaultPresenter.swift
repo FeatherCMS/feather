@@ -10,7 +10,7 @@ struct AppLogoutAuthDefaultPresenter: AppLogoutAuthPresenter {
             expires: Date(timeIntervalSince1970: 0),
             maxAge: 0,
             path: "/",
-            secure: AppEnvironmentStore.current.publicOrigins.usesSecureCookies,
+            secure: unsafe AppEnvironmentStore.current.publicOrigins.usesSecureCookies,
             httpOnly: true,
             sameSite: .lax
         )

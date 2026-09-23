@@ -32,7 +32,7 @@ func buildAppRoutes(
         themeRenderer: themeRenderer,
         contentRenderer: DefaultMarkdownRenderer(
             events: publicContentEvents,
-            mediaResolver: AppEnvironmentStore.current.mediaResolver
+            mediaResolver: unsafe AppEnvironmentStore.current.mediaResolver
         )
     )
     .controller.route(on: router)

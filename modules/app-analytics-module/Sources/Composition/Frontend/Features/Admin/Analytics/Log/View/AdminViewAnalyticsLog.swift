@@ -10,7 +10,7 @@ struct AdminViewAnalyticsLog {
                     interactor: AdminViewAnalyticsLogDefaultInteractor(
                         repository: AdminViewAnalyticsLogOpenAPIRepository(
                             api: AnalyticsAdminAPIClient(
-                                apiBaseURL: AppEnvironmentStore.current
+                                apiBaseURL: unsafe AppEnvironmentStore.current
                                     .apiBaseURL,
                                 sessionToken: context.sessionToken
                             )

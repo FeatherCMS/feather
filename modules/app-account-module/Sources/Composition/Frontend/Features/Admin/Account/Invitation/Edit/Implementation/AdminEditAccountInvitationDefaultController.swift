@@ -155,7 +155,7 @@ struct AdminEditAccountInvitationDefaultController:
         selected: [String]
     ) async -> [AccountInvitationForm.RoleOptionState] {
         let userAPI = UserAdminAPIClient(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: context.sessionToken
         )
         guard

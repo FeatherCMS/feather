@@ -23,7 +23,7 @@ public enum BlogWebPublicContentEventHandlers {
         _ context: WebPublicContentEventContext<RuntimeBuilderContext>
     ) async throws -> WebPublicContentResult? {
         let api = BlogAppAPIClient(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: context.runtime.1.sessionToken
         )
 
@@ -282,7 +282,7 @@ public enum BlogWebPublicContentEventHandlers {
         permalink: String,
         publicationDate: Double?
     ) -> [String: any Sendable] {
-        let resolvedImageURL = AppEnvironmentStore.current.mediaResolver
+        let resolvedImageURL = unsafe AppEnvironmentStore.current.mediaResolver
             .resolve(imagePath: image) ?? ""
         var result: [String: any Sendable] = [
             "id": id,

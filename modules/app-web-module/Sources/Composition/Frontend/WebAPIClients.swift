@@ -60,7 +60,7 @@ public struct WebAdminAPIClient: Sendable {
 
     public func mediaAdminAPI() -> MediaAdminAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }
@@ -138,14 +138,14 @@ public struct WebAppAPIClient: Sendable {
 extension DefaultRequestContext {
     public func webAdminAPI() -> WebAdminAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }
 
     public func webApplicationAPI() -> WebAppAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
             sessionToken: sessionToken
         )
     }

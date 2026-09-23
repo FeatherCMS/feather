@@ -277,7 +277,7 @@ struct AppMagicLink {
                     name: "session_token",
                     value: result.token,
                     path: "/",
-                    secure: AppEnvironmentStore.current.publicOrigins
+                    secure: unsafe AppEnvironmentStore.current.publicOrigins
                         .usesSecureCookies,
                     httpOnly: true,
                     sameSite: .lax
