@@ -1,26 +1,26 @@
 // swift-tools-version:6.3
 import PackageDescription
 
-var swiftSettings: [SwiftSetting] = [
+let swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     // .strictMemorySafety(),
     // .treatAllWarnings(as: .error),
-    .enableUpcomingFeature("ExistentialAny"),
     // .enableUpcomingFeature("InternalImportsByDefault"),
+    .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("MemberImportVisibility"),
     .enableUpcomingFeature("InferIsolatedConformances"),
     .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
     .enableUpcomingFeature("ImmutableWeakCaptures"),
-    .enableUpcomingFeature("LifetimeDependence"),
-    .enableExperimentalFeature("SuppressedAssociatedTypesWithDefaults"),
+    .enableUpcomingFeature("StrictConcurrency"),
+    .enableExperimentalFeature("SuppressedAssociatedTypes"),
     .enableExperimentalFeature("LifetimeDependence"),
     .enableExperimentalFeature("Lifetimes"),
-    .enableExperimentalFeature("StrictConcurrency=complete"),
     .unsafeFlags(
         ["-cross-module-optimization"],
         .when(configuration: .release)
     ),
 ]
+
 
 let package = Package(
     name: "app-news-module",

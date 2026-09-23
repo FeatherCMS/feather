@@ -46,6 +46,9 @@ generate_yaml() {
                 "${target}"
         )
     done
+
+    "${WORKSPACE_DIR}/scripts/normalize-openapi-generated.sh" \
+        "${MODULE_DIR}/Sources/APIs"
 }
 
 generate_types() {
