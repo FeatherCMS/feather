@@ -1,5 +1,5 @@
 {
-  "originHash" : "c1bc48d7f7fc1c8476681f015f443cbb0a730c7294c54cc3a32487b562793e95",
+  "originHash" : "0369e0c4605cd76a603a369e0f92adee842729ac530c9246b71bb7a26f062913",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -42,17 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-storage",
       "state" : {
-        "revision" : "d9cf9f07b3b270d34b5ac34fcbbbe765a85b17b8",
-        "version" : "1.0.0-beta.2"
-      }
-    },
-    {
-      "identity" : "feather-storage-fs",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-storage-fs",
-      "state" : {
-        "revision" : "d8ba920af6e6d02740f978ae2f3997a996827125",
-        "version" : "1.0.0-beta.1"
+        "revision" : "bf6d985e4f077296d26373f204f634cbdcddfa21",
+        "version" : "1.0.0-beta.3"
       }
     },
     {
@@ -69,8 +60,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hummingbird-project/hummingbird",
       "state" : {
-        "revision" : "55bc9025a4825ee2a234b1f82b51b87be6ef74e4",
-        "version" : "2.26.0"
+        "revision" : "bb1f427eca980a1280a83aee0079cd4371455de6",
+        "version" : "2.27.0"
       }
     },
     {
@@ -339,8 +330,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-runtime",
       "state" : {
-        "revision" : "3d3a8457661daf7fb260ceeb9f0e24e5204ba5fb",
-        "version" : "1.12.0"
+        "revision" : "9e53df53e043b53046a371b31aaf0a1e26eef946",
+        "version" : "1.12.1"
       }
     },
     {
@@ -366,8 +357,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-subprocess",
       "state" : {
-        "revision" : "13d087685b95d64d6aac9b94500d347bbe84c39b",
-        "version" : "0.4.0"
+        "revision" : "b3937ab85dd32f6e9435914599c1519074769c1a",
+        "version" : "1.0.0"
       }
     },
     {

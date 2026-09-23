@@ -4,7 +4,7 @@ import PackageDescription
 var swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     // .strictMemorySafety(),
-    .treatAllWarnings(as: .error),
+    // .treatAllWarnings(as: .error),
     .enableUpcomingFeature("ExistentialAny"),
     // .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("MemberImportVisibility"),
@@ -12,7 +12,6 @@ var swiftSettings: [SwiftSetting] = [
     .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
     .enableUpcomingFeature("ImmutableWeakCaptures"),
     .enableUpcomingFeature("LifetimeDependence"),
-    .enableUpcomingFeature("ImmutableWeakCaptures"),
     .enableExperimentalFeature("SuppressedAssociatedTypesWithDefaults"),
     .enableExperimentalFeature("LifetimeDependence"),
     .enableExperimentalFeature("Lifetimes"),

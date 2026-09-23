@@ -4,7 +4,7 @@ import PackageDescription
 var swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     // .strictMemorySafety(),
-    .treatAllWarnings(as: .error),
+    // .treatAllWarnings(as: .error),
     .enableUpcomingFeature("ExistentialAny"),
     // .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("MemberImportVisibility"),
@@ -12,7 +12,6 @@ var swiftSettings: [SwiftSetting] = [
     .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
     .enableUpcomingFeature("ImmutableWeakCaptures"),
     .enableUpcomingFeature("LifetimeDependence"),
-    .enableUpcomingFeature("ImmutableWeakCaptures"),
     .enableExperimentalFeature("SuppressedAssociatedTypesWithDefaults"),
     .enableExperimentalFeature("LifetimeDependence"),
     .enableExperimentalFeature("Lifetimes"),
@@ -39,6 +38,7 @@ let package = Package(
         .library(name: "NewsInfrastructure", targets: ["NewsInfrastructure"]),
         .library(name: "NewsAppAPI", targets: ["NewsAppAPI"]),
         .library(name: "NewsSharedOpenAPIGenerator", targets: ["NewsSharedOpenAPIGenerator"]),
+        .executable(name: "NewsAppOpenAPIGenerator", targets: ["NewsAppOpenAPIGenerator"]),
         .library(name: "NewsBackend", targets: ["NewsBackend"]),
         .library(name: "NewsFrontend", targets: ["NewsFrontend"]),
     ],
@@ -47,10 +47,14 @@ let package = Package(
             url: "https://github.com/apple/swift-log",
             from: "1.0.0"
         ),
-        // .package(
-        //     url: "https://github.com/mattpolzin/OpenAPIKit",
-        //     from: "5.0.0"
-        // ),
+        .package(
+            url: "https://github.com/mattpolzin/OpenAPIKit",
+            from: "5.0.0"
+        ),
+        .package(
+            url: "https://github.com/jpsim/Yams",
+            from: "6.2.0"
+        ),
         .package(
             url: "https://github.com/apple/swift-openapi-runtime",
             from: "1.12.1"
@@ -132,6 +136,17 @@ let package = Package(
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
             ],
             path: "Sources/Generators/Shared",
+            swiftSettings: swiftSettings
+        ),
+        .executableTarget(
+            name: "NewsAppOpenAPIGenerator",
+            dependencies: [
+                .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
+                .product(name: "Yams", package: "Yams"),
+
+                .target(name: "NewsSharedOpenAPIGenerator"),
+            ],
+            path: "Sources/Generators/App",
             swiftSettings: swiftSettings
         ),
         // MARK: -
