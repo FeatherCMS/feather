@@ -1,11 +1,11 @@
 import AuthAdminAPI
 import AuthAppAPI
 import CSS
-import FeatherAdmin
+public import FeatherAdmin
 import FeatherValidation
 import FeatherValidationFoundation
 import HTML
-import Hummingbird
+public import Hummingbird
 import OpenAPIRuntime
 import SGML
 import SystemAdminAPI

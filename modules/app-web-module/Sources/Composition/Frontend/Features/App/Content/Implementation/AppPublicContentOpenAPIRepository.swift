@@ -1,6 +1,6 @@
 import Foundation
 import OpenAPIRuntime
-import WebAppAPI
+public import WebAppAPI
 
 public struct AppPublicContentOpenAPIRepository: AppPublicContentRepository {
 

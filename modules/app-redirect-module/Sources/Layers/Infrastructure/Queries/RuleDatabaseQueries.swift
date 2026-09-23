@@ -5,8 +5,8 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherApplication
-import FeatherInfrastructure
-import RedirectApplication
+public import FeatherInfrastructure
+public import RedirectApplication
 
 extension RuleTable.Row {
 

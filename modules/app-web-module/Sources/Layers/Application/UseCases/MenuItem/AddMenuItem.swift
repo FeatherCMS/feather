@@ -1,7 +1,7 @@
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 import WebContracts
-import WebDomain
+public import WebDomain
 
 //
 //  AddMenuItem.swift

@@ -1,6 +1,6 @@
 import FeatherApplication
-import FeatherInfrastructure
-import MediaApplication
+public import FeatherInfrastructure
+public import MediaApplication
 
 extension MediaAssetNodeTable.SearchRow {
     func asItem() throws -> MediaAssetSearchList.Item {

@@ -1,9 +1,9 @@
-import CSS
-import HTML
+public import CSS
+public import HTML
 import Hummingbird
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct NewAdminListPagination: Component {
 

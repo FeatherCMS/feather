@@ -1,7 +1,7 @@
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 import MediaContracts
-import MediaDomain
+public import MediaDomain
 
 public struct EditMediaVariantProcessor: UseCase {
     struct Action: PermissionAction {

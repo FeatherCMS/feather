@@ -1,7 +1,7 @@
 import AuthAppAPI
-import FeatherAdmin
-import Foundation
-import Hummingbird
+public import FeatherAdmin
+public import Foundation
+public import Hummingbird
 
 public struct DefaultAuthMiddleware<Context: AuthRequestContext>:
     RouterMiddleware

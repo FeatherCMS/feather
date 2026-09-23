@@ -1,7 +1,7 @@
 import AccountAppAPI
-import FeatherAdmin
-import Foundation
-import Hummingbird
+public import FeatherAdmin
+public import Foundation
+public import Hummingbird
 import MediaFrontend
 
 public struct AccountTopBarMiddleware: RouterMiddleware {

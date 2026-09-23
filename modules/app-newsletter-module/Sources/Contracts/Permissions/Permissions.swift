@@ -1,4 +1,4 @@
-import FeatherContracts
+public import FeatherContracts
 
 public enum Permissions: PermissionProvider {
     public enum Campaigns: PermissionProvider {

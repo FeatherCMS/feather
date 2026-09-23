@@ -1,5 +1,5 @@
 import FeatherAdmin
-import FeatherContracts
+public import FeatherContracts
 
 public struct AppPublicContent {
     public let controller: any AppPublicContentController

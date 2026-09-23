@@ -1,4 +1,4 @@
-import AuthApplication
+public import AuthApplication
 import AuthInfrastructure
 import FeatherInfrastructure
 import UserInfrastructure

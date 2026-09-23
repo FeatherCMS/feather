@@ -1,10 +1,10 @@
 import CSS
-import FeatherContracts
-import HTML
-import Hummingbird
+public import FeatherContracts
+public import HTML
+public import Hummingbird
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct RenderingEngineAssetConfiguration: Sendable {
     public let publicStylesheetPaths: [String]

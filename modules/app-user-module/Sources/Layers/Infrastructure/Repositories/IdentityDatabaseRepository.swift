@@ -6,9 +6,9 @@
 
 import FeatherApplication
 import FeatherDomain
-import FeatherInfrastructure
-import UserApplication
-import UserDomain
+public import FeatherInfrastructure
+public import UserApplication
+public import UserDomain
 
 extension IdentityTable.Row {
     var asDomain: Identity {

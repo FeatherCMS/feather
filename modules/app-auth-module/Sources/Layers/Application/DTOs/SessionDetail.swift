@@ -5,9 +5,9 @@
 //  Created by Tibor Bödecs on 2026. 04. 11.
 //
 
-import FeatherApplication
+public import FeatherApplication
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct SessionDetail: DTO {
     public let id: String

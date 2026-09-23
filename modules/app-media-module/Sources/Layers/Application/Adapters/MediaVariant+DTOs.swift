@@ -1,4 +1,4 @@
-import MediaDomain
+public import MediaDomain
 
 extension MediaVariant {
     public var asVariantListItem: MediaVariantList.Item {

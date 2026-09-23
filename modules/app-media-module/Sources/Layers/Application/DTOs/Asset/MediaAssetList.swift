@@ -1,6 +1,6 @@
-import FeatherApplication
+public import FeatherApplication
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct MediaAssetList: DTO {
     public struct Item: Sendable {

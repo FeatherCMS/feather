@@ -5,8 +5,8 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherDomain
-import FeatherInfrastructure
-import WebDomain
+public import FeatherInfrastructure
+public import WebDomain
 
 extension MenuTable.Row {
     var asDomain: Menu {

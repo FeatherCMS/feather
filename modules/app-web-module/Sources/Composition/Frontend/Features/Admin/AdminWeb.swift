@@ -1,6 +1,6 @@
-import FeatherAdmin
-import FeatherContracts
-import Hummingbird
+public import FeatherAdmin
+public import FeatherContracts
+public import Hummingbird
 import OpenAPIRuntime
 
 public struct AdminWeb {

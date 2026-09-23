@@ -1,10 +1,10 @@
-import CSS
+public import CSS
 import FeatherAdmin
 import Foundation
-import HTML
+public import HTML
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct WebPageRichContentEditor: Component {
     public struct State: Sendable {

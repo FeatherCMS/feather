@@ -1,5 +1,5 @@
-import FeatherApplication
-import Foundation
+public import FeatherApplication
+public import Foundation
 
 public struct AccountProfileDetail: DTO {
     public let userId: String

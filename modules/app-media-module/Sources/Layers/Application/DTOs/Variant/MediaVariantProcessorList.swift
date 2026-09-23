@@ -1,4 +1,4 @@
-import FeatherApplication
+public import FeatherApplication
 
 public struct MediaVariantProcessorList: DTO {
     public struct Item: Sendable {

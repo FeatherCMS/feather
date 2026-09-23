@@ -7,7 +7,7 @@
 
 import FeatherContracts
 import Foundation
-import Hummingbird
+public import Hummingbird
 
 public struct URLFormRequestDecoder: RequestDecoder {
     public let decoder = URLEncodedFormDecoder()

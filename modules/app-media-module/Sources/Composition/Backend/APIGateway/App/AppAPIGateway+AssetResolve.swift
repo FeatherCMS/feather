@@ -1,4 +1,4 @@
-import MediaAppAPI
+public import MediaAppAPI
 import MediaApplication
 
 extension AppAPIGateway {

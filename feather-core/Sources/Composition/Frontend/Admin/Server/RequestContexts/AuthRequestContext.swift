@@ -1,5 +1,5 @@
-import FeatherContracts
-import Hummingbird
+public import FeatherContracts
+public import Hummingbird
 
 public protocol AuthRequestContext: RequestContext {
     var sessionToken: String? { get set }

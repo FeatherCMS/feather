@@ -5,8 +5,8 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherDomain
-import FeatherInfrastructure
-import NewsDomain
+public import FeatherInfrastructure
+public import NewsDomain
 import WebDomain
 import WebInfrastructure
 

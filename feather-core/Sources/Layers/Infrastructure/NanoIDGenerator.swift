@@ -1,4 +1,4 @@
-import FeatherDomain
+public import FeatherDomain
 import NanoID
 
 public struct NanoIDGenerator: IDGenerator {

@@ -1,4 +1,4 @@
-import Hummingbird
+public import Hummingbird
 
 public typealias RuntimeBuilderContext = (
     request: Request,

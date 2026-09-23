@@ -1,5 +1,5 @@
 import Foundation
-import Hummingbird
+public import Hummingbird
 import MediaApplication
 import NIOCore
 

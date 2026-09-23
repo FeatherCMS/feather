@@ -1,6 +1,6 @@
-import AuthApplication
+public import AuthApplication
 import FeatherApplication
-import FeatherInfrastructure
+public import FeatherInfrastructure
 
 extension CredentialTable.Row {
 

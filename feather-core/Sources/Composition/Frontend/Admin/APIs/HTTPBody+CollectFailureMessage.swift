@@ -1,5 +1,5 @@
 import NIOCore
-import OpenAPIRuntime
+public import OpenAPIRuntime
 
 extension HTTPBody {
 

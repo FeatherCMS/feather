@@ -1,16 +1,16 @@
 import AsyncHTTPClient
 import AuthAdminAPI
-import AuthAppAPI
+public import AuthAppAPI
 import CSS
-import FeatherAdmin
+public import FeatherAdmin
 import FeatherValidation
 import FeatherValidationFoundation
-import Foundation
+public import Foundation
 import HTML
 import Hummingbird
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
+public import OpenAPIRuntime
 import SGML
 import SystemAdminAPI
 import SystemFrontend

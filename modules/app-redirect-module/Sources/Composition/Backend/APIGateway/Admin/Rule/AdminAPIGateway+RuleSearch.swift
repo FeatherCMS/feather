@@ -1,5 +1,5 @@
 import FeatherContracts
-import RedirectAdminAPI
+public import RedirectAdminAPI
 import RedirectApplication
 
 extension AdminAPIGateway {

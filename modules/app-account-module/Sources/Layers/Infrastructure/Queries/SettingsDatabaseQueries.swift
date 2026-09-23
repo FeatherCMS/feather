@@ -4,9 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 07. 16.
 
-import AccountApplication
-import AccountDomain
-import FeatherInfrastructure
+public import AccountApplication
+public import AccountDomain
+public import FeatherInfrastructure
 
 public struct SettingsDatabaseQueries: SettingsQueries {
 

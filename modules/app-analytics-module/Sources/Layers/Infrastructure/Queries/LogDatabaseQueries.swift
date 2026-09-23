@@ -4,10 +4,10 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import AnalyticsApplication
+public import AnalyticsApplication
 import FeatherApplication
 import FeatherDatabase
-import FeatherInfrastructure
+public import FeatherInfrastructure
 import Foundation
 
 extension LogTable.Row {

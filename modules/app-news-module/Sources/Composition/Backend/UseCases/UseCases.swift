@@ -1,6 +1,6 @@
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
+public import FeatherContracts
+public import FeatherDatabase
+public import FeatherDomain
 import FeatherInfrastructure
 import NewsApplication
 import NewsInfrastructure

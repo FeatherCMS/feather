@@ -5,9 +5,9 @@
 //  Created by Binary Birds on 2026. 07. 16.
 
 import AccountDomain
-import FeatherApplication
-import FeatherContracts
-import UserApplication
+public import FeatherApplication
+public import FeatherContracts
+public import UserApplication
 import UserDomain
 
 public struct CompleteInvitationRegistration: UseCase {

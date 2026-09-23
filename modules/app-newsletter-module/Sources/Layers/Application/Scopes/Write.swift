@@ -1,5 +1,5 @@
-import FeatherContracts
-import NewsletterDomain
+public import FeatherContracts
+public import NewsletterDomain
 
 public struct Write: Scope {
     public let newsletter: any CampaignRepository

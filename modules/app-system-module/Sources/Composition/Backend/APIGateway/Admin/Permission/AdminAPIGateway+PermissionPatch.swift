@@ -1,5 +1,5 @@
 import FeatherContracts
-import SystemAdminAPI
+public import SystemAdminAPI
 import SystemApplication
 
 extension AdminAPIGateway {

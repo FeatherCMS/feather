@@ -1,7 +1,7 @@
 import ContactDomain
-import FeatherDatabase
-import FeatherDomain
-import FeatherInfrastructure
+public import FeatherDatabase
+public import FeatherDomain
+public import FeatherInfrastructure
 
 public struct TableSeedMigration: DatabaseMigration {
     public let connection: any DatabaseConnection

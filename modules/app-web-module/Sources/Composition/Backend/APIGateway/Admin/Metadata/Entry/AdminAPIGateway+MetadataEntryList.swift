@@ -1,4 +1,4 @@
-import WebAdminAPI
+public import WebAdminAPI
 
 extension AdminAPIGateway {
 

@@ -5,10 +5,10 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherContracts
-import FeatherDomain
-import Foundation
+public import FeatherDomain
+public import Foundation
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct Page: Model {
 

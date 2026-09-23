@@ -1,9 +1,9 @@
-import CSS
-import FeatherContracts
-import HTML
+public import CSS
+public import FeatherContracts
+public import HTML
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct NewAdminListRowActions: Component {
 

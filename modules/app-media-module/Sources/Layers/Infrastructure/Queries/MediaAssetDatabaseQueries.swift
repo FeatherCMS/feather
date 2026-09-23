@@ -1,6 +1,6 @@
 import FeatherApplication
-import FeatherInfrastructure
-import MediaApplication
+public import FeatherInfrastructure
+public import MediaApplication
 
 extension MediaAssetNodeFileTable.Row {
     var asDetail: MediaAssetDetail {

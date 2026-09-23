@@ -1,7 +1,7 @@
-import FeatherApplication
-import NewsletterDomain
+public import FeatherApplication
+public import NewsletterDomain
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct IssueDetail: DTO {
     public let id: String

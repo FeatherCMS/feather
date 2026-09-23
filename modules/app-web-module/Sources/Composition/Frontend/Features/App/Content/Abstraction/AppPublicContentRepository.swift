@@ -1,4 +1,4 @@
-import WebAppAPI
+public import WebAppAPI
 
 public protocol AppPublicContentRepository: Sendable {
 

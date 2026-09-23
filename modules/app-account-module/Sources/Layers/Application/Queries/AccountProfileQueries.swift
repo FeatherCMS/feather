@@ -1,4 +1,4 @@
-import AccountDomain
+public import AccountDomain
 
 public protocol AccountProfileQueries: Sendable {
 

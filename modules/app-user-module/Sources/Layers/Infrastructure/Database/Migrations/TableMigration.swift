@@ -4,8 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherDatabase
-import FeatherInfrastructure
+public import FeatherDatabase
+public import FeatherInfrastructure
 
 public struct TableMigration: DatabaseMigration {
 

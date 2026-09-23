@@ -1,12 +1,12 @@
 import AsyncHTTPClient
-import FeatherAdmin
-import Foundation
-import MediaFrontend
+public import FeatherAdmin
+public import Foundation
+public import MediaFrontend
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
-import WebAdminAPI
-import WebAppAPI
+public import OpenAPIRuntime
+public import WebAdminAPI
+public import WebAppAPI
 
 public struct WebAdminAPIClient: Sendable {
     public let client: WebAdminAPI.Client

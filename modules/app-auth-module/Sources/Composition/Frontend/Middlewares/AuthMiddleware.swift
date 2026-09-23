@@ -1,5 +1,5 @@
-import FeatherAdmin
-import Hummingbird
+public import FeatherAdmin
+public import Hummingbird
 
 public struct AuthMiddleware<Context: AuthRequestContext>: RouterMiddleware {
 

@@ -1,9 +1,9 @@
 import AuthApplication
-import FeatherBackend
+public import FeatherBackend
 import FeatherContracts
-import HTTPTypes
+public import HTTPTypes
 import Hummingbird
-import OpenAPIRuntime
+public import OpenAPIRuntime
 
 public struct AuthSubjectMiddleware: ServerMiddleware {
 

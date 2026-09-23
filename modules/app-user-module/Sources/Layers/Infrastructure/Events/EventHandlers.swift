@@ -1,4 +1,4 @@
-import FeatherContracts
+public import FeatherContracts
 import FeatherDomain
 import SystemApplication
 import UserApplication

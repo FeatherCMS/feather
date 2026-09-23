@@ -4,10 +4,10 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import AuthApplication
+public import AuthApplication
 import FeatherApplication
 import FeatherDatabase
-import FeatherInfrastructure
+public import FeatherInfrastructure
 
 extension RolePermissionTable.Row {
 

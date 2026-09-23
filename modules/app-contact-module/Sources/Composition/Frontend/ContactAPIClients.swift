@@ -1,14 +1,14 @@
 import AsyncHTTPClient
-import ContactAdminAPI
-import ContactAppAPI
-import FeatherAdmin
+public import ContactAdminAPI
+public import ContactAppAPI
+public import FeatherAdmin
 import FeatherValidation
-import Foundation
+public import Foundation
 import HTML
 import Hummingbird
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
+public import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents

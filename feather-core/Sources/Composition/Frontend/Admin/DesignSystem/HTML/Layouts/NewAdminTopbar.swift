@@ -6,10 +6,10 @@
 //
 
 import HTML
-import SGML
+public import SGML
 import SVG
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct NewAdminTopBar: Component {
 

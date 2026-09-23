@@ -1,4 +1,4 @@
-import FeatherContracts
+public import FeatherContracts
 
 public struct WebPageProvider: Event {
     public typealias Output = [WebPageDefinition]

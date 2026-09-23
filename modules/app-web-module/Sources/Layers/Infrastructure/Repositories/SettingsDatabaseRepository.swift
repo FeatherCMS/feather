@@ -4,11 +4,11 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherInfrastructure
-import SystemDomain
+public import FeatherInfrastructure
+public import SystemDomain
 import SystemInfrastructure
 import WebApplication
-import WebDomain
+public import WebDomain
 
 public struct SettingsDatabaseRepository: SettingsRepository {
 

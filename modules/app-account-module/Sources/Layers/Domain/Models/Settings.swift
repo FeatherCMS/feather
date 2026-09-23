@@ -4,8 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 07. 16.
 
-import FeatherDomain
-import Foundation
+public import FeatherDomain
+public import Foundation
+public import struct Foundation.Date
 
 public struct Settings: Model {
 

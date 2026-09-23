@@ -1,6 +1,6 @@
 import AuthContracts
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 
 public struct GetCredential: UseCase {
     struct Action: PermissionAction {

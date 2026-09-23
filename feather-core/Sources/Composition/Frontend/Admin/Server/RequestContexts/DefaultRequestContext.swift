@@ -6,7 +6,7 @@
 //
 
 import FeatherContracts
-import Hummingbird
+public import Hummingbird
 import OpenAPIRuntime
 
 public struct DefaultRequestContext: AuthRequestContext, Sendable {

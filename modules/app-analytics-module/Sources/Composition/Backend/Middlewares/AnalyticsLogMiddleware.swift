@@ -1,7 +1,7 @@
 import AnalyticsApplication
 import AnalyticsDomain
 import HTTPTypes
-import Hummingbird
+public import Hummingbird
 
 public struct AnalyticsLogMiddleware: RouterMiddleware {
 

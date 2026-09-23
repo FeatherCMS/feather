@@ -1,5 +1,5 @@
-import FeatherContracts
-import FeatherDomain
+public import FeatherContracts
+public import FeatherDomain
 
 public struct UserEventContext: ExecutionContext {
     public let idGenerator: any IDGenerator

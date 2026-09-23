@@ -1,4 +1,4 @@
-import AccountAppAPI
+public import AccountAppAPI
 
 public struct AppAPIGateway: Sendable, AccountAppAPI.APIProtocol {
     public let useCases: UseCases

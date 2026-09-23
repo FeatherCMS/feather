@@ -4,7 +4,7 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
+public import FeatherApplication
 
 public struct LogOverview: DTO {
 

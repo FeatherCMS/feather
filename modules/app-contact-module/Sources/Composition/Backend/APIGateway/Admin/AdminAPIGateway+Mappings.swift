@@ -1,5 +1,5 @@
-import ContactAdminAPI
-import ContactApplication
+public import ContactAdminAPI
+public import ContactApplication
 import ContactDomain
 import Foundation
 

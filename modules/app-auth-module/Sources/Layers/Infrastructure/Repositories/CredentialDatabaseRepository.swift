@@ -1,6 +1,6 @@
-import AuthDomain
+public import AuthDomain
 import FeatherDomain
-import FeatherInfrastructure
+public import FeatherInfrastructure
 
 import struct Foundation.Date
 

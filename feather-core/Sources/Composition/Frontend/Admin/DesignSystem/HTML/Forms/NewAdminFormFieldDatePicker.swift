@@ -1,11 +1,11 @@
-import CSS
+public import CSS
 import FeatherContracts
-import HTML
+public import HTML
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
-import struct HTML.Button
+public import struct HTML.Button
 
 public struct NewAdminFormFieldDatePicker: Component {
     public struct State: Sendable {

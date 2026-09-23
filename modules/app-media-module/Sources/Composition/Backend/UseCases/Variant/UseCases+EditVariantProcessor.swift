@@ -1,4 +1,4 @@
-import MediaApplication
+public import MediaApplication
 
 extension UseCases {
     public func makeEditVariantProcessor() -> EditMediaVariantProcessor {

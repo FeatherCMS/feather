@@ -4,8 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherContracts
-import SystemDomain
+public import FeatherContracts
+public import SystemDomain
 
 public struct WriteVariable: Scope {
     public let variable: any VariableRepository

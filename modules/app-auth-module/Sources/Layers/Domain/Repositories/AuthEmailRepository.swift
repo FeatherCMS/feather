@@ -1,4 +1,4 @@
-import FeatherDomain
+public import FeatherDomain
 
 public protocol AuthEmailRepository: Repository {
     func list() async throws -> [AuthEmail]

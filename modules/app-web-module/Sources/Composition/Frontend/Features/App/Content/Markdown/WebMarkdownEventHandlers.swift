@@ -1,4 +1,4 @@
-import FeatherContracts
+public import FeatherContracts
 
 public enum WebMarkdownEventHandlers {
     public static func register(in registry: inout EventRegistry) {

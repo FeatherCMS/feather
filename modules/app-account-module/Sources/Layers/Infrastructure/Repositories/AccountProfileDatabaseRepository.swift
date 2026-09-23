@@ -1,7 +1,7 @@
-import AccountDomain
+public import AccountDomain
 import FeatherDatabase
 import FeatherDomain
-import FeatherInfrastructure
+public import FeatherInfrastructure
 
 public struct AccountProfileDatabaseRepository: AccountProfileRepository {
     public let context: DatabaseTransactionContext

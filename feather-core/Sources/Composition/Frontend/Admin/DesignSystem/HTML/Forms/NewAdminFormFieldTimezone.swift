@@ -1,8 +1,8 @@
-import CSS
-import HTML
+public import CSS
+public import HTML
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 /// A select-based form field containing IANA timezone identifiers.
 public struct NewAdminFormFieldTimezone: Component {

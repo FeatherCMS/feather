@@ -1,7 +1,7 @@
-import AccountDomain
-import FeatherContracts
-import SystemApplication
-import UserDomain
+public import AccountDomain
+public import FeatherContracts
+public import SystemApplication
+public import UserDomain
 
 public struct WriteInvitationWithVariable: Scope {
     public let invitation: any InvitationRepository

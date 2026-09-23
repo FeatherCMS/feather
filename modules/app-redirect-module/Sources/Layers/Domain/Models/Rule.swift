@@ -4,10 +4,10 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherDomain
-import RedirectContracts
+public import FeatherDomain
+public import RedirectContracts
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct Rule: Model {
 

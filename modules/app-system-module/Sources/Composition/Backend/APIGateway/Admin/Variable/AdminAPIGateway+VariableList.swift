@@ -1,4 +1,4 @@
-import SystemAdminAPI
+public import SystemAdminAPI
 
 extension AdminAPIGateway {
 

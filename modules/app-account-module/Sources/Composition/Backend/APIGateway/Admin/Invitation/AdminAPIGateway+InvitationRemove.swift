@@ -1,4 +1,4 @@
-import AccountAdminAPI
+public import AccountAdminAPI
 import AccountApplication
 import FeatherContracts
 

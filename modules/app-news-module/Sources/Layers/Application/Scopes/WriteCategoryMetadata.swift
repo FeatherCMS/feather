@@ -4,10 +4,10 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherContracts
-import NewsDomain
-import SystemApplication
-import WebDomain
+public import FeatherContracts
+public import NewsDomain
+public import SystemApplication
+public import WebDomain
 
 public struct WriteCategoryMetadata: Scope {
     public let category: any CategoryRepository

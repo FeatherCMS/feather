@@ -5,9 +5,9 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import AuthDomain
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
+public import FeatherApplication
+public import FeatherContracts
+public import FeatherDomain
 import UserDomain
 
 public struct SignInWithCredentials: SignIn {

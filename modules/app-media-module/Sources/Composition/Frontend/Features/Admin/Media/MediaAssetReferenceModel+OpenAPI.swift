@@ -1,8 +1,8 @@
-import FeatherAdmin
+public import FeatherAdmin
 import FeatherValidation
 import HTML
 import Hummingbird
-import MediaAdminAPI
+public import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
 import WebBuilders

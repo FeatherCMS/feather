@@ -1,14 +1,14 @@
 import AsyncHTTPClient
-import FeatherAdmin
+public import FeatherAdmin
 import FeatherValidation
-import Foundation
+public import Foundation
 import HTML
 import Hummingbird
 import NIOCore
-import NewsletterAdminAPI
-import NewsletterAppAPI
+public import NewsletterAdminAPI
+public import NewsletterAppAPI
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
+public import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents

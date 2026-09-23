@@ -1,4 +1,4 @@
-import FeatherDomain
+public import FeatherDomain
 
 public protocol MediaAssetNodeFolderRepository: Repository {
     func insert(

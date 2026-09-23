@@ -5,8 +5,8 @@
 //  Created by Tibor Bödecs on 2026. 08. 11..
 //
 
-import FeatherContracts
-import UserDomain
+public import FeatherContracts
+public import UserDomain
 
 public struct WriteIdentityRole: Scope {
     public let identity: any IdentityRepository

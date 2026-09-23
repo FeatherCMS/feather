@@ -1,4 +1,4 @@
-import RedirectAdminAPI
+public import RedirectAdminAPI
 
 extension AdminAPIGateway {
 

@@ -4,8 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
-import WebApplication
+public import FeatherApplication
+public import WebApplication
 
 public struct PublicNewsCategorySummary: DTO {
     public let id: String

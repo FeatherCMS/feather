@@ -1,4 +1,4 @@
-import AuthAppAPI
+public import AuthAppAPI
 import AuthApplication
 import AuthDomain
 import FeatherContracts

@@ -1,4 +1,4 @@
-import FeatherContracts
+public import FeatherContracts
 
 public struct ReadJob: Scope {
     public let job: any JobQueries

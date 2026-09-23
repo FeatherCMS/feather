@@ -1,4 +1,4 @@
-import FeatherDomain
+public import FeatherDomain
 
 public struct MediaAssetNodeFileStorageIdentity: Sendable {
     public let nodeId: String

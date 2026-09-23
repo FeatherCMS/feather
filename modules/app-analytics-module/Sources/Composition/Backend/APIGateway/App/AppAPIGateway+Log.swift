@@ -1,4 +1,4 @@
-import AnalyticsAppAPI
+public import AnalyticsAppAPI
 import AnalyticsApplication
 import AnalyticsDomain
 import FeatherContracts

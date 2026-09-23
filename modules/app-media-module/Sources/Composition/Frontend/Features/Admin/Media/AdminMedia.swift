@@ -1,7 +1,7 @@
-import FeatherAdmin
+public import FeatherAdmin
 import FeatherValidation
 import HTML
-import Hummingbird
+public import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML

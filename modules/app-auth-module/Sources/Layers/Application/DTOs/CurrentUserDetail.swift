@@ -5,8 +5,8 @@
 //  Created by Tibor Bödecs on 2026. 04. 11.
 //
 
-import FeatherApplication
-import UserApplication
+public import FeatherApplication
+public import UserApplication
 
 public struct CurrentUserDetail: DTO {
     public var user: IdentityDetail

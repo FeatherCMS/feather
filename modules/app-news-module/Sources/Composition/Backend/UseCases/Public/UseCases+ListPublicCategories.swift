@@ -1,5 +1,5 @@
 import FeatherInfrastructure
-import NewsApplication
+public import NewsApplication
 import NewsInfrastructure
 import WebInfrastructure
 

@@ -1,7 +1,7 @@
-import FeatherDatabase
+public import FeatherDatabase
 import FeatherInfrastructure
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 extension CredentialTable.Row {
 

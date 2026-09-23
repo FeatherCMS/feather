@@ -1,6 +1,6 @@
 import FeatherContracts
 import Foundation
-import Hummingbird
+public import Hummingbird
 
 public enum OpenAPIRepositoryError: Error {
     case unauthorized

@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 04. 18.
 //
 
-import FeatherContracts
+public import FeatherContracts
 import UserApplication
 
 public struct DefaultAuthorizer: Authorizer {

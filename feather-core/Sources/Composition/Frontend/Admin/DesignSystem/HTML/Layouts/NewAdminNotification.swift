@@ -1,9 +1,9 @@
-import CSS
-import HTML
+public import CSS
+public import HTML
 import SGML
 import SVG
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct NewAdminNotification: Component {
     public struct State: Codable, Sendable, Equatable {

@@ -4,7 +4,7 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherDomain
+public import FeatherDomain
 
 public protocol MenuItemRepository: Repository {
 

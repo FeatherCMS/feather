@@ -1,6 +1,6 @@
 import FeatherContracts
-import Foundation
-import Hummingbird
+public import Foundation
+public import Hummingbird
 
 /// Builds a redirect location carrying a one-time admin notification.
 public struct AdminNotificationRedirect {

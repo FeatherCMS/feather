@@ -4,8 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherContracts
-import UserDomain
+public import FeatherContracts
+public import UserDomain
 
 public struct WriteIdentity: Scope {
     public let identity: any IdentityRepository

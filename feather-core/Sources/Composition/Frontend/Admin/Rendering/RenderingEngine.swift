@@ -1,7 +1,7 @@
-import HTML
-import Hummingbird
+public import HTML
+public import Hummingbird
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public protocol RenderingEngine: Sendable {
 

@@ -1,6 +1,6 @@
 import FeatherContracts
 import Foundation
-import NewsAppAPI
+public import NewsAppAPI
 import NewsApplication
 import WebApplication
 import WebDomain

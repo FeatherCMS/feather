@@ -4,9 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherDomain
-import FeatherInfrastructure
-import UserDomain
+public import FeatherDomain
+public import FeatherInfrastructure
+public import UserDomain
 
 import struct Foundation.Date
 

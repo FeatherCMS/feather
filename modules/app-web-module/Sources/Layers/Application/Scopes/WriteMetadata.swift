@@ -4,8 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherContracts
-import WebDomain
+public import FeatherContracts
+public import WebDomain
 
 public struct WriteMetadata: Scope {
     public let metadata: any MetadataRepository

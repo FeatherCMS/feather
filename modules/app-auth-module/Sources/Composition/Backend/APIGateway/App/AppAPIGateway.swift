@@ -1,4 +1,4 @@
-import AuthAppAPI
+public import AuthAppAPI
 
 public struct AppAPIGateway: Sendable, AuthAppAPI.APIProtocol {
     public let useCases: UseCases

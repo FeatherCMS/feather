@@ -6,8 +6,8 @@
 //
 
 import FeatherApplication
-import FeatherInfrastructure
-import SystemApplication
+public import FeatherInfrastructure
+public import SystemApplication
 
 extension PermissionTable.Row {
 

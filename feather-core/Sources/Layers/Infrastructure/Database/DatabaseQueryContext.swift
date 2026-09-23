@@ -3,8 +3,8 @@
 //  feather-core
 //
 
-import FeatherContracts
-import FeatherDatabase
+public import FeatherContracts
+public import FeatherDatabase
 
 public struct DatabaseQueryContext: QueryContext, DatabaseContext {
 

@@ -1,4 +1,4 @@
-import FeatherContracts
+public import FeatherContracts
 
 public struct PermissionSeedDefinition: Sendable, Hashable, Codable {
     public let key: String

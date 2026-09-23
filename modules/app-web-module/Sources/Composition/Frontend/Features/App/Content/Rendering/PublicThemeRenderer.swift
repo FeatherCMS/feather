@@ -1,4 +1,4 @@
-import FeatherAdmin
+public import FeatherAdmin
 
 public protocol PublicThemeRenderer: Sendable {
     func render(

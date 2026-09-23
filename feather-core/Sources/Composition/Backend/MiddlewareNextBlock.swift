@@ -1,5 +1,5 @@
-import HTTPTypes
-import OpenAPIRuntime
+public import HTTPTypes
+public import OpenAPIRuntime
 
 #if compiler(>=6.2)
 public typealias MiddlewareNextBlock =

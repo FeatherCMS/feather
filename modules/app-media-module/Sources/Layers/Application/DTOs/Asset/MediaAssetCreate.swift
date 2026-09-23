@@ -1,4 +1,4 @@
-import FeatherApplication
+public import FeatherApplication
 
 public struct MediaAssetCreate: DTO {
     public let folderId: String?

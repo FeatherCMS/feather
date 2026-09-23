@@ -1,6 +1,6 @@
 import FeatherDomain
-import FeatherInfrastructure
-import MediaDomain
+public import FeatherInfrastructure
+public import MediaDomain
 
 extension MediaAssetNodeFileTable.Row {
     var asDomain: MediaAssetNodeFile {

@@ -1,5 +1,5 @@
 import BCrypt
-import FeatherDomain
+public import FeatherDomain
 import NIOPosix
 
 public struct BCryptPasswordHasher: PasswordHasher {

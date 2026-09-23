@@ -1,11 +1,11 @@
 import AsyncHTTPClient
-import FeatherAdmin
-import Foundation
+public import FeatherAdmin
+public import Foundation
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
-import SystemAdminAPI
-import SystemAppAPI
+public import OpenAPIRuntime
+public import SystemAdminAPI
+public import SystemAppAPI
 
 public struct SystemAdminAPIClient: Sendable {
     public let client: SystemAdminAPI.Client

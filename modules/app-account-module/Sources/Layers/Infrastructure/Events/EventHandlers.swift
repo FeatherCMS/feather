@@ -1,5 +1,5 @@
 import AccountContracts
-import FeatherContracts
+public import FeatherContracts
 import FeatherInfrastructure
 import SystemApplication
 import UserApplication

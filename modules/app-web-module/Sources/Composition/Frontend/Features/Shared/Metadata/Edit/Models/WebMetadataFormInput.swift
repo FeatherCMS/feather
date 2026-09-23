@@ -1,4 +1,4 @@
-import FeatherAdmin
+public import FeatherAdmin
 import FeatherContracts
 import OpenAPIRuntime
 

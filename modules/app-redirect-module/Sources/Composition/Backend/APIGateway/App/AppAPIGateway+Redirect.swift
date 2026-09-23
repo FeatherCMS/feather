@@ -1,4 +1,4 @@
-import RedirectAppAPI
+public import RedirectAppAPI
 import RedirectApplication
 import RedirectContracts
 

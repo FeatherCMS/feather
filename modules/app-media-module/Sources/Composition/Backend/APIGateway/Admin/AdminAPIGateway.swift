@@ -1,4 +1,4 @@
-import MediaAdminAPI
+public import MediaAdminAPI
 
 public struct AdminAPIGateway: Sendable, MediaAdminAPI.APIProtocol {
     public let useCases: UseCases

@@ -1,7 +1,7 @@
-import AccountApplication
+public import AccountApplication
 import AuthDomain
 import AuthInfrastructure
-import FeatherContracts
+public import FeatherContracts
 import FeatherInfrastructure
 
 /// Adapts Account's registration port to Auth's credential infrastructure.

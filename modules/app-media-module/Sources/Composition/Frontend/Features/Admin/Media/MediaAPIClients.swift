@@ -1,13 +1,13 @@
 import AsyncHTTPClient
-import FeatherAdmin
+public import FeatherAdmin
 import FeatherValidation
-import Foundation
+public import Foundation
 import HTML
 import Hummingbird
-import MediaAdminAPI
+public import MediaAdminAPI
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
+public import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents

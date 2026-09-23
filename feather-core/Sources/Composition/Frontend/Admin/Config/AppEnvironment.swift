@@ -1,5 +1,5 @@
-import FeatherContracts
-import Foundation
+public import FeatherContracts
+public import Foundation
 
 public struct AppEnvironment: Sendable {
     public let apiBaseURL: URL

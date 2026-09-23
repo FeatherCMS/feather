@@ -1,10 +1,10 @@
 import AsyncHTTPClient
-import FeatherAdmin
-import Foundation
+public import FeatherAdmin
+public import Foundation
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
-import UserAdminAPI
+public import OpenAPIRuntime
+public import UserAdminAPI
 
 public struct UserAdminAPIClient: Sendable {
     public let client: UserAdminAPI.Client

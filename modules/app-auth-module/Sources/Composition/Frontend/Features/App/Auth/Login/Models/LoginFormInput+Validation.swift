@@ -1,4 +1,4 @@
-import FeatherValidation
+public import FeatherValidation
 import FeatherValidationFoundation
 
 enum LoginFormFieldValidator {

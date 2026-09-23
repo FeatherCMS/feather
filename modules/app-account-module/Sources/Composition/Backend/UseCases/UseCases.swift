@@ -1,8 +1,8 @@
 import AccountApplication
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
+public import FeatherApplication
+public import FeatherContracts
+public import FeatherDatabase
+public import FeatherDomain
 
 public struct UseCases: Sendable {
     let database: any DatabaseClient

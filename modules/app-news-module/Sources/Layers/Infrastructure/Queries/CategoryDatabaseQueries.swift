@@ -5,9 +5,9 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherApplication
-import FeatherInfrastructure
-import NewsApplication
-import WebApplication
+public import FeatherInfrastructure
+public import NewsApplication
+public import WebApplication
 
 extension CategoryTable.Row {
     var asQueryListItem: CategoryList.Item {

@@ -1,9 +1,9 @@
-import FeatherAdmin
+public import FeatherAdmin
 import FeatherContracts
 import FeatherDomain
 import Foundation
 import OpenAPIRuntime
-import WebAdminAPI
+public import WebAdminAPI
 
 public struct AdminMetadataSchemaBuilder {
     public static func createSchema(

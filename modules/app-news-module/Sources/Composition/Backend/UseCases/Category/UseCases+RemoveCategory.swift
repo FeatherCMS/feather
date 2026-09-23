@@ -1,4 +1,4 @@
-import NewsApplication
+public import NewsApplication
 
 extension UseCases {
 

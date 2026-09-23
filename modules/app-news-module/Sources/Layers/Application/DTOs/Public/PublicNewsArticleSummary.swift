@@ -4,9 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
+public import FeatherApplication
 import Foundation
-import WebApplication
+public import WebApplication
 
 public enum NewsReadingTime {
     public static func minutes(for content: String) -> Int {

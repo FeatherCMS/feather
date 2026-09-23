@@ -1,6 +1,6 @@
-import AuthAdminAPI
-import AuthApplication
-import FeatherApplication
+public import AuthAdminAPI
+public import AuthApplication
+public import FeatherApplication
 import Foundation
 
 extension AdminAPIGateway {

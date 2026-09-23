@@ -1,4 +1,4 @@
-import FeatherApplication
+public import FeatherApplication
 
 public struct MediaVariantProcessorCreate: DTO {
     public let variantId: String

@@ -1,5 +1,5 @@
 import FeatherContracts
-import NewsletterAdminAPI
+public import NewsletterAdminAPI
 import NewsletterApplication
 import NewsletterContracts
 

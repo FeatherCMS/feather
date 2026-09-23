@@ -1,4 +1,4 @@
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct WebPageMetadataDefinition: Sendable, Equatable {
     public let template: String

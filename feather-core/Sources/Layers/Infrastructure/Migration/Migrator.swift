@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 02. 20.
 //
 
-import FeatherDatabase
+public import FeatherDatabase
 import Logging
 
 public struct Migrator {

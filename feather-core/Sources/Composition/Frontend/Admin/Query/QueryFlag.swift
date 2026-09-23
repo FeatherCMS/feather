@@ -1,4 +1,4 @@
-import Hummingbird
+public import Hummingbird
 
 public enum QueryFlag {
     public static func isSet(

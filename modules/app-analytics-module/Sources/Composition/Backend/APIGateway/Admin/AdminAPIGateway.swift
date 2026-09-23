@@ -1,4 +1,4 @@
-import AnalyticsAdminAPI
+public import AnalyticsAdminAPI
 
 public struct AdminAPIGateway: Sendable, AnalyticsAdminAPI.APIProtocol {
     public let useCases: UseCases

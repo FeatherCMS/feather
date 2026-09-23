@@ -4,8 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherContracts
-import RedirectDomain
+public import FeatherContracts
+public import RedirectDomain
 
 public struct WriteRule: Scope {
     public let rule: any RuleRepository

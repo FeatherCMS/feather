@@ -6,13 +6,13 @@
 //
 
 import DOM
-import FeatherContracts
+public import FeatherContracts
 import HTML
-import Hummingbird
-import SGML
-import SVG
+public import Hummingbird
+public import SGML
+public import SVG
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct NewAdminSideBar: Component {
 

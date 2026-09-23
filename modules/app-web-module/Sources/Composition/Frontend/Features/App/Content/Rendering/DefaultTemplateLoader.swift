@@ -1,5 +1,5 @@
-import Foundation
-import Mustache
+public import Foundation
+public import Mustache
 
 public struct DefaultTemplateLoader: TemplateLoader {
 

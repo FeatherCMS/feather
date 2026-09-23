@@ -1,4 +1,4 @@
-import FeatherContracts
+public import FeatherContracts
 
 public protocol WebMarkdownSourceTransformer: Sendable {
     var priority: Int { get }

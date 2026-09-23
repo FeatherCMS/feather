@@ -4,9 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherDomain
+public import FeatherDomain
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct MagicLink: Model {
 

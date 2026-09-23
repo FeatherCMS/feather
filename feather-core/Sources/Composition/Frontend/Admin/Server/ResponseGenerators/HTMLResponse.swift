@@ -1,5 +1,5 @@
-import HTML
-import Hummingbird
+public import HTML
+public import Hummingbird
 import SGML
 
 public struct HTMLResponse: ResponseGenerator {

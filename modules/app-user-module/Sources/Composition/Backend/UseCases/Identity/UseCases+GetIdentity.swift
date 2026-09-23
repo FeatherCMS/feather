@@ -1,5 +1,5 @@
 import FeatherInfrastructure
-import UserApplication
+public import UserApplication
 import UserInfrastructure
 
 extension UseCases {

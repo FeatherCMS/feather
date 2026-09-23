@@ -1,9 +1,9 @@
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 import NewsletterContracts
 import NewsletterDomain
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct ScheduleIssue: UseCase {
     struct Action: PermissionAction { let key = Permissions.Issues.update }

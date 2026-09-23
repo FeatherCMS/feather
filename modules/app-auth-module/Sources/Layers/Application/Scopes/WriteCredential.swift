@@ -1,5 +1,5 @@
-import AuthDomain
-import FeatherContracts
+public import AuthDomain
+public import FeatherContracts
 
 public struct WriteCredentialLink: Scope {
     public let credential: any CredentialRepository

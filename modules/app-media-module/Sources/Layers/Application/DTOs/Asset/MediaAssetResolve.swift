@@ -1,4 +1,4 @@
-import FeatherApplication
+public import FeatherApplication
 
 public struct MediaAssetResolve: DTO {
     public struct Variant: Sendable {

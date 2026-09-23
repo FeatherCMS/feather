@@ -1,9 +1,9 @@
-import CSS
+public import CSS
 import FeatherContracts
-import HTML
+public import HTML
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct NewAdminFormFieldMediaPicker: Component {
     public enum OutputMode: String, Sendable {

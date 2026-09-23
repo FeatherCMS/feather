@@ -1,4 +1,4 @@
-import FeatherAdmin
+public import FeatherAdmin
 import OpenAPIRuntime
 
 public struct AdminMetadataFieldStateFactory {

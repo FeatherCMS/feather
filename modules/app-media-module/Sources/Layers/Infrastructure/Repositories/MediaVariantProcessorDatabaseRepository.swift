@@ -1,7 +1,7 @@
 import FeatherDomain
-import FeatherInfrastructure
+public import FeatherInfrastructure
 import Foundation
-import MediaDomain
+public import MediaDomain
 
 extension MediaVariantProcessorTable.Row {
     var asDomain: MediaVariantProcessor {

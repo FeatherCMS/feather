@@ -1,5 +1,5 @@
 import FeatherInfrastructure
-import MediaApplication
+public import MediaApplication
 import MediaInfrastructure
 
 extension UseCases {

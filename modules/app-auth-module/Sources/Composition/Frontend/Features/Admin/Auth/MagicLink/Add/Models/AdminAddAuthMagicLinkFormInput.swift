@@ -1,7 +1,7 @@
 import AuthAdminAPI
 import AuthAppAPI
 import CSS
-import FeatherAdmin
+public import FeatherAdmin
 import FeatherContracts
 import FeatherValidation
 import FeatherValidationFoundation

@@ -1,4 +1,4 @@
-import CSS
+public import CSS
 
 /// Design-system token keys
 public enum TokenKey {

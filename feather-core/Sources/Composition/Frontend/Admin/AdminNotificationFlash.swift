@@ -1,5 +1,5 @@
 import Foundation
-import Hummingbird
+public import Hummingbird
 
 /// Carries an admin notification across a POST redirect without query flags.
 public enum AdminNotificationFlash {

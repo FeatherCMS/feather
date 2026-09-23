@@ -1,8 +1,8 @@
-import FeatherAdmin
+public import FeatherAdmin
 import FeatherContracts
-import Foundation
+public import Foundation
 import HTTPTypes
-import Hummingbird
+public import Hummingbird
 import RedirectAppAPI
 
 public struct RedirectRuleMiddleware: RouterMiddleware {

@@ -1,4 +1,4 @@
-import FeatherDomain
+public import FeatherDomain
 
 public protocol MediaVariantRepository: Repository {
     func insert(_ model: MediaVariant.New) async throws -> MediaVariant

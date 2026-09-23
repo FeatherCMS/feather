@@ -1,6 +1,6 @@
 import FeatherContracts
 import Foundation
-import WebDomain
+public import WebDomain
 
 extension PageMetadataInput {
     public func asMetadataBase(

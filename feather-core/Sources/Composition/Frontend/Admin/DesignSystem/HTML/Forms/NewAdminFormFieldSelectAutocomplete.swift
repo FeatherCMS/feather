@@ -1,9 +1,9 @@
-import CSS
+public import CSS
 import Foundation
-import HTML
+public import HTML
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct NewAdminFormFieldSelectAutocomplete: Component {
     public enum SelectionMode: String, Sendable, Equatable {

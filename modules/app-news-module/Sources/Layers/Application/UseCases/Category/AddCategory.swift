@@ -1,9 +1,9 @@
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 import NewsContracts
 import NewsDomain
 import SystemApplication
-import WebApplication
+public import WebApplication
 
 //
 //  AddCategory.swift

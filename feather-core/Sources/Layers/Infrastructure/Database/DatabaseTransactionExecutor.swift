@@ -3,9 +3,9 @@
 //  feather-core
 //
 
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
+public import FeatherContracts
+public import FeatherDatabase
+public import FeatherDomain
 
 public struct DatabaseTransactionExecutor<S: Scope>:
     ContextualTransactionExecutor

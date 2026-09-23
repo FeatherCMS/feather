@@ -5,8 +5,8 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherApplication
-import FeatherInfrastructure
-import UserApplication
+public import FeatherInfrastructure
+public import UserApplication
 
 extension IdentityTable.Row {
 

@@ -1,4 +1,4 @@
-import FeatherAdmin
+public import FeatherAdmin
 import Mustache
 
 public struct DefaultThemeRenderer: PublicThemeRenderer {

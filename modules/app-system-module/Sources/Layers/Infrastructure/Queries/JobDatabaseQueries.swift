@@ -1,7 +1,7 @@
 import FeatherDatabase
-import FeatherInfrastructure
+public import FeatherInfrastructure
 import Foundation
-import SystemApplication
+public import SystemApplication
 
 private struct JobRow {
     let id: String
