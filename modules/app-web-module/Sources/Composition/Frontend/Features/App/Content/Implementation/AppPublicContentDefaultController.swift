@@ -1,5 +1,6 @@
 import FeatherAdmin
 import Hummingbird
+import Foundation
 
 struct AppPublicContentDefaultController: AppPublicContentController {
 
@@ -12,23 +13,12 @@ struct AppPublicContentDefaultController: AppPublicContentController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        try await render(
-            path: request.uri.path,
-            request: request,
-            context: context
-        )
-    }
-}
-
-extension AppPublicContentDefaultController {
-
-    fileprivate func render(
-        path: String,
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
-        guard let content = try await interactor.resolve(path: path) else {
+        
+        let slug = request.uri.path.trimmingCharacters(
+            in: CharacterSet(charactersIn: "/")
+        )
+        guard let content = try await interactor.resolve(slug: slug) else {
             throw HTTPError(.notFound)
         }
         let rendered = await presenter.render(

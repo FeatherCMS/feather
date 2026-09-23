@@ -1,3 +1,6 @@
 protocol AppPublicContentInteractor: Sendable {
-    func resolve(path: String) async throws -> AppPublicResolvedContent?
+
+    func resolve(
+        slug: String
+    ) async throws -> AppPublicResolvedContent?
 }

@@ -8,27 +8,39 @@ import WebContracts
 struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
     let repository: any AppPublicContentRepository
     let events: any EventPublisher
-    let requestContext: RuntimeBuilderContext
+    let runtime: RuntimeBuilderContext
     let contentRenderer: any WebContentRenderer
 
     func resolve(
-        path: String
+        slug: String
     ) async throws -> AppPublicResolvedContent? {
-        let slug = path.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
-        guard let metadata = try await repository.resolveWebRoute(slug: slug)
+        guard
+            let metadata = try await repository.resolveWebRoute(slug: slug)
         else {
             let templateIdentifier = slug.isEmpty ? "home" : "not-found"
+            let baseMetadata = PublicContent.Metadata.Base(
+                referenceType: "",
+                referenceId: "",
+                slug: slug,
+                template: templateIdentifier
+            )
             return try await fallbackContent(
                 path: slug,
+                baseMetadata: baseMetadata,
                 templateIdentifier: templateIdentifier,
                 isNotFound: !slug.isEmpty,
             )
         }
 
+        let baseMetadata = PublicContent.Metadata.Base(
+            referenceType: metadata.referenceType,
+            referenceId: metadata.referenceId,
+            slug: metadata.slug,
+            template: metadata.template
+        )
         let payload = try await resolveModuleContent(
             path: slug,
-            templateIdentifier: metadata.template,
-            referenceID: metadata.referenceId
+            baseMetadata: baseMetadata
         )
         return .init(
             moduleContext: .init(
@@ -40,12 +52,13 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
 
     private func fallbackContent(
         path: String,
+        baseMetadata: PublicContent.Metadata.Base,
         templateIdentifier: String,
         isNotFound: Bool
     ) async throws -> AppPublicResolvedContent? {
         let payload = try await resolveModuleContent(
             path: path,
-            templateIdentifier: templateIdentifier
+            baseMetadata: baseMetadata
         )
         return .init(
             moduleContext: .init(
@@ -58,13 +71,11 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
 
     private func resolveModuleContent(
         path: String,
-        templateIdentifier: String?,
-        referenceID: String? = nil
+        baseMetadata: PublicContent.Metadata.Base
     ) async throws -> [String: any Sendable] {
         let context = WebPublicContentEventContext<RuntimeBuilderContext>(
-            templateIdentifier: templateIdentifier,
-            referenceID: referenceID,
-            runtime: requestContext
+            baseMetadata: baseMetadata,
+            runtime: runtime
         )
         let results = try await events.trigger(
             event: WebPublicContentProvider(),

@@ -35,7 +35,7 @@ public enum NewsWebPublicContentEventHandlers {
             ]
         )
 
-        switch context.templateIdentifier {
+        switch context.baseMetadata.template {
         case "news.categories":
             let response = try await client.newsCategoryList(.init())
             switch response {
@@ -73,7 +73,8 @@ public enum NewsWebPublicContentEventHandlers {
         context: WebPublicContentEventContext<RuntimeBuilderContext>,
         client: NewsAppAPI.Client
     ) async throws -> WebPublicContentResult? {
-        guard let referenceID = context.referenceID else { return nil }
+        guard !context.baseMetadata.referenceId.isEmpty else { return nil }
+        let referenceID = context.baseMetadata.referenceId
         let response = try await client.newsArticleGet(
             .init(path: .init(id: referenceID))
         )
@@ -87,7 +88,8 @@ public enum NewsWebPublicContentEventHandlers {
         context: WebPublicContentEventContext<RuntimeBuilderContext>,
         client: NewsAppAPI.Client
     ) async throws -> WebPublicContentResult? {
-        guard let referenceID = context.referenceID else { return nil }
+        guard !context.baseMetadata.referenceId.isEmpty else { return nil }
+        let referenceID = context.baseMetadata.referenceId
         let response = try await client.newsCategoryGet(
             .init(path: .init(id: referenceID))
         )

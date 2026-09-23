@@ -2,25 +2,14 @@ import Foundation
 import OpenAPIRuntime
 import WebAppAPI
 
-public struct WebPublicContentRepository: Sendable, AppPublicContentRepository {
-    private let apiBaseURL: URL
+public struct WebPublicContentRepository: AppPublicContentRepository {
+
     private let api: WebAppAPIClient
 
     public init(
-        apiBaseURL: URL,
-        sessionToken: String? = nil
+        api: WebAppAPIClient
     ) {
-        self.apiBaseURL = apiBaseURL
-        self.api = WebAppAPIClient(
-            apiBaseURL: apiBaseURL,
-            sessionToken: sessionToken
-        )
-    }
-
-    public func withSessionToken(
-        _ sessionToken: String?
-    ) -> any AppPublicContentRepository {
-        Self(apiBaseURL: apiBaseURL, sessionToken: sessionToken)
+        self.api = api
     }
 
     public func resolveWebRoute(

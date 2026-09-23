@@ -30,7 +30,7 @@ public enum BlogWebPublicContentEventHandlers {
         if let kind = kind(for: context) {
             return try await resolveList(kind: kind, api: api)
         }
-        switch context.templateIdentifier {
+        switch context.baseMetadata.template {
         case "blog.post":
             return try await resolvePost(context: context, api: api)
         case "blog.author":
@@ -46,7 +46,8 @@ public enum BlogWebPublicContentEventHandlers {
         context: WebPublicContentEventContext<RuntimeBuilderContext>,
         api: BlogAppAPIClient
     ) async throws -> WebPublicContentResult? {
-        guard let referenceID = context.referenceID else { return nil }
+        guard !context.baseMetadata.referenceId.isEmpty else { return nil }
+        let referenceID = context.baseMetadata.referenceId
         let response = try await api.withOpenAPIRepositoryErrorMapping {
             client in
             try await client.blogPostGet(.init(path: .init(id: referenceID)))
@@ -59,7 +60,8 @@ public enum BlogWebPublicContentEventHandlers {
         context: WebPublicContentEventContext<RuntimeBuilderContext>,
         api: BlogAppAPIClient
     ) async throws -> WebPublicContentResult? {
-        guard let referenceID = context.referenceID else { return nil }
+        guard !context.baseMetadata.referenceId.isEmpty else { return nil }
+        let referenceID = context.baseMetadata.referenceId
         let response = try await api.withOpenAPIRepositoryErrorMapping {
             client in
             try await client.blogAuthorGet(.init(path: .init(id: referenceID)))
@@ -72,7 +74,8 @@ public enum BlogWebPublicContentEventHandlers {
         context: WebPublicContentEventContext<RuntimeBuilderContext>,
         api: BlogAppAPIClient
     ) async throws -> WebPublicContentResult? {
-        guard let referenceID = context.referenceID else { return nil }
+        guard !context.baseMetadata.referenceId.isEmpty else { return nil }
+        let referenceID = context.baseMetadata.referenceId
         let response = try await api.withOpenAPIRepositoryErrorMapping {
             client in
             try await client.blogTagGet(.init(path: .init(id: referenceID)))
@@ -149,7 +152,7 @@ public enum BlogWebPublicContentEventHandlers {
     private static func kind(
         for context: WebPublicContentEventContext<RuntimeBuilderContext>
     ) -> Kind? {
-        switch context.templateIdentifier {
+        switch context.baseMetadata.template {
         case "blog.posts":
             return .posts
         case "blog.authors":

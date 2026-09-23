@@ -5,7 +5,6 @@ public struct AppPublicContent {
     public let controller: any AppPublicContentController
 
     public init(
-        repository: any AppPublicContentRepository,
         events: any EventPublisher,
         themeRenderer: any PublicThemeRenderer,
         contentRenderer: any WebContentRenderer
@@ -14,11 +13,11 @@ public struct AppPublicContent {
             buildRuntime: { request, context in
                 (
                     interactor: AppPublicContentDefaultInteractor(
-                        repository: repository.withSessionToken(
-                            context.sessionToken
+                        repository: WebPublicContentRepository(
+                            api: context.webApplicationAPI()
                         ),
                         events: events,
-                        requestContext: (request, context),
+                        runtime: (request, context),
                         contentRenderer: contentRenderer
                     ),
                     presenter: AppPublicContentDefaultPresenter(

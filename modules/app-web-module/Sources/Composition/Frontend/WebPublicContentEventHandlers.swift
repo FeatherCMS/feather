@@ -58,7 +58,7 @@ public enum WebPublicContentEventHandlers {
         var payload: [String: any Sendable] = [
             "baseUrl": normalizedURL(
                 base: origins.staticBaseURL,
-                path: ""
+                slug: ""
             ),
             "siteBaseUrl": origins.siteBaseURL,
             "staticBaseUrl": origins.staticBaseURL,
@@ -72,9 +72,10 @@ public enum WebPublicContentEventHandlers {
                 )
             ],
         ]
-        switch context.templateIdentifier {
+        switch context.baseMetadata.template {
         case "web.page":
-            guard let referenceID = context.referenceID else { return nil }
+            guard !context.baseMetadata.referenceId.isEmpty else { return nil }
+            let referenceID = context.baseMetadata.referenceId
             let response = try await api.withOpenAPIRepositoryErrorMapping {
                 client in
                 try await client.webPageGet(
@@ -86,7 +87,7 @@ public enum WebPublicContentEventHandlers {
                 let page = try value.body.json
                 payload["page"] = pageContext(
                     page: page,
-                    requestPath: requestPath,
+                    slug: requestPath,
                     siteSettings: siteSettings,
                     siteBaseURL: origins.siteBaseURL
                 )
@@ -106,7 +107,7 @@ public enum WebPublicContentEventHandlers {
                         "The page you requested does not exist or is not available.",
                     "permalink": normalizedURL(
                         base: origins.siteBaseURL,
-                        path: requestPath
+                        slug: requestPath
                     ),
                     "noindex": true,
                     "css": [String](),
@@ -157,7 +158,7 @@ public enum WebPublicContentEventHandlers {
 
     private static func pageContext(
         page: WebAppAPI.Components.Schemas.WebPageDetailSchema,
-        requestPath: String,
+        slug: String,
         siteSettings: WebAppAPI.Components.Schemas.WebSiteSettingsSchema,
         siteBaseURL: String
     ) -> [String: any Sendable] {
@@ -183,10 +184,7 @@ public enum WebPublicContentEventHandlers {
         var context: [String: any Sendable] = [
             "title": title,
             "description": description,
-            "permalink": normalizedURL(
-                base: siteBaseURL,
-                path: requestPath
-            ),
+            "permalink": normalizedURL(base: siteBaseURL, slug: slug),
             "noindex": siteSettings.noIndex
                 || page.metadata.noIndex
                 || page.metadata.status != "published",
@@ -218,10 +216,10 @@ public enum WebPublicContentEventHandlers {
 
     private static func normalizedURL(
         base: String,
-        path: String
+        slug: String
     ) -> String {
         var url = base.hasSuffix("/") ? base : base + "/"
-        let normalizedPath = path.trimmingCharacters(
+        let normalizedPath = slug.trimmingCharacters(
             in: CharacterSet(charactersIn: "/")
         )
         if !normalizedPath.isEmpty {
