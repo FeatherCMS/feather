@@ -3,10 +3,11 @@ import Foundation
 import Hummingbird
 
 struct AdminViewDashboardDefaultController: AdminViewDashboardController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewDashboardInteractor,
-        any AdminViewDashboardPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewDashboardInteractor,
+            any AdminViewDashboardPresenter
+        >
 
     func getHome(
         request: Request,

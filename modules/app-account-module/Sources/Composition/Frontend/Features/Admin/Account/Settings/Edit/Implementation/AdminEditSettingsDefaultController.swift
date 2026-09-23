@@ -5,10 +5,11 @@ import Hummingbird
 struct AdminEditSettingsDefaultController:
     AdminEditSettingsController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditSettingsInteractor,
-        any AdminEditSettingsPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditSettingsInteractor,
+            any AdminEditSettingsPresenter
+        >
 
     func getEditSettings(
         request: Request,

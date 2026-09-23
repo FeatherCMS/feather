@@ -3,10 +3,11 @@ import Hummingbird
 import UserContracts
 
 struct AdminViewUserRoleDefaultController: AdminViewUserRoleController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewUserRoleInteractor,
-        any AdminViewUserRolePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewUserRoleInteractor,
+            any AdminViewUserRolePresenter
+        >
 
     func getUserRole(
         request: Request,

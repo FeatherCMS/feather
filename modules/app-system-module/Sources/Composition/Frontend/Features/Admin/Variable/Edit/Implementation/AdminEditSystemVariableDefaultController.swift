@@ -8,10 +8,11 @@ import SystemContracts
 struct AdminEditSystemVariableDefaultController:
     AdminEditSystemVariableController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditSystemVariableInteractor,
-        any AdminEditSystemVariablePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditSystemVariableInteractor,
+            any AdminEditSystemVariablePresenter
+        >
 
     func getEditSystemVariable(
         request: Request,

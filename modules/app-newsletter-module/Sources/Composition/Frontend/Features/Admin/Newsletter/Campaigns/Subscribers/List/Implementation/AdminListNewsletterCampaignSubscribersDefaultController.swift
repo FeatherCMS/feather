@@ -11,10 +11,11 @@ import WebComponents
 struct AdminListNewsletterCampaignSubscribersDefaultController:
     AdminListNewsletterCampaignSubscribersController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListNewsletterCampaignSubscribersInteractor,
-        any AdminListNewsletterCampaignSubscribersPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListNewsletterCampaignSubscribersInteractor,
+            any AdminListNewsletterCampaignSubscribersPresenter
+        >
     func list(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {

@@ -4,10 +4,11 @@ import Foundation
 import Hummingbird
 
 struct AppLoginAuthDefaultController: AppLoginAuthController {
-    let buildRuntime: RuntimeBuilder<
-        any AppLoginAuthInteractor,
-        any AppLoginAuthPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AppLoginAuthInteractor,
+            any AppLoginAuthPresenter
+        >
 
     func getLogin(
         request: Request,

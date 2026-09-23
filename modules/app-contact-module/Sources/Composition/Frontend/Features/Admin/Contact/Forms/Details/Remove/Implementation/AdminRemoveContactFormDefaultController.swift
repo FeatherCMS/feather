@@ -9,10 +9,11 @@ import WebComponents
 
 struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveContactFormInteractor,
-        any AdminRemoveContactFormPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveContactFormInteractor,
+            any AdminRemoveContactFormPresenter
+        >
 
     func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse

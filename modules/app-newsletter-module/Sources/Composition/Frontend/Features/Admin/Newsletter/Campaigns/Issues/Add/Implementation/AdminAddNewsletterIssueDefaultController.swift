@@ -10,10 +10,11 @@ import WebComponents
 struct AdminAddNewsletterIssueDefaultController:
     AdminAddNewsletterIssueController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddNewsletterIssueInteractor,
-        any AdminAddNewsletterIssuePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddNewsletterIssueInteractor,
+            any AdminAddNewsletterIssuePresenter
+        >
     func getAddNewsletterIssue(
         request: Request,
         context: DefaultRequestContext

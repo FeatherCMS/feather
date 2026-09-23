@@ -20,10 +20,11 @@ import WebComponents
 struct AdminRemoveAuthEmailDefaultController:
     AdminRemoveAuthEmailController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveAuthEmailInteractor,
-        any AdminRemoveAuthEmailPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveAuthEmailInteractor,
+            any AdminRemoveAuthEmailPresenter
+        >
 
     func getRemoveAuthEmail(
         request: Request,

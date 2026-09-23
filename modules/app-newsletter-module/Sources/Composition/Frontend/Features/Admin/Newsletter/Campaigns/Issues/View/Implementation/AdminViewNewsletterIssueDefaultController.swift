@@ -10,10 +10,11 @@ import WebComponents
 struct AdminViewNewsletterIssueDefaultController:
     AdminViewNewsletterIssueController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewNewsletterIssueInteractor,
-        any AdminViewNewsletterIssuePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewNewsletterIssueInteractor,
+            any AdminViewNewsletterIssuePresenter
+        >
     func get(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {

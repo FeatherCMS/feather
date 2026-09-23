@@ -5,10 +5,11 @@ struct AdminViewAnalyticsOverviewDefaultController:
     AdminViewAnalyticsOverviewController
 {
 
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewAnalyticsOverviewInteractor,
-        any AdminViewAnalyticsOverviewPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewAnalyticsOverviewInteractor,
+            any AdminViewAnalyticsOverviewPresenter
+        >
 
     func getOverview(
         request: Request,

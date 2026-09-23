@@ -5,10 +5,11 @@ import NewsletterContracts
 struct AdminAddNewsletterCampaignDefaultController:
     AdminAddNewsletterCampaignController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddNewsletterCampaignInteractor,
-        any AdminAddNewsletterCampaignPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddNewsletterCampaignInteractor,
+            any AdminAddNewsletterCampaignPresenter
+        >
 
     func getAddNewsletterCampaign(
         request: Request,

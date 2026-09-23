@@ -21,10 +21,11 @@ import WebComponents
 struct AdminRemoveAuthCredentialDefaultController:
     AdminRemoveAuthCredentialController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveAuthCredentialInteractor,
-        any AdminRemoveAuthCredentialPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveAuthCredentialInteractor,
+            any AdminRemoveAuthCredentialPresenter
+        >
 
     func getRemoveCredential(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse

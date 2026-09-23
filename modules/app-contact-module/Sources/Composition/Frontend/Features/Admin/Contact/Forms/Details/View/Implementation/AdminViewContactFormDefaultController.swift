@@ -8,10 +8,11 @@ import WebBuilders
 import WebComponents
 
 struct AdminViewContactFormDefaultController: AdminViewContactFormController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewContactFormInteractor,
-        any AdminViewContactFormPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewContactFormInteractor,
+            any AdminViewContactFormPresenter
+        >
 
     func get(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse

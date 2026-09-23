@@ -2,10 +2,11 @@ import FeatherAdmin
 import Hummingbird
 
 struct AppLogoutAuthDefaultController: AppLogoutAuthController {
-    let buildRuntime: RuntimeBuilder<
-        any AppLogoutAuthInteractor,
-        any AppLogoutAuthPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AppLogoutAuthInteractor,
+            any AppLogoutAuthPresenter
+        >
 
     func getLogout(
         request: Request,

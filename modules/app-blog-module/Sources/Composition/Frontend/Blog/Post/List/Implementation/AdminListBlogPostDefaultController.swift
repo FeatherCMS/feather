@@ -15,10 +15,11 @@ import WebFrontend
 struct AdminListBlogPostDefaultController:
     AdminListBlogPostController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListBlogPostInteractor,
-        any AdminListBlogPostPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListBlogPostInteractor,
+            any AdminListBlogPostPresenter
+        >
 
     func getBlogPosts(
         request: Request,

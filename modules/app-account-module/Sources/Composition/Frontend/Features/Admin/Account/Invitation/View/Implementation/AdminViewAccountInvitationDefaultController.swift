@@ -4,10 +4,11 @@ import Hummingbird
 struct AdminViewAccountInvitationDefaultController:
     AdminViewAccountInvitationController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewAccountInvitationInteractor,
-        any AdminViewAccountInvitationPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewAccountInvitationInteractor,
+            any AdminViewAccountInvitationPresenter
+        >
 
     func getAccountInvitation(
         request: Request,

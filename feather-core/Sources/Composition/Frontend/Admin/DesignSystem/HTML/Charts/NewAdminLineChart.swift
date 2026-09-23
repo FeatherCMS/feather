@@ -81,7 +81,8 @@ public struct NewAdminLineChart: Component {
             }
         let polylinePoints = chartPoints.flatMap { [$0.x, $0.y] }
         let areaPoints =
-            ([(x: yAxisGuideStart, y: Double(height) - bottomInset)] + chartPoints + [
+            ([(x: yAxisGuideStart, y: Double(height) - bottomInset)]
+            + chartPoints + [
                 (x: Double(width) - rightInset, y: Double(height) - bottomInset)
             ])
             .flatMap { [$0.x, $0.y] }
@@ -152,10 +153,11 @@ public struct NewAdminLineChart: Component {
                         + (Double(index) / Double(count)) * chartWidth
                     let labelPosition = labelX / Double(width) * 100
                     let labelAlignment =
-                        index == 0 && points.count > 1 ? ""
+                        index == 0 && points.count > 1
+                        ? ""
                         : index == points.count - 1 && points.count > 1
-                        ? "transform:translateX(-100%);"
-                        : "transform:translateX(-50%);"
+                            ? "transform:translateX(-100%);"
+                            : "transform:translateX(-50%);"
                     Span(points[index].label)
                         .class("new-admin-line-chart__label")
                         .setAttribute(

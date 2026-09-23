@@ -10,10 +10,11 @@ import WebComponents
 struct AdminEditContactFormFieldDefaultController:
     AdminEditContactFormFieldController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditContactFormFieldInteractor,
-        any AdminEditContactFormFieldPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditContactFormFieldInteractor,
+            any AdminEditContactFormFieldPresenter
+        >
     func edit(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {

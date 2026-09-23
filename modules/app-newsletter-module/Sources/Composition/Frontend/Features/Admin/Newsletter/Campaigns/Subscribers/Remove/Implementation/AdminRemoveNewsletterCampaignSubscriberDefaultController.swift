@@ -10,10 +10,11 @@ import WebComponents
 struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
     AdminRemoveNewsletterCampaignSubscriberController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveNewsletterCampaignSubscriberInteractor,
-        any AdminRemoveNewsletterCampaignSubscriberPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveNewsletterCampaignSubscriberInteractor,
+            any AdminRemoveNewsletterCampaignSubscriberPresenter
+        >
     func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {

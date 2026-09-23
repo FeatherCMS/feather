@@ -43,7 +43,9 @@ struct MediaResolverTestSuite {
             resolver.resolve(variants: variants, variantKey: "cover")
                 == "https://media.example.com/media/variants/asset/cover.jpg"
         )
-        #expect(resolver.resolve(variants: variants, variantKey: "original") == nil)
+        #expect(
+            resolver.resolve(variants: variants, variantKey: "original") == nil
+        )
     }
 
     @Test
@@ -52,7 +54,8 @@ struct MediaResolverTestSuite {
             in: "![Photo](/media/assets/photo.jpg)"
         )
         #expect(
-            output == "![Photo](https://media.example.com/media/assets/photo.jpg)"
+            output
+                == "![Photo](https://media.example.com/media/assets/photo.jpg)"
         )
     }
 }

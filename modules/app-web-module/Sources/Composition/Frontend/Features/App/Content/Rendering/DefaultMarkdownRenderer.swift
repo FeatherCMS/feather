@@ -49,7 +49,7 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
             Logger.current.error(
                 "Markdown block renderer providers failed.",
                 metadata: [
-                    "error": .string(String(describing: error)),
+                    "error": .string(String(describing: error))
                 ]
             )
             return markdown

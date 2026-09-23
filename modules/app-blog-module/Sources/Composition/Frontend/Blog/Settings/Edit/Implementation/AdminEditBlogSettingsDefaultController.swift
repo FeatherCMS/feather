@@ -16,10 +16,11 @@ import WebFrontend
 struct AdminEditBlogSettingsDefaultController:
     AdminEditBlogSettingsController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditBlogSettingsInteractor,
-        any AdminEditBlogSettingsPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditBlogSettingsInteractor,
+            any AdminEditBlogSettingsPresenter
+        >
 
     func getEditBlogSettings(
         request: Request,

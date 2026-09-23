@@ -7,10 +7,11 @@ struct AdminViewAnalyticsInsightsDefaultController:
     AdminViewAnalyticsInsightsController
 {
     let source: AdminAnalyticsInsightsPage.Source
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewAnalyticsInsightsInteractor,
-        any AdminViewAnalyticsInsightsPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewAnalyticsInsightsInteractor,
+            any AdminViewAnalyticsInsightsPresenter
+        >
 
     func getInsights(
         request: Request,

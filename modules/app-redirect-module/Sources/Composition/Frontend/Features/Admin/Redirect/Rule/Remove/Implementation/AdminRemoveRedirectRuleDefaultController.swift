@@ -5,10 +5,11 @@ import RedirectContracts
 struct AdminRemoveRedirectRuleDefaultController:
     AdminRemoveRedirectRuleController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveRedirectRuleInteractor,
-        any AdminRemoveRedirectRulePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveRedirectRuleInteractor,
+            any AdminRemoveRedirectRulePresenter
+        >
 
     func getRemoveRedirectRule(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse

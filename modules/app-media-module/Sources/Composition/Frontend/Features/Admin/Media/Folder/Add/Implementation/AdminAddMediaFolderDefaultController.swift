@@ -11,10 +11,11 @@ import WebBuilders
 import WebComponents
 
 struct AdminAddMediaFolderDefaultController: AdminAddMediaFolderController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddMediaFolderInteractor,
-        any AdminAddMediaFolderPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddMediaFolderInteractor,
+            any AdminAddMediaFolderPresenter
+        >
 
     func getAddMediaFolder(
         request: Request,

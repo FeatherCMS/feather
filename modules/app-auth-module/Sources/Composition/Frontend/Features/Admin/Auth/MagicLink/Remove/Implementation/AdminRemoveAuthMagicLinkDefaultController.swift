@@ -20,10 +20,11 @@ import WebComponents
 struct AdminRemoveAuthMagicLinkDefaultController:
     AdminRemoveAuthMagicLinkController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveAuthMagicLinkInteractor,
-        any AdminRemoveAuthMagicLinkPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveAuthMagicLinkInteractor,
+            any AdminRemoveAuthMagicLinkPresenter
+        >
 
     func getRemoveAuthMagicLink(
         request: Request,

@@ -5,10 +5,11 @@ import Hummingbird
 struct AdminListContactSubmissionsDefaultController:
     AdminListContactSubmissionsController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListContactSubmissionsInteractor,
-        any AdminListContactSubmissionsPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListContactSubmissionsInteractor,
+            any AdminListContactSubmissionsPresenter
+        >
     func list(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {

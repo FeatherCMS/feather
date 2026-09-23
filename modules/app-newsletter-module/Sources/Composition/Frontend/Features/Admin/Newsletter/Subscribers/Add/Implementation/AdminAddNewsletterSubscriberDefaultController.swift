@@ -10,10 +10,11 @@ import WebComponents
 struct AdminAddNewsletterSubscriberDefaultController:
     AdminAddNewsletterSubscriberController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddNewsletterSubscriberInteractor,
-        any AdminAddNewsletterSubscriberPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddNewsletterSubscriberInteractor,
+            any AdminAddNewsletterSubscriberPresenter
+        >
 
     func get(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse

@@ -12,10 +12,11 @@ import WebComponents
 import WebFrontend
 
 struct AdminAddBlogTagDefaultController: AdminAddBlogTagController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddBlogTagInteractor,
-        any AdminAddBlogTagPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddBlogTagInteractor,
+            any AdminAddBlogTagPresenter
+        >
 
     func getAddBlogTag(
         request: Request,

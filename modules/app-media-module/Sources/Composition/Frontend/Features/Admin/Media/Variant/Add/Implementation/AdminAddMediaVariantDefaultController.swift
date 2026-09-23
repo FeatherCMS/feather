@@ -4,10 +4,11 @@ import Hummingbird
 import MediaContracts
 
 struct AdminAddMediaVariantDefaultController: AdminAddMediaVariantController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddMediaVariantInteractor,
-        any AdminAddMediaVariantPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddMediaVariantInteractor,
+            any AdminAddMediaVariantPresenter
+        >
 
     func getAddMediaVariant(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse

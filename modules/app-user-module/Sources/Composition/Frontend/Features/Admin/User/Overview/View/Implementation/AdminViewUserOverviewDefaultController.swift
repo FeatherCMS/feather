@@ -3,10 +3,11 @@ import Hummingbird
 import UserContracts
 
 struct AdminViewUserOverviewDefaultController: AdminViewUserOverviewController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewUserOverviewInteractor,
-        any AdminViewUserOverviewPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewUserOverviewInteractor,
+            any AdminViewUserOverviewPresenter
+        >
 
     func getOverview(
         request: Request,

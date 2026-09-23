@@ -14,10 +14,11 @@ import WebFrontend
 struct AdminViewBlogOverviewDefaultController:
     AdminViewBlogOverviewController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewBlogOverviewInteractor,
-        any AdminViewBlogOverviewPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewBlogOverviewInteractor,
+            any AdminViewBlogOverviewPresenter
+        >
 
     func getOverview(
         request: Request,

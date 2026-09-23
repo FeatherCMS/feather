@@ -14,10 +14,11 @@ import WebFrontend
 struct AdminRemoveBlogPostDefaultController:
     AdminRemoveBlogPostController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveBlogPostInteractor,
-        any AdminRemoveBlogPostPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveBlogPostInteractor,
+            any AdminRemoveBlogPostPresenter
+        >
 
     func getRemoveBlogPost(
         request: Request,

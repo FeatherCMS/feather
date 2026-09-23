@@ -10,10 +10,11 @@ import WebComponents
 struct AdminAddContactFormEmailDefaultController:
     AdminAddContactFormEmailController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddContactFormEmailInteractor,
-        any AdminAddContactFormEmailPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddContactFormEmailInteractor,
+            any AdminAddContactFormEmailPresenter
+        >
 
     func add(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse

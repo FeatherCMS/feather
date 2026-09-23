@@ -719,7 +719,8 @@ public struct WebPageRichContentEditor: Component {
                             .setAttribute(name: "spellcheck", value: "false")
                             .setAttribute(
                                 name: "data-media-base-url",
-                                value: unsafe AppEnvironmentStore.current.publicOrigins
+                                value: unsafe AppEnvironmentStore.current
+                                    .publicOrigins
                                     .mediaBaseURL.absoluteString
                             )
                             .class("markdown-source")

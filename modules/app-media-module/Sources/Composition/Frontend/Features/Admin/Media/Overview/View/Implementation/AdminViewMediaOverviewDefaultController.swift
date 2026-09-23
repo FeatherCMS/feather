@@ -10,10 +10,11 @@ import WebComponents
 
 struct AdminViewMediaOverviewDefaultController: AdminViewMediaOverviewController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewMediaOverviewInteractor,
-        any AdminViewMediaOverviewPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewMediaOverviewInteractor,
+            any AdminViewMediaOverviewPresenter
+        >
 
     func getOverview(
         request: Request,

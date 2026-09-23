@@ -5,10 +5,11 @@ import NewsletterContracts
 struct AdminListNewsletterIssuesDefaultController:
     AdminListNewsletterIssuesController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListNewsletterIssuesInteractor,
-        any AdminListNewsletterIssuesPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListNewsletterIssuesInteractor,
+            any AdminListNewsletterIssuesPresenter
+        >
 
     func list(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse

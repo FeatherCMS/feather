@@ -4,10 +4,11 @@ import Hummingbird
 import RedirectContracts
 
 struct AdminListRedirectRuleDefaultController: AdminListRedirectRuleController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListRedirectRuleInteractor,
-        any AdminListRedirectRulePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListRedirectRuleInteractor,
+            any AdminListRedirectRulePresenter
+        >
 
     func getRedirectRules(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse

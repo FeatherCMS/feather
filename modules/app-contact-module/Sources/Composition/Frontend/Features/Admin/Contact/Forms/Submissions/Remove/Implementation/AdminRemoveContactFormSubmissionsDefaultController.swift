@@ -4,10 +4,11 @@ import Hummingbird
 struct AdminRemoveContactFormSubmissionsDefaultController:
     AdminRemoveContactFormSubmissionsController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveContactFormSubmissionsInteractor,
-        any AdminRemoveContactFormSubmissionsPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveContactFormSubmissionsInteractor,
+            any AdminRemoveContactFormSubmissionsPresenter
+        >
 
     func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse

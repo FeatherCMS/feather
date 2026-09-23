@@ -6,10 +6,11 @@ import WebContracts
 struct AdminListWebMenuDefaultController:
     AdminListWebMenuController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListWebMenuInteractor,
-        any AdminListWebMenuPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListWebMenuInteractor,
+            any AdminListWebMenuPresenter
+        >
 
     func getWebMenus(
         request: Request,

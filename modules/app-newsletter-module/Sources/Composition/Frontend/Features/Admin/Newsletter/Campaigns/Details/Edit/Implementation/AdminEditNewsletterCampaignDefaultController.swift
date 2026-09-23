@@ -5,10 +5,11 @@ import NewsletterContracts
 struct AdminEditNewsletterCampaignDefaultController:
     AdminEditNewsletterCampaignController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditNewsletterCampaignInteractor,
-        any AdminEditNewsletterCampaignPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditNewsletterCampaignInteractor,
+            any AdminEditNewsletterCampaignPresenter
+        >
     func edit(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {

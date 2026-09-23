@@ -5,10 +5,11 @@ import NewsletterContracts
 struct AdminRemoveNewsletterCampaignDefaultController:
     AdminRemoveNewsletterCampaignController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveNewsletterCampaignInteractor,
-        any AdminRemoveNewsletterCampaignPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveNewsletterCampaignInteractor,
+            any AdminRemoveNewsletterCampaignPresenter
+        >
     func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {

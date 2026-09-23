@@ -7,10 +7,11 @@ import Hummingbird
 struct AdminListAnalyticsLogDefaultController:
     AdminListAnalyticsLogController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListAnalyticsLogInteractor,
-        any AdminListAnalyticsLogPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListAnalyticsLogInteractor,
+            any AdminListAnalyticsLogPresenter
+        >
 
     func getAnalyticsLogs(
         request: Request,

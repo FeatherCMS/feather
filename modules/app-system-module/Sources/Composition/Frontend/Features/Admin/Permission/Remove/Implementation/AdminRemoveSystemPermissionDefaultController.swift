@@ -5,10 +5,11 @@ import SystemContracts
 struct AdminRemoveSystemPermissionDefaultController:
     AdminRemoveSystemPermissionController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveSystemPermissionInteractor,
-        any AdminRemoveSystemPermissionPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveSystemPermissionInteractor,
+            any AdminRemoveSystemPermissionPresenter
+        >
 
     func getRemoveSystemPermissions(
         request: Request,

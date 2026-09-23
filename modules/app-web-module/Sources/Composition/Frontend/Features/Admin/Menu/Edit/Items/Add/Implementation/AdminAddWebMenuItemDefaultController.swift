@@ -5,10 +5,11 @@ import Hummingbird
 import OpenAPIRuntime
 
 struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddWebMenuItemInteractor,
-        any AdminAddWebMenuItemPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddWebMenuItemInteractor,
+            any AdminAddWebMenuItemPresenter
+        >
 
     func getAddWebMenuItem(
         request: Request,

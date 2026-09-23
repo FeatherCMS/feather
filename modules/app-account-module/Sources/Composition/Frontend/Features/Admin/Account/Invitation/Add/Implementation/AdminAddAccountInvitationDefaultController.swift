@@ -8,10 +8,11 @@ import UserFrontend
 struct AdminAddAccountInvitationDefaultController:
     AdminAddAccountInvitationController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddAccountInvitationInteractor,
-        any AdminAddAccountInvitationPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddAccountInvitationInteractor,
+            any AdminAddAccountInvitationPresenter
+        >
 
     func getAddAccountInvitation(
         request: Request,

@@ -4,10 +4,11 @@ import Hummingbird
 struct AdminViewContactOverviewDefaultController:
     AdminViewContactOverviewController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewContactOverviewInteractor,
-        any AdminViewContactOverviewPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewContactOverviewInteractor,
+            any AdminViewContactOverviewPresenter
+        >
 
     func getOverview(
         request: Request,

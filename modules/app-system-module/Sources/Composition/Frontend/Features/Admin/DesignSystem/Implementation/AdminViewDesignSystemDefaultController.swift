@@ -3,10 +3,11 @@ import Hummingbird
 
 struct AdminViewDesignSystemDefaultController: AdminViewDesignSystemController {
 
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewDesignSystemInteractor,
-        any AdminViewDesignSystemPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewDesignSystemInteractor,
+            any AdminViewDesignSystemPresenter
+        >
 
     func getDesignSystem(
         request: Request,

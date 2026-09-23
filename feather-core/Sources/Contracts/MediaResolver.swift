@@ -23,10 +23,12 @@ public struct MediaResolver: Sendable {
             return imagePath
         }
 
-        let base = mediaBaseURL.absoluteString.hasSuffix("/")
+        let base =
+            mediaBaseURL.absoluteString.hasSuffix("/")
             ? String(mediaBaseURL.absoluteString.dropLast())
             : mediaBaseURL.absoluteString
-        let path = imagePath.hasPrefix("/")
+        let path =
+            imagePath.hasPrefix("/")
             ? imagePath
             : "/\(imagePath)"
         return base + path

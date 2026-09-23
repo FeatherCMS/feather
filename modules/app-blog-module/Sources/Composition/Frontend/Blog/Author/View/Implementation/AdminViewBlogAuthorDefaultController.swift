@@ -12,10 +12,11 @@ import WebComponents
 import WebFrontend
 
 struct AdminViewBlogAuthorDefaultController: AdminViewBlogAuthorController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewBlogAuthorInteractor,
-        any AdminViewBlogAuthorPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewBlogAuthorInteractor,
+            any AdminViewBlogAuthorPresenter
+        >
 
     func getBlogAuthor(
         request: Request,

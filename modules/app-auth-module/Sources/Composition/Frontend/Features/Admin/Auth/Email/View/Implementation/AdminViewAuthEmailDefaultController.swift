@@ -18,10 +18,11 @@ import WebBuilders
 import WebComponents
 
 struct AdminViewAuthEmailDefaultController: AdminViewAuthEmailController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewAuthEmailInteractor,
-        any AdminViewAuthEmailPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewAuthEmailInteractor,
+            any AdminViewAuthEmailPresenter
+        >
 
     func getAuthEmail(
         request: Request,

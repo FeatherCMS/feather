@@ -44,10 +44,11 @@ enum AdminBlogMetadataRoutes {
         for route in routes {
             router.get(RouterPath(route.path)) { request, context in
                 let id = try context.requiredID()
-                let metadataID = context.parameters.get(
-                    "metadataID",
-                    as: String.self
-                ) ?? ""
+                let metadataID =
+                    context.parameters.get(
+                        "metadataID",
+                        as: String.self
+                    ) ?? ""
                 let editPath = route.editPath(RouterPath(id))
                 let configuration = AdminWebMetadataEditConfiguration(
                     referenceType: route.referenceType,
@@ -62,9 +63,12 @@ enum AdminBlogMetadataRoutes {
                         ),
                         .init(
                             label: "Metadata",
-                            href: editPath.appendingPath(
-                                RouterPath("metadata")
-                            ).appendingPath(RouterPath(metadataID)).description
+                            href:
+                                editPath.appendingPath(
+                                    RouterPath("metadata")
+                                )
+                                .appendingPath(RouterPath(metadataID))
+                                .description
                                 + "/",
                             isCurrent: true
                         ),
@@ -82,10 +86,11 @@ enum AdminBlogMetadataRoutes {
             }
             router.post(RouterPath(route.path)) { request, context in
                 let id = try context.requiredID()
-                let metadataID = context.parameters.get(
-                    "metadataID",
-                    as: String.self
-                ) ?? ""
+                let metadataID =
+                    context.parameters.get(
+                        "metadataID",
+                        as: String.self
+                    ) ?? ""
                 let editPath = route.editPath(RouterPath(id))
                 let configuration = AdminWebMetadataEditConfiguration(
                     referenceType: route.referenceType,
@@ -100,9 +105,12 @@ enum AdminBlogMetadataRoutes {
                         ),
                         .init(
                             label: "Metadata",
-                            href: editPath.appendingPath(
-                                RouterPath("metadata")
-                            ).appendingPath(RouterPath(metadataID)).description
+                            href:
+                                editPath.appendingPath(
+                                    RouterPath("metadata")
+                                )
+                                .appendingPath(RouterPath(metadataID))
+                                .description
                                 + "/",
                             isCurrent: true
                         ),

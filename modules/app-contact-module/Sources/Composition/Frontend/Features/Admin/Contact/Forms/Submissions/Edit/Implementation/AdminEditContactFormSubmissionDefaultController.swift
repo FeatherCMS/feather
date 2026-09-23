@@ -10,10 +10,11 @@ import WebComponents
 struct AdminEditContactFormSubmissionDefaultController:
     AdminEditContactFormSubmissionController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditContactFormSubmissionInteractor,
-        any AdminEditContactFormSubmissionPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditContactFormSubmissionInteractor,
+            any AdminEditContactFormSubmissionPresenter
+        >
 
     func update(request: Request, context: DefaultRequestContext) async throws
         -> Response

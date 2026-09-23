@@ -5,10 +5,11 @@ import MediaContracts
 struct AdminListMediaVariantProcessorsDefaultController:
     AdminListMediaVariantProcessorsController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListMediaVariantProcessorsInteractor,
-        any AdminListMediaVariantProcessorsPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListMediaVariantProcessorsInteractor,
+            any AdminListMediaVariantProcessorsPresenter
+        >
 
     func getMediaVariantProcessors(
         request: Request,

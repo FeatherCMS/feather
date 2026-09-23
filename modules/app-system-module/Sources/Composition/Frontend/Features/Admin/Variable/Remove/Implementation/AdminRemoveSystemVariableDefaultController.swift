@@ -7,10 +7,11 @@ import SystemContracts
 struct AdminRemoveSystemVariableDefaultController:
     AdminRemoveSystemVariableController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveSystemVariableInteractor,
-        any AdminRemoveSystemVariablePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveSystemVariableInteractor,
+            any AdminRemoveSystemVariablePresenter
+        >
 
     func getRemoveSystemVariables(
         request: Request,

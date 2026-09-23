@@ -7,10 +7,11 @@ import SystemContracts
 struct AdminListSystemVariableDefaultController:
     AdminListSystemVariableController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListSystemVariableInteractor,
-        any AdminListSystemVariablePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListSystemVariableInteractor,
+            any AdminListSystemVariablePresenter
+        >
 
     func getSystemVariables(
         request: Request,

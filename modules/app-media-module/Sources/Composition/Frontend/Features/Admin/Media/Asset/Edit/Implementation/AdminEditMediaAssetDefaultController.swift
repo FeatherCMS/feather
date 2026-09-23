@@ -10,10 +10,11 @@ import WebBuilders
 import WebComponents
 
 struct AdminEditMediaAssetDefaultController: AdminEditMediaAssetController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditMediaAssetInteractor,
-        any AdminEditMediaAssetPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditMediaAssetInteractor,
+            any AdminEditMediaAssetPresenter
+        >
 
     func getEditMediaAsset(
         request: Request,

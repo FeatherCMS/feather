@@ -5,10 +5,11 @@ import Hummingbird
 import OpenAPIRuntime
 
 struct AdminAddWebPageDefaultController: AdminAddWebPageController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddWebPageInteractor,
-        any AdminAddWebPagePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddWebPageInteractor,
+            any AdminAddWebPagePresenter
+        >
 
     func getAddWebPage(
         request: Request,

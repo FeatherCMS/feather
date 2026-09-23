@@ -11,10 +11,11 @@ import WebBuilders
 import WebComponents
 
 struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddMediaAssetInteractor,
-        any AdminAddMediaAssetPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddMediaAssetInteractor,
+            any AdminAddMediaAssetPresenter
+        >
 
     func getAddMediaAsset(
         request: Request,

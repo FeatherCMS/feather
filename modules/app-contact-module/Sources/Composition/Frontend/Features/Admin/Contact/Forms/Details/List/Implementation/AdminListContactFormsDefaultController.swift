@@ -9,10 +9,11 @@ import WebBuilders
 import WebComponents
 
 struct AdminListContactFormsDefaultController: AdminListContactFormsController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListContactFormsInteractor,
-        any AdminListContactFormsPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListContactFormsInteractor,
+            any AdminListContactFormsPresenter
+        >
 
     func list(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse

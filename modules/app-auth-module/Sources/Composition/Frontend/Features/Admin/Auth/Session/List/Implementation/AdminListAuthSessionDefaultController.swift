@@ -5,10 +5,11 @@ import Hummingbird
 struct AdminListAuthSessionDefaultController:
     AdminListAuthSessionController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListAuthSessionInteractor,
-        any AdminListAuthSessionPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListAuthSessionInteractor,
+            any AdminListAuthSessionPresenter
+        >
 
     func get(
         request: Request,

@@ -3,10 +3,11 @@ import Hummingbird
 import MediaContracts
 
 struct AdminListMediaVariantDefaultController: AdminListMediaVariantController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListMediaVariantInteractor,
-        any AdminListMediaVariantPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListMediaVariantInteractor,
+            any AdminListMediaVariantPresenter
+        >
 
     func getMediaVariants(
         request: Request,

@@ -2,10 +2,11 @@ import FeatherAdmin
 import Hummingbird
 
 struct AdminViewAnalyticsLogDefaultController: AdminViewAnalyticsLogController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewAnalyticsLogInteractor,
-        any AdminViewAnalyticsLogPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewAnalyticsLogInteractor,
+            any AdminViewAnalyticsLogPresenter
+        >
 
     func getAnalyticsLog(
         request: Request,

@@ -4,10 +4,11 @@ import Hummingbird
 struct AdminRemoveAccountInvitationDefaultController:
     AdminRemoveAccountInvitationController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveAccountInvitationInteractor,
-        any AdminRemoveAccountInvitationPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveAccountInvitationInteractor,
+            any AdminRemoveAccountInvitationPresenter
+        >
 
     func getRemoveAccountInvitation(
         request: Request,

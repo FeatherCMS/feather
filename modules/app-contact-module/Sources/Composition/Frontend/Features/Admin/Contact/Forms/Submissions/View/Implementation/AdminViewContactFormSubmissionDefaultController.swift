@@ -4,10 +4,11 @@ import Hummingbird
 struct AdminViewContactFormSubmissionDefaultController:
     AdminViewContactFormSubmissionController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewContactFormSubmissionInteractor,
-        any AdminViewContactFormSubmissionPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewContactFormSubmissionInteractor,
+            any AdminViewContactFormSubmissionPresenter
+        >
 
     func get(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse

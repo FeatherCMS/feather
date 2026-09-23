@@ -19,10 +19,11 @@ import WebComponents
 
 struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddAuthCredentialInteractor,
-        any AdminAddAuthCredentialPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddAuthCredentialInteractor,
+            any AdminAddAuthCredentialPresenter
+        >
 
     func getAddCredential(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse

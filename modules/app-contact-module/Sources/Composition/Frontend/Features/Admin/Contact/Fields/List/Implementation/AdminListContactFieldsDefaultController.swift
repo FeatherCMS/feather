@@ -12,10 +12,11 @@ import WebComponents
 struct AdminListContactFieldsDefaultController:
     AdminListContactFieldsController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListContactFieldsInteractor,
-        any AdminListContactFieldsPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListContactFieldsInteractor,
+            any AdminListContactFieldsPresenter
+        >
 
     func list(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse

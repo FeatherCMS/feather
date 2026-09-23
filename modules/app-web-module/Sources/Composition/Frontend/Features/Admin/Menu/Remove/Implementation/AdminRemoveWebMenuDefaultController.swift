@@ -6,10 +6,11 @@ import OpenAPIRuntime
 struct AdminRemoveWebMenuDefaultController:
     AdminRemoveWebMenuController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveWebMenuInteractor,
-        any AdminRemoveWebMenuPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveWebMenuInteractor,
+            any AdminRemoveWebMenuPresenter
+        >
 
     func getRemoveWebMenu(
         request: Request,

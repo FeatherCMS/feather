@@ -7,10 +7,11 @@ import OpenAPIRuntime
 struct AdminEditWebPageDefaultController:
     AdminEditWebPageController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditWebPageInteractor,
-        any AdminEditWebPagePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditWebPageInteractor,
+            any AdminEditWebPagePresenter
+        >
 
     func getEditWebPage(
         request: Request,

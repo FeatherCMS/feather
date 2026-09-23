@@ -12,10 +12,11 @@ import WebComponents
 import WebFrontend
 
 struct AdminViewBlogPostDefaultController: AdminViewBlogPostController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewBlogPostInteractor,
-        any AdminViewBlogPostPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewBlogPostInteractor,
+            any AdminViewBlogPostPresenter
+        >
 
     func getBlogPost(
         request: Request,

@@ -14,10 +14,11 @@ import WebFrontend
 struct AdminViewBlogAuthorLinkDefaultController:
     AdminViewBlogAuthorLinkController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewBlogAuthorLinkInteractor,
-        any AdminViewBlogAuthorLinkPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewBlogAuthorLinkInteractor,
+            any AdminViewBlogAuthorLinkPresenter
+        >
 
     func getBlogAuthorLink(
         request: Request,

@@ -6,10 +6,11 @@ import Hummingbird
 import UserContracts
 
 struct AdminEditUserRoleDefaultController: AdminEditUserRoleController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditUserRoleInteractor,
-        any AdminEditUserRolePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditUserRoleInteractor,
+            any AdminEditUserRolePresenter
+        >
 
     func getEditUserRole(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse

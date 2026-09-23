@@ -7,10 +7,11 @@ import UserContracts
 struct AdminRemoveUserIdentityDefaultController:
     AdminRemoveUserIdentityController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveUserIdentityInteractor,
-        any AdminRemoveUserIdentityPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveUserIdentityInteractor,
+            any AdminRemoveUserIdentityPresenter
+        >
 
     func getRemoveUserIdentity(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse

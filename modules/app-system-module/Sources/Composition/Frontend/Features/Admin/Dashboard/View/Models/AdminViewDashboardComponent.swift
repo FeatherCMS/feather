@@ -97,7 +97,9 @@ struct AdminViewDashboardComponent: Component {
                 BorderRadius(18.px)
                 Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             }
-            Custom(".admin-dashboard .new-admin-chart-card svg > rect:first-child") {
+            Custom(
+                ".admin-dashboard .new-admin-chart-card svg > rect:first-child"
+            ) {
                 UnsafeRawProperty(
                     name: "fill",
                     value: "var(--material-color-secondary-tint)"
@@ -186,7 +188,9 @@ struct AdminViewDashboardComponent: Component {
                         }
                         Div {
                             H2("Content at a glance")
-                            P("Your available content across installed modules.")
+                            P(
+                                "Your available content across installed modules."
+                            )
                         }
                         .class("admin-dashboard__section-heading-copy")
                     }

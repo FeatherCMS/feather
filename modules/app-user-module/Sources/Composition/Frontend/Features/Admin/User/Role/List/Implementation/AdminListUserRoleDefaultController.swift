@@ -4,10 +4,11 @@ import Hummingbird
 import UserContracts
 
 struct AdminListUserRoleDefaultController: AdminListUserRoleController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListUserRoleInteractor,
-        any AdminListUserRolePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListUserRoleInteractor,
+            any AdminListUserRolePresenter
+        >
 
     func getUserRoles(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse

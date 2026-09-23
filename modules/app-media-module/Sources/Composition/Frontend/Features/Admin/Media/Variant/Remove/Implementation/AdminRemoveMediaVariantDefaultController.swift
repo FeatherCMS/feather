@@ -5,10 +5,11 @@ import MediaContracts
 struct AdminRemoveMediaVariantDefaultController:
     AdminRemoveMediaVariantController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveMediaVariantInteractor,
-        any AdminRemoveMediaVariantPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveMediaVariantInteractor,
+            any AdminRemoveMediaVariantPresenter
+        >
 
     func getRemoveMediaVariants(
         request: Request,

@@ -6,10 +6,11 @@ import SystemContracts
 struct AdminViewSystemVariableDefaultController:
     AdminViewSystemVariableController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewSystemVariableInteractor,
-        any AdminViewSystemVariablePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewSystemVariableInteractor,
+            any AdminViewSystemVariablePresenter
+        >
 
     func getSystemVariable(
         request: Request,

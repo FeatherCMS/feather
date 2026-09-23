@@ -20,10 +20,11 @@ import WebComponents
 struct AdminEditAuthCredentialDefaultController:
     AdminEditAuthCredentialController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditAuthCredentialInteractor,
-        any AdminEditAuthCredentialPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditAuthCredentialInteractor,
+            any AdminEditAuthCredentialPresenter
+        >
 
     func getEditCredential(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse

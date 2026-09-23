@@ -7,10 +7,11 @@ import OpenAPIRuntime
 struct AdminEditWebMenuDefaultController:
     AdminEditWebMenuController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditWebMenuInteractor,
-        any AdminEditWebMenuPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditWebMenuInteractor,
+            any AdminEditWebMenuPresenter
+        >
 
     func getEditWebMenu(
         request: Request,

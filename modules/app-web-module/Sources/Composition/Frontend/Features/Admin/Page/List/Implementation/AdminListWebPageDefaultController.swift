@@ -6,10 +6,11 @@ import WebContracts
 struct AdminListWebPageDefaultController:
     AdminListWebPageController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListWebPageInteractor,
-        any AdminListWebPagePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListWebPageInteractor,
+            any AdminListWebPagePresenter
+        >
 
     func getWebPages(
         request: Request,

@@ -3,10 +3,11 @@ import Hummingbird
 import OpenAPIRuntime
 
 struct AdminViewWebOverviewDefaultController: AdminViewWebOverviewController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewWebOverviewInteractor,
-        any AdminViewWebOverviewPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewWebOverviewInteractor,
+            any AdminViewWebOverviewPresenter
+        >
 
     func getOverview(
         request: Request,

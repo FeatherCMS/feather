@@ -6,10 +6,11 @@ import Hummingbird
 struct AdminViewAnalyticsNotFoundDefaultController:
     AdminViewAnalyticsNotFoundController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewAnalyticsNotFoundInteractor,
-        any AdminViewAnalyticsNotFoundPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewAnalyticsNotFoundInteractor,
+            any AdminViewAnalyticsNotFoundPresenter
+        >
 
     func getNotFound(
         request: Request,

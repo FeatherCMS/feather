@@ -6,10 +6,11 @@ import Hummingbird
 struct AdminRemoveAuthSessionDefaultController:
     AdminRemoveAuthSessionController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveAuthSessionInteractor,
-        any AdminRemoveAuthSessionPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveAuthSessionInteractor,
+            any AdminRemoveAuthSessionPresenter
+        >
 
     func getRemoveAuthSession(
         request: Request,

@@ -3,10 +3,11 @@ import Hummingbird
 import UserContracts
 
 struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveUserRoleInteractor,
-        any AdminRemoveUserRolePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveUserRoleInteractor,
+            any AdminRemoveUserRolePresenter
+        >
 
     func getRemoveUserRole(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse

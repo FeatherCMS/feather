@@ -9,10 +9,11 @@ import WebBuilders
 import WebComponents
 
 struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveMediaAssetInteractor,
-        any AdminRemoveMediaAssetPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveMediaAssetInteractor,
+            any AdminRemoveMediaAssetPresenter
+        >
 
     func getRemoveMediaAsset(
         request: Request,

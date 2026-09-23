@@ -10,10 +10,11 @@ import WebComponents
 struct AdminAddContactFormFieldDefaultController:
     AdminAddContactFormFieldController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddContactFormFieldInteractor,
-        any AdminAddContactFormFieldPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddContactFormFieldInteractor,
+            any AdminAddContactFormFieldPresenter
+        >
     func getAddContactFormField(
         request: Request,
         context: DefaultRequestContext

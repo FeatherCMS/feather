@@ -15,10 +15,11 @@ import WebFrontend
 struct AdminListBlogTagDefaultController:
     AdminListBlogTagController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListBlogTagInteractor,
-        any AdminListBlogTagPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListBlogTagInteractor,
+            any AdminListBlogTagPresenter
+        >
 
     func getBlogTags(
         request: Request,

@@ -6,10 +6,11 @@ import Hummingbird
 import UserContracts
 
 struct AdminAddUserRoleDefaultController: AdminAddUserRoleController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddUserRoleInteractor,
-        any AdminAddUserRolePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddUserRoleInteractor,
+            any AdminAddUserRolePresenter
+        >
 
     func getAddUserRole(
         request: Request,

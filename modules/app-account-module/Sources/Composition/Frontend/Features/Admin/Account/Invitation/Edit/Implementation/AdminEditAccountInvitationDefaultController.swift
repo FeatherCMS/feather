@@ -8,10 +8,11 @@ import UserFrontend
 struct AdminEditAccountInvitationDefaultController:
     AdminEditAccountInvitationController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditAccountInvitationInteractor,
-        any AdminEditAccountInvitationPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditAccountInvitationInteractor,
+            any AdminEditAccountInvitationPresenter
+        >
 
     func getEditAccountInvitation(
         request: Request,

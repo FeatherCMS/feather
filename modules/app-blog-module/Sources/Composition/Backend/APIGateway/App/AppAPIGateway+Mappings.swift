@@ -34,10 +34,11 @@ extension AppAPIGateway {
                     ) ?? "/media/variants/\(asset.id)/\($0.key).\($0.extension)"
                 )
             }
-        let defaultURL = resolver.resolve(
-            variants: variants,
-            variantKey: "preview"
-        ) ?? resolver.resolve(imagePath: originalURL) ?? ""
+        let defaultURL =
+            resolver.resolve(
+                variants: variants,
+                variantKey: "preview"
+            ) ?? resolver.resolve(imagePath: originalURL) ?? ""
         return .init(
             assetId: asset.id,
             originalURL: originalURL,

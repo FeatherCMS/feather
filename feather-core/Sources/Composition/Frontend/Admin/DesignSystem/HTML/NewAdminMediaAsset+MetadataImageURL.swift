@@ -14,8 +14,9 @@ extension NewAdminMediaAsset {
             return nil
         }
 
-        guard let mediaPrefix = unsafe AppEnvironmentStore.current.mediaResolver
-            .resolve(imagePath: "/media/assets/")
+        guard
+            let mediaPrefix = unsafe AppEnvironmentStore.current.mediaResolver
+                .resolve(imagePath: "/media/assets/")
         else {
             return nil
         }

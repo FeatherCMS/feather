@@ -4,10 +4,11 @@ import Hummingbird
 import UserContracts
 
 struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListUserIdentityInteractor,
-        any AdminListUserIdentityPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListUserIdentityInteractor,
+            any AdminListUserIdentityPresenter
+        >
 
     func getUserIdentities(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse

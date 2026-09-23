@@ -5,10 +5,11 @@ import MediaAdminAPI
 import MediaContracts
 
 struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditMediaVariantInteractor,
-        any AdminEditMediaVariantPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditMediaVariantInteractor,
+            any AdminEditMediaVariantPresenter
+        >
 
     func getEditMediaVariant(request: Request, context: DefaultRequestContext)
         async throws -> Response

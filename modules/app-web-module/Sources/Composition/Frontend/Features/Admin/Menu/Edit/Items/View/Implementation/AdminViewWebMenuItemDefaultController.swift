@@ -4,10 +4,11 @@ import Hummingbird
 import OpenAPIRuntime
 
 struct AdminViewWebMenuItemDefaultController: AdminViewWebMenuItemController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewWebMenuItemInteractor,
-        any AdminViewWebMenuItemPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewWebMenuItemInteractor,
+            any AdminViewWebMenuItemPresenter
+        >
 
     func getWebMenuItem(
         request: Request,

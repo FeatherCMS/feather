@@ -4,10 +4,11 @@ import Hummingbird
 import UserContracts
 
 struct AdminViewUserIdentityDefaultController: AdminViewUserIdentityController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewUserIdentityInteractor,
-        any AdminViewUserIdentityPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewUserIdentityInteractor,
+            any AdminViewUserIdentityPresenter
+        >
 
     func getUserIdentity(
         request: Request,

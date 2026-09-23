@@ -19,10 +19,11 @@ import WebComponents
 
 struct AdminViewAuthMagicLinkDefaultController: AdminViewAuthMagicLinkController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewAuthMagicLinkInteractor,
-        any AdminViewAuthMagicLinkPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewAuthMagicLinkInteractor,
+            any AdminViewAuthMagicLinkPresenter
+        >
 
     func getAuthMagicLink(
         request: Request,

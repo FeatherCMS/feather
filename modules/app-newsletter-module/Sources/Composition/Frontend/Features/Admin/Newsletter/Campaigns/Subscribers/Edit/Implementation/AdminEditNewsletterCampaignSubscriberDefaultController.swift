@@ -10,10 +10,11 @@ import WebComponents
 struct AdminEditNewsletterCampaignSubscriberDefaultController:
     AdminEditNewsletterCampaignSubscriberController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditNewsletterCampaignSubscriberInteractor,
-        any AdminEditNewsletterCampaignSubscriberPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditNewsletterCampaignSubscriberInteractor,
+            any AdminEditNewsletterCampaignSubscriberPresenter
+        >
     func edit(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {

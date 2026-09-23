@@ -6,10 +6,11 @@ import SystemContracts
 struct AdminAddSystemPermissionDefaultController:
     AdminAddSystemPermissionController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddSystemPermissionInteractor,
-        any AdminAddSystemPermissionPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddSystemPermissionInteractor,
+            any AdminAddSystemPermissionPresenter
+        >
 
     func getAddSystemPermission(
         request: Request,

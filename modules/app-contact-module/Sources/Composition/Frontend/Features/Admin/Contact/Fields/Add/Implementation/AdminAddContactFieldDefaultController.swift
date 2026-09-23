@@ -11,10 +11,11 @@ import WebComponents
 struct AdminAddContactFieldDefaultController:
     AdminAddContactFieldController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminAddContactFieldInteractor,
-        any AdminAddContactFieldPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminAddContactFieldInteractor,
+            any AdminAddContactFieldPresenter
+        >
     func getAddContactField(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
     {

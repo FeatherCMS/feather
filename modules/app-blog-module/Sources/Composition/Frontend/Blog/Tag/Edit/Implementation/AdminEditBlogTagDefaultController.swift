@@ -14,10 +14,11 @@ import WebFrontend
 struct AdminEditBlogTagDefaultController:
     AdminEditBlogTagController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditBlogTagInteractor,
-        any AdminEditBlogTagPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditBlogTagInteractor,
+            any AdminEditBlogTagPresenter
+        >
 
     func getEditBlogTag(
         request: Request,

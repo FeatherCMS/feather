@@ -17,10 +17,11 @@ import WebBuilders
 import WebComponents
 
 struct AdminViewAuthOverviewDefaultController: AdminViewAuthOverviewController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewAuthOverviewInteractor,
-        any AdminViewAuthOverviewPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewAuthOverviewInteractor,
+            any AdminViewAuthOverviewPresenter
+        >
 
     func getOverview(
         request: Request,

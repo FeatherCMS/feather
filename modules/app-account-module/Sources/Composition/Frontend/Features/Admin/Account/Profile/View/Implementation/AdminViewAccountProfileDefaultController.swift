@@ -6,10 +6,11 @@ import Hummingbird
 struct AdminViewAccountProfileDefaultController:
     AdminViewAccountProfileController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewAccountProfileInteractor,
-        any AdminViewAccountProfilePresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewAccountProfileInteractor,
+            any AdminViewAccountProfilePresenter
+        >
 
     func getAccountProfile(
         request: Request,

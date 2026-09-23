@@ -5,10 +5,11 @@ import SystemContracts
 struct AdminListSystemPermissionDefaultController:
     AdminListSystemPermissionController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListSystemPermissionInteractor,
-        any AdminListSystemPermissionPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListSystemPermissionInteractor,
+            any AdminListSystemPermissionPresenter
+        >
 
     func getSystemPermissions(
         request: Request,

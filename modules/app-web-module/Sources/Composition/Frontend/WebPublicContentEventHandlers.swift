@@ -45,7 +45,8 @@ public enum WebPublicContentEventHandlers {
                 )
             }
         }
-        let origins = unsafe FeatherAdmin.AppEnvironmentStore.current.publicOrigins
+        let origins = unsafe FeatherAdmin.AppEnvironmentStore.current
+            .publicOrigins
         let navigation =
             menus
             .first(where: { $0.key == "main" })?
@@ -103,7 +104,7 @@ public enum WebPublicContentEventHandlers {
                         "The page you requested does not exist or is not available.",
                     "permalink": normalizedURL(
                         base: origins.siteBaseURL,
-                        slug:  context.baseMetadata.slug
+                        slug: context.baseMetadata.slug
                     ),
                     "noindex": true,
                     "css": [String](),

@@ -1,20 +1,21 @@
 import FeatherAdmin
-import Hummingbird
 import Foundation
+import Hummingbird
 
 struct AppPublicContentDefaultController: AppPublicContentController {
 
-    let buildRuntime: RuntimeBuilder<
-        any AppPublicContentInteractor,
-        any AppPublicContentPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AppPublicContentInteractor,
+            any AppPublicContentPresenter
+        >
 
     func getContent(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
-        
+
         let slug = request.uri.path.trimmingCharacters(
             in: CharacterSet(charactersIn: "/")
         )

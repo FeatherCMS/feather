@@ -7,10 +7,11 @@ import WebContracts
 struct AdminEditWebSettingsDefaultController:
     AdminEditWebSettingsController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditWebSettingsInteractor,
-        any AdminEditWebSettingsPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditWebSettingsInteractor,
+            any AdminEditWebSettingsPresenter
+        >
 
     func getEditWebSettings(
         request: Request,

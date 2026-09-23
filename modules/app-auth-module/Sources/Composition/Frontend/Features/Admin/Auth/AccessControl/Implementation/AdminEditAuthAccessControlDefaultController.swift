@@ -22,10 +22,11 @@ import WebComponents
 struct AdminEditAuthAccessControlDefaultController:
     AdminEditAuthAccessControlController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditAuthAccessControlInteractor,
-        any AdminEditAuthAccessControlPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditAuthAccessControlInteractor,
+            any AdminEditAuthAccessControlPresenter
+        >
 
     func getAuthAccessControl(
         request: Request,

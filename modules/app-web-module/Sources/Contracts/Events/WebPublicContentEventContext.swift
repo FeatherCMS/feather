@@ -1,7 +1,6 @@
 import FeatherContracts
 
-public struct WebPublicContentEventContext<T: Sendable>: ExecutionContext
-{
+public struct WebPublicContentEventContext<T: Sendable>: ExecutionContext {
     public let baseMetadata: PublicContent.Metadata.Base
     public let runtime: T
 

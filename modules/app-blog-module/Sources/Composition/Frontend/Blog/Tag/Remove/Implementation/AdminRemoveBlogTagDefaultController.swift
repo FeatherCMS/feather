@@ -14,10 +14,11 @@ import WebFrontend
 struct AdminRemoveBlogTagDefaultController:
     AdminRemoveBlogTagController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminRemoveBlogTagInteractor,
-        any AdminRemoveBlogTagPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminRemoveBlogTagInteractor,
+            any AdminRemoveBlogTagPresenter
+        >
 
     func getRemoveBlogTag(
         request: Request,

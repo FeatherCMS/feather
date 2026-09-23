@@ -6,10 +6,11 @@ import SystemContracts
 struct AdminEditSystemPermissionDefaultController:
     AdminEditSystemPermissionController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditSystemPermissionInteractor,
-        any AdminEditSystemPermissionPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditSystemPermissionInteractor,
+            any AdminEditSystemPermissionPresenter
+        >
 
     func getEditSystemPermission(
         request: Request,

@@ -9,10 +9,11 @@ import WebContracts
 struct AdminEditWebMetadataDefaultController:
     Sendable
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditWebMetadataInteractor,
-        any AdminEditWebMetadataPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditWebMetadataInteractor,
+            any AdminEditWebMetadataPresenter
+        >
 
     func getEditWebMetadataForContent(
         request: Request,

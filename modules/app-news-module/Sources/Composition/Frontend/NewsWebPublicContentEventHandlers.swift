@@ -24,7 +24,8 @@ public enum NewsWebPublicContentEventHandlers {
     ) async throws -> WebPublicContentResult? {
         // TODO: fix this
         let client = NewsAppAPI.Client(
-            serverURL: unsafe FeatherAdmin.AppEnvironmentStore.current.apiBaseURL,
+            serverURL: unsafe FeatherAdmin.AppEnvironmentStore.current
+                .apiBaseURL,
             transport: AsyncHTTPClientTransport(
                 configuration: .init(client: .shared, timeout: .seconds(3))
             ),
@@ -166,7 +167,8 @@ public enum NewsWebPublicContentEventHandlers {
         image: String,
         permalink: String
     ) -> [String: any Sendable] {
-        let resolvedImageURL = unsafe AppEnvironmentStore.current.mediaResolver
+        let resolvedImageURL =
+            unsafe AppEnvironmentStore.current.mediaResolver
             .resolve(imagePath: image) ?? ""
         return [
             "id": id,

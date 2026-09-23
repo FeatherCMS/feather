@@ -3,10 +3,11 @@ import Hummingbird
 import SystemContracts
 
 struct AdminViewSystemJobDefaultController: AdminViewSystemJobController {
-    let buildRuntime: RuntimeBuilder<
-        any AdminViewSystemJobInteractor,
-        any AdminViewSystemJobPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminViewSystemJobInteractor,
+            any AdminViewSystemJobPresenter
+        >
 
     func getSystemJob(
         request: Request,

@@ -20,10 +20,11 @@ import WebComponents
 struct AdminListAuthCredentialDefaultController:
     AdminListAuthCredentialController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminListAuthCredentialInteractor,
-        any AdminListAuthCredentialPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminListAuthCredentialInteractor,
+            any AdminListAuthCredentialPresenter
+        >
 
     func getCredentials(
         request: Request,

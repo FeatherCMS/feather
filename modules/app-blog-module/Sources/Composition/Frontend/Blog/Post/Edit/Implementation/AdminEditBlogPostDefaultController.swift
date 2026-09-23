@@ -14,10 +14,11 @@ import WebFrontend
 struct AdminEditBlogPostDefaultController:
     AdminEditBlogPostController
 {
-    let buildRuntime: RuntimeBuilder<
-        any AdminEditBlogPostInteractor,
-        any AdminEditBlogPostPresenter
-    >
+    let buildRuntime:
+        RuntimeBuilder<
+            any AdminEditBlogPostInteractor,
+            any AdminEditBlogPostPresenter
+        >
 
     func getEditBlogPost(
         request: Request,
