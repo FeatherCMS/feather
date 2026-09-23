@@ -11,6 +11,7 @@ fi
 
 find "${OPENAPI_DIRECTORY}" -type f -name '*.swift' -exec perl -pi -e '
     s/^\@_spi\(Generated\) public import OpenAPIRuntime$/\@_spi(Generated) import OpenAPIRuntime/;
-    s/^\@preconcurrency public import struct Foundation\.(URL|Data|Date)$/\@preconcurrency import struct Foundation.$1/;
+    s/^\@preconcurrency public import struct Foundation\.(URL|Data|Date)$/\@preconcurrency \@unsafe import struct Foundation.$1/;
+    s/^\@preconcurrency import struct Foundation\.(URL|Data|Date)$/\@preconcurrency \@unsafe import struct Foundation.$1/;
     s/^public import struct Foundation\.(URL|Data|Date)$/import struct Foundation.$1/;
 ' {} +
