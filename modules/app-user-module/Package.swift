@@ -4,7 +4,7 @@ import PackageDescription
 let swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
     // .strictMemorySafety(),
-    // .treatAllWarnings(as: .error),
+    .treatAllWarnings(as: .error),
     // .enableUpcomingFeature("InternalImportsByDefault"),
     .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("MemberImportVisibility"),
