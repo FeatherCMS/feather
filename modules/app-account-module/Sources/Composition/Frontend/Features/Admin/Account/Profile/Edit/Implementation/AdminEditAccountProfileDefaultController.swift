@@ -6,17 +6,16 @@ import Hummingbird
 struct AdminEditAccountProfileDefaultController:
     AdminEditAccountProfileController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditAccountProfileInteractor,
-            presenter: any AdminEditAccountProfilePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditAccountProfileInteractor,
+        any AdminEditAccountProfilePresenter
+    >
 
     func getEditAccountProfile(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard let account = context.account else {
             return try await presenter.renderDeniedPage(permissions: [])
         }
@@ -53,7 +52,7 @@ struct AdminEditAccountProfileDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard let account = context.account else {
             return try await presenter.renderDeniedPage(permissions: [])
                 .response(from: request, context: context)

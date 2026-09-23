@@ -20,17 +20,16 @@ import WebBuilders
 import WebComponents
 
 struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListAuthEmailInteractor,
-            presenter: any AdminListAuthEmailPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListAuthEmailInteractor,
+        any AdminListAuthEmailPresenter
+    >
 
     func getAuthEmails(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissionSet = context.currentUserPermissions
         let permissions = AuthPermissions.Emails.list
         let canAccess = context.isCurrentUserAllowed(
@@ -91,7 +90,7 @@ struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         let selectedIds = request.queryStrings("selectedIds")
         let page = request.queryPage()
         let search = request.querySearch()
@@ -127,7 +126,7 @@ struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.delete)
         else {
             return try await presenter.renderError(error: .forbidden)

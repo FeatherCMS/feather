@@ -6,17 +6,16 @@ import Hummingbird
 import UserContracts
 
 struct AdminAddUserRoleDefaultController: AdminAddUserRoleController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddUserRoleInteractor,
-            presenter: any AdminAddUserRolePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddUserRoleInteractor,
+        any AdminAddUserRolePresenter
+    >
 
     func getAddUserRole(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Roles.create)
         else {
             return try await presenter.renderForbiddenPage()
@@ -28,7 +27,7 @@ struct AdminAddUserRoleDefaultController: AdminAddUserRoleController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Roles.create)
         else {
             return try await runtime.presenter

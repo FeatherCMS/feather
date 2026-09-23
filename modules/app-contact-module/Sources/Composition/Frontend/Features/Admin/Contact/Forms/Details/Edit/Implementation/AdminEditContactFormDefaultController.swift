@@ -8,16 +8,15 @@ import WebBuilders
 import WebComponents
 
 struct AdminEditContactFormDefaultController: AdminEditContactFormController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditContactFormInteractor,
-            presenter: any AdminEditContactFormPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditContactFormInteractor,
+        any AdminEditContactFormPresenter
+    >
 
     func edit(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let formId = try context.requiredParameter("formId")
         do {
             return try await presenter.renderPage(
@@ -47,7 +46,7 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
     func update(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         let formId = try context.requiredParameter("formId")
         let form = try await request.decode(
             as: ContactFormEditForm.self,

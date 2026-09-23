@@ -7,17 +7,16 @@ import SystemContracts
 struct AdminListSystemVariableDefaultController:
     AdminListSystemVariableController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListSystemVariableInteractor,
-            presenter: any AdminListSystemVariablePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListSystemVariableInteractor,
+        any AdminListSystemVariablePresenter
+    >
 
     func getSystemVariables(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let page = request.queryPage()
         let search = request.querySearch()
         let permissions = context.currentUserPermissions

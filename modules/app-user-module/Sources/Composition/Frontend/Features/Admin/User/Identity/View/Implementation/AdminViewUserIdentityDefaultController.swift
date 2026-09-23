@@ -4,17 +4,16 @@ import Hummingbird
 import UserContracts
 
 struct AdminViewUserIdentityDefaultController: AdminViewUserIdentityController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewUserIdentityInteractor,
-            presenter: any AdminViewUserIdentityPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewUserIdentityInteractor,
+        any AdminViewUserIdentityPresenter
+    >
 
     func getUserIdentity(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Identities.read)
         else {
             return try await presenter.renderErrorPage(error: .forbidden)

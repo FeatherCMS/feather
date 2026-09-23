@@ -12,17 +12,16 @@ import WebComponents
 import WebFrontend
 
 struct AdminAddBlogPostDefaultController: AdminAddBlogPostController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddBlogPostInteractor,
-            presenter: any AdminAddBlogPostPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddBlogPostInteractor,
+        any AdminAddBlogPostPresenter
+    >
 
     func getAddBlogPost(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let slugPrefix = (try? await slugPrefix(context: context)) ?? "/"
         let options =
             (try? await runtime.interactor.loadOptions())
@@ -37,7 +36,7 @@ struct AdminAddBlogPostDefaultController: AdminAddBlogPostController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         var lastPayload: BlogPostFormInput?
 

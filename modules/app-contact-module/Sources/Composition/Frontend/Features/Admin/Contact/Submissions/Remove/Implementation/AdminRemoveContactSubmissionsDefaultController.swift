@@ -4,16 +4,15 @@ import Hummingbird
 struct AdminRemoveContactSubmissionsDefaultController:
     AdminRemoveContactSubmissionsController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveContactSubmissionsInteractor,
-            presenter: any AdminRemoveContactSubmissionsPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveContactSubmissionsInteractor,
+        any AdminRemoveContactSubmissionsPresenter
+    >
     func confirm(request: Request, context: DefaultRequestContext)
         async throws
         -> HTMLResponse
     {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         return try await presenter.renderRemovePage(
             items: request.queryStrings("selectedIds")
                 .map {
@@ -35,7 +34,7 @@ struct AdminRemoveContactSubmissionsDefaultController:
                 sessionToken: context.sessionToken
             )
         else { return Response(status: .badRequest) }
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         try await interactor.remove(ids: payload.normalizedSelectedIds)
         return Response(
             status: .seeOther,

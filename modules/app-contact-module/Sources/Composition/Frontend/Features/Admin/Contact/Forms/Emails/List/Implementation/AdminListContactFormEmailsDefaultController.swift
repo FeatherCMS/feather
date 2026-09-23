@@ -10,16 +10,15 @@ import WebComponents
 struct AdminListContactFormEmailsDefaultController:
     AdminListContactFormEmailsController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListContactFormEmailsInteractor,
-            presenter: any AdminListContactFormEmailsPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListContactFormEmailsInteractor,
+        any AdminListContactFormEmailsPresenter
+    >
 
     func list(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let formId = try context.requiredParameter("formId")
         do {
             return try await presenter.renderPage(

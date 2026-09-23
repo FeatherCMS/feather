@@ -6,17 +6,16 @@ import OpenAPIRuntime
 struct AdminRemoveWebMenuDefaultController:
     AdminRemoveWebMenuController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveWebMenuInteractor,
-            presenter: any AdminRemoveWebMenuPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveWebMenuInteractor,
+        any AdminRemoveWebMenuPresenter
+    >
 
     func getRemoveWebMenu(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         do {
             let menu = try await runtime.interactor.get(id: id)
@@ -37,7 +36,7 @@ struct AdminRemoveWebMenuDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,

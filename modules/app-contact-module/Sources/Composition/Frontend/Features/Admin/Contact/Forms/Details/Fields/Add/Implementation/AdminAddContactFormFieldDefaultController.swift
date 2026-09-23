@@ -10,18 +10,17 @@ import WebComponents
 struct AdminAddContactFormFieldDefaultController:
     AdminAddContactFormFieldController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddContactFormFieldInteractor,
-            presenter: any AdminAddContactFormFieldPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddContactFormFieldInteractor,
+        any AdminAddContactFormFieldPresenter
+    >
     func getAddContactFormField(
         request: Request,
         context: DefaultRequestContext
     )
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let formId = context.parameters.get("formId", as: String.self) ?? ""
         return try await presenter.renderPage(
             model: try await interactor.getAddContactFormField(formId: formId),
@@ -34,7 +33,7 @@ struct AdminAddContactFormFieldDefaultController:
     )
         async throws -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let formId = context.parameters.get("formId", as: String.self) ?? ""
         let payload = try await request.decode(
             as: ContactFormFieldAddForm.self,

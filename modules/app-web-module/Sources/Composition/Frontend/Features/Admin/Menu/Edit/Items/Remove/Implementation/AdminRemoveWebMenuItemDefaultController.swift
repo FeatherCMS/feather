@@ -6,17 +6,16 @@ import OpenAPIRuntime
 struct AdminRemoveWebMenuItemDefaultController:
     AdminRemoveWebMenuItemController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveWebMenuItemInteractor,
-            presenter: any AdminRemoveWebMenuItemPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveWebMenuItemInteractor,
+        any AdminRemoveWebMenuItemPresenter
+    >
 
     func getRemoveWebMenuItem(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let origin = WebMenuItemRoutes.removeOrigin(
@@ -45,7 +44,7 @@ struct AdminRemoveWebMenuItemDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let origin = WebMenuItemRoutes.removeOrigin(

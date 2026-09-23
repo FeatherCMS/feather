@@ -10,16 +10,15 @@ import WebComponents
 struct AdminAddNewsletterSubscriberDefaultController:
     AdminAddNewsletterSubscriberController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddNewsletterSubscriberInteractor,
-            presenter: any AdminAddNewsletterSubscriberPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddNewsletterSubscriberInteractor,
+        any AdminAddNewsletterSubscriberPresenter
+    >
 
     func get(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         do {
             return try await presenter.render(
                 model: try await interactor.get(),
@@ -46,7 +45,7 @@ struct AdminAddNewsletterSubscriberDefaultController:
     func post(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let form = try await request.decode(
             as: AdminAddNewsletterSubscriberForm.self,
             context: context

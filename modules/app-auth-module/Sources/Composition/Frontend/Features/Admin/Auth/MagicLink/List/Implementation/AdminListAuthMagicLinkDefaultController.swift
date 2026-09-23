@@ -21,17 +21,16 @@ import WebComponents
 
 struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListAuthMagicLinkInteractor,
-            presenter: any AdminListAuthMagicLinkPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListAuthMagicLinkInteractor,
+        any AdminListAuthMagicLinkPresenter
+    >
 
     func getAuthMagicLinks(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissionSet = context.currentUserPermissions
         let permissions = AuthPermissions.MagicLinks.list
         let canAccess = context.isCurrentUserAllowed(
@@ -95,7 +94,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         let selectedIds = request.queryStrings("selectedIds")
         let page = request.queryPage()
         let search = request.querySearch()
@@ -132,7 +131,7 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.delete)
         else {

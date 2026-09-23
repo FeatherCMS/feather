@@ -5,17 +5,16 @@ import SystemContracts
 struct AdminListSystemPermissionDefaultController:
     AdminListSystemPermissionController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListSystemPermissionInteractor,
-            presenter: any AdminListSystemPermissionPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListSystemPermissionInteractor,
+        any AdminListSystemPermissionPresenter
+    >
 
     func getSystemPermissions(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserAdminListActions
         guard permissions.allows(SystemPermissions.Permissions.list) else {
             return try await presenter.renderErrorPage(error: .forbidden)

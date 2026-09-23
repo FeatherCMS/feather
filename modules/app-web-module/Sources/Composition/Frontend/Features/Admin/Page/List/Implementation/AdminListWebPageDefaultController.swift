@@ -6,17 +6,16 @@ import WebContracts
 struct AdminListWebPageDefaultController:
     AdminListWebPageController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListWebPageInteractor,
-            presenter: any AdminListWebPagePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListWebPageInteractor,
+        any AdminListWebPagePresenter
+    >
 
     func getWebPages(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let page = request.queryPage()
         let search = request.querySearch()
         let permissions = context.currentUserPermissions
@@ -60,7 +59,7 @@ struct AdminListWebPageDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         let selectedIds = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
@@ -89,7 +88,7 @@ struct AdminListWebPageDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context

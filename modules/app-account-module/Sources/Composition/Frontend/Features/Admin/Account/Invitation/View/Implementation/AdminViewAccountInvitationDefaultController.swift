@@ -4,17 +4,16 @@ import Hummingbird
 struct AdminViewAccountInvitationDefaultController:
     AdminViewAccountInvitationController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewAccountInvitationInteractor,
-            presenter: any AdminViewAccountInvitationPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewAccountInvitationInteractor,
+        any AdminViewAccountInvitationPresenter
+    >
 
     func getAccountInvitation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         do {

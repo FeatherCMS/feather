@@ -6,17 +6,16 @@ import SystemContracts
 struct AdminAddSystemPermissionDefaultController:
     AdminAddSystemPermissionController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddSystemPermissionInteractor,
-            presenter: any AdminAddSystemPermissionPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddSystemPermissionInteractor,
+        any AdminAddSystemPermissionPresenter
+    >
 
     func getAddSystemPermission(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
                 to: SystemPermissions.Permissions.create
@@ -31,7 +30,7 @@ struct AdminAddSystemPermissionDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
                 to: SystemPermissions.Permissions.create

@@ -7,17 +7,16 @@ import OpenAPIRuntime
 struct AdminEditWebMenuItemDefaultController:
     AdminEditWebMenuItemController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditWebMenuItemInteractor,
-            presenter: any AdminEditWebMenuItemPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditWebMenuItemInteractor,
+        any AdminEditWebMenuItemPresenter
+    >
 
     func getEditWebMenuItem(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let permissions = context.currentUserPermissions
@@ -65,7 +64,7 @@ struct AdminEditWebMenuItemDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let permissions = context.currentUserPermissions

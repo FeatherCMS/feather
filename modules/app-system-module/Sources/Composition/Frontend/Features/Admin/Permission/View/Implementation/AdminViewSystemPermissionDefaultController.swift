@@ -5,17 +5,16 @@ import SystemContracts
 struct AdminViewSystemPermissionDefaultController:
     AdminViewSystemPermissionController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewSystemPermissionInteractor,
-            presenter: any AdminViewSystemPermissionPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewSystemPermissionInteractor,
+        any AdminViewSystemPermissionPresenter
+    >
 
     func getSystemPermission(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: SystemPermissions.Permissions.read)
         else {

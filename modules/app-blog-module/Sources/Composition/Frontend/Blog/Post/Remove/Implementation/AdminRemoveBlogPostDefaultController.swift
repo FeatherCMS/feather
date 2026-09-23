@@ -14,17 +14,16 @@ import WebFrontend
 struct AdminRemoveBlogPostDefaultController:
     AdminRemoveBlogPostController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveBlogPostInteractor,
-            presenter: any AdminRemoveBlogPostPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveBlogPostInteractor,
+        any AdminRemoveBlogPostPresenter
+    >
 
     func getRemoveBlogPost(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         do {
             let page = try await runtime.interactor.get(id: id)
@@ -45,7 +44,7 @@ struct AdminRemoveBlogPostDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,

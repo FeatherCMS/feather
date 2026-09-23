@@ -7,17 +7,16 @@ import WebContracts
 struct AdminListWebMenuItemDefaultController:
     AdminListWebMenuItemController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListWebMenuItemInteractor,
-            presenter: any AdminListWebMenuItemPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListWebMenuItemInteractor,
+        any AdminListWebMenuItemPresenter
+    >
 
     func getWebMenuItems(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let page = request.queryPage()
         let search = request.querySearch()
@@ -64,7 +63,7 @@ struct AdminListWebMenuItemDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let selectedIds = request.queryStrings("ids")
         let page = request.queryPage()
@@ -117,7 +116,7 @@ struct AdminListWebMenuItemDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
@@ -157,7 +156,7 @@ struct AdminListWebMenuItemDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let itemId = try context.requiredParameter("itemId")
         let payload = try await request.decode(

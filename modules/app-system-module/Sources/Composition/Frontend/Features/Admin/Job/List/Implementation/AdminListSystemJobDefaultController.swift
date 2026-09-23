@@ -3,17 +3,16 @@ import Hummingbird
 import SystemContracts
 
 struct AdminListSystemJobDefaultController: AdminListSystemJobController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListSystemJobInteractor,
-            presenter: any AdminListSystemJobPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListSystemJobInteractor,
+        any AdminListSystemJobPresenter
+    >
 
     func getSystemJobs(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let page = request.queryPage()
         let search = request.querySearch()
         let status = request.queryString("status").flatMap(Int.init)

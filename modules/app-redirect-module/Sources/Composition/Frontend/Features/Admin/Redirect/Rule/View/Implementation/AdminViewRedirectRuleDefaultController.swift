@@ -3,16 +3,15 @@ import Hummingbird
 import RedirectContracts
 
 struct AdminViewRedirectRuleDefaultController: AdminViewRedirectRuleController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewRedirectRuleInteractor,
-            presenter: any AdminViewRedirectRulePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewRedirectRuleInteractor,
+        any AdminViewRedirectRulePresenter
+    >
 
     func getRedirectRule(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.read)
         else { return try await presenter.renderErrorPage(error: .forbidden) }
         let id = try context.requiredID()

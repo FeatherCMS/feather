@@ -4,16 +4,15 @@ import Hummingbird
 import RedirectContracts
 
 struct AdminEditRedirectRuleDefaultController: AdminEditRedirectRuleController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditRedirectRuleInteractor,
-            presenter: any AdminEditRedirectRulePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditRedirectRuleInteractor,
+        any AdminEditRedirectRulePresenter
+    >
 
     func getEditRedirectRule(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.update)
         else { return try await presenter.renderForbiddenPage() }
         let id = try context.requiredID()
@@ -36,7 +35,7 @@ struct AdminEditRedirectRuleDefaultController: AdminEditRedirectRuleController {
     func postEditRedirectRule(request: Request, context: DefaultRequestContext)
         async throws -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.update)
         else {
             return try await presenter.renderForbiddenPage()

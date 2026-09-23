@@ -11,16 +11,15 @@ import WebComponents
 struct AdminListContactFormFieldsDefaultController:
     AdminListContactFormFieldsController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListContactFormFieldsInteractor,
-            presenter: any AdminListContactFormFieldsPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListContactFormFieldsInteractor,
+        any AdminListContactFormFieldsPresenter
+    >
 
     func list(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let formId = context.parameters.get("formId", as: String.self) ?? ""
         let search = request.querySearch() ?? ""
         do {

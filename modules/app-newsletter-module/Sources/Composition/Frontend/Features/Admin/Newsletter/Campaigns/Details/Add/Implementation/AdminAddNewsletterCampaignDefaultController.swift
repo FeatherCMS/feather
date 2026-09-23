@@ -5,11 +5,10 @@ import NewsletterContracts
 struct AdminAddNewsletterCampaignDefaultController:
     AdminAddNewsletterCampaignController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddNewsletterCampaignInteractor,
-            presenter: any AdminAddNewsletterCampaignPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddNewsletterCampaignInteractor,
+        any AdminAddNewsletterCampaignPresenter
+    >
 
     func getAddNewsletterCampaign(
         request: Request,
@@ -17,7 +16,7 @@ struct AdminAddNewsletterCampaignDefaultController:
     )
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.create)
         else {
             return try await presenter.renderPage(
@@ -41,7 +40,7 @@ struct AdminAddNewsletterCampaignDefaultController:
     )
         async throws -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.create)
         else {
             return

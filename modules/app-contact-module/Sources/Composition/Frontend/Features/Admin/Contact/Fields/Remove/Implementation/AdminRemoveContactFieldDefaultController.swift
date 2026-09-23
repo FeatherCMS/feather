@@ -11,16 +11,15 @@ import WebComponents
 struct AdminRemoveContactFieldDefaultController:
     AdminRemoveContactFieldController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveContactFieldInteractor,
-            presenter: any AdminRemoveContactFieldPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveContactFieldInteractor,
+        any AdminRemoveContactFieldPresenter
+    >
 
     func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.delete)
         else {
             return try await presenter.renderForbiddenPage()
@@ -35,7 +34,7 @@ struct AdminRemoveContactFieldDefaultController:
     func remove(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.delete)
         else {
             return
@@ -72,7 +71,7 @@ struct AdminRemoveContactFieldDefaultController:
         async throws
         -> HTMLResponse
     {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.delete)
         else {
             return try await presenter.renderForbiddenPage()
@@ -93,7 +92,7 @@ struct AdminRemoveContactFieldDefaultController:
             as: NewAdminListRemoveFormInput.self,
             context: context
         )
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.delete)
         else {
             return

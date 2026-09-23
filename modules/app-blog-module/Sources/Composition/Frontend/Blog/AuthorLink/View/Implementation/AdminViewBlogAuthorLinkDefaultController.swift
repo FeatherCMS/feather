@@ -14,17 +14,16 @@ import WebFrontend
 struct AdminViewBlogAuthorLinkDefaultController:
     AdminViewBlogAuthorLinkController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewBlogAuthorLinkInteractor,
-            presenter: any AdminViewBlogAuthorLinkPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewBlogAuthorLinkInteractor,
+        any AdminViewBlogAuthorLinkPresenter
+    >
 
     func getBlogAuthorLink(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let permissions = context.currentUserPermissions

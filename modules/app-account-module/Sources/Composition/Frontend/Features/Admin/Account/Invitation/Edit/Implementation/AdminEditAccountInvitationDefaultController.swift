@@ -8,17 +8,16 @@ import UserFrontend
 struct AdminEditAccountInvitationDefaultController:
     AdminEditAccountInvitationController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditAccountInvitationInteractor,
-            presenter: any AdminEditAccountInvitationPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditAccountInvitationInteractor,
+        any AdminEditAccountInvitationPresenter
+    >
 
     func getEditAccountInvitation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
         let isEdited = request.hasQueryFlag("edited")
         let permissions = context.currentUserPermissions
@@ -52,7 +51,7 @@ struct AdminEditAccountInvitationDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
         let availableRoleOptions = await roleOptions(context, selected: [])
         var lastPayload: AdminEditAccountInvitationFormInput?

@@ -3,16 +3,15 @@ import Hummingbird
 import UserContracts
 
 struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveUserRoleInteractor,
-            presenter: any AdminRemoveUserRolePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveUserRoleInteractor,
+        any AdminRemoveUserRolePresenter
+    >
 
     func getRemoveUserRole(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Roles.delete)
         else { return try await presenter.renderForbiddenPage() }
         let id = try context.requiredID()
@@ -34,7 +33,7 @@ struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
     func postRemoveUserRole(request: Request, context: DefaultRequestContext)
         async throws -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Roles.delete)
         else {
             return try await presenter.renderForbiddenPage()
@@ -77,7 +76,7 @@ struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
     func getRemoveUserRoles(request: Request, context: DefaultRequestContext)
         async throws -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Roles.delete)
         else {
             return try await presenter.renderForbiddenPage()
@@ -125,7 +124,7 @@ struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
     func postRemoveUserRoles(request: Request, context: DefaultRequestContext)
         async throws -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Roles.delete)
         else {
             return try await presenter.renderForbiddenPage()

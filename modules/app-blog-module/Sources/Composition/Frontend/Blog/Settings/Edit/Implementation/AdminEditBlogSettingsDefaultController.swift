@@ -16,17 +16,16 @@ import WebFrontend
 struct AdminEditBlogSettingsDefaultController:
     AdminEditBlogSettingsController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditBlogSettingsInteractor,
-            presenter: any AdminEditBlogSettingsPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditBlogSettingsInteractor,
+        any AdminEditBlogSettingsPresenter
+    >
 
     func getEditBlogSettings(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let canRead = context.isCurrentUserAllowed(
             to: BlogPermissions.Settings.read
@@ -73,7 +72,7 @@ struct AdminEditBlogSettingsDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let canEdit = canEdit(permissions: permissions)
 

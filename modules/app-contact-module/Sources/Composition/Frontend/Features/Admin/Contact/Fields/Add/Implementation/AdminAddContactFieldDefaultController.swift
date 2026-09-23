@@ -11,15 +11,14 @@ import WebComponents
 struct AdminAddContactFieldDefaultController:
     AdminAddContactFieldController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddContactFieldInteractor,
-            presenter: any AdminAddContactFieldPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddContactFieldInteractor,
+        any AdminAddContactFieldPresenter
+    >
     func getAddContactField(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.create)
         else {
             return try await presenter.renderForbiddenPage()
@@ -32,7 +31,7 @@ struct AdminAddContactFieldDefaultController:
     func postAddContactField(request: Request, context: DefaultRequestContext)
         async throws -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.create)
         else {
             return

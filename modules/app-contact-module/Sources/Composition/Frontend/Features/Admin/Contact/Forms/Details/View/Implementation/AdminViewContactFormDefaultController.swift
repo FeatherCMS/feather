@@ -8,16 +8,15 @@ import WebBuilders
 import WebComponents
 
 struct AdminViewContactFormDefaultController: AdminViewContactFormController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewContactFormInteractor,
-            presenter: any AdminViewContactFormPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewContactFormInteractor,
+        any AdminViewContactFormPresenter
+    >
 
     func get(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let formId = try context.requiredParameter("formId")
         do {
             return try await presenter.renderDetailsPage(

@@ -14,17 +14,16 @@ import WebFrontend
 struct AdminEditBlogTagDefaultController:
     AdminEditBlogTagController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditBlogTagInteractor,
-            presenter: any AdminEditBlogTagPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditBlogTagInteractor,
+        any AdminEditBlogTagPresenter
+    >
 
     func getEditBlogTag(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         do {
@@ -56,7 +55,7 @@ struct AdminEditBlogTagDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         var lastPayload: BlogTagFormInput?

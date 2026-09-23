@@ -19,17 +19,16 @@ import WebComponents
 
 struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
 
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddAuthMagicLinkInteractor,
-            presenter: any AdminAddAuthMagicLinkPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddAuthMagicLinkInteractor,
+        any AdminAddAuthMagicLinkPresenter
+    >
 
     func getAddAuthMagicLink(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.create)
         else { return try await presenter.renderForbiddenPage() }
@@ -48,7 +47,7 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.create)
         else {

@@ -8,17 +8,16 @@ import SystemContracts
 struct AdminEditSystemVariableDefaultController:
     AdminEditSystemVariableController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditSystemVariableInteractor,
-            presenter: any AdminEditSystemVariablePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditSystemVariableInteractor,
+        any AdminEditSystemVariablePresenter
+    >
 
     func getEditSystemVariable(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: SystemPermissions.Variables.update)
         else {
@@ -47,7 +46,7 @@ struct AdminEditSystemVariableDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: SystemPermissions.Variables.update)
         else {

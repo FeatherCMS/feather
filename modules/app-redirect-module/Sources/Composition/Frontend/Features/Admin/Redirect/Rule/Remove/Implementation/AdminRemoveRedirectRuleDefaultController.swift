@@ -5,16 +5,15 @@ import RedirectContracts
 struct AdminRemoveRedirectRuleDefaultController:
     AdminRemoveRedirectRuleController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveRedirectRuleInteractor,
-            presenter: any AdminRemoveRedirectRulePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveRedirectRuleInteractor,
+        any AdminRemoveRedirectRulePresenter
+    >
 
     func getRemoveRedirectRule(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.delete)
         else { return try await presenter.renderForbiddenPage() }
         let id = try context.requiredID()
@@ -40,7 +39,7 @@ struct AdminRemoveRedirectRuleDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.delete)
         else {
             return try await presenter.renderForbiddenPage()
@@ -91,7 +90,7 @@ struct AdminRemoveRedirectRuleDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.delete)
         else {
             return try await presenter.renderForbiddenPage()
@@ -146,7 +145,7 @@ struct AdminRemoveRedirectRuleDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.delete)
         else {
             return try await presenter.renderForbiddenPage()

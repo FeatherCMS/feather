@@ -13,18 +13,18 @@ public enum BlogWebPublicContentEventHandlers {
     ) {
         registry.register(
             event: WebPublicContentProvider.self,
-            context: WebPublicContentEventContext.self
+            context: WebPublicContentEventContext<RuntimeBuilderContext>.self
         ) { _, context in
             try await resolve(context)
         }
     }
 
     private static func resolve(
-        _ context: WebPublicContentEventContext
+        _ context: WebPublicContentEventContext<RuntimeBuilderContext>
     ) async throws -> WebPublicContentResult? {
         let api = BlogAppAPIClient(
             apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: context.sessionToken
+            sessionToken: context.runtime.1.sessionToken
         )
 
         if let kind = kind(for: context) {
@@ -43,7 +43,7 @@ public enum BlogWebPublicContentEventHandlers {
     }
 
     private static func resolvePost(
-        context: WebPublicContentEventContext,
+        context: WebPublicContentEventContext<RuntimeBuilderContext>,
         api: BlogAppAPIClient
     ) async throws -> WebPublicContentResult? {
         guard let referenceID = context.referenceID else { return nil }
@@ -56,7 +56,7 @@ public enum BlogWebPublicContentEventHandlers {
     }
 
     private static func resolveAuthor(
-        context: WebPublicContentEventContext,
+        context: WebPublicContentEventContext<RuntimeBuilderContext>,
         api: BlogAppAPIClient
     ) async throws -> WebPublicContentResult? {
         guard let referenceID = context.referenceID else { return nil }
@@ -69,7 +69,7 @@ public enum BlogWebPublicContentEventHandlers {
     }
 
     private static func resolveTag(
-        context: WebPublicContentEventContext,
+        context: WebPublicContentEventContext<RuntimeBuilderContext>,
         api: BlogAppAPIClient
     ) async throws -> WebPublicContentResult? {
         guard let referenceID = context.referenceID else { return nil }
@@ -147,7 +147,7 @@ public enum BlogWebPublicContentEventHandlers {
     }
 
     private static func kind(
-        for context: WebPublicContentEventContext
+        for context: WebPublicContentEventContext<RuntimeBuilderContext>
     ) -> Kind? {
         switch context.templateIdentifier {
         case "blog.posts":

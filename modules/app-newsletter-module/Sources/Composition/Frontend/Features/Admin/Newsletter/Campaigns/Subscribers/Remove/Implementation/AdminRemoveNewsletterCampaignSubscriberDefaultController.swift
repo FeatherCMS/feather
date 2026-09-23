@@ -10,15 +10,14 @@ import WebComponents
 struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
     AdminRemoveNewsletterCampaignSubscriberController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveNewsletterCampaignSubscriberInteractor,
-            presenter: any AdminRemoveNewsletterCampaignSubscriberPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveNewsletterCampaignSubscriberInteractor,
+        any AdminRemoveNewsletterCampaignSubscriberPresenter
+    >
     func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let newsletterId = try context.requiredParameter("newsletterId")
         let subscriberId = try context.requiredParameter("subscriberId")
         let item = try await interactor.get(
@@ -33,7 +32,7 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
     func remove(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         let newsletterId = try context.requiredParameter("newsletterId")
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
@@ -64,7 +63,7 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
     func removeSelected(request: Request, context: DefaultRequestContext)
         async throws -> Response
     {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         let newsletterId = try context.requiredParameter("newsletterId")
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,

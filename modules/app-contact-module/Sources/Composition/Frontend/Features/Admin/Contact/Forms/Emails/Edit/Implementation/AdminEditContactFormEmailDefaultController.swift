@@ -10,16 +10,15 @@ import WebComponents
 struct AdminEditContactFormEmailDefaultController:
     AdminEditContactFormEmailController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditContactFormEmailInteractor,
-            presenter: any AdminEditContactFormEmailPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditContactFormEmailInteractor,
+        any AdminEditContactFormEmailPresenter
+    >
 
     func edit(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let formId = try context.requiredParameter("formId")
         let mailId = try context.requiredParameter("mailId")
         do {
@@ -59,7 +58,7 @@ struct AdminEditContactFormEmailDefaultController:
     func update(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         let formId = try context.requiredParameter("formId")
         let mailId = try context.requiredParameter("mailId")
         let input = try await request.decode(

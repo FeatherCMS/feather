@@ -7,17 +7,16 @@ import WebContracts
 struct AdminEditWebSettingsDefaultController:
     AdminEditWebSettingsController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditWebSettingsInteractor,
-            presenter: any AdminEditWebSettingsPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditWebSettingsInteractor,
+        any AdminEditWebSettingsPresenter
+    >
 
     func getEditWebSettings(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let canRead = context.isCurrentUserAllowed(
             to: WebPermissions.Settings.read
@@ -64,7 +63,7 @@ struct AdminEditWebSettingsDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let canEdit = canEdit(permissions: permissions)
 

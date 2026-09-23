@@ -5,17 +5,16 @@ import MediaContracts
 struct AdminRemoveMediaVariantDefaultController:
     AdminRemoveMediaVariantController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveMediaVariantInteractor,
-            presenter: any AdminRemoveMediaVariantPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveMediaVariantInteractor,
+        any AdminRemoveMediaVariantPresenter
+    >
 
     func getRemoveMediaVariants(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: MediaPermissions.Variants.delete)
         else {
             return
@@ -62,7 +61,7 @@ struct AdminRemoveMediaVariantDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: MediaPermissions.Variants.delete)
         else {
             return

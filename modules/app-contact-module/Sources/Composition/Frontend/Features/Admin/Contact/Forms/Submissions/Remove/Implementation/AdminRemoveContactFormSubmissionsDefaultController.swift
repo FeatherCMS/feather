@@ -4,16 +4,15 @@ import Hummingbird
 struct AdminRemoveContactFormSubmissionsDefaultController:
     AdminRemoveContactFormSubmissionsController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveContactFormSubmissionsInteractor,
-            presenter: any AdminRemoveContactFormSubmissionsPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveContactFormSubmissionsInteractor,
+        any AdminRemoveContactFormSubmissionsPresenter
+    >
 
     func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let formId = try context.requiredParameter("formId")
         let submissionId = try context.requiredParameter("submissionId")
         let submission = try await interactor.get(
@@ -29,7 +28,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
     func remove(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         let formId = try context.requiredParameter("formId")
         let submissionId = try context.requiredParameter("submissionId")
         let nonceRequest = try await request.decode(
@@ -59,7 +58,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         async throws
         -> HTMLResponse
     {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         return try await presenter.renderRemovePage(
             formId: try context.requiredParameter("formId"),
             items: request.queryStrings("selectedIds")
@@ -84,7 +83,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
                 sessionToken: context.sessionToken
             )
         else { return Response(status: .badRequest) }
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         try await interactor.remove(
             formId: formId,
             ids: payload.normalizedSelectedIds

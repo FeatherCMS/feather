@@ -4,17 +4,16 @@ import Hummingbird
 import OpenAPIRuntime
 
 struct AdminViewWebMenuItemDefaultController: AdminViewWebMenuItemController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewWebMenuItemInteractor,
-            presenter: any AdminViewWebMenuItemPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewWebMenuItemInteractor,
+        any AdminViewWebMenuItemPresenter
+    >
 
     func getWebMenuItem(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let permissions = context.currentUserPermissions

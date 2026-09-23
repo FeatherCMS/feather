@@ -5,16 +5,15 @@ import MediaAdminAPI
 import MediaContracts
 
 struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditMediaVariantInteractor,
-            presenter: any AdminEditMediaVariantPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditMediaVariantInteractor,
+        any AdminEditMediaVariantPresenter
+    >
 
     func getEditMediaVariant(request: Request, context: DefaultRequestContext)
         async throws -> Response
     {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: MediaPermissions.Variants.update)
         else {
             return try await runtime.presenter
@@ -54,7 +53,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
     func postEditMediaVariant(request: Request, context: DefaultRequestContext)
         async throws -> Response
     {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: MediaPermissions.Variants.update)
         else {
             return try await runtime.presenter
@@ -108,7 +107,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
                 to: MediaPermissions.VariantProcessors.update
@@ -143,7 +142,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
                 to: MediaPermissions.VariantProcessors.delete
@@ -187,7 +186,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
                 to: MediaPermissions.VariantProcessors.create
@@ -229,7 +228,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
                 to: MediaPermissions.VariantProcessors.update
@@ -273,7 +272,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
                 to: MediaPermissions.VariantProcessors.delete

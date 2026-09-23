@@ -10,16 +10,15 @@ import WebComponents
 struct AdminRemoveContactFormEmailDefaultController:
     AdminRemoveContactFormEmailController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveContactFormEmailInteractor,
-            presenter: any AdminRemoveContactFormEmailPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveContactFormEmailInteractor,
+        any AdminRemoveContactFormEmailPresenter
+    >
 
     func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let formId = try context.requiredParameter("formId")
         let selectedIds = request.queryStrings("selectedIds")
         if selectedIds.count == 1, let mailId = selectedIds.first {
@@ -48,7 +47,7 @@ struct AdminRemoveContactFormEmailDefaultController:
             as: NewAdminListRemoveFormInput.self,
             context: context
         )
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         let formId = try context.requiredParameter("formId")
         guard
             await AdminNonceStore.shared.consume(

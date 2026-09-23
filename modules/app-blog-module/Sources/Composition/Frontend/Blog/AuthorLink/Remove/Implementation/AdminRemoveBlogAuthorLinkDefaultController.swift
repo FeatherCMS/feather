@@ -14,17 +14,16 @@ import WebFrontend
 struct AdminRemoveBlogAuthorLinkDefaultController:
     AdminRemoveBlogAuthorLinkController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveBlogAuthorLinkInteractor,
-            presenter: any AdminRemoveBlogAuthorLinkPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveBlogAuthorLinkInteractor,
+        any AdminRemoveBlogAuthorLinkPresenter
+    >
 
     func getRemoveBlogAuthorLink(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         do {
@@ -48,7 +47,7 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let nonceRequest = try await request.decode(

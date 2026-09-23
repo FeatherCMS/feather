@@ -9,17 +9,16 @@ import WebBuilders
 import WebComponents
 
 struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveMediaAssetInteractor,
-            presenter: any AdminRemoveMediaAssetPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveMediaAssetInteractor,
+        any AdminRemoveMediaAssetPresenter
+    >
 
     func getRemoveMediaAsset(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
         let model = try await interactor.getRemoveMediaAsset(id: id)
         return try await presenter.renderRemovePage(
@@ -31,7 +30,7 @@ struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
         let payload = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,

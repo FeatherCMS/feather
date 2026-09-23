@@ -5,17 +5,16 @@ import Hummingbird
 import OpenAPIRuntime
 
 struct AdminAddWebPageDefaultController: AdminAddWebPageController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddWebPageInteractor,
-            presenter: any AdminAddWebPagePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddWebPageInteractor,
+        any AdminAddWebPagePresenter
+    >
 
     func getAddWebPage(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         return try await runtime.presenter.renderAddPage(
             state: formState(slugPrefix: slugPrefix(context: context)),
             permissions: context.currentUserPermissions
@@ -26,7 +25,7 @@ struct AdminAddWebPageDefaultController: AdminAddWebPageController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         var lastPayload: WebPageFormInput?
 

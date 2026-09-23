@@ -4,17 +4,16 @@ import Hummingbird
 import OpenAPIRuntime
 
 struct AdminViewWebPageDefaultController: AdminViewWebPageController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewWebPageInteractor,
-            presenter: any AdminViewWebPagePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewWebPageInteractor,
+        any AdminViewWebPagePresenter
+    >
 
     func getWebPage(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserAdminListActions
         do {

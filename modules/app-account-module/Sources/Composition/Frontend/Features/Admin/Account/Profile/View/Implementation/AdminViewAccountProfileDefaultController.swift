@@ -6,17 +6,16 @@ import Hummingbird
 struct AdminViewAccountProfileDefaultController:
     AdminViewAccountProfileController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewAccountProfileInteractor,
-            presenter: any AdminViewAccountProfilePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewAccountProfileInteractor,
+        any AdminViewAccountProfilePresenter
+    >
 
     func getAccountProfile(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard let account = context.account else {
             return try await runtime.presenter.renderDeniedPage(
                 permissions: []

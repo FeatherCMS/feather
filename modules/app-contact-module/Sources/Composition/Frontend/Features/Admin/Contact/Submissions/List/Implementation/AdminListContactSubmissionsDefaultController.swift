@@ -5,15 +5,14 @@ import Hummingbird
 struct AdminListContactSubmissionsDefaultController:
     AdminListContactSubmissionsController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListContactSubmissionsInteractor,
-            presenter: any AdminListContactSubmissionsPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListContactSubmissionsInteractor,
+        any AdminListContactSubmissionsPresenter
+    >
     func list(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let search = request.querySearch() ?? ""
         do {
             let items = try await interactor.list()

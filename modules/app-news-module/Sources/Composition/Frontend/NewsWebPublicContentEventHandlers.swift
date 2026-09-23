@@ -13,15 +13,16 @@ public enum NewsWebPublicContentEventHandlers {
     ) {
         registry.register(
             event: WebPublicContentProvider.self,
-            context: WebPublicContentEventContext.self
+            context: WebPublicContentEventContext<RuntimeBuilderContext>.self
         ) { _, context in
             try await resolve(context)
         }
     }
 
     private static func resolve(
-        _ context: WebPublicContentEventContext
+        _ context: WebPublicContentEventContext<RuntimeBuilderContext>
     ) async throws -> WebPublicContentResult? {
+        // TODO: fix this
         let client = NewsAppAPI.Client(
             serverURL: FeatherAdmin.AppEnvironmentStore.current.apiBaseURL,
             transport: AsyncHTTPClientTransport(
@@ -29,7 +30,7 @@ public enum NewsWebPublicContentEventHandlers {
             ),
             middlewares: [
                 FeatherAdmin.ClientAPIAuthMiddleware(
-                    sessionToken: context.sessionToken
+                    sessionToken: context.runtime.context.sessionToken
                 )
             ]
         )
@@ -69,7 +70,7 @@ public enum NewsWebPublicContentEventHandlers {
     }
 
     private static func resolveArticle(
-        context: WebPublicContentEventContext,
+        context: WebPublicContentEventContext<RuntimeBuilderContext>,
         client: NewsAppAPI.Client
     ) async throws -> WebPublicContentResult? {
         guard let referenceID = context.referenceID else { return nil }
@@ -83,7 +84,7 @@ public enum NewsWebPublicContentEventHandlers {
     }
 
     private static func resolveCategory(
-        context: WebPublicContentEventContext,
+        context: WebPublicContentEventContext<RuntimeBuilderContext>,
         client: NewsAppAPI.Client
     ) async throws -> WebPublicContentResult? {
         guard let referenceID = context.referenceID else { return nil }

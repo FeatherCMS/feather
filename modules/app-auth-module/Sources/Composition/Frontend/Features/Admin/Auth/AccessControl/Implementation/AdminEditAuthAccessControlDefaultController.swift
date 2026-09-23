@@ -22,17 +22,16 @@ import WebComponents
 struct AdminEditAuthAccessControlDefaultController:
     AdminEditAuthAccessControlController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditAuthAccessControlInteractor,
-            presenter: any AdminEditAuthAccessControlPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditAuthAccessControlInteractor,
+        any AdminEditAuthAccessControlPresenter
+    >
 
     func getAuthAccessControl(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let canList = permissions.contains(
             AuthPermissions.AccessControl.list.rawValue
@@ -81,7 +80,7 @@ struct AdminEditAuthAccessControlDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let canEdit = permissions.contains(
             AuthPermissions.AccessControl.update.rawValue

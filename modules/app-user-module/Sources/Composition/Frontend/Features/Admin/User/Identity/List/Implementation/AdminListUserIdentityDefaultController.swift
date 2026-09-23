@@ -4,16 +4,15 @@ import Hummingbird
 import UserContracts
 
 struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListUserIdentityInteractor,
-            presenter: any AdminListUserIdentityPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListUserIdentityInteractor,
+        any AdminListUserIdentityPresenter
+    >
 
     func getUserIdentities(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Identities.list)
         else { return try await presenter.renderErrorPage(error: .forbidden) }
         let search = request.querySearch()

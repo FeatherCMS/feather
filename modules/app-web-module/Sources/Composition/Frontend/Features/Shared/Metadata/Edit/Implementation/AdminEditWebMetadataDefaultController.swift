@@ -9,11 +9,10 @@ import WebContracts
 struct AdminEditWebMetadataDefaultController:
     Sendable
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditWebMetadataInteractor,
-            presenter: any AdminEditWebMetadataPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditWebMetadataInteractor,
+        any AdminEditWebMetadataPresenter
+    >
 
     func getEditWebMetadataForContent(
         request: Request,
@@ -44,7 +43,7 @@ struct AdminEditWebMetadataDefaultController:
         context: DefaultRequestContext,
         configuration: AdminWebMetadataEditConfiguration
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try metadataID(context: context)
         let permissions = context.currentUserPermissions
         do {
@@ -99,7 +98,7 @@ struct AdminEditWebMetadataDefaultController:
         context: DefaultRequestContext,
         configuration: AdminWebMetadataEditConfiguration
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try metadataID(context: context)
         let permissions = context.currentUserPermissions
         let entry = try await loadEntry(

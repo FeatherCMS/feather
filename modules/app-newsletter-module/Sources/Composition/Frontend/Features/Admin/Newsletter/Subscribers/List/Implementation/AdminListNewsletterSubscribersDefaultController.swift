@@ -6,16 +6,15 @@ import NewsletterContracts
 struct AdminListNewsletterSubscribersDefaultController:
     AdminListNewsletterSubscribersController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListNewsletterSubscribersInteractor,
-            presenter: any AdminListNewsletterSubscribersPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListNewsletterSubscribersInteractor,
+        any AdminListNewsletterSubscribersPresenter
+    >
 
     func list(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let campaignId = request.queryString("campaignId")?
             .whitespaceTrimmed
         let permissions = context.currentUserAdminListActions

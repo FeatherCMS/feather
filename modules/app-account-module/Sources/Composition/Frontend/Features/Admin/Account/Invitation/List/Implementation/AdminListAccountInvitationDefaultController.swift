@@ -5,17 +5,16 @@ import Hummingbird
 struct AdminListAccountInvitationDefaultController:
     AdminListAccountInvitationController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListAccountInvitationInteractor,
-            presenter: any AdminListAccountInvitationPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListAccountInvitationInteractor,
+        any AdminListAccountInvitationPresenter
+    >
 
     func getAccountInvitations(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let permissionScope = AccountPermissions.Invitations.list
         do {
@@ -75,7 +74,7 @@ struct AdminListAccountInvitationDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let selectedIds = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
@@ -129,7 +128,7 @@ struct AdminListAccountInvitationDefaultController:
             )
         }
         let payload = nonceRequest.input
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         if !payload.normalizedIds.isEmpty {
             try await runtime.interactor.remove(
                 ids: payload.normalizedIds

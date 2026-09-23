@@ -12,17 +12,16 @@ import WebComponents
 import WebFrontend
 
 struct AdminAddBlogTagDefaultController: AdminAddBlogTagController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddBlogTagInteractor,
-            presenter: any AdminAddBlogTagPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddBlogTagInteractor,
+        any AdminAddBlogTagPresenter
+    >
 
     func getAddBlogTag(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let slugPrefix = (try? await slugPrefix(context: context)) ?? "/"
         return try await runtime.presenter.renderAddPage(
             state: formState(slugPrefix: slugPrefix),
@@ -34,7 +33,7 @@ struct AdminAddBlogTagDefaultController: AdminAddBlogTagController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         var lastPayload: BlogTagFormInput?
 

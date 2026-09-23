@@ -11,17 +11,16 @@ import WebBuilders
 import WebComponents
 
 struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListMediaAssetInteractor,
-            presenter: any AdminListMediaAssetPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListMediaAssetInteractor,
+        any AdminListMediaAssetPresenter
+    >
 
     func getListMediaAssets(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let page = request.queryPage()
         let search = request.querySearch()
         let parentId = request.queryString("parent_id")?
@@ -77,7 +76,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: MediaPermissions.Assets.delete)
         else {
@@ -115,7 +114,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: MediaPermissions.Assets.delete)
         else {

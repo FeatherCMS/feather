@@ -6,17 +6,16 @@ import SystemContracts
 struct AdminViewSystemVariableDefaultController:
     AdminViewSystemVariableController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewSystemVariableInteractor,
-            presenter: any AdminViewSystemVariablePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewSystemVariableInteractor,
+        any AdminViewSystemVariablePresenter
+    >
 
     func getSystemVariable(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.read)
         else {
             return try await runtime.presenter.renderErrorPage(

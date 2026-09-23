@@ -3,17 +3,16 @@ import Hummingbird
 import SystemContracts
 
 struct AdminViewSystemJobDefaultController: AdminViewSystemJobController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewSystemJobInteractor,
-            presenter: any AdminViewSystemJobPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewSystemJobInteractor,
+        any AdminViewSystemJobPresenter
+    >
 
     func getSystemJob(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: SystemPermissions.Jobs.read)
         else {
             return try await runtime.presenter.renderErrorPage(

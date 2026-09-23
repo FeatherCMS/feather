@@ -6,17 +6,16 @@ import Hummingbird
 struct AdminRemoveAuthSessionDefaultController:
     AdminRemoveAuthSessionController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveAuthSessionInteractor,
-            presenter: any AdminRemoveAuthSessionPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveAuthSessionInteractor,
+        any AdminRemoveAuthSessionPresenter
+    >
 
     func getRemoveAuthSession(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let identityId = try context.requiredID()
         let sessionId = try context.requiredParameter("sessionId")
         guard context.isCurrentUserAllowed(to: AuthPermissions.Sessions.delete)
@@ -51,7 +50,7 @@ struct AdminRemoveAuthSessionDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let identityId = try context.requiredID()
         let sessionId = try context.requiredParameter("sessionId")
         guard context.isCurrentUserAllowed(to: AuthPermissions.Sessions.delete)

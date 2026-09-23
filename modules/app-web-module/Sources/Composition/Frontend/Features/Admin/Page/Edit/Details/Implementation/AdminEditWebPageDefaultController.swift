@@ -7,17 +7,16 @@ import OpenAPIRuntime
 struct AdminEditWebPageDefaultController:
     AdminEditWebPageController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditWebPageInteractor,
-            presenter: any AdminEditWebPagePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditWebPageInteractor,
+        any AdminEditWebPagePresenter
+    >
 
     func getEditWebPage(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         do {
@@ -49,7 +48,7 @@ struct AdminEditWebPageDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         var lastPayload: WebPageFormInput?

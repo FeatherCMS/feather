@@ -12,17 +12,16 @@ import WebComponents
 import WebFrontend
 
 struct AdminViewBlogPostDefaultController: AdminViewBlogPostController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewBlogPostInteractor,
-            presenter: any AdminViewBlogPostPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewBlogPostInteractor,
+        any AdminViewBlogPostPresenter
+    >
 
     func getBlogPost(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         do {

@@ -18,7 +18,7 @@ public struct AppPublicContent {
                             context.sessionToken
                         ),
                         events: events,
-                        sessionToken: context.sessionToken,
+                        requestContext: (request, context),
                         contentRenderer: contentRenderer
                     ),
                     presenter: AppPublicContentDefaultPresenter(

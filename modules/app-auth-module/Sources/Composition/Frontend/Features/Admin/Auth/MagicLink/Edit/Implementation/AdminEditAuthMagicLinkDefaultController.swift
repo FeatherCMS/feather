@@ -19,11 +19,10 @@ import WebComponents
 
 struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditAuthMagicLinkInteractor,
-            presenter: any AdminEditAuthMagicLinkPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditAuthMagicLinkInteractor,
+        any AdminEditAuthMagicLinkPresenter
+    >
 
     func getEditAuthMagicLink(
         request: Request,
@@ -31,10 +30,7 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
     ) async throws -> HTMLResponse {
         let id = try context.requiredID()
         let isEdited = request.hasQueryFlag("edited")
-        let (interactor, presenter) = buildRuntime(
-            request,
-            context
-        )
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.update)
@@ -73,10 +69,7 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
         context: DefaultRequestContext
     ) async throws -> Response {
         let id = try context.requiredID()
-        let (interactor, presenter) = buildRuntime(
-            request,
-            context
-        )
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.update)
         else {

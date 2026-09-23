@@ -20,17 +20,16 @@ import WebComponents
 struct AdminListAuthCredentialDefaultController:
     AdminListAuthCredentialController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListAuthCredentialInteractor,
-            presenter: any AdminListAuthCredentialPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListAuthCredentialInteractor,
+        any AdminListAuthCredentialPresenter
+    >
 
     func getCredentials(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
             to: AuthPermissions.Credential.list

@@ -6,17 +6,16 @@ import Hummingbird
 struct AdminViewAnalyticsNotFoundDefaultController:
     AdminViewAnalyticsNotFoundController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewAnalyticsNotFoundInteractor,
-            presenter: any AdminViewAnalyticsNotFoundPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewAnalyticsNotFoundInteractor,
+        any AdminViewAnalyticsNotFoundPresenter
+    >
 
     func getNotFound(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
             to: AnalyticsPermissions.NotFound.list

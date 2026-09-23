@@ -2,17 +2,16 @@ import FeatherAdmin
 import Hummingbird
 
 struct AdminViewAnalyticsLogDefaultController: AdminViewAnalyticsLogController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewAnalyticsLogInteractor,
-            presenter: any AdminViewAnalyticsLogPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewAnalyticsLogInteractor,
+        any AdminViewAnalyticsLogPresenter
+    >
 
     func getAnalyticsLog(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
         do {
             let model = try await interactor.execute(id: id)

@@ -7,17 +7,16 @@ import OpenAPIRuntime
 struct AdminEditWebMenuDefaultController:
     AdminEditWebMenuController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditWebMenuInteractor,
-            presenter: any AdminEditWebMenuPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditWebMenuInteractor,
+        any AdminEditWebMenuPresenter
+    >
 
     func getEditWebMenu(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         do {
@@ -46,7 +45,7 @@ struct AdminEditWebMenuDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         var lastPayload: WebMenuFormInput?

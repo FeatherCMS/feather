@@ -5,15 +5,14 @@ import NewsletterContracts
 struct AdminEditNewsletterCampaignDefaultController:
     AdminEditNewsletterCampaignController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditNewsletterCampaignInteractor,
-            presenter: any AdminEditNewsletterCampaignPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditNewsletterCampaignInteractor,
+        any AdminEditNewsletterCampaignPresenter
+    >
     func edit(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredParameter("newsletterId")
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.update)
         else {
@@ -41,7 +40,7 @@ struct AdminEditNewsletterCampaignDefaultController:
     func update(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredParameter("newsletterId")
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.update)
         else {

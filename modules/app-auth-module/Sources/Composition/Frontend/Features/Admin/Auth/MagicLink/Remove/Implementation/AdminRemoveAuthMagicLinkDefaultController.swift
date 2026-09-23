@@ -20,17 +20,16 @@ import WebComponents
 struct AdminRemoveAuthMagicLinkDefaultController:
     AdminRemoveAuthMagicLinkController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveAuthMagicLinkInteractor,
-            presenter: any AdminRemoveAuthMagicLinkPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveAuthMagicLinkInteractor,
+        any AdminRemoveAuthMagicLinkPresenter
+    >
 
     func getRemoveAuthMagicLink(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.delete)
@@ -59,7 +58,7 @@ struct AdminRemoveAuthMagicLinkDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.delete)

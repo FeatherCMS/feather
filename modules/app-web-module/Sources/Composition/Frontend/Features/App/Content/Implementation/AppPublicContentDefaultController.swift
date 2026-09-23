@@ -3,11 +3,10 @@ import Hummingbird
 
 struct AppPublicContentDefaultController: AppPublicContentController {
 
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AppPublicContentInteractor,
-            presenter: any AppPublicContentPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AppPublicContentInteractor,
+        any AppPublicContentPresenter
+    >
 
     func getContent(
         request: Request,
@@ -28,7 +27,7 @@ extension AppPublicContentDefaultController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard let content = try await interactor.resolve(path: path) else {
             throw HTTPError(.notFound)
         }

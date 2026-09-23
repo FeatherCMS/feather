@@ -10,16 +10,15 @@ import WebComponents
 struct AdminAddNewsletterIssueDefaultController:
     AdminAddNewsletterIssueController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddNewsletterIssueInteractor,
-            presenter: any AdminAddNewsletterIssuePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddNewsletterIssueInteractor,
+        any AdminAddNewsletterIssuePresenter
+    >
     func getAddNewsletterIssue(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             let newsletterId = context.parameters.get(
                 "newsletterId",
@@ -39,7 +38,7 @@ struct AdminAddNewsletterIssueDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             let newsletterId = context.parameters.get(
                 "newsletterId",

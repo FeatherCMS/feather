@@ -5,18 +5,17 @@ import Hummingbird
 struct AdminEditSettingsDefaultController:
     AdminEditSettingsController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditSettingsInteractor,
-            presenter: any AdminEditSettingsPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditSettingsInteractor,
+        any AdminEditSettingsPresenter
+    >
 
     func getEditSettings(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         let targetUserID = context.parameters.get("userId", as: String.self)
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let isTargetUser = targetUserID != nil
         let canRead = context.isCurrentUserAllowed(
@@ -78,7 +77,7 @@ struct AdminEditSettingsDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let targetUserID = context.parameters.get("userId", as: String.self)
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let isTargetUser = targetUserID != nil
         let canEdit = context.isCurrentUserAllowed(

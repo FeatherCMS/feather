@@ -7,17 +7,16 @@ struct AdminViewAnalyticsInsightsDefaultController:
     AdminViewAnalyticsInsightsController
 {
     let source: AdminAnalyticsInsightsPage.Source
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewAnalyticsInsightsInteractor,
-            presenter: any AdminViewAnalyticsInsightsPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewAnalyticsInsightsInteractor,
+        any AdminViewAnalyticsInsightsPresenter
+    >
 
     func getInsights(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
             to: AnalyticsPermissions.Insights.list

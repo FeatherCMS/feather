@@ -1,6 +1,7 @@
 import FeatherAdmin
 import FeatherContracts
 import Foundation
+import HummingbirdCore
 import OpenAPIRuntime
 import WebAppAPI
 import WebContracts
@@ -11,19 +12,20 @@ public enum WebPublicContentEventHandlers {
     ) {
         registry.register(
             event: WebPublicContentProvider.self,
-            context: WebPublicContentEventContext.self
+            context: WebPublicContentEventContext<RuntimeBuilderContext>.self
         ) { _, context in
             try await resolve(context)
         }
     }
 
     private static func resolve(
-        _ context: WebPublicContentEventContext
+        _ context: WebPublicContentEventContext<RuntimeBuilderContext>
     ) async throws -> WebPublicContentResult? {
-        let api = WebAppAPIClient(
-            apiBaseURL: FeatherAdmin.AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: context.sessionToken
+        let requestPath = context.runtime.request.uri.path.trimmingCharacters(
+            in: CharacterSet(charactersIn: "/")
         )
+
+        let api = context.runtime.context.webApplicationAPI()
         let siteSettings = try await api.withOpenAPIRepositoryErrorMapping {
             client in
             let response = try await client.webSiteSettings(.init())
@@ -84,7 +86,7 @@ public enum WebPublicContentEventHandlers {
                 let page = try value.body.json
                 payload["page"] = pageContext(
                     page: page,
-                    requestPath: context.path,
+                    requestPath: requestPath,
                     siteSettings: siteSettings,
                     siteBaseURL: origins.siteBaseURL
                 )
@@ -104,7 +106,7 @@ public enum WebPublicContentEventHandlers {
                         "The page you requested does not exist or is not available.",
                     "permalink": normalizedURL(
                         base: origins.siteBaseURL,
-                        path: context.path
+                        path: requestPath
                     ),
                     "noindex": true,
                     "css": [String](),

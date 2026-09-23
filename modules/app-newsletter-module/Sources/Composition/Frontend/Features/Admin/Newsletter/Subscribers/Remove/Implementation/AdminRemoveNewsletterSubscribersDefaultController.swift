@@ -11,16 +11,15 @@ import WebComponents
 struct AdminRemoveNewsletterSubscribersDefaultController:
     AdminRemoveNewsletterSubscribersController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveNewsletterSubscribersInteractor,
-            presenter: any AdminRemoveNewsletterSubscribersPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveNewsletterSubscribersInteractor,
+        any AdminRemoveNewsletterSubscribersPresenter
+    >
 
     func confirm(request: Request, context: DefaultRequestContext) async throws
         -> HTMLResponse
     {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         return try await presenter.renderRemovePage(
             items: request.queryStrings("selectedIds")
                 .map {
@@ -34,7 +33,7 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
     func remove(request: Request, context: DefaultRequestContext) async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context

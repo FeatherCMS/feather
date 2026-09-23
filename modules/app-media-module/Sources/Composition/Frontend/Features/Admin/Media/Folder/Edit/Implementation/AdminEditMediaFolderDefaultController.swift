@@ -10,17 +10,16 @@ import WebBuilders
 import WebComponents
 
 struct AdminEditMediaFolderDefaultController: AdminEditMediaFolderController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditMediaFolderInteractor,
-            presenter: any AdminEditMediaFolderPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditMediaFolderInteractor,
+        any AdminEditMediaFolderPresenter
+    >
 
     func getEditMediaFolder(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserAdminListActions
         do {
@@ -44,7 +43,7 @@ struct AdminEditMediaFolderDefaultController: AdminEditMediaFolderController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserAdminListActions
         let payload = try await request.decode(

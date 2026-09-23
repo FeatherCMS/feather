@@ -7,17 +7,16 @@ import Hummingbird
 struct AdminListAnalyticsLogDefaultController:
     AdminListAnalyticsLogController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListAnalyticsLogInteractor,
-            presenter: any AdminListAnalyticsLogPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminListAnalyticsLogInteractor,
+        any AdminListAnalyticsLogPresenter
+    >
 
     func getAnalyticsLogs(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let page = request.queryPage()
         let search = request.querySearch()
         let source = request.queryString("source")?

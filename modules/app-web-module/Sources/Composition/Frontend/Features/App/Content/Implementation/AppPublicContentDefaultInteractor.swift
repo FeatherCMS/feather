@@ -1,3 +1,4 @@
+import FeatherAdmin
 import FeatherContracts
 import Foundation
 import SystemContracts
@@ -7,7 +8,7 @@ import WebContracts
 struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
     let repository: any AppPublicContentRepository
     let events: any EventPublisher
-    let sessionToken: String?
+    let requestContext: RuntimeBuilderContext
     let contentRenderer: any WebContentRenderer
 
     func resolve(
@@ -20,7 +21,7 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
             return try await fallbackContent(
                 path: slug,
                 templateIdentifier: templateIdentifier,
-                isNotFound: !slug.isEmpty
+                isNotFound: !slug.isEmpty,
             )
         }
 
@@ -60,11 +61,10 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
         templateIdentifier: String?,
         referenceID: String? = nil
     ) async throws -> [String: any Sendable] {
-        let context = WebPublicContentEventContext(
-            path: path,
+        let context = WebPublicContentEventContext<RuntimeBuilderContext>(
             templateIdentifier: templateIdentifier,
             referenceID: referenceID,
-            sessionToken: sessionToken
+            runtime: requestContext
         )
         let results = try await events.trigger(
             event: WebPublicContentProvider(),

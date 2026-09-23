@@ -19,16 +19,15 @@ import WebComponents
 
 struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddAuthCredentialInteractor,
-            presenter: any AdminAddAuthCredentialPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddAuthCredentialInteractor,
+        any AdminAddAuthCredentialPresenter
+    >
 
     func getAddCredential(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.Credential.create)
         else { return try await presenter.renderForbiddenPage() }
@@ -47,7 +46,7 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
     func postAddCredential(request: Request, context: DefaultRequestContext)
         async throws -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.Credential.create)
         else {

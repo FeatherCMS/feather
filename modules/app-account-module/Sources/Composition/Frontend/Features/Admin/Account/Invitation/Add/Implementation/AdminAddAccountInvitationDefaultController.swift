@@ -8,17 +8,16 @@ import UserFrontend
 struct AdminAddAccountInvitationDefaultController:
     AdminAddAccountInvitationController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddAccountInvitationInteractor,
-            presenter: any AdminAddAccountInvitationPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddAccountInvitationInteractor,
+        any AdminAddAccountInvitationPresenter
+    >
 
     func getAddAccountInvitation(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         return try await presenter.renderPage(
             form: presenter.formState(
                 email: "",
@@ -33,7 +32,7 @@ struct AdminAddAccountInvitationDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         var lastPayload: AdminAddAccountInvitationFormInput?
         let availableRoleOptions = await roleOptions(context)
         do {

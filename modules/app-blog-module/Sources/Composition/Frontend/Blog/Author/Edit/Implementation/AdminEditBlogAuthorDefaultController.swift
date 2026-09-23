@@ -16,17 +16,16 @@ import WebFrontend
 struct AdminEditBlogAuthorDefaultController:
     AdminEditBlogAuthorController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditBlogAuthorInteractor,
-            presenter: any AdminEditBlogAuthorPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminEditBlogAuthorInteractor,
+        any AdminEditBlogAuthorPresenter
+    >
 
     func getEditBlogAuthor(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         do {
@@ -59,7 +58,7 @@ struct AdminEditBlogAuthorDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         var lastPayload: BlogAuthorFormInput?

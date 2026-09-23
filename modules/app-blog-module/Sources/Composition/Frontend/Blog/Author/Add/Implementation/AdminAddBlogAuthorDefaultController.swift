@@ -14,17 +14,16 @@ import WebComponents
 import WebFrontend
 
 struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddBlogAuthorInteractor,
-            presenter: any AdminAddBlogAuthorPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddBlogAuthorInteractor,
+        any AdminAddBlogAuthorPresenter
+    >
 
     func getAddBlogAuthor(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let slugPrefix = (try? await slugPrefix(context: context)) ?? "/"
         return try await runtime.presenter.renderAddPage(
@@ -40,7 +39,7 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         var lastPayload: BlogAuthorFormInput?
 

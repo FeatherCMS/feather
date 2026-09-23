@@ -4,17 +4,16 @@ import Hummingbird
 import UserContracts
 
 struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddUserIdentityInteractor,
-            presenter: any AdminAddUserIdentityPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddUserIdentityInteractor,
+        any AdminAddUserIdentityPresenter
+    >
 
     func getAddUserIdentity(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.create)
         else {
@@ -30,7 +29,7 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.create)
         else {

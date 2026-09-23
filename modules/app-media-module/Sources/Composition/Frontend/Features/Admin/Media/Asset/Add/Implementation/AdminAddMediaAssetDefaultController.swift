@@ -11,17 +11,16 @@ import WebBuilders
 import WebComponents
 
 struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddMediaAssetInteractor,
-            presenter: any AdminAddMediaAssetPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminAddMediaAssetInteractor,
+        any AdminAddMediaAssetPresenter
+    >
 
     func getAddMediaAsset(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let parentId =
             request.queryString("parent_id")?
             .whitespaceTrimmed
@@ -55,7 +54,7 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let payload = try await request.decode(
             as: AssetAddForm.self,
             context: context

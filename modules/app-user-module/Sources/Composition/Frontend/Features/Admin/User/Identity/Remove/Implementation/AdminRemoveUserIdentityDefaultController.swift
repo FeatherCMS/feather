@@ -7,16 +7,15 @@ import UserContracts
 struct AdminRemoveUserIdentityDefaultController:
     AdminRemoveUserIdentityController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveUserIdentityInteractor,
-            presenter: any AdminRemoveUserIdentityPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveUserIdentityInteractor,
+        any AdminRemoveUserIdentityPresenter
+    >
 
     func getRemoveUserIdentity(request: Request, context: DefaultRequestContext)
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.delete)
         else { return try await presenter.renderForbiddenPage() }
@@ -40,7 +39,7 @@ struct AdminRemoveUserIdentityDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (removeInteractor, presenter) = buildRuntime(request, context)
+        let (removeInteractor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.delete)
         else {
@@ -85,7 +84,7 @@ struct AdminRemoveUserIdentityDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.delete)
         else {
@@ -135,7 +134,7 @@ struct AdminRemoveUserIdentityDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (removeInteractor, presenter) = buildRuntime(request, context)
+        let (removeInteractor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.delete)
         else {

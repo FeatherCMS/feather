@@ -3,17 +3,16 @@ import Foundation
 import Hummingbird
 
 struct AdminViewDashboardDefaultController: AdminViewDashboardController {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewDashboardInteractor,
-            presenter: any AdminViewDashboardPresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminViewDashboardInteractor,
+        any AdminViewDashboardPresenter
+    >
 
     func getHome(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
 
         let now = Date().timeIntervalSince1970
         let model = try await interactor.getHome(

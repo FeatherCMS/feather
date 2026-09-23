@@ -6,17 +6,16 @@ import OpenAPIRuntime
 struct AdminRemoveWebPageDefaultController:
     AdminRemoveWebPageController
 {
-    let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveWebPageInteractor,
-            presenter: any AdminRemoveWebPagePresenter
-        )
+    let buildRuntime: RuntimeBuilder<
+        any AdminRemoveWebPageInteractor,
+        any AdminRemoveWebPagePresenter
+    >
 
     func getRemoveWebPage(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         do {
             let page = try await runtime.interactor.get(id: id)
@@ -37,7 +36,7 @@ struct AdminRemoveWebPageDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
