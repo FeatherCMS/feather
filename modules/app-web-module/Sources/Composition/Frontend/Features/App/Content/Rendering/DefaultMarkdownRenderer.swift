@@ -19,8 +19,7 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
     }
 
     public func render(
-        markdown: String,
-        requestPath: String
+        markdown: String
     ) async -> String {
         guard !markdown.isEmpty else {
             return markdown
@@ -28,20 +27,13 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
         var source = markdown
         let transformers =
             (try? await events.trigger(
-                event: WebMarkdownSourceTransformerProvider(
-                    request: .init(requestPath: requestPath)
-                ),
-                using: WebMarkdownSourceTransformerRequest(
-                    requestPath: requestPath
-                )
+                event: WebMarkdownSourceTransformerProvider(),
+                using: WebMarkdownSourceTransformerRequest()
             )
             .compactMap { $0 }
             .sorted { $0.priority < $1.priority }) ?? []
         for transformer in transformers {
-            source = await transformer.transform(
-                source,
-                requestPath: requestPath
-            )
+            source = await transformer.transform(source)
         }
         source = WebImageURLResolver.resolveMarkdownImageURLs(
             in: source,
@@ -51,12 +43,8 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
         do {
             renderers =
                 try await events.trigger(
-                    event: WebMarkdownBlockRendererProvider(
-                        request: .init(requestPath: requestPath)
-                    ),
-                    using: WebMarkdownBlockRendererRequest(
-                        requestPath: requestPath
-                    )
+                    event: WebMarkdownBlockRendererProvider(),
+                    using: WebMarkdownBlockRendererRequest()
                 )
                 .compactMap { $0 }
         }
@@ -64,7 +52,6 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
             Logger.current.error(
                 "Markdown block renderer providers failed.",
                 metadata: [
-                    "path": .string(requestPath),
                     "error": .string(String(describing: error)),
                 ]
             )
@@ -72,23 +59,15 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
         }
         if renderers.isEmpty && source.contains("@") {
             Logger.current.error(
-                "Markdown contains custom blocks but no block renderers are registered.",
-                metadata: ["path": .string(requestPath)]
+                "Markdown contains custom blocks but no block renderers are registered."
             )
         }
-        let output = await renderDocument(
-            source: source,
-            renderers: renderers,
-            requestPath: requestPath
-        )
+        let output = await renderDocument(source: source, renderers: renderers)
         if output.isEmpty
             && !markdown.whitespaceTrimmed.isEmpty
         {
             Logger.current.warning(
                 "Markdown rendering produced empty output.",
-                metadata: [
-                    "path": .string(requestPath)
-                ]
             )
             return markdown
         }
@@ -97,8 +76,7 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
 
     private func renderDocument(
         source: String,
-        renderers: [any WebMarkdownBlockRenderer],
-        requestPath: String,
+        renderers: [any WebMarkdownBlockRenderer]
     ) async -> String {
         let normalizedSource =
             source
@@ -110,19 +88,14 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
         )
         var output = ""
         for child in document.children {
-            output += await render(
-                child,
-                renderers: renderers,
-                requestPath: requestPath
-            )
+            output += await render(child, renderers: renderers)
         }
         return output
     }
 
     private func render(
         _ markup: any Markup,
-        renderers: [any WebMarkdownBlockRenderer],
-        requestPath: String
+        renderers: [any WebMarkdownBlockRenderer]
     ) async -> String {
         guard let directive = markup as? BlockDirective else {
             return HTMLFormatter.format(markup)
@@ -140,8 +113,7 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
                         ),
                         html: await render(
                             childDirective,
-                            renderers: renderers,
-                            requestPath: requestPath
+                            renderers: renderers
                         )
                     )
                 )
@@ -157,7 +129,6 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
         }
 
         let request = WebMarkdownBlockRendererRequest(
-            requestPath: requestPath,
             arguments: arguments,
             children: children
         )

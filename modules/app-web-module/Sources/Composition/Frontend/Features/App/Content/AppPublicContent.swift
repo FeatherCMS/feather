@@ -13,15 +13,15 @@ public struct AppPublicContent {
             buildRuntime: { request, context in
                 (
                     interactor: AppPublicContentDefaultInteractor(
-                        repository: WebPublicContentRepository(
+                        repository: AppPublicContentOpenAPIRepository(
                             api: context.webApplicationAPI()
                         ),
                         events: events,
-                        runtime: (request, context),
-                        contentRenderer: contentRenderer
+                        runtime: (request, context)
                     ),
                     presenter: AppPublicContentDefaultPresenter(
-                        themeRenderer: themeRenderer
+                        themeRenderer: themeRenderer,
+                        contentRenderer: contentRenderer
                     )
                 )
             }

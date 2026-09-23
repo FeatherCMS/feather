@@ -45,7 +45,7 @@ func buildRouter(
     let authAppClient = AuthAppAPIClient(
         apiBaseURL: environment.apiBaseURL
     )
-    let publicContentRepository = WebPublicContentRepository(
+    let publicContentRepository = AppPublicContentOpenAPIRepository(
         apiBaseURL: environment.apiBaseURL
     )
     var adminEvents = EventRegistry()

@@ -2,5 +2,5 @@ protocol AppPublicContentInteractor: Sendable {
 
     func resolve(
         slug: String
-    ) async throws -> AppPublicResolvedContent?
+    ) async throws -> AppPublicContentModel
 }

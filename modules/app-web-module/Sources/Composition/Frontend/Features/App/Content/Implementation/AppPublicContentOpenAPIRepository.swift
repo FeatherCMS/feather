@@ -2,7 +2,7 @@ import Foundation
 import OpenAPIRuntime
 import WebAppAPI
 
-public struct WebPublicContentRepository: AppPublicContentRepository {
+public struct AppPublicContentOpenAPIRepository: AppPublicContentRepository {
 
     private let api: WebAppAPIClient
 

@@ -1,7 +1,6 @@
 import FeatherContracts
 
 public struct WebMarkdownBlockRendererRequest: Sendable, ExecutionContext {
-    public let requestPath: String
     public let arguments: [String: String]
     public let children: [Child]
 
@@ -22,11 +21,9 @@ public struct WebMarkdownBlockRendererRequest: Sendable, ExecutionContext {
     }
 
     public init(
-        requestPath: String,
         arguments: [String: String] = [:],
         children: [Child] = []
     ) {
-        self.requestPath = requestPath
         self.arguments = arguments
         self.children = children
     }

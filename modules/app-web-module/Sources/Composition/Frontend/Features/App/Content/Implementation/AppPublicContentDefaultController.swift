@@ -18,16 +18,13 @@ struct AppPublicContentDefaultController: AppPublicContentController {
         let slug = request.uri.path.trimmingCharacters(
             in: CharacterSet(charactersIn: "/")
         )
-        guard let content = try await interactor.resolve(slug: slug) else {
-            throw HTTPError(.notFound)
-        }
+        let content = try await interactor.resolve(slug: slug)
         let rendered = await presenter.render(
-            content: content,
-            request: request
+            content: content
         )
         let response = HTMLResponse(
             content: rendered.content,
-            status: content.isNotFound ? .notFound : .ok
+            status: content.status
         )
         return try response.response(from: request, context: context)
     }
