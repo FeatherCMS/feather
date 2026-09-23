@@ -1,4 +1,5 @@
 import FeatherContracts
+import Foundation
 import Testing
 
 import WebFrontend
@@ -21,12 +22,13 @@ struct MarkdownContentRendererTestSuite {
     func rendersMarkdownToHTML() async {
         let renderer = DefaultMarkdownRenderer(
             events: EventRegistry(),
-            mediaBaseURL: ""
+            mediaResolver: MediaResolver(
+                mediaBaseURL: URL(string: "http://localhost:8080")!
+            )
         )
 
         let output = await renderer.render(
-            markdown: "# Hello\n\nThis is **markdown**.",
-            requestPath: "/posts/hello/"
+            markdown: "# Hello\n\nThis is **markdown**."
         )
 
         #expect(output.contains("<h1>Hello</h1>"))
@@ -45,12 +47,13 @@ struct MarkdownContentRendererTestSuite {
 
         let renderer = DefaultMarkdownRenderer(
             events: events,
-            mediaBaseURL: ""
+            mediaResolver: MediaResolver(
+                mediaBaseURL: URL(string: "http://localhost:8080")!
+            )
         )
 
         let output = await renderer.render(
-            markdown: "# Welcome\n\n@ContactForm(id: form-123)",
-            requestPath: "/"
+            markdown: "# Welcome\n\n@ContactForm(id: form-123)"
         )
 
         #expect(output.contains("<h1>Welcome</h1>"))

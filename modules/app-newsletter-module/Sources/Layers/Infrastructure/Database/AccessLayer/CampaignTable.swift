@@ -5,7 +5,7 @@ import struct Foundation.Date
 
 extension CampaignTable.Row {
 
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.name = try row.decode(column: "name", as: String.self)
         self.fromEmail = try row.decode(column: "from_email", as: String.self)

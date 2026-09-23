@@ -14,10 +14,11 @@ extension NewAdminMediaAsset {
             return nil
         }
 
-        let mediaPrefix =
-            AppEnvironmentStore.current.publicOrigins.mediaBaseURL
-            .absoluteString
-            + "/media/assets/"
+        guard let mediaPrefix = AppEnvironmentStore.current.mediaResolver
+            .resolve(imagePath: "/media/assets/")
+        else {
+            return nil
+        }
         guard rawValue.hasPrefix(mediaPrefix) else {
             return nil
         }

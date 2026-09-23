@@ -1,8 +1,10 @@
 import Foundation
+import FeatherContracts
 
 public struct AppEnvironment: Sendable {
     public let apiBaseURL: URL
     public let publicOrigins: AppPublicOriginConfiguration
+    public let mediaResolver: MediaResolver
 
     public init(
         apiBaseURL: URL,
@@ -10,6 +12,9 @@ public struct AppEnvironment: Sendable {
     ) {
         self.apiBaseURL = apiBaseURL
         self.publicOrigins = publicOrigins
+        self.mediaResolver = MediaResolver(
+            mediaBaseURL: publicOrigins.mediaBaseURL
+        )
     }
 }
 

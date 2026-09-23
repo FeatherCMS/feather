@@ -1,4 +1,5 @@
 import Environment
+import Foundation
 
 struct ServerConfig: Sendable {
     struct QueueConfig: Sendable {
@@ -10,6 +11,7 @@ struct ServerConfig: Sendable {
         let storageRootPath: String
         let storageShardDepth: Int
         let storageShardSegmentLength: Int
+        let publicBaseURL: URL
     }
 
     let host: String

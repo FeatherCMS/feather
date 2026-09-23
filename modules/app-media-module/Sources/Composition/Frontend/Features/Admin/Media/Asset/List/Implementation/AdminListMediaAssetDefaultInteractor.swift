@@ -147,8 +147,6 @@ extension AdminListMediaAssetDefaultInteractor {
     private func preferredPreview(
         from variants: [Components.Schemas.MediaAssetResolveVariantSchema]
     ) -> Components.Schemas.MediaAssetResolveVariantSchema? {
-        variants.first(where: {
-            $0.key == "preview" || $0.key == "display"
-        }) ?? variants.first
+        variants.first(where: { $0.key == "preview" })
     }
 }

@@ -45,9 +45,6 @@ func buildRouter(
     let authAppClient = AuthAppAPIClient(
         apiBaseURL: environment.apiBaseURL
     )
-    let publicContentRepository = AppPublicContentOpenAPIRepository(
-        apiBaseURL: environment.apiBaseURL
-    )
     var adminEvents = EventRegistry()
     WebFrontend.WebEventHandlers.register(in: &adminEvents)
     BlogFrontend.BlogEventHandlers.register(in: &adminEvents)
@@ -107,7 +104,6 @@ func buildRouter(
         authRouter: authRouter,
         renderingEngine: renderingEngine,
         themeRenderer: themeRenderer,
-        publicContentRepository: publicContentRepository,
         publicContentEvents: publicContentEvents
     )
 

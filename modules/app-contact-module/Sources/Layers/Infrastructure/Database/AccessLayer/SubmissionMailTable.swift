@@ -5,7 +5,7 @@ import FeatherInfrastructure
 import struct Foundation.Date
 
 extension SubmissionMailTable.Row {
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         id = try row.decode(column: "id", as: String.self)
         formId = try row.decode(column: "form_id", as: String.self)
         mailFrom = try row.decode(column: "mail_from", as: String.self)

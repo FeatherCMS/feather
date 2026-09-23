@@ -11,7 +11,7 @@ import struct Foundation.Date
 
 extension LogTable.Row {
 
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.accountId = try row.decode(column: "account_id", as: String?.self)
         self.source = try row.decode(column: "source", as: String.self)

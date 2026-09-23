@@ -1,33 +1,49 @@
-import Foundation
+public import Foundation
 
-public enum WebImageURLResolver {
-    public static func resolve(
-        _ imageURL: String,
-        mediaBaseURL: String
-    ) -> String {
-        guard !imageURL.isEmpty else { return imageURL }
-        guard
-            !imageURL.hasPrefix("http://"),
-            !imageURL.hasPrefix("https://")
-        else {
-            return imageURL
+public struct MediaURLVariant: Sendable, Equatable, Hashable {
+    public let key: String
+    public let url: String
+
+    public init(key: String, url: String) {
+        self.key = key
+        self.url = url
+    }
+}
+
+public struct MediaResolver: Sendable {
+    public let mediaBaseURL: URL
+
+    public init(mediaBaseURL: URL) {
+        self.mediaBaseURL = mediaBaseURL
+    }
+
+    public func resolve(imagePath: String) -> String? {
+        guard !imagePath.isEmpty else { return nil }
+        if let url = URL(string: imagePath), url.scheme != nil {
+            return imagePath
         }
 
-        let base =
-            mediaBaseURL.hasSuffix("/")
-            ? String(mediaBaseURL.dropLast())
-            : mediaBaseURL
-        let path =
-            imageURL.hasPrefix("/")
-            ? imageURL
-            : "/\(imageURL)"
+        let base = mediaBaseURL.absoluteString.hasSuffix("/")
+            ? String(mediaBaseURL.absoluteString.dropLast())
+            : mediaBaseURL.absoluteString
+        let path = imagePath.hasPrefix("/")
+            ? imagePath
+            : "/\(imagePath)"
         return base + path
     }
 
-    public static func resolveMarkdownImageURLs(
-        in source: String,
-        mediaBaseURL: String
-    ) -> String {
+    public func resolve(
+        variants: [MediaURLVariant],
+        variantKey: String
+    ) -> String? {
+        guard let variant = variants.first(where: { $0.key == variantKey })
+        else {
+            return nil
+        }
+        return resolve(imagePath: variant.url)
+    }
+
+    public func resolveMarkdownImages(in source: String) -> String {
         let marker = "/media/assets/"
         var result = source
         var searchStart = result.startIndex
@@ -60,17 +76,19 @@ public enum WebImageURLResolver {
                 else { break }
                 pathEnd = result.index(after: pathEnd)
             }
+
             let path = String(result[markerRange.lowerBound..<pathEnd])
+            let resolvedPath = resolve(imagePath: path) ?? path
             result.replaceSubrange(
                 markerRange.lowerBound..<pathEnd,
-                with: resolve(path, mediaBaseURL: mediaBaseURL)
+                with: resolvedPath
             )
             searchStart = result.index(
                 result.startIndex,
                 offsetBy: result.distance(
                     from: result.startIndex,
                     to: markerRange.lowerBound
-                ) + resolve(path, mediaBaseURL: mediaBaseURL).count
+                ) + resolvedPath.count
             )
         }
         return result

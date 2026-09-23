@@ -5,7 +5,7 @@ import struct Foundation.Date
 
 extension SubscriberTable.Row {
 
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         self.newsletterId = try row.decode(
             column: "newsletter_id",
             as: String.self

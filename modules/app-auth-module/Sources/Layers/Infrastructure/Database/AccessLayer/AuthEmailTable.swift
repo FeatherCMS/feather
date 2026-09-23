@@ -135,7 +135,7 @@ struct AuthEmailTable {
         }
     }
 
-    private func decode(_ row: DatabaseRow) throws -> Row {
+    private func decode(_ row: any DatabaseRow) throws -> Row {
         .init(
             id: try row.decode(column: "id", as: String.self),
             identityId: try row.decode(column: "identity_id", as: String.self),

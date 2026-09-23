@@ -8,14 +8,14 @@ import WebContracts
 public struct DefaultMarkdownRenderer: WebContentRenderer {
 
     private let events: any EventPublisher
-    private let mediaBaseURL: String
+    private let mediaResolver: MediaResolver
 
     public init(
         events: any EventPublisher,
-        mediaBaseURL: String
+        mediaResolver: MediaResolver
     ) {
         self.events = events
-        self.mediaBaseURL = mediaBaseURL
+        self.mediaResolver = mediaResolver
     }
 
     public func render(
@@ -35,10 +35,7 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
         for transformer in transformers {
             source = await transformer.transform(source)
         }
-        source = WebImageURLResolver.resolveMarkdownImageURLs(
-            in: source,
-            mediaBaseURL: mediaBaseURL
-        )
+        source = mediaResolver.resolveMarkdownImages(in: source)
         let renderers: [any WebMarkdownBlockRenderer]
         do {
             renderers =

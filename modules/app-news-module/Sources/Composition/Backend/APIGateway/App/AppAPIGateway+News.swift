@@ -1,4 +1,5 @@
 import Foundation
+import FeatherContracts
 import NewsAppAPI
 import NewsApplication
 import WebApplication

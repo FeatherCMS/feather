@@ -1,4 +1,5 @@
 import Logging
+import Foundation
 import Testing
 
 @testable import Environment
@@ -22,7 +23,10 @@ extension ServerConfig {
                 pollTimeMilliseconds: 100
             ),
             media: .init(
-                storageRootPath: "/tmp/backend-media-tests"
+                storageRootPath: "/tmp/backend-media-tests",
+                storageShardDepth: 0,
+                storageShardSegmentLength: 2,
+                publicBaseURL: URL(string: "http://localhost:8080")!
             )
         )
     }

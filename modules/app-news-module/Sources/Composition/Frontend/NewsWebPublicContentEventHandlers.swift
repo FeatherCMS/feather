@@ -166,10 +166,8 @@ public enum NewsWebPublicContentEventHandlers {
         image: String,
         permalink: String
     ) -> [String: any Sendable] {
-        let resolvedImageURL = WebImageURLResolver.resolve(
-            image,
-            mediaBaseURL: mediaBaseURL
-        )
+        let resolvedImageURL = AppEnvironmentStore.current.mediaResolver
+            .resolve(imagePath: image) ?? ""
         return [
             "id": id,
             "title": title,
@@ -180,11 +178,6 @@ public enum NewsWebPublicContentEventHandlers {
                 ? permalink
                 : "/\(permalink)",
         ]
-    }
-
-    private static var mediaBaseURL: String {
-        FeatherAdmin.AppEnvironmentStore.current.publicOrigins.mediaBaseURL
-            .absoluteString
     }
 
 }

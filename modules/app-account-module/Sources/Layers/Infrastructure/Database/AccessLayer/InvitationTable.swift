@@ -15,7 +15,7 @@ import class Foundation.JSONEncoder
 extension InvitationTable.Row {
 
     init(
-        from row: DatabaseRow
+        from row: any DatabaseRow
     ) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.userId = try row.decode(column: "user_id", as: String.self)

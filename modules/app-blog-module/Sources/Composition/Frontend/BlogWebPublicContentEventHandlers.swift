@@ -282,10 +282,8 @@ public enum BlogWebPublicContentEventHandlers {
         permalink: String,
         publicationDate: Double?
     ) -> [String: any Sendable] {
-        let resolvedImageURL = WebImageURLResolver.resolve(
-            image,
-            mediaBaseURL: mediaBaseURL
-        )
+        let resolvedImageURL = AppEnvironmentStore.current.mediaResolver
+            .resolve(imagePath: image) ?? ""
         var result: [String: any Sendable] = [
             "id": id,
             "title": title,
@@ -305,10 +303,6 @@ public enum BlogWebPublicContentEventHandlers {
                 )
         }
         return result
-    }
-
-    private static var mediaBaseURL: String {
-        AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString
     }
 
 }

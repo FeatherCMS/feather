@@ -20,7 +20,6 @@ func buildAppRoutes(
     authRouter: Router<DefaultRequestContext>,
     renderingEngine: DefaultRenderingEngine,
     themeRenderer: DefaultThemeRenderer,
-    publicContentRepository: any AppPublicContentRepository,
     publicContentEvents: any EventPublisher
 ) {
     AppContactFormSubmission().route(on: router)
@@ -29,13 +28,11 @@ func buildAppRoutes(
         .route(on: router)
 
     AppPublicContent(
-        repository: publicContentRepository,
         events: publicContentEvents,
         themeRenderer: themeRenderer,
         contentRenderer: DefaultMarkdownRenderer(
             events: publicContentEvents,
-            mediaBaseURL: AppEnvironmentStore.current.publicOrigins
-                .mediaBaseURL.absoluteString
+            mediaResolver: AppEnvironmentStore.current.mediaResolver
         )
     )
     .controller.route(on: router)

@@ -128,12 +128,13 @@ public enum WebPublicContentEventHandlers {
             context["name"] = name
         }
 
+        let resolver = AppEnvironmentStore.current.mediaResolver
         let values = [
             "language": settings.locale,
             "description": settings.excerpt,
-            "logo": settings.logo,
-            "logoDark": settings.logoDark,
-            "metaImage": settings.metaImage,
+            "logo": resolver.resolve(imagePath: settings.logo) ?? "",
+            "logoDark": resolver.resolve(imagePath: settings.logoDark) ?? "",
+            "metaImage": resolver.resolve(imagePath: settings.metaImage) ?? "",
             "primaryColor": settings.primaryColor,
             "secondaryColor": settings.secondaryColor,
             "tertiaryColor": settings.tertiaryColor,
@@ -164,18 +165,13 @@ public enum WebPublicContentEventHandlers {
         let description =
             page.metadata.excerpt.isEmpty
             ? siteSettings.excerpt : page.metadata.excerpt
+        let resolver = AppEnvironmentStore.current.mediaResolver
         let image: String?
         if let imageURL = page.metadata.imageURL.emptyToNil {
-            image =
-                WebImageURLResolver.resolve(
-                    imageURL,
-                    mediaBaseURL: FeatherAdmin.AppEnvironmentStore.current
-                        .publicOrigins.mediaBaseURL.absoluteString
-                )
-                .emptyToNil
+            image = resolver.resolve(imagePath: imageURL)
         }
         else {
-            image = siteSettings.metaImage.emptyToNil
+            image = resolver.resolve(imagePath: siteSettings.metaImage)
         }
         var context: [String: any Sendable] = [
             "title": title,

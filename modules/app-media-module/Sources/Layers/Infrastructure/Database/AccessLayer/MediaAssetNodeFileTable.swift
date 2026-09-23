@@ -4,7 +4,7 @@ import FeatherInfrastructure
 import struct Foundation.Date
 
 extension MediaAssetNodeFileTable.Row {
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         id = try row.decode(column: "id", as: String.self)
         folderId = try row.decode(column: "folder_id", as: String?.self)
         name = try row.decode(column: "name", as: String.self)

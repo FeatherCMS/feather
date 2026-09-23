@@ -4,7 +4,7 @@ import FeatherInfrastructure
 import struct Foundation.Date
 
 extension MediaAssetStorageObjectTable.Row {
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         id = try row.decode(column: "id", as: String.self)
         objectKey = try row.decode(column: "object_key", as: String.self)
         createdAt = try row.decode(column: "created_at", as: Date.self)

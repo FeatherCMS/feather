@@ -10,10 +10,10 @@ import Logging
 
 public struct Migrator {
 
-    public let migrations: [Migration]
+    public let migrations: [any Migration]
 
     public init(
-        migrations: [Migration]
+        migrations: [any Migration]
     ) {
         self.migrations = migrations
     }

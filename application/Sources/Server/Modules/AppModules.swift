@@ -35,7 +35,8 @@ struct AppModules: Sendable {
     let account: AccountBackend.UseCases
 
     init(
-        infrastructure: AppInfrastructure
+        infrastructure: AppInfrastructure,
+        mediaResolver: MediaResolver
     ) {
         self.infrastructure = infrastructure
 
@@ -113,7 +114,8 @@ struct AppModules: Sendable {
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer,
-            media: media
+            media: media,
+            mediaResolver: mediaResolver
         )
         self.blog = blog
         let web = WebBackend.UseCases(

@@ -5,7 +5,7 @@ import struct Foundation.Date
 
 extension SubmissionTable.Row {
 
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.formId = try row.decode(column: "form_id", as: String.self)
         self.valuesJSON = try row.decode(column: "values", as: String.self)

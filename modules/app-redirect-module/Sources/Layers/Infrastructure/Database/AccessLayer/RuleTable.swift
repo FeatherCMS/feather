@@ -12,7 +12,7 @@ import struct Foundation.Date
 
 extension RuleTable.Row {
 
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.source = try row.decode(column: "source", as: String.self)
         self.destination = try row.decode(

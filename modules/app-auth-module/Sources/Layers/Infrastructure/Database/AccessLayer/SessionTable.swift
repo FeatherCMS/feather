@@ -12,7 +12,7 @@ import struct Foundation.Date
 extension SessionTable.Row {
 
     init(
-        from row: DatabaseRow
+        from row: any DatabaseRow
     ) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.token = try row.decode(column: "token", as: String.self)
