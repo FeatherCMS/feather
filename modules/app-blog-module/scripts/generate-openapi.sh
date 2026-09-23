@@ -47,8 +47,6 @@ generate_yaml() {
         )
     done
 
-    "${WORKSPACE_DIR}/scripts/normalize-openapi-generated.sh" \
-        "${MODULE_DIR}/Sources/APIs"
 }
 
 generate_types() {
@@ -61,6 +59,9 @@ generate_types() {
             --output-directory "${MODULE_DIR}/${OUTPUT_DIRECTORIES[${index}]}" \
             "${MODULE_DIR}/openapi/${SPECIFICATIONS[${index}]}"
     done
+
+    "${WORKSPACE_DIR}/scripts/normalize-openapi-generated.sh" \
+        "${MODULE_DIR}/Sources/APIs"
 }
 
 case "${1:-run}" in
