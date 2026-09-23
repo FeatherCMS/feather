@@ -12,7 +12,42 @@ struct NewsletterSubscriberRow: Component {
     let returnTo: String
 
     func html(context: inout BuilderContext) -> Tr {
-        Tr {
+        var actions: [NewAdminListRowActions.Action] = [
+            .init(
+                "View",
+                href: NewsletterAdminRoutes.subscriberDetails(
+                    RouterPath(item.id)
+                ).description,
+                style: .ghost(.primary),
+                permission: Permissions.Subscribers.read
+            ),
+        ]
+        if let campaign = item.newsletters.first {
+            actions.append(
+                .init(
+                    "Edit",
+                    href: NewsletterAdminRoutes.campaignSubscriberEdit(
+                        newsletterID: RouterPath(campaign.id),
+                        subscriberID: RouterPath(item.id)
+                    ).description,
+                    style: .ghost(.secondary),
+                    permission: Permissions.Subscribers.update
+                )
+            )
+        }
+        actions.append(
+            .init(
+                "Remove",
+                href: NewAdminLocation.remove(
+                    path: NewsletterAdminRoutes.subscriberRemove.description,
+                    ids: [item.id],
+                    returnTo: returnTo
+                ),
+                style: .destructive,
+                permission: Permissions.Subscribers.delete
+            )
+        )
+        return Tr {
             if permissions.allows(Permissions.Subscribers.delete) {
                 context.build(NewAdminListRowCheckbox(id: item.id))
             }
@@ -34,27 +69,7 @@ struct NewsletterSubscriberRow: Component {
             context.build(
                 NewAdminListRowActions(
                     label: "Actions",
-                    actions: [
-                        .init(
-                            "View",
-                            href: NewsletterAdminRoutes.subscriberDetails(
-                                RouterPath(item.id)
-                            ).description,
-                            style: .ghost(.primary),
-                            permission: Permissions.Subscribers.read
-                        ),
-                        .init(
-                            "Remove",
-                            href: NewAdminLocation.remove(
-                                path: NewsletterAdminRoutes.subscriberRemove
-                                    .description,
-                                ids: [item.id],
-                                returnTo: returnTo
-                            ),
-                            style: .destructive,
-                            permission: Permissions.Subscribers.delete
-                        ),
-                    ],
+                    actions: actions,
                     permissions: permissions
                 )
             )

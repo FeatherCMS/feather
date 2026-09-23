@@ -15,15 +15,7 @@ struct NewsletterIssueDetailsView: Component {
     let permissions: NewAdminListActions
 
     func html(context: inout BuilderContext) -> Section {
-        var actions: [NewAdminDetailView.Action] = [
-            .init(
-                label: "Back to issues",
-                href: NewsletterAdminRoutes.campaignIssues(
-                    RouterPath(newsletterId)
-                ).description,
-                style: .secondary
-            ),
-        ]
+        var actions: [NewAdminDetailView.Action] = []
         if permissions.allows(Permissions.Issues.update) {
             actions.append(
                 .init(

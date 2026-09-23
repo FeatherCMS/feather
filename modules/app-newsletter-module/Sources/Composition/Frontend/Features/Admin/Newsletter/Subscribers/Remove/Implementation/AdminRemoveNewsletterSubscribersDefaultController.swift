@@ -39,7 +39,8 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
                 .init(id: $0.0, label: $0.1)
             },
             search: request.querySearch(),
-            campaignId: request.queryString("campaignId")
+            campaignId: request.queryString("campaignId"),
+            returnTo: request.queryString("returnTo")
         )
     }
 

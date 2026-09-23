@@ -35,7 +35,7 @@ extension AdminAPIGateway {
                     } ?? current.scheduledDate
                 )
             )
-        if result.scheduledDate == nil && result.status == .draft {
+        if current.scheduledDate == nil {
             try await useCases.enqueueIssueEmails(issue: result)
         }
         return .ok(

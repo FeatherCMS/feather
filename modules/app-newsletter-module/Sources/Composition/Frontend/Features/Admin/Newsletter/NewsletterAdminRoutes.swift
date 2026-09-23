@@ -61,9 +61,8 @@ enum NewsletterAdminRoutes {
         newsletterID: campaignID,
         subscriberID: subscriberID
     )
-    static let campaignSubscriberRemoveSelectedRoute = campaignSubscriberRemove(
-        campaignID
-    )
+    static let campaignSubscriberRemoveSelectedRoute =
+        campaignSubscriberRemoveSelected(campaignID)
     static let subscriberDetailsRoute = subscriberDetails(subscriberID)
 
     static func campaignDetails(_ id: RouterPath) -> RouterPath {
@@ -117,8 +116,13 @@ enum NewsletterAdminRoutes {
             .appendingPath(RouterPath("test-email"))
     }
 
-    static let issueTestEmailSelectedRoute = campaignIssues(campaignID)
-        .appendingPath(RouterPath("test-email"))
+    static func issueTestEmail(newsletterID: RouterPath) -> RouterPath {
+        campaignIssues(newsletterID).appendingPath(RouterPath("test-email"))
+    }
+
+    static let issueTestEmailSelectedRoute = issueTestEmail(
+        newsletterID: campaignID
+    )
 
     static func campaignSubscribers(_ id: RouterPath) -> RouterPath {
         newsletter.appendingPath(id).appendingPath(RouterPath("subscribers"))
@@ -130,6 +134,12 @@ enum NewsletterAdminRoutes {
 
     static func campaignSubscriberRemove(_ id: RouterPath) -> RouterPath {
         campaignSubscribers(id).appendingPath(RouterPath("remove"))
+    }
+
+    static func campaignSubscriberRemoveSelected(
+        _ newsletterID: RouterPath
+    ) -> RouterPath {
+        campaignSubscribers(newsletterID).appendingPath(RouterPath("remove"))
     }
 
     static func campaignSubscriberDetails(

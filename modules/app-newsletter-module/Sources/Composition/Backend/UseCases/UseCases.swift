@@ -3,6 +3,7 @@ import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import Foundation
 import NewsletterApplication
 import NewsletterContracts
 import NewsletterDomain
@@ -16,7 +17,8 @@ public protocol NewsletterMailQueue: Sendable {
         additionalHeaders: String,
         messageBody: String,
         deliveryIssueId: String?,
-        deliveryNewsletterId: String?
+        deliveryNewsletterId: String?,
+        scheduledAt: Date?
     ) async throws
 }
 
@@ -66,10 +68,11 @@ public struct UseCases: Sendable {
                 input: .init(newsletterId: issue.newsletterId)
             )
         for subscriber in subscribers where subscriber.status == .subscribed {
-            _ = try await createPendingDelivery(
+            let shouldEnqueue = try await createPendingDelivery(
                 issue: issue,
                 email: subscriber.email
             )
+            guard shouldEnqueue else { continue }
             try await mailQueue.enqueue(
                 mailFrom: newsletter.fromEmail,
                 mailTo: subscriber.email,
@@ -77,7 +80,8 @@ public struct UseCases: Sendable {
                 additionalHeaders: "",
                 messageBody: issue.content,
                 deliveryIssueId: issue.id,
-                deliveryNewsletterId: issue.newsletterId
+                deliveryNewsletterId: issue.newsletterId,
+                scheduledAt: issue.scheduledDate
             )
         }
     }
@@ -111,25 +115,6 @@ public struct UseCases: Sendable {
     }
 
     func enqueueIssueTestEmail(
-        issue: IssueDetail,
-        email: String
-    ) async throws {
-        let subject = try await CurrentSubject.require()
-        let newsletter = try await makeGetNewsletterCampaign()
-            .execute(subject: subject, input: .init(id: issue.newsletterId))
-        guard !newsletter.fromEmail.isEmpty else { return }
-        try await mailQueue.enqueue(
-            mailFrom: newsletter.fromEmail,
-            mailTo: email,
-            subject: issue.subject,
-            additionalHeaders: "",
-            messageBody: issue.content,
-            deliveryIssueId: nil,
-            deliveryNewsletterId: nil
-        )
-    }
-
-    func enqueueIssueTestEmail(
         newsletterKey: String,
         email: String,
         subject: String,
@@ -146,7 +131,8 @@ public struct UseCases: Sendable {
             additionalHeaders: "",
             messageBody: content,
             deliveryIssueId: nil,
-            deliveryNewsletterId: nil
+            deliveryNewsletterId: nil,
+            scheduledAt: nil
         )
     }
 

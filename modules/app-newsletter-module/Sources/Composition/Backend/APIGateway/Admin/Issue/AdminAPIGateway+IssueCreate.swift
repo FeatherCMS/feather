@@ -35,9 +35,7 @@ extension AdminAPIGateway {
                 )
         }
 
-        if body.scheduledAt == nil {
-            try await useCases.enqueueIssueEmails(issue: result)
-        }
+        try await useCases.enqueueIssueEmails(issue: result)
 
         return .created(
             .init(

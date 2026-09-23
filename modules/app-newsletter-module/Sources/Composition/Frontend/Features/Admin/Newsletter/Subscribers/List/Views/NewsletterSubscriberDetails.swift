@@ -17,7 +17,7 @@ struct NewsletterSubscriberDetails: Component {
             for campaign in item.newsletters {
                 actions.append(
                     .init(
-                        label: "Edit \(campaign.name)",
+                        label: "Edit",
                         href: NewsletterAdminRoutes.campaignSubscriberEdit(
                             newsletterID: RouterPath(campaign.id),
                             subscriberID: RouterPath(item.id)

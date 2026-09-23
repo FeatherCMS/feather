@@ -51,6 +51,9 @@ public struct RemoveIssue: UseCase {
                 else { continue }
                 ids.append(id)
             }
+            for id in ids {
+                try await scope.delivery.delete(issueId: id)
+            }
             return try await scope.issue.delete(ids: ids)
         }
     }

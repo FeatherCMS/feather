@@ -91,7 +91,9 @@ struct NewsletterCampaignSubscribersTableContent: Component {
                                 state: .init(
                                     action: NewAdminLocation.remove(
                                         path: NewsletterAdminRoutes
-                                            .campaignSubscriberRemoveSelectedRoute
+                                            .campaignSubscriberRemoveSelected(
+                                                RouterPath(newsletterId)
+                                            )
                                             .description,
                                         ids: [],
                                         returnTo: returnTo
