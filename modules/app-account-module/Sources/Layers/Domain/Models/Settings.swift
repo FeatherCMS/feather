@@ -6,6 +6,7 @@
 
 public import FeatherDomain
 public import Foundation
+
 public import struct Foundation.Date
 
 public struct Settings: Model {
