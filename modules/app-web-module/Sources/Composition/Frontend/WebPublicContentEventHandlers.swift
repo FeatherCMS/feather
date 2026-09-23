@@ -21,10 +21,6 @@ public enum WebPublicContentEventHandlers {
     private static func resolve(
         _ context: WebPublicContentEventContext<RuntimeBuilderContext>
     ) async throws -> WebPublicContentResult? {
-        let requestPath = context.runtime.request.uri.path.trimmingCharacters(
-            in: CharacterSet(charactersIn: "/")
-        )
-
         let api = context.runtime.context.webApplicationAPI()
         let siteSettings = try await api.withOpenAPIRepositoryErrorMapping {
             client in
@@ -87,7 +83,7 @@ public enum WebPublicContentEventHandlers {
                 let page = try value.body.json
                 payload["page"] = pageContext(
                     page: page,
-                    slug: requestPath,
+                    slug: context.baseMetadata.slug,
                     siteSettings: siteSettings,
                     siteBaseURL: origins.siteBaseURL
                 )
@@ -107,7 +103,7 @@ public enum WebPublicContentEventHandlers {
                         "The page you requested does not exist or is not available.",
                     "permalink": normalizedURL(
                         base: origins.siteBaseURL,
-                        slug: requestPath
+                        slug:  context.baseMetadata.slug
                     ),
                     "noindex": true,
                     "css": [String](),
