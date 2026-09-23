@@ -11,7 +11,7 @@ struct AdminAddNewsletterIssueDefaultPresenter:
     AdminAddNewsletterIssuePresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
     func renderPage(
         model: AdminAddNewsletterIssueModel,

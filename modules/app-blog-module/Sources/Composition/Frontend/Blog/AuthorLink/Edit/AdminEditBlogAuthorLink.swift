@@ -14,13 +14,14 @@ import WebFrontend
 struct AdminEditBlogAuthorLink {
     let controller: any AdminEditBlogAuthorLinkController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: BlogAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminEditBlogAuthorLinkDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminEditBlogAuthorLinkDefaultInteractor(
                         repository: AdminEditBlogAuthorLinkOpenAPIRepository(
-                            api: context.blogAdminAPI()
+                            api: apiBuilder.makeBlogAdmin(context)
                         )
                     ),
                     presenter: AdminEditBlogAuthorLinkDefaultPresenter(

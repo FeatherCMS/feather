@@ -5,14 +5,14 @@ public protocol AdminViewAnalyticsNotFoundController: Sendable {
 
     func getNotFound(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminViewAnalyticsNotFoundController {
 
     public func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             AnalyticsAdminRoutes.notFound,

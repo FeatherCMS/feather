@@ -4,6 +4,7 @@ import Foundation
 import Hummingbird
 
 struct AppLoginAuthDefaultController: AppLoginAuthController {
+    let usesSecureCookies: Bool
     let buildRuntime:
         RuntimeBuilder<
             any AppLoginAuthInteractor,
@@ -56,8 +57,7 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
                 expires: Date().addingTimeInterval(oneDay),
                 maxAge: Int(oneDay),
                 path: "/",
-                secure: unsafe AppEnvironmentStore.current.publicOrigins
-                    .usesSecureCookies,
+                secure: usesSecureCookies,
                 httpOnly: true,
                 sameSite: .lax
             )

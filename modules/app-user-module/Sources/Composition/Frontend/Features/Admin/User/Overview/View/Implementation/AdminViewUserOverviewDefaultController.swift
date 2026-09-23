@@ -4,14 +4,14 @@ import UserContracts
 
 struct AdminViewUserOverviewDefaultController: AdminViewUserOverviewController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewUserOverviewInteractor,
             any AdminViewUserOverviewPresenter
         >
 
     func getOverview(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         return try await presenter.renderPage(

@@ -15,14 +15,14 @@ struct AdminEditBlogTagDefaultController:
     AdminEditBlogTagController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditBlogTagInteractor,
             any AdminEditBlogTagPresenter
         >
 
     func getEditBlogTag(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
@@ -54,7 +54,7 @@ struct AdminEditBlogTagDefaultController:
 
     func postEditBlogTag(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         let id = try context.requiredID()

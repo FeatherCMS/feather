@@ -14,13 +14,14 @@ import WebFrontend
 struct AdminRemoveBlogTag {
     let controller: any AdminRemoveBlogTagController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: BlogAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminRemoveBlogTagDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminRemoveBlogTagDefaultInteractor(
                         repository: AdminRemoveBlogTagOpenAPIRepository(
-                            api: context.blogAdminAPI()
+                            api: apiBuilder.makeBlogAdmin(context)
                         )
                     ),
                     presenter: AdminRemoveBlogTagDefaultPresenter(

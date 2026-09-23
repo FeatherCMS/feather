@@ -21,12 +21,12 @@ struct AdminEditAuthCredentialDefaultController:
     AdminEditAuthCredentialController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditAuthCredentialInteractor,
             any AdminEditAuthCredentialPresenter
         >
 
-    func getEditCredential(request: Request, context: DefaultRequestContext)
+    func getEditCredential(request: Request, context: AuthenticatedRequestContext)
         async throws -> HTMLResponse
     {
         let id = try context.requiredID()
@@ -63,7 +63,7 @@ struct AdminEditAuthCredentialDefaultController:
         }
     }
 
-    func postEditCredential(request: Request, context: DefaultRequestContext)
+    func postEditCredential(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
     {
         let id = try context.requiredID()

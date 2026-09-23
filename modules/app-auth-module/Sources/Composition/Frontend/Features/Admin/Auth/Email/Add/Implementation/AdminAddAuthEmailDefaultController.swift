@@ -20,14 +20,14 @@ import WebComponents
 struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
 
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminAddAuthEmailInteractor,
             any AdminAddAuthEmailPresenter
         >
 
     func getAddAuthEmail(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.create)
@@ -44,7 +44,7 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
 
     func postAddAuthEmail(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.create)
@@ -136,7 +136,7 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
 
     private func createResponse(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         presenter: any AdminAddAuthEmailPresenter,
         state: AuthEmailForm.State
     ) async throws -> Response {

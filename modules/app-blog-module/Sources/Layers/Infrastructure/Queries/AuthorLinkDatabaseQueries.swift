@@ -4,9 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import BlogApplication
+public import BlogApplication
 import FeatherApplication
-import FeatherInfrastructure
+public import FeatherInfrastructure
 
 extension AuthorLinkTable.Row {
 

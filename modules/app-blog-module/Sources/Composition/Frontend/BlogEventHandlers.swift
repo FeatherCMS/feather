@@ -1,4 +1,4 @@
-import FeatherContracts
+public import FeatherContracts
 import SystemContracts
 import WebContracts
 

@@ -1,8 +1,8 @@
 import BlogDomain
 import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
-import FeatherInfrastructure
+public import FeatherDatabase
+public import FeatherDomain
+public import FeatherInfrastructure
 import WebDomain
 
 public struct TableSeedMigration: DatabaseMigration {

@@ -1,4 +1,4 @@
-import Jobs
+public import Jobs
 
 public struct EmailJobPayload: JobParameters {
     public static let jobName = "send_email"

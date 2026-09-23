@@ -4,8 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherContracts
-import WebApplication
+public import FeatherContracts
+public import WebApplication
 
 public struct ReadAuthorMetadata: Scope {
     public let author: any AuthorQueries

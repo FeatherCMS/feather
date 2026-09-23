@@ -13,7 +13,8 @@ enum AdminBlogMetadataRoutes {
     }
 
     static func register(
-        router: Router<DefaultRequestContext>,
+        router: any RouterMethods<AuthenticatedRequestContext>,
+        apiBuilder: WebAPIBuilder,
         renderingEngine: any RenderingEngine,
         events: any EventPublisher
     ) {
@@ -75,6 +76,7 @@ enum AdminBlogMetadataRoutes {
                     ]
                 )
                 let handler = AdminWebMetadataEditHandler(
+                    apiBuilder: apiBuilder,
                     renderingEngine: renderingEngine,
                     adminEvents: events
                 )
@@ -117,6 +119,7 @@ enum AdminBlogMetadataRoutes {
                     ]
                 )
                 let handler = AdminWebMetadataEditHandler(
+                    apiBuilder: apiBuilder,
                     renderingEngine: renderingEngine,
                     adminEvents: events
                 )

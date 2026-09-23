@@ -5,12 +5,12 @@ import UserContracts
 
 struct AdminListUserRoleDefaultController: AdminListUserRoleController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminListUserRoleInteractor,
             any AdminListUserRolePresenter
         >
 
-    func getUserRoles(request: Request, context: DefaultRequestContext)
+    func getUserRoles(request: Request, context: AuthenticatedRequestContext)
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))

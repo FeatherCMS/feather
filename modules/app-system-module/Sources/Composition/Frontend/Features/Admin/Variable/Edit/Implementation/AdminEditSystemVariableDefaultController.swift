@@ -9,14 +9,14 @@ struct AdminEditSystemVariableDefaultController:
     AdminEditSystemVariableController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditSystemVariableInteractor,
             any AdminEditSystemVariablePresenter
         >
 
     func getEditSystemVariable(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         guard
@@ -45,7 +45,7 @@ struct AdminEditSystemVariableDefaultController:
 
     func postEditSystemVariable(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         guard

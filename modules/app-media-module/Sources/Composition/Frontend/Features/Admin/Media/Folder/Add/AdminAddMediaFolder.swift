@@ -11,13 +11,16 @@ import WebComponents
 struct AdminAddMediaFolder {
     let controller: any AdminAddMediaFolderController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: MediaAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminAddMediaFolderDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminAddMediaFolderDefaultInteractor(
                         repository: AdminAddMediaFolderOpenAPIRepository(
-                            api: context.mediaAdminAPI()
+                            api: apiBuilder.makeMediaAdmin(context)
                         )
                     ),
                     presenter: AdminAddMediaFolderDefaultPresenter(

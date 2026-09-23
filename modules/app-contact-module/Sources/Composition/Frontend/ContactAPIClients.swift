@@ -83,18 +83,22 @@ public struct ContactAppAPIClient: Sendable {
     }
 }
 
-extension DefaultRequestContext {
-    public func contactAdminAPI() -> ContactAdminAPIClient {
-        .init(
-            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+public struct ContactAPIBuilder: Sendable {
+    private let apiBaseURL: URL
+
+    public init(apiBaseURL: URL) {
+        self.apiBaseURL = apiBaseURL
     }
 
-    public func contactApplicationAPI() -> ContactAppAPIClient {
-        .init(
-            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+    public func makeContactAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> ContactAdminAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeContactApp(
+        _ context: DefaultRequestContext
+    ) -> ContactAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
     }
 }

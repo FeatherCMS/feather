@@ -13,14 +13,14 @@ import WebFrontend
 
 struct AdminViewBlogTagDefaultController: AdminViewBlogTagController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewBlogTagInteractor,
             any AdminViewBlogTagPresenter
         >
 
     func getBlogTag(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         let id = try context.requiredID()

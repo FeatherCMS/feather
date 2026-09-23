@@ -1,4 +1,4 @@
-import FeatherInfrastructure
+public import FeatherInfrastructure
 import NIOHTTP1
 import OpenAPIRuntime
 

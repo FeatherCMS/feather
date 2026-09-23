@@ -19,14 +19,15 @@ import WebComponents
 struct AdminAddAuthCredential {
     let controller: any AdminAddAuthCredentialController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: AuthAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         controller = AdminAddAuthCredentialDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminAddAuthCredentialDefaultInteractor(
                         repository: AdminAddAuthCredentialOpenAPIRepository(
-                            api: context.authAdminAPI(),
-                            userAPI: context.userAdminAPI()
+                            api: apiBuilder.makeAuthAdmin(context),
+                            userAPI: apiBuilder.makeUserAdmin(context)
                         )
                     ),
                     presenter: AdminAddAuthCredentialDefaultPresenter(

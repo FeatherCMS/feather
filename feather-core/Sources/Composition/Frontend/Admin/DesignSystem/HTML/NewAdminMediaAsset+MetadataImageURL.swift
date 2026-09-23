@@ -14,17 +14,11 @@ extension NewAdminMediaAsset {
             return nil
         }
 
-        guard
-            let mediaPrefix = unsafe AppEnvironmentStore.current.mediaResolver
-                .resolve(imagePath: "/media/assets/")
-        else {
-            return nil
-        }
-        guard rawValue.hasPrefix(mediaPrefix) else {
+        guard let mediaPrefixRange = rawValue.range(of: "/media/assets/") else {
             return nil
         }
 
-        let relativePath = String(rawValue.dropFirst(mediaPrefix.count))
+        let relativePath = String(rawValue[mediaPrefixRange.upperBound...])
         let decodedPath = relativePath.removingPercentEncoding ?? relativePath
         let pathComponents = decodedPath.split(
             separator: "/",

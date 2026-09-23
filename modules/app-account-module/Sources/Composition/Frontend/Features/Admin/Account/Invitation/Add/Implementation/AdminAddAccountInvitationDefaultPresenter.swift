@@ -5,7 +5,7 @@ struct AdminAddAccountInvitationDefaultPresenter:
     AdminAddAccountInvitationPresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderEngine: any RenderingEngine
 
     func renderPage(

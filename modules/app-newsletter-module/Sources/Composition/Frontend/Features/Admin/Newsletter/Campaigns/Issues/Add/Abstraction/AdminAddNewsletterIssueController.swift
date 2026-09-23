@@ -10,15 +10,15 @@ import WebComponents
 protocol AdminAddNewsletterIssueController: Sendable {
     func getAddNewsletterIssue(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
     func postAddNewsletterIssue(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 }
 extension AdminAddNewsletterIssueController {
-    func route(on router: Router<DefaultRequestContext>) {
+    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.get(
             NewsletterAdminRoutes.issueAddRoute,
             use: getAddNewsletterIssue

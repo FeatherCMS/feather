@@ -7,7 +7,7 @@ import WebContracts
 struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
     let repository: any AppPublicContentRepository
     let events: any EventPublisher
-    let runtime: RuntimeBuilderContext
+    let runtime: PublicContentRuntimeContext
 
     func resolve(
         slug: String
@@ -49,7 +49,7 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
     private func resolveResults(
         baseMetadata: PublicContent.Metadata.Base
     ) async throws -> [WebPublicContentProvider.Output] {
-        let eventContext = WebPublicContentEventContext<RuntimeBuilderContext>(
+        let eventContext = WebPublicContentEventContext<PublicContentRuntimeContext>(
             baseMetadata: baseMetadata,
             runtime: runtime
         )

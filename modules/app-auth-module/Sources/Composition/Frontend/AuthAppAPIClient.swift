@@ -58,12 +58,3 @@ public struct AuthAppAPIClient: Sendable {
         )
     }
 }
-
-extension DefaultRequestContext {
-    public func authAppAPI() -> AuthAppAPIClient {
-        .init(
-            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
-    }
-}

@@ -5,7 +5,7 @@ struct AdminRemoveNewsletterCampaignDefaultPresenter:
     AdminRemoveNewsletterCampaignPresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
     func render(item: NewAdminRemoveItemContext) async throws
         -> HTMLResponse

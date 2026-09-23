@@ -5,7 +5,7 @@ import WebComponents
 
 struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderEditPage(id: String, state: UserIdentityEditForm.State)

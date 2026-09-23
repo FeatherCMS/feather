@@ -3,21 +3,21 @@ import BlogAppAPI
 import CSS
 import FeatherAdmin
 import FeatherValidation
-import HTML
+public import HTML
 import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebAdminAPI
 import WebBuilders
-import WebComponents
-import WebFrontend
+public import WebComponents
+public import WebFrontend
 
 extension AdminViewMediaAssetOpenAPIRepository {
     init(api: BlogAdminAPIClient) {
         self.init(
             api: MediaAdminAPIClient(
-                apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
+                apiBaseURL: api.apiBaseURL,
                 sessionToken: api.sessionToken
             )
         )

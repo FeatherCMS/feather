@@ -4,13 +4,14 @@ import Hummingbird
 struct AdminEditSystemVariable {
     let controller: any AdminEditSystemVariableController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: SystemAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminEditSystemVariableDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminEditSystemVariableDefaultInteractor(
                         repository: AdminEditSystemVariableOpenAPIRepository(
-                            api: context.systemAdminAPI()
+                            api: apiBuilder.makeSystemAdmin(context)
                         )
                     ),
                     presenter: AdminEditSystemVariableDefaultPresenter(

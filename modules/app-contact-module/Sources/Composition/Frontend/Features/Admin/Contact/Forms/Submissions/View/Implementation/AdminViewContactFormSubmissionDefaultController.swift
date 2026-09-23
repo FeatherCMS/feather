@@ -5,12 +5,12 @@ struct AdminViewContactFormSubmissionDefaultController:
     AdminViewContactFormSubmissionController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewContactFormSubmissionInteractor,
             any AdminViewContactFormSubmissionPresenter
         >
 
-    func get(request: Request, context: DefaultRequestContext) async throws
+    func get(request: Request, context: AuthenticatedRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))

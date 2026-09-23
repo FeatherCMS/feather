@@ -3,14 +3,14 @@ import Hummingbird
 
 struct AdminViewAnalyticsLogDefaultController: AdminViewAnalyticsLogController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewAnalyticsLogInteractor,
             any AdminViewAnalyticsLogPresenter
         >
 
     func getAnalyticsLog(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()

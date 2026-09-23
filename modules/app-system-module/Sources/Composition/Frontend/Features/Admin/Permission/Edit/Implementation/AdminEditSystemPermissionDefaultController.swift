@@ -7,14 +7,14 @@ struct AdminEditSystemPermissionDefaultController:
     AdminEditSystemPermissionController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditSystemPermissionInteractor,
             any AdminEditSystemPermissionPresenter
         >
 
     func getEditSystemPermission(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
@@ -44,7 +44,7 @@ struct AdminEditSystemPermissionDefaultController:
 
     func postEditSystemPermission(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()

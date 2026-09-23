@@ -9,13 +9,6 @@ struct AdminRemoveUserRoleOpenAPIRepository: AdminRemoveUserRoleRepository {
         self.api = api
     }
 
-    init() {
-        self.api = UserAdminAPIClient(
-            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: nil
-        )
-    }
-
     private func name(
         id: String
     ) async throws -> String {

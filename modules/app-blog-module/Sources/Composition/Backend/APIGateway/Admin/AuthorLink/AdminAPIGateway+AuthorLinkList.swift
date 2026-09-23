@@ -1,4 +1,4 @@
-import BlogAdminAPI
+public import BlogAdminAPI
 
 extension AdminAPIGateway {
 

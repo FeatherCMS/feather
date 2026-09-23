@@ -5,12 +5,12 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
     AdminRemoveContactFormSubmissionsController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminRemoveContactFormSubmissionsInteractor,
             any AdminRemoveContactFormSubmissionsPresenter
         >
 
-    func confirm(request: Request, context: DefaultRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -26,7 +26,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         )
     }
 
-    func remove(request: Request, context: DefaultRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext) async throws
         -> Response
     {
         let (interactor, _) = buildRuntime((request, context))
@@ -55,7 +55,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         )
     }
 
-    func confirmSelected(request: Request, context: DefaultRequestContext)
+    func confirmSelected(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> HTMLResponse
     {
@@ -69,7 +69,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         )
     }
 
-    func removeSelected(request: Request, context: DefaultRequestContext)
+    func removeSelected(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> Response
     {

@@ -17,14 +17,19 @@ import WebBuilders
 import WebComponents
 
 public struct AdminAuth {
+    private let apiBuilder: AuthAPIBuilder
     private let renderingEngine: any RenderingEngine
 
-    public init(renderingEngine: any RenderingEngine) {
+    public init(
+        apiBuilder: AuthAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
+        self.apiBuilder = apiBuilder
         self.renderingEngine = renderingEngine
     }
 
     public func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         AdminViewAuthOverview(
             renderingEngine: renderingEngine
@@ -32,61 +37,70 @@ public struct AdminAuth {
         .controller.route(on: router)
 
         AdminListAuthEmail(
+            apiBuilder: apiBuilder,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
         AdminViewAuthEmail(
+            apiBuilder: apiBuilder,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
-        AdminAddAuthEmail(renderingEngine: renderingEngine).controller
+        AdminAddAuthEmail(apiBuilder: apiBuilder, renderingEngine: renderingEngine).controller
             .route(on: router)
-        AdminEditAuthEmail(renderingEngine: renderingEngine).controller
+        AdminEditAuthEmail(apiBuilder: apiBuilder, renderingEngine: renderingEngine).controller
             .route(on: router)
-        AdminRemoveAuthEmail(renderingEngine: renderingEngine).controller
+        AdminRemoveAuthEmail(apiBuilder: apiBuilder, renderingEngine: renderingEngine).controller
             .route(on: router)
 
         AdminListAuthMagicLink(
+            apiBuilder: apiBuilder,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
         AdminViewAuthMagicLink(
+            apiBuilder: apiBuilder,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
         AdminAddAuthMagicLink(
+            apiBuilder: apiBuilder,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
         AdminEditAuthMagicLink(
+            apiBuilder: apiBuilder,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
         AdminRemoveAuthMagicLink(
+            apiBuilder: apiBuilder,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
         AdminEditAuthAccessControl(
+            apiBuilder: apiBuilder,
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
 
         AdminCredential(
+            apiBuilder: apiBuilder,
             renderingEngine: renderingEngine
         )
         .route(on: router)
 
-        AdminListAuthSession(renderingEngine: renderingEngine)
+        AdminListAuthSession(apiBuilder: apiBuilder, renderingEngine: renderingEngine)
             .controller
             .route(on: router)
-        AdminRemoveAuthSession(renderingEngine: renderingEngine)
+        AdminRemoveAuthSession(apiBuilder: apiBuilder, renderingEngine: renderingEngine)
             .controller
             .route(on: router)
     }

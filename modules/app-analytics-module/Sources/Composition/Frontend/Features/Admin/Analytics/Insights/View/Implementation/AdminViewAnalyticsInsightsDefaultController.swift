@@ -8,14 +8,14 @@ struct AdminViewAnalyticsInsightsDefaultController:
 {
     let source: AdminAnalyticsInsightsPage.Source
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewAnalyticsInsightsInteractor,
             any AdminViewAnalyticsInsightsPresenter
         >
 
     func getInsights(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions

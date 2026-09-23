@@ -1,4 +1,4 @@
-import FeatherDomain
+public import FeatherDomain
 
 public protocol SettingsRepository: Repository {
     func get() async throws -> Settings

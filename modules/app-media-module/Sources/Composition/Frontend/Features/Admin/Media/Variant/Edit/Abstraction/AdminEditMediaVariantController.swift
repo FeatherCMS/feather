@@ -2,34 +2,34 @@ import FeatherAdmin
 import Hummingbird
 
 protocol AdminEditMediaVariantController: Sendable {
-    func getEditMediaVariant(request: Request, context: DefaultRequestContext)
+    func getEditMediaVariant(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
     func getEditMediaVariantProcessor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
     func getRemoveMediaVariantProcessors(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
-    func postEditMediaVariant(request: Request, context: DefaultRequestContext)
+    func postEditMediaVariant(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
     func postAddMediaVariantProcessor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
     func postEditMediaVariantProcessor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
     func postRemoveMediaVariantProcessor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 }
 
 extension AdminEditMediaVariantController {
-    func route(on router: Router<DefaultRequestContext>) {
+    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.get(MediaVariantRoutes.editRoute, use: getEditMediaVariant)
         router.get(
             MediaVariantRoutes.processorEditRoute,

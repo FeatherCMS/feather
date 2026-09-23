@@ -20,7 +20,7 @@ struct AdminEditAuthAccessControl {
 
     let controller: any AdminEditAuthAccessControlController
 
-    init(
+    init(apiBuilder: AuthAPIBuilder,
         renderingEngine: any RenderingEngine
     ) {
         self.controller = AdminEditAuthAccessControlDefaultController(
@@ -28,9 +28,9 @@ struct AdminEditAuthAccessControl {
                 (
                     interactor: AdminEditAuthAccessControlDefaultInteractor(
                         repository: AdminEditAuthAccessControlOpenAPIRepository(
-                            api: context.authAdminAPI(),
-                            userAPI: context.userAdminAPI(),
-                            systemAPI: context.systemAdminAPI()
+                            api: apiBuilder.makeAuthAdmin(context),
+                            userAPI: apiBuilder.makeUserAdmin(context),
+                            systemAPI: apiBuilder.makeSystemAdmin(context)
                         )
                     ),
                     presenter: AdminEditAuthAccessControlDefaultPresenter(

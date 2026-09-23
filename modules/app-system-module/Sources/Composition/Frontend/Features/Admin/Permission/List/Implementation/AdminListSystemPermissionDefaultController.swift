@@ -6,14 +6,14 @@ struct AdminListSystemPermissionDefaultController:
     AdminListSystemPermissionController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminListSystemPermissionInteractor,
             any AdminListSystemPermissionPresenter
         >
 
     func getSystemPermissions(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserAdminListActions

@@ -12,7 +12,7 @@ import WebComponents
 
 struct AdminEditMediaFolderDefaultPresenter: AdminEditMediaFolderPresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderEngine: any RenderingEngine
 
     func renderEditPage(

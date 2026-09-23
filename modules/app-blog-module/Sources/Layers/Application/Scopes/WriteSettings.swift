@@ -1,5 +1,5 @@
-import BlogDomain
-import FeatherContracts
+public import BlogDomain
+public import FeatherContracts
 
 public struct WriteSettings: Scope {
     public let settings: any SettingsRepository

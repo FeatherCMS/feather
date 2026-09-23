@@ -4,13 +4,14 @@ import Hummingbird
 struct AdminEditUserRole {
     let controller: any AdminEditUserRoleController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: UserAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminEditUserRoleDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminEditUserRoleDefaultInteractor(
                         repository: AdminEditUserRoleOpenAPIRepository(
-                            api: context.userAdminAPI()
+                            api: apiBuilder.makeUserAdmin(context)
                         )
                     ),
                     presenter: AdminEditUserRoleDefaultPresenter(

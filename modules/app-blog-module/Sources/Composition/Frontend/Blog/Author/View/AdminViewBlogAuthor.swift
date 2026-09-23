@@ -14,13 +14,14 @@ import WebFrontend
 struct AdminViewBlogAuthor {
     let controller: any AdminViewBlogAuthorController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: BlogAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminViewBlogAuthorDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminViewBlogAuthorDefaultInteractor(
                         repository: AdminViewBlogAuthorOpenAPIRepository(
-                            api: context.blogAdminAPI()
+                            api: apiBuilder.makeBlogAdmin(context)
                         )
                     ),
                     presenter: AdminViewBlogAuthorDefaultPresenter(

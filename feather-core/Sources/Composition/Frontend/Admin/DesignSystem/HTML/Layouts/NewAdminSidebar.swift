@@ -273,15 +273,14 @@ public struct NewAdminSideBar: Component {
     }
 }
 
-extension DefaultRequestContext {
-
-    public func adminMenuGroups(
+public func adminMenuGroups(
+        for context: AuthenticatedRequestContext,
         request: Request,
         events: any EventPublisher
     ) async throws -> [NewAdminSideBar.Group] {
         let catalog = try await load(events: events)
         let path = request.uri.path
-        let permissions = currentUserPermissions
+        let permissions = context.currentUserPermissions
         let menuDefinitions = catalog.menus
             .filter { definition in
                 guard let permission = definition.permission else {
@@ -345,7 +344,7 @@ extension DefaultRequestContext {
             }
     }
 
-    private func isCurrent(
+private func isCurrent(
         _ link: String,
         path: String
     ) -> Bool {
@@ -375,7 +374,7 @@ extension DefaultRequestContext {
         return true
     }
 
-    private func normalizedPath(_ value: String) -> String {
+private func normalizedPath(_ value: String) -> String {
         let path = String(
             value.split(
                 separator: "?",
@@ -410,4 +409,3 @@ extension DefaultRequestContext {
         }
         return .init(menus: menus, items: items)
     }
-}

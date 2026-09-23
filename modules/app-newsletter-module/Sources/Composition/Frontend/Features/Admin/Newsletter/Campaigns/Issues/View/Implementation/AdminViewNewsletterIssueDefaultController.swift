@@ -11,11 +11,11 @@ struct AdminViewNewsletterIssueDefaultController:
     AdminViewNewsletterIssueController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewNewsletterIssueInteractor,
             any AdminViewNewsletterIssuePresenter
         >
-    func get(request: Request, context: DefaultRequestContext) async throws
+    func get(request: Request, context: AuthenticatedRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))

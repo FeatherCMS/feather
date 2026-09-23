@@ -4,12 +4,12 @@ import RedirectContracts
 
 struct AdminViewRedirectRuleDefaultController: AdminViewRedirectRuleController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewRedirectRuleInteractor,
             any AdminViewRedirectRulePresenter
         >
 
-    func getRedirectRule(request: Request, context: DefaultRequestContext)
+    func getRedirectRule(request: Request, context: AuthenticatedRequestContext)
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))

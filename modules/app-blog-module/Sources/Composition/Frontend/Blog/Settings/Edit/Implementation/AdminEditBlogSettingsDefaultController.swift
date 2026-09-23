@@ -17,14 +17,14 @@ struct AdminEditBlogSettingsDefaultController:
     AdminEditBlogSettingsController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditBlogSettingsInteractor,
             any AdminEditBlogSettingsPresenter
         >
 
     func getEditBlogSettings(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
@@ -71,7 +71,7 @@ struct AdminEditBlogSettingsDefaultController:
 
     func postEditBlogSettings(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions

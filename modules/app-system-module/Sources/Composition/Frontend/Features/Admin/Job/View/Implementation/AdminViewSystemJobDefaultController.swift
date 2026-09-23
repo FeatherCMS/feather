@@ -4,14 +4,14 @@ import SystemContracts
 
 struct AdminViewSystemJobDefaultController: AdminViewSystemJobController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewSystemJobInteractor,
             any AdminViewSystemJobPresenter
         >
 
     func getSystemJob(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: SystemPermissions.Jobs.read)

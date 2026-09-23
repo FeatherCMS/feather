@@ -7,12 +7,12 @@ import UserContracts
 
 struct AdminEditUserRoleDefaultController: AdminEditUserRoleController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditUserRoleInteractor,
             any AdminEditUserRolePresenter
         >
 
-    func getEditUserRole(request: Request, context: DefaultRequestContext)
+    func getEditUserRole(request: Request, context: AuthenticatedRequestContext)
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -35,7 +35,7 @@ struct AdminEditUserRoleDefaultController: AdminEditUserRoleController {
         }
     }
 
-    func postEditUserRole(request: Request, context: DefaultRequestContext)
+    func postEditUserRole(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

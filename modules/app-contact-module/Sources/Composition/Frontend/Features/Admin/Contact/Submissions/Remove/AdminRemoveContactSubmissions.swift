@@ -2,14 +2,15 @@ import FeatherAdmin
 
 struct AdminRemoveContactSubmissions {
     let controller: any AdminRemoveContactSubmissionsController
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: ContactAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         controller = AdminRemoveContactSubmissionsDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminRemoveContactSubmissionsDefaultInteractor(
                         repository:
                             AdminRemoveContactSubmissionsOpenAPIRepository(
-                                api: context.contactAdminAPI()
+                                api: apiBuilder.makeContactAdmin(context)
                             )
                     ),
                     presenter: AdminRemoveContactSubmissionsDefaultPresenter(

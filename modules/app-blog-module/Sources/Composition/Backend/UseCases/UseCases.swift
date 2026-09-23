@@ -1,11 +1,11 @@
 import BlogApplication
 import BlogInfrastructure
 import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
+public import FeatherContracts
+public import FeatherDatabase
+public import FeatherDomain
 import FeatherInfrastructure
-import MediaBackend
+public import MediaBackend
 import SystemInfrastructure
 import WebInfrastructure
 

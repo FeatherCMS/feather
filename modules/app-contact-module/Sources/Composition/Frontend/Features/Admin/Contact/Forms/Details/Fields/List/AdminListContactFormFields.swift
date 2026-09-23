@@ -10,12 +10,13 @@ import WebComponents
 struct AdminListContactFormFields {
     let controller: any AdminListContactFormFieldsController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: ContactAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         controller = AdminListContactFormFieldsDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminListContactFormFieldsDefaultInteractor(
-                        repository: .init(api: context.contactAdminAPI())
+                        repository: .init(api: apiBuilder.makeContactAdmin(context))
                     ),
                     presenter: AdminListContactFormFieldsDefaultPresenter(
                         request: request,

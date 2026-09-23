@@ -20,19 +20,19 @@ protocol AdminEditAuthMagicLinkController: Sendable {
 
     func getEditAuthMagicLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
     func postEditAuthMagicLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 }
 
 extension AdminEditAuthMagicLinkController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             AuthMagicLinkRoutes.edit(RouterPath("{id}")),

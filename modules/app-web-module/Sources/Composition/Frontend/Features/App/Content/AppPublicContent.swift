@@ -1,4 +1,4 @@
-import FeatherAdmin
+public import FeatherAdmin
 public import FeatherContracts
 
 public struct AppPublicContent {
@@ -7,17 +7,26 @@ public struct AppPublicContent {
     public init(
         events: any EventPublisher,
         themeRenderer: any PublicThemeRenderer,
-        contentRenderer: any WebContentRenderer
+        contentRenderer: any WebContentRenderer,
+        webAPIBuilder: WebAPIBuilder,
+        publicOrigins: AppPublicOriginConfiguration,
+        mediaResolver: MediaResolver
     ) {
         self.controller = AppPublicContentDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AppPublicContentDefaultInteractor(
                         repository: AppPublicContentOpenAPIRepository(
-                            api: context.webApplicationAPI()
+                            api: webAPIBuilder.makeWebApp(context)
                         ),
                         events: events,
-                        runtime: (request, context)
+                        runtime: .init(
+                            request: request,
+                            context: context,
+                            apiBaseURL: webAPIBuilder.baseURL,
+                            publicOrigins: publicOrigins,
+                            mediaResolver: mediaResolver
+                        )
                     ),
                     presenter: AppPublicContentDefaultPresenter(
                         themeRenderer: themeRenderer,

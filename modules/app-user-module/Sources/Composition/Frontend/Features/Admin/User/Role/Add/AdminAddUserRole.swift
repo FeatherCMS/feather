@@ -5,13 +5,14 @@ import UserAdminAPI
 struct AdminAddUserRole {
     let controller: any AdminAddUserRoleController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: UserAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminAddUserRoleDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminAddUserRoleDefaultInteractor(
                         repository: AdminAddUserRoleOpenAPIRepository(
-                            api: context.userAdminAPI()
+                            api: apiBuilder.makeUserAdmin(context)
                         )
                     ),
                     presenter: AdminAddUserRoleDefaultPresenter(

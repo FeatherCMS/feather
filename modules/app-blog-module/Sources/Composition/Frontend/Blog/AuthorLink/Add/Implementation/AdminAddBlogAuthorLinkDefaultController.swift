@@ -14,14 +14,14 @@ import WebFrontend
 struct AdminAddBlogAuthorLinkDefaultController: AdminAddBlogAuthorLinkController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminAddBlogAuthorLinkInteractor,
             any AdminAddBlogAuthorLinkPresenter
         >
 
     func getAddBlogAuthorLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
@@ -34,7 +34,7 @@ struct AdminAddBlogAuthorLinkDefaultController: AdminAddBlogAuthorLinkController
 
     func postAddBlogAuthorLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()

@@ -12,14 +12,14 @@ import WebComponents
 
 struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminListMediaAssetInteractor,
             any AdminListMediaAssetPresenter
         >
 
     func getListMediaAssets(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let page = request.queryPage()
@@ -75,7 +75,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
 
     func removeConfirmation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime((request, context))
         guard
@@ -113,7 +113,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
 
     func remove(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         guard

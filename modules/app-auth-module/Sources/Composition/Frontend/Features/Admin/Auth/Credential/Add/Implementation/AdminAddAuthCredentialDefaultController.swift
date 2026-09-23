@@ -20,12 +20,12 @@ import WebComponents
 struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminAddAuthCredentialInteractor,
             any AdminAddAuthCredentialPresenter
         >
 
-    func getAddCredential(request: Request, context: DefaultRequestContext)
+    func getAddCredential(request: Request, context: AuthenticatedRequestContext)
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -44,7 +44,7 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
         )
     }
 
-    func postAddCredential(request: Request, context: DefaultRequestContext)
+    func postAddCredential(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

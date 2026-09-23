@@ -12,19 +12,19 @@ protocol AdminEditMediaFolderController: Sendable {
 
     func getEditMediaFolder(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
     func postEditMediaFolder(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 }
 
 extension AdminEditMediaFolderController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             "/admin/media/folders/{id}/edit/",

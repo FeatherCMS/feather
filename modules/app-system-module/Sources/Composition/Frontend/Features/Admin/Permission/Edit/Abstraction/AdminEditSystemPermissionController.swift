@@ -5,19 +5,19 @@ protocol AdminEditSystemPermissionController: Sendable {
 
     func getEditSystemPermission(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
     func postEditSystemPermission(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 }
 
 extension AdminEditSystemPermissionController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             SystemPermissionRoutes.edit(RouterPath("{id}")),

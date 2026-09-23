@@ -4,14 +4,14 @@ import UserContracts
 
 struct AdminViewUserRoleDefaultController: AdminViewUserRoleController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewUserRoleInteractor,
             any AdminViewUserRolePresenter
         >
 
     func getUserRole(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Roles.read)

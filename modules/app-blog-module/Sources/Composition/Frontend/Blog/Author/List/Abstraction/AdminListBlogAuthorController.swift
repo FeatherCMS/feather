@@ -15,29 +15,29 @@ protocol AdminListBlogAuthorController: Sendable {
 
     func getBlogAuthors(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
     func getBlogAuthorsRemoveConfirmation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 
     func postBlogAuthorsRemove(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 
     func postBlogAuthorStatus(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 }
 
 extension AdminListBlogAuthorController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             "/admin/blog/authors",

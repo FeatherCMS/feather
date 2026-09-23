@@ -4,12 +4,12 @@ import UserContracts
 
 struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminRemoveUserRoleInteractor,
             any AdminRemoveUserRolePresenter
         >
 
-    func getRemoveUserRole(request: Request, context: DefaultRequestContext)
+    func getRemoveUserRole(request: Request, context: AuthenticatedRequestContext)
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -31,7 +31,7 @@ struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
         }
     }
 
-    func postRemoveUserRole(request: Request, context: DefaultRequestContext)
+    func postRemoveUserRole(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -74,7 +74,7 @@ struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
         }
     }
 
-    func getRemoveUserRoles(request: Request, context: DefaultRequestContext)
+    func getRemoveUserRoles(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -122,7 +122,7 @@ struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
         }
     }
 
-    func postRemoveUserRoles(request: Request, context: DefaultRequestContext)
+    func postRemoveUserRoles(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

@@ -11,11 +11,11 @@ struct AdminEditNewsletterCampaignSubscriberDefaultController:
     AdminEditNewsletterCampaignSubscriberController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditNewsletterCampaignSubscriberInteractor,
             any AdminEditNewsletterCampaignSubscriberPresenter
         >
-    func edit(request: Request, context: DefaultRequestContext) async throws
+    func edit(request: Request, context: AuthenticatedRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -47,7 +47,7 @@ struct AdminEditNewsletterCampaignSubscriberDefaultController:
             )
         }
     }
-    func update(request: Request, context: DefaultRequestContext) async throws
+    func update(request: Request, context: AuthenticatedRequestContext) async throws
         -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

@@ -5,19 +5,19 @@ protocol AdminEditUserIdentityController: Sendable {
 
     func getEditUserIdentity(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
     func postEditUserIdentity(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 }
 
 extension AdminEditUserIdentityController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             UserIdentityRoutes.edit(RouterPath("{id}")),

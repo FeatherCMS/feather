@@ -5,19 +5,19 @@ protocol AdminAddRedirectRuleController: Sendable {
 
     func getAddRedirectRule(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
     func postAddRedirectRule(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 }
 
 extension AdminAddRedirectRuleController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             RedirectRuleRoutes.add,

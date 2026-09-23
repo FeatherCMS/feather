@@ -15,19 +15,19 @@ protocol AdminAddBlogAuthorLinkController: Sendable {
 
     func getAddBlogAuthorLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
     func postAddBlogAuthorLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 }
 
 extension AdminAddBlogAuthorLinkController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             "/admin/blog/authors/{id}/links/add/",

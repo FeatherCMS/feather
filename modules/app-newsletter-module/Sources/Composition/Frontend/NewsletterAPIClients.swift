@@ -132,18 +132,22 @@ public struct NewsletterAppAPIClient: Sendable {
     }
 }
 
-extension DefaultRequestContext {
-    public func newsletterAdminAPI() -> NewsletterAdminAPIClient {
-        .init(
-            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+public struct NewsletterAPIBuilder: Sendable {
+    private let apiBaseURL: URL
+
+    public init(apiBaseURL: URL) {
+        self.apiBaseURL = apiBaseURL
     }
 
-    public func newsletterApplicationAPI() -> NewsletterAppAPIClient {
-        .init(
-            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+    public func makeNewsletterAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> NewsletterAdminAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeNewsletterApp(
+        _ context: DefaultRequestContext
+    ) -> NewsletterAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
     }
 }

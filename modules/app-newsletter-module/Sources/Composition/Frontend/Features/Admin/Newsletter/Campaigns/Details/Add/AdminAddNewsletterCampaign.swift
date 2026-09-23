@@ -3,13 +3,14 @@ import FeatherAdmin
 struct AdminAddNewsletterCampaign {
     let controller: any AdminAddNewsletterCampaignController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: NewsletterAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         controller = AdminAddNewsletterCampaignDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminAddNewsletterCampaignDefaultInteractor(
                         repository: AdminAddNewsletterCampaignOpenAPIRepository(
-                            api: context.newsletterAdminAPI()
+                            api: apiBuilder.makeNewsletterAdmin(context)
                         )
                     ),
                     presenter: AdminAddNewsletterCampaignDefaultPresenter(

@@ -4,11 +4,11 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
+public import FeatherApplication
 import FeatherContracts
-import WebApplication
+public import WebApplication
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct AuthorDetail: DTO {
     public let id: String

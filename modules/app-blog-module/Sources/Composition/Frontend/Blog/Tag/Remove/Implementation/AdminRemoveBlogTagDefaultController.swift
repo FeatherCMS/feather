@@ -15,14 +15,14 @@ struct AdminRemoveBlogTagDefaultController:
     AdminRemoveBlogTagController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminRemoveBlogTagInteractor,
             any AdminRemoveBlogTagPresenter
         >
 
     func getRemoveBlogTag(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
@@ -43,7 +43,7 @@ struct AdminRemoveBlogTagDefaultController:
 
     func postRemoveBlogTag(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         let id = try context.requiredID()

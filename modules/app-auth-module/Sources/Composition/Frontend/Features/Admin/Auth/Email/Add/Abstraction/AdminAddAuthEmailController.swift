@@ -20,19 +20,19 @@ protocol AdminAddAuthEmailController: Sendable {
 
     func getAddAuthEmail(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
     func postAddAuthEmail(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 }
 
 extension AdminAddAuthEmailController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             AuthEmailRoutes.add,

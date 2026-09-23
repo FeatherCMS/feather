@@ -4,7 +4,7 @@ import Hummingbird
 protocol AdminViewAnalyticsInsightsController: Sendable {
     func getInsights(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 }
 

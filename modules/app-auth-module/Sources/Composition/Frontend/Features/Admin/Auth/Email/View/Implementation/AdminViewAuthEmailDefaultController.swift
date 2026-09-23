@@ -19,14 +19,14 @@ import WebComponents
 
 struct AdminViewAuthEmailDefaultController: AdminViewAuthEmailController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewAuthEmailInteractor,
             any AdminViewAuthEmailPresenter
         >
 
     func getAuthEmail(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let id = try context.requiredID()
         let (interactor, presenter) = buildRuntime((request, context))

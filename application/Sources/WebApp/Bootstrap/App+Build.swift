@@ -30,8 +30,6 @@ func buildApplication(
             )!
         )
     )
-    unsafe AppEnvironmentStore.current = environment
-
     let webMetadataExtensions = try await buildWebMetadataExtensions()
 
     let router = try await buildRouter(

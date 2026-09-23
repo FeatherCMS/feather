@@ -5,14 +5,14 @@ import OpenAPIRuntime
 
 struct AdminViewWebMenuItemDefaultController: AdminViewWebMenuItemController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewWebMenuItemInteractor,
             any AdminViewWebMenuItemPresenter
         >
 
     func getWebMenuItem(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()

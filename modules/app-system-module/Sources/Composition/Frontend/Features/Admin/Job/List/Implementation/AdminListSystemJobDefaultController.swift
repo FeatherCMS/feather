@@ -4,14 +4,14 @@ import SystemContracts
 
 struct AdminListSystemJobDefaultController: AdminListSystemJobController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminListSystemJobInteractor,
             any AdminListSystemJobPresenter
         >
 
     func getSystemJobs(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         let page = request.queryPage()

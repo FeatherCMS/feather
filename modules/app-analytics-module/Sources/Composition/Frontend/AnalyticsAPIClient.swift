@@ -93,3 +93,23 @@ public struct AnalyticsAppAPIClient: Sendable {
         }
     }
 }
+
+public struct AnalyticsAPIBuilder: Sendable {
+    private let apiBaseURL: URL
+
+    public init(apiBaseURL: URL) {
+        self.apiBaseURL = apiBaseURL
+    }
+
+    public func makeAnalyticsAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> AnalyticsAdminAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeAnalyticsApp(
+        _ context: DefaultRequestContext
+    ) -> AnalyticsAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+}

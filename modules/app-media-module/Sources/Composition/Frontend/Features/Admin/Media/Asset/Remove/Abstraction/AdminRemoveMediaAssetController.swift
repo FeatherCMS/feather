@@ -12,19 +12,19 @@ protocol AdminRemoveMediaAssetController: Sendable {
 
     func getRemoveMediaAsset(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
     func postRemoveMediaAsset(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 }
 
 extension AdminRemoveMediaAssetController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             "/admin/media/assets/{id}/remove/",

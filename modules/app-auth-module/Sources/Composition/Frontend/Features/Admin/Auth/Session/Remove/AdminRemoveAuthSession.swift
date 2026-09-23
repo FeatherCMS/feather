@@ -5,11 +5,12 @@ import UserFrontend
 struct AdminRemoveAuthSession {
     let controller: any AdminRemoveAuthSessionController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: AuthAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminRemoveAuthSessionDefaultController(
             buildRuntime: { request, context in
-                let api = context.authAdminAPI()
-                let userAPI = context.userAdminAPI()
+                let api = apiBuilder.makeAuthAdmin(context)
+                let userAPI = apiBuilder.makeUserAdmin(context)
                 return (
                     interactor: AdminRemoveAuthSessionDefaultInteractor(
                         repository:

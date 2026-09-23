@@ -4,7 +4,7 @@ import Hummingbird
 struct AdminRemoveMediaVariantDefaultPresenter: AdminRemoveMediaVariantPresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderRemovePage(items: [NewAdminRemoveItemContext], returnTo: String?)

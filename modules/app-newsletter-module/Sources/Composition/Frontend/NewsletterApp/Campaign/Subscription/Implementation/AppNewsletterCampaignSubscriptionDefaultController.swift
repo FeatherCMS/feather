@@ -11,6 +11,7 @@ import WebComponents
 struct AppNewsletterCampaignSubscriptionDefaultController:
     AppNewsletterCampaignSubscriptionController
 {
+    let apiBuilder: NewsletterAPIBuilder
     func subscribe(
         request: Request,
         context: DefaultRequestContext
@@ -20,7 +21,7 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
             as: AppNewsletterCampaignSubscriptionForm.self,
             context: context
         )
-        let response = try await context.newsletterApplicationAPI()
+        let response = try await apiBuilder.makeNewsletterApp(context)
             .withOpenAPIRepositoryErrorMapping { client in
                 try await client.appNewsletterCampaignSubscribe(
                     path: .init(newsletterCampaignId: campaignId),

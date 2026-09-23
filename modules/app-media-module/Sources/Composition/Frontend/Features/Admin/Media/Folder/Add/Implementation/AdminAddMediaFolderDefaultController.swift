@@ -12,14 +12,14 @@ import WebComponents
 
 struct AdminAddMediaFolderDefaultController: AdminAddMediaFolderController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminAddMediaFolderInteractor,
             any AdminAddMediaFolderPresenter
         >
 
     func getAddMediaFolder(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let parentId = request.queryString("parent_id")?
@@ -37,7 +37,7 @@ struct AdminAddMediaFolderDefaultController: AdminAddMediaFolderController {
 
     func postAddMediaFolder(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         let payload = try await request.decode(

@@ -11,14 +11,14 @@ import WebComponents
 
 struct AdminEditMediaAssetDefaultController: AdminEditMediaAssetController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditMediaAssetInteractor,
             any AdminEditMediaAssetPresenter
         >
 
     func getEditMediaAsset(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
@@ -42,7 +42,7 @@ struct AdminEditMediaAssetDefaultController: AdminEditMediaAssetController {
 
     func postEditMediaAsset(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         let id = try context.requiredID()

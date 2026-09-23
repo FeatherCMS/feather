@@ -8,7 +8,7 @@ struct AdminListMediaVariantProcessorsDefaultPresenter:
     AdminListMediaVariantProcessorsPresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderAddPage(variantId: String) async throws -> HTMLResponse {

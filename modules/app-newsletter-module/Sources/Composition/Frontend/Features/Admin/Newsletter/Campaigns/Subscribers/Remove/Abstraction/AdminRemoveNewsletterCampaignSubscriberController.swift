@@ -8,15 +8,15 @@ import WebBuilders
 import WebComponents
 
 protocol AdminRemoveNewsletterCampaignSubscriberController: Sendable {
-    func confirm(request: Request, context: DefaultRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext) async throws
         -> HTMLResponse
-    func remove(request: Request, context: DefaultRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext) async throws
         -> Response
-    func removeSelected(request: Request, context: DefaultRequestContext)
+    func removeSelected(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
 }
 extension AdminRemoveNewsletterCampaignSubscriberController {
-    func route(on router: Router<DefaultRequestContext>) {
+    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.get(
             NewsletterAdminRoutes.campaignSubscriberRemoveRoute,
             use: confirm

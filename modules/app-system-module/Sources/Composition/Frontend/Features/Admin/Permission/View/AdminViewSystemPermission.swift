@@ -4,11 +4,12 @@ import Hummingbird
 struct AdminViewSystemPermission {
     let controller: any AdminViewSystemPermissionController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: SystemAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminViewSystemPermissionDefaultController(
             buildRuntime: { request, context in
                 let repository = AdminViewSystemPermissionOpenAPIRepository(
-                    api: context.systemAdminAPI()
+                    api: apiBuilder.makeSystemAdmin(context)
                 )
                 let interactor = AdminViewSystemPermissionDefaultInteractor(
                     repository: repository

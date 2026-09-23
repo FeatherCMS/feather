@@ -10,14 +10,14 @@ struct AdminEditWebMetadataDefaultController:
     Sendable
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditWebMetadataInteractor,
             any AdminEditWebMetadataPresenter
         >
 
     func getEditWebMetadataForContent(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         configuration: AdminWebMetadataEditConfiguration
     ) async throws -> HTMLResponse {
         try await renderEditWebMetadata(
@@ -29,7 +29,7 @@ struct AdminEditWebMetadataDefaultController:
 
     func postEditWebMetadataForContent(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         configuration: AdminWebMetadataEditConfiguration
     ) async throws -> Response {
         try await renderPostEditWebMetadata(
@@ -41,7 +41,7 @@ struct AdminEditWebMetadataDefaultController:
 
     private func renderEditWebMetadata(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         configuration: AdminWebMetadataEditConfiguration
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
@@ -96,7 +96,7 @@ struct AdminEditWebMetadataDefaultController:
 
     private func renderPostEditWebMetadata(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         configuration: AdminWebMetadataEditConfiguration
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
@@ -356,7 +356,7 @@ struct AdminEditWebMetadataDefaultController:
     }
 
     private func metadataID(
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) throws -> String {
         if let metadataID = context.parameters.get(
             "metadataID",
@@ -373,7 +373,7 @@ struct AdminEditWebMetadataDefaultController:
             presenter: any AdminEditWebMetadataPresenter
         ),
         id: String,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         referenceType: String?
     ) async throws -> WebMetadataDetailsModel {
         if let referenceType,

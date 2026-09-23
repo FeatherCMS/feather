@@ -11,13 +11,13 @@ struct AdminAddNewsletterIssueDefaultController:
     AdminAddNewsletterIssueController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminAddNewsletterIssueInteractor,
             any AdminAddNewsletterIssuePresenter
         >
     func getAddNewsletterIssue(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         guard
@@ -37,7 +37,7 @@ struct AdminAddNewsletterIssueDefaultController:
     }
     func postAddNewsletterIssue(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         guard

@@ -4,9 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import BlogDomain
-import FeatherContracts
-import WebDomain
+public import BlogDomain
+public import FeatherContracts
+public import WebDomain
 
 public struct WriteAuthorPostsMetadata: Scope {
     public let post: any PostRepository

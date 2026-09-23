@@ -7,7 +7,7 @@ import WebComponents
 
 struct AdminListUserIdentityDefaultPresenter: AdminListUserIdentityPresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderListPage(

@@ -7,21 +7,17 @@ struct AdminViewAccountProfileDefaultController:
     AdminViewAccountProfileController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewAccountProfileInteractor,
             any AdminViewAccountProfilePresenter
         >
 
     func getAccountProfile(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
-        guard let account = context.account else {
-            return try await runtime.presenter.renderDeniedPage(
-                permissions: []
-            )
-        }
+        let account = context.account
 
         let permissions = account.permissionSet
         guard

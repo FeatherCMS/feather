@@ -7,14 +7,14 @@ struct AdminViewAnalyticsNotFoundDefaultController:
     AdminViewAnalyticsNotFoundController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewAnalyticsNotFoundInteractor,
             any AdminViewAnalyticsNotFoundPresenter
         >
 
     func getNotFound(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions

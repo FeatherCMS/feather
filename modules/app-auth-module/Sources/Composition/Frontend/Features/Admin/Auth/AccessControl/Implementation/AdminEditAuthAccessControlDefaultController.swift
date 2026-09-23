@@ -23,14 +23,14 @@ struct AdminEditAuthAccessControlDefaultController:
     AdminEditAuthAccessControlController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditAuthAccessControlInteractor,
             any AdminEditAuthAccessControlPresenter
         >
 
     func getAuthAccessControl(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
@@ -79,7 +79,7 @@ struct AdminEditAuthAccessControlDefaultController:
 
     func postAuthAccessControl(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions

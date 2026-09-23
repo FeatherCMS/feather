@@ -8,12 +8,12 @@ import WebBuilders
 import WebComponents
 
 protocol AdminListContactFormFieldsController: Sendable {
-    func list(request: Request, context: DefaultRequestContext) async throws
+    func list(request: Request, context: AuthenticatedRequestContext) async throws
         -> HTMLResponse
 }
 
 extension AdminListContactFormFieldsController {
-    func route(on router: Router<DefaultRequestContext>) {
+    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.get(ContactAdminRoutes.formFieldsRoute, use: list)
     }
 }

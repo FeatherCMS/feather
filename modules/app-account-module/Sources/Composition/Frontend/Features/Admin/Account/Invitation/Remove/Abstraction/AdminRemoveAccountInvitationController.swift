@@ -5,19 +5,19 @@ protocol AdminRemoveAccountInvitationController: Sendable {
 
     func getRemoveAccountInvitation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
     func postRemoveAccountInvitation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 }
 
 extension AdminRemoveAccountInvitationController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             RouterPath(

@@ -15,7 +15,7 @@ public protocol RenderingEngine: Sendable {
 
     func renderNewAdminPage<T: Component>(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         title: String,
         content: T
     ) async throws -> HTMLResponse

@@ -21,14 +21,14 @@ struct AdminListAuthCredentialDefaultController:
     AdminListAuthCredentialController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminListAuthCredentialInteractor,
             any AdminListAuthCredentialPresenter
         >
 
     func getCredentials(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions

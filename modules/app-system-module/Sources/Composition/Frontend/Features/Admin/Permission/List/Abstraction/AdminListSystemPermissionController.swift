@@ -6,7 +6,7 @@ protocol AdminListSystemPermissionController: Sendable {
 
     func getSystemPermissions(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
 }
@@ -14,7 +14,7 @@ protocol AdminListSystemPermissionController: Sendable {
 extension AdminListSystemPermissionController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(SystemPermissionRoutes.list, use: getSystemPermissions)
     }

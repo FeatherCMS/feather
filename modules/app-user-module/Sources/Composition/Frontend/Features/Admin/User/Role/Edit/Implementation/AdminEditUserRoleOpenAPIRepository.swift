@@ -10,13 +10,6 @@ struct AdminEditUserRoleOpenAPIRepository: AdminEditUserRoleRepository {
         self.api = api
     }
 
-    init() {
-        self.api = UserAdminAPIClient(
-            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: nil
-        )
-    }
-
     func load(
         id: String
     ) async throws -> UserRoleDetailsModel {

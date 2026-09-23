@@ -18,7 +18,7 @@ import WebComponents
 
 struct AdminViewAuthMagicLinkDefaultPresenter: AdminViewAuthMagicLinkPresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderEngine: any RenderingEngine
 
     func renderPage(

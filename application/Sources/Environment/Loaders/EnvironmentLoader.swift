@@ -1,4 +1,4 @@
-import Configuration
+public import Configuration
 import SystemPackage
 
 public struct EnvironmentLoader {
@@ -26,7 +26,7 @@ public struct EnvironmentLoader {
     public func loadConfigReader(
         defaultEnvironmentFilePrefix: String
     ) async throws -> ConfigReader {
-        var providers: [ConfigProvider] = [
+        var providers: [any ConfigProvider] = [
             EnvironmentVariablesProvider()
         ]
         if let configFilePath = envFilePath {

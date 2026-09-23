@@ -20,14 +20,14 @@ import WebComponents
 struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditAuthMagicLinkInteractor,
             any AdminEditAuthMagicLinkPresenter
         >
 
     func getEditAuthMagicLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let id = try context.requiredID()
         let isEdited = request.hasQueryFlag("edited")
@@ -67,7 +67,7 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
 
     func postEditAuthMagicLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let id = try context.requiredID()
         let (interactor, presenter) = buildRuntime((request, context))
@@ -173,7 +173,7 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
 
     private func updateResponse(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         id: String,
         presenter: any AdminEditAuthMagicLinkPresenter,
         state: AuthMagicLinkForm.State

@@ -10,7 +10,7 @@ import WebComponents
 
 struct AdminAddMediaFolderDefaultPresenter: AdminAddMediaFolderPresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderEngine: any RenderingEngine
 
     func renderPage(

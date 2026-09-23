@@ -6,14 +6,14 @@ struct AdminRemoveSystemPermissionDefaultController:
     AdminRemoveSystemPermissionController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminRemoveSystemPermissionInteractor,
             any AdminRemoveSystemPermissionPresenter
         >
 
     func getRemoveSystemPermissions(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         guard
@@ -71,7 +71,7 @@ struct AdminRemoveSystemPermissionDefaultController:
 
     func postRemoveSystemPermissions(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         guard

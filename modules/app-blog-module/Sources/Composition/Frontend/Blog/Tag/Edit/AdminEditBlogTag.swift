@@ -14,13 +14,14 @@ import WebFrontend
 struct AdminEditBlogTag {
     let controller: any AdminEditBlogTagController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: BlogAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminEditBlogTagDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminEditBlogTagDefaultInteractor(
                         repository: AdminEditBlogTagOpenAPIRepository(
-                            api: context.blogAdminAPI()
+                            api: apiBuilder.makeBlogAdmin(context)
                         )
                     ),
                     presenter: AdminEditBlogTagDefaultPresenter(

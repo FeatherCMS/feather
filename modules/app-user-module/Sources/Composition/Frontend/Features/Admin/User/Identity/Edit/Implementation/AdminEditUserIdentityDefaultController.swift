@@ -5,12 +5,12 @@ import UserContracts
 
 struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditUserIdentityInteractor,
             any AdminEditUserIdentityPresenter
         >
 
-    func getEditUserIdentity(request: Request, context: DefaultRequestContext)
+    func getEditUserIdentity(request: Request, context: AuthenticatedRequestContext)
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -41,7 +41,7 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
         }
     }
 
-    func postEditUserIdentity(request: Request, context: DefaultRequestContext)
+    func postEditUserIdentity(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

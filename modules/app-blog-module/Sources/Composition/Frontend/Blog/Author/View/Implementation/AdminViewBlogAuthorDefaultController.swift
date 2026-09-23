@@ -13,14 +13,14 @@ import WebFrontend
 
 struct AdminViewBlogAuthorDefaultController: AdminViewBlogAuthorController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewBlogAuthorInteractor,
             any AdminViewBlogAuthorPresenter
         >
 
     func getBlogAuthor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         let id = try context.requiredID()

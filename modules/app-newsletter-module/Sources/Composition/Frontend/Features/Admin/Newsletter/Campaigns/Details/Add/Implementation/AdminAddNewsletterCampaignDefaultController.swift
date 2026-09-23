@@ -6,14 +6,14 @@ struct AdminAddNewsletterCampaignDefaultController:
     AdminAddNewsletterCampaignController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminAddNewsletterCampaignInteractor,
             any AdminAddNewsletterCampaignPresenter
         >
 
     func getAddNewsletterCampaign(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     )
         async throws -> HTMLResponse
     {
@@ -37,7 +37,7 @@ struct AdminAddNewsletterCampaignDefaultController:
 
     func postAddNewsletterCampaign(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     )
         async throws -> Response
     {

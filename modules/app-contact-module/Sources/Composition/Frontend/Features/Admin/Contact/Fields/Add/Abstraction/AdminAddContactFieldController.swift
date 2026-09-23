@@ -8,13 +8,13 @@ import WebBuilders
 import WebComponents
 
 protocol AdminAddContactFieldController: Sendable {
-    func getAddContactField(request: Request, context: DefaultRequestContext)
+    func getAddContactField(request: Request, context: AuthenticatedRequestContext)
         async throws -> HTMLResponse
-    func postAddContactField(request: Request, context: DefaultRequestContext)
+    func postAddContactField(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
 }
 extension AdminAddContactFieldController {
-    func route(on router: Router<DefaultRequestContext>) {
+    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.get(ContactAdminRoutes.fieldAdd, use: getAddContactField)
         router.post(ContactAdminRoutes.fieldAdd, use: postAddContactField)
     }

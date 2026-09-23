@@ -6,17 +6,18 @@ import SystemFrontend
 struct AdminAddWebMenuItem {
     let controller: any AdminAddWebMenuItemController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: WebAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminAddWebMenuItemDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminAddWebMenuItemDefaultInteractor(
                         repository: AdminAddWebMenuItemOpenAPIRepository(
-                            api: context.webAdminAPI()
+                            api: apiBuilder.makeWebAdmin(context)
                         ),
                         permissionRepository:
                             AdminSystemPermissionOpenAPIRepository(
-                                api: context.systemAdminAPI()
+                                api: apiBuilder.makeSystemAdmin(context)
                             )
                     ),
                     presenter: AdminAddWebMenuItemDefaultPresenter(

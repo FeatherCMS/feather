@@ -12,16 +12,19 @@ public enum WebPublicContentEventHandlers {
     ) {
         registry.register(
             event: WebPublicContentProvider.self,
-            context: WebPublicContentEventContext<RuntimeBuilderContext>.self
+            context: WebPublicContentEventContext<PublicContentRuntimeContext>.self
         ) { _, context in
             try await resolve(context)
         }
     }
 
     private static func resolve(
-        _ context: WebPublicContentEventContext<RuntimeBuilderContext>
+        _ context: WebPublicContentEventContext<PublicContentRuntimeContext>
     ) async throws -> WebPublicContentResult? {
-        let api = context.runtime.context.webApplicationAPI()
+        let api = WebAppAPIClient(
+            apiBaseURL: context.runtime.apiBaseURL,
+            sessionToken: context.runtime.context.sessionToken
+        )
         let siteSettings = try await api.withOpenAPIRepositoryErrorMapping {
             client in
             let response = try await client.webSiteSettings(.init())
@@ -45,8 +48,8 @@ public enum WebPublicContentEventHandlers {
                 )
             }
         }
-        let origins = unsafe FeatherAdmin.AppEnvironmentStore.current
-            .publicOrigins
+        let origins = context.runtime.publicOrigins
+        let mediaResolver = context.runtime.mediaResolver
         let navigation =
             menus
             .first(where: { $0.key == "main" })?
@@ -61,7 +64,8 @@ public enum WebPublicContentEventHandlers {
             "staticBaseUrl": origins.staticBaseURL,
             "site": siteContext(
                 settings: siteSettings,
-                navigation: navigation
+                navigation: navigation,
+                mediaResolver: mediaResolver
             ),
             "generation": [
                 "year": String(
@@ -86,7 +90,8 @@ public enum WebPublicContentEventHandlers {
                     page: page,
                     slug: context.baseMetadata.slug,
                     siteSettings: siteSettings,
-                    siteBaseURL: origins.siteBaseURL
+                    siteBaseURL: origins.siteBaseURL,
+                    mediaResolver: mediaResolver
                 )
             case .notFound:
                 return nil
@@ -118,7 +123,8 @@ public enum WebPublicContentEventHandlers {
 
     private static func siteContext(
         settings: WebAppAPI.Components.Schemas.WebSiteSettingsSchema,
-        navigation: [[String: any Sendable]]
+        navigation: [[String: any Sendable]],
+        mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
         var context: [String: any Sendable] = [
             "navigation": navigation,
@@ -129,13 +135,12 @@ public enum WebPublicContentEventHandlers {
             context["name"] = name
         }
 
-        let resolver = unsafe AppEnvironmentStore.current.mediaResolver
         let values = [
             "language": settings.locale,
             "description": settings.excerpt,
-            "logo": resolver.resolve(imagePath: settings.logo) ?? "",
-            "logoDark": resolver.resolve(imagePath: settings.logoDark) ?? "",
-            "metaImage": resolver.resolve(imagePath: settings.metaImage) ?? "",
+            "logo": mediaResolver.resolve(imagePath: settings.logo) ?? "",
+            "logoDark": mediaResolver.resolve(imagePath: settings.logoDark) ?? "",
+            "metaImage": mediaResolver.resolve(imagePath: settings.metaImage) ?? "",
             "primaryColor": settings.primaryColor,
             "secondaryColor": settings.secondaryColor,
             "tertiaryColor": settings.tertiaryColor,
@@ -158,7 +163,8 @@ public enum WebPublicContentEventHandlers {
         page: WebAppAPI.Components.Schemas.WebPageDetailSchema,
         slug: String,
         siteSettings: WebAppAPI.Components.Schemas.WebSiteSettingsSchema,
-        siteBaseURL: String
+        siteBaseURL: String,
+        mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
         let title =
             page.metadata.title.isEmpty
@@ -166,13 +172,12 @@ public enum WebPublicContentEventHandlers {
         let description =
             page.metadata.excerpt.isEmpty
             ? siteSettings.excerpt : page.metadata.excerpt
-        let resolver = unsafe AppEnvironmentStore.current.mediaResolver
         let image: String?
         if let imageURL = page.metadata.imageURL.emptyToNil {
-            image = resolver.resolve(imagePath: imageURL)
+            image = mediaResolver.resolve(imagePath: imageURL)
         }
         else {
-            image = resolver.resolve(imagePath: siteSettings.metaImage)
+            image = mediaResolver.resolve(imagePath: siteSettings.metaImage)
         }
         var context: [String: any Sendable] = [
             "title": title,

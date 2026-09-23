@@ -9,19 +9,16 @@ import FeatherContracts
 public import Hummingbird
 import OpenAPIRuntime
 
-public struct DefaultRequestContext: AuthRequestContext, Sendable {
+public struct DefaultRequestContext: RequestContext, Sendable {
 
     public var coreContext: CoreRequestContextStorage
 
     public var sessionToken: String?
     public var account: AccountModel?
-    public var accountTopBarState: NewAdminTopBar.State
-
     public init(
         source: ApplicationRequestContextSource,
     ) {
         self.coreContext = .init(source: source)
-        self.accountTopBarState = .init()
     }
 
     public var requestDecoder: URLFormRequestDecoder {

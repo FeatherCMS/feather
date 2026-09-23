@@ -20,14 +20,14 @@ import WebComponents
 struct AdminViewAuthMagicLinkDefaultController: AdminViewAuthMagicLinkController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewAuthMagicLinkInteractor,
             any AdminViewAuthMagicLinkPresenter
         >
 
     func getAuthMagicLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let id = try context.requiredID()
         let (interactor, presenter) = buildRuntime((request, context))

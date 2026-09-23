@@ -7,14 +7,14 @@ import UserContracts
 
 struct AdminAddUserRoleDefaultController: AdminAddUserRoleController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminAddUserRoleInteractor,
             any AdminAddUserRolePresenter
         >
 
     func getAddUserRole(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Roles.create)
@@ -26,7 +26,7 @@ struct AdminAddUserRoleDefaultController: AdminAddUserRoleController {
 
     func postAddUserRole(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Roles.create)

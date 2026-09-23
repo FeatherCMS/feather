@@ -4,13 +4,13 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherDatabase
+public import FeatherDatabase
 import FeatherInfrastructure
 
-import struct Foundation.Data
-import struct Foundation.Date
-import class Foundation.JSONDecoder
-import class Foundation.JSONEncoder
+public import struct Foundation.Data
+public import struct Foundation.Date
+public import class Foundation.JSONDecoder
+public import class Foundation.JSONEncoder
 
 extension String {
 

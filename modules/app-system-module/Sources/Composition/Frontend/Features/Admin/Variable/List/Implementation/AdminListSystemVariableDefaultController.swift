@@ -8,14 +8,14 @@ struct AdminListSystemVariableDefaultController:
     AdminListSystemVariableController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminListSystemVariableInteractor,
             any AdminListSystemVariablePresenter
         >
 
     func getSystemVariables(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let page = request.queryPage()

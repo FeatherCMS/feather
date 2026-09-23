@@ -11,13 +11,13 @@ struct AdminAddContactFormFieldDefaultController:
     AdminAddContactFormFieldController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminAddContactFormFieldInteractor,
             any AdminAddContactFormFieldPresenter
         >
     func getAddContactFormField(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     )
         async throws -> HTMLResponse
     {
@@ -30,7 +30,7 @@ struct AdminAddContactFormFieldDefaultController:
     }
     func postAddContactFormField(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     )
         async throws -> Response
     {

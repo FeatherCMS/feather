@@ -19,13 +19,14 @@ import WebComponents
 struct AdminListAuthMagicLink {
     let controller: any AdminListAuthMagicLinkController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: AuthAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminListAuthMagicLinkDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminListAuthMagicLinkDefaultInteractor(
                         repository: AdminListAuthMagicLinkOpenAPIRepository(
-                            api: context.authAdminAPI()
+                            api: apiBuilder.makeAuthAdmin(context)
                         )
                     ),
                     presenter: AdminListAuthMagicLinkDefaultPresenter(

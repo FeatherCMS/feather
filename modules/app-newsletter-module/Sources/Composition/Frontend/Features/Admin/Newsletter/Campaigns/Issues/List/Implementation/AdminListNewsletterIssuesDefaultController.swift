@@ -6,12 +6,12 @@ struct AdminListNewsletterIssuesDefaultController:
     AdminListNewsletterIssuesController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminListNewsletterIssuesInteractor,
             any AdminListNewsletterIssuesPresenter
         >
 
-    func list(request: Request, context: DefaultRequestContext) async throws
+    func list(request: Request, context: AuthenticatedRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))

@@ -9,12 +9,12 @@ import WebComponents
 
 struct AdminAddContactFormDefaultController: AdminAddContactFormController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminAddContactFormInteractor,
             any AdminAddContactFormPresenter
         >
 
-    func add(request: Request, context: DefaultRequestContext) async throws
+    func add(request: Request, context: AuthenticatedRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -35,7 +35,7 @@ struct AdminAddContactFormDefaultController: AdminAddContactFormController {
         )
     }
 
-    func create(request: Request, context: DefaultRequestContext) async throws
+    func create(request: Request, context: AuthenticatedRequestContext) async throws
         -> Response
     {
         let (interactor, _) = buildRuntime((request, context))

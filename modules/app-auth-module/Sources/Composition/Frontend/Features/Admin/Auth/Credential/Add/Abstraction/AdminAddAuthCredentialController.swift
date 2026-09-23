@@ -17,14 +17,14 @@ import WebBuilders
 import WebComponents
 
 protocol AdminAddAuthCredentialController: Sendable {
-    func getAddCredential(request: Request, context: DefaultRequestContext)
+    func getAddCredential(request: Request, context: AuthenticatedRequestContext)
         async throws -> HTMLResponse
-    func postAddCredential(request: Request, context: DefaultRequestContext)
+    func postAddCredential(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
 }
 
 extension AdminAddAuthCredentialController {
-    func route(on router: Router<DefaultRequestContext>) {
+    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.get(AuthCredentialRoutes.add, use: getAddCredential)
         router.post(AuthCredentialRoutes.add, use: postAddCredential)
     }

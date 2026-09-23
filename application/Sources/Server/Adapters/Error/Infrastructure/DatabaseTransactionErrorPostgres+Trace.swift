@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 04. 19..
 //
 
-import FeatherDatabasePostgres
+public import FeatherDatabasePostgres
 
 extension DatabaseTransactionErrorPostgres: ErrorTraceRepresentable {
 

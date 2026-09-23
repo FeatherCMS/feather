@@ -1,9 +1,9 @@
 import BlogContracts
 import BlogDomain
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 import SystemApplication
-import WebApplication
+public import WebApplication
 
 //
 //  AddAuthor.swift

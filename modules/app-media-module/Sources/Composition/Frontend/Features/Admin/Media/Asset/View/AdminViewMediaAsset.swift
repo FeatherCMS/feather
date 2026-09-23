@@ -11,13 +11,16 @@ import WebComponents
 struct AdminViewMediaAsset {
     let controller: any AdminViewMediaAssetController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: MediaAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminViewMediaAssetDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminViewMediaAssetDefaultInteractor(
                         repository: AdminViewMediaAssetOpenAPIRepository(
-                            api: context.mediaAdminAPI()
+                            api: apiBuilder.makeMediaAdmin(context)
                         )
                     ),
                     presenter: AdminViewMediaAssetDefaultPresenter(

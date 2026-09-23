@@ -113,7 +113,7 @@ struct WebPageForm: Component {
             )
             context.build(textarea(state.excerpt, rows: 4))
             context.build(
-                WebPageRichContentEditor(
+                    WebPageRichContentEditor(
                     state: .init(
                         key: state.content.key,
                         label: state.content.label,

@@ -5,14 +5,14 @@ import UserContracts
 
 struct AdminViewUserIdentityDefaultController: AdminViewUserIdentityController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewUserIdentityInteractor,
             any AdminViewUserIdentityPresenter
         >
 
     func getUserIdentity(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Identities.read)

@@ -1,4 +1,4 @@
-import UserDomain
+public import UserDomain
 
 extension Role.Error: ErrorTraceRepresentable {
 

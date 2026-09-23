@@ -6,6 +6,7 @@ struct AdminViewAnalyticsInsights {
     let controller: any AdminViewAnalyticsInsightsController
 
     init(
+        apiBuilder: AnalyticsAPIBuilder,
         source: AdminAnalyticsInsightsPage.Source,
         renderingEngine: any RenderingEngine
     ) {
@@ -16,11 +17,7 @@ struct AdminViewAnalyticsInsights {
                 (
                     interactor: AdminViewAnalyticsInsightsDefaultInteractor(
                         repository: AdminViewAnalyticsInsightsOpenAPIRepository(
-                            api: AnalyticsAdminAPIClient(
-                                apiBaseURL: unsafe AppEnvironmentStore.current
-                                    .apiBaseURL,
-                                sessionToken: context.sessionToken
-                            )
+                            api: apiBuilder.makeAnalyticsAdmin(context)
                         )
                     ),
                     presenter: AdminViewAnalyticsInsightsDefaultPresenter(
@@ -34,7 +31,7 @@ struct AdminViewAnalyticsInsights {
     }
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         switch source {
         case .api:

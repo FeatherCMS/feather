@@ -5,14 +5,14 @@ protocol AdminViewSystemOverviewController: Sendable {
 
     func getOverview(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminViewSystemOverviewController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             "/admin/system/",

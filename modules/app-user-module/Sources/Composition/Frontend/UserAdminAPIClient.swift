@@ -58,11 +58,22 @@ public struct UserAdminAPIClient: Sendable {
     }
 }
 
-extension DefaultRequestContext {
-    public func userAdminAPI() -> UserAdminAPIClient {
-        .init(
-            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+public struct UserAPIBuilder: Sendable {
+    private let apiBaseURL: URL
+
+    public init(apiBaseURL: URL) {
+        self.apiBaseURL = apiBaseURL
+    }
+
+    public func makeUserAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> UserAdminAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeUserApp(
+        _ context: DefaultRequestContext
+    ) -> UserAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
     }
 }

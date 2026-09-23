@@ -15,14 +15,14 @@ protocol AdminViewBlogPostController: Sendable {
 
     func getBlogPost(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminViewBlogPostController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             "/admin/blog/posts/{id}/",

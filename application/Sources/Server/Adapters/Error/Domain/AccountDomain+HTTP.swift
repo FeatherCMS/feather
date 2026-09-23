@@ -1,4 +1,4 @@
-import AccountDomain
+public import AccountDomain
 import NIOHTTP1
 import OpenAPIRuntime
 

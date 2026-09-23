@@ -6,14 +6,14 @@ struct AdminListAccountInvitationDefaultController:
     AdminListAccountInvitationController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminListAccountInvitationInteractor,
             any AdminListAccountInvitationPresenter
         >
 
     func getAccountInvitations(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
@@ -73,7 +73,7 @@ struct AdminListAccountInvitationDefaultController:
 
     func getAccountInvitationsRemoveConfirmation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         let selectedIds = request.queryStrings("ids")
@@ -104,7 +104,7 @@ struct AdminListAccountInvitationDefaultController:
 
     func postAccountInvitationsRemove(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,

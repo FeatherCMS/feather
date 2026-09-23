@@ -15,14 +15,14 @@ struct AdminViewBlogAuthorLinkDefaultController:
     AdminViewBlogAuthorLinkController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewBlogAuthorLinkInteractor,
             any AdminViewBlogAuthorLinkPresenter
         >
 
     func getBlogAuthorLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()

@@ -6,20 +6,17 @@ import UserFrontend
 struct AdminViewAccountInvitation {
     let controller: any AdminViewAccountInvitationController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: AccountAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminViewAccountInvitationDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminViewAccountInvitationDefaultInteractor(
                         repository: AccountInvitationOpenAPIRepository(
-                            api: context.accountAdminAPI()
+                            api: apiBuilder.makeAccountAdmin(context)
                         ),
                         roleNamesProvider: { roleIDs in
-                            let userAPI = UserAdminAPIClient(
-                                apiBaseURL: unsafe AppEnvironmentStore.current
-                                    .apiBaseURL,
-                                sessionToken: context.sessionToken
-                            )
+                            let userAPI = apiBuilder.makeUserAdmin(context)
                             guard
                                 let response =
                                     try? await userAPI

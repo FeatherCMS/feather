@@ -5,14 +5,14 @@ struct AdminRemoveAccountInvitationDefaultController:
     AdminRemoveAccountInvitationController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminRemoveAccountInvitationInteractor,
             any AdminRemoveAccountInvitationPresenter
         >
 
     func getRemoveAccountInvitation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
@@ -33,7 +33,7 @@ struct AdminRemoveAccountInvitationDefaultController:
 
     func postRemoveAccountInvitation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()

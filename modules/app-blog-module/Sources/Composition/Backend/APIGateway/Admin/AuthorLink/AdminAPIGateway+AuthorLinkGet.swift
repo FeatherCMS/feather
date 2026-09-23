@@ -1,4 +1,4 @@
-import BlogAdminAPI
+public import BlogAdminAPI
 import BlogApplication
 import FeatherContracts
 

@@ -4,10 +4,11 @@ import Hummingbird
 struct AdminRemoveUserIdentity {
     let controller: any AdminRemoveUserIdentityController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: UserAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminRemoveUserIdentityDefaultController(
             buildRuntime: { request, context in
-                let api = context.userAdminAPI()
+                let api = apiBuilder.makeUserAdmin(context)
                 return (
                     interactor: AdminRemoveUserIdentityDefaultInteractor(
                         repository: AdminRemoveUserIdentityOpenAPIRepository(

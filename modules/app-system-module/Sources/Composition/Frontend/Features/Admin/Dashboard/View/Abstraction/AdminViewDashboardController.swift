@@ -5,14 +5,14 @@ protocol AdminViewDashboardController: Sendable {
 
     func getHome(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminViewDashboardController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             "/admin/",

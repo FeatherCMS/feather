@@ -6,14 +6,14 @@ struct AdminEditSettingsDefaultController:
     AdminEditSettingsController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditSettingsInteractor,
             any AdminEditSettingsPresenter
         >
 
     func getEditSettings(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let targetUserID = context.parameters.get("userId", as: String.self)
         let (interactor, presenter) = buildRuntime((request, context))
@@ -75,7 +75,7 @@ struct AdminEditSettingsDefaultController:
 
     func postEditSettings(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let targetUserID = context.parameters.get("userId", as: String.self)
         let (interactor, presenter) = buildRuntime((request, context))

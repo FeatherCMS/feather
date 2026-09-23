@@ -1,7 +1,9 @@
 public import FeatherAdmin
 public import Hummingbird
 
-public struct AuthMiddleware<Context: AuthRequestContext>: RouterMiddleware {
+public struct AuthMiddleware: RouterMiddleware {
+
+    public typealias Context = DefaultRequestContext
 
     private let authenticate: @Sendable (String) async throws -> AccountModel
     private let secureCookies: Bool

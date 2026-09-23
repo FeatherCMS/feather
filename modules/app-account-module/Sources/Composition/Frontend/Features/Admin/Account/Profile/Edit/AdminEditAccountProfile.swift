@@ -4,15 +4,16 @@ import MediaFrontend
 struct AdminEditAccountProfile {
     let controller: any AdminEditAccountProfileController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: AccountAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminEditAccountProfileDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminEditAccountProfileDefaultInteractor(
                         accountProfileRepository:
                             AdminEditAccountProfileOpenAPIRepository(
-                                api: context.accountAppAPI(),
-                                mediaAPI: context.mediaAdminAPI()
+                                api: apiBuilder.makeAccountApp(context),
+                                mediaAPI: apiBuilder.makeMediaAdmin(context)
                             )
                     ),
                     presenter: AdminEditAccountProfileDefaultPresenter(

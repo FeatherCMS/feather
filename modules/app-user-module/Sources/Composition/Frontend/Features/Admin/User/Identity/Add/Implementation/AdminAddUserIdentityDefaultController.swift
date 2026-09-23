@@ -5,14 +5,14 @@ import UserContracts
 
 struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminAddUserIdentityInteractor,
             any AdminAddUserIdentityPresenter
         >
 
     func getAddUserIdentity(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         guard
@@ -28,7 +28,7 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
 
     func postAddUserIdentity(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         guard

@@ -5,14 +5,14 @@ struct AdminViewAccountInvitationDefaultController:
     AdminViewAccountInvitationController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewAccountInvitationInteractor,
             any AdminViewAccountInvitationPresenter
         >
 
     func getAccountInvitation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         let id = try context.requiredID()

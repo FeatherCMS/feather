@@ -7,19 +7,17 @@ struct AdminEditAccountProfileDefaultController:
     AdminEditAccountProfileController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditAccountProfileInteractor,
             any AdminEditAccountProfilePresenter
         >
 
     func getEditAccountProfile(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
-        guard let account = context.account else {
-            return try await presenter.renderDeniedPage(permissions: [])
-        }
+        let account = context.account
 
         let permissions = account.permissionSet
         guard
@@ -51,13 +49,10 @@ struct AdminEditAccountProfileDefaultController:
 
     func postEditAccountProfile(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
-        guard let account = context.account else {
-            return try await presenter.renderDeniedPage(permissions: [])
-                .response(from: request, context: context)
-        }
+        let account = context.account
 
         let permissions = account.permissionSet
         guard
@@ -273,7 +268,7 @@ struct AdminEditAccountProfileDefaultController:
 
     private func renderEditResponse(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         presenter: any AdminEditAccountProfilePresenter,
         permissions: Set<String>,
         state: AccountProfileEdit.State

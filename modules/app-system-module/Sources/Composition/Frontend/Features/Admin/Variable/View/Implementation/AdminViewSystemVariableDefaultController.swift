@@ -7,14 +7,14 @@ struct AdminViewSystemVariableDefaultController:
     AdminViewSystemVariableController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewSystemVariableInteractor,
             any AdminViewSystemVariablePresenter
         >
 
     func getSystemVariable(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: SystemPermissions.Variables.read)

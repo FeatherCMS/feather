@@ -6,12 +6,12 @@ import MediaContracts
 
 struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditMediaVariantInteractor,
             any AdminEditMediaVariantPresenter
         >
 
-    func getEditMediaVariant(request: Request, context: DefaultRequestContext)
+    func getEditMediaVariant(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
     {
         let runtime = buildRuntime((request, context))
@@ -51,7 +51,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
         }
     }
 
-    func postEditMediaVariant(request: Request, context: DefaultRequestContext)
+    func postEditMediaVariant(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
     {
         let runtime = buildRuntime((request, context))
@@ -106,7 +106,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
 
     func getEditMediaVariantProcessor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         guard
@@ -141,7 +141,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
 
     func getRemoveMediaVariantProcessors(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         guard
@@ -185,7 +185,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
 
     func postAddMediaVariantProcessor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         guard
@@ -227,7 +227,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
 
     func postEditMediaVariantProcessor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         guard
@@ -271,7 +271,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
 
     func postRemoveMediaVariantProcessor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         guard

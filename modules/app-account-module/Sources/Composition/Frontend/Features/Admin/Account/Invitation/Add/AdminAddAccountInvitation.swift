@@ -4,15 +4,16 @@ struct AdminAddAccountInvitation {
 
     let controller: any AdminAddAccountInvitationController
 
-    init(
+    init(apiBuilder: AccountAPIBuilder,
         renderingEngine: any RenderingEngine
     ) {
         self.controller = AdminAddAccountInvitationDefaultController(
+            apiBuilder: apiBuilder,
             buildRuntime: { request, context in
                 (
                     interactor: AdminAddAccountInvitationDefaultInteractor(
                         repository: AdminAddAccountInvitationOpenAPIRepository(
-                            api: context.accountAdminAPI()
+                            api: apiBuilder.makeAccountAdmin(context)
                         )
                     ),
                     presenter: AdminAddAccountInvitationDefaultPresenter(

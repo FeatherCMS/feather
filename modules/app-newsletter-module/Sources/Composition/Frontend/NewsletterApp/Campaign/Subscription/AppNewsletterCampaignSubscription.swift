@@ -10,8 +10,10 @@ import WebComponents
 public struct AppNewsletterCampaignSubscription {
     let controller: any AppNewsletterCampaignSubscriptionController
 
-    public init() {
-        self.controller = AppNewsletterCampaignSubscriptionDefaultController()
+    public init(apiBuilder: NewsletterAPIBuilder) {
+        self.controller = AppNewsletterCampaignSubscriptionDefaultController(
+            apiBuilder: apiBuilder
+        )
     }
 
     public func route(on router: Router<DefaultRequestContext>) {

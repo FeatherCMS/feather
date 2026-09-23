@@ -12,12 +12,12 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
     AdminRemoveNewsletterSubscribersController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminRemoveNewsletterSubscribersInteractor,
             any AdminRemoveNewsletterSubscribersPresenter
         >
 
-    func confirm(request: Request, context: DefaultRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext) async throws
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime((request, context))
@@ -31,7 +31,7 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
         )
     }
 
-    func remove(request: Request, context: DefaultRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext) async throws
         -> Response
     {
         let (interactor, _) = buildRuntime((request, context))

@@ -3,8 +3,10 @@ public import FeatherContracts
 public import Hummingbird
 public import SystemContracts
 
-public struct AdminAuthMiddleware<Context: AuthRequestContext>: RouterMiddleware
+public struct AdminAuthMiddleware: RouterMiddleware
 {
+
+    public typealias Context = DefaultRequestContext
 
     private let loginPath: String
     private let unauthorizedPath: String

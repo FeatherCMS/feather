@@ -10,14 +10,14 @@ import WebComponents
 
 struct AdminViewMediaAssetDefaultController: AdminViewMediaAssetController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewMediaAssetInteractor,
             any AdminViewMediaAssetPresenter
         >
 
     func getMediaAsset(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()

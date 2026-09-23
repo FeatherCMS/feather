@@ -1,7 +1,7 @@
 import BlogContracts
 import BlogDomain
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 
 //
 //  AddAuthorLink.swift

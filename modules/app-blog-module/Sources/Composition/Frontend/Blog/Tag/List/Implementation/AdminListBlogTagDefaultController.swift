@@ -15,15 +15,16 @@ import WebFrontend
 struct AdminListBlogTagDefaultController:
     AdminListBlogTagController
 {
+    let apiBuilder: BlogAPIBuilder
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminListBlogTagInteractor,
             any AdminListBlogTagPresenter
         >
 
     func getBlogTags(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let page = request.queryPage()
@@ -67,7 +68,7 @@ struct AdminListBlogTagDefaultController:
 
     func getBlogTagsRemoveConfirmation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime((request, context))
         let selectedIds = request.queryStrings("selectedIds")
@@ -96,7 +97,7 @@ struct AdminListBlogTagDefaultController:
 
     func postBlogTagsRemove(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime((request, context))
         let nonceRequest = try await request.decode(
@@ -132,7 +133,7 @@ struct AdminListBlogTagDefaultController:
 
     func postBlogTagStatus(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let id = try context.requiredID()
         let payload = try await request.decode(
@@ -140,7 +141,7 @@ struct AdminListBlogTagDefaultController:
             context: context
         )
         let repository = AdminListBlogTagFormOpenAPIRepository(
-            api: context.blogAdminAPI()
+            api: apiBuilder.makeBlogAdmin(context)
         )
         let details = try await repository.load(id: id)
         let targetStatus = resolvedStatus(
@@ -148,7 +149,7 @@ struct AdminListBlogTagDefaultController:
             current: details.metadata
         )
         try await AdminWebMetadataStatusUpdater(
-            api: context.webAdminAPI()
+            api: apiBuilder.makeWebAdmin(context)
         )
         .update(
             referenceType: "blog.tag",

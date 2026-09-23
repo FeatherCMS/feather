@@ -8,14 +8,14 @@ struct AdminListAnalyticsLogDefaultController:
     AdminListAnalyticsLogController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminListAnalyticsLogInteractor,
             any AdminListAnalyticsLogPresenter
         >
 
     func getAnalyticsLogs(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let page = request.queryPage()

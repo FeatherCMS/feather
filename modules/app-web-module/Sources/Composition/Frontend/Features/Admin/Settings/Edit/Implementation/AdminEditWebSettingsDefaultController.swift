@@ -8,14 +8,14 @@ struct AdminEditWebSettingsDefaultController:
     AdminEditWebSettingsController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditWebSettingsInteractor,
             any AdminEditWebSettingsPresenter
         >
 
     func getEditWebSettings(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
@@ -62,7 +62,7 @@ struct AdminEditWebSettingsDefaultController:
 
     func postEditWebSettings(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions

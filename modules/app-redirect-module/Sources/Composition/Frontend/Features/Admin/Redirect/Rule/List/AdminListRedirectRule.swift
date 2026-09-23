@@ -5,13 +5,14 @@ struct AdminListRedirectRule {
 
     let controller: any AdminListRedirectRuleController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: RedirectAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminListRedirectRuleDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminListRedirectRuleDefaultInteractor(
                         repository: AdminListRedirectRuleOpenAPIRepository(
-                            api: context.redirectAdminAPI()
+                            api: apiBuilder.makeRedirectAdmin(context)
                         )
                     ),
                     presenter: AdminListRedirectRuleDefaultPresenter(

@@ -9,7 +9,7 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
-import WebFrontend
+public import WebFrontend
 
 public struct AppGetBlogPostModel: Sendable {
     public let title: String

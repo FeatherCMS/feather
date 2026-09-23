@@ -4,10 +4,10 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
-import WebApplication
+public import FeatherApplication
+public import WebApplication
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct TagDetail: DTO {
     public let id: String

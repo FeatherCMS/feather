@@ -5,14 +5,14 @@ struct AdminViewContactOverviewDefaultController:
     AdminViewContactOverviewController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewContactOverviewInteractor,
             any AdminViewContactOverviewPresenter
         >
 
     func getOverview(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         return try await presenter.renderOverview(

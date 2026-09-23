@@ -8,14 +8,14 @@ struct AdminRemoveSystemVariableDefaultController:
     AdminRemoveSystemVariableController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminRemoveSystemVariableInteractor,
             any AdminRemoveSystemVariablePresenter
         >
 
     func getRemoveSystemVariables(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         guard
@@ -67,7 +67,7 @@ struct AdminRemoveSystemVariableDefaultController:
 
     func postRemoveSystemVariables(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         guard

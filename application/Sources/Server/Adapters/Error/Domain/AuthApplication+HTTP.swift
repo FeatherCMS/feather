@@ -1,4 +1,4 @@
-import AuthApplication
+public import AuthApplication
 import NIOHTTP1
 import OpenAPIRuntime
 

@@ -4,13 +4,16 @@ import Hummingbird
 struct AdminEditMediaVariant {
     let controller: any AdminEditMediaVariantController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: MediaAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminEditMediaVariantDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminEditMediaVariantDefaultInteractor(
                         repository: AdminEditMediaVariantOpenAPIRepository(
-                            api: context.mediaAdminAPI()
+                            api: apiBuilder.makeMediaAdmin(context)
                         )
                     ),
                     presenter: AdminEditMediaVariantDefaultPresenter(

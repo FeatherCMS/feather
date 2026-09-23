@@ -7,14 +7,14 @@ struct AdminRemoveWebPageDefaultController:
     AdminRemoveWebPageController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminRemoveWebPageInteractor,
             any AdminRemoveWebPagePresenter
         >
 
     func getRemoveWebPage(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
@@ -35,7 +35,7 @@ struct AdminRemoveWebPageDefaultController:
 
     func postRemoveWebPage(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         let id = try context.requiredID()

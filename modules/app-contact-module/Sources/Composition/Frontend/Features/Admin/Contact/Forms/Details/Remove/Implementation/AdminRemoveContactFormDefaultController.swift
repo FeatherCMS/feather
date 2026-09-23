@@ -10,12 +10,12 @@ import WebComponents
 struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminRemoveContactFormInteractor,
             any AdminRemoveContactFormPresenter
         >
 
-    func confirm(request: Request, context: DefaultRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -31,7 +31,7 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
         )
     }
 
-    func remove(request: Request, context: DefaultRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext) async throws
         -> Response
     {
         let payload = try await request.decode(

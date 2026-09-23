@@ -5,12 +5,12 @@ import RedirectContracts
 
 struct AdminAddRedirectRuleDefaultController: AdminAddRedirectRuleController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminAddRedirectRuleInteractor,
             any AdminAddRedirectRulePresenter
         >
 
-    func getAddRedirectRule(request: Request, context: DefaultRequestContext)
+    func getAddRedirectRule(request: Request, context: AuthenticatedRequestContext)
         async throws -> HTMLResponse
     {
         let (_, presenter) = buildRuntime((request, context))
@@ -22,7 +22,7 @@ struct AdminAddRedirectRuleDefaultController: AdminAddRedirectRuleController {
         )
     }
 
-    func postAddRedirectRule(request: Request, context: DefaultRequestContext)
+    func postAddRedirectRule(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

@@ -1,4 +1,4 @@
-import BlogApplication
+public import BlogApplication
 import BlogInfrastructure
 import FeatherInfrastructure
 import WebInfrastructure

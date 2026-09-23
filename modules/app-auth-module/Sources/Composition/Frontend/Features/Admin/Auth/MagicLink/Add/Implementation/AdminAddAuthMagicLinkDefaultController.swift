@@ -20,14 +20,14 @@ import WebComponents
 struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
 
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminAddAuthMagicLinkInteractor,
             any AdminAddAuthMagicLinkPresenter
         >
 
     func getAddAuthMagicLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         guard
@@ -46,7 +46,7 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
 
     func postAddAuthMagicLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         guard
@@ -145,7 +145,7 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
 
     private func createResponse(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         presenter: any AdminAddAuthMagicLinkPresenter,
         state: AuthMagicLinkForm.State
     ) async throws -> Response {

@@ -6,14 +6,14 @@ struct AdminViewAnalyticsOverviewDefaultController:
 {
 
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewAnalyticsOverviewInteractor,
             any AdminViewAnalyticsOverviewPresenter
         >
 
     func getOverview(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let model = try await interactor.getOverview()

@@ -4,17 +4,13 @@ public import Hummingbird
 public struct AdminViewAnalyticsNotFound {
     public let controller: any AdminViewAnalyticsNotFoundController
 
-    public init(renderingEngine: any RenderingEngine) {
+    public init(apiBuilder: AnalyticsAPIBuilder, renderingEngine: any RenderingEngine) {
         self.controller = AdminViewAnalyticsNotFoundDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminViewAnalyticsNotFoundDefaultInteractor(
                         repository: AdminViewAnalyticsNotFoundOpenAPIRepository(
-                            api: AnalyticsAdminAPIClient(
-                                apiBaseURL: unsafe AppEnvironmentStore.current
-                                    .apiBaseURL,
-                                sessionToken: context.sessionToken
-                            )
+                            api: apiBuilder.makeAnalyticsAdmin(context)
                         )
                     ),
                     presenter: AdminViewAnalyticsNotFoundDefaultPresenter(
@@ -30,7 +26,7 @@ public struct AdminViewAnalyticsNotFound {
 
 extension AdminViewAnalyticsNotFound {
     public func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         controller.route(on: router)
     }

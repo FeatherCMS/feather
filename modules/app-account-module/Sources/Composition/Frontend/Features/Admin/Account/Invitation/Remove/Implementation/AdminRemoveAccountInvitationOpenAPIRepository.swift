@@ -11,13 +11,6 @@ struct AdminRemoveAccountInvitationOpenAPIRepository:
         self.api = api
     }
 
-    init() {
-        self.api = AccountAdminAPIClient(
-            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: nil
-        )
-    }
-
     func get(
         id: String
     ) async throws -> AccountInvitationDetailsModel {

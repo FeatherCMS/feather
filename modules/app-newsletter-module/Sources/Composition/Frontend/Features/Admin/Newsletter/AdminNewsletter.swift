@@ -2,49 +2,68 @@ public import FeatherAdmin
 public import Hummingbird
 
 public struct AdminNewsletter {
+    private let apiBuilder: NewsletterAPIBuilder
     public let renderingEngine: any RenderingEngine
 
-    public init(renderingEngine: any RenderingEngine) {
+    public init(apiBuilder: NewsletterAPIBuilder,
+        renderingEngine: any RenderingEngine) {
+        self.apiBuilder = apiBuilder
         self.renderingEngine = renderingEngine
     }
 
-    public func route(on router: Router<DefaultRequestContext>) {
-        AdminViewNewsletterOverview(renderingEngine: renderingEngine)
+    public func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
+        AdminViewNewsletterOverview(
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
 
-        AdminListNewsletterCampaigns(renderingEngine: renderingEngine)
+        AdminListNewsletterCampaigns(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminViewNewsletterCampaign(renderingEngine: renderingEngine)
+        AdminViewNewsletterCampaign(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminEditNewsletterCampaign(renderingEngine: renderingEngine)
+        AdminEditNewsletterCampaign(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminRemoveNewsletterCampaign(renderingEngine: renderingEngine)
+        AdminRemoveNewsletterCampaign(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
 
-        AdminAddNewsletterCampaign(renderingEngine: renderingEngine)
+        AdminAddNewsletterCampaign(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
 
-        AdminListNewsletterIssues(renderingEngine: renderingEngine)
+        AdminListNewsletterIssues(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminViewNewsletterIssue(renderingEngine: renderingEngine)
+        AdminViewNewsletterIssue(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminAddNewsletterIssue(renderingEngine: renderingEngine)
+        AdminAddNewsletterIssue(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminEditNewsletterIssue(renderingEngine: renderingEngine)
+        AdminEditNewsletterIssue(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminRemoveNewsletterIssue(renderingEngine: renderingEngine)
+        AdminRemoveNewsletterIssue(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminTestNewsletterIssueEmail().controller.route(on: router)
+        AdminTestNewsletterIssueEmail(apiBuilder: apiBuilder).controller.route(on: router)
 
-        AdminViewNewsletterCampaignSubscriber(renderingEngine: renderingEngine)
+        AdminViewNewsletterCampaignSubscriber(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminListNewsletterCampaignSubscribers(renderingEngine: renderingEngine)
+        AdminListNewsletterCampaignSubscribers(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminListNewsletterSubscribers(renderingEngine: renderingEngine)
+        AdminListNewsletterSubscribers(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminAddNewsletterSubscriber(renderingEngine: renderingEngine)
+        AdminAddNewsletterSubscriber(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminRemoveNewsletterSubscribers(renderingEngine: renderingEngine)
+        AdminRemoveNewsletterSubscribers(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
     }
 }

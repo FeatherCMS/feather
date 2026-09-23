@@ -4,10 +4,10 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherDatabase
+public import FeatherDatabase
 import FeatherInfrastructure
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 extension TagTable.Row {
 

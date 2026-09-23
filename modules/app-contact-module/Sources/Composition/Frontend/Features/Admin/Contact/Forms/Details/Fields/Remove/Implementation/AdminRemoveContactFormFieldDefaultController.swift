@@ -11,11 +11,11 @@ struct AdminRemoveContactFormFieldDefaultController:
     AdminRemoveContactFormFieldController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminRemoveContactFormFieldInteractor,
             any AdminRemoveContactFormFieldPresenter
         >
-    func confirm(request: Request, context: DefaultRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -27,7 +27,7 @@ struct AdminRemoveContactFormFieldDefaultController:
             items: [.init(id: id, label: field?.label ?? id)]
         )
     }
-    func remove(request: Request, context: DefaultRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext) async throws
         -> Response
     {
         let (interactor, _) = buildRuntime((request, context))
@@ -58,7 +58,7 @@ struct AdminRemoveContactFormFieldDefaultController:
             ]
         )
     }
-    func confirmSelected(request: Request, context: DefaultRequestContext)
+    func confirmSelected(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> HTMLResponse
     {
@@ -71,7 +71,7 @@ struct AdminRemoveContactFormFieldDefaultController:
                 }
         )
     }
-    func removeSelected(request: Request, context: DefaultRequestContext)
+    func removeSelected(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> Response
     {

@@ -8,12 +8,12 @@ struct AdminRemoveUserIdentityDefaultController:
     AdminRemoveUserIdentityController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminRemoveUserIdentityInteractor,
             any AdminRemoveUserIdentityPresenter
         >
 
-    func getRemoveUserIdentity(request: Request, context: DefaultRequestContext)
+    func getRemoveUserIdentity(request: Request, context: AuthenticatedRequestContext)
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -38,7 +38,7 @@ struct AdminRemoveUserIdentityDefaultController:
 
     func postRemoveUserIdentity(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (removeInteractor, presenter) = buildRuntime((request, context))
         guard
@@ -83,7 +83,7 @@ struct AdminRemoveUserIdentityDefaultController:
 
     func getRemoveUserIdentities(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         guard
@@ -133,7 +133,7 @@ struct AdminRemoveUserIdentityDefaultController:
 
     func postRemoveUserIdentities(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (removeInteractor, presenter) = buildRuntime((request, context))
         guard

@@ -1,6 +1,6 @@
 import BlogAdminAPI
 import FeatherAdmin
-import FeatherContracts
+public import FeatherContracts
 import OpenAPIRuntime
 import SystemFrontend
 

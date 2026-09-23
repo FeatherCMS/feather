@@ -6,7 +6,7 @@ struct AdminListSystemVariable {
 
     let controller: any AdminListSystemVariableController
 
-    init(
+    init(apiBuilder: SystemAPIBuilder,
         renderingEngine: any RenderingEngine
     ) {
         self.controller = AdminListSystemVariableDefaultController(
@@ -14,7 +14,7 @@ struct AdminListSystemVariable {
                 (
                     interactor: AdminListSystemVariableDefaultInteractor(
                         repository: AdminListSystemVariableOpenAPIRepository(
-                            api: context.systemAdminAPI()
+                            api: apiBuilder.makeSystemAdmin(context)
                         )
                     ),
                     presenter: AdminListSystemVariableDefaultPresenter(

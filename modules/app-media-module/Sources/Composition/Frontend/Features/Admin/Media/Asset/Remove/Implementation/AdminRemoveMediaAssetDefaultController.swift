@@ -10,14 +10,14 @@ import WebComponents
 
 struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminRemoveMediaAssetInteractor,
             any AdminRemoveMediaAssetPresenter
         >
 
     func getRemoveMediaAsset(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
@@ -29,7 +29,7 @@ struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
 
     func postRemoveMediaAsset(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()

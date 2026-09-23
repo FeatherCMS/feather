@@ -8,12 +8,12 @@ import WebBuilders
 import WebComponents
 
 protocol AdminTestNewsletterIssueEmailController: Sendable {
-    func send(request: Request, context: DefaultRequestContext) async throws
+    func send(request: Request, context: AuthenticatedRequestContext) async throws
         -> Response
 }
 
 extension AdminTestNewsletterIssueEmailController {
-    func route(on router: Router<DefaultRequestContext>) {
+    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.post(
             NewsletterAdminRoutes.issueTestEmailSelectedRoute,
             use: send

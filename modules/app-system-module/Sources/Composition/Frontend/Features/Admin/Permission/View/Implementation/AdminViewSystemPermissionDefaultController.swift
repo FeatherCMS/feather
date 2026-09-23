@@ -6,14 +6,14 @@ struct AdminViewSystemPermissionDefaultController:
     AdminViewSystemPermissionController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewSystemPermissionInteractor,
             any AdminViewSystemPermissionPresenter
         >
 
     func getSystemPermission(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         guard

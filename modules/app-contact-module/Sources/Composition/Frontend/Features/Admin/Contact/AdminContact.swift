@@ -2,64 +2,91 @@ public import FeatherAdmin
 public import Hummingbird
 
 public struct AdminContact {
+    private let apiBuilder: ContactAPIBuilder
     public let renderingEngine: any RenderingEngine
 
-    public init(renderingEngine: any RenderingEngine) {
+    public init(apiBuilder: ContactAPIBuilder,
+        renderingEngine: any RenderingEngine) {
+        self.apiBuilder = apiBuilder
         self.renderingEngine = renderingEngine
     }
 
-    public func route(on router: Router<DefaultRequestContext>) {
-        AdminViewContactOverview(renderingEngine: renderingEngine)
+    public func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
+        AdminViewContactOverview(
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
 
-        AdminListContactForms(renderingEngine: renderingEngine)
+        AdminListContactForms(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminAddContactForm(renderingEngine: renderingEngine)
+        AdminAddContactForm(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminEditContactForm(renderingEngine: renderingEngine)
+        AdminEditContactForm(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminViewContactForm(renderingEngine: renderingEngine)
+        AdminViewContactForm(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminRemoveContactForm(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-
-        AdminListContactFormEmails(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminAddContactFormEmail(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminEditContactFormEmail(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminRemoveContactFormEmail(renderingEngine: renderingEngine)
+        AdminRemoveContactForm(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
 
-        AdminListContactFields(renderingEngine: renderingEngine)
+        AdminListContactFormEmails(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminAddContactField(renderingEngine: renderingEngine)
+        AdminAddContactFormEmail(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminEditContactField(renderingEngine: renderingEngine)
+        AdminEditContactFormEmail(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminRemoveContactField(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminListContactFormFields(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminAddContactFormField(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminEditContactFormField(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminRemoveContactFormField(renderingEngine: renderingEngine)
+        AdminRemoveContactFormEmail(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
 
-        AdminListContactFormSubmissions(renderingEngine: renderingEngine)
+        AdminListContactFields(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminViewContactFormSubmission(renderingEngine: renderingEngine)
+        AdminAddContactField(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminEditContactFormSubmission(renderingEngine: renderingEngine)
+        AdminEditContactField(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminRemoveContactFormSubmissions(renderingEngine: renderingEngine)
+        AdminRemoveContactField(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminListContactSubmissions(renderingEngine: renderingEngine)
+        AdminListContactFormFields(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
-        AdminRemoveContactSubmissions(renderingEngine: renderingEngine)
+        AdminAddContactFormField(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
+            .controller.route(on: router)
+        AdminEditContactFormField(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
+            .controller.route(on: router)
+        AdminRemoveContactFormField(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
+            .controller.route(on: router)
+
+        AdminListContactFormSubmissions(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
+            .controller.route(on: router)
+        AdminViewContactFormSubmission(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
+            .controller.route(on: router)
+        AdminEditContactFormSubmission(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
+            .controller.route(on: router)
+        AdminRemoveContactFormSubmissions(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
+            .controller.route(on: router)
+        AdminListContactSubmissions(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
+            .controller.route(on: router)
+        AdminRemoveContactSubmissions(apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine)
             .controller.route(on: router)
     }
 }

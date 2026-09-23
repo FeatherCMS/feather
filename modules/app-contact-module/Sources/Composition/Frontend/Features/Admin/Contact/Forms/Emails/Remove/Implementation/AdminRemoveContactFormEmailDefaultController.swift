@@ -11,12 +11,12 @@ struct AdminRemoveContactFormEmailDefaultController:
     AdminRemoveContactFormEmailController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminRemoveContactFormEmailInteractor,
             any AdminRemoveContactFormEmailPresenter
         >
 
-    func confirm(request: Request, context: DefaultRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext) async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -41,7 +41,7 @@ struct AdminRemoveContactFormEmailDefaultController:
         )
     }
 
-    func remove(request: Request, context: DefaultRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext) async throws
         -> Response
     {
         let payload = try await request.decode(

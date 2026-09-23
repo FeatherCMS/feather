@@ -15,14 +15,14 @@ struct AdminViewBlogOverviewDefaultController:
     AdminViewBlogOverviewController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewBlogOverviewInteractor,
             any AdminViewBlogOverviewPresenter
         >
 
     func getOverview(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let model = try await interactor.getOverview()

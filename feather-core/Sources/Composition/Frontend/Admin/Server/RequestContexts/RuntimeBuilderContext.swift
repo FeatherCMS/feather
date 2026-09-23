@@ -10,3 +10,14 @@ public typealias RuntimeBuilder<Interactor, Presenter> =
         interactor: Interactor,
         presenter: Presenter
     )
+
+public typealias AuthenticatedRuntimeBuilderContext = (
+    request: Request,
+    context: AuthenticatedRequestContext
+)
+
+public typealias AuthenticatedRuntimeBuilder<Interactor, Presenter> =
+    @Sendable (AuthenticatedRuntimeBuilderContext) -> (
+        interactor: Interactor,
+        presenter: Presenter
+    )

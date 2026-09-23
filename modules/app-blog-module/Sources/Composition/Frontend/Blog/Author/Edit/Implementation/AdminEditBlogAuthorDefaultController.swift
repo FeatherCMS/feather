@@ -17,14 +17,14 @@ struct AdminEditBlogAuthorDefaultController:
     AdminEditBlogAuthorController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminEditBlogAuthorInteractor,
             any AdminEditBlogAuthorPresenter
         >
 
     func getEditBlogAuthor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
@@ -57,7 +57,7 @@ struct AdminEditBlogAuthorDefaultController:
 
     func postEditBlogAuthor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         let id = try context.requiredID()

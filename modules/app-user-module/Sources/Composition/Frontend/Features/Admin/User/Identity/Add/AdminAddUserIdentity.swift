@@ -3,17 +3,18 @@ import FeatherAdmin
 struct AdminAddUserIdentity {
     let controller: any AdminAddUserIdentityController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(apiBuilder: UserAPIBuilder,
+        renderingEngine: any RenderingEngine) {
         self.controller = AdminAddUserIdentityDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminAddUserIdentityDefaultInteractor(
                         repository: AdminAddUserIdentityOpenAPIRepository(
-                            api: context.userAdminAPI()
+                            api: apiBuilder.makeUserAdmin(context)
                         ),
                         roleRepository:
                             AdminAddUserIdentityRoleOpenAPIRepository(
-                                api: context.userAdminAPI()
+                                api: apiBuilder.makeUserAdmin(context)
                             )
                     ),
                     presenter: AdminAddUserIdentityDefaultPresenter(

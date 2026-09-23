@@ -5,18 +5,19 @@ struct AdminResendAccountInvitation {
 
     let controller: AdminResendAccountInvitationDefaultController
 
-    init() {
+    init(apiBuilder: AccountAPIBuilder,
+        ) {
         self.controller = .init(
             buildRepository: { context in
                 AdminResendAccountInvitationOpenAPIRepository(
-                    api: context.accountAdminAPI()
+                    api: apiBuilder.makeAccountAdmin(context)
                 )
             }
         )
     }
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             RouterPath(

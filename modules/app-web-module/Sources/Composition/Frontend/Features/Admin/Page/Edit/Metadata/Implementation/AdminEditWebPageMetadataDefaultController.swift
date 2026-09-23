@@ -8,18 +8,20 @@ import WebContracts
 struct AdminEditWebPageMetadataDefaultController:
     AdminEditWebPageMetadataController
 {
+    let apiBuilder: WebAPIBuilder
     let renderingEngine: any RenderingEngine
     let adminEvents: any EventPublisher
 
     private func makeHandler() -> AdminWebMetadataEditHandler {
         AdminWebMetadataEditHandler(
+            apiBuilder: apiBuilder,
             renderingEngine: renderingEngine,
             adminEvents: adminEvents
         )
     }
 
     private func configuration(
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) throws -> AdminWebMetadataEditConfiguration {
         let pageID = try context.requiredID()
         let metadataID =
@@ -54,7 +56,7 @@ struct AdminEditWebPageMetadataDefaultController:
 
     func getEditWebPageMetadata(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let handler = makeHandler()
         let configuration = try configuration(context: context)
@@ -67,7 +69,7 @@ struct AdminEditWebPageMetadataDefaultController:
 
     func postEditWebPageMetadata(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let handler = makeHandler()
         let configuration = try configuration(context: context)

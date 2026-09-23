@@ -1,5 +1,5 @@
 import BlogContracts
-import FeatherContracts
+public import FeatherContracts
 import SystemApplication
 import WebContracts
 

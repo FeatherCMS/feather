@@ -1,6 +1,6 @@
-import BlogApplication
+public import BlogApplication
 import BlogInfrastructure
-import FeatherInfrastructure
+public import FeatherInfrastructure
 
 extension UseCases {
 

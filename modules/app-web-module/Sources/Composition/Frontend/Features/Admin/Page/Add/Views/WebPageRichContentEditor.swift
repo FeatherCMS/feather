@@ -33,7 +33,6 @@ public struct WebPageRichContentEditor: Component {
     }
 
     public let state: State
-
     public init(state: State) {
         self.state = state
     }
@@ -719,9 +718,7 @@ public struct WebPageRichContentEditor: Component {
                             .setAttribute(name: "spellcheck", value: "false")
                             .setAttribute(
                                 name: "data-media-base-url",
-                                value: unsafe AppEnvironmentStore.current
-                                    .publicOrigins
-                                    .mediaBaseURL.absoluteString
+                                value: "/media/"
                             )
                             .class("markdown-source")
                     }
@@ -739,8 +736,7 @@ public struct WebPageRichContentEditor: Component {
             .data("markdown-video-picker", "markdown-video-url")
             .data(
                 "markdown-media-base-url",
-                unsafe AppEnvironmentStore.current.publicOrigins.mediaBaseURL
-                    .absoluteString
+                "/media/"
             )
             context.build(
                 NewAdminFormFieldMediaPicker(
@@ -785,7 +781,7 @@ public struct WebPageRichContentEditor: Component {
             }
             Script()
                 .src(
-                    "\(unsafe AppEnvironmentStore.current.publicOrigins.staticBaseURL)/admin/markdown-editor.js"
+                    "/admin/markdown-editor.js"
                 )
                 .defer()
         }

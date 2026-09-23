@@ -17,14 +17,14 @@ import WebBuilders
 import WebComponents
 
 protocol AdminRemoveAuthCredentialController: Sendable {
-    func getRemoveCredential(request: Request, context: DefaultRequestContext)
+    func getRemoveCredential(request: Request, context: AuthenticatedRequestContext)
         async throws -> HTMLResponse
-    func postRemoveCredential(request: Request, context: DefaultRequestContext)
+    func postRemoveCredential(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
 }
 
 extension AdminRemoveAuthCredentialController {
-    func route(on router: Router<DefaultRequestContext>) {
+    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.get(
             AuthCredentialRoutes.remove(RouterPath("{id}")),
             use: getRemoveCredential

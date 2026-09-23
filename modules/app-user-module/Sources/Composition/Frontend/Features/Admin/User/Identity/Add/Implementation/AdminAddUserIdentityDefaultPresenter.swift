@@ -5,7 +5,7 @@ import WebComponents
 
 struct AdminAddUserIdentityDefaultPresenter: AdminAddUserIdentityPresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderAddPage(state: UserIdentityAddForm.State) async throws

@@ -5,14 +5,14 @@ protocol AdminViewAccountProfileController: Sendable {
 
     func getAccountProfile(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminViewAccountProfileController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             RouterPath(AccountAdminRoutes.profile.description + "/"),

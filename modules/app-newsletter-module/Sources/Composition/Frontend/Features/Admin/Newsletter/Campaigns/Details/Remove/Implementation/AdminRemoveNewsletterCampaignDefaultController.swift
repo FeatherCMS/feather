@@ -6,11 +6,11 @@ struct AdminRemoveNewsletterCampaignDefaultController:
     AdminRemoveNewsletterCampaignController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminRemoveNewsletterCampaignInteractor,
             any AdminRemoveNewsletterCampaignPresenter
         >
-    func confirm(request: Request, context: DefaultRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext) async throws
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime((request, context))
@@ -19,7 +19,7 @@ struct AdminRemoveNewsletterCampaignDefaultController:
         let id = try context.requiredParameter("newsletterId")
         return try await presenter.render(item: .init(id: id, label: id))
     }
-    func remove(request: Request, context: DefaultRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext) async throws
         -> Response
     {
         let (interactor, _) = buildRuntime((request, context))
@@ -46,7 +46,7 @@ struct AdminRemoveNewsletterCampaignDefaultController:
             )
         )
     }
-    func removeSelected(request: Request, context: DefaultRequestContext)
+    func removeSelected(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
     {
         let (interactor, _) = buildRuntime((request, context))

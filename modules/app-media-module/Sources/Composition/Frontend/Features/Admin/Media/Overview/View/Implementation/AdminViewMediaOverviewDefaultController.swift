@@ -11,14 +11,14 @@ import WebComponents
 struct AdminViewMediaOverviewDefaultController: AdminViewMediaOverviewController
 {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminViewMediaOverviewInteractor,
             any AdminViewMediaOverviewPresenter
         >
 
     func getOverview(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         return try await presenter.renderOverview(

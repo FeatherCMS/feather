@@ -8,15 +8,16 @@ import UserFrontend
 struct AdminAddAccountInvitationDefaultController:
     AdminAddAccountInvitationController
 {
+    let apiBuilder: AccountAPIBuilder
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminAddAccountInvitationInteractor,
             any AdminAddAccountInvitationPresenter
         >
 
     func getAddAccountInvitation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (_, presenter) = buildRuntime((request, context))
         return try await presenter.renderPage(
@@ -31,7 +32,7 @@ struct AdminAddAccountInvitationDefaultController:
 
     func postAddAccountInvitation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         var lastPayload: AdminAddAccountInvitationFormInput?
@@ -128,12 +129,9 @@ struct AdminAddAccountInvitationDefaultController:
     }
 
     private func roleOptions(
-        _ context: DefaultRequestContext
+        _ context: AuthenticatedRequestContext
     ) async -> [AccountInvitationForm.RoleOptionState] {
-        let userAPI = UserAdminAPIClient(
-            apiBaseURL: unsafe AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: context.sessionToken
-        )
+        let userAPI = apiBuilder.makeUserAdmin(context)
         guard
             let response =
                 try? await userAPI
@@ -159,7 +157,7 @@ struct AdminAddAccountInvitationDefaultController:
 
     private func createResponse(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         presenter: any AdminAddAccountInvitationPresenter,
         state: AccountInvitationForm.State
     ) async throws -> Response {

@@ -21,14 +21,14 @@ import WebComponents
 
 struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
     let buildRuntime:
-        RuntimeBuilder<
+        AuthenticatedRuntimeBuilder<
             any AdminListAuthEmailInteractor,
             any AdminListAuthEmailPresenter
         >
 
     func getAuthEmails(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         let permissionSet = context.currentUserPermissions
@@ -89,7 +89,7 @@ struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
 
     func getAuthEmailsRemoveConfirmation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime((request, context))
         let selectedIds = request.queryStrings("selectedIds")
@@ -125,7 +125,7 @@ struct AdminListAuthEmailDefaultController: AdminListAuthEmailController {
 
     func postAuthEmailsRemove(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.delete)
