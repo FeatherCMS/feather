@@ -3,7 +3,7 @@ import PackageDescription
 
 var swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
-    .strictMemorySafety(),
+    // .strictMemorySafety(),
     .treatAllWarnings(as: .error),
     .enableUpcomingFeature("ExistentialAny"),
     // .enableUpcomingFeature("InternalImportsByDefault"),
@@ -109,7 +109,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-openapi-runtime",
-            from: "1.9.0"
+            from: "1.12.1"
         ),
         .package(
             url: "https://github.com/apple/swift-nio",

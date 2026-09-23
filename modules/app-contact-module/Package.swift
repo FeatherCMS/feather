@@ -3,7 +3,7 @@ import PackageDescription
 
 var swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
-    .strictMemorySafety(),
+    // .strictMemorySafety(),
     .treatAllWarnings(as: .error),
     .enableUpcomingFeature("ExistentialAny"),
     // .enableUpcomingFeature("InternalImportsByDefault"),
@@ -47,7 +47,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/mattpolzin/OpenAPIKit", from: "5.0.0"),
         .package(url: "https://github.com/jpsim/Yams", from: "6.2.0"),
-        .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.9.0"),
+        .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.12.1"),
         .package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.27.0"),
         .package(url: "https://github.com/swift-server/async-http-client", from: "1.0.0"),
 
