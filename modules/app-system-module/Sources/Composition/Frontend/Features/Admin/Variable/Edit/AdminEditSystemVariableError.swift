@@ -1,5 +1,3 @@
-import Foundation
-
 enum AdminEditSystemVariableError: Error, Sendable {
     case notFound
     case unauthorized

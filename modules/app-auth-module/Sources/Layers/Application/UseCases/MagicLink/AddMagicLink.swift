@@ -1,8 +1,7 @@
 import AuthContracts
 import AuthDomain
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
+public import FeatherApplication
+public import FeatherContracts
 
 //
 //  AddMagicLink.swift

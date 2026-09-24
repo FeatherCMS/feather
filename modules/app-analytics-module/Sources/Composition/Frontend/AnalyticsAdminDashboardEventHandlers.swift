@@ -1,7 +1,6 @@
 import AnalyticsAdminAPI
 import FeatherAdmin
-import FeatherContracts
-import Foundation
+public import FeatherContracts
 import OpenAPIRuntime
 import SystemFrontend
 
@@ -58,17 +57,6 @@ public enum AnalyticsAdminDashboardEventHandlers {
                             )
                         },
                         insightCards: [
-                            .init(
-                                title: "Top pages",
-                                items: overview.paths.prefix(8)
-                                    .map {
-                                        .init(
-                                            label: $0.label,
-                                            count: $0.count,
-                                            share: $0.share
-                                        )
-                                    }
-                            ),
                             .init(
                                 title: "Operating systems",
                                 items: overview.operatingSystems.map {

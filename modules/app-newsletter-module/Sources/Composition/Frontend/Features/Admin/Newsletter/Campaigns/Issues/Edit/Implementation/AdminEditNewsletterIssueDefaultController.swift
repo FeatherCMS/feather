@@ -11,14 +11,15 @@ struct AdminEditNewsletterIssueDefaultController:
     AdminEditNewsletterIssueController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditNewsletterIssueInteractor,
-            presenter: any AdminEditNewsletterIssuePresenter
-        )
-    func get(request: Request, context: DefaultRequestContext) async throws
+        AuthenticatedRuntimeBuilder<
+            any AdminEditNewsletterIssueInteractor,
+            any AdminEditNewsletterIssuePresenter
+        >
+    func get(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let newsletterId = try context.requiredParameter("newsletterId")
         let issueId = try context.requiredParameter("issueId")
         do {
@@ -47,10 +48,11 @@ struct AdminEditNewsletterIssueDefaultController:
             )
         }
     }
-    func update(request: Request, context: DefaultRequestContext) async throws
+    func update(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let newsletterId = try context.requiredParameter("newsletterId")
         let issueId = try context.requiredParameter("issueId")
         let form = try await request.decode(

@@ -1,7 +1,6 @@
-import AuthDomain
-import FeatherDatabase
+public import AuthDomain
 import FeatherDomain
-import FeatherInfrastructure
+public import FeatherInfrastructure
 
 extension AuthEmailTable.Row {
     var asDomain: AuthEmail {

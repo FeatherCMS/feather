@@ -1,10 +1,9 @@
 import AsyncHTTPClient
-import FeatherAdmin
-import Foundation
+public import FeatherAdmin
+public import Foundation
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
-import RedirectAppAPI
+public import RedirectAppAPI
 
 public struct RedirectAppAPIClient: Sendable {
     public let client: RedirectAppAPI.Client

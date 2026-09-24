@@ -1,6 +1,5 @@
 import FeatherAdmin
 import FeatherValidation
-import HTML
 import Hummingbird
 import OpenAPIRuntime
 import UserAdminAPI
@@ -9,17 +8,18 @@ import UserFrontend
 struct AdminEditAccountInvitationDefaultController:
     AdminEditAccountInvitationController
 {
+    let apiBuilder: AccountAPIBuilder
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditAccountInvitationInteractor,
-            presenter: any AdminEditAccountInvitationPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditAccountInvitationInteractor,
+            any AdminEditAccountInvitationPresenter
+        >
 
     func getEditAccountInvitation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
         let isEdited = request.hasQueryFlag("edited")
         let permissions = context.currentUserPermissions
@@ -51,9 +51,9 @@ struct AdminEditAccountInvitationDefaultController:
 
     func postEditAccountInvitation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
         let availableRoleOptions = await roleOptions(context, selected: [])
         var lastPayload: AdminEditAccountInvitationFormInput?
@@ -153,13 +153,10 @@ struct AdminEditAccountInvitationDefaultController:
     }
 
     private func roleOptions(
-        _ context: DefaultRequestContext,
+        _ context: AuthenticatedRequestContext,
         selected: [String]
     ) async -> [AccountInvitationForm.RoleOptionState] {
-        let userAPI = UserAdminAPIClient(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: context.sessionToken
-        )
+        let userAPI = apiBuilder.makeUserAdmin(context)
         guard
             let response =
                 try? await userAPI
@@ -189,7 +186,7 @@ struct AdminEditAccountInvitationDefaultController:
 
     private func updateResponse(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         id: String,
         presenter: any AdminEditAccountInvitationPresenter,
         state: AccountInvitationForm.State

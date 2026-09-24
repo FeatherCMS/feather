@@ -1,10 +1,4 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
 import FeatherInfrastructure
-import UserAdminAPI
-import UserAppAPI
 import UserApplication
 import UserInfrastructure
 

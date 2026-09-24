@@ -1,6 +1,5 @@
-import FeatherDatabase
-import FeatherInfrastructure
-import NewsletterDomain
+public import FeatherInfrastructure
+public import NewsletterDomain
 
 extension SubscriberTable.Row {
     var asDomain: Subscriber {

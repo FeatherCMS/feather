@@ -1,5 +1,5 @@
-import FeatherDatabase
-import FeatherInfrastructure
+public import FeatherDatabase
+public import FeatherInfrastructure
 
 public struct TableSeedMigration: DatabaseMigration {
     public let connection: any DatabaseConnection

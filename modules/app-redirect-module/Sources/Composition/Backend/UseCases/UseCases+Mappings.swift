@@ -1,10 +1,7 @@
 import FeatherApplication
-import FeatherContracts
-import Foundation
 import RedirectAdminAPI
 import RedirectApplication
 import RedirectContracts
-import RedirectDomain
 
 extension AdminAPIGateway {
     func mapSortDirection(

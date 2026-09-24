@@ -1,21 +1,22 @@
 import FeatherAdmin
-import FeatherContracts
 import FeatherValidation
-import HTML
 import Hummingbird
 import RedirectContracts
 
 struct AdminAddRedirectRuleDefaultController: AdminAddRedirectRuleController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddRedirectRuleInteractor,
-            presenter: any AdminAddRedirectRulePresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminAddRedirectRuleInteractor,
+            any AdminAddRedirectRulePresenter
+        >
 
-    func getAddRedirectRule(request: Request, context: DefaultRequestContext)
+    func getAddRedirectRule(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.create)
         else { return try await presenter.renderForbiddenPage() }
         return try await presenter.renderAddPage(
@@ -24,10 +25,13 @@ struct AdminAddRedirectRuleDefaultController: AdminAddRedirectRuleController {
         )
     }
 
-    func postAddRedirectRule(request: Request, context: DefaultRequestContext)
+    func postAddRedirectRule(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.create)
         else {
             return try await presenter.renderForbiddenPage()

@@ -1,5 +1,3 @@
-import Foundation
-
 enum AdminAddSystemVariableError: Error, Sendable {
     case unauthorized
     case forbidden

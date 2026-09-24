@@ -1,5 +1,5 @@
 {
-  "originHash" : "eddd719d8844d9b601544bbe98d137f4c83ce7c7b8989c910da654596ff51db6",
+  "originHash" : "1cef90daa97945fd6a756ca8e73c91d2ea9d7b682011596630881dab01070009",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -238,7 +238,7 @@
     {
       "identity" : "swift-nanoid",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/binarybirds/swift-nanoid",
+      "location" : "https://github.com/BinaryBirds/swift-nanoid",
       "state" : {
         "revision" : "cb73f19b3a25cc5aa14512fa43b08f2ff63002db",
         "version" : "1.1.1"
@@ -312,8 +312,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-runtime",
       "state" : {
-        "revision" : "3d3a8457661daf7fb260ceeb9f0e24e5204ba5fb",
-        "version" : "1.12.0"
+        "revision" : "9e53df53e043b53046a371b31aaf0a1e26eef946",
+        "version" : "1.12.1"
       }
     },
     {
@@ -339,8 +339,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-subprocess.git",
       "state" : {
-        "revision" : "13d087685b95d64d6aac9b94500d347bbe84c39b",
-        "version" : "0.4.0"
+        "revision" : "b3937ab85dd32f6e9435914599c1519074769c1a",
+        "version" : "1.0.0"
       }
     },
     {

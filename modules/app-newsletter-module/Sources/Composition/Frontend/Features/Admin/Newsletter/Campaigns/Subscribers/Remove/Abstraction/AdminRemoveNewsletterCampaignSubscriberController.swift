@@ -1,26 +1,23 @@
 import FeatherAdmin
-import FeatherValidation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
 
 protocol AdminRemoveNewsletterCampaignSubscriberController: Sendable {
-    func confirm(request: Request, context: DefaultRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     func confirmSelected(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
-    func remove(request: Request, context: DefaultRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
-    func removeSelected(request: Request, context: DefaultRequestContext)
+    func removeSelected(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response
 }
+
 extension AdminRemoveNewsletterCampaignSubscriberController {
-    func route(on router: Router<DefaultRequestContext>) {
+    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.get(
             NewsletterAdminRoutes.campaignSubscriberRemoveSelectedRoute,
             use: confirmSelected

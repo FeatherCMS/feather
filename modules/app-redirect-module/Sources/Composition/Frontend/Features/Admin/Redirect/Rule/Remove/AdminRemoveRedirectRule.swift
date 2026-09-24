@@ -1,17 +1,18 @@
 import FeatherAdmin
-import Foundation
-import Hummingbird
 
 struct AdminRemoveRedirectRule {
     let controller: any AdminRemoveRedirectRuleController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: RedirectAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminRemoveRedirectRuleDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminRemoveRedirectRuleDefaultInteractor(
                         repository: AdminRemoveRedirectRuleOpenAPIRepository(
-                            api: context.redirectAdminAPI()
+                            api: apiBuilder.makeRedirectAdmin(context)
                         )
                     ),
                     presenter: AdminRemoveRedirectRuleDefaultPresenter(

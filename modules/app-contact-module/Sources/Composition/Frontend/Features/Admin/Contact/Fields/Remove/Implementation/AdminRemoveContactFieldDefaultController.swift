@@ -12,15 +12,16 @@ struct AdminRemoveContactFieldDefaultController:
     AdminRemoveContactFieldController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveContactFieldInteractor,
-            presenter: any AdminRemoveContactFieldPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminRemoveContactFieldInteractor,
+            any AdminRemoveContactFieldPresenter
+        >
 
-    func confirm(request: Request, context: DefaultRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.delete)
         else {
             return try await presenter.renderForbiddenPage()
@@ -32,10 +33,11 @@ struct AdminRemoveContactFieldDefaultController:
         )
     }
 
-    func remove(request: Request, context: DefaultRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.delete)
         else {
             return
@@ -68,11 +70,11 @@ struct AdminRemoveContactFieldDefaultController:
         )
     }
 
-    func confirmSelected(request: Request, context: DefaultRequestContext)
+    func confirmSelected(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> HTMLResponse
     {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.delete)
         else {
             return try await presenter.renderForbiddenPage()
@@ -85,7 +87,7 @@ struct AdminRemoveContactFieldDefaultController:
         )
     }
 
-    func removeSelected(request: Request, context: DefaultRequestContext)
+    func removeSelected(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> Response
     {
@@ -93,7 +95,7 @@ struct AdminRemoveContactFieldDefaultController:
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.delete)
         else {
             return

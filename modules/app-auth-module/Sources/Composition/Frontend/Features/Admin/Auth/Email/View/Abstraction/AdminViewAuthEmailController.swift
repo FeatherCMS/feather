@@ -20,14 +20,14 @@ protocol AdminViewAuthEmailController: Sendable {
 
     func getAuthEmail(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminViewAuthEmailController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             AuthEmailRoutes.details(RouterPath("{id}")),

@@ -1,6 +1,4 @@
-import FeatherContracts
-import FeatherInfrastructure
-import MediaApplication
+public import FeatherContracts
 import MediaContracts
 import SystemApplication
 

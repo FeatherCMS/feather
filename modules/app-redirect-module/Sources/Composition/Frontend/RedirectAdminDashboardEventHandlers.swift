@@ -1,6 +1,5 @@
 import FeatherAdmin
-import FeatherContracts
-import Foundation
+public import FeatherContracts
 import OpenAPIRuntime
 import RedirectAdminAPI
 import SystemFrontend

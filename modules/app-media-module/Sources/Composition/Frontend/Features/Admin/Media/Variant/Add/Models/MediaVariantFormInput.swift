@@ -1,7 +1,6 @@
 import FeatherAdmin
 import FeatherContracts
 import FeatherValidation
-import Foundation
 
 struct MediaVariantFormInput: Decodable, Sendable, Equatable, Hashable {
     let key: String
@@ -10,10 +9,10 @@ struct MediaVariantFormInput: Decodable, Sendable, Equatable, Hashable {
     let isActive: NewAdminFormFieldCheckbox.Input
 
     var normalizedKey: String {
-        key.trimmingCharacters(in: .whitespacesAndNewlines)
+        key.whitespaceTrimmed
     }
     var normalizedName: String {
-        name.trimmingCharacters(in: .whitespacesAndNewlines)
+        name.whitespaceTrimmed
     }
 
     init(

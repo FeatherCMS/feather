@@ -1,5 +1,5 @@
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 
 public struct PublicResolveMediaAssets: UseCase {
     let query: any QueryExecutor<ReadMedia>

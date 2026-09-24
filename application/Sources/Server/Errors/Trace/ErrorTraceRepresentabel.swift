@@ -24,7 +24,7 @@ public extension ErrorTraceRepresentable {
     func underlyingTraces() -> [ErrorTrace] {
         var traces: [ErrorTrace] = []
         for underlyingError in underlyingErrors {
-            if let error = underlyingError as? ErrorTraceRepresentable {
+            if let error = underlyingError as? any ErrorTraceRepresentable {
                 traces.append(error.trace())
             }
             else {
@@ -47,7 +47,7 @@ public extension ErrorTraceRepresentable {
             if let match = error as? T {
                 return match
             }
-            if let nested = error as? ErrorTraceRepresentable,
+            if let nested = error as? any ErrorTraceRepresentable,
                 let match = nested.lookup(type)
             {
                 return match

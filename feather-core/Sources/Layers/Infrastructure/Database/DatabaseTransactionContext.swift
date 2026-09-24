@@ -3,10 +3,9 @@
 //  feather-core
 //
 
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
+public import FeatherContracts
+public import FeatherDatabase
+public import FeatherDomain
 
 public struct DatabaseTransactionContext: TransactionContext, DatabaseContext {
 

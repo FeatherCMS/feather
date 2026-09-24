@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 
 struct AdminViewUserIdentityDefaultInteractor: AdminViewUserIdentityInteractor {
     private let repository: any AdminViewUserIdentityRepository

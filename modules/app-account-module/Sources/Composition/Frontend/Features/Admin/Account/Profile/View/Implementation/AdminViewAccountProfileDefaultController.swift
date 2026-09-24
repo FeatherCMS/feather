@@ -1,40 +1,23 @@
 import AccountContracts
-import CSS
 import FeatherAdmin
 import FeatherContracts
-import FeatherValidation
-import FeatherValidationFoundation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import SystemAdminAPI
-import SystemFrontend
-import UserAdminAPI
-import UserAppAPI
-import UserFrontend
-import WebBuilders
-import WebComponents
 
 struct AdminViewAccountProfileDefaultController:
     AdminViewAccountProfileController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewAccountProfileInteractor,
-            presenter: any AdminViewAccountProfilePresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminViewAccountProfileInteractor,
+            any AdminViewAccountProfilePresenter
+        >
 
     func getAccountProfile(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
-        guard let account = context.account else {
-            return try await runtime.presenter.renderDeniedPage(
-                permissions: []
-            )
-        }
+        let runtime = buildRuntime((request, context))
+        let account = context.account
 
         let permissions = account.permissionSet
         guard

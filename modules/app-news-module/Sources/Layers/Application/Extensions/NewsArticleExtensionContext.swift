@@ -1,5 +1,4 @@
-import FeatherApplication
-import FeatherContracts
+public import FeatherContracts
 
 public struct NewsArticleExtensionContext: Sendable {
     public let articleID: String

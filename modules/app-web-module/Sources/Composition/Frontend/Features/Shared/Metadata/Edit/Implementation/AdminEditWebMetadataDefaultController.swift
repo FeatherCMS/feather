@@ -10,14 +10,14 @@ struct AdminEditWebMetadataDefaultController:
     Sendable
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditWebMetadataInteractor,
-            presenter: any AdminEditWebMetadataPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditWebMetadataInteractor,
+            any AdminEditWebMetadataPresenter
+        >
 
     func getEditWebMetadataForContent(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         configuration: AdminWebMetadataEditConfiguration
     ) async throws -> HTMLResponse {
         try await renderEditWebMetadata(
@@ -29,7 +29,7 @@ struct AdminEditWebMetadataDefaultController:
 
     func postEditWebMetadataForContent(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         configuration: AdminWebMetadataEditConfiguration
     ) async throws -> Response {
         try await renderPostEditWebMetadata(
@@ -41,11 +41,11 @@ struct AdminEditWebMetadataDefaultController:
 
     private func renderEditWebMetadata(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         configuration: AdminWebMetadataEditConfiguration
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
-        let id = try metadataID(context: context)
+        let runtime = buildRuntime((request, context))
+        let id = try metadataID(request: request, context: context)
         let permissions = context.currentUserPermissions
         do {
             let entry = try await loadEntry(
@@ -96,11 +96,11 @@ struct AdminEditWebMetadataDefaultController:
 
     private func renderPostEditWebMetadata(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         configuration: AdminWebMetadataEditConfiguration
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
-        let id = try metadataID(context: context)
+        let runtime = buildRuntime((request, context))
+        let id = try metadataID(request: request, context: context)
         let permissions = context.currentUserPermissions
         let entry = try await loadEntry(
             runtime: runtime,
@@ -356,7 +356,8 @@ struct AdminEditWebMetadataDefaultController:
     }
 
     private func metadataID(
-        context: DefaultRequestContext
+        request: Request,
+        context: AuthenticatedRequestContext
     ) throws -> String {
         if let metadataID = context.parameters.get(
             "metadataID",
@@ -373,7 +374,7 @@ struct AdminEditWebMetadataDefaultController:
             presenter: any AdminEditWebMetadataPresenter
         ),
         id: String,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         referenceType: String?
     ) async throws -> WebMetadataDetailsModel {
         if let referenceType,

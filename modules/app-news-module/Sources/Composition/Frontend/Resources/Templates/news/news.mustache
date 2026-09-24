@@ -1,21 +1,23 @@
 {{& page.contents.html}}
 
 <div id="news" class="wrapper">
+    {{#empty(items)}}<p>Empty.</p>{{/empty(items)}}
+    {{^empty(items)}}
     <div class="grid grid-321">
     {{#items}}
         {{> partials/news/item}}
     {{/items}}
     </div>
-    {{^items}}<p>Empty.</p>{{/items}}
+    {{/empty(items)}}
 </div>
 
 {{#pagination}}
 <nav class="pagination" aria-label="News pages">
-    {{#hasPrevious}}<a href="{{previousURL}}" rel="prev">Previous</a>{{/hasPrevious}}
+    {{#previousURL}}<a href="{{previousURL}}" rel="prev">Previous</a>{{/previousURL}}
     {{#pages}}
         {{#isCurrent}}<span aria-current="page">{{number}}</span>{{/isCurrent}}
         {{^isCurrent}}<a href="{{url}}">{{number}}</a>{{/isCurrent}}
     {{/pages}}
-    {{#hasNext}}<a href="{{nextURL}}" rel="next">Next</a>{{/hasNext}}
+    {{#nextURL}}<a href="{{nextURL}}" rel="next">Next</a>{{/nextURL}}
 </nav>
 {{/pagination}}

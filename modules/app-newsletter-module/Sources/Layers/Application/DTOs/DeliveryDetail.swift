@@ -1,8 +1,7 @@
-import FeatherApplication
-import FeatherContracts
-import NewsletterDomain
+public import FeatherApplication
+public import NewsletterDomain
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct DeliveryDetail: DTO {
     public let issueId: String

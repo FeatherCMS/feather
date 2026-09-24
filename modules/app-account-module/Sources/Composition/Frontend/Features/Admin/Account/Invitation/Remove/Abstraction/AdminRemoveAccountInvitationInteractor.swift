@@ -1,6 +1,3 @@
-import FeatherAdmin
-import Foundation
-
 protocol AdminRemoveAccountInvitationInteractor: Sendable {
 
     func get(

@@ -7,16 +7,16 @@ struct AdminRemoveWebPageDefaultController:
     AdminRemoveWebPageController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveWebPageInteractor,
-            presenter: any AdminRemoveWebPagePresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminRemoveWebPageInteractor,
+            any AdminRemoveWebPagePresenter
+        >
 
     func getRemoveWebPage(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         do {
             let page = try await runtime.interactor.get(id: id)
@@ -35,9 +35,9 @@ struct AdminRemoveWebPageDefaultController:
 
     func postRemoveWebPage(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,

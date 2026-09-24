@@ -1,4 +1,4 @@
-import Foundation
+import FeatherContracts
 
 struct AdminListWebPageMetadata: Sendable {
     let slug: String
@@ -7,12 +7,12 @@ struct AdminListWebPageMetadata: Sendable {
     let status: String
 
     var normalizedSlug: String {
-        slug.trimmingCharacters(in: .whitespacesAndNewlines)
+        slug.whitespaceTrimmed
     }
 
     var normalizedStatus: String {
         status
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
             .lowercased()
     }
 }

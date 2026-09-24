@@ -1,5 +1,5 @@
 import FeatherAdmin
-import FeatherValidation
+public import FeatherValidation
 
 enum AdminAddUserRoleFormFieldValidator {
 

@@ -4,10 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherDatabase
-import FeatherDomain
-import FeatherInfrastructure
-import SystemDomain
+public import FeatherDomain
+public import FeatherInfrastructure
+public import SystemDomain
 
 extension VariableTable.Row {
     var asDomain: Variable {

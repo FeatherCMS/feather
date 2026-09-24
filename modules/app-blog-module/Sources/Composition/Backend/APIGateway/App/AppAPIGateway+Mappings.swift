@@ -1,5 +1,6 @@
 import BlogAppAPI
 import BlogApplication
+import FeatherContracts
 import Foundation
 import MediaApplication
 import MediaBackend
@@ -18,7 +19,8 @@ extension AppAPIGateway {
         else {
             return nil
         }
-        let originalURL = asset.url
+        let resolver = useCases.mediaResolver
+        let originalURL = resolver.resolve(imagePath: asset.url) ?? asset.url
         let variants =
             ((try? await useCases.media.listAssociatedVariantFiles(
                 assetId: assetId
@@ -26,32 +28,23 @@ extension AppAPIGateway {
             .map {
                 PublicContentMediaVariant(
                     key: $0.key,
-                    url:
-                        "/media/variants/\(asset.id)/\($0.key).\($0.extension)"
+                    url: resolver.resolve(
+                        imagePath:
+                            "/media/variants/\(asset.id)/\($0.key).\($0.extension)"
+                    ) ?? "/media/variants/\(asset.id)/\($0.key).\($0.extension)"
                 )
             }
-        let defaultURL = preferredDefaultMediaURL(
-            originalURL: originalURL,
-            variants: variants
-        )
+        let defaultURL =
+            resolver.resolve(
+                variants: variants,
+                variantKey: "preview"
+            ) ?? resolver.resolve(imagePath: originalURL) ?? ""
         return .init(
             assetId: asset.id,
             originalURL: originalURL,
             defaultURL: defaultURL,
             variants: variants
         )
-    }
-
-    func preferredDefaultMediaURL(
-        originalURL: String,
-        variants: [PublicContentMediaVariant]
-    ) -> String {
-        if let preview = variants.first(where: {
-            $0.key == "preview" || $0.key == "display"
-        }) {
-            return preview.url
-        }
-        return variants.first?.url ?? originalURL
     }
 
     func publicTimestamp(

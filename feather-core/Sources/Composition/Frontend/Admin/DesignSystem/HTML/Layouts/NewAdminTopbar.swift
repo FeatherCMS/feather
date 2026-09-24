@@ -5,12 +5,11 @@
 //  Created by Tibor Bödecs on 2026. 09. 04..
 //
 
-import Foundation
 import HTML
-import SGML
+public import SGML
 import SVG
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct NewAdminTopBar: Component {
 

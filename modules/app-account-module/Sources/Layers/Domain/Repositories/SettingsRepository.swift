@@ -4,7 +4,7 @@
 //
 //  Created by Binary Birds on 2026. 07. 16.
 
-import FeatherDomain
+public import FeatherDomain
 
 public protocol SettingsRepository: Repository {
 

@@ -12,19 +12,23 @@ import WebComponents
 struct AdminTestNewsletterIssueEmailDefaultController:
     AdminTestNewsletterIssueEmailController
 {
-    func send(request: Request, context: DefaultRequestContext) async throws
+    let apiBuilder: NewsletterAPIBuilder
+
+    func send(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
         guard context.isCurrentUserAllowed(to: Permissions.Issues.update)
         else { return Response(status: .forbidden) }
-        let newsletterId = try context.requiredParameter("newsletterId")
+        let newsletterKey = try context.requiredParameter("newsletterId")
         let issueId = context.parameters.get("issueId", as: String.self)
         let location = issueId.map {
             NewsletterAdminRoutes.issueEdit(
-                newsletterID: RouterPath(newsletterId),
+                newsletterID: RouterPath(newsletterKey),
                 issueID: RouterPath($0)
             ).description
-        } ?? NewsletterAdminRoutes.issueAdd(RouterPath(newsletterId)).description
+        } ?? NewsletterAdminRoutes.issueAdd(RouterPath(newsletterKey)).description
+
         do {
             let form = try await request.decode(
                 as: NewsletterIssueTestEmailForm.self,
@@ -38,11 +42,12 @@ struct AdminTestNewsletterIssueEmailDefaultController:
                         content: form.content
                     )
                 )
-            let api = context.newsletterAdminAPI()
+            let api = apiBuilder.makeNewsletterAdmin(context)
+
             if let issueId {
                 let response = try await api.newsletterIssueTestEmail(
                     path: .init(
-                        newsletterCampaignKey: newsletterId,
+                        newsletterCampaignKey: newsletterKey,
                         newsletterIssueId: issueId
                     ),
                     body: body
@@ -65,7 +70,7 @@ struct AdminTestNewsletterIssueEmailDefaultController:
             }
             else {
                 let response = try await api.newsletterCampaignTestEmail(
-                    path: .init(newsletterCampaignKey: newsletterId),
+                    path: .init(newsletterCampaignKey: newsletterKey),
                     body: body
                 )
                 switch response {
@@ -82,6 +87,7 @@ struct AdminTestNewsletterIssueEmailDefaultController:
                     )
                 }
             }
+
             return AdminNotificationFlash.redirect(
                 to: location,
                 notification: .init(

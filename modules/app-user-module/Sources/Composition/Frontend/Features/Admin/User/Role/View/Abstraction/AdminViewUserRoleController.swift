@@ -5,14 +5,14 @@ protocol AdminViewUserRoleController: Sendable {
 
     func getUserRole(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminViewUserRoleController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             UserRoleRoutes.details(RouterPath("{id}")),

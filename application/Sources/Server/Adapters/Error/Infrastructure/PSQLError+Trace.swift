@@ -5,9 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 04. 19..
 //
 
-import PostgresNIO
-import NIOHTTP1
-import OpenAPIRuntime
+public import PostgresNIO
 
 extension PSQLError: ErrorTraceRepresentable {
 

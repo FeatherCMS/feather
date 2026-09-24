@@ -1,16 +1,18 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminRemoveUserRole {
     let controller: any AdminRemoveUserRoleController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: UserAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminRemoveUserRoleDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminRemoveUserRoleDefaultInteractor(
                         repository: AdminRemoveUserRoleOpenAPIRepository(
-                            api: context.userAdminAPI()
+                            api: apiBuilder.makeUserAdmin(context)
                         )
                     ),
                     presenter: AdminRemoveUserRoleDefaultPresenter(

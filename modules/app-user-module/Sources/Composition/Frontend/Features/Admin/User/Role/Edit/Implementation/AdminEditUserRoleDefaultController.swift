@@ -7,15 +7,15 @@ import UserContracts
 
 struct AdminEditUserRoleDefaultController: AdminEditUserRoleController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditUserRoleInteractor,
-            presenter: any AdminEditUserRolePresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditUserRoleInteractor,
+            any AdminEditUserRolePresenter
+        >
 
-    func getEditUserRole(request: Request, context: DefaultRequestContext)
+    func getEditUserRole(request: Request, context: AuthenticatedRequestContext)
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Roles.update)
         else { return try await presenter.renderForbiddenPage() }
         let id = try context.requiredID()
@@ -35,10 +35,13 @@ struct AdminEditUserRoleDefaultController: AdminEditUserRoleController {
         }
     }
 
-    func postEditUserRole(request: Request, context: DefaultRequestContext)
+    func postEditUserRole(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Roles.update)
         else {
             return try await presenter.renderForbiddenPage()

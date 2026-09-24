@@ -4,9 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
+public import FeatherApplication
 import FeatherContracts
-import Foundation
 
 public struct ResolvedMetadata: DTO {
     public let title: String
@@ -55,7 +54,7 @@ extension ResolvedMetadata {
         guard let value else {
             return nil
         }
-        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmed = value.whitespaceTrimmed
         return trimmed.isEmpty ? nil : trimmed
     }
 }

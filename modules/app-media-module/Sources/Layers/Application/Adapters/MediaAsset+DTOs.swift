@@ -1,4 +1,4 @@
-import MediaDomain
+public import MediaDomain
 
 extension MediaAssetNodeFile {
     public var asDetail: MediaAssetDetail {

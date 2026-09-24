@@ -23,16 +23,16 @@ struct AdminEditAuthAccessControlDefaultController:
     AdminEditAuthAccessControlController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditAuthAccessControlInteractor,
-            presenter: any AdminEditAuthAccessControlPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditAuthAccessControlInteractor,
+            any AdminEditAuthAccessControlPresenter
+        >
 
     func getAuthAccessControl(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let canList = permissions.contains(
             AuthPermissions.AccessControl.list.rawValue
@@ -79,9 +79,9 @@ struct AdminEditAuthAccessControlDefaultController:
 
     func postAuthAccessControl(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let canEdit = permissions.contains(
             AuthPermissions.AccessControl.update.rawValue
@@ -126,9 +126,7 @@ struct AdminEditAuthAccessControlDefaultController:
             case .edited:
                 let search =
                     payload.search?
-                    .trimmingCharacters(
-                        in: .whitespacesAndNewlines
-                    ) ?? ""
+                    .whitespaceTrimmed ?? ""
                 let query =
                     search.isEmpty
                     ? [] : [URLQueryItem(name: "search", value: search)]
@@ -149,9 +147,7 @@ struct AdminEditAuthAccessControlDefaultController:
                         state: state,
                         permissions: permissions,
                         search: payload.search?
-                            .trimmingCharacters(
-                                in: .whitespacesAndNewlines
-                            ) ?? ""
+                            .whitespaceTrimmed ?? ""
                     )
                     .response(from: request, context: context)
             }
@@ -168,9 +164,7 @@ struct AdminEditAuthAccessControlDefaultController:
                     state: state,
                     permissions: permissions,
                     search: payload.search?
-                        .trimmingCharacters(
-                            in: .whitespacesAndNewlines
-                        ) ?? ""
+                        .whitespaceTrimmed ?? ""
                 )
                 .response(from: request, context: context)
         }

@@ -1,10 +1,10 @@
 import AsyncHTTPClient
-import FeatherAdmin
-import Foundation
+public import FeatherAdmin
+public import Foundation
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
-import UserAdminAPI
+public import OpenAPIRuntime
+public import UserAdminAPI
 
 public struct UserAdminAPIClient: Sendable {
     public let client: UserAdminAPI.Client
@@ -58,11 +58,22 @@ public struct UserAdminAPIClient: Sendable {
     }
 }
 
-extension DefaultRequestContext {
-    public func userAdminAPI() -> UserAdminAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+public struct UserAPIBuilder: Sendable {
+    private let apiBaseURL: URL
+
+    public init(apiBaseURL: URL) {
+        self.apiBaseURL = apiBaseURL
+    }
+
+    public func makeUserAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> UserAdminAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeUserApp(
+        _ context: DefaultRequestContext
+    ) -> UserAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
     }
 }

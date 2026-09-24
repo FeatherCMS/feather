@@ -1,12 +1,11 @@
 import FeatherAdmin
 import FeatherValidation
 import Hummingbird
-import UserContracts
 import WebComponents
 
 struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderEditPage(id: String, state: UserIdentityEditForm.State)

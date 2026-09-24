@@ -5,7 +5,7 @@ protocol AdminViewUserIdentityController: Sendable {
 
     func getUserIdentity(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
 }
@@ -13,7 +13,7 @@ protocol AdminViewUserIdentityController: Sendable {
 extension AdminViewUserIdentityController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             UserIdentityRoutes.details(RouterPath("{id}")),

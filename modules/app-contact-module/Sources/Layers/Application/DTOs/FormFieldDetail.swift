@@ -1,8 +1,7 @@
-import ContactDomain
-import FeatherApplication
-import FeatherContracts
+public import ContactDomain
+public import FeatherApplication
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct FormFieldDetail: DTO {
     public let id: String

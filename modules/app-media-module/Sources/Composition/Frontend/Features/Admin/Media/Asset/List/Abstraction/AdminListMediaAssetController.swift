@@ -1,6 +1,5 @@
 import FeatherAdmin
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -13,17 +12,17 @@ protocol AdminListMediaAssetController: Sendable {
 
     func getListMediaAssets(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
     func removeConfirmation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 
     func remove(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 
 }
@@ -31,7 +30,7 @@ protocol AdminListMediaAssetController: Sendable {
 extension AdminListMediaAssetController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             "/admin/media/assets/",

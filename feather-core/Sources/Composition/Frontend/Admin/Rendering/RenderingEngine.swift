@@ -1,7 +1,7 @@
-import HTML
-import Hummingbird
+public import HTML
+public import Hummingbird
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public protocol RenderingEngine: Sendable {
 
@@ -15,7 +15,7 @@ public protocol RenderingEngine: Sendable {
 
     func renderNewAdminPage<T: Component>(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         title: String,
         content: T
     ) async throws -> HTMLResponse

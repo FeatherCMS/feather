@@ -5,8 +5,6 @@
 //  Created by Tibor Bödecs on 2026. 04. 17.
 //
 
-import Foundation
-
 // Is this a domain model? 🤔
 public struct AuthResolvedSession: Sendable {
     public var identityId: String

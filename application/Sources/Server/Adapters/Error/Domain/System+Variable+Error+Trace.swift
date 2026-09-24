@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 04. 19..
 //
 
-import SystemDomain
+public import SystemDomain
 
 extension Variable.Error: ErrorTraceRepresentable {
     public var underlyingErrors: [any Error] { [] }

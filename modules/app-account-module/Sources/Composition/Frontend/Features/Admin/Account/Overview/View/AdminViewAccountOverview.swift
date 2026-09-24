@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminViewAccountOverview {
     let controller: any AdminViewAccountOverviewController

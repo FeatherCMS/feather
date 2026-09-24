@@ -1,5 +1,3 @@
-import FeatherAdmin
-import Foundation
 import UserAdminAPI
 
 protocol AdminListUserIdentityRepository: Sendable {

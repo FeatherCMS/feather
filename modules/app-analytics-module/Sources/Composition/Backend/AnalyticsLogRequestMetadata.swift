@@ -1,3 +1,4 @@
+import FeatherContracts
 import Foundation
 
 public enum AnalyticsLogRequestMetadata {
@@ -21,7 +22,7 @@ public enum AnalyticsLogRequestMetadata {
             first
             .split(separator: ";", maxSplits: 1)
             .first?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
         guard let code, !code.isEmpty else {
             return (nil, nil)
         }

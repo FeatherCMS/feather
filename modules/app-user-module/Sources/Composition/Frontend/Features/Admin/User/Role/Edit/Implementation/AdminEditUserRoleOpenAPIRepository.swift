@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 import Hummingbird
 import OpenAPIRuntime
 import UserAdminAPI
@@ -9,13 +8,6 @@ struct AdminEditUserRoleOpenAPIRepository: AdminEditUserRoleRepository {
 
     init(api: UserAdminAPIClient) {
         self.api = api
-    }
-
-    init() {
-        self.api = UserAdminAPIClient(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: nil
-        )
     }
 
     func load(

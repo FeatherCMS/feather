@@ -8,16 +8,16 @@ struct AdminEditWebSettingsDefaultController:
     AdminEditWebSettingsController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditWebSettingsInteractor,
-            presenter: any AdminEditWebSettingsPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditWebSettingsInteractor,
+            any AdminEditWebSettingsPresenter
+        >
 
     func getEditWebSettings(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let canRead = context.isCurrentUserAllowed(
             to: WebPermissions.Settings.read
@@ -62,9 +62,9 @@ struct AdminEditWebSettingsDefaultController:
 
     func postEditWebSettings(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let canEdit = canEdit(permissions: permissions)
 
@@ -285,7 +285,7 @@ struct AdminEditWebSettingsDefaultController:
             locale: .init(
                 key: WebSettingsVariableKey.locale.fieldKey,
                 label: WebSettingsVariableKey.locale.label,
-                value: locale,
+                value: Self.normalizeLocale(locale),
                 error: nil
             ),
             timezone: .init(
@@ -328,6 +328,15 @@ struct AdminEditWebSettingsDefaultController:
             error: error,
             success: nil
         )
+    }
+
+    private static func normalizeLocale(_ value: String) -> String {
+        switch value {
+        case "en_us":
+            "en-US"
+        default:
+            value
+        }
     }
 
     private func makeFormState(

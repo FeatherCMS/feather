@@ -4,9 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherDatabase
-import FeatherInfrastructure
-import MediaApplication
+public import FeatherInfrastructure
+public import MediaApplication
 
 extension MediaAssetNodeFolderTable.Row {
     var asDetail: MediaFolderDetail {

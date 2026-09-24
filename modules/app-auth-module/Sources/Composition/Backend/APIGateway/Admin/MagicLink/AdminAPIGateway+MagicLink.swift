@@ -1,4 +1,4 @@
-import AuthAdminAPI
+public import AuthAdminAPI
 import AuthApplication
 
 extension AdminAPIGateway {

@@ -11,14 +11,15 @@ struct AdminAddNewsletterCampaignSubscriberDefaultController:
     AdminAddNewsletterCampaignSubscriberController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddNewsletterCampaignSubscriberInteractor,
-            presenter: any AdminAddNewsletterCampaignSubscriberPresenter
-        )
-    func add(request: Request, context: DefaultRequestContext) async throws
+        AuthenticatedRuntimeBuilder<
+            any AdminAddNewsletterCampaignSubscriberInteractor,
+            any AdminAddNewsletterCampaignSubscriberPresenter
+        >
+    func add(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         return try await presenter.render(
             newsletterId: try context.requiredParameter("newsletterId"),
             form: .init(
@@ -31,10 +32,11 @@ struct AdminAddNewsletterCampaignSubscriberDefaultController:
             permissions: context.currentUserPermissions
         )
     }
-    func create(request: Request, context: DefaultRequestContext) async throws
+    func create(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let newsletterId = try context.requiredParameter("newsletterId")
         let form = try await request.decode(
             as: NewsletterCampaignSubscriberForm.self,

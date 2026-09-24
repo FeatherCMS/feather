@@ -4,9 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
-import FeatherContracts
-import MediaDomain
+public import FeatherContracts
+public import MediaDomain
 
 public struct WriteMedia: Scope {
     public let folders: any MediaAssetNodeFolderRepository

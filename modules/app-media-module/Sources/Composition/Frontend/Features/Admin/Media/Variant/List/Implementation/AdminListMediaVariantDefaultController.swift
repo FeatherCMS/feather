@@ -4,16 +4,16 @@ import MediaContracts
 
 struct AdminListMediaVariantDefaultController: AdminListMediaVariantController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListMediaVariantInteractor,
-            presenter: any AdminListMediaVariantPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminListMediaVariantInteractor,
+            any AdminListMediaVariantPresenter
+        >
 
     func getMediaVariants(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: MediaPermissions.Variants.list)
         else {
             return try await presenter.renderErrorPage(error: .forbidden)

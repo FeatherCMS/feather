@@ -1,13 +1,12 @@
-import FeatherContracts
+public import FeatherContracts
 import AccountInfrastructure
 import AnalyticsInfrastructure
 import AuthInfrastructure
 import BlogInfrastructure
 import ContactInfrastructure
-import FeatherDatabase
-import FeatherApplication
-import FeatherDomain
-import FeatherInfrastructure
+public import FeatherDatabase
+public import FeatherDomain
+public import FeatherInfrastructure
 import MediaInfrastructure
 import NewsletterInfrastructure
 import NewsInfrastructure
@@ -20,7 +19,7 @@ public func buildMigrations(
     connection: any DatabaseConnection,
     events: any EventPublisher,
     idGenerator: any IDGenerator
-) -> [Migration] {
+) -> [any Migration] {
     [
         // Tables
         SystemInfrastructure.TableMigration(connection: connection),
@@ -52,7 +51,8 @@ public func buildMigrations(
             idGenerator: idGenerator
         ),
         MediaInfrastructure.TableSeedMigration(
-            connection: connection
+            connection: connection,
+            idGenerator: idGenerator
         ),
         WebInfrastructure.TableSeedMigration(
             connection: connection,

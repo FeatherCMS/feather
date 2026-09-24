@@ -6,11 +6,11 @@
 //
 
 import DOM
-import HTML
+public import HTML
 import SGML
 import SVG
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct NewAdminBaseLayout<T: Component>: Component {
 

@@ -7,16 +7,16 @@ struct AdminRemoveWebMenuDefaultController:
     AdminRemoveWebMenuController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveWebMenuInteractor,
-            presenter: any AdminRemoveWebMenuPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminRemoveWebMenuInteractor,
+            any AdminRemoveWebMenuPresenter
+        >
 
     func getRemoveWebMenu(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         do {
             let menu = try await runtime.interactor.get(id: id)
@@ -35,9 +35,9 @@ struct AdminRemoveWebMenuDefaultController:
 
     func postRemoveWebMenu(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,

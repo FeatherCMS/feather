@@ -1,12 +1,10 @@
 import AsyncHTTPClient
 import FeatherAdmin
-import FeatherContracts
+public import FeatherContracts
 import Foundation
 import NIOCore
 import NewsAppAPI
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
-import SystemContracts
 import WebContracts
 
 public enum NewsWebPublicContentEventHandlers {
@@ -15,35 +13,40 @@ public enum NewsWebPublicContentEventHandlers {
     ) {
         registry.register(
             event: WebPublicContentProvider.self,
-            context: WebPublicContentEventContext.self
-        ) { event, _ in
-            try await resolve(event.request)
+            context: WebPublicContentEventContext<PublicContentRuntimeContext>
+                .self
+        ) { _, context in
+            try await resolve(context)
         }
     }
 
     private static func resolve(
-        _ request: WebPublicContentEventContext
+        _ context: WebPublicContentEventContext<PublicContentRuntimeContext>
     ) async throws -> WebPublicContentResult? {
+        let mediaResolver = context.runtime.mediaResolver
+        // TODO: fix this
         let client = NewsAppAPI.Client(
-            serverURL: FeatherAdmin.AppEnvironmentStore.current.apiBaseURL,
+            serverURL: context.runtime.apiBaseURL,
             transport: AsyncHTTPClientTransport(
                 configuration: .init(client: .shared, timeout: .seconds(3))
             ),
             middlewares: [
                 FeatherAdmin.ClientAPIAuthMiddleware(
-                    sessionToken: request.sessionToken
+                    sessionToken: context.runtime.context.sessionToken
                 )
             ]
         )
 
-        switch request.templateIdentifier {
+        switch context.baseMetadata.template {
         case "news.categories":
             let response = try await client.newsCategoryList(.init())
             switch response {
             case .ok(let value):
                 return .init(
                     payload: [
-                        "items": try value.body.json.map(summaryContext)
+                        "items": try value.body.json.map {
+                            summaryContext($0, mediaResolver: mediaResolver)
+                        }
                     ]
                 )
             case .undocumented:
@@ -55,80 +58,117 @@ public enum NewsWebPublicContentEventHandlers {
             case .ok(let value):
                 return .init(
                     payload: [
-                        "items": try value.body.json.map(summaryContext)
+                        "items": try value.body.json.map {
+                            summaryContext($0, mediaResolver: mediaResolver)
+                        }
                     ]
                 )
             case .undocumented:
                 return nil
             }
-        default:
-            return try await resolveDetail(request, client: client)
-        }
-    }
-
-    private static func resolveDetail(
-        _ request: WebPublicContentEventContext,
-        client: NewsAppAPI.Client
-    ) async throws -> WebPublicContentResult? {
-        guard !request.referenceID.isEmpty else { return nil }
-        switch request.referenceType {
         case "news.article":
-            let response = try await client.newsArticleGet(
-                .init(path: .init(id: request.referenceID))
-            )
-            guard case .ok(let value) = response else { return nil }
-            return .init(
-                payload: ["page": pageContext(try value.body.json)]
+            return try await resolveArticle(
+                context: context,
+                client: client,
+                mediaResolver: mediaResolver
             )
         case "news.category":
-            let response = try await client.newsCategoryGet(
-                .init(path: .init(id: request.referenceID))
-            )
-            guard case .ok(let value) = response else { return nil }
-            return .init(
-                payload: ["page": pageContext(try value.body.json)]
+            return try await resolveCategory(
+                context: context,
+                client: client,
+                mediaResolver: mediaResolver
             )
         default:
             return nil
         }
     }
 
-    private static func summaryContext(
-        _ value: NewsAppAPI.Components.Schemas.NewsArticleSummarySchema
-    ) -> [String: any Sendable] {
-        baseContext(
-            id: value.id,
-            title: value.metadata.title,
-            description: value.metadata.excerpt,
-            image: value.imageURL,
-            permalink: value.metadata.slug
+    private static func resolveArticle(
+        context: WebPublicContentEventContext<PublicContentRuntimeContext>,
+        client: NewsAppAPI.Client,
+        mediaResolver: MediaResolver
+    ) async throws -> WebPublicContentResult? {
+        guard !context.baseMetadata.referenceId.isEmpty else { return nil }
+        let referenceID = context.baseMetadata.referenceId
+        let response = try await client.newsArticleGet(
+            .init(path: .init(id: referenceID))
+        )
+        guard case .ok(let value) = response else { return nil }
+        return .init(
+            payload: [
+                "page": pageContext(
+                    try value.body.json,
+                    mediaResolver: mediaResolver
+                )
+            ]
+        )
+    }
+
+    private static func resolveCategory(
+        context: WebPublicContentEventContext<PublicContentRuntimeContext>,
+        client: NewsAppAPI.Client,
+        mediaResolver: MediaResolver
+    ) async throws -> WebPublicContentResult? {
+        guard !context.baseMetadata.referenceId.isEmpty else { return nil }
+        let referenceID = context.baseMetadata.referenceId
+        let response = try await client.newsCategoryGet(
+            .init(path: .init(id: referenceID))
+        )
+        guard case .ok(let value) = response else { return nil }
+        return .init(
+            payload: [
+                "page": pageContext(
+                    try value.body.json,
+                    mediaResolver: mediaResolver
+                )
+            ]
         )
     }
 
     private static func summaryContext(
-        _ value: NewsAppAPI.Components.Schemas.NewsCategorySummarySchema
+        _ value: NewsAppAPI.Components.Schemas.NewsArticleSummarySchema,
+        mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
         baseContext(
             id: value.id,
             title: value.metadata.title,
             description: value.metadata.excerpt,
             image: value.imageURL,
-            permalink: value.metadata.slug
+            permalink: value.metadata.slug,
+            mediaResolver: mediaResolver
+        )
+    }
+
+    private static func summaryContext(
+        _ value: NewsAppAPI.Components.Schemas.NewsCategorySummarySchema,
+        mediaResolver: MediaResolver
+    ) -> [String: any Sendable] {
+        baseContext(
+            id: value.id,
+            title: value.metadata.title,
+            description: value.metadata.excerpt,
+            image: value.imageURL,
+            permalink: value.metadata.slug,
+            mediaResolver: mediaResolver
         )
     }
 
     private static func pageContext(
-        _ value: NewsAppAPI.Components.Schemas.NewsArticleDetailSchema
+        _ value: NewsAppAPI.Components.Schemas.NewsArticleDetailSchema,
+        mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
             title: value.metadata.title,
             description: value.metadata.excerpt,
             image: value.imageURL,
-            permalink: value.metadata.slug
+            permalink: value.metadata.slug,
+            mediaResolver: mediaResolver
         )
         result["contents"] = ["html": value.content] as [String: any Sendable]
-        result["categories"] = value.categories.map(summaryContext)
+        result["categories"] = value.categories.map {
+            summaryContext($0, mediaResolver: mediaResolver)
+        }
         result["noindex"] =
             value.metadata.status != "published"
             || value.metadata.noIndex
@@ -136,17 +176,21 @@ public enum NewsWebPublicContentEventHandlers {
     }
 
     private static func pageContext(
-        _ value: NewsAppAPI.Components.Schemas.NewsCategoryDetailSchema
+        _ value: NewsAppAPI.Components.Schemas.NewsCategoryDetailSchema,
+        mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
             title: value.metadata.title,
             description: value.metadata.excerpt,
             image: value.imageURL,
-            permalink: value.metadata.slug
+            permalink: value.metadata.slug,
+            mediaResolver: mediaResolver
         )
         result["contents"] = ["html": value.content] as [String: any Sendable]
-        result["news"] = value.news.map(summaryContext)
+        result["news"] = value.news.map {
+            summaryContext($0, mediaResolver: mediaResolver)
+        }
         result["noindex"] =
             value.metadata.status != "published"
             || value.metadata.noIndex
@@ -158,12 +202,10 @@ public enum NewsWebPublicContentEventHandlers {
         title: String,
         description: String,
         image: String,
-        permalink: String
+        permalink: String,
+        mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
-        let resolvedImageURL = WebImageURLResolver.resolve(
-            image,
-            mediaBaseURL: mediaBaseURL
-        )
+        let resolvedImageURL = mediaResolver.resolve(imagePath: image) ?? ""
         return [
             "id": id,
             "title": title,
@@ -174,11 +216,6 @@ public enum NewsWebPublicContentEventHandlers {
                 ? permalink
                 : "/\(permalink)",
         ]
-    }
-
-    private static var mediaBaseURL: String {
-        FeatherAdmin.AppEnvironmentStore.current.publicOrigins.mediaBaseURL
-            .absoluteString
     }
 
 }

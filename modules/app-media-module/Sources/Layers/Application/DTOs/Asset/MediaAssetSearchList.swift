@@ -1,4 +1,4 @@
-import FeatherApplication
+public import FeatherApplication
 
 public struct MediaAssetSearchList: DTO {
     public enum Item: Sendable {

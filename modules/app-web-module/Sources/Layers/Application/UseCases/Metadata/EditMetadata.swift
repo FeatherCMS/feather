@@ -1,11 +1,9 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
+public import FeatherApplication
+public import FeatherContracts
 import SystemContracts
-import WebContracts
-import WebDomain
+public import WebDomain
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 //
 //  EditMetadata.swift

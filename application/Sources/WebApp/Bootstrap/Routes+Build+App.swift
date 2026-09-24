@@ -20,23 +20,26 @@ func buildAppRoutes(
     authRouter: Router<DefaultRequestContext>,
     renderingEngine: DefaultRenderingEngine,
     themeRenderer: DefaultThemeRenderer,
-    publicContentRepository: any AppPublicContentRepository,
-    publicContentEvents: any EventPublisher
+    publicContentEvents: any EventPublisher,
+    apiBuilder: APIBuilder,
+    mediaResolver: MediaResolver,
+    publicOrigins: AppPublicOriginConfiguration
 ) {
-    AppContactFormSubmission().route(on: router)
+    AppContactFormSubmission(apiBuilder: apiBuilder.contact).route(on: router)
 
-    AppNewsletterCampaignSubscription()
+    AppNewsletterCampaignSubscription(apiBuilder: apiBuilder.newsletter)
         .route(on: router)
 
     AppPublicContent(
-        repository: publicContentRepository,
         events: publicContentEvents,
         themeRenderer: themeRenderer,
         contentRenderer: DefaultMarkdownRenderer(
             events: publicContentEvents,
-            mediaBaseURL: AppEnvironmentStore.current.publicOrigins
-                .mediaBaseURL.absoluteString
-        )
+            mediaResolver: mediaResolver
+        ),
+        webAPIBuilder: apiBuilder.web,
+        publicOrigins: publicOrigins,
+        mediaResolver: mediaResolver
     )
     .controller.route(on: router)
 

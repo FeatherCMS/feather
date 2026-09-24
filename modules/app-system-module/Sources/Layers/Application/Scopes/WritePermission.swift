@@ -4,9 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
-import FeatherContracts
-import SystemDomain
+public import FeatherContracts
+public import SystemDomain
 
 public struct WritePermission: Scope {
     public let permission: any PermissionRepository

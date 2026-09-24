@@ -6,8 +6,6 @@
 
 import AuthDomain
 import FeatherApplication
-import FeatherContracts
-import FeatherDomain
 import UserDomain
 
 import struct Foundation.Date

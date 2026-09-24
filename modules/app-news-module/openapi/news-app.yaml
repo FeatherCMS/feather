@@ -110,27 +110,16 @@ components:
     MediaAssetVariantSchema:
       type: object
       properties:
-        id:
-          $ref: '#/components/schemas/MediaAssetIdField'
+        key:
+          $ref: '#/components/schemas/MediaAssetKeyField'
         url:
           $ref: '#/components/schemas/MediaAssetURLField'
-        type:
-          $ref: '#/components/schemas/MediaAssetTypeField'
-        width:
-          type: integer
-          format: int64
-          nullable: true
-        height:
-          type: integer
-          format: int64
-          nullable: true
       required:
-      - id
+      - key
       - url
-      - type
-    MediaAssetTypeField:
+    MediaAssetKeyField:
       type: string
-      example: png
+      example: preview
     WebMetadataContentSchema:
       type: object
       properties:
@@ -166,11 +155,7 @@ components:
       - title
       - excerpt
       - imageURL
-      - canonicalURL
       - noIndex
-      - cssCodeInjection
-      - javascriptCodeInjection
-      - structuredDataCodeInjection
     WebMetadataSlugField:
       type: string
       example: homepage

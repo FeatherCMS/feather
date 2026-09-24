@@ -1,9 +1,8 @@
 import BlogContracts
 import BlogDomain
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
-import WebApplication
+public import FeatherApplication
+public import FeatherContracts
+public import WebApplication
 import WebDomain
 
 //

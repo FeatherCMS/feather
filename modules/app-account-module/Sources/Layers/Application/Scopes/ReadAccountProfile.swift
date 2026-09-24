@@ -1,6 +1,4 @@
-import AccountDomain
-import FeatherApplication
-import FeatherContracts
+public import FeatherContracts
 
 public struct ReadAccountProfile: Scope {
     public let profile: any AccountProfileQueries

@@ -1,7 +1,6 @@
 import AnalyticsContracts
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
+public import FeatherApplication
+public import FeatherContracts
 
 //
 //  GetLogOverview.swift

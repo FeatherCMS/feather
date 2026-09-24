@@ -1,5 +1,4 @@
-import ContactAppAPI
-import FeatherContracts
+public import FeatherContracts
 import WebFrontend
 
 public enum ContactMarkdownEventHandlers {

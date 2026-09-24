@@ -8,15 +8,18 @@ struct AdminRemoveUserIdentityDefaultController:
     AdminRemoveUserIdentityController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveUserIdentityInteractor,
-            presenter: any AdminRemoveUserIdentityPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminRemoveUserIdentityInteractor,
+            any AdminRemoveUserIdentityPresenter
+        >
 
-    func getRemoveUserIdentity(request: Request, context: DefaultRequestContext)
+    func getRemoveUserIdentity(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.delete)
         else { return try await presenter.renderForbiddenPage() }
@@ -38,9 +41,9 @@ struct AdminRemoveUserIdentityDefaultController:
 
     func postRemoveUserIdentity(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (removeInteractor, presenter) = buildRuntime(request, context)
+        let (removeInteractor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.delete)
         else {
@@ -83,9 +86,9 @@ struct AdminRemoveUserIdentityDefaultController:
 
     func getRemoveUserIdentities(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.delete)
         else {
@@ -133,9 +136,9 @@ struct AdminRemoveUserIdentityDefaultController:
 
     func postRemoveUserIdentities(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (removeInteractor, presenter) = buildRuntime(request, context)
+        let (removeInteractor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.delete)
         else {

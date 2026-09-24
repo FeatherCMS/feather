@@ -4,10 +4,10 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherDomain
+import FeatherContracts
+public import FeatherDomain
 
-import struct Foundation.CharacterSet
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct MenuItem: Model {
 
@@ -95,7 +95,7 @@ extension MenuItem {
     private static func normalizePermission(
         _ permission: String
     ) -> String {
-        permission.trimmingCharacters(in: .whitespacesAndNewlines)
+        permission.whitespaceTrimmed
     }
 
     private static func validate(

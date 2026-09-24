@@ -1,6 +1,5 @@
 import AnalyticsAdminAPI
 import FeatherAdmin
-import Hummingbird
 import OpenAPIRuntime
 
 struct AdminListAnalyticsLogOpenAPIRepository:
@@ -21,7 +20,9 @@ struct AdminListAnalyticsLogOpenAPIRepository:
         search: String?,
         source: String?,
         method: String?,
-        responseCode: Int?
+        responseCode: Int?,
+        from: Double?,
+        to: Double?
     ) async throws -> AdminListAnalyticsLogModel {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
@@ -35,7 +36,9 @@ struct AdminListAnalyticsLogOpenAPIRepository:
                                 search: search ?? "",
                                 source: source ?? "",
                                 method: method ?? "",
-                                responseCode: responseCode
+                                responseCode: responseCode,
+                                from: from,
+                                to: to
                             )
                         )
                     )

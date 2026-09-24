@@ -1,4 +1,4 @@
-import Configuration
+public import Configuration
 
 public struct AppEnvironmentURLResolver {
     public let reader: ConfigReader

@@ -1,14 +1,14 @@
 import AsyncHTTPClient
-import FeatherAdmin
+public import FeatherAdmin
 import FeatherValidation
-import Foundation
+public import Foundation
 import HTML
 import Hummingbird
 import NIOCore
-import NewsletterAdminAPI
-import NewsletterAppAPI
+public import NewsletterAdminAPI
+public import NewsletterAppAPI
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
+public import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
@@ -135,18 +135,22 @@ public struct NewsletterAppAPIClient: Sendable {
     }
 }
 
-extension DefaultRequestContext {
-    public func newsletterAdminAPI() -> NewsletterAdminAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+public struct NewsletterAPIBuilder: Sendable {
+    private let apiBaseURL: URL
+
+    public init(apiBaseURL: URL) {
+        self.apiBaseURL = apiBaseURL
     }
 
-    public func newsletterApplicationAPI() -> NewsletterAppAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+    public func makeNewsletterAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> NewsletterAdminAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeNewsletterApp(
+        _ context: DefaultRequestContext
+    ) -> NewsletterAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
     }
 }

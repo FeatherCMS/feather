@@ -1,4 +1,3 @@
-import HTTPTypes
 import NIOHTTP1
 import OpenAPIRuntime
 import UserDomain

@@ -1,11 +1,5 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
 import FeatherInfrastructure
-import Foundation
-import MediaApplication
-import MediaDomain
+public import MediaApplication
 import MediaInfrastructure
 
 extension UseCases {

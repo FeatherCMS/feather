@@ -1,17 +1,11 @@
 import FeatherAdmin
-import FeatherValidation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
 
 struct AdminRemoveContactSubmissionsDefaultPresenter:
     AdminRemoveContactSubmissionsPresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
     func renderRemovePage(items: [NewAdminRemoveItemContext])
         async throws

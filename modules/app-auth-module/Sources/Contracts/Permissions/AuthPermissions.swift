@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 04. 18.
 //
 
-import FeatherContracts
+public import FeatherContracts
 
 public enum AuthPermissions: PermissionProvider {
 

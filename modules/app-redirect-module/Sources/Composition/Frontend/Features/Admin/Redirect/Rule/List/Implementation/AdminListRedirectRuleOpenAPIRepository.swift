@@ -1,7 +1,4 @@
 import FeatherAdmin
-import FeatherContracts
-import Foundation
-import Hummingbird
 import OpenAPIRuntime
 import RedirectAdminAPI
 import RedirectContracts

@@ -1,9 +1,9 @@
-import CSS
-import HTML
+public import CSS
+public import HTML
 import SGML
-import SVG
+public import SVG
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct NewAdminListEmptyState: Component {
 

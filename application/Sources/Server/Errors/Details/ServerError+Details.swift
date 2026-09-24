@@ -1,7 +1,8 @@
 import HTTPTypes
+import Foundation
+
 import NIOHTTP1
 import OpenAPIRuntime
-import Foundation
 
 extension ServerError {
 

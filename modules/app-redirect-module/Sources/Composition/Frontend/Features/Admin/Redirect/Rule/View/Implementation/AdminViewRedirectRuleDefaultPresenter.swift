@@ -1,10 +1,9 @@
 import FeatherAdmin
 import Hummingbird
-import WebComponents
 
 struct AdminViewRedirectRuleDefaultPresenter: AdminViewRedirectRulePresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderDetailsPage(

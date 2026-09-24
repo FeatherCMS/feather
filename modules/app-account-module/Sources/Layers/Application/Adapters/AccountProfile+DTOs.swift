@@ -1,4 +1,4 @@
-import AccountDomain
+public import AccountDomain
 
 extension AccountProfile {
     public var asDetail: AccountProfileDetail {

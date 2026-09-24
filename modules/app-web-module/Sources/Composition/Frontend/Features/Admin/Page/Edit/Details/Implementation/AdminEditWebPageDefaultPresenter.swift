@@ -8,7 +8,7 @@ import WebComponents
 
 struct AdminEditWebPageDefaultPresenter: AdminEditWebPagePresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderEditPage(

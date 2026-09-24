@@ -1,4 +1,4 @@
-import FeatherContracts
+public import FeatherContracts
 
 public struct NewAdminListActions: Sendable {
 

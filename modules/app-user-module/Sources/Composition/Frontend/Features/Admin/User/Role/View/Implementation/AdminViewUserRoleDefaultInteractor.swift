@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 
 struct AdminViewUserRoleDefaultInteractor: AdminViewUserRoleInteractor {
     let repository: any AdminViewUserRoleRepository

@@ -1,5 +1,5 @@
 import BlogAdminAPI
-import WebFrontend
+public import WebFrontend
 
 extension BlogAdminAPI.Components.Schemas.WebMetadataDetailSchema:
     AdminMetadataDetailSchema

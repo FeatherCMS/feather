@@ -1,15 +1,6 @@
-import AuthAdminAPI
-import AuthAppAPI
-import AuthApplication
-import AuthInfrastructure
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
+public import AuthApplication
 import FeatherInfrastructure
-import SystemApplication
 import UserApplication
-import UserBackend
 import UserInfrastructure
 
 extension UseCases {

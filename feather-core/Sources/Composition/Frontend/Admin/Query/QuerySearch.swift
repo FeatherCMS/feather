@@ -1,5 +1,6 @@
+import FeatherContracts
 import Foundation
-import Hummingbird
+public import Hummingbird
 
 extension Request {
     public func queryString(
@@ -47,9 +48,7 @@ extension Request {
     public func querySearch() -> String? {
         guard
             let raw = queryString("search")?
-                .trimmingCharacters(
-                    in: .whitespacesAndNewlines
-                ),
+                .whitespaceTrimmed,
             !raw.isEmpty
         else { return nil }
         return raw

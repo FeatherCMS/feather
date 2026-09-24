@@ -21,16 +21,19 @@ struct AdminEditAuthCredentialDefaultController:
     AdminEditAuthCredentialController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditAuthCredentialInteractor,
-            presenter: any AdminEditAuthCredentialPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditAuthCredentialInteractor,
+            any AdminEditAuthCredentialPresenter
+        >
 
-    func getEditCredential(request: Request, context: DefaultRequestContext)
+    func getEditCredential(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
         let id = try context.requiredID()
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.Credential.update)
         else {
@@ -63,11 +66,14 @@ struct AdminEditAuthCredentialDefaultController:
         }
     }
 
-    func postEditCredential(request: Request, context: DefaultRequestContext)
+    func postEditCredential(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
         let id = try context.requiredID()
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.Credential.update)
         else {

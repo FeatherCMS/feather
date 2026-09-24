@@ -1,7 +1,6 @@
 import FeatherAdmin
 import FeatherContracts
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -13,20 +12,20 @@ import WebComponents
 
 struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListMediaAssetInteractor,
-            presenter: any AdminListMediaAssetPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminListMediaAssetInteractor,
+            any AdminListMediaAssetPresenter
+        >
 
     func getListMediaAssets(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let page = request.queryPage()
         let search = request.querySearch()
         let parentId = request.queryString("parent_id")?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
             .emptyToNil
         let view =
             AdminListMediaAssetModel.ViewMode(
@@ -38,7 +37,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
             allowedExtensions: request.queryString("extensions")?
                 .split(separator: ",")
                 .map {
-                    $0.trimmingCharacters(in: .whitespacesAndNewlines)
+                    $0.whitespaceTrimmed
                         .lowercased()
                 }
                 .filter { !$0.isEmpty } ?? [],
@@ -76,9 +75,9 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
 
     func removeConfirmation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: MediaPermissions.Assets.delete)
         else {
@@ -114,9 +113,9 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
 
     func remove(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: MediaPermissions.Assets.delete)
         else {

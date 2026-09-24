@@ -4,10 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
-import FeatherContracts
-import NewsDomain
-import WebApplication
+public import FeatherContracts
+public import WebApplication
 
 public struct ReadArticleMetadata: Scope {
     public let article: any ArticleQueries

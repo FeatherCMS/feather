@@ -1,5 +1,5 @@
-import Foundation
-import WebContracts
+public import Foundation
+public import WebContracts
 
 public struct NewsWebTemplateProvider: WebTemplateProvider {
     public let templates: [WebTemplateDefinition] = [

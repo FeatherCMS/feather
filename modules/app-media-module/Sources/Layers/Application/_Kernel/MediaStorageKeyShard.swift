@@ -1,5 +1,3 @@
-import Foundation
-
 public struct MediaStorageKeyShard: Sendable, Equatable {
     public let depth: Int
     public let segmentLength: Int

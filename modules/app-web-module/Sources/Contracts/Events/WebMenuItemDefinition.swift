@@ -1,5 +1,3 @@
-import FeatherContracts
-
 public struct WebMenuItemDefinition: Sendable, Hashable, Codable {
     public let label: String
     public let url: String

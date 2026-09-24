@@ -11,6 +11,7 @@ import WebComponents
 struct AppContactFormSubmissionDefaultController:
     AppContactFormSubmissionController
 {
+    let apiBuilder: ContactAPIBuilder
 
     func submit(
         request: Request,
@@ -21,7 +22,7 @@ struct AppContactFormSubmissionDefaultController:
             as: AppContactFormSubmissionForm.self,
             context: context
         )
-        let response = try await context.contactApplicationAPI()
+        let response = try await apiBuilder.makeContactApp(context)
             .withOpenAPIRepositoryErrorMapping { client in
                 try await client.appContactFormSubmission(
                     path: .init(contactFormKey: formId),

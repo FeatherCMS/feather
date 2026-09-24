@@ -1805,7 +1805,7 @@ components:
         locale:
           type: string
           examples:
-          - en_us
+          - en-US
         timezone:
           type: string
           examples:
@@ -1895,7 +1895,7 @@ components:
         locale:
           type: string
           examples:
-          - en_us
+          - en-US
         timezone:
           type: string
           examples:

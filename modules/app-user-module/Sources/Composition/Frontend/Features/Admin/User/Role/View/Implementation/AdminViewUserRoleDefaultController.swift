@@ -1,20 +1,19 @@
 import FeatherAdmin
-import HTML
 import Hummingbird
 import UserContracts
 
 struct AdminViewUserRoleDefaultController: AdminViewUserRoleController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewUserRoleInteractor,
-            presenter: any AdminViewUserRolePresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminViewUserRoleInteractor,
+            any AdminViewUserRolePresenter
+        >
 
     func getUserRole(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Roles.read)
         else {
             return try await runtime.presenter.renderErrorPage(

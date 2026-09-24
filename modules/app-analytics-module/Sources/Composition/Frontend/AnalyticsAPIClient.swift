@@ -1,11 +1,11 @@
-import AnalyticsAdminAPI
-import AnalyticsAppAPI
+public import AnalyticsAdminAPI
+public import AnalyticsAppAPI
 import AsyncHTTPClient
-import FeatherAdmin
-import Foundation
+public import FeatherAdmin
+public import Foundation
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
+public import OpenAPIRuntime
 
 public struct AnalyticsAdminAPIClient: Sendable {
     public let client: AnalyticsAdminAPI.Client
@@ -91,5 +91,25 @@ public struct AnalyticsAppAPIClient: Sendable {
                 description: String(describing: error)
             )
         }
+    }
+}
+
+public struct AnalyticsAPIBuilder: Sendable {
+    private let apiBaseURL: URL
+
+    public init(apiBaseURL: URL) {
+        self.apiBaseURL = apiBaseURL
+    }
+
+    public func makeAnalyticsAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> AnalyticsAdminAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeAnalyticsApp(
+        _ context: DefaultRequestContext
+    ) -> AnalyticsAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
     }
 }

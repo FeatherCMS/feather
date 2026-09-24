@@ -1,12 +1,12 @@
-import CSS
-import FeatherAdmin
+public import CSS
+public import FeatherAdmin
 import Foundation
-import HTML
+public import HTML
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct AdminMetadataFields: Component {
 

@@ -1,36 +1,23 @@
-import CSS
 import FeatherAdmin
-import FeatherValidation
-import FeatherValidationFoundation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import SystemAdminAPI
-import SystemFrontend
-import UserAdminAPI
-import UserAppAPI
-import UserFrontend
-import WebBuilders
-import WebComponents
 
 protocol AdminEditAccountProfileController: Sendable {
 
     func getEditAccountProfile(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
     func postEditAccountProfile(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 }
 
 extension AdminEditAccountProfileController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             RouterPath(AccountAdminRoutes.profileEdit.description + "/"),

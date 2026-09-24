@@ -1,6 +1,6 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -50,9 +50,7 @@ struct WebPageEdit: Component {
 
     private var previewPath: String? {
         guard let slug = state.form.metadata.slug.value else { return nil }
-        let normalizedSlug = slug.trimmingCharacters(
-            in: .whitespacesAndNewlines
-        )
+        let normalizedSlug = slug.whitespaceTrimmed
         return normalizedSlug.isEmpty ? nil : "/\(normalizedSlug)/"
     }
 }

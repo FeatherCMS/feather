@@ -1,23 +1,22 @@
 import AccountContracts
 import FeatherAdmin
 import Hummingbird
-import OpenAPIRuntime
 
 struct AdminEditSettingsDefaultController:
     AdminEditSettingsController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditSettingsInteractor,
-            presenter: any AdminEditSettingsPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditSettingsInteractor,
+            any AdminEditSettingsPresenter
+        >
 
     func getEditSettings(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let targetUserID = context.parameters.get("userId", as: String.self)
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let isTargetUser = targetUserID != nil
         let canRead = context.isCurrentUserAllowed(
@@ -76,10 +75,10 @@ struct AdminEditSettingsDefaultController:
 
     func postEditSettings(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let targetUserID = context.parameters.get("userId", as: String.self)
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let isTargetUser = targetUserID != nil
         let canEdit = context.isCurrentUserAllowed(

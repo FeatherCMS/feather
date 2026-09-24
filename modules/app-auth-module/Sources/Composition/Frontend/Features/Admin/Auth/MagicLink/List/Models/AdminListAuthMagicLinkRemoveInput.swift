@@ -1,5 +1,4 @@
 import FeatherContracts
-import Foundation
 
 struct AdminListAuthMagicLinkRemoveInput: Decodable, Sendable {
     private var selectedIds: [String]?

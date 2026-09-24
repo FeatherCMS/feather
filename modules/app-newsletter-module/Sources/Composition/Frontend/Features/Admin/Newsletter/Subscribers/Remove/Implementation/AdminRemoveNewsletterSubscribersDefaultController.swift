@@ -13,15 +13,16 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
     AdminRemoveNewsletterSubscribersController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveNewsletterSubscribersInteractor,
-            presenter: any AdminRemoveNewsletterSubscribersPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminRemoveNewsletterSubscribersInteractor,
+            any AdminRemoveNewsletterSubscribersPresenter
+        >
 
-    func confirm(request: Request, context: DefaultRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: Permissions.Subscribers.delete)
         else {
             return HTMLResponse(content: "Forbidden", status: .forbidden)
@@ -44,10 +45,11 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
         )
     }
 
-    func remove(request: Request, context: DefaultRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: Permissions.Subscribers.delete)
         else { return Response(status: .forbidden) }
         let nonceRequest = try await request.decode(
@@ -62,7 +64,7 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
         else { return Response(status: .badRequest) }
         let payload = nonceRequest.input
         try await interactor.remove(
-            ids: payload.normalizedSelectedIds,
+            ids: payload.normalizedIds,
             campaignId: payload.campaignId?.emptyToNil
         )
         return AdminNotificationFlash.redirect(

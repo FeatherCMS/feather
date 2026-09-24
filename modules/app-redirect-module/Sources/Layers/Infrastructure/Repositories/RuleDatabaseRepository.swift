@@ -4,10 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherDatabase
 import FeatherDomain
-import FeatherInfrastructure
-import RedirectDomain
+public import FeatherInfrastructure
+public import RedirectDomain
 
 extension RuleTable.Row {
     var asDomain: Rule {

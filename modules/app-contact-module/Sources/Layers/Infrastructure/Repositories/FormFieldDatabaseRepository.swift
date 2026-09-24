@@ -1,7 +1,6 @@
-import ContactDomain
-import FeatherDatabase
+public import ContactDomain
 import FeatherDomain
-import FeatherInfrastructure
+public import FeatherInfrastructure
 
 extension FormFieldTable.Row {
     var asDomain: FormField {

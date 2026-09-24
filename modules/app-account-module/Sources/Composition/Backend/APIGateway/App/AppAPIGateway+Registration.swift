@@ -1,4 +1,4 @@
-import AccountAppAPI
+public import AccountAppAPI
 import Hummingbird
 
 extension AppAPIGateway {

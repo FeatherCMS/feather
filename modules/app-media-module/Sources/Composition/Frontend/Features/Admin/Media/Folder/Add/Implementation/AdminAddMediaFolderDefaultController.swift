@@ -12,18 +12,18 @@ import WebComponents
 
 struct AdminAddMediaFolderDefaultController: AdminAddMediaFolderController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddMediaFolderInteractor,
-            presenter: any AdminAddMediaFolderPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminAddMediaFolderInteractor,
+            any AdminAddMediaFolderPresenter
+        >
 
     func getAddMediaFolder(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let parentId = request.queryString("parent_id")?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
             .emptyToNil
         let view = request.queryString("view") ?? "grid"
         let model = try await interactor.getAddMediaFolder(
@@ -37,9 +37,9 @@ struct AdminAddMediaFolderDefaultController: AdminAddMediaFolderController {
 
     func postAddMediaFolder(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let payload = try await request.decode(
             as: MediaFolderAddForm.self,
             context: context

@@ -15,7 +15,7 @@ public struct WebSiteSettingsExcerptField: StringSchemaRepresentable {
 }
 
 public struct WebSiteSettingsLocaleField: StringSchemaRepresentable {
-    public var example: String? = "en_us"
+    public var example: String? = "en-US"
 
     public init() {}
 }

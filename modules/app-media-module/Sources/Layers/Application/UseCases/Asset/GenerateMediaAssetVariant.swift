@@ -1,7 +1,6 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
-import FeatherStorage
+public import FeatherApplication
+public import FeatherContracts
+public import FeatherStorage
 import Foundation
 import MediaDomain
 

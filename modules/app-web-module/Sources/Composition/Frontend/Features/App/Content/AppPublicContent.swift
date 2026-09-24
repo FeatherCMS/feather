@@ -1,28 +1,36 @@
-import FeatherAdmin
-import FeatherContracts
+public import FeatherAdmin
+public import FeatherContracts
 
 public struct AppPublicContent {
     public let controller: any AppPublicContentController
 
     public init(
-        repository: any AppPublicContentRepository,
         events: any EventPublisher,
         themeRenderer: any PublicThemeRenderer,
-        contentRenderer: any WebContentRenderer
+        contentRenderer: any WebContentRenderer,
+        webAPIBuilder: WebAPIBuilder,
+        publicOrigins: AppPublicOriginConfiguration,
+        mediaResolver: MediaResolver
     ) {
         self.controller = AppPublicContentDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AppPublicContentDefaultInteractor(
-                        repository: repository.withSessionToken(
-                            context.sessionToken
+                        repository: AppPublicContentOpenAPIRepository(
+                            api: webAPIBuilder.makeWebApp(context)
                         ),
                         events: events,
-                        sessionToken: context.sessionToken,
-                        contentRenderer: contentRenderer
+                        runtime: .init(
+                            request: request,
+                            context: context,
+                            apiBaseURL: webAPIBuilder.baseURL,
+                            publicOrigins: publicOrigins,
+                            mediaResolver: mediaResolver
+                        )
                     ),
                     presenter: AppPublicContentDefaultPresenter(
-                        themeRenderer: themeRenderer
+                        themeRenderer: themeRenderer,
+                        contentRenderer: contentRenderer
                     )
                 )
             }

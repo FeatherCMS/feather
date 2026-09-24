@@ -12,7 +12,7 @@ import struct Foundation.Date
 
 extension MenuItemTable.Row {
 
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.menuId = try row.decode(column: "menu_id", as: String.self)
         self.label = try row.decode(column: "label", as: String.self)

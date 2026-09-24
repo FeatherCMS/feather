@@ -1,5 +1,5 @@
 import FeatherAdmin
-import Foundation
+import FeatherContracts
 import Hummingbird
 import NewsletterContracts
 
@@ -7,17 +7,18 @@ struct AdminListNewsletterSubscribersDefaultController:
     AdminListNewsletterSubscribersController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListNewsletterSubscribersInteractor,
-            presenter: any AdminListNewsletterSubscribersPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminListNewsletterSubscribersInteractor,
+            any AdminListNewsletterSubscribersPresenter
+        >
 
-    func list(request: Request, context: DefaultRequestContext) async throws
+    func list(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let campaignId = request.queryString("campaignId")?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
         let permissions = context.currentUserAdminListActions
         guard permissions.allows(Permissions.Subscribers.list) else {
             return try await presenter.render(
@@ -64,9 +65,9 @@ struct AdminListNewsletterSubscribersDefaultController:
 
     func viewSubscriber(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: Permissions.Subscribers.read)
         else {
             return try await presenter.renderDetailsErrorPage(

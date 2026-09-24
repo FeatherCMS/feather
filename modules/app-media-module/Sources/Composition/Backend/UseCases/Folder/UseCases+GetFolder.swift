@@ -3,8 +3,7 @@ import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
-import Foundation
-import MediaApplication
+public import MediaApplication
 import MediaDomain
 import MediaInfrastructure
 

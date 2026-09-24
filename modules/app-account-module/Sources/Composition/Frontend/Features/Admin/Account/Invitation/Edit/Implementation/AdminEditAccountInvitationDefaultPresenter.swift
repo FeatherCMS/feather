@@ -1,13 +1,11 @@
 import FeatherAdmin
-import FeatherContracts
-import Foundation
 import Hummingbird
 
 struct AdminEditAccountInvitationDefaultPresenter:
     AdminEditAccountInvitationPresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderEngine: any RenderingEngine
 
     func renderEditPage(

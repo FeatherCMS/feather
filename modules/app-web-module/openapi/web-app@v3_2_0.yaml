@@ -110,7 +110,7 @@ components:
     WebSiteSettingsLocaleField:
       type: string
       examples:
-      - en_us
+      - en-US
     WebSiteSettingsNoIndexField:
       type: boolean
       examples:
@@ -344,31 +344,18 @@ components:
     MediaAssetVariantSchema:
       type: object
       properties:
-        id:
-          $ref: '#/components/schemas/MediaAssetIdField'
+        key:
+          $ref: '#/components/schemas/MediaAssetKeyField'
         url:
           $ref: '#/components/schemas/MediaAssetURLField'
-        type:
-          $ref: '#/components/schemas/MediaAssetTypeField'
-        width:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        height:
-          type:
-          - integer
-          - 'null'
-          format: int64
       required:
-      - id
+      - key
       - url
-      - type
-      minProperties: 3
-    MediaAssetTypeField:
+      minProperties: 2
+    MediaAssetKeyField:
       type: string
       examples:
-      - png
+      - preview
     WebMetadataContentSchema:
       type: object
       properties:

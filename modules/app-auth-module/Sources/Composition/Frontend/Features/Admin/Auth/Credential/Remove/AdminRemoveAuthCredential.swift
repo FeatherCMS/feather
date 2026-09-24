@@ -19,13 +19,16 @@ import WebComponents
 struct AdminRemoveAuthCredential {
     let controller: any AdminRemoveAuthCredentialController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: AuthAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminRemoveAuthCredentialDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminRemoveAuthCredentialDefaultInteractor(
                         repository: AdminRemoveAuthCredentialOpenAPIRepository(
-                            api: context.authAdminAPI()
+                            api: apiBuilder.makeAuthAdmin(context)
                         )
                     ),
                     presenter: AdminRemoveAuthCredentialDefaultPresenter(

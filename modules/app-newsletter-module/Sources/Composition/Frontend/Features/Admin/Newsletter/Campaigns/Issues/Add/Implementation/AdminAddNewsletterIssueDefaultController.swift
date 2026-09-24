@@ -11,15 +11,15 @@ struct AdminAddNewsletterIssueDefaultController:
     AdminAddNewsletterIssueController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddNewsletterIssueInteractor,
-            presenter: any AdminAddNewsletterIssuePresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminAddNewsletterIssueInteractor,
+            any AdminAddNewsletterIssuePresenter
+        >
     func getAddNewsletterIssue(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             let newsletterId = context.parameters.get(
                 "newsletterId",
@@ -37,9 +37,9 @@ struct AdminAddNewsletterIssueDefaultController:
     }
     func postAddNewsletterIssue(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             let newsletterId = context.parameters.get(
                 "newsletterId",

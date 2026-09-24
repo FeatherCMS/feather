@@ -22,16 +22,19 @@ struct AdminRemoveAuthCredentialDefaultController:
     AdminRemoveAuthCredentialController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveAuthCredentialInteractor,
-            presenter: any AdminRemoveAuthCredentialPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminRemoveAuthCredentialInteractor,
+            any AdminRemoveAuthCredentialPresenter
+        >
 
-    func getRemoveCredential(request: Request, context: DefaultRequestContext)
+    func getRemoveCredential(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
         let id = try context.requiredID()
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.Credential.delete)
         else {
@@ -58,11 +61,14 @@ struct AdminRemoveAuthCredentialDefaultController:
         }
     }
 
-    func postRemoveCredential(request: Request, context: DefaultRequestContext)
+    func postRemoveCredential(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
         let id = try context.requiredID()
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.Credential.delete)
         else {

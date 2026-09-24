@@ -6,17 +6,18 @@ import WebContracts
 struct AdminListWebPageDefaultController:
     AdminListWebPageController
 {
+    let apiBuilder: WebAPIBuilder
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListWebPageInteractor,
-            presenter: any AdminListWebPagePresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminListWebPageInteractor,
+            any AdminListWebPagePresenter
+        >
 
     func getWebPages(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let page = request.queryPage()
         let search = request.querySearch()
         let permissions = context.currentUserPermissions
@@ -58,9 +59,9 @@ struct AdminListWebPageDefaultController:
 
     func getWebPagesRemoveConfirmation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         let selectedIds = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
@@ -87,9 +88,9 @@ struct AdminListWebPageDefaultController:
 
     func postWebPagesRemove(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
@@ -123,7 +124,7 @@ struct AdminListWebPageDefaultController:
 
     func postWebPageStatus(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let id = try context.requiredID()
         let payload = try await request.decode(
@@ -131,7 +132,7 @@ struct AdminListWebPageDefaultController:
             context: context
         )
         let repository = AdminListWebPageFormOpenAPIRepository(
-            api: context.webAdminAPI()
+            api: apiBuilder.makeWebAdmin(context)
         )
         let metadata = try await repository.load(id: id)
         let targetStatus = resolvedStatus(
@@ -139,7 +140,7 @@ struct AdminListWebPageDefaultController:
             current: metadata
         )
         try await AdminWebMetadataStatusUpdater(
-            api: context.webAdminAPI()
+            api: apiBuilder.makeWebAdmin(context)
         )
         .update(
             referenceType: "web.page",

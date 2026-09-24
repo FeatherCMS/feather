@@ -1,11 +1,9 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
+public import FeatherContracts
+public import FeatherDatabase
+public import FeatherDomain
 import FeatherInfrastructure
-import Foundation
+public import struct Foundation.Date
 import NewsletterApplication
-import NewsletterContracts
 import NewsletterDomain
 import NewsletterInfrastructure
 

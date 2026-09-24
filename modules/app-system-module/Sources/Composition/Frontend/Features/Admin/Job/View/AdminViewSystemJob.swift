@@ -1,16 +1,18 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminViewSystemJob {
     let controller: any AdminViewSystemJobController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: SystemAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminViewSystemJobDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminViewSystemJobDefaultInteractor(
                         repository: AdminViewSystemJobOpenAPIRepository(
-                            api: context.systemAdminAPI()
+                            api: apiBuilder.makeSystemAdmin(context)
                         )
                     ),
                     presenter: AdminViewSystemJobDefaultPresenter(

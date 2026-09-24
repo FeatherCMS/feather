@@ -1,4 +1,4 @@
-import FeatherContracts
+public import FeatherContracts
 
 public enum AccountPermissions: PermissionProvider {
 

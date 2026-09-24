@@ -1,9 +1,6 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
+public import FeatherApplication
+public import FeatherContracts
 import SystemContracts
-import WebContracts
-import WebDomain
 
 //
 //  GetMetadata.swift

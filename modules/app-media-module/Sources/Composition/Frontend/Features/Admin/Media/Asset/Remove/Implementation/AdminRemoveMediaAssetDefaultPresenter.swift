@@ -1,6 +1,5 @@
 import FeatherAdmin
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -11,7 +10,7 @@ import WebComponents
 
 struct AdminRemoveMediaAssetDefaultPresenter: AdminRemoveMediaAssetPresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderEngine: any RenderingEngine
 
     func renderRemovePage(

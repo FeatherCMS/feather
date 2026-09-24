@@ -15,16 +15,16 @@ struct AdminEditBlogPostDefaultController:
     AdminEditBlogPostController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditBlogPostInteractor,
-            presenter: any AdminEditBlogPostPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditBlogPostInteractor,
+            any AdminEditBlogPostPresenter
+        >
 
     func getEditBlogPost(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         do {
@@ -60,9 +60,9 @@ struct AdminEditBlogPostDefaultController:
 
     func postEditBlogPost(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         var lastPayload: BlogPostFormInput?

@@ -1,8 +1,8 @@
-import CSS
-import HTML
+public import CSS
+public import HTML
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct NewAdminStatCard: Component {
     public let label: String
@@ -26,7 +26,7 @@ public struct NewAdminStatCard: Component {
                     .variable(TokenKey.Colors.Materials.Primary.border)
                 )
                 BorderRadius(12.px)
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             }
             Custom(".new-admin-stat-card__label") {
                 Margin(0)

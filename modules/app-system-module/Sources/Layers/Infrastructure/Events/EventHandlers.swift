@@ -1,5 +1,4 @@
-import FeatherContracts
-import FeatherInfrastructure
+public import FeatherContracts
 import SystemApplication
 import SystemContracts
 

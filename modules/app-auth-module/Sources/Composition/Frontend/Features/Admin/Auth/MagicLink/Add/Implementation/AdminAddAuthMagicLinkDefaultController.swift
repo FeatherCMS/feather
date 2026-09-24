@@ -20,16 +20,16 @@ import WebComponents
 struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
 
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddAuthMagicLinkInteractor,
-            presenter: any AdminAddAuthMagicLinkPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminAddAuthMagicLinkInteractor,
+            any AdminAddAuthMagicLinkPresenter
+        >
 
     func getAddAuthMagicLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.create)
         else { return try await presenter.renderForbiddenPage() }
@@ -46,9 +46,9 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
 
     func postAddAuthMagicLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.create)
         else {
@@ -145,7 +145,7 @@ struct AdminAddAuthMagicLinkDefaultController: AdminAddAuthMagicLinkController {
 
     private func createResponse(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         presenter: any AdminAddAuthMagicLinkPresenter,
         state: AuthMagicLinkForm.State
     ) async throws -> Response {

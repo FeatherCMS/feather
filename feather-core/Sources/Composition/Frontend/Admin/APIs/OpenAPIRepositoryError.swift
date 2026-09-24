@@ -1,5 +1,6 @@
+import FeatherContracts
 import Foundation
-import Hummingbird
+public import Hummingbird
 
 public enum OpenAPIRepositoryError: Error {
     case unauthorized
@@ -63,9 +64,7 @@ extension OpenAPIRepositoryError {
         responseBody: String?
     ) -> Self {
         let trimmedBody = responseBody?
-            .trimmingCharacters(
-                in: .whitespacesAndNewlines
-            )
+            .whitespaceTrimmed
         let backendError =
             trimmedBody
             .flatMap { body in body.data(using: .utf8) }

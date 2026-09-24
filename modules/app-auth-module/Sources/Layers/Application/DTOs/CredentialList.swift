@@ -3,10 +3,9 @@
 //  app-auth-module
 //
 
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct CredentialList: DTO {
 

@@ -1,13 +1,4 @@
-//
-//  File.swift
-//  backend
-//
-//  Created by Tibor Bödecs on 2026. 04. 18..
-//
-
-import FeatherMail
 import FeatherDatabase
-import FeatherDomain
 import FeatherInfrastructure
 import Environment
 import Foundation
@@ -15,73 +6,15 @@ import Jobs
 import NewsletterDomain
 import NewsletterInfrastructure
 
-struct EmailService {
-    let client: any MailClient
-
-    func sendEmail(
-        to: [String],
-        from: String,
-        subject: String,
-        message: String
-    ) async throws {
-        try await client.send(
-            .init(
-                from: .init(from),
-                to: to.map { .init($0) },
-                subject: subject,
-                body: .plainText(message)
-            )
-        )
-    }
-
-    func sendContactFormEmail(
-        to: String,
-        from: String,
-        subject: String,
-        additionalHeaders: [String],
-        message: String
-    ) async throws {
-        let headers = parseHeaders(additionalHeaders)
-        try await client.send(
-            .init(
-                from: .init(from),
-                to: [.init(to)],
-                cc: headers["cc", default: []].map { .init($0) },
-                bcc: headers["bcc", default: []].map { .init($0) },
-                replyTo: headers["reply-to", default: []].map { .init($0) },
-                subject: subject,
-                body: .html(message)
-            )
-        )
-    }
-
-    private func parseHeaders(_ values: [String]) -> [String: [String]] {
-        values.reduce(into: [:]) { result, line in
-            let parts = line.split(separator: ":", maxSplits: 1)
-                .map(String.init)
-            guard parts.count == 2 else { return }
-            let key = parts[0]
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-                .lowercased()
-            guard ["cc", "bcc", "reply-to"].contains(key) else { return }
-            result[key, default: []] += parts[1]
-                .split(separator: ",")
-                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-        }
-    }
-}
-
 struct JobController {
     init(
         queue: some JobQueueProtocol,
         emailService: EmailService,
         database: any DatabaseClient
     ) {
-        // This function demonstrates two different ways to register a job
-        // Register Job with predefined job identifier
         queue.registerJob(parameters: EmailJobPayload.self) {
             parameters,
-            context in
+            _ in
             try await Self.sendEmail(
                 parameters: parameters,
                 emailService: emailService

@@ -6,10 +6,10 @@
 //
 
 import CSS
-import HTML
+public import HTML
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct NewAdminHTML<T: Component>: Component where T.HTML: FlowContent {
 

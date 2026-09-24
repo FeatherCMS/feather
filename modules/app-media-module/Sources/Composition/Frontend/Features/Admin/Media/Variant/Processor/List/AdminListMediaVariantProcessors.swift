@@ -4,7 +4,10 @@ import Hummingbird
 struct AdminListMediaVariantProcessors {
     let controller: any AdminListMediaVariantProcessorsController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: MediaAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminListMediaVariantProcessorsDefaultController(
             buildRuntime: { request, context in
                 (
@@ -12,7 +15,7 @@ struct AdminListMediaVariantProcessors {
                         AdminListMediaVariantProcessorsDefaultInteractor(
                             repository:
                                 AdminListMediaVariantProcessorsOpenAPIRepository(
-                                    api: context.mediaAdminAPI()
+                                    api: apiBuilder.makeMediaAdmin(context)
                                 )
                         ),
                     presenter: AdminListMediaVariantProcessorsDefaultPresenter(

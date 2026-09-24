@@ -1,8 +1,6 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
+public import FeatherApplication
+public import FeatherContracts
 import RedirectContracts
-import RedirectDomain
 
 //
 //  GetRule.swift

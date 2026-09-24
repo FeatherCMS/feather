@@ -1,34 +1,26 @@
-// swift-tools-version:6.1
+// swift-tools-version:6.3
 import PackageDescription
 
-// NOTE: https://github.com/swift-server/swift-http-server/blob/main/Package.swift
-var defaultSwiftSettings: [SwiftSetting] = [
-    // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0441-formalize-language-mode-terminology.md
+let swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
-    // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0444-member-import-visibility.md
+    .strictMemorySafety(),
+    .treatAllWarnings(as: .error),
+    .enableUpcomingFeature("InternalImportsByDefault"),
+    .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("MemberImportVisibility"),
-    // https://forums.swift.org/t/experimental-support-for-lifetime-dependencies-in-swift-6-2-and-beyond/78638
+    .enableUpcomingFeature("InferIsolatedConformances"),
+    .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+    .enableUpcomingFeature("ImmutableWeakCaptures"),
+    .enableUpcomingFeature("StrictConcurrency"),
+    .enableExperimentalFeature("SuppressedAssociatedTypes"),
+    .enableExperimentalFeature("LifetimeDependence"),
     .enableExperimentalFeature("Lifetimes"),
-    // https://github.com/swiftlang/swift/pull/65218
-    .enableExperimentalFeature(
-        "AvailabilityMacro=ContactModule 1.0:macOS 15.0, iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0"
-    ),
-]
-
-#if compiler(>=6.2)
-defaultSwiftSettings.append(
-    // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0461-async-function-isolation.md
-    .enableUpcomingFeature("NonisolatedNonsendingByDefault")
-)
-#endif
-
-defaultSwiftSettings += [
-    .enableExperimentalFeature("StrictConcurrency=complete"),
     .unsafeFlags(
         ["-cross-module-optimization"],
         .when(configuration: .release)
     ),
 ]
+
 
 let package = Package(
     name: "app-contact-module",
@@ -54,7 +46,7 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/mattpolzin/OpenAPIKit", from: "5.0.0"),
         .package(url: "https://github.com/jpsim/Yams", from: "6.2.0"),
-        .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.9.0"),
+        .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.12.1"),
         .package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.27.0"),
         .package(url: "https://github.com/swift-server/async-http-client", from: "1.0.0"),
 
@@ -69,7 +61,7 @@ let package = Package(
                 .product(name: "FeatherContracts", package: "feather-core")
             ],
             path: "Sources/Contracts",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "ContactDomain",
@@ -79,7 +71,7 @@ let package = Package(
                 .target(name: "ContactContracts"),
             ],
             path: "Sources/Layers/Domain",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "ContactApplication",
@@ -90,7 +82,7 @@ let package = Package(
                 .target(name: "ContactDomain"),
             ],
             path: "Sources/Layers/Application",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "ContactInfrastructure",
@@ -100,7 +92,7 @@ let package = Package(
                 .target(name: "ContactApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "ContactAdminAPI",
@@ -108,7 +100,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "ContactAppAPI",
@@ -116,7 +108,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/App",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .executableTarget(
             name: "ContactAdminOpenAPIGenerator",
@@ -126,7 +118,7 @@ let package = Package(
                 .product(name: "Yams", package: "Yams"),
             ],
             path: "Sources/Generators/Admin",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .executableTarget(
             name: "ContactAppOpenAPIGenerator",
@@ -136,7 +128,7 @@ let package = Package(
                 .product(name: "Yams", package: "Yams"),
             ],
             path: "Sources/Generators/App",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "ContactBackend",
@@ -149,7 +141,7 @@ let package = Package(
 
             ],
             path: "Sources/Composition/Backend",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "ContactFrontend",
@@ -163,28 +155,28 @@ let package = Package(
                 .target(name: "ContactAppAPI"),
             ],
             path: "Sources/Composition/Frontend",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "ContactDomainTests",
             dependencies: [
                 .target(name: "ContactDomain"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "ContactApplicationTests",
             dependencies: [
                 .target(name: "ContactApplication"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "ContactInfrastructureTests",
             dependencies: [
                 .target(name: "ContactInfrastructure"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
     ]
 )

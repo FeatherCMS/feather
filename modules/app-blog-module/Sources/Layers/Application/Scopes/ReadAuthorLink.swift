@@ -4,9 +4,7 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import BlogDomain
-import FeatherApplication
-import FeatherContracts
+public import FeatherContracts
 
 public struct ReadAuthorLink: Scope {
     public let authorLink: any AuthorLinkQueries

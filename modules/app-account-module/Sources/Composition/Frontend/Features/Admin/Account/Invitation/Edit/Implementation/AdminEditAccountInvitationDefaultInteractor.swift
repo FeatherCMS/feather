@@ -1,6 +1,3 @@
-import FeatherAdmin
-import Foundation
-
 struct AdminEditAccountInvitationDefaultInteractor:
     AdminEditAccountInvitationInteractor
 {

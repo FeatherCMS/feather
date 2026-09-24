@@ -1,24 +1,23 @@
 import FeatherAdmin
-import HTML
 import Hummingbird
 
 protocol AdminAddUserIdentityController: Sendable {
 
     func getAddUserIdentity(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
     func postAddUserIdentity(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 }
 
 extension AdminAddUserIdentityController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             UserIdentityRoutes.add,

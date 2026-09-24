@@ -1,7 +1,6 @@
-import AccountApplication
-import AccountDomain
-import FeatherDatabase
-import FeatherInfrastructure
+public import AccountApplication
+public import AccountDomain
+public import FeatherInfrastructure
 
 public struct AccountProfileDatabaseQueries: AccountProfileQueries {
     public let context: DatabaseQueryContext

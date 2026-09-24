@@ -1,4 +1,4 @@
-import Hummingbird
+public import Hummingbird
 
 extension Request {
     public func queryInt(

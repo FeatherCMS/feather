@@ -1,7 +1,5 @@
 import AccountAdminAPI
 import FeatherAdmin
-import Foundation
-import Hummingbird
 import OpenAPIRuntime
 
 struct AdminRemoveAccountInvitationOpenAPIRepository:
@@ -11,13 +9,6 @@ struct AdminRemoveAccountInvitationOpenAPIRepository:
 
     init(api: AccountAdminAPIClient) {
         self.api = api
-    }
-
-    init() {
-        self.api = AccountAdminAPIClient(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: nil
-        )
     }
 
     func get(

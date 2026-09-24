@@ -1,10 +1,10 @@
-import AccountAdminAPI
+public import AccountAdminAPI
 import AsyncHTTPClient
-import FeatherAdmin
-import Foundation
+public import FeatherAdmin
+public import Foundation
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
+public import OpenAPIRuntime
 
 public struct AccountAdminAPIClient: Sendable {
     public let client: AccountAdminAPI.Client
@@ -51,15 +51,6 @@ public struct AccountAdminAPIClient: Sendable {
         return OpenAPIRepositoryError.parsedFailure(
             statusCode: statusCode,
             responseBody: body
-        )
-    }
-}
-
-extension DefaultRequestContext {
-    public func accountAdminAPI() -> AccountAdminAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
         )
     }
 }

@@ -1,4 +1,4 @@
-import AccountAdminAPI
+public import AccountAdminAPI
 
 public struct AdminAPIGateway: Sendable, AccountAdminAPI.APIProtocol {
     public let useCases: UseCases

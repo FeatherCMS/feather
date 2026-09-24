@@ -1,13 +1,10 @@
 import FeatherContracts
-import FeatherApplication
 import FeatherInfrastructure
-import FeatherDatabase
 import AuthApplication
 import AuthInfrastructure
 import UserInfrastructure
 import MediaBackend
 import AnalyticsBackend
-import WebInfrastructure
 import WebBackend
 import NewsletterBackend
 import RedirectBackend
@@ -23,6 +20,7 @@ struct AppModules: Sendable {
 
     private let infrastructure: AppInfrastructure
     private let authorizer: any Authorizer
+    let mediaResolver: MediaResolver
 
     let system: SystemBackend.UseCases
     let analytics: AnalyticsBackend.UseCases
@@ -38,9 +36,11 @@ struct AppModules: Sendable {
     let account: AccountBackend.UseCases
 
     init(
-        infrastructure: AppInfrastructure
+        infrastructure: AppInfrastructure,
+        mediaResolver: MediaResolver
     ) {
         self.infrastructure = infrastructure
+        self.mediaResolver = mediaResolver
 
         let query = DatabaseQueryExecutor(
             database: infrastructure.database,
@@ -116,7 +116,8 @@ struct AppModules: Sendable {
             database: infrastructure.database,
             idGenerator: infrastructure.idGenerator,
             authorizer: authorizer,
-            media: media
+            media: media,
+            mediaResolver: mediaResolver
         )
         self.blog = blog
         let web = WebBackend.UseCases(

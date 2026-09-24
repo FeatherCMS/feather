@@ -4,9 +4,7 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import AccountDomain
-import FeatherApplication
-import FeatherContracts
+public import FeatherContracts
 
 public struct ReadInvitation: Scope {
     public let invitation: any InvitationQueries

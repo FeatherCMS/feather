@@ -1,4 +1,4 @@
-import FeatherValidation
+public import FeatherValidation
 
 public enum AdminMetadataFieldValidator {
 

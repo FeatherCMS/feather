@@ -2,7 +2,6 @@ import FeatherAdmin
 import FeatherContracts
 import HTML
 import Hummingbird
-import WebBuilders
 import WebComponents
 
 struct AccountProfileDetails: Component {

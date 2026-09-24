@@ -4,10 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import BlogDomain
-import FeatherApplication
-import FeatherContracts
-import WebApplication
+public import FeatherContracts
+public import WebApplication
 
 public struct ReadPublic: Scope {
     public let post: any PostQueries

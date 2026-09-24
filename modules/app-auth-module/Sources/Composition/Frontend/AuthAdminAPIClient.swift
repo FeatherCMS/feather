@@ -1,16 +1,16 @@
 import AsyncHTTPClient
-import AuthAdminAPI
+public import AuthAdminAPI
 import AuthAppAPI
 import CSS
-import FeatherAdmin
+public import FeatherAdmin
 import FeatherValidation
 import FeatherValidationFoundation
-import Foundation
+public import Foundation
 import HTML
 import Hummingbird
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
+public import OpenAPIRuntime
 import SGML
 import SystemAdminAPI
 import SystemFrontend
@@ -59,11 +59,42 @@ public struct AuthAdminAPIClient: Sendable {
     }
 }
 
-extension DefaultRequestContext {
-    public func authAdminAPI() -> AuthAdminAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+public struct AuthAPIBuilder: Sendable {
+    private let apiBaseURL: URL
+    let user: UserAPIBuilder
+    let system: SystemAPIBuilder
+
+    public init(apiBaseURL: URL) {
+        self.apiBaseURL = apiBaseURL
+        self.user = .init(apiBaseURL: apiBaseURL)
+        self.system = .init(apiBaseURL: apiBaseURL)
+    }
+
+    public func makeAuthAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> AuthAdminAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeAuthApp(
+        _ context: DefaultRequestContext
+    ) -> AuthAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeAuthApp() -> AuthAppAPIClient {
+        .init(apiBaseURL: apiBaseURL)
+    }
+
+    func makeUserAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> UserAdminAPIClient {
+        user.makeUserAdmin(context)
+    }
+
+    func makeSystemAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> SystemAdminAPIClient {
+        system.makeSystemAdmin(context)
     }
 }

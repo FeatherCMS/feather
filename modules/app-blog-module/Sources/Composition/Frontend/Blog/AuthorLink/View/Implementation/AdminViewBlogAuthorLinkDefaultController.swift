@@ -15,16 +15,16 @@ struct AdminViewBlogAuthorLinkDefaultController:
     AdminViewBlogAuthorLinkController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewBlogAuthorLinkInteractor,
-            presenter: any AdminViewBlogAuthorLinkPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminViewBlogAuthorLinkInteractor,
+            any AdminViewBlogAuthorLinkPresenter
+        >
 
     func getBlogAuthorLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let permissions = context.currentUserPermissions

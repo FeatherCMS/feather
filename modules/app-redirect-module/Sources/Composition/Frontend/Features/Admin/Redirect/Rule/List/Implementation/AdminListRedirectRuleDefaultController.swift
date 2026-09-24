@@ -1,20 +1,22 @@
 import FeatherAdmin
 import FeatherContracts
-import Foundation
 import Hummingbird
 import RedirectContracts
 
 struct AdminListRedirectRuleDefaultController: AdminListRedirectRuleController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListRedirectRuleInteractor,
-            presenter: any AdminListRedirectRulePresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminListRedirectRuleInteractor,
+            any AdminListRedirectRulePresenter
+        >
 
-    func getRedirectRules(request: Request, context: DefaultRequestContext)
+    func getRedirectRules(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.list)
         else {
             return try await presenter.renderErrorPage(error: .forbidden)
@@ -22,7 +24,7 @@ struct AdminListRedirectRuleDefaultController: AdminListRedirectRuleController {
 
         let search = request.querySearch()
         let rawStatusCode = request.queryString("statusCode")?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
         let statusCode = rawStatusCode.flatMap(Int.init)
             .flatMap(StatusCode.init(rawValue:))
         do {

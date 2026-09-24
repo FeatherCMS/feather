@@ -1,22 +1,21 @@
 import FeatherAdmin
-import HTML
 import Hummingbird
-import OpenAPIRuntime
 
 struct AdminRemoveAccountInvitationDefaultController:
     AdminRemoveAccountInvitationController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveAccountInvitationInteractor,
-            presenter: any AdminRemoveAccountInvitationPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminRemoveAccountInvitationInteractor,
+            any AdminRemoveAccountInvitationPresenter
+        >
 
     func getRemoveAccountInvitation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
+
         let id = try context.requiredID()
         do {
             let invitation = try await interactor.get(id: id)
@@ -35,9 +34,9 @@ struct AdminRemoveAccountInvitationDefaultController:
 
     func postRemoveAccountInvitation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,

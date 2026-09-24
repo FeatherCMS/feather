@@ -11,7 +11,7 @@ import struct Foundation.Date
 
 extension WebMetadataTable.Row {
 
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.referenceType = try row.decode(
             column: "reference_type",

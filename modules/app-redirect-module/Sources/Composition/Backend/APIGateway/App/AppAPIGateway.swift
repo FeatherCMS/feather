@@ -1,4 +1,4 @@
-import RedirectAppAPI
+public import RedirectAppAPI
 
 public struct AppAPIGateway: Sendable, RedirectAppAPI.APIProtocol {
     public let useCases: UseCases

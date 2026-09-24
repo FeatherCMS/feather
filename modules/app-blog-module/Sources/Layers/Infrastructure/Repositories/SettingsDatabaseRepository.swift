@@ -1,6 +1,5 @@
-import BlogDomain
-import FeatherDatabase
-import FeatherInfrastructure
+public import BlogDomain
+public import FeatherInfrastructure
 import SystemDomain
 import SystemInfrastructure
 

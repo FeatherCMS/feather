@@ -1,6 +1,3 @@
-import FeatherAdmin
-import Hummingbird
-
 struct AdminViewAnalyticsOverviewDefaultInteractor:
     AdminViewAnalyticsOverviewInteractor
 {

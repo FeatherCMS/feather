@@ -1,5 +1,6 @@
 import Jobs
 import NewsletterBackend
+import struct Foundation.Date
 
 struct JobNewsletterMailQueue: NewsletterMailQueue {
     let queue: any JobQueueProtocol
@@ -11,7 +12,8 @@ struct JobNewsletterMailQueue: NewsletterMailQueue {
         additionalHeaders: [String],
         messageBody: String,
         deliveryIssueId: String?,
-        deliveryNewsletterId: String?
+        deliveryNewsletterId: String?,
+        scheduledAt: Date?
     ) async throws {
         try await queue.enqueueSubmissionMail(
             mailFrom: mailFrom,
@@ -20,7 +22,8 @@ struct JobNewsletterMailQueue: NewsletterMailQueue {
             additionalHeaders: additionalHeaders,
             messageBody: messageBody,
             deliveryIssueId: deliveryIssueId,
-            deliveryNewsletterId: deliveryNewsletterId
+            deliveryNewsletterId: deliveryNewsletterId,
+            scheduledAt: scheduledAt
         )
     }
 }

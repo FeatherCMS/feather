@@ -6,17 +6,20 @@ import SystemFrontend
 struct AdminEditWebMenuItem {
     let controller: any AdminEditWebMenuItemController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: WebAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminEditWebMenuItemDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminEditWebMenuItemDefaultInteractor(
                         repository: AdminEditWebMenuItemOpenAPIRepository(
-                            api: context.webAdminAPI()
+                            api: apiBuilder.makeWebAdmin(context)
                         ),
                         permissionRepository:
                             AdminSystemPermissionOpenAPIRepository(
-                                api: context.systemAdminAPI()
+                                api: apiBuilder.makeSystemAdmin(context)
                             )
                     ),
                     presenter: AdminEditWebMenuItemDefaultPresenter(

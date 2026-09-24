@@ -1,5 +1,5 @@
 import FeatherAdmin
-import FeatherContracts
+public import FeatherContracts
 import Hummingbird
 
 public enum AdminMenuEventHandlers {
@@ -62,13 +62,13 @@ public enum AdminMenuEventHandlers {
                     link: "/admin/system/jobs/",
                     permission: "system:jobs:list"
                 ),
-                .init(
-                    menuKey: "system",
-                    label: "Design System",
-                    icon: "layers",
-                    link: "/admin/system/design-system/",
-                    permission: "system.admin.access"
-                ),
+                // .init(
+                //     menuKey: "system",
+                //     label: "Design System",
+                //     icon: "layers",
+                //     link: "/admin/system/design-system/",
+                //     permission: "system.admin.access"
+                // ),
             ]
         }
     }

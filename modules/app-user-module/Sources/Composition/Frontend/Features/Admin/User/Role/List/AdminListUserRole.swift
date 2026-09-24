@@ -6,13 +6,16 @@ struct AdminListUserRole {
 
     let controller: any AdminListUserRoleController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: UserAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminListUserRoleDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminListUserRoleDefaultInteractor(
                         repository: AdminListUserRoleOpenAPIRepository(
-                            api: context.userAdminAPI()
+                            api: apiBuilder.makeUserAdmin(context)
                         )
                     ),
                     presenter: AdminListUserRoleDefaultPresenter(

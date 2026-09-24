@@ -1,4 +1,4 @@
-import Configuration
+public import Configuration
 import Logging
 
 public struct SystemConfigLoader {

@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import Foundation
 import HTML
 import Hummingbird
@@ -9,7 +10,7 @@ import WebComponents
 
 struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderEditPage(
@@ -83,9 +84,7 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
 
     private func previewPath(for state: WebMetadataForm.State) -> String? {
         guard let slug = state.slug.value else { return nil }
-        let normalizedSlug = slug.trimmingCharacters(
-            in: .whitespacesAndNewlines
-        )
+        let normalizedSlug = slug.whitespaceTrimmed
         return normalizedSlug.isEmpty ? nil : "/\(normalizedSlug)/"
     }
 }

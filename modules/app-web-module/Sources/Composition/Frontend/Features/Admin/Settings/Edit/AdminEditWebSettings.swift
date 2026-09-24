@@ -4,13 +4,16 @@ import OpenAPIRuntime
 struct AdminEditWebSettings {
     let controller: any AdminEditWebSettingsController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: WebAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminEditWebSettingsDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminEditWebSettingsDefaultInteractor(
                         repository: AdminEditWebSettingsOpenAPIRepository(
-                            api: context.webAdminAPI()
+                            api: apiBuilder.makeWebAdmin(context)
                         )
                     ),
                     presenter: AdminEditWebSettingsDefaultPresenter(

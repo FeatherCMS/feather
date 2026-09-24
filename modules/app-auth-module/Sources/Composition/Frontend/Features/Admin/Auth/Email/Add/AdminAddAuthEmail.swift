@@ -19,14 +19,17 @@ import WebComponents
 struct AdminAddAuthEmail {
     let controller: any AdminAddAuthEmailController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: AuthAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminAddAuthEmailDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminAddAuthEmailDefaultInteractor(
                         repository: AdminAddAuthEmailOpenAPIRepository(
-                            api: context.authAdminAPI(),
-                            userAPI: context.userAdminAPI()
+                            api: apiBuilder.makeAuthAdmin(context),
+                            userAPI: apiBuilder.makeUserAdmin(context)
                         )
                     ),
                     presenter: AdminAddAuthEmailDefaultPresenter(

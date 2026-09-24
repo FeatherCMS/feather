@@ -13,6 +13,8 @@ import FeatherStorage
 import FeatherStorageFS
 import MediaApplication
 import MediaInfrastructure
+import FeatherContracts
+import FeatherAdmin
 #if canImport(FoundationEssentials)
 import FoundationEssentials
 #else
@@ -80,6 +82,9 @@ func buildServer(
                 depth: config.media.storageShardDepth,
                 segmentLength: config.media.storageShardSegmentLength
             )
+        ),
+        mediaResolver: MediaResolver(
+            mediaBaseURL: config.media.publicBaseURL
         )
     )
 

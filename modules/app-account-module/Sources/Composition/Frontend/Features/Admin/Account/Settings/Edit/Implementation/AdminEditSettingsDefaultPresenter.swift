@@ -1,12 +1,11 @@
 import FeatherAdmin
-import HTML
 import Hummingbird
 
 struct AdminEditSettingsDefaultPresenter:
     AdminEditSettingsPresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderEngine: any RenderingEngine
 
     func renderPage(

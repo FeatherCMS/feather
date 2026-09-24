@@ -1,12 +1,11 @@
 import FeatherAdmin
-import Foundation
 import Hummingbird
 
 protocol AdminListRedirectRuleController: Sendable {
 
     func getRedirectRules(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
 }
@@ -14,7 +13,7 @@ protocol AdminListRedirectRuleController: Sendable {
 extension AdminListRedirectRuleController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             RedirectRuleRoutes.list,

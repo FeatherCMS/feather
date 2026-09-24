@@ -1,6 +1,6 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
-import Foundation
 
 struct MediaVariantProcessorFormInput: Decodable, Sendable, Equatable, Hashable
 {
@@ -10,13 +10,13 @@ struct MediaVariantProcessorFormInput: Decodable, Sendable, Equatable, Hashable
     let isActive: NewAdminFormFieldCheckbox.Input
 
     var normalizedName: String {
-        name.trimmingCharacters(in: .whitespacesAndNewlines)
+        name.whitespaceTrimmed
     }
     var normalizedExtensions: String {
-        matchExtensions.trimmingCharacters(in: .whitespacesAndNewlines)
+        matchExtensions.whitespaceTrimmed
     }
     var normalizedCommand: String {
-        commandTemplate.trimmingCharacters(in: .whitespacesAndNewlines)
+        commandTemplate.whitespaceTrimmed
     }
 
     func validate() async throws(ValidationError) {

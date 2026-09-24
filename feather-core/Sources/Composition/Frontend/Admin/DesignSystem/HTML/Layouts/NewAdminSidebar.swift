@@ -6,13 +6,13 @@
 //
 
 import DOM
-import FeatherContracts
+public import FeatherContracts
 import HTML
-import Hummingbird
-import SGML
-import SVG
+public import Hummingbird
+public import SGML
+public import SVG
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct NewAdminSideBar: Component {
 
@@ -273,141 +273,139 @@ public struct NewAdminSideBar: Component {
     }
 }
 
-extension DefaultRequestContext {
+public func adminMenuGroups(
+    for context: AuthenticatedRequestContext,
+    request: Request,
+    events: any EventPublisher
+) async throws -> [NewAdminSideBar.Group] {
+    let catalog = try await load(events: events)
+    let path = request.uri.path
+    let permissions = context.currentUserPermissions
+    let menuDefinitions = catalog.menus
+        .filter { definition in
+            guard let permission = definition.permission else {
+                return true
+            }
+            return permissions.contains(permission)
+        }
+        .sorted { $0.priority < $1.priority }
 
-    public func adminMenuGroups(
-        request: Request,
-        events: any EventPublisher
-    ) async throws -> [NewAdminSideBar.Group] {
-        let catalog = try await load(events: events)
-        let path = request.uri.path
-        let permissions = currentUserPermissions
-        let menuDefinitions = catalog.menus
-            .filter { definition in
-                guard let permission = definition.permission else {
-                    return true
-                }
+    var groups: [String: [NewAdminSideBar.Group.Menu]] = [:]
+    for definition in menuDefinitions {
+        let parentIcon =
+            FeatherIcons.get(named: definition.icon)
+            ?? FeatherIcons.helpCircle()
+
+        let children = catalog.items
+            .filter { $0.menuKey == definition.key }
+            .filter { item in
+                guard let permission = item.permission else { return true }
                 return permissions.contains(permission)
             }
             .sorted { $0.priority < $1.priority }
-
-        var groups: [String: [NewAdminSideBar.Group.Menu]] = [:]
-        for definition in menuDefinitions {
-            let parentIcon =
-                FeatherIcons.get(named: definition.icon)
-                ?? FeatherIcons.helpCircle()
-
-            let children = catalog.items
-                .filter { $0.menuKey == definition.key }
-                .filter { item in
-                    guard let permission = item.permission else { return true }
-                    return permissions.contains(permission)
-                }
-                .sorted { $0.priority < $1.priority }
-                .compactMap { item in
-                    let icon =
-                        FeatherIcons.get(named: item.icon)
-                        ?? FeatherIcons.helpCircle()
-                    return NewAdminSideBar.Group.Menu.Item(
-                        icon: icon,
-                        label: item.label,
-                        link: item.link,
-                        isCurrent: isCurrent(item.link, path: path)
-                    )
-                }
-
-            guard definition.link != nil || !children.isEmpty else {
-                continue
-            }
-
-            let parent = NewAdminSideBar.Group.Menu.Item(
-                icon: parentIcon,
-                label: definition.label,
-                link: definition.link,
-                isCurrent: definition.link.map { isCurrent($0, path: path) }
-                    ?? children.contains(where: { $0.isCurrent })
-            )
-            groups[definition.groupKey, default: []]
-                .append(
-                    .init(parent: parent, children: children)
-                )
-        }
-
-        return ["site", "admin"]
-            .compactMap { key in
-                guard let menus = groups[key], !menus.isEmpty else {
-                    return nil
-                }
-                return .init(
-                    label: key == "site" ? "Site" : "Admin",
-                    menus: menus
+            .compactMap { item in
+                let icon =
+                    FeatherIcons.get(named: item.icon)
+                    ?? FeatherIcons.helpCircle()
+                return NewAdminSideBar.Group.Menu.Item(
+                    icon: icon,
+                    label: item.label,
+                    link: item.link,
+                    isCurrent: isCurrent(item.link, path: path)
                 )
             }
-    }
 
-    private func isCurrent(
-        _ link: String,
-        path: String
-    ) -> Bool {
-        let normalizedLink = normalizedPath(link)
-        let currentPath = normalizedPath(path)
-
-        guard normalizedLink != "/" else {
-            return currentPath == "/"
+        guard definition.link != nil || !children.isEmpty else {
+            continue
         }
 
-        // Match route segments rather than raw prefixes so query parameters
-        // and trailing slashes do not affect selection, while similarly named
-        // routes (for example `/variables` and `/variables-archive`) remain
-        // distinct.
-        guard
-            currentPath == normalizedLink
-                || currentPath.hasPrefix(normalizedLink + "/")
-        else {
-            return false
-        }
-
-        // The admin root is a standalone route and must not remain selected
-        // for nested admin pages.
-        if normalizedLink == "/admin" {
-            return currentPath == normalizedLink
-        }
-        return true
-    }
-
-    private func normalizedPath(_ value: String) -> String {
-        let path = String(
-            value.split(
-                separator: "?",
-                maxSplits: 1,
-                omittingEmptySubsequences: false
-            )[0]
+        let parent = NewAdminSideBar.Group.Menu.Item(
+            icon: parentIcon,
+            label: definition.label,
+            link: definition.link,
+            isCurrent: definition.link.map { isCurrent($0, path: path) }
+                ?? children.contains(where: { $0.isCurrent })
         )
-        guard path.count > 1, path.hasSuffix("/") else {
-            return path
-        }
-        return String(path.dropLast())
+        groups[definition.groupKey, default: []]
+            .append(
+                .init(parent: parent, children: children)
+            )
     }
 
-    private func load(
-        events: any EventPublisher
-    ) async throws -> AdminMenuCatalog {
-        let context = AdminEventContext(path: "", permissions: [])
-        let menus =
+    return ["site", "admin"]
+        .compactMap { key in
+            guard let menus = groups[key], !menus.isEmpty else {
+                return nil
+            }
+            return .init(
+                label: key == "site" ? "Site" : "Admin",
+                menus: menus
+            )
+        }
+}
+
+private func isCurrent(
+    _ link: String,
+    path: String
+) -> Bool {
+    let normalizedLink = normalizedPath(link)
+    let currentPath = normalizedPath(path)
+
+    guard normalizedLink != "/" else {
+        return currentPath == "/"
+    }
+
+    // Match route segments rather than raw prefixes so query parameters
+    // and trailing slashes do not affect selection, while similarly named
+    // routes (for example `/variables` and `/variables-archive`) remain
+    // distinct.
+    guard
+        currentPath == normalizedLink
+            || currentPath.hasPrefix(normalizedLink + "/")
+    else {
+        return false
+    }
+
+    // The admin root is a standalone route and must not remain selected
+    // for nested admin pages.
+    if normalizedLink == "/admin" {
+        return currentPath == normalizedLink
+    }
+    return true
+}
+
+private func normalizedPath(_ value: String) -> String {
+    let path = String(
+        value.split(
+            separator: "?",
+            maxSplits: 1,
+            omittingEmptySubsequences: false
+        )[0]
+    )
+    guard path.count > 1, path.hasSuffix("/") else {
+        return path
+    }
+    return String(path.dropLast())
+}
+
+private func load(
+    events: any EventPublisher
+) async throws -> AdminMenuCatalog {
+    let context = AdminEventContext(path: "", permissions: [])
+    let menus =
+        try await events.trigger(
+            event: AdminMenuProvider(),
+            using: context
+        )
+        .flatMap { $0 }
+    var items: [AdminMenuItemDefinition] = []
+    for menu in menus {
+        items +=
             try await events.trigger(
-                event: AdminMenuProvider(),
+                event: AdminMenuItemProvider(menuKey: menu.key),
                 using: context
             )
             .flatMap { $0 }
-        var items: [AdminMenuItemDefinition] = []
-        for menu in menus {
-            items +=
-                try await events.trigger(
-                    event: AdminMenuItemProvider(menuKey: menu.key),
-                    using: context
-                )
-                .flatMap { $0 }
-        }
-        return .init(menus: menus, items: items)
     }
+    return .init(menus: menus, items: items)
 }

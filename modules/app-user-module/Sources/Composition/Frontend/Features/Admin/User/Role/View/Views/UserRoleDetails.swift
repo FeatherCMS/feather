@@ -3,7 +3,6 @@ import FeatherContracts
 import HTML
 import Hummingbird
 import UserContracts
-import WebBuilders
 import WebComponents
 
 struct UserRoleDetails: Component {

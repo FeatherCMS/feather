@@ -1,44 +1,31 @@
 import FeatherAdmin
+import Foundation
 import Hummingbird
 
 struct AppPublicContentDefaultController: AppPublicContentController {
 
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AppPublicContentInteractor,
-            presenter: any AppPublicContentPresenter
-        )
+        RuntimeBuilder<
+            any AppPublicContentInteractor,
+            any AppPublicContentPresenter
+        >
 
     func getContent(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        try await render(
-            path: request.uri.path,
-            request: request,
-            context: context
+        let (interactor, presenter) = buildRuntime((request, context))
+
+        let slug = request.uri.path.trimmingCharacters(
+            in: CharacterSet(charactersIn: "/")
         )
-    }
-}
-
-extension AppPublicContentDefaultController {
-
-    fileprivate func render(
-        path: String,
-        request: Request,
-        context: DefaultRequestContext
-    ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
-        guard let content = try await interactor.resolve(path: path) else {
-            throw HTTPError(.notFound)
-        }
+        let content = try await interactor.resolve(slug: slug)
         let rendered = await presenter.render(
-            content: content,
-            request: request
+            content: content
         )
         let response = HTMLResponse(
             content: rendered.content,
-            status: content.isNotFound ? .notFound : .ok
+            status: content.status
         )
         return try response.response(from: request, context: context)
     }

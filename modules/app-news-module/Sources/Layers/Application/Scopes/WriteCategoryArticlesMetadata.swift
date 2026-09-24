@@ -1,7 +1,6 @@
-import FeatherApplication
-import FeatherContracts
-import NewsDomain
-import WebDomain
+public import FeatherContracts
+public import NewsDomain
+public import WebDomain
 
 public struct WriteCategoryArticlesMetadata: Scope {
     public let article: any ArticleRepository

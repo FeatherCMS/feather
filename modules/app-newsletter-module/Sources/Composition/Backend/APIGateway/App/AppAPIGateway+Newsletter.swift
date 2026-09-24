@@ -1,4 +1,4 @@
-import NewsletterAppAPI
+public import NewsletterAppAPI
 import NewsletterApplication
 
 extension AppAPIGateway {

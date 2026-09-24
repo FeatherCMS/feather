@@ -1,5 +1,3 @@
-import Foundation
-
 enum AdminViewSystemPermissionError: Error, Sendable {
     case notFound
     case unauthorized

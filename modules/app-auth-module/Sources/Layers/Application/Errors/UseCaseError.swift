@@ -20,13 +20,13 @@ public struct UseCaseError: Error {
     public var reason: Reason
     public var debugMessage: String
     public var message: String
-    public var underlyingErrors: [Error]
+    public var underlyingErrors: [any Error]
 
     public init(
         reason: Reason,
         logMessage: String,
         userFriendlyMessage: String,
-        underlyingErrors: [Error] = []
+        underlyingErrors: [any Error] = []
     ) {
         self.reason = reason
         self.debugMessage = logMessage

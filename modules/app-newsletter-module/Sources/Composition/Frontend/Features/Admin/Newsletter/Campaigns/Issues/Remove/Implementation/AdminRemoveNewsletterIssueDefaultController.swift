@@ -12,14 +12,15 @@ struct AdminRemoveNewsletterIssueDefaultController:
     AdminRemoveNewsletterIssueController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveNewsletterIssueInteractor,
-            presenter: any AdminRemoveNewsletterIssuePresenter
-        )
-    func confirm(request: Request, context: DefaultRequestContext) async throws
+        AuthenticatedRuntimeBuilder<
+            any AdminRemoveNewsletterIssueInteractor,
+            any AdminRemoveNewsletterIssuePresenter
+        >
+    func confirm(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: Permissions.Issues.delete)
         else { return HTMLResponse(content: "Forbidden", status: .forbidden) }
         let issueId = try context.requiredParameter("issueId")
@@ -31,10 +32,11 @@ struct AdminRemoveNewsletterIssueDefaultController:
             )
         )
     }
-    func remove(request: Request, context: DefaultRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         let newsletterId = try context.requiredParameter("newsletterId")
         guard context.isCurrentUserAllowed(to: Permissions.Issues.delete)
         else { return Response(status: .forbidden) }

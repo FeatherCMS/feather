@@ -36,7 +36,7 @@ extension Array where Element == String {
 
 extension PostTable.Row {
 
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.title = try row.decode(column: "title", as: String.self)
         self.excerpt = try row.decode(column: "excerpt", as: String.self)

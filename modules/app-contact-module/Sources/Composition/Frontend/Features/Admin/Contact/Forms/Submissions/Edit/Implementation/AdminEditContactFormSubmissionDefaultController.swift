@@ -11,15 +11,16 @@ struct AdminEditContactFormSubmissionDefaultController:
     AdminEditContactFormSubmissionController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditContactFormSubmissionInteractor,
-            presenter: any AdminEditContactFormSubmissionPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditContactFormSubmissionInteractor,
+            any AdminEditContactFormSubmissionPresenter
+        >
 
-    func update(request: Request, context: DefaultRequestContext) async throws
+    func update(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let formId = try context.requiredParameter("formKey")
         let submissionId = try context.requiredParameter("submissionId")
         let form = try await request.decode(

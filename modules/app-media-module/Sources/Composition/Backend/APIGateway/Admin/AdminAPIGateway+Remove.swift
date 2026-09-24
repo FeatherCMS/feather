@@ -1,8 +1,5 @@
-import FeatherApplication
-import FeatherBackend
 import FeatherContracts
-import MediaAdminAPI
-import MediaApplication
+public import MediaAdminAPI
 
 extension AdminAPIGateway {
     public func mediaAssetNodeRemove(

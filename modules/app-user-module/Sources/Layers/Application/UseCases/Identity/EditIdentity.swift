@@ -1,7 +1,7 @@
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 import UserContracts
-import UserDomain
+public import UserDomain
 
 //
 //  EditIdentity.swift

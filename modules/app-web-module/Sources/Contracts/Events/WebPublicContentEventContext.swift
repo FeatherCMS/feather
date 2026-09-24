@@ -1,25 +1,14 @@
-import FeatherContracts
-import Foundation
+public import FeatherContracts
 
-public struct WebPublicContentEventContext: Sendable, Codable, ExecutionContext
-{
-    public let path: String
-    public let templateIdentifier: String?
-    public let sessionToken: String?
-    public let referenceType: String
-    public let referenceID: String
+public struct WebPublicContentEventContext<T: Sendable>: ExecutionContext {
+    public let baseMetadata: PublicContent.Metadata.Base
+    public let runtime: T
 
     public init(
-        path: String,
-        templateIdentifier: String?,
-        sessionToken: String?,
-        referenceType: String = "",
-        referenceID: String = ""
+        baseMetadata: PublicContent.Metadata.Base,
+        runtime: T
     ) {
-        self.path = path
-        self.templateIdentifier = templateIdentifier
-        self.sessionToken = sessionToken
-        self.referenceType = referenceType
-        self.referenceID = referenceID
+        self.baseMetadata = baseMetadata
+        self.runtime = runtime
     }
 }

@@ -17,7 +17,7 @@ struct AdminListBlogAuthorDefaultPresenter:
     AdminListBlogAuthorPresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderEngine: any RenderingEngine
 
     func renderListPage(

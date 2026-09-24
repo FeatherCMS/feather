@@ -1,17 +1,19 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminRemoveAccountInvitation {
     let controller: any AdminRemoveAccountInvitationController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: AccountAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminRemoveAccountInvitationDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminRemoveAccountInvitationDefaultInteractor(
                         repository:
                             AdminRemoveAccountInvitationOpenAPIRepository(
-                                api: context.accountAdminAPI()
+                                api: apiBuilder.makeAccountAdmin(context)
                             )
                     ),
                     presenter: AdminRemoveAccountInvitationDefaultPresenter(

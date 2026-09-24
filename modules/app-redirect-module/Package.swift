@@ -1,34 +1,26 @@
-// swift-tools-version:6.1
+// swift-tools-version:6.3
 import PackageDescription
 
-// NOTE: https://github.com/swift-server/swift-http-server/blob/main/Package.swift
-var defaultSwiftSettings: [SwiftSetting] = [
-    // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0441-formalize-language-mode-terminology.md
+let swiftSettings: [SwiftSetting] = [
     .swiftLanguageMode(.v6),
-    // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0444-member-import-visibility.md
+    .strictMemorySafety(),
+    .treatAllWarnings(as: .error),
+    .enableUpcomingFeature("InternalImportsByDefault"),
+    .enableUpcomingFeature("ExistentialAny"),
     .enableUpcomingFeature("MemberImportVisibility"),
-    // https://forums.swift.org/t/experimental-support-for-lifetime-dependencies-in-swift-6-2-and-beyond/78638
+    .enableUpcomingFeature("InferIsolatedConformances"),
+    .enableUpcomingFeature("NonisolatedNonsendingByDefault"),
+    .enableUpcomingFeature("ImmutableWeakCaptures"),
+    .enableUpcomingFeature("StrictConcurrency"),
+    .enableExperimentalFeature("SuppressedAssociatedTypes"),
+    .enableExperimentalFeature("LifetimeDependence"),
     .enableExperimentalFeature("Lifetimes"),
-    // https://github.com/swiftlang/swift/pull/65218
-    .enableExperimentalFeature(
-        "AvailabilityMacro=RedirectModule 1.0:macOS 15.0, iOS 18.0, tvOS 18.0, watchOS 11.0, visionOS 2.0"
-    ),
-]
-
-#if compiler(>=6.2)
-defaultSwiftSettings.append(
-    // https://github.com/swiftlang/swift-evolution/blob/main/proposals/0461-async-function-isolation.md
-    .enableUpcomingFeature("NonisolatedNonsendingByDefault")
-)
-#endif
-
-defaultSwiftSettings += [
-    .enableExperimentalFeature("StrictConcurrency=complete"),
     .unsafeFlags(
         ["-cross-module-optimization"],
         .when(configuration: .release)
     ),
 ]
+
 
 let package = Package(
     name: "app-redirect-module",
@@ -68,7 +60,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-openapi-runtime",
-            from: "1.9.0"
+            from: "1.12.1"
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
@@ -100,7 +92,7 @@ let package = Package(
                 .product(name: "FeatherContracts", package: "feather-core"),
             ],
             path: "Sources/Contracts",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "RedirectDomain",
@@ -110,7 +102,7 @@ let package = Package(
                 .target(name: "RedirectContracts"),
             ],
             path: "Sources/Layers/Domain",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "RedirectApplication",
@@ -121,7 +113,7 @@ let package = Package(
                 .target(name: "RedirectDomain"),
             ],
             path: "Sources/Layers/Application",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "RedirectInfrastructure",
@@ -131,7 +123,7 @@ let package = Package(
                 .target(name: "RedirectApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "RedirectAdminAPI",
@@ -139,7 +131,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/Admin",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "RedirectAppAPI",
@@ -147,7 +139,7 @@ let package = Package(
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
             ],
             path: "Sources/APIs/App",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "RedirectSharedOpenAPIGenerator",
@@ -155,7 +147,7 @@ let package = Package(
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
             ],
             path: "Sources/Generators/Shared",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .executableTarget(
             name: "RedirectAdminOpenAPIGenerator",
@@ -166,7 +158,7 @@ let package = Package(
                 .target(name: "RedirectSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/Admin",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .executableTarget(
             name: "RedirectAppOpenAPIGenerator",
@@ -177,7 +169,7 @@ let package = Package(
                 .target(name: "RedirectSharedOpenAPIGenerator"),
             ],
             path: "Sources/Generators/App",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "RedirectBackend",
@@ -189,7 +181,7 @@ let package = Package(
                 .target(name: "RedirectAppAPI"),
             ],
             path: "Sources/Composition/Backend",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .target(
             name: "RedirectFrontend",
@@ -203,7 +195,7 @@ let package = Package(
                 .target(name: "RedirectAppAPI"),
             ],
             path: "Sources/Composition/Frontend",
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
 
         .testTarget(
@@ -211,14 +203,14 @@ let package = Package(
             dependencies: [
                 .target(name: "RedirectDomain"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "RedirectApplicationTests",
             dependencies: [
                 .target(name: "RedirectApplication"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
         .testTarget(
             name: "RedirectInfrastructureTests",
@@ -229,7 +221,7 @@ let package = Package(
 
                 .target(name: "RedirectInfrastructure"),
             ],
-            swiftSettings: defaultSwiftSettings
+            swiftSettings: swiftSettings
         ),
     ]
 )

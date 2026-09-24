@@ -1,21 +1,22 @@
 import FeatherAdmin
-import FeatherContracts
 import FeatherValidation
-import HTML
 import Hummingbird
 import UserContracts
 
 struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditUserIdentityInteractor,
-            presenter: any AdminEditUserIdentityPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditUserIdentityInteractor,
+            any AdminEditUserIdentityPresenter
+        >
 
-    func getEditUserIdentity(request: Request, context: DefaultRequestContext)
+    func getEditUserIdentity(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.update)
         else { return try await presenter.renderForbiddenPage() }
@@ -43,10 +44,13 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
         }
     }
 
-    func postEditUserIdentity(request: Request, context: DefaultRequestContext)
+    func postEditUserIdentity(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.update)
         else {

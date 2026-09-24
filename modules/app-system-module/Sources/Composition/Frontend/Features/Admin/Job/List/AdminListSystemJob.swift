@@ -1,18 +1,20 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminListSystemJob {
     static let pageSize = 20
 
     let controller: any AdminListSystemJobController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: SystemAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminListSystemJobDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminListSystemJobDefaultInteractor(
                         repository: AdminListSystemJobOpenAPIRepository(
-                            api: context.systemAdminAPI()
+                            api: apiBuilder.makeSystemAdmin(context)
                         )
                     ),
                     presenter: AdminListSystemJobDefaultPresenter(

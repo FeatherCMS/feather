@@ -1,8 +1,6 @@
 import FeatherAdmin
-import Hummingbird
 import OpenAPIRuntime
 import RedirectAdminAPI
-import RedirectContracts
 
 struct AdminRemoveRedirectRuleOpenAPIRepository:
     AdminRemoveRedirectRuleRepository

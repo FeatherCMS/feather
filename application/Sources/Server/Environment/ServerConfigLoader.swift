@@ -1,5 +1,6 @@
 import Environment
 import Configuration
+import Foundation
 
 struct ServerConfigLoader {
 
@@ -63,7 +64,13 @@ struct ServerConfigLoader {
                         forKey: "storage_shard_segment_length",
                         default: 2
                     )
-                )
+                ),
+                publicBaseURL: URL(
+                    string: mediaReader.string(
+                        forKey: "public_base_url",
+                        default: "http://localhost:8080"
+                    )
+                )!
             )
         )
     }

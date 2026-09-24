@@ -3,7 +3,6 @@ import BlogAppAPI
 import FeatherAdmin
 import FeatherContracts
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import MediaContracts
@@ -15,17 +14,18 @@ import WebComponents
 import WebFrontend
 
 struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
+    let apiBuilder: BlogAPIBuilder
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddBlogAuthorInteractor,
-            presenter: any AdminAddBlogAuthorPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminAddBlogAuthorInteractor,
+            any AdminAddBlogAuthorPresenter
+        >
 
     func getAddBlogAuthor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let slugPrefix = (try? await slugPrefix(context: context)) ?? "/"
         return try await runtime.presenter.renderAddPage(
@@ -39,9 +39,9 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
 
     func postAddBlogAuthor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         var lastPayload: BlogAuthorFormInput?
 
@@ -168,7 +168,7 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
     }
 
     private func slugPrefix(
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> String {
         try await slugPrefix(
             context: context,
@@ -177,11 +177,11 @@ struct AdminAddBlogAuthorDefaultController: AdminAddBlogAuthorController {
     }
 
     private func slugPrefix(
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         keyPath: KeyPath<AppPublicBlogRouteSettings, String>
     ) async throws -> String {
         let schema = try await AppPublicContentOpenAPIRepository(
-            api: context.blogApplicationAPI()
+            api: apiBuilder.makeBlogApp(context)
         )
         .getRouteSettings()
         let settings = AppPublicBlogRouteSettings(schema: schema)

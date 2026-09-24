@@ -6,7 +6,7 @@ import WebComponents
 struct AdminViewDesignSystemDefaultPresenter: AdminViewDesignSystemPresenter {
 
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let events: any EventPublisher
     let renderEngine: any RenderingEngine
 
@@ -14,7 +14,8 @@ struct AdminViewDesignSystemDefaultPresenter: AdminViewDesignSystemPresenter {
         model: AdminViewDesignSystemModel
     ) async throws -> HTMLResponse {
         var buildContext = BuilderContext()
-        let menuGroups = try await context.adminMenuGroups(
+        let menuGroups = try await adminMenuGroups(
+            for: context,
             request: request,
             events: events
         )

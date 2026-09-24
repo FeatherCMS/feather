@@ -1,7 +1,7 @@
 import AuthContracts
 import AuthDomain
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 
 public struct ListAuthEmails: UseCase {
     struct Action: PermissionAction { let key = AuthPermissions.Emails.list }

@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminViewContactOverview {
     let controller: any AdminViewContactOverviewController

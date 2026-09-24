@@ -1,10 +1,11 @@
 import BlogAppAPI
 import FeatherAdmin
-import FeatherContracts
+public import FeatherContracts
 import Foundation
 import OpenAPIRuntime
 import SystemContracts
 import WebContracts
+import WebFrontend
 
 public enum BlogWebPublicContentEventHandlers {
     public static func register(
@@ -12,66 +13,123 @@ public enum BlogWebPublicContentEventHandlers {
     ) {
         registry.register(
             event: WebPublicContentProvider.self,
-            context: WebPublicContentEventContext.self
-        ) { event, _ in
-            try await resolve(event.request)
+            context: WebPublicContentEventContext<PublicContentRuntimeContext>
+                .self
+        ) { _, context in
+            try await resolve(context)
         }
     }
 
     private static func resolve(
-        _ request: WebPublicContentEventContext
+        _ context: WebPublicContentEventContext<PublicContentRuntimeContext>
     ) async throws -> WebPublicContentResult? {
         let api = BlogAppAPIClient(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: request.sessionToken
+            apiBaseURL: context.runtime.apiBaseURL,
+            sessionToken: context.runtime.context.sessionToken
         )
+        let mediaResolver = context.runtime.mediaResolver
 
-        if let kind = kind(for: request) {
-            return try await resolveList(kind: kind, api: api)
+        if let kind = kind(for: context) {
+            return try await resolveList(
+                kind: kind,
+                api: api,
+                mediaResolver: mediaResolver
+            )
         }
-        guard !request.referenceID.isEmpty else { return nil }
-        switch request.referenceType {
+        switch context.baseMetadata.template {
         case "blog.post":
-            let response = try await api.withOpenAPIRepositoryErrorMapping {
-                client in
-                try await client.blogPostGet(
-                    .init(path: .init(id: request.referenceID))
-                )
-            }
-            guard case .ok(let value) = response else { return nil }
-            return .init(
-                payload: ["page": pageContext(try value.body.json)]
+            return try await resolvePost(
+                context: context,
+                api: api,
+                mediaResolver: mediaResolver
             )
         case "blog.author":
-            let response = try await api.withOpenAPIRepositoryErrorMapping {
-                client in
-                try await client.blogAuthorGet(
-                    .init(path: .init(id: request.referenceID))
-                )
-            }
-            guard case .ok(let value) = response else { return nil }
-            return .init(
-                payload: ["page": pageContext(try value.body.json)]
+            return try await resolveAuthor(
+                context: context,
+                api: api,
+                mediaResolver: mediaResolver
             )
         case "blog.tag":
-            let response = try await api.withOpenAPIRepositoryErrorMapping {
-                client in
-                try await client.blogTagGet(
-                    .init(path: .init(id: request.referenceID))
-                )
-            }
-            guard case .ok(let value) = response else { return nil }
-            return .init(
-                payload: ["page": pageContext(try value.body.json)]
+            return try await resolveTag(
+                context: context,
+                api: api,
+                mediaResolver: mediaResolver
             )
         default:
             return nil
         }
     }
 
+    private static func resolvePost(
+        context: WebPublicContentEventContext<PublicContentRuntimeContext>,
+        api: BlogAppAPIClient,
+        mediaResolver: MediaResolver
+    ) async throws -> WebPublicContentResult? {
+        guard !context.baseMetadata.referenceId.isEmpty else { return nil }
+        let referenceID = context.baseMetadata.referenceId
+        let response = try await api.withOpenAPIRepositoryErrorMapping {
+            client in
+            try await client.blogPostGet(.init(path: .init(id: referenceID)))
+        }
+        guard case .ok(let value) = response else { return nil }
+        return .init(
+            payload: [
+                "page": pageContext(
+                    try value.body.json,
+                    mediaResolver: mediaResolver
+                )
+            ]
+        )
+    }
+
+    private static func resolveAuthor(
+        context: WebPublicContentEventContext<PublicContentRuntimeContext>,
+        api: BlogAppAPIClient,
+        mediaResolver: MediaResolver
+    ) async throws -> WebPublicContentResult? {
+        guard !context.baseMetadata.referenceId.isEmpty else { return nil }
+        let referenceID = context.baseMetadata.referenceId
+        let response = try await api.withOpenAPIRepositoryErrorMapping {
+            client in
+            try await client.blogAuthorGet(.init(path: .init(id: referenceID)))
+        }
+        guard case .ok(let value) = response else { return nil }
+        return .init(
+            payload: [
+                "page": pageContext(
+                    try value.body.json,
+                    mediaResolver: mediaResolver
+                )
+            ]
+        )
+    }
+
+    private static func resolveTag(
+        context: WebPublicContentEventContext<PublicContentRuntimeContext>,
+        api: BlogAppAPIClient,
+        mediaResolver: MediaResolver
+    ) async throws -> WebPublicContentResult? {
+        guard !context.baseMetadata.referenceId.isEmpty else { return nil }
+        let referenceID = context.baseMetadata.referenceId
+        let response = try await api.withOpenAPIRepositoryErrorMapping {
+            client in
+            try await client.blogTagGet(.init(path: .init(id: referenceID)))
+        }
+        guard case .ok(let value) = response else { return nil }
+        return .init(
+            payload: [
+                "page": pageContext(
+                    try value.body.json,
+                    mediaResolver: mediaResolver
+                )
+            ]
+        )
+    }
+
     private static func resolveList(
         kind: Kind,
-        api: BlogAppAPIClient
+        api: BlogAppAPIClient,
+        mediaResolver: MediaResolver
     ) async throws -> WebPublicContentResult {
         switch kind {
         case .posts:
@@ -89,7 +147,9 @@ public enum BlogWebPublicContentEventHandlers {
             }
             return try listPayload(
                 key: "posts",
-                items: value.map(summaryContext)
+                items: value.map {
+                    summaryContext($0, mediaResolver: mediaResolver)
+                }
             )
         case .authors:
             let value = try await api.withOpenAPIRepositoryErrorMapping {
@@ -106,7 +166,9 @@ public enum BlogWebPublicContentEventHandlers {
             }
             return try listPayload(
                 key: "authors",
-                items: value.map(summaryContext)
+                items: value.map {
+                    summaryContext($0, mediaResolver: mediaResolver)
+                }
             )
         case .tags:
             let value = try await api.withOpenAPIRepositoryErrorMapping {
@@ -123,7 +185,9 @@ public enum BlogWebPublicContentEventHandlers {
             }
             return try listPayload(
                 key: "tags",
-                items: value.map(summaryContext)
+                items: value.map {
+                    summaryContext($0, mediaResolver: mediaResolver)
+                }
             )
         }
     }
@@ -135,9 +199,9 @@ public enum BlogWebPublicContentEventHandlers {
     }
 
     private static func kind(
-        for request: WebPublicContentEventContext
+        for context: WebPublicContentEventContext<PublicContentRuntimeContext>
     ) -> Kind? {
-        switch request.templateIdentifier {
+        switch context.baseMetadata.template {
         case "blog.posts":
             return .posts
         case "blog.authors":
@@ -157,7 +221,8 @@ public enum BlogWebPublicContentEventHandlers {
     }
 
     private static func summaryContext(
-        _ value: BlogAppAPI.Components.Schemas.BlogPostSummarySchema
+        _ value: BlogAppAPI.Components.Schemas.BlogPostSummarySchema,
+        mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
@@ -165,15 +230,21 @@ public enum BlogWebPublicContentEventHandlers {
             description: value.metadata.excerpt,
             image: value.imageURL,
             permalink: value.metadata.slug,
-            publicationDate: value.metadata.publicationDate
+            publicationDate: value.metadata.publicationDate,
+            mediaResolver: mediaResolver
         )
-        result["authors"] = value.authors.map(summaryContext)
-        result["tags"] = value.tags.map(summaryContext)
+        result["authors"] = value.authors.map {
+            summaryContext($0, mediaResolver: mediaResolver)
+        }
+        result["tags"] = value.tags.map {
+            summaryContext($0, mediaResolver: mediaResolver)
+        }
         return result
     }
 
     private static func summaryContext(
-        _ value: BlogAppAPI.Components.Schemas.BlogAuthorSummarySchema
+        _ value: BlogAppAPI.Components.Schemas.BlogAuthorSummarySchema,
+        mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
         baseContext(
             id: value.id,
@@ -181,12 +252,14 @@ public enum BlogWebPublicContentEventHandlers {
             description: value.metadata.excerpt,
             image: value.imageURL,
             permalink: value.metadata.slug,
-            publicationDate: value.metadata.publicationDate
+            publicationDate: value.metadata.publicationDate,
+            mediaResolver: mediaResolver
         )
     }
 
     private static func summaryContext(
-        _ value: BlogAppAPI.Components.Schemas.BlogTagSummarySchema
+        _ value: BlogAppAPI.Components.Schemas.BlogTagSummarySchema,
+        mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
         baseContext(
             id: value.id,
@@ -194,12 +267,14 @@ public enum BlogWebPublicContentEventHandlers {
             description: value.metadata.excerpt,
             image: value.imageURL,
             permalink: value.metadata.slug,
-            publicationDate: value.metadata.publicationDate
+            publicationDate: value.metadata.publicationDate,
+            mediaResolver: mediaResolver
         )
     }
 
     private static func pageContext(
-        _ value: BlogAppAPI.Components.Schemas.BlogPostDetailSchema
+        _ value: BlogAppAPI.Components.Schemas.BlogPostDetailSchema,
+        mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
@@ -207,12 +282,19 @@ public enum BlogWebPublicContentEventHandlers {
             description: value.metadata.excerpt,
             image: value.imageURL,
             permalink: value.metadata.slug,
-            publicationDate: value.metadata.publicationDate
+            publicationDate: value.metadata.publicationDate,
+            mediaResolver: mediaResolver
         )
         result["contents"] = ["html": value.content] as [String: any Sendable]
-        result["authors"] = value.authors.map(summaryContext)
-        result["tags"] = value.tags.map(summaryContext)
-        result["relatedPosts"] = value.relatedPosts.map(summaryContext)
+        result["authors"] = value.authors.map {
+            summaryContext($0, mediaResolver: mediaResolver)
+        }
+        result["tags"] = value.tags.map {
+            summaryContext($0, mediaResolver: mediaResolver)
+        }
+        result["relatedPosts"] = value.relatedPosts.map {
+            summaryContext($0, mediaResolver: mediaResolver)
+        }
         result["noindex"] =
             value.metadata.status != "published"
             || value.metadata.noIndex
@@ -220,7 +302,8 @@ public enum BlogWebPublicContentEventHandlers {
     }
 
     private static func pageContext(
-        _ value: BlogAppAPI.Components.Schemas.BlogAuthorDetailSchema
+        _ value: BlogAppAPI.Components.Schemas.BlogAuthorDetailSchema,
+        mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
@@ -228,10 +311,13 @@ public enum BlogWebPublicContentEventHandlers {
             description: value.metadata.excerpt,
             image: value.imageURL,
             permalink: value.metadata.slug,
-            publicationDate: value.metadata.publicationDate
+            publicationDate: value.metadata.publicationDate,
+            mediaResolver: mediaResolver
         )
         result["contents"] = ["html": value.content] as [String: any Sendable]
-        result["posts"] = value.posts.map(summaryContext)
+        result["posts"] = value.posts.map {
+            summaryContext($0, mediaResolver: mediaResolver)
+        }
         result["postCountLabel"] = "\(value.posts.count) posts"
         result["noindex"] =
             value.metadata.status != "published"
@@ -240,7 +326,8 @@ public enum BlogWebPublicContentEventHandlers {
     }
 
     private static func pageContext(
-        _ value: BlogAppAPI.Components.Schemas.BlogTagDetailSchema
+        _ value: BlogAppAPI.Components.Schemas.BlogTagDetailSchema,
+        mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
         var result = baseContext(
             id: value.id,
@@ -248,10 +335,13 @@ public enum BlogWebPublicContentEventHandlers {
             description: value.metadata.excerpt,
             image: value.imageURL,
             permalink: value.metadata.slug,
-            publicationDate: value.metadata.publicationDate
+            publicationDate: value.metadata.publicationDate,
+            mediaResolver: mediaResolver
         )
         result["contents"] = ["html": value.content] as [String: any Sendable]
-        result["posts"] = value.posts.map(summaryContext)
+        result["posts"] = value.posts.map {
+            summaryContext($0, mediaResolver: mediaResolver)
+        }
         result["postCountLabel"] = "\(value.posts.count) posts"
         result["noindex"] =
             value.metadata.status != "published"
@@ -265,12 +355,10 @@ public enum BlogWebPublicContentEventHandlers {
         description: String,
         image: String,
         permalink: String,
-        publicationDate: Double?
+        publicationDate: Double?,
+        mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
-        let resolvedImageURL = WebImageURLResolver.resolve(
-            image,
-            mediaBaseURL: mediaBaseURL
-        )
+        let resolvedImageURL = mediaResolver.resolve(imagePath: image) ?? ""
         var result: [String: any Sendable] = [
             "id": id,
             "title": title,
@@ -290,10 +378,6 @@ public enum BlogWebPublicContentEventHandlers {
                 )
         }
         return result
-    }
-
-    private static var mediaBaseURL: String {
-        AppEnvironmentStore.current.publicOrigins.mediaBaseURL.absoluteString
     }
 
 }

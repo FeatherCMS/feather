@@ -11,7 +11,7 @@ import struct Foundation.Date
 
 extension SettingsTable.Row {
 
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.userId = try row.decode(column: "user_id", as: String.self)
         self.language = try row.decode(column: "language", as: String.self)

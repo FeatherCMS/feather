@@ -1,7 +1,6 @@
 import FeatherAdmin
 import FeatherContracts
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -13,7 +12,7 @@ import WebComponents
 
 struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderEngine: any RenderingEngine
 
     func renderListPage(

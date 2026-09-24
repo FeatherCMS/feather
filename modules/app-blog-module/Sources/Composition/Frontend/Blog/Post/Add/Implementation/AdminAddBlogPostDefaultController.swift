@@ -2,7 +2,6 @@ import BlogAdminAPI
 import BlogAppAPI
 import FeatherAdmin
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import MediaFrontend
@@ -13,17 +12,18 @@ import WebComponents
 import WebFrontend
 
 struct AdminAddBlogPostDefaultController: AdminAddBlogPostController {
+    let apiBuilder: BlogAPIBuilder
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddBlogPostInteractor,
-            presenter: any AdminAddBlogPostPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminAddBlogPostInteractor,
+            any AdminAddBlogPostPresenter
+        >
 
     func getAddBlogPost(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let slugPrefix = (try? await slugPrefix(context: context)) ?? "/"
         let options =
             (try? await runtime.interactor.loadOptions())
@@ -36,9 +36,9 @@ struct AdminAddBlogPostDefaultController: AdminAddBlogPostController {
 
     func postAddBlogPost(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         var lastPayload: BlogPostFormInput?
 
@@ -218,7 +218,7 @@ struct AdminAddBlogPostDefaultController: AdminAddBlogPostController {
     }
 
     private func slugPrefix(
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> String {
         try await slugPrefix(
             context: context,
@@ -227,11 +227,11 @@ struct AdminAddBlogPostDefaultController: AdminAddBlogPostController {
     }
 
     private func slugPrefix(
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         keyPath: KeyPath<AppPublicBlogRouteSettings, String>
     ) async throws -> String {
         let schema = try await AppPublicContentOpenAPIRepository(
-            api: context.blogApplicationAPI()
+            api: apiBuilder.makeBlogApp(context)
         )
         .getRouteSettings()
         let settings = AppPublicBlogRouteSettings(schema: schema)

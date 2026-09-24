@@ -4,12 +4,12 @@ import Hummingbird
 protocol AdminViewContactOverviewController: Sendable {
     func getOverview(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminViewContactOverviewController {
-    func route(on router: Router<DefaultRequestContext>) {
+    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.get(ContactAdminRoutes.contact, use: getOverview)
     }
 }

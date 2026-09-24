@@ -1,10 +1,8 @@
-import AuthAppAPI
+public import AuthAppAPI
 import AuthApplication
 import AuthDomain
-import FeatherApplication
 import FeatherContracts
 import UserApplication
-import UserBackend
 import UserDomain
 
 extension AppAPIGateway {

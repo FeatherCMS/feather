@@ -1,21 +1,23 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminEditUserIdentity {
     let controller: any AdminEditUserIdentityController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: UserAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminEditUserIdentityDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminEditUserIdentityDefaultInteractor(
                         identityRepository:
                             AdminEditUserIdentityOpenAPIRepository(
-                                api: context.userAdminAPI()
+                                api: apiBuilder.makeUserAdmin(context)
                             ),
                         roleRepository:
                             AdminEditUserIdentityRoleOpenAPIRepository(
-                                api: context.userAdminAPI()
+                                api: apiBuilder.makeUserAdmin(context)
                             )
                     ),
                     presenter: AdminEditUserIdentityDefaultPresenter(

@@ -5,9 +5,8 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherApplication
-import FeatherContracts
+public import FeatherContracts
 import Foundation
-import NewsDomain
 import WebApplication
 
 public struct ListPublicArticles {
@@ -19,17 +18,16 @@ public struct ListPublicArticles {
         self.query = query
     }
 
-    public func execute() async throws -> [PublicNewsArticleSummary] {
+    public func execute(
+        limit: Int? = nil
+    ) async throws -> [PublicNewsArticleSummary] {
         let now = Date()
         return try await query.run { scope in
             let articles = try await scope.article.list(
                 query: .init(
-                    page: .init(size: 10000, number: 1),
+                    page: .init(size: limit ?? 10000, number: 1),
                     sort: [.init(field: .createdAt, direction: .desc)]
                 )
-            )
-            let categoryIDsByArticleID = try await scope.article.categoryIDs(
-                for: articles.items.map(\.id)
             )
             var result: [PublicNewsArticleSummary] = []
             for item in articles.items {
@@ -52,11 +50,32 @@ public struct ListPublicArticles {
                         media: nil,
                         metadata: metadata,
                         readingTime: NewsReadingTime.minutes(for: item.content),
-                        categoryIDs: categoryIDsByArticleID[item.id] ?? []
+                        categoryIDs: []
                     )
                 )
+                if let limit, result.count == limit {
+                    break
+                }
             }
-            return result
+            var categoryIDsByArticleID: [String: [String]] = [:]
+            if limit == nil {
+                categoryIDsByArticleID = try await scope.article.categoryIDs(
+                    for: result.map(\.id)
+                )
+            }
+            return result.map { item in
+                .init(
+                    id: item.id,
+                    title: item.title,
+                    excerpt: item.excerpt,
+                    imageAssetId: item.imageAssetId,
+                    imageURL: item.imageURL,
+                    media: item.media,
+                    metadata: item.metadata,
+                    readingTime: item.readingTime,
+                    categoryIDs: categoryIDsByArticleID[item.id] ?? []
+                )
+            }
         }
     }
 }

@@ -5,12 +5,10 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import AuthDomain
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
+public import FeatherApplication
+public import FeatherContracts
 import Foundation
 import SystemApplication
-import UserDomain
 
 public struct RequestMagicLink: UseCase {
     let transaction: any TransactionExecutor<WriteRequestMagicLink>
@@ -64,7 +62,7 @@ public struct RequestMagicLink: UseCase {
                     try await scope.variable.get(
                         "web-settings-public-base-url"
                     )?
-                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .whitespaceTrimmed
                 let publicBaseURL =
                     configuredPublicBaseURL.flatMap {
                         $0.isEmpty ? nil : $0

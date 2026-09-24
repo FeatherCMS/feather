@@ -1,10 +1,6 @@
 import AccountApplication
 import AccountInfrastructure
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
 import FeatherInfrastructure
-import SystemApplication
 import SystemInfrastructure
 import UserInfrastructure
 

@@ -7,7 +7,6 @@
 
 import SystemDomain
 import NIOHTTP1
-import HTTPTypes
 import OpenAPIRuntime
 
 /*

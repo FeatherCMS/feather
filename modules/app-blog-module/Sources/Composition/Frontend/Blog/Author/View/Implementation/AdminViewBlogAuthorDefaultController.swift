@@ -13,16 +13,16 @@ import WebFrontend
 
 struct AdminViewBlogAuthorDefaultController: AdminViewBlogAuthorController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewBlogAuthorInteractor,
-            presenter: any AdminViewBlogAuthorPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminViewBlogAuthorInteractor,
+            any AdminViewBlogAuthorPresenter
+        >
 
     func getBlogAuthor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         do {

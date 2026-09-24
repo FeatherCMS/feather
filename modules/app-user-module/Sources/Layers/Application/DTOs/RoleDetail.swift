@@ -5,10 +5,9 @@
 //  Created by Tibor Bödecs on 2026. 04. 11.
 //
 
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct RoleDetail: DTO {
     public let id: String

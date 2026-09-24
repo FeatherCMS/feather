@@ -4,10 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import AuthDomain
-import FeatherApplication
-import FeatherContracts
-import UserApplication
+public import FeatherContracts
+public import UserApplication
 
 public struct ReadAuth: Scope {
     public let identity: any IdentityQueries

@@ -1,7 +1,5 @@
-import AuthAdminAPI
+public import AuthAdminAPI
 import AuthApplication
-import FeatherApplication
-import FeatherBackend
 import FeatherContracts
 
 extension AdminAPIGateway {

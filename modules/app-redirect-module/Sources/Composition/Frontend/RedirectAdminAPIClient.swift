@@ -1,10 +1,10 @@
 import AsyncHTTPClient
-import FeatherAdmin
-import Foundation
+public import FeatherAdmin
+public import Foundation
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
-import RedirectAdminAPI
+public import OpenAPIRuntime
+public import RedirectAdminAPI
 
 public struct RedirectAdminAPIClient: Sendable {
     public let client: RedirectAdminAPI.Client
@@ -55,11 +55,22 @@ public struct RedirectAdminAPIClient: Sendable {
     }
 }
 
-extension DefaultRequestContext {
-    public func redirectAdminAPI() -> RedirectAdminAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+public struct RedirectAPIBuilder: Sendable {
+    private let apiBaseURL: URL
+
+    public init(apiBaseURL: URL) {
+        self.apiBaseURL = apiBaseURL
+    }
+
+    public func makeRedirectAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> RedirectAdminAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeRedirectApp(
+        _ context: DefaultRequestContext
+    ) -> RedirectAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
     }
 }

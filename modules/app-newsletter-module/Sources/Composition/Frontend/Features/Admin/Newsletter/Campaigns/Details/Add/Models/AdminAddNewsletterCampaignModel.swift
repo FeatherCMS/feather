@@ -1,12 +1,3 @@
-import FeatherAdmin
-import FeatherValidation
-import HTML
-import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
-
 struct AdminAddNewsletterCampaignModel: Sendable {
     let key: String
     let name: String

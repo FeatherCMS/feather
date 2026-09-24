@@ -4,10 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
-import FeatherContracts
-import SystemApplication
-import WebDomain
+public import FeatherContracts
+public import SystemApplication
+public import WebDomain
 
 public struct WritePageMetadata: Scope {
     public let page: any PageRepository

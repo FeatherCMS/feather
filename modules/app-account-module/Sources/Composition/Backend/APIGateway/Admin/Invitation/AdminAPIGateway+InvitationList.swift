@@ -1,5 +1,4 @@
-import AccountAdminAPI
-import AccountApplication
+public import AccountAdminAPI
 
 extension AdminAPIGateway {
 

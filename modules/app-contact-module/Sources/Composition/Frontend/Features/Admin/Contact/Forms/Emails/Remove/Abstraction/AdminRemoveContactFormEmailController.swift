@@ -8,14 +8,16 @@ import WebBuilders
 import WebComponents
 
 protocol AdminRemoveContactFormEmailController: Sendable {
-    func confirm(request: Request, context: DefaultRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
-    func remove(request: Request, context: DefaultRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
 }
 
 extension AdminRemoveContactFormEmailController {
-    func route(on router: Router<DefaultRequestContext>) {
+    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.get(
             ContactAdminRoutes.formEmailRemoveRoute,
             use: confirm

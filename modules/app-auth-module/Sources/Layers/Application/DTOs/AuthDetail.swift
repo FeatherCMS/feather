@@ -4,10 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import AuthDomain
-import FeatherApplication
-import FeatherContracts
-import UserDomain
+public import AuthDomain
+public import FeatherApplication
+public import UserDomain
 
 public struct AuthDetail: DTO {
     public var user: Identity

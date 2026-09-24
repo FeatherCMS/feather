@@ -1,6 +1,5 @@
-import AccountDomain
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 import Foundation
 
 public struct ValidateInvitation: UseCase {

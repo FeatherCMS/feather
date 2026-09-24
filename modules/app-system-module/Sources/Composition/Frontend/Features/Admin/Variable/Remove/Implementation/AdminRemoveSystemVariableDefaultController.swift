@@ -8,16 +8,16 @@ struct AdminRemoveSystemVariableDefaultController:
     AdminRemoveSystemVariableController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveSystemVariableInteractor,
-            presenter: any AdminRemoveSystemVariablePresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminRemoveSystemVariableInteractor,
+            any AdminRemoveSystemVariablePresenter
+        >
 
     func getRemoveSystemVariables(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: SystemPermissions.Variables.delete)
         else {
@@ -67,9 +67,9 @@ struct AdminRemoveSystemVariableDefaultController:
 
     func postRemoveSystemVariables(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: SystemPermissions.Variables.delete)
         else {

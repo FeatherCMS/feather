@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
@@ -19,7 +20,7 @@ struct AdminListNewsletterSubscribersDefaultInteractor:
         let campaigns = try await repository.campaigns()
         let items = try await repository.list()
         let normalizedSearch =
-            search?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            search?.whitespaceTrimmed ?? ""
         let filtered = items.filter {
             (normalizedSearch.isEmpty
                 || $0.email.localizedCaseInsensitiveContains(normalizedSearch)

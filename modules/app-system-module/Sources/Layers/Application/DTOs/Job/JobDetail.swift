@@ -1,6 +1,6 @@
-import FeatherApplication
+public import FeatherApplication
 import FeatherContracts
-import Foundation
+public import Foundation
 
 public struct JobDetail: DTO, Sendable {
     public let id: String

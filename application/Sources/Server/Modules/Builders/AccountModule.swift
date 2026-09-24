@@ -1,7 +1,6 @@
 import FeatherContracts
 import AccountApplication
 import AccountInfrastructure
-import FeatherApplication
 import FeatherInfrastructure
 
 struct AccountModule: Sendable {

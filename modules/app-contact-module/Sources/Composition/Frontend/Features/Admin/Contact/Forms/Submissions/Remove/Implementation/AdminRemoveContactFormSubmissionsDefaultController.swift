@@ -1,25 +1,20 @@
 import FeatherAdmin
-import FeatherValidation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
 
 struct AdminRemoveContactFormSubmissionsDefaultController:
     AdminRemoveContactFormSubmissionsController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveContactFormSubmissionsInteractor,
-            presenter: any AdminRemoveContactFormSubmissionsPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminRemoveContactFormSubmissionsInteractor,
+            any AdminRemoveContactFormSubmissionsPresenter
+        >
 
-    func confirm(request: Request, context: DefaultRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let formId = try context.requiredParameter("formKey")
         let submissionId = try context.requiredParameter("submissionId")
         let submission = try await interactor.get(
@@ -32,10 +27,11 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         )
     }
 
-    func remove(request: Request, context: DefaultRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         let formId = try context.requiredParameter("formKey")
         let submissionId = try context.requiredParameter("submissionId")
         let nonceRequest = try await request.decode(
@@ -61,11 +57,11 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         )
     }
 
-    func confirmSelected(request: Request, context: DefaultRequestContext)
+    func confirmSelected(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> HTMLResponse
     {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         return try await presenter.renderRemovePage(
             formId: try context.requiredParameter("formKey"),
             items: request.queryStrings("ids")
@@ -75,7 +71,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         )
     }
 
-    func removeSelected(request: Request, context: DefaultRequestContext)
+    func removeSelected(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> Response
     {
@@ -90,7 +86,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
                 sessionToken: context.sessionToken
             )
         else { return Response(status: .badRequest) }
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         try await interactor.remove(
             formId: formId,
             ids: payload.input.normalizedIds

@@ -5,15 +5,18 @@ import MediaContracts
 
 struct AdminAddMediaVariantDefaultController: AdminAddMediaVariantController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddMediaVariantInteractor,
-            presenter: any AdminAddMediaVariantPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminAddMediaVariantInteractor,
+            any AdminAddMediaVariantPresenter
+        >
 
-    func getAddMediaVariant(request: Request, context: DefaultRequestContext)
+    func getAddMediaVariant(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: MediaPermissions.Variants.create)
         else {
             return try await runtime.presenter.renderAddError(
@@ -24,10 +27,13 @@ struct AdminAddMediaVariantDefaultController: AdminAddMediaVariantController {
         return try await runtime.presenter.renderAddPage(state: .empty())
     }
 
-    func postAddMediaVariant(request: Request, context: DefaultRequestContext)
+    func postAddMediaVariant(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: MediaPermissions.Variants.create)
         else {
             return try await runtime.presenter

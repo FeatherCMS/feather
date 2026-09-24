@@ -1,10 +1,11 @@
+import FeatherContracts
 import Foundation
 
 enum WebMetadataDateDefaults {
 
     static func publicationDate(_ value: String?) -> String {
         let trimmed =
-            value?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+            value?.whitespaceTrimmed ?? ""
         if trimmed.isEmpty {
             return currentLocalDateTime()
         }

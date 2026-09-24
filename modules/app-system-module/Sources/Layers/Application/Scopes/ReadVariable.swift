@@ -4,9 +4,7 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
-import FeatherContracts
-import SystemDomain
+public import FeatherContracts
 
 public struct ReadVariable: Scope {
     public let variable: any VariableQueries

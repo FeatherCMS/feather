@@ -5,8 +5,9 @@
 //  Created by Tibor Bödecs on 2026. 03. 01..
 //
 
+import FeatherContracts
 import Foundation
-import Hummingbird
+public import Hummingbird
 
 public struct URLFormRequestDecoder: RequestDecoder {
     public let decoder = URLEncodedFormDecoder()
@@ -109,7 +110,7 @@ public struct URLFormRequestDecoder: RequestDecoder {
                 omittingEmptySubsequences: true
             )
             .first?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
             .lowercased()
         return mediaType == "application/x-www-form-urlencoded"
     }

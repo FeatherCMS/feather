@@ -1,5 +1,5 @@
-import FeatherStorage
-import Foundation
+public import FeatherStorage
+public import Foundation
 import NIOCore
 
 public enum MediaStorageData {

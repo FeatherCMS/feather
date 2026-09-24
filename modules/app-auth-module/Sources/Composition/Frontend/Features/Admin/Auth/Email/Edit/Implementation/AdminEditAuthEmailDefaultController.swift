@@ -19,21 +19,18 @@ import WebComponents
 
 struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditAuthEmailInteractor,
-            presenter: any AdminEditAuthEmailPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditAuthEmailInteractor,
+            any AdminEditAuthEmailPresenter
+        >
 
     func getEditAuthEmail(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let id = try context.requiredID()
         let isEdited = request.hasQueryFlag("edited")
-        let (interactor, presenter) = buildRuntime(
-            request,
-            context
-        )
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.update)
         else {
@@ -68,13 +65,10 @@ struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
 
     func postEditAuthEmail(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let id = try context.requiredID()
-        let (interactor, presenter) = buildRuntime(
-            request,
-            context
-        )
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.update)
         else {
             return
@@ -173,7 +167,7 @@ struct AdminEditAuthEmailDefaultController: AdminEditAuthEmailController {
 
     private func updateResponse(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         id: String,
         presenter: any AdminEditAuthEmailPresenter,
         state: AuthEmailForm.State

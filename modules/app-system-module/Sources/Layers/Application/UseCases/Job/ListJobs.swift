@@ -1,7 +1,6 @@
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 import SystemContracts
-import SystemDomain
 
 public struct ListJobs: UseCase {
     struct Action: PermissionAction {

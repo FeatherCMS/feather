@@ -1,14 +1,13 @@
 import AccountAppAPI
 import FeatherAdmin
-import FeatherValidation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
-import SGML
 import WebBuilders
 import WebComponents
 
 struct AppAcceptAccountInvitation {
+    let apiBuilder: AccountAPIBuilder
 
     struct FormInput: Codable, Sendable {
         let token: String
@@ -77,6 +76,11 @@ struct AppAcceptAccountInvitation {
 
     let renderingEngine: any RenderingEngine
 
+    init(apiBuilder: AccountAPIBuilder, renderingEngine: any RenderingEngine) {
+        self.apiBuilder = apiBuilder
+        self.renderingEngine = renderingEngine
+    }
+
     func get(
         request: Request,
         context: DefaultRequestContext
@@ -96,7 +100,7 @@ struct AppAcceptAccountInvitation {
             )
         }
         do {
-            let response = try await context.accountAppAPI()
+            let response = try await apiBuilder.makeAccountApp(context)
                 .withOpenAPIRepositoryErrorMapping { client in
                     try await client.accountInvitationValidation(
                         query: .init(token: token),
@@ -117,7 +121,7 @@ struct AppAcceptAccountInvitation {
                     context: &buildContext
                 )
             case .undocumented(let statusCode, let response):
-                throw try await context.accountAppAPI()
+                throw try await apiBuilder.makeAccountApp(context)
                     .failure(
                         statusCode: statusCode,
                         responseBody: response.body
@@ -174,7 +178,7 @@ struct AppAcceptAccountInvitation {
             )
         }
         do {
-            let response = try await context.accountAppAPI()
+            let response = try await apiBuilder.makeAccountApp(context)
                 .withOpenAPIRepositoryErrorMapping { client in
                     try await client.accountInvitationExchange(
                         .init(
@@ -202,7 +206,7 @@ struct AppAcceptAccountInvitation {
                     context: &buildContext
                 )
             case .undocumented(let statusCode, let response):
-                throw try await context.accountAppAPI()
+                throw try await apiBuilder.makeAccountApp(context)
                     .failure(
                         statusCode: statusCode,
                         responseBody: response.body

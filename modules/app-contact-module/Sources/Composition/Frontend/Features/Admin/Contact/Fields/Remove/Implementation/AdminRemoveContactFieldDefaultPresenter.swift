@@ -12,7 +12,7 @@ struct AdminRemoveContactFieldDefaultPresenter:
     AdminRemoveContactFieldPresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
     func renderRemovePage(items: [NewAdminRemoveItemContext])
         async throws -> HTMLResponse

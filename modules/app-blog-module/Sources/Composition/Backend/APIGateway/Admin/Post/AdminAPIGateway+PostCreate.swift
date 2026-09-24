@@ -1,6 +1,5 @@
-import BlogAdminAPI
+public import BlogAdminAPI
 import BlogApplication
-import FeatherApplication
 import FeatherContracts
 
 extension AdminAPIGateway {

@@ -1,9 +1,7 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
-import FeatherInfrastructure
-import SystemApplication
+public import FeatherContracts
+public import FeatherDatabase
+public import FeatherDomain
+public import FeatherInfrastructure
 import UserApplication
 import UserDomain
 

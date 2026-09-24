@@ -1,8 +1,6 @@
 import FeatherAdmin
-import FeatherContracts
 import MediaAdminAPI
 import OpenAPIRuntime
-import WebComponents
 
 struct AdminRemoveMediaVariantOpenAPIRepository:
     AdminRemoveMediaVariantRepository

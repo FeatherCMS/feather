@@ -5,12 +5,9 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherInfrastructure
-import NewsApplication
-import WebApplication
-import WebDomain
+public import FeatherInfrastructure
+public import NewsApplication
+public import WebApplication
 
 extension ArticleTable.Row {
     var asQueryListItem: ArticleList.Item {

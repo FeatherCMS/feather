@@ -1,5 +1,5 @@
-import CSS
-import Hummingbird
+public import CSS
+public import Hummingbird
 
 public struct CSSResponse: ResponseGenerator {
 

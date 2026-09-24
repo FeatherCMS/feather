@@ -1,4 +1,4 @@
-import ContactAppAPI
+public import ContactAppAPI
 import ContactApplication
 import ContactDomain
 import Foundation

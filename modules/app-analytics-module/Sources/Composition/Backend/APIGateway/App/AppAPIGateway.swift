@@ -1,4 +1,4 @@
-import AnalyticsAppAPI
+public import AnalyticsAppAPI
 
 public struct AppAPIGateway: Sendable, AnalyticsAppAPI.APIProtocol {
     public let useCases: UseCases

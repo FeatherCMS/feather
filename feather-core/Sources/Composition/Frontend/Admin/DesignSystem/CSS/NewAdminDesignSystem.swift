@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 09. 04..
 //
 
-import CSS
+public import CSS
 import WebBuilders
 
 public struct NewAdminDesignSystem {

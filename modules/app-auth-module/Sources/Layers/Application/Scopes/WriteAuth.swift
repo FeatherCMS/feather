@@ -4,10 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import AuthDomain
-import FeatherApplication
-import FeatherContracts
-import UserDomain
+public import AuthDomain
+public import FeatherContracts
+public import UserDomain
 
 // TODO: no need for magic link custom scope for sign in
 public struct WriteAuth: Scope {

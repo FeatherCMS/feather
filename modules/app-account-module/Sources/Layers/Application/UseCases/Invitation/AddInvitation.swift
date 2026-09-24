@@ -1,9 +1,7 @@
 import AccountContracts
 import AccountDomain
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
-import Foundation
+public import FeatherApplication
+public import FeatherContracts
 import SystemApplication
 import UserApplication
 import UserDomain
@@ -100,7 +98,7 @@ public struct AddInvitation: UseCase {
             )
             let configuredPublicBaseURL =
                 try await scope.variable.get("web-settings-public-base-url")?
-                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .whitespaceTrimmed
             let publicBaseURL =
                 configuredPublicBaseURL?.isEmpty == false
                 ? configuredPublicBaseURL!

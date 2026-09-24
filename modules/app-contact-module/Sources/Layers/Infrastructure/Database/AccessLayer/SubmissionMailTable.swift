@@ -8,7 +8,7 @@ import class Foundation.JSONDecoder
 import class Foundation.JSONEncoder
 
 extension SubmissionMailTable.Row {
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         id = try row.decode(column: "id", as: String.self)
         formId = try row.decode(column: "form_id", as: String.self)
         mailFrom = try row.decode(column: "mail_from", as: String.self)

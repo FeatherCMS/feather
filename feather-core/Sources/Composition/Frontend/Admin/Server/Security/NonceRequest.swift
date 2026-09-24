@@ -1,5 +1,3 @@
-import Foundation
-
 /// Decodes a flat form payload while keeping its one-time nonce separate from
 /// the feature input.
 public struct NonceRequest<Input: Decodable & Sendable>:
@@ -12,7 +10,7 @@ public struct NonceRequest<Input: Decodable & Sendable>:
         case nonce = "_nonce"
     }
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         nonce = try container.decodeIfPresent(
             String.self,

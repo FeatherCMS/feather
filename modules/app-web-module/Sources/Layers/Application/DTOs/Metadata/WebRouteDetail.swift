@@ -4,8 +4,7 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
 
 public struct WebRouteDetail: DTO {
     public let referenceType: String

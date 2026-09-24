@@ -3,16 +3,12 @@ import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
 
 struct AdminEditNewsletterCampaignDefaultPresenter:
     AdminEditNewsletterCampaignPresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
     func render(
         item: AdminNewsletterCampaignItem,

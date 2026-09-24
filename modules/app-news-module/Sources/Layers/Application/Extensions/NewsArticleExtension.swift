@@ -1,6 +1,3 @@
-import FeatherApplication
-import FeatherContracts
-
 public protocol NewsArticleExtension: Sendable {
     associatedtype CreateInput: Sendable
     associatedtype UpdateInput: Sendable

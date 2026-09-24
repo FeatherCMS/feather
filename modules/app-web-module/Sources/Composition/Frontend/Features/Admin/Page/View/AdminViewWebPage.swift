@@ -6,14 +6,17 @@ import OpenAPIRuntime
 struct AdminViewWebPage {
     let controller: any AdminViewWebPageController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: WebAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminViewWebPageDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminViewWebPageDefaultInteractor(
                         repository: AdminViewWebPageOpenAPIRepository(
-                            api: context.webAdminAPI(),
-                            mediaAPI: context.mediaAdminAPI()
+                            api: apiBuilder.makeWebAdmin(context),
+                            mediaAPI: apiBuilder.makeMediaAdmin(context)
                         )
                     ),
                     presenter: AdminViewWebPageDefaultPresenter(

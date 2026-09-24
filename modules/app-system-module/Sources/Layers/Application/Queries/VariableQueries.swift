@@ -6,7 +6,6 @@
 //
 
 import FeatherApplication
-import FeatherContracts
 
 public protocol VariableQueries: Sendable {
 

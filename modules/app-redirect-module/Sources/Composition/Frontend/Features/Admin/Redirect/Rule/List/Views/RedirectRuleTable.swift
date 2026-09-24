@@ -1,6 +1,5 @@
 import FeatherAdmin
 import HTML
-import Hummingbird
 import RedirectAdminAPI
 import SGML
 import WebBuilders

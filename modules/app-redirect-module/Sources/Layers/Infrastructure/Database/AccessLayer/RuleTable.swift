@@ -7,13 +7,12 @@
 import FeatherDatabase
 import FeatherInfrastructure
 import RedirectContracts
-import RedirectDomain
 
 import struct Foundation.Date
 
 extension RuleTable.Row {
 
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.source = try row.decode(column: "source", as: String.self)
         self.destination = try row.decode(
@@ -173,7 +172,8 @@ struct RuleTable {
             query: #"""
                 SELECT *
                 FROM redirect_rule
-                WHERE source=\#(source)
+                WHERE TRIM(BOTH '/' FROM source) =
+                    TRIM(BOTH '/' FROM \#(source))
                 LIMIT 1;
                 """#
         ) { sequence in

@@ -1,4 +1,4 @@
-import FeatherContracts
+public import FeatherContracts
 
 public struct UserIdentitySeedProvider: Event {
     public typealias Output = [UserIdentitySeedDefinition]
