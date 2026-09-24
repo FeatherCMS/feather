@@ -172,10 +172,6 @@ public struct NewAdminFormFieldMultiInput: Component {
                 )
                 OutlineOffset(1.px)
             },
-            Custom(".new-admin-multi-input .field-help") {
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                FontSize(0.86.rem)
-            },
             Custom(".new-admin-multi-input .field-error") {
                 Color(.red)
                 FontSize(0.86.rem)
@@ -261,7 +257,7 @@ public struct NewAdminFormFieldMultiInput: Component {
                 .role("status")
                 .ariaLive(.polite)
             if let help = state.help {
-                Span(help).class("field-help")
+                context.build(NewAdminFormFieldHelp(help))
             }
             if let error = state.error {
                 Span(error).id(errorID).class("field-error")
