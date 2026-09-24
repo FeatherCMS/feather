@@ -3,7 +3,8 @@ import Mustache
 
 public struct DefaultThemeRenderer: PublicThemeRenderer {
 
-    private let library: MustacheLibrary
+    private let fallbackLibrary: MustacheLibrary
+    private let templateLoader: any TemplateLoader
     private let templatePath: @Sendable (String) -> String?
     private let layoutTemplate = "html"
 
@@ -11,7 +12,8 @@ public struct DefaultThemeRenderer: PublicThemeRenderer {
         templateLoader: any TemplateLoader,
         templatePath: @escaping @Sendable (String) -> String?
     ) throws {
-        self.library = .init(templates: try templateLoader.load())
+        self.fallbackLibrary = .init(templates: try templateLoader.load())
+        self.templateLoader = templateLoader
         self.templatePath = templatePath
     }
 
@@ -19,6 +21,17 @@ public struct DefaultThemeRenderer: PublicThemeRenderer {
         templateIdentifier: String?,
         context: [String: any Sendable]
     ) -> HTMLResponse {
+        #if DEBUG
+        let library: MustacheLibrary
+        if let templates = try? templateLoader.load() {
+            library = .init(templates: templates)
+        }
+        else {
+            library = fallbackLibrary
+        }
+        #else
+        let library = fallbackLibrary
+        #endif
         let template =
             templatePath(templateIdentifier ?? "") ?? "pages/default"
         let body =
