@@ -223,10 +223,10 @@ func buildRouter(
         useCases: modules.media,
         mediaResolver: modules.mediaResolver
     )
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
+    .registerHandlers(
+        on: router,
+        middlewares: middlewares
+    )
 
     try BlogBackend.AppAPIGateway(useCases: modules.blog)
         .registerHandlers(
