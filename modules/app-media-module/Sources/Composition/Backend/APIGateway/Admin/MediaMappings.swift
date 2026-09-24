@@ -58,7 +58,7 @@ extension AdminAPIGateway {
             name: detail.name,
             slug: detail.slug,
             slugPath: detail.slugPath,
-            url: detail.url,
+            url: mediaResolver.resolve(imagePath: detail.url) ?? detail.url,
             _extension: detail.extension,
             contentType: detail.contentType,
             sizeBytes: detail.sizeBytes,
@@ -75,7 +75,7 @@ extension AdminAPIGateway {
     {
         .init(
             id: item.id,
-            url: item.url,
+            url: mediaResolver.resolve(imagePath: item.url) ?? item.url,
             _extension: item.extension,
             title: item.title,
             altText: item.altText,
@@ -83,7 +83,7 @@ extension AdminAPIGateway {
                 .init(
                     key: $0.key,
                     name: $0.name,
-                    url: $0.url,
+                    url: mediaResolver.resolve(imagePath: $0.url) ?? $0.url,
                     _extension: $0.extension
                 )
             }
@@ -99,7 +99,7 @@ extension AdminAPIGateway {
             name: item.name,
             slug: item.slug,
             slugPath: item.slugPath,
-            url: item.url,
+            url: mediaResolver.resolve(imagePath: item.url) ?? item.url,
             _extension: item.extension,
             contentType: item.contentType,
             sizeBytes: item.sizeBytes,
@@ -123,15 +123,16 @@ extension AdminAPIGateway {
     func map(_ item: MediaBackend.UseCases.AssociatedVariantFile)
         -> MediaAdminAPI.Components.Schemas.MediaAssetVariantListItemSchema
     {
-        .init(
+        let url = mediaVariantPublicURL(
+            assetId: item.assetId,
+            name: item.name,
+            extension: item.extension
+        )
+        return .init(
             variantId: item.variantId,
             name: item.name,
             _extension: item.extension,
-            url: mediaVariantPublicURL(
-                assetId: item.assetId,
-                name: item.name,
-                extension: item.extension
-            )
+            url: mediaResolver.resolve(imagePath: url) ?? url
         )
     }
 

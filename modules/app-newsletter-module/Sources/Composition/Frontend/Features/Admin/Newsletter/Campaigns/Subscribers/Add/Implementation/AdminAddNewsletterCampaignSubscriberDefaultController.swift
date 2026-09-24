@@ -21,7 +21,7 @@ struct AdminAddNewsletterCampaignSubscriberDefaultController:
     {
         let (_, presenter) = buildRuntime((request, context))
         return try await presenter.render(
-            newsletterId: try request.requiredParameter("newsletterId"),
+            newsletterId: try context.requiredParameter("newsletterId"),
             form: .init(
                 email: "",
                 firstName: "",
@@ -37,7 +37,7 @@ struct AdminAddNewsletterCampaignSubscriberDefaultController:
         -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let newsletterId = try request.requiredParameter("newsletterId")
+        let newsletterId = try context.requiredParameter("newsletterId")
         let form = try await request.decode(
             as: NewsletterCampaignSubscriberForm.self,
             context: context

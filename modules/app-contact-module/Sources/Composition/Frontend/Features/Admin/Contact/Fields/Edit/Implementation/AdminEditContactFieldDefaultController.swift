@@ -26,7 +26,7 @@ struct AdminEditContactFieldDefaultController:
         else {
             return try await presenter.renderForbiddenPage()
         }
-        let id = try request.requiredParameter("fieldId")
+        let id = try context.requiredParameter("fieldId")
         do {
             return try await presenter.renderPage(
                 field: try await interactor.get(id: id),
@@ -63,7 +63,7 @@ struct AdminEditContactFieldDefaultController:
                 .renderForbiddenPage()
                 .response(from: request, context: context)
         }
-        let id = try request.requiredParameter("fieldId")
+        let id = try context.requiredParameter("fieldId")
         let form = try await request.decode(
             as: ContactFieldFormInput.self,
             context: context

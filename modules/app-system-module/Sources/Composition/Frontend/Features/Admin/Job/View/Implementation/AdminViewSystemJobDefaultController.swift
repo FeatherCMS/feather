@@ -20,7 +20,7 @@ struct AdminViewSystemJobDefaultController: AdminViewSystemJobController {
                 error: .forbidden
             )
         }
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         do {
             let job = try await runtime.interactor.execute(
                 entity: .init(id: id)

@@ -126,7 +126,7 @@ struct AdminListWebPageDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         let payload = try await request.decode(
             as: NewAdminStatusActionFormInput.self,
             context: context

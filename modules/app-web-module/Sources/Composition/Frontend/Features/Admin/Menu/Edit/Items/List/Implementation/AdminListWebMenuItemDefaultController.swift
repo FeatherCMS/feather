@@ -18,7 +18,7 @@ struct AdminListWebMenuItemDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
-        let menuId = try request.requiredID()
+        let menuId = try context.requiredID()
         let page = request.queryPage()
         let search = request.querySearch()
         let permissions = context.currentUserPermissions
@@ -65,7 +65,7 @@ struct AdminListWebMenuItemDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
-        let menuId = try request.requiredID()
+        let menuId = try context.requiredID()
         let selectedIds = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
@@ -118,7 +118,7 @@ struct AdminListWebMenuItemDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime((request, context))
-        let menuId = try request.requiredID()
+        let menuId = try context.requiredID()
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
@@ -158,8 +158,8 @@ struct AdminListWebMenuItemDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime((request, context))
-        let menuId = try request.requiredID()
-        let itemId = try request.requiredParameter("itemId")
+        let menuId = try context.requiredID()
+        let itemId = try context.requiredParameter("itemId")
         let payload = try await request.decode(
             as: WebMenuItemMoveFormInput.self,
             context: context

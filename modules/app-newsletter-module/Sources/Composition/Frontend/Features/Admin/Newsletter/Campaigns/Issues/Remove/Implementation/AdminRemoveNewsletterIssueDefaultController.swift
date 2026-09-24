@@ -20,9 +20,9 @@ struct AdminRemoveNewsletterIssueDefaultController:
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime((request, context))
-        let issueId = try request.requiredParameter("issueId")
+        let issueId = try context.requiredParameter("issueId")
         return try await presenter.render(
-            newsletterId: try request.requiredParameter("newsletterId"),
+            newsletterId: try context.requiredParameter("newsletterId"),
             item: .init(id: issueId, label: issueId)
         )
     }
@@ -31,7 +31,7 @@ struct AdminRemoveNewsletterIssueDefaultController:
         -> Response
     {
         let (interactor, _) = buildRuntime((request, context))
-        let newsletterId = try request.requiredParameter("newsletterId")
+        let newsletterId = try context.requiredParameter("newsletterId")
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
@@ -44,7 +44,7 @@ struct AdminRemoveNewsletterIssueDefaultController:
         else { return Response(status: .badRequest) }
         try await interactor.remove(
             newsletterId: newsletterId,
-            issueId: try request.requiredParameter("issueId")
+            issueId: try context.requiredParameter("issueId")
         )
         return AdminNotificationFlash.redirect(
             to: NewsletterAdminRoutes.campaignIssues(RouterPath(newsletterId))

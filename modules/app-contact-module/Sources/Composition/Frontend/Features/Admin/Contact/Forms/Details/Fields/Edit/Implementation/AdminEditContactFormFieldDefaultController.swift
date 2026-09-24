@@ -21,7 +21,7 @@ struct AdminEditContactFormFieldDefaultController:
     {
         let (interactor, presenter) = buildRuntime((request, context))
         let formId = context.parameters.get("formId", as: String.self) ?? ""
-        let id = try request.requiredParameter("fieldId")
+        let id = try context.requiredParameter("fieldId")
         do {
             return try await presenter.renderPage(
                 formId: formId,
@@ -54,7 +54,7 @@ struct AdminEditContactFormFieldDefaultController:
     {
         let (interactor, presenter) = buildRuntime((request, context))
         let formId = context.parameters.get("formId", as: String.self) ?? ""
-        let id = try request.requiredParameter("fieldId")
+        let id = try context.requiredParameter("fieldId")
         let form = try await request.decode(
             as: ContactFormFieldAddForm.self,
             context: context

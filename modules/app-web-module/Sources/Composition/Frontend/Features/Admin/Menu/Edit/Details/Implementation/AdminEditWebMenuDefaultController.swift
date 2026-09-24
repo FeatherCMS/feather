@@ -18,7 +18,7 @@ struct AdminEditWebMenuDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         do {
             let menu = try await runtime.interactor.load(id: id)
@@ -47,7 +47,7 @@ struct AdminEditWebMenuDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         var lastPayload: WebMenuFormInput?
 

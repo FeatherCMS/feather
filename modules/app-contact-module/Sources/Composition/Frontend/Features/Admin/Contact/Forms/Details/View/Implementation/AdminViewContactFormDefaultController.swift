@@ -19,7 +19,7 @@ struct AdminViewContactFormDefaultController: AdminViewContactFormController {
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let formId = try request.requiredParameter("formId")
+        let formId = try context.requiredParameter("formId")
         do {
             return try await presenter.renderDetailsPage(
                 item: try await interactor.get(id: formId),

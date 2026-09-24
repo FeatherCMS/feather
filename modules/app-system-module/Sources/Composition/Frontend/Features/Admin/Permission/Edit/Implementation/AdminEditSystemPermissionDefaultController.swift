@@ -17,7 +17,7 @@ struct AdminEditSystemPermissionDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         guard
             context.isCurrentUserAllowed(
                 to: SystemPermissions.Permissions.update
@@ -47,7 +47,7 @@ struct AdminEditSystemPermissionDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         guard
             context.isCurrentUserAllowed(
                 to: SystemPermissions.Permissions.update

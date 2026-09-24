@@ -20,8 +20,8 @@ struct AdminViewNewsletterCampaignSubscriberDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let newsletterId = try request.requiredParameter("newsletterId")
-        let subscriberId = try request.requiredParameter("subscriberId")
+        let newsletterId = try context.requiredParameter("newsletterId")
+        let subscriberId = try context.requiredParameter("subscriberId")
         return try await presenter.render(
             newsletterId: newsletterId,
             item: try await interactor.get(

@@ -24,7 +24,7 @@ struct AdminEditWebPageMetadataDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) throws -> AdminWebMetadataEditConfiguration {
-        let pageID = try request.requiredID()
+        let pageID = try context.requiredID()
         let metadataID =
             context.parameters.get(
                 "metadataID",

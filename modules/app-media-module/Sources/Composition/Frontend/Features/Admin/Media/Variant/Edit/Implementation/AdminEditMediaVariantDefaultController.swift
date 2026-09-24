@@ -24,7 +24,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
                 .renderErrorPage(error: .forbidden)
                 .response(from: request, context: context)
         }
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         do {
             let detail = try await runtime.interactor.load(id: id)
             guard detail.id == id else {
@@ -67,7 +67,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
                 .renderErrorPage(error: .forbidden)
                 .response(from: request, context: context)
         }
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         var input: MediaVariantFormInput?
         do {
             let payload = try await request.decode(
@@ -124,8 +124,8 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
                 .renderErrorPage(error: .forbidden)
                 .response(from: request, context: context)
         }
-        let variantId = try request.requiredID()
-        let processorId = try request.requiredParameter("processorId")
+        let variantId = try context.requiredID()
+        let processorId = try context.requiredParameter("processorId")
         do {
             let processor = try await runtime.interactor.loadProcessor(
                 variantId: variantId,
@@ -159,7 +159,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
                 .renderErrorPage(error: .forbidden)
                 .response(from: request, context: context)
         }
-        let variantId = try request.requiredID()
+        let variantId = try context.requiredID()
         let ids = request.queryStrings("ids")
         guard !ids.isEmpty else {
             return Response(
@@ -199,7 +199,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
                 to: MediaPermissions.VariantProcessors.create
             )
         else { return Response(status: .forbidden) }
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         do {
             let payload = try await request.decode(
                 as: NonceRequest<MediaVariantProcessorFormInput>.self,
@@ -241,8 +241,8 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
                 to: MediaPermissions.VariantProcessors.update
             )
         else { return Response(status: .forbidden) }
-        let id = try request.requiredID()
-        let processorId = try request.requiredParameter("processorId")
+        let id = try context.requiredID()
+        let processorId = try context.requiredParameter("processorId")
         do {
             let payload = try await request.decode(
                 as: NonceRequest<MediaVariantProcessorFormInput>.self,
@@ -285,7 +285,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
                 to: MediaPermissions.VariantProcessors.delete
             )
         else { return Response(status: .forbidden) }
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         do {
             let payload = try await request.decode(
                 as: NonceRequest<NewAdminListRemoveFormInput>.self,

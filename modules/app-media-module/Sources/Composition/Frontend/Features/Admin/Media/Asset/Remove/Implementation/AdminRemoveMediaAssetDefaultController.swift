@@ -20,7 +20,7 @@ struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         let model = try await interactor.getRemoveMediaAsset(id: id)
         return try await presenter.renderRemovePage(
             model: model
@@ -32,7 +32,7 @@ struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         let payload = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context

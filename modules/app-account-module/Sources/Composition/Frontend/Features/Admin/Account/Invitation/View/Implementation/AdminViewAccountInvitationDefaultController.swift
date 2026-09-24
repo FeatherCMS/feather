@@ -15,7 +15,7 @@ struct AdminViewAccountInvitationDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         do {
             let invitation = try await runtime.interactor.execute(

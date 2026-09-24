@@ -28,7 +28,7 @@ struct AdminViewAuthEmailDefaultController: AdminViewAuthEmailController {
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.read)

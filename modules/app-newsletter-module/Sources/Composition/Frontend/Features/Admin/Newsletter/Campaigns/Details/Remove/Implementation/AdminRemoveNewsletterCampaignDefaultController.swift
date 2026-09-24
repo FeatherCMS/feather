@@ -17,7 +17,7 @@ struct AdminRemoveNewsletterCampaignDefaultController:
         let (_, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.delete)
         else { return HTMLResponse(content: "Forbidden", status: .forbidden) }
-        let id = try request.requiredParameter("newsletterId")
+        let id = try context.requiredParameter("newsletterId")
         return try await presenter.render(item: .init(id: id, label: id))
     }
     func remove(request: Request, context: AuthenticatedRequestContext)
@@ -38,7 +38,7 @@ struct AdminRemoveNewsletterCampaignDefaultController:
             )
         else { return Response(status: .badRequest) }
         try await interactor.remove(
-            id: try request.requiredParameter("newsletterId")
+            id: try context.requiredParameter("newsletterId")
         )
         return AdminNotificationFlash.redirect(
             to: NewsletterAdminRoutes.campaigns.description,

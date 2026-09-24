@@ -26,7 +26,7 @@ struct AdminRemoveContactFieldDefaultController:
         else {
             return try await presenter.renderForbiddenPage()
         }
-        let id = try request.requiredParameter("fieldId")
+        let id = try context.requiredParameter("fieldId")
         let field = try? await interactor.get(id: id)
         return try await presenter.renderRemovePage(
             items: [.init(id: id, label: field?.label ?? id)]
@@ -56,7 +56,7 @@ struct AdminRemoveContactFieldDefaultController:
             )
         else { return Response(status: .badRequest) }
         try await interactor.remove(
-            id: try request.requiredParameter("fieldId")
+            id: try context.requiredParameter("fieldId")
         )
         return Response(
             status: .seeOther,

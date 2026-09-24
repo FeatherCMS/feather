@@ -21,7 +21,7 @@ struct AdminRemoveContactFormFieldDefaultController:
     {
         let (interactor, presenter) = buildRuntime((request, context))
         let formId = context.parameters.get("formId", as: String.self) ?? ""
-        let id = try request.requiredParameter("fieldId")
+        let id = try context.requiredParameter("fieldId")
         let field = try? await interactor.get(formId: formId, id: id)
         return try await presenter.renderRemovePage(
             formId: formId,
@@ -46,7 +46,7 @@ struct AdminRemoveContactFormFieldDefaultController:
         else { return Response(status: .badRequest) }
         try await interactor.remove(
             formId: formId,
-            id: try request.requiredParameter("fieldId")
+            id: try context.requiredParameter("fieldId")
         )
         let basePath = "/admin/contact/forms/\(formId)/fields/"
         return Response(
@@ -66,7 +66,7 @@ struct AdminRemoveContactFormFieldDefaultController:
     {
         let (_, presenter) = buildRuntime((request, context))
         return try await presenter.renderRemovePage(
-            formId: try request.requiredParameter("formId"),
+            formId: try context.requiredParameter("formId"),
             items: request.queryStrings("selectedIds")
                 .map {
                     .init(id: $0, label: $0)
@@ -77,7 +77,7 @@ struct AdminRemoveContactFormFieldDefaultController:
         async throws
         -> Response
     {
-        let formId = try request.requiredParameter("formId")
+        let formId = try context.requiredParameter("formId")
         let payload = try await request.decode(
             as: NewAdminListRemoveFormInput.self,
             context: context

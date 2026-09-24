@@ -44,7 +44,7 @@ enum AdminBlogMetadataRoutes {
 
         for route in routes {
             router.get(RouterPath(route.path)) { request, context in
-                let id = try request.requiredID()
+                let id = try context.requiredID()
                 let metadataID =
                     context.parameters.get(
                         "metadataID",
@@ -87,7 +87,7 @@ enum AdminBlogMetadataRoutes {
                 )
             }
             router.post(RouterPath(route.path)) { request, context in
-                let id = try request.requiredID()
+                let id = try context.requiredID()
                 let metadataID =
                     context.parameters.get(
                         "metadataID",

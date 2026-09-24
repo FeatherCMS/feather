@@ -16,7 +16,7 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
-        let menuId = try request.requiredID()
+        let menuId = try context.requiredID()
         do {
             let availablePermissions = try await runtime.interactor
                 .loadPermissions()
@@ -42,7 +42,7 @@ struct AdminAddWebMenuItemDefaultController: AdminAddWebMenuItemController {
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
-        let menuId = try request.requiredID()
+        let menuId = try context.requiredID()
         let permissions = context.currentUserPermissions
         var lastPayload: WebMenuItemFormInput?
         var availablePermissions: [String] = []

@@ -20,8 +20,8 @@ struct AdminEditNewsletterIssueDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let newsletterId = try request.requiredParameter("newsletterId")
-        let issueId = try request.requiredParameter("issueId")
+        let newsletterId = try context.requiredParameter("newsletterId")
+        let issueId = try context.requiredParameter("issueId")
         do {
             return try await presenter.render(
                 model: try await interactor.get(
@@ -53,8 +53,8 @@ struct AdminEditNewsletterIssueDefaultController:
         -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let newsletterId = try request.requiredParameter("newsletterId")
-        let issueId = try request.requiredParameter("issueId")
+        let newsletterId = try context.requiredParameter("newsletterId")
+        let issueId = try context.requiredParameter("issueId")
         let form = try await request.decode(
             as: NewsletterIssueAddForm.self,
             context: context

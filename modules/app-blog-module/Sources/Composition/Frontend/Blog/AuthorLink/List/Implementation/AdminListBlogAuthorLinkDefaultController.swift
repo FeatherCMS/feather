@@ -26,7 +26,7 @@ struct AdminListBlogAuthorLinkDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
-        let menuId = try request.requiredID()
+        let menuId = try context.requiredID()
         let page = request.queryPage()
         let search = request.querySearch()
         let permissions = context.currentUserPermissions
@@ -73,7 +73,7 @@ struct AdminListBlogAuthorLinkDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime((request, context))
-        let menuId = try request.requiredID()
+        let menuId = try context.requiredID()
         let selectedIds = request.queryStrings("selectedIds")
         let page = request.queryPage()
         let search = request.querySearch()
@@ -100,7 +100,7 @@ struct AdminListBlogAuthorLinkDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, _) = buildRuntime((request, context))
-        let menuId = try request.requiredID()
+        let menuId = try context.requiredID()
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context

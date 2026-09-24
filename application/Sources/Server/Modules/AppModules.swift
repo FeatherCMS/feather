@@ -20,6 +20,7 @@ struct AppModules: Sendable {
 
     private let infrastructure: AppInfrastructure
     private let authorizer: any Authorizer
+    let mediaResolver: MediaResolver
 
     let system: SystemBackend.UseCases
     let analytics: AnalyticsBackend.UseCases
@@ -39,6 +40,7 @@ struct AppModules: Sendable {
         mediaResolver: MediaResolver
     ) {
         self.infrastructure = infrastructure
+        self.mediaResolver = mediaResolver
 
         let query = DatabaseQueryExecutor(
             database: infrastructure.database,

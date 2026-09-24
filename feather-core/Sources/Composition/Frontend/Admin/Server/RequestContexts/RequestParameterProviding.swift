@@ -1,6 +1,9 @@
 public import Hummingbird
 
-extension Request {
+/// A request context that exposes required route parameter helpers.
+public protocol RequestParameterProviding: RequestContext {}
+
+extension RequestParameterProviding {
     public func requiredID() throws -> String {
         try requiredParameter("id")
     }
@@ -9,7 +12,7 @@ extension Request {
         _ name: String
     ) throws -> String {
         guard
-            let value = uri.queryParameters.get(name, as: String.self),
+            let value = parameters.get(name, as: String.self),
             !value.isEmpty
         else {
             throw HTTPError(.badRequest)

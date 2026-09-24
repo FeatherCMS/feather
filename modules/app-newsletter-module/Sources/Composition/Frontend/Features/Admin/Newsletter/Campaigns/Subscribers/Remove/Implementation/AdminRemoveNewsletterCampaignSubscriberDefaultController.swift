@@ -20,8 +20,8 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let newsletterId = try request.requiredParameter("newsletterId")
-        let subscriberId = try request.requiredParameter("subscriberId")
+        let newsletterId = try context.requiredParameter("newsletterId")
+        let subscriberId = try context.requiredParameter("subscriberId")
         let item = try await interactor.get(
             newsletterId: newsletterId,
             subscriberId: subscriberId
@@ -36,7 +36,7 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
         -> Response
     {
         let (interactor, _) = buildRuntime((request, context))
-        let newsletterId = try request.requiredParameter("newsletterId")
+        let newsletterId = try context.requiredParameter("newsletterId")
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
@@ -49,7 +49,7 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
         else { return Response(status: .badRequest) }
         try await interactor.remove(
             newsletterId: newsletterId,
-            subscriberId: try request.requiredParameter("subscriberId")
+            subscriberId: try context.requiredParameter("subscriberId")
         )
         return AdminNotificationFlash.redirect(
             to:
@@ -67,7 +67,7 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
         async throws -> Response
     {
         let (interactor, _) = buildRuntime((request, context))
-        let newsletterId = try request.requiredParameter("newsletterId")
+        let newsletterId = try context.requiredParameter("newsletterId")
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context

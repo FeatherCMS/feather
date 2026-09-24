@@ -32,7 +32,7 @@ struct AdminEditAuthCredentialDefaultController:
     )
         async throws -> HTMLResponse
     {
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.Credential.update)
@@ -72,7 +72,7 @@ struct AdminEditAuthCredentialDefaultController:
     )
         async throws -> Response
     {
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.Credential.update)

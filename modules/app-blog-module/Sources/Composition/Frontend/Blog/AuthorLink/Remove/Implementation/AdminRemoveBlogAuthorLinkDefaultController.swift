@@ -25,8 +25,8 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
-        let menuId = try request.requiredID()
-        let id = try request.requiredParameter("itemId")
+        let menuId = try context.requiredID()
+        let id = try context.requiredParameter("itemId")
         do {
             let rule = try await runtime.interactor.get(menuId: menuId, id: id)
             return try await runtime.presenter.renderRemovePage(
@@ -49,8 +49,8 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
-        let menuId = try request.requiredID()
-        let id = try request.requiredParameter("itemId")
+        let menuId = try context.requiredID()
+        let id = try context.requiredParameter("itemId")
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context

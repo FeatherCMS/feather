@@ -2,7 +2,11 @@ public import FeatherContracts
 public import Hummingbird
 
 /// Request context used by routes that require an authenticated account.
-public struct AuthenticatedRequestContext: ChildRequestContext, Sendable {
+public struct AuthenticatedRequestContext:
+    ChildRequestContext,
+    RequestParameterProviding,
+    Sendable
+{
 
     public typealias ParentContext = DefaultRequestContext
 

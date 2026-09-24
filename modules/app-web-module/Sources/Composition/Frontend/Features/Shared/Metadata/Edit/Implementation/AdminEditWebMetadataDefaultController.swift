@@ -365,7 +365,7 @@ struct AdminEditWebMetadataDefaultController:
         ) {
             return metadataID
         }
-        return try request.requiredID()
+        return try context.requiredID()
     }
 
     private func loadEntry(

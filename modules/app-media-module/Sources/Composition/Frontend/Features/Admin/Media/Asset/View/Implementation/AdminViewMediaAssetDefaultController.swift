@@ -20,7 +20,7 @@ struct AdminViewMediaAssetDefaultController: AdminViewMediaAssetController {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         let permissions = context.currentUserAdminListActions
         do {
             let model = try await interactor.getMediaAsset(id: id)

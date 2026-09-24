@@ -21,12 +21,12 @@ struct AdminListAuthSessionDefaultController:
         else {
             return try await runtime.presenter.renderError(
                 error: .forbidden,
-                identityID: try request.requiredID(),
+                identityID: try context.requiredID(),
                 permissions: permissions
             )
         }
 
-        let identityID = try request.requiredID()
+        let identityID = try context.requiredID()
         do {
             let model = try await runtime.interactor.list(
                 identityID: identityID

@@ -22,7 +22,7 @@ struct AdminListContactFormSubmissionsDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let formId = try request.requiredParameter("formId")
+        let formId = try context.requiredParameter("formId")
         let search = request.querySearch() ?? ""
         do {
             let items = try await interactor.list(formId: formId)

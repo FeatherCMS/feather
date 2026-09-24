@@ -17,7 +17,7 @@ struct AppContactFormSubmissionDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let formId = try request.requiredParameter("formId")
+        let formId = try context.requiredParameter("formId")
         let form = try await request.decode(
             as: AppContactFormSubmissionForm.self,
             context: context

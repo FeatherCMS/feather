@@ -20,7 +20,7 @@ struct AdminViewUserRoleDefaultController: AdminViewUserRoleController {
                 error: .forbidden
             )
         }
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         do {
             let role = try await runtime.interactor.load(id: id)
             return try await runtime.presenter.renderDetailsPage(

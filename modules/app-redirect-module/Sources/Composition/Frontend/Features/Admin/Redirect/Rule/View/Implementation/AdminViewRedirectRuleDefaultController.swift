@@ -15,7 +15,7 @@ struct AdminViewRedirectRuleDefaultController: AdminViewRedirectRuleController {
         let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.read)
         else { return try await presenter.renderErrorPage(error: .forbidden) }
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         do {
             return try await presenter.renderDetailsPage(
                 rule: try await interactor.load(id: id),

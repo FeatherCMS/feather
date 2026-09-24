@@ -21,7 +21,7 @@ struct AdminEditMediaAssetDefaultController: AdminEditMediaAssetController {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         let permissions = context.currentUserAdminListActions
         do {
             let model = try await runtime.interactor.load(id: id)
@@ -45,7 +45,7 @@ struct AdminEditMediaAssetDefaultController: AdminEditMediaAssetController {
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         let permissions = context.currentUserAdminListActions
         let payload = try await request.decode(
             as: AssetEditForm.self,

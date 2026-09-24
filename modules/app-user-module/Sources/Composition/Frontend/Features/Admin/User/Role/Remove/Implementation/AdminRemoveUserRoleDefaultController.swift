@@ -18,7 +18,7 @@ struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
         let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Roles.delete)
         else { return try await presenter.renderForbiddenPage() }
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         do {
             let names = try await interactor.names(ids: [id])
             return try await presenter.renderRemovePage(
@@ -46,7 +46,7 @@ struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
             return try await presenter.renderForbiddenPage()
                 .response(from: request, context: context)
         }
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         do {
             let payload = try await request.decode(
                 as: NonceRequest<NewAdminListRemoveFormInput>.self,

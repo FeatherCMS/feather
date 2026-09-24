@@ -9,7 +9,7 @@ import FeatherContracts
 public import Hummingbird
 import OpenAPIRuntime
 
-public struct DefaultRequestContext: RequestContext, Sendable {
+public struct DefaultRequestContext: RequestParameterProviding, Sendable {
 
     public var coreContext: CoreRequestContextStorage
 

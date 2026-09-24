@@ -19,7 +19,7 @@ struct AdminEditRedirectRuleDefaultController: AdminEditRedirectRuleController {
         let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.update)
         else { return try await presenter.renderForbiddenPage() }
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         do {
             return try await presenter.renderEditPage(
                 id: id,
@@ -48,7 +48,7 @@ struct AdminEditRedirectRuleDefaultController: AdminEditRedirectRuleController {
             return try await presenter.renderForbiddenPage()
                 .response(from: request, context: context)
         }
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         var lastPayload: RedirectRuleEditFormInput?
         do {
             let payload = try await request.decode(

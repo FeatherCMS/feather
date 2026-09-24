@@ -18,7 +18,7 @@ struct AdminEditUserRoleDefaultController: AdminEditUserRoleController {
         let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Roles.update)
         else { return try await presenter.renderForbiddenPage() }
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         do {
             let role = try await interactor.load(id: id)
             return try await presenter.renderEditPage(
@@ -47,7 +47,7 @@ struct AdminEditUserRoleDefaultController: AdminEditUserRoleController {
             return try await presenter.renderForbiddenPage()
                 .response(from: request, context: context)
         }
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         var lastPayload: AdminEditUserRoleFormInput?
         do {
             let payload = try await request.decode(

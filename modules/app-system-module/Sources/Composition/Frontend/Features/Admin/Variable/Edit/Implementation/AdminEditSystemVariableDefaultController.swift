@@ -26,7 +26,7 @@ struct AdminEditSystemVariableDefaultController:
                 error: .forbidden
             )
         }
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         let permissions = context.currentUserAdminListActions.granted
         do {
             let variable = try await runtime.interactor.load(id: id)
@@ -57,7 +57,7 @@ struct AdminEditSystemVariableDefaultController:
                 )
                 .response(from: request, context: context)
         }
-        let id = try request.requiredID()
+        let id = try context.requiredID()
         let permissions = context.currentUserAdminListActions.granted
         var lastPayload: SystemVariableEditFormInput?
 
