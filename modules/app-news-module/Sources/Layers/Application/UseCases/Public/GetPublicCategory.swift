@@ -27,7 +27,9 @@ public struct GetPublicCategory {
     }
 
     public func execute(
-        id: String
+        id: String,
+        pageNumber: Int = 1,
+        pageSize: Int = 10000
     ) async throws -> PublicNewsCategoryDetail {
         let now = Date()
         return try await query.run { scope in
@@ -45,7 +47,9 @@ public struct GetPublicCategory {
             let articles = try await Self.publicArticles(
                 matchingCategoryID: id,
                 now: now,
-                context: scope
+                context: scope,
+                pageNumber: pageNumber,
+                pageSize: pageSize
             )
             return .init(
                 id: category.id,
@@ -56,21 +60,46 @@ public struct GetPublicCategory {
                 imageURL: "",
                 media: nil,
                 metadata: metadata,
-                articles: articles
+                articles: articles.items,
+                total: articles.total,
+                page: articles.page,
+                pageSize: articles.pageSize
             )
         }
     }
 }
 
 extension GetPublicCategory {
+    fileprivate struct PublicArticlePage: Sendable {
+        let items: [PublicNewsArticleSummary]
+        let total: Int
+        let page: Int
+        let pageSize: Int
+    }
+
     fileprivate static func publicArticles(
         matchingCategoryID categoryID: String,
         now: Date,
-        context: ReadPublicNewsCategory
-    ) async throws -> [PublicNewsArticleSummary] {
+        context: ReadPublicNewsCategory,
+        pageNumber: Int,
+        pageSize: Int
+    ) async throws -> PublicArticlePage {
+        let resolvedPageSize = max(1, pageSize)
+        let total = try await context.article.countPublic(
+            query: .init(),
+            categoryID: categoryID
+        )
+        let pageCount = max(
+            1,
+            (total + resolvedPageSize - 1) / resolvedPageSize
+        )
+        let currentPage = min(max(1, pageNumber), pageCount)
         let articles = try await context.article.listPublic(
             query: .init(
-                page: .init(size: 10000, number: 1),
+                page: .init(
+                    size: resolvedPageSize,
+                    number: currentPage
+                ),
                 sort: [.init(field: .createdAt, direction: .desc)]
             ),
             categoryID: categoryID
@@ -103,6 +132,11 @@ extension GetPublicCategory {
                 )
             )
         }
-        return result
+        return .init(
+            items: result,
+            total: total,
+            page: currentPage,
+            pageSize: resolvedPageSize
+        )
     }
 }
