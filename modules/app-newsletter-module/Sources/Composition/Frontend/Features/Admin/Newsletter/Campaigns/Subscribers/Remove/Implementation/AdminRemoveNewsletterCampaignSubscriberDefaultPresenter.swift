@@ -18,9 +18,11 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultPresenter:
             sessionToken: context.sessionToken
         )
         let cancel = NewAdminLocation.removeCancel(
-            path: NewsletterAdminRoutes.campaignSubscribers(
-                RouterPath(newsletterId)
-            ).description,
+            path:
+                NewsletterAdminRoutes.campaignSubscribers(
+                    RouterPath(newsletterId)
+                )
+                .description,
             returnTo: returnTo
         )
         return try await renderingEngine.renderNewAdminPage(
@@ -43,9 +45,11 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultPresenter:
                     description: "This action cannot be undone."
                 ),
                 selectedItems: items.map(\.label),
-                action: NewsletterAdminRoutes.campaignSubscriberRemove(
-                    RouterPath(newsletterId)
-                ).description,
+                action:
+                    NewsletterAdminRoutes.campaignSubscriberRemove(
+                        RouterPath(newsletterId)
+                    )
+                    .description,
                 cancel: cancel,
                 submitLabel: "Remove subscriber",
                 nonceToken: nonceToken,

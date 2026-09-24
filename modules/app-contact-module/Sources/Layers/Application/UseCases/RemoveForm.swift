@@ -40,9 +40,10 @@ public struct RemoveForm: UseCase {
                 keys.append(form.key)
             }
             let deletedIds = try await scope.form.delete(ids: ids)
-            return zip(ids, keys).compactMap { id, key in
-                deletedIds.contains(id) ? key : nil
-            }
+            return zip(ids, keys)
+                .compactMap { id, key in
+                    deletedIds.contains(id) ? key : nil
+                }
         }
     }
 }

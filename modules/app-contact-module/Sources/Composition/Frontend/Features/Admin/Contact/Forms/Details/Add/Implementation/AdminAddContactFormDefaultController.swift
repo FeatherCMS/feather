@@ -69,21 +69,22 @@ struct AdminAddContactFormDefaultController: AdminAddContactFormController {
         catch let error as AdminAddContactFormError {
             let availableFields =
                 (try? await interactor.availableFields()) ?? []
-            return try await presenter.renderAddError(
-                item: .init(
-                    key: form.key,
-                    name: form.name,
-                    successMessage: form.successMessage ?? "",
-                    failureMessage: form.failureMessage ?? "",
-                    redirectUrl: form.redirectUrl,
-                    selectedFieldIDs: form.fieldIds ?? [],
-                    availableFields: availableFields,
-                    mails: form.mails
-                ),
-                error: error,
-                permissions: context.currentUserPermissions
-            )
-            .response(from: request, context: context)
+            return
+                try await presenter.renderAddError(
+                    item: .init(
+                        key: form.key,
+                        name: form.name,
+                        successMessage: form.successMessage ?? "",
+                        failureMessage: form.failureMessage ?? "",
+                        redirectUrl: form.redirectUrl,
+                        selectedFieldIDs: form.fieldIds ?? [],
+                        availableFields: availableFields,
+                        mails: form.mails
+                    ),
+                    error: error,
+                    permissions: context.currentUserPermissions
+                )
+                .response(from: request, context: context)
         }
     }
 }

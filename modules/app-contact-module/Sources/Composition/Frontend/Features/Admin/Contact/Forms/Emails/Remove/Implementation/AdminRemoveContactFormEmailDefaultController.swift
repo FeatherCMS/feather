@@ -35,7 +35,8 @@ struct AdminRemoveContactFormEmailDefaultController:
         }
         return try await presenter.renderRemovePage(
             formId: formId,
-            items: ids
+            items:
+                ids
                 .map {
                     .init(id: $0, label: $0)
                 }

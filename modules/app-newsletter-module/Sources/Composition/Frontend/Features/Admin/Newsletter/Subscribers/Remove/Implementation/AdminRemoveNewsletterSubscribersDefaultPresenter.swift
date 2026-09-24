@@ -25,12 +25,13 @@ struct AdminRemoveNewsletterSubscribersDefaultPresenter:
             queryItems: campaignId?.emptyToNil.map { [("campaignId", $0)] }
                 ?? []
         )
-        let cancel = returnTo.map {
-            NewAdminLocation.removeCancel(
-                path: NewsletterAdminRoutes.subscribers.description,
-                returnTo: $0
-            )
-        } ?? list
+        let cancel =
+            returnTo.map {
+                NewAdminLocation.removeCancel(
+                    path: NewsletterAdminRoutes.subscribers.description,
+                    returnTo: $0
+                )
+            } ?? list
         return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,

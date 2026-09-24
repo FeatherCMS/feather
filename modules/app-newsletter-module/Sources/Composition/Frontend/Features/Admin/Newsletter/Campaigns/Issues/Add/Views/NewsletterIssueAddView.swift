@@ -173,7 +173,8 @@ struct NewsletterIssueAddView: Component {
                                     newsletterID: RouterPath(
                                         state.newsletterId
                                     )
-                                ).description,
+                                )
+                                .description,
                             hiddenFields: [
                                 .init(name: "subject", value: state.subject),
                                 .init(name: "content", value: state.content),

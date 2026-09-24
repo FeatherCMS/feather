@@ -37,15 +37,18 @@ struct AdminRemoveNewsletterCampaignDefaultController:
         guard !ids.isEmpty else {
             return Response(
                 status: .seeOther,
-                headers: [.location: NewsletterAdminRoutes.campaigns.description]
+                headers: [
+                    .location: NewsletterAdminRoutes.campaigns.description
+                ]
             )
         }
         let names = try await interactor.names(ids: ids)
-        return try await presenter.renderRemovePage(
-            items: zip(ids, names).map { .init(id: $0.0, label: $0.1) },
-            returnTo: request.queryString("returnTo")
-        )
-        .response(from: request, context: context)
+        return
+            try await presenter.renderRemovePage(
+                items: zip(ids, names).map { .init(id: $0.0, label: $0.1) },
+                returnTo: request.queryString("returnTo")
+            )
+            .response(from: request, context: context)
     }
 
     func remove(request: Request, context: AuthenticatedRequestContext)
@@ -59,11 +62,15 @@ struct AdminRemoveNewsletterCampaignDefaultController:
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
-        guard await AdminNonceStore.shared.consume(
-            nonceRequest.nonce,
-            sessionToken: context.sessionToken
-        ) else { return Response(status: .badRequest) }
-        try await interactor.remove(id: try context.requiredParameter("newsletterId"))
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
+        try await interactor.remove(
+            id: try context.requiredParameter("newsletterId")
+        )
         return AdminNotificationFlash.redirect(
             to: NewsletterAdminRoutes.campaigns.description,
             notification: .init(
@@ -83,10 +90,12 @@ struct AdminRemoveNewsletterCampaignDefaultController:
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
-        guard await AdminNonceStore.shared.consume(
-            nonceRequest.nonce,
-            sessionToken: context.sessionToken
-        ) else { return Response(status: .badRequest) }
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         let payload = nonceRequest.input
         try await interactor.remove(ids: payload.normalizedSelectedIds)
         return AdminNotificationFlash.redirect(

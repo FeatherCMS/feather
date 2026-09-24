@@ -1,5 +1,5 @@
-import Foundation
 import FeatherContracts
+import Foundation
 
 struct NewsletterCampaignAddForm: Decodable {
     var key: String = ""

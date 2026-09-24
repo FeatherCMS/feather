@@ -25,7 +25,8 @@ struct AdminRemoveNewsletterCampaignSubscriberOpenAPIRepository {
                 try await get(
                     newsletterId: newsletterId,
                     subscriberId: subscriberId
-                ).email
+                )
+                .email
             )
         }
         return names

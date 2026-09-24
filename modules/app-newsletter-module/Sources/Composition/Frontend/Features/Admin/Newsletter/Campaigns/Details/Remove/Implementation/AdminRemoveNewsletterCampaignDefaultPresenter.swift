@@ -10,8 +10,7 @@ struct AdminRemoveNewsletterCampaignDefaultPresenter:
     func renderRemovePage(
         items: [NewAdminRemoveItemContext],
         returnTo: String?
-    ) async throws -> HTMLResponse
-    {
+    ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )

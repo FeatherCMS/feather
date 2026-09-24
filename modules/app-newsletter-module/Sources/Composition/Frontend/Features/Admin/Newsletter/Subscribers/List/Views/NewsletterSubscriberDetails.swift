@@ -18,10 +18,12 @@ struct NewsletterSubscriberDetails: Component {
                 actions.append(
                     .init(
                         label: "Edit",
-                        href: NewsletterAdminRoutes.campaignSubscriberEdit(
-                            newsletterID: RouterPath(campaign.id),
-                            subscriberID: RouterPath(item.id)
-                        ).description,
+                        href:
+                            NewsletterAdminRoutes.campaignSubscriberEdit(
+                                newsletterID: RouterPath(campaign.id),
+                                subscriberID: RouterPath(item.id)
+                            )
+                            .description,
                         style: .secondary
                     )
                 )
@@ -32,11 +34,14 @@ struct NewsletterSubscriberDetails: Component {
                 .init(
                     label: "Remove",
                     href: NewAdminLocation.remove(
-                        path: NewsletterAdminRoutes.subscriberRemove.description,
+                        path: NewsletterAdminRoutes.subscriberRemove
+                            .description,
                         ids: [item.id],
-                        returnTo: NewsletterAdminRoutes.subscriberDetails(
-                            RouterPath(item.id)
-                        ).description
+                        returnTo:
+                            NewsletterAdminRoutes.subscriberDetails(
+                                RouterPath(item.id)
+                            )
+                            .description
                     ),
                     style: .destructive
                 )
@@ -52,16 +57,19 @@ struct NewsletterSubscriberDetails: Component {
                 ],
                 pageHeader: .init(
                     title: "Subscriber details",
-                    description: "Review campaign subscriptions for this email address."
+                    description:
+                        "Review campaign subscriptions for this email address."
                 ),
                 fields: [
                     .init(label: "Email", value: item.email),
                     .init(label: "Name", value: item.name),
                     .init(
                         label: "Campaigns",
-                        value: item.newsletters.map {
-                            "\($0.name) (\($0.status))"
-                        }.joined(separator: ", ")
+                        value: item.newsletters
+                            .map {
+                                "\($0.name) (\($0.status))"
+                            }
+                            .joined(separator: ", ")
                     ),
                 ],
                 actions: actions

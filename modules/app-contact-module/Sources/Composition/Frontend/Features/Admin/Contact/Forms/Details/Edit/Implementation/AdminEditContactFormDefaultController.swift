@@ -47,7 +47,8 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
             current = try await interactor.get(key: formKey)
         }
         catch let error as AdminEditContactFormError {
-            return try await presenter
+            return
+                try await presenter
                 .renderErrorPage(error: error)
                 .response(from: request, context: context)
         }
@@ -74,22 +75,23 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
             )
         }
         catch let error as AdminEditContactFormError {
-            return try await presenter.renderEditError(
-                key: formKey,
-                item: .init(
-                    key: form.key,
-                    name: form.name,
-                    successMessage: form.successMessage ?? "",
-                    failureMessage: form.failureMessage ?? "",
-                    redirectUrl: form.redirectUrl,
-                    selectedFieldIDs: form.fieldIds ?? [],
-                    availableFields: current.availableFields,
-                    mails: form.mails.isEmpty ? current.mails : form.mails
-                ),
-                error: error,
-                permissions: context.currentUserPermissions
-            )
-            .response(from: request, context: context)
+            return
+                try await presenter.renderEditError(
+                    key: formKey,
+                    item: .init(
+                        key: form.key,
+                        name: form.name,
+                        successMessage: form.successMessage ?? "",
+                        failureMessage: form.failureMessage ?? "",
+                        redirectUrl: form.redirectUrl,
+                        selectedFieldIDs: form.fieldIds ?? [],
+                        availableFields: current.availableFields,
+                        mails: form.mails.isEmpty ? current.mails : form.mails
+                    ),
+                    error: error,
+                    permissions: context.currentUserPermissions
+                )
+                .response(from: request, context: context)
         }
     }
 }

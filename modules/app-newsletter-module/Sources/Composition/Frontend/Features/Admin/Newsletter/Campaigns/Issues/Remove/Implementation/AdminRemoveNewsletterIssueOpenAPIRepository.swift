@@ -13,10 +13,11 @@ struct AdminRemoveNewsletterIssueOpenAPIRepository {
     func get(newsletterId: String, issueId: String) async throws
         -> AdminAddNewsletterIssueModel
     {
-        try await AdminEditNewsletterIssueOpenAPIRepository(api: api).get(
-            newsletterId: newsletterId,
-            issueId: issueId
-        )
+        try await AdminEditNewsletterIssueOpenAPIRepository(api: api)
+            .get(
+                newsletterId: newsletterId,
+                issueId: issueId
+            )
     }
     func remove(newsletterId: String, issueId: String) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in

@@ -34,9 +34,10 @@ public struct RemoveCampaign: UseCase {
                 keys.append(key)
             }
             let deletedIDs = try await scope.newsletter.delete(ids: ids)
-            return zip(ids, keys).compactMap { id, key in
-                deletedIDs.contains(id) ? key : nil
-            }
+            return zip(ids, keys)
+                .compactMap { id, key in
+                    deletedIDs.contains(id) ? key : nil
+                }
         }
     }
 }

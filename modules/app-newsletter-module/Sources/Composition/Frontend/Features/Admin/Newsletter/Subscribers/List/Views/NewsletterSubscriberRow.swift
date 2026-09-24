@@ -15,21 +15,25 @@ struct NewsletterSubscriberRow: Component {
         var actions: [NewAdminListRowActions.Action] = [
             .init(
                 "View",
-                href: NewsletterAdminRoutes.subscriberDetails(
-                    RouterPath(item.id)
-                ).description,
+                href:
+                    NewsletterAdminRoutes.subscriberDetails(
+                        RouterPath(item.id)
+                    )
+                    .description,
                 style: .ghost(.primary),
                 permission: Permissions.Subscribers.read
-            ),
+            )
         ]
         if let campaign = item.newsletters.first {
             actions.append(
                 .init(
                     "Edit",
-                    href: NewsletterAdminRoutes.campaignSubscriberEdit(
-                        newsletterID: RouterPath(campaign.id),
-                        subscriberID: RouterPath(item.id)
-                    ).description,
+                    href:
+                        NewsletterAdminRoutes.campaignSubscriberEdit(
+                            newsletterID: RouterPath(campaign.id),
+                            subscriberID: RouterPath(item.id)
+                        )
+                        .description,
                     style: .ghost(.secondary),
                     permission: Permissions.Subscribers.update
                 )

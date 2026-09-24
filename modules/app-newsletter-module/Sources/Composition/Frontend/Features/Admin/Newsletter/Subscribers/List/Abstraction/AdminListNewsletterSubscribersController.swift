@@ -20,6 +20,9 @@ protocol AdminListNewsletterSubscribersController: Sendable {
 extension AdminListNewsletterSubscribersController {
     func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.get(NewsletterAdminRoutes.subscribers, use: list)
-        router.get(NewsletterAdminRoutes.subscriberDetailsRoute, use: viewSubscriber)
+        router.get(
+            NewsletterAdminRoutes.subscriberDetailsRoute,
+            use: viewSubscriber
+        )
     }
 }

@@ -138,7 +138,8 @@ struct DeliveryTable {
         issueId: String
     ) async throws {
         try await connection.run(
-            query: #"DELETE FROM newsletter_delivery WHERE issue_id = \#(issueId);"#
+            query:
+                #"DELETE FROM newsletter_delivery WHERE issue_id = \#(issueId);"#
         ) { _ in }
     }
 }

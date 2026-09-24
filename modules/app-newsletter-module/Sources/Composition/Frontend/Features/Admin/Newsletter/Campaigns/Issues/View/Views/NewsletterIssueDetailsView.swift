@@ -20,10 +20,12 @@ struct NewsletterIssueDetailsView: Component {
             actions.append(
                 .init(
                     label: "Edit",
-                    href: NewsletterAdminRoutes.issueEdit(
-                        newsletterID: RouterPath(newsletterId),
-                        issueID: RouterPath(issueId)
-                    ).description,
+                    href:
+                        NewsletterAdminRoutes.issueEdit(
+                            newsletterID: RouterPath(newsletterId),
+                            issueID: RouterPath(issueId)
+                        )
+                        .description,
                     style: .primary
                 )
             )
@@ -32,10 +34,12 @@ struct NewsletterIssueDetailsView: Component {
             actions.append(
                 .init(
                     label: "Remove",
-                    href: NewsletterAdminRoutes.issueRemove(
-                        newsletterID: RouterPath(newsletterId),
-                        issueID: RouterPath(issueId)
-                    ).description,
+                    href:
+                        NewsletterAdminRoutes.issueRemove(
+                            newsletterID: RouterPath(newsletterId),
+                            issueID: RouterPath(issueId)
+                        )
+                        .description,
                     style: .destructive
                 )
             )
@@ -45,14 +49,17 @@ struct NewsletterIssueDetailsView: Component {
                 breadcrumb: NewsletterAdminRoutes.breadcrumb + [
                     .init(
                         label: "Issues",
-                        link: NewsletterAdminRoutes.campaignIssues(
-                            RouterPath(newsletterId)
-                        ).description
+                        link:
+                            NewsletterAdminRoutes.campaignIssues(
+                                RouterPath(newsletterId)
+                            )
+                            .description
                     )
                 ],
                 pageHeader: .init(
                     title: "Campaign issue details",
-                    description: "Review the issue content and delivery schedule."
+                    description:
+                        "Review the issue content and delivery schedule."
                 ),
                 fields: [
                     .init(label: "Subject", value: model.subject),

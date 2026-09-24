@@ -66,19 +66,21 @@ struct AdminAddContactFieldDefaultController:
                     ]
                 )
             }
-            return try await presenter.renderPage(
-                model: model,
-                permissions: context.currentUserPermissions
-            )
-            .response(from: request, context: context)
+            return
+                try await presenter.renderPage(
+                    model: model,
+                    permissions: context.currentUserPermissions
+                )
+                .response(from: request, context: context)
         }
         catch let error as AdminAddContactFieldError {
-            return try await presenter.renderAddError(
-                input: payload,
-                error: error,
-                permissions: context.currentUserPermissions
-            )
-            .response(from: request, context: context)
+            return
+                try await presenter.renderAddError(
+                    input: payload,
+                    error: error,
+                    permissions: context.currentUserPermissions
+                )
+                .response(from: request, context: context)
         }
     }
 }

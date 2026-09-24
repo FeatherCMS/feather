@@ -2,10 +2,11 @@ public import FeatherContracts
 public import FeatherDatabase
 public import FeatherDomain
 import FeatherInfrastructure
-public import struct Foundation.Date
 import NewsletterApplication
 import NewsletterDomain
 import NewsletterInfrastructure
+
+public import struct Foundation.Date
 
 public protocol NewsletterMailQueue: Sendable {
     func enqueue(

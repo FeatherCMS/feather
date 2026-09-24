@@ -36,9 +36,10 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
         }
         let names = try await interactor.names(ids: ids)
         return try await presenter.renderRemovePage(
-            items: zip(ids, names).map {
-                .init(id: $0.0, label: $0.1)
-            },
+            items: zip(ids, names)
+                .map {
+                    .init(id: $0.0, label: $0.1)
+                },
             search: request.querySearch(),
             campaignId: request.queryString("campaignId"),
             returnTo: request.queryString("returnTo")

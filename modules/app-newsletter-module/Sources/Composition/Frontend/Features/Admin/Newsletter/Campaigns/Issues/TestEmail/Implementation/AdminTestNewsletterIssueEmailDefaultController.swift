@@ -22,12 +22,16 @@ struct AdminTestNewsletterIssueEmailDefaultController:
         else { return Response(status: .forbidden) }
         let newsletterKey = try context.requiredParameter("newsletterId")
         let issueId = context.parameters.get("issueId", as: String.self)
-        let location = issueId.map {
-            NewsletterAdminRoutes.issueEdit(
-                newsletterID: RouterPath(newsletterKey),
-                issueID: RouterPath($0)
-            ).description
-        } ?? NewsletterAdminRoutes.issueAdd(RouterPath(newsletterKey)).description
+        let location =
+            issueId.map {
+                NewsletterAdminRoutes.issueEdit(
+                    newsletterID: RouterPath(newsletterKey),
+                    issueID: RouterPath($0)
+                )
+                .description
+            }
+            ?? NewsletterAdminRoutes.issueAdd(RouterPath(newsletterKey))
+            .description
 
         do {
             let form = try await request.decode(

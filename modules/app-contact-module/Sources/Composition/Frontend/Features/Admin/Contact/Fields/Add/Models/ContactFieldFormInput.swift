@@ -28,10 +28,11 @@ public struct ContactFieldFormInput: Decodable, Sendable {
         key = try container.decode(String.self, forKey: .key)
         type = try container.decode(String.self, forKey: .type)
         label = try container.decode(String.self, forKey: .label)
-        allowedValues = try container.decodeIfPresent(
-            [String].self,
-            forKey: .allowedValues
-        ) ?? []
+        allowedValues =
+            try container.decodeIfPresent(
+                [String].self,
+                forKey: .allowedValues
+            ) ?? []
         isRequired =
             try container.decodeIfPresent(
                 NewAdminFormFieldCheckbox.Input.self,
@@ -53,7 +54,8 @@ public struct ContactFieldFormInput: Decodable, Sendable {
             return "Allowed values are required for select and radio fields."
         case "text", "textarea", "toggle", "hidden":
             guard !normalizedAllowedValues.isEmpty else { return nil }
-            return "Allowed values can only be used with select and radio fields."
+            return
+                "Allowed values can only be used with select and radio fields."
         default:
             return nil
         }

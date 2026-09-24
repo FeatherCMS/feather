@@ -1,7 +1,7 @@
 import FeatherAdmin
-import NewsletterContracts
 import HTML
 import Hummingbird
+import NewsletterContracts
 import SGML
 import WebBuilders
 import WebComponents
@@ -77,7 +77,10 @@ struct NewsletterCampaignEditPage: Component {
                         NewAdminDetailField(label: "Key", value: state.form.key)
                     )
                     context.build(
-                        NewAdminDetailField(label: "Name", value: state.form.name)
+                        NewAdminDetailField(
+                            label: "Name",
+                            value: state.form.name
+                        )
                     )
                     context.build(
                         NewAdminDetailField(
@@ -91,7 +94,11 @@ struct NewsletterCampaignEditPage: Component {
                 Div {
                     if state.permissions.allows(Permissions.Campaigns.update) {
                         context.build(
-                            NewAdminButton("Edit", href: editPath, style: .primary)
+                            NewAdminButton(
+                                "Edit",
+                                href: editPath,
+                                style: .primary
+                            )
                         )
                     }
                     if state.permissions.allows(Permissions.Campaigns.delete) {
@@ -99,11 +106,14 @@ struct NewsletterCampaignEditPage: Component {
                             NewAdminButton(
                                 "Remove",
                                 href: NewAdminLocation.remove(
-                                    path: NewsletterAdminRoutes.campaignRemove.description,
+                                    path: NewsletterAdminRoutes.campaignRemove
+                                        .description,
                                     ids: [state.id],
-                                    returnTo: NewsletterAdminRoutes.campaignDetails(
-                                        RouterPath(state.id)
-                                    ).description
+                                    returnTo:
+                                        NewsletterAdminRoutes.campaignDetails(
+                                            RouterPath(state.id)
+                                        )
+                                        .description
                                 ),
                                 style: .destructive
                             )

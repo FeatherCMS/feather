@@ -78,7 +78,8 @@ struct AdminEditContactFormDefaultPresenter: AdminEditContactFormPresenter {
             return try await renderFormError(
                 key: key,
                 item: item,
-                message: "The contact form could not be saved. Please try again.",
+                message:
+                    "The contact form could not be saved. Please try again.",
                 permissions: permissions,
                 status: .serviceUnavailable
             )

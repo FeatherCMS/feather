@@ -18,10 +18,11 @@ extension SubmissionMailTable.Row {
             column: "additional_headers",
             as: String.self
         )
-        additionalHeaders = try JSONDecoder().decode(
-            [String].self,
-            from: Data(additionalHeadersJSON.utf8)
-        )
+        additionalHeaders = try JSONDecoder()
+            .decode(
+                [String].self,
+                from: Data(additionalHeadersJSON.utf8)
+            )
         messageBody = try row.decode(column: "message_body", as: String.self)
         createdAt = try row.decode(column: "created_at", as: Date.self)
         updatedAt = try row.decode(column: "updated_at", as: Date.self)
@@ -44,7 +45,7 @@ struct SubmissionMailTable {
     let connection: any DatabaseConnection
 
     func list(formId: String) async throws -> [Row] {
-        return try await connection.run(
+        try await connection.run(
             query: #"""
                 SELECT * FROM contact_form_mail
                 WHERE form_id = \#(formId)

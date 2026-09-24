@@ -75,12 +75,13 @@ struct AdminAddNewsletterCampaignDefaultController:
             )
         }
         catch let error as AdminAddNewsletterCampaignError {
-            return try await presenter.renderAddError(
-                input: payload,
-                error: error,
-                permissions: context.currentUserPermissions
-            )
-            .response(from: request, context: context)
+            return
+                try await presenter.renderAddError(
+                    input: payload,
+                    error: error,
+                    permissions: context.currentUserPermissions
+                )
+                .response(from: request, context: context)
         }
     }
 }

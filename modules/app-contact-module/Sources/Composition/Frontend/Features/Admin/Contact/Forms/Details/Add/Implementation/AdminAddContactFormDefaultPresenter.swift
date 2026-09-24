@@ -69,7 +69,8 @@ struct AdminAddContactFormDefaultPresenter: AdminAddContactFormPresenter {
         case .unavailable:
             return try await renderFormError(
                 item: item,
-                message: "The contact form could not be created. Please try again.",
+                message:
+                    "The contact form could not be created. Please try again.",
                 permissions: permissions,
                 status: .serviceUnavailable
             )

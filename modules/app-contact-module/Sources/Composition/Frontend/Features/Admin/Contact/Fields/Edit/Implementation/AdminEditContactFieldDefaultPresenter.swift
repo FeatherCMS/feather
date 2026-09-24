@@ -53,7 +53,8 @@ struct AdminEditContactFieldDefaultPresenter:
         case .unavailable:
             return try await renderFormError(
                 field: field,
-                message: "The contact form field could not be saved. Please try again.",
+                message:
+                    "The contact form field could not be saved. Please try again.",
                 permissions: permissions,
                 status: .serviceUnavailable
             )

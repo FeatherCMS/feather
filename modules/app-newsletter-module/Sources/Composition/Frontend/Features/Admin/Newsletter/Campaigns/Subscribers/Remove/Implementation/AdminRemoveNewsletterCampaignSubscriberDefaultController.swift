@@ -50,9 +50,11 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: NewsletterAdminRoutes.campaignSubscribers(
-                        RouterPath(newsletterId)
-                    ).description
+                    .location:
+                        NewsletterAdminRoutes.campaignSubscribers(
+                            RouterPath(newsletterId)
+                        )
+                        .description
                 ]
             )
         }
@@ -60,12 +62,13 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
             newsletterId: newsletterId,
             subscriberIds: ids
         )
-        return try await presenter.render(
-            newsletterId: newsletterId,
-            items: zip(ids, names).map { .init(id: $0.0, label: $0.1) },
-            returnTo: request.queryString("returnTo")
-        )
-        .response(from: request, context: context)
+        return
+            try await presenter.render(
+                newsletterId: newsletterId,
+                items: zip(ids, names).map { .init(id: $0.0, label: $0.1) },
+                returnTo: request.queryString("returnTo")
+            )
+            .response(from: request, context: context)
     }
 
     func remove(request: Request, context: AuthenticatedRequestContext)
@@ -80,16 +83,21 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
-        guard await AdminNonceStore.shared.consume(
-            nonceRequest.nonce,
-            sessionToken: context.sessionToken
-        ) else { return Response(status: .badRequest) }
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         try await interactor.remove(
             newsletterId: newsletterId,
             subscriberId: try context.requiredParameter("subscriberId")
         )
         return AdminNotificationFlash.redirect(
-            to: NewsletterAdminRoutes.campaignSubscribers(RouterPath(newsletterId))
+            to:
+                NewsletterAdminRoutes.campaignSubscribers(
+                    RouterPath(newsletterId)
+                )
                 .description,
             notification: .init(
                 title: "Removed",
@@ -109,16 +117,21 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
-        guard await AdminNonceStore.shared.consume(
-            nonceRequest.nonce,
-            sessionToken: context.sessionToken
-        ) else { return Response(status: .badRequest) }
+        guard
+            await AdminNonceStore.shared.consume(
+                nonceRequest.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
         try await interactor.remove(
             newsletterId: newsletterId,
             subscriberIds: nonceRequest.input.normalizedIds
         )
         return AdminNotificationFlash.redirect(
-            to: NewsletterAdminRoutes.campaignSubscribers(RouterPath(newsletterId))
+            to:
+                NewsletterAdminRoutes.campaignSubscribers(
+                    RouterPath(newsletterId)
+                )
                 .description,
             notification: .init(
                 title: "Removed",
