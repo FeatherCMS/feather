@@ -1,6 +1,10 @@
 import FeatherOpenAPI
 import OpenAPIKit30
 
+struct ContactAdditionalHeadersSchema: ArraySchemaRepresentable {
+    var items: SchemaRepresentable? { ContactContentField() }
+}
+
 struct SubmissionMailSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
@@ -8,7 +12,7 @@ struct SubmissionMailSchema: ObjectSchemaRepresentable {
             "mailFrom": ContactEmailField(),
             "mailTo": ContactEmailField(),
             "subject": ContactSubjectField(),
-            "additionalHeaders": ContactContentField(),
+            "additionalHeaders": ContactAdditionalHeadersSchema(),
             "messageBody": ContactContentField(),
             "createdAt": ContactTimestampField(),
             "updatedAt": ContactTimestampField(),
@@ -24,7 +28,7 @@ struct SubmissionMailInputSchema: ObjectSchemaRepresentable {
             "mailFrom": ContactEmailField(),
             "mailTo": ContactEmailField(),
             "subject": ContactSubjectField(),
-            "additionalHeaders": ContactContentField()
+            "additionalHeaders": ContactAdditionalHeadersSchema()
                 .reference(required: false),
             "messageBody": ContactContentField(),
         ]

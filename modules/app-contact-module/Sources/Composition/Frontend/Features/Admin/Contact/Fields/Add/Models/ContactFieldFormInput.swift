@@ -12,7 +12,7 @@ public struct ContactFieldFormInput: Decodable, Sendable {
     var key: String = ""
     var type: String = "text"
     var label: String = ""
-    var allowedValues: String = ""
+    var allowedValues: [String] = []
     var isRequired: NewAdminFormFieldCheckbox.Input = .init(value: false)
 
     enum CodingKeys: String, CodingKey {
@@ -31,7 +31,7 @@ public struct ContactFieldFormInput: Decodable, Sendable {
         allowedValues = try container.decodeIfPresent(
             [String].self,
             forKey: .allowedValues
-        )?.joined(separator: "\n") ?? ""
+        ) ?? []
         isRequired =
             try container.decodeIfPresent(
                 NewAdminFormFieldCheckbox.Input.self,
@@ -42,7 +42,7 @@ public struct ContactFieldFormInput: Decodable, Sendable {
     var isRequiredValue: Bool { isRequired.value }
     var position: String = "0"
     var normalizedAllowedValues: [String] {
-        allowedValues.split(separator: "\n")
+        allowedValues
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
             .filter { !$0.isEmpty }
     }

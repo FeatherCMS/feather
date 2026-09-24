@@ -23,7 +23,7 @@ struct AdminContactFormEmail: Sendable, Equatable, Codable, Hashable {
     public let mailFrom: String
     public let mailTo: String
     public let subject: String
-    public let additionalHeaders: String
+    public let additionalHeaders: [String]
     public let messageBody: String
 }
 
@@ -37,7 +37,7 @@ struct ContactFormEditForm: Decodable {
     public let mailFrom: [String]?
     public let mailTo: [String]?
     public let subject: [String]?
-    public let additionalHeaders: [String]?
+    public let additionalHeaders: [[String]]?
     public let messageBody: [String]?
 
     var mails: [AdminContactFormEmail] {
@@ -53,7 +53,7 @@ struct ContactFormEditForm: Decodable {
                 let from = mailFrom?[safe: index] ?? ""
                 let to = mailTo?[safe: index] ?? ""
                 let title = subject?[safe: index] ?? ""
-                let headers = additionalHeaders?[safe: index] ?? ""
+                let headers = additionalHeaders?[safe: index] ?? []
                 let body = messageBody?[safe: index] ?? ""
                 let mail = AdminContactFormEmail(
                     id: "",
@@ -83,7 +83,7 @@ public struct SubmissionMailFormInput: Decodable {
             mailFrom: mailFrom,
             mailTo: mailTo,
             subject: subject,
-            additionalHeaders: (additionalHeaders ?? []).joined(separator: "\n"),
+            additionalHeaders: additionalHeaders ?? [],
             messageBody: messageBody
         )
     }

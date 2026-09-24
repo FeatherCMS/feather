@@ -338,7 +338,9 @@ components:
         subject:
           type: string
         additionalHeaders:
-          type: string
+          type: array
+          items:
+            type: string
         messageBody:
           type: string
         createdAt:
@@ -394,7 +396,7 @@ components:
         subject:
           type: string
         additionalHeaders:
-          $ref: '#/components/schemas/ContactContentField'
+          $ref: '#/components/schemas/ContactAdditionalHeadersSchema'
         messageBody:
           type: string
       required:
@@ -402,6 +404,10 @@ components:
       - mailTo
       - subject
       - messageBody
+    ContactAdditionalHeadersSchema:
+      type: array
+      items:
+        type: string
     DeleteRequestSchema:
       type: object
       properties:

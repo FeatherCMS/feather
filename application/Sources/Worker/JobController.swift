@@ -38,7 +38,7 @@ struct EmailService {
         to: String,
         from: String,
         subject: String,
-        additionalHeaders: String,
+        additionalHeaders: [String],
         message: String
     ) async throws {
         let headers = parseHeaders(additionalHeaders)
@@ -55,20 +55,19 @@ struct EmailService {
         )
     }
 
-    private func parseHeaders(_ value: String) -> [String: [String]] {
-        value.split(whereSeparator: \.isNewline)
-            .reduce(into: [:]) { result, line in
-                let parts = line.split(separator: ":", maxSplits: 1)
-                    .map(String.init)
-                guard parts.count == 2 else { return }
-                let key = parts[0]
-                    .trimmingCharacters(in: .whitespacesAndNewlines)
-                    .lowercased()
-                guard ["cc", "bcc", "reply-to"].contains(key) else { return }
-                result[key, default: []] += parts[1]
-                    .split(separator: ",")
-                    .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-            }
+    private func parseHeaders(_ values: [String]) -> [String: [String]] {
+        values.reduce(into: [:]) { result, line in
+            let parts = line.split(separator: ":", maxSplits: 1)
+                .map(String.init)
+            guard parts.count == 2 else { return }
+            let key = parts[0]
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .lowercased()
+            guard ["cc", "bcc", "reply-to"].contains(key) else { return }
+            result[key, default: []] += parts[1]
+                .split(separator: ",")
+                .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+        }
     }
 }
 

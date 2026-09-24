@@ -8,7 +8,7 @@ struct JobNewsletterMailQueue: NewsletterMailQueue {
         mailFrom: String,
         mailTo: String,
         subject: String,
-        additionalHeaders: String,
+        additionalHeaders: [String],
         messageBody: String,
         deliveryIssueId: String?,
         deliveryNewsletterId: String?

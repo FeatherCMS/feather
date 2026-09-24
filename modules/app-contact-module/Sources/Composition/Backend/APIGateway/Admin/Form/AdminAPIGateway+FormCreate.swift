@@ -29,7 +29,7 @@ extension AdminAPIGateway {
                                     mailTo: $0.mailTo,
                                     subject: $0.subject,
                                     additionalHeaders: $0.additionalHeaders
-                                        ?? "",
+                                        ?? [],
                                     messageBody: $0.messageBody
                                 )
                             }

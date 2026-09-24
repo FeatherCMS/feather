@@ -383,7 +383,7 @@ public enum Components {
             /// - Remark: Generated from `#/components/schemas/SubmissionMailSchema/subject`.
             public var subject: Swift.String
             /// - Remark: Generated from `#/components/schemas/SubmissionMailSchema/additionalHeaders`.
-            public var additionalHeaders: Swift.String
+            public var additionalHeaders: [Swift.String]
             /// - Remark: Generated from `#/components/schemas/SubmissionMailSchema/messageBody`.
             public var messageBody: Swift.String
             /// - Remark: Generated from `#/components/schemas/SubmissionMailSchema/createdAt`.
@@ -406,7 +406,7 @@ public enum Components {
                 mailFrom: Swift.String,
                 mailTo: Swift.String,
                 subject: Swift.String,
-                additionalHeaders: Swift.String,
+                additionalHeaders: [Swift.String],
                 messageBody: Swift.String,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
@@ -497,7 +497,7 @@ public enum Components {
             /// - Remark: Generated from `#/components/schemas/SubmissionMailInputSchema/subject`.
             public var subject: Swift.String
             /// - Remark: Generated from `#/components/schemas/SubmissionMailInputSchema/additionalHeaders`.
-            public var additionalHeaders: Components.Schemas.ContactContentField?
+            public var additionalHeaders: Components.Schemas.ContactAdditionalHeadersSchema?
             /// - Remark: Generated from `#/components/schemas/SubmissionMailInputSchema/messageBody`.
             public var messageBody: Swift.String
             /// Creates a new `SubmissionMailInputSchema`.
@@ -512,7 +512,7 @@ public enum Components {
                 mailFrom: Swift.String,
                 mailTo: Swift.String,
                 subject: Swift.String,
-                additionalHeaders: Components.Schemas.ContactContentField? = nil,
+                additionalHeaders: Components.Schemas.ContactAdditionalHeadersSchema? = nil,
                 messageBody: Swift.String
             ) {
                 self.mailFrom = mailFrom
@@ -529,6 +529,8 @@ public enum Components {
                 case messageBody
             }
         }
+        /// - Remark: Generated from `#/components/schemas/ContactAdditionalHeadersSchema`.
+        public typealias ContactAdditionalHeadersSchema = [Swift.String]
         /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
         public struct DeleteRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.

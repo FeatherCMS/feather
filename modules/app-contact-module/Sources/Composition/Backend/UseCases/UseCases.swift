@@ -13,7 +13,7 @@ public protocol ContactMailQueue: Sendable {
         mailFrom: String,
         mailTo: String,
         subject: String,
-        additionalHeaders: String,
+        additionalHeaders: [String],
         messageBody: String
     ) async throws
 }
@@ -55,10 +55,9 @@ extension UseCases {
                 mailFrom: render(mail.mailFrom, values: values),
                 mailTo: render(mail.mailTo, values: values),
                 subject: render(mail.subject, values: values),
-                additionalHeaders: render(
-                    mail.additionalHeaders,
-                    values: values
-                ),
+                additionalHeaders: mail.additionalHeaders.map {
+                    render($0, values: values)
+                },
                 messageBody: renderHTML(mail.messageBody, values: values)
             )
         }

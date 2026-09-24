@@ -59,9 +59,7 @@ struct ContactFieldForm: Component {
                     state: .init(
                         name: "allowedValues[]",
                         label: "Allowed values",
-                        values: field.allowedValues
-                            .split(whereSeparator: \.isNewline)
-                            .map(String.init),
+                        values: field.allowedValues,
                         error: fieldErrors["allowedValues"],
                         help:
                             "Required for select and radio fields. Type a value and press Enter or comma to add it."

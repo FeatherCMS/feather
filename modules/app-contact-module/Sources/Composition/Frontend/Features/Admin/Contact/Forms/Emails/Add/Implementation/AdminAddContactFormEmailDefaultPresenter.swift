@@ -31,7 +31,7 @@ struct AdminAddContactFormEmailDefaultPresenter:
                     mailFrom: "",
                     mailTo: "",
                     subject: "",
-                    additionalHeaders: "",
+                    additionalHeaders: [],
                     messageBody: ""
                 ),
                 availableFields: availableFields,

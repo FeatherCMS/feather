@@ -6,7 +6,7 @@ extension JobQueueProtocol {
         mailFrom: String,
         mailTo: String,
         subject: String,
-        additionalHeaders: String,
+        additionalHeaders: [String],
         messageBody: String,
         deliveryIssueId: String? = nil,
         deliveryNewsletterId: String? = nil

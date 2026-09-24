@@ -5,14 +5,14 @@ public struct SubmissionMailInput: DTO {
     public let mailFrom: String
     public let mailTo: String
     public let subject: String
-    public let additionalHeaders: String
+    public let additionalHeaders: [String]
     public let messageBody: String
 
     public init(
         mailFrom: String,
         mailTo: String,
         subject: String,
-        additionalHeaders: String,
+        additionalHeaders: [String],
         messageBody: String
     ) {
         self.mailFrom = mailFrom

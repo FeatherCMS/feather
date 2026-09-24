@@ -46,7 +46,7 @@ struct AdminEditContactFormEmailDefaultController:
                     mailFrom: "",
                     mailTo: "",
                     subject: "",
-                    additionalHeaders: "",
+                    additionalHeaders: [],
                     messageBody: ""
                 ),
                 availableFields: [],

@@ -48,9 +48,7 @@ struct SubmissionMailForm: Component {
                     state: .init(
                         name: "additionalHeaders[]",
                         label: "Additional headers",
-                        values: mail.additionalHeaders
-                            .split(whereSeparator: \.isNewline)
-                            .map(String.init),
+                        values: mail.additionalHeaders,
                         help:
                             "Type a header and press Enter to add it. Examples: Reply-To: {{email}}, CC: manager@example.com, BCC: archive@example.com.",
                         commitsOnComma: false
