@@ -147,10 +147,39 @@ public struct ArticleDatabaseQueries: ArticleQueries {
         return .init(items: items)
     }
 
+    public func listPublic(
+        query: ArticleList.Query,
+        categoryID: String?
+    ) async throws -> ArticleList {
+        let page = pageSizeOffset(query.page)
+        let table = ArticleTable(connection: context.connection)
+        let items = try await table.listPublic(
+            search: query.search,
+            categoryID: categoryID,
+            orderBy: orderByArticle(query),
+            limit: page.size,
+            offset: page.offset
+        )
+        .map(\.asQueryListItem)
+
+        return .init(items: items)
+    }
+
     public func count(
         query: ArticleList.Query
     ) async throws -> Int {
         let table = ArticleTable(connection: context.connection)
         return try await table.count(search: query.search)
+    }
+
+    public func countPublic(
+        query: ArticleList.Query,
+        categoryID: String?
+    ) async throws -> Int {
+        let table = ArticleTable(connection: context.connection)
+        return try await table.countPublic(
+            search: query.search,
+            categoryID: categoryID
+        )
     }
 }

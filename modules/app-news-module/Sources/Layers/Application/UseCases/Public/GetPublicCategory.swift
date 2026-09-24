@@ -68,18 +68,18 @@ extension GetPublicCategory {
         now: Date,
         context: ReadPublicNewsCategory
     ) async throws -> [PublicNewsArticleSummary] {
-        let articles = try await context.article.list(
+        let articles = try await context.article.listPublic(
             query: .init(
                 page: .init(size: 10000, number: 1),
                 sort: [.init(field: .createdAt, direction: .desc)]
-            )
+            ),
+            categoryID: categoryID
+        )
+        let categoryIDsByArticleID = try await context.article.categoryIDs(
+            for: articles.items.map(\.id)
         )
         var result: [PublicNewsArticleSummary] = []
         for item in articles.items {
-            let article = try await context.article.find(id: item.id)
-            guard article.categoryIds.contains(categoryID) else {
-                continue
-            }
             guard
                 let metadata = try await context.metadata.find(
                     referenceType: "news.article",
@@ -94,12 +94,12 @@ extension GetPublicCategory {
                     id: item.id,
                     title: item.title,
                     excerpt: item.excerpt,
-                    imageAssetId: article.imageAssetId,
+                    imageAssetId: item.imageAssetId,
                     imageURL: "",
                     media: nil,
                     metadata: metadata,
-                    readingTime: NewsReadingTime.minutes(for: article.content),
-                    categoryIDs: article.categoryIds
+                    readingTime: NewsReadingTime.minutes(for: item.content),
+                    categoryIDs: categoryIDsByArticleID[item.id] ?? []
                 )
             )
         }

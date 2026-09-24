@@ -18,7 +18,17 @@ public protocol ArticleQueries: Sendable {
         query: ArticleList.Query
     ) async throws -> ArticleList
 
+    func listPublic(
+        query: ArticleList.Query,
+        categoryID: String?
+    ) async throws -> ArticleList
+
     func count(
         query: ArticleList.Query
+    ) async throws -> Int
+
+    func countPublic(
+        query: ArticleList.Query,
+        categoryID: String?
     ) async throws -> Int
 }
