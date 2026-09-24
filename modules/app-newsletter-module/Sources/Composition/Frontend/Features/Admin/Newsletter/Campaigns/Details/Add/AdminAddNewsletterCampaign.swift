@@ -3,8 +3,10 @@ import FeatherAdmin
 struct AdminAddNewsletterCampaign {
     let controller: any AdminAddNewsletterCampaignController
 
-    init(apiBuilder: NewsletterAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: NewsletterAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminAddNewsletterCampaignDefaultController(
             buildRuntime: { request, context in
                 (

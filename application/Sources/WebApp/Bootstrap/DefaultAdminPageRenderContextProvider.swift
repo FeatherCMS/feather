@@ -26,20 +26,23 @@ struct DefaultAdminPageRenderContextProvider:
         var topBarState = NewAdminTopBar.State()
         do {
             let accountAPI = accountAPIBuilder.makeAccountApp(context)
-            let profileID = try await accountAPI
+            let profileID =
+                try await accountAPI
                 .withOpenAPIRepositoryErrorMapping { client in
                     let response = try await client.accountProfileGet()
                     return try response.ok.body.json.profileImageAssetId
                 }
 
             if let profileID {
-                let asset = try await mediaAPIBuilder
+                let asset =
+                    try await mediaAPIBuilder
                     .makeMediaAdmin(context)
                     .loadImageAsset(assetId: profileID)
                 topBarState = .init(
-                    profileImageURL: asset?.previewURL.flatMap {
-                        mediaResolver.resolve(imagePath: $0)
-                    }
+                    profileImageURL: asset?.previewURL
+                        .flatMap {
+                            mediaResolver.resolve(imagePath: $0)
+                        }
                 )
             }
         }

@@ -2,9 +2,15 @@ import FeatherAdmin
 import Hummingbird
 
 protocol AdminAddMediaVariantController: Sendable {
-    func getAddMediaVariant(request: Request, context: AuthenticatedRequestContext)
+    func getAddMediaVariant(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
-    func postAddMediaVariant(request: Request, context: AuthenticatedRequestContext)
+    func postAddMediaVariant(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
 }
 

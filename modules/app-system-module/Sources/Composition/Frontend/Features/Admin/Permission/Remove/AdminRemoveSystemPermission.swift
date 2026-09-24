@@ -4,8 +4,10 @@ import Hummingbird
 struct AdminRemoveSystemPermission {
     let controller: any AdminRemoveSystemPermissionController
 
-    init(apiBuilder: SystemAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: SystemAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminRemoveSystemPermissionDefaultController(
             buildRuntime: { request, context in
                 (

@@ -5,8 +5,10 @@ import OpenAPIRuntime
 struct AdminAddWebMenu {
     let controller: any AdminAddWebMenuController
 
-    init(apiBuilder: WebAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: WebAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminAddWebMenuDefaultController(
             buildRuntime: { request, context in
                 (

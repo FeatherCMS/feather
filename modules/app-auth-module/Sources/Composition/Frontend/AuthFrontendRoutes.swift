@@ -44,7 +44,8 @@ public enum AuthFrontendRoutes {
         AppMagicLink(
             apiBuilder: authAPIBuilder,
             usesSecureCookies: usesSecureCookies
-        ).route(on: router)
+        )
+        .route(on: router)
     }
 
 }

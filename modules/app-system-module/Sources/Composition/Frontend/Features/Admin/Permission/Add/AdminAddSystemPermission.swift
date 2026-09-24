@@ -4,8 +4,10 @@ import Hummingbird
 struct AdminAddSystemPermission {
     let controller: any AdminAddSystemPermissionController
 
-    init(apiBuilder: SystemAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: SystemAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminAddSystemPermissionDefaultController(
             buildRuntime: { request, context in
                 let repository = AdminAddSystemPermissionOpenAPIRepository(

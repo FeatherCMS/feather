@@ -3,8 +3,10 @@ import FeatherAdmin
 struct AdminViewSystemJob {
     let controller: any AdminViewSystemJobController
 
-    init(apiBuilder: SystemAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: SystemAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminViewSystemJobDefaultController(
             buildRuntime: { request, context in
                 (

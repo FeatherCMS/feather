@@ -17,7 +17,8 @@ struct AdminRemoveContactFieldDefaultController:
             any AdminRemoveContactFieldPresenter
         >
 
-    func confirm(request: Request, context: AuthenticatedRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -32,7 +33,8 @@ struct AdminRemoveContactFieldDefaultController:
         )
     }
 
-    func remove(request: Request, context: AuthenticatedRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

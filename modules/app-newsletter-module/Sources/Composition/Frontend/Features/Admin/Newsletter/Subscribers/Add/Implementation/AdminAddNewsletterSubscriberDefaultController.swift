@@ -16,7 +16,8 @@ struct AdminAddNewsletterSubscriberDefaultController:
             any AdminAddNewsletterSubscriberPresenter
         >
 
-    func get(request: Request, context: AuthenticatedRequestContext) async throws
+    func get(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -43,7 +44,8 @@ struct AdminAddNewsletterSubscriberDefaultController:
         }
     }
 
-    func post(request: Request, context: AuthenticatedRequestContext) async throws
+    func post(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

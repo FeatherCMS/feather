@@ -15,7 +15,8 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
             any AdminRemoveNewsletterCampaignSubscriberInteractor,
             any AdminRemoveNewsletterCampaignSubscriberPresenter
         >
-    func confirm(request: Request, context: AuthenticatedRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -30,7 +31,8 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
             item: .init(id: subscriberId, label: item.email)
         )
     }
-    func remove(request: Request, context: AuthenticatedRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
         let (interactor, _) = buildRuntime((request, context))

@@ -4,8 +4,10 @@ import Hummingbird
 struct AdminListSystemPermission {
     let controller: any AdminListSystemPermissionController
 
-    init(apiBuilder: SystemAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: SystemAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminListSystemPermissionDefaultController(
             buildRuntime: { request, context in
                 (

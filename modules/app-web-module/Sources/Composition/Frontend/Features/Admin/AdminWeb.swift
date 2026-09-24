@@ -8,7 +8,8 @@ public struct AdminWeb {
     public let renderingEngine: any RenderingEngine
     public let adminEvents: any EventPublisher
 
-    public init(apiBuilder: WebAPIBuilder,
+    public init(
+        apiBuilder: WebAPIBuilder,
         renderingEngine: any RenderingEngine,
         adminEvents: any EventPublisher
     ) {

@@ -11,7 +11,10 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
             any AdminEditMediaVariantPresenter
         >
 
-    func getEditMediaVariant(request: Request, context: AuthenticatedRequestContext)
+    func getEditMediaVariant(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
         let runtime = buildRuntime((request, context))
@@ -51,7 +54,10 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
         }
     }
 
-    func postEditMediaVariant(request: Request, context: AuthenticatedRequestContext)
+    func postEditMediaVariant(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
         let runtime = buildRuntime((request, context))

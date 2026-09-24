@@ -10,13 +10,17 @@ import WebComponents
 struct AdminRemoveContactFormField {
     let controller: any AdminRemoveContactFormFieldController
 
-    init(apiBuilder: ContactAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: ContactAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminRemoveContactFormFieldDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminRemoveContactFormFieldDefaultInteractor(
-                        repository: .init(api: apiBuilder.makeContactAdmin(context))
+                        repository: .init(
+                            api: apiBuilder.makeContactAdmin(context)
+                        )
                     ),
                     presenter: AdminRemoveContactFormFieldDefaultPresenter(
                         request: request,

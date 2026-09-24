@@ -2,7 +2,8 @@ import FeatherAdmin
 import Hummingbird
 
 protocol AdminListContactSubmissionsController: Sendable {
-    func list(request: Request, context: AuthenticatedRequestContext) async throws
+    func list(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
 }
 

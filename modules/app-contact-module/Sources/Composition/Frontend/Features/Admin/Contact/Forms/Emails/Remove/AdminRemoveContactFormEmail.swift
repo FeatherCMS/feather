@@ -10,13 +10,17 @@ import WebComponents
 struct AdminRemoveContactFormEmail {
     let controller: any AdminRemoveContactFormEmailController
 
-    init(apiBuilder: ContactAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: ContactAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminRemoveContactFormEmailDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminRemoveContactFormEmailDefaultInteractor(
-                        repository: .init(api: apiBuilder.makeContactAdmin(context))
+                        repository: .init(
+                            api: apiBuilder.makeContactAdmin(context)
+                        )
                     ),
                     presenter: AdminRemoveContactFormEmailDefaultPresenter(
                         request: request,

@@ -2,9 +2,11 @@ import FeatherAdmin
 import Hummingbird
 
 protocol AdminEditNewsletterCampaignController: Sendable {
-    func edit(request: Request, context: AuthenticatedRequestContext) async throws
+    func edit(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
-    func update(request: Request, context: AuthenticatedRequestContext) async throws
+    func update(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
 }
 

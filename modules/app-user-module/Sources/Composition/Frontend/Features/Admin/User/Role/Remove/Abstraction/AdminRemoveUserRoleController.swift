@@ -13,9 +13,15 @@ protocol AdminRemoveUserRoleController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> Response
 
-    func getRemoveUserRoles(request: Request, context: AuthenticatedRequestContext)
+    func getRemoveUserRoles(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
-    func postRemoveUserRoles(request: Request, context: AuthenticatedRequestContext)
+    func postRemoveUserRoles(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
 }
 

@@ -16,7 +16,8 @@ struct AdminListNewsletterCampaignSubscribersDefaultController:
             any AdminListNewsletterCampaignSubscribersInteractor,
             any AdminListNewsletterCampaignSubscribersPresenter
         >
-    func list(request: Request, context: AuthenticatedRequestContext) async throws
+    func list(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))

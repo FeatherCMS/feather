@@ -19,8 +19,10 @@ import WebComponents
 struct AdminRemoveAuthEmail {
     let controller: any AdminRemoveAuthEmailController
 
-    init(apiBuilder: AuthAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: AuthAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminRemoveAuthEmailDefaultController(
             buildRuntime: { request, context in
                 (

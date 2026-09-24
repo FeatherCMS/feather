@@ -4,8 +4,10 @@ import MediaFrontend
 struct AdminEditAccountProfile {
     let controller: any AdminEditAccountProfileController
 
-    init(apiBuilder: AccountAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: AccountAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminEditAccountProfileDefaultController(
             buildRuntime: { request, context in
                 (

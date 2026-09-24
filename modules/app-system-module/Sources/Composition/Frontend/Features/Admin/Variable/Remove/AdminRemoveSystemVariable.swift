@@ -4,8 +4,10 @@ import Hummingbird
 struct AdminRemoveSystemVariable {
     let controller: any AdminRemoveSystemVariableController
 
-    init(apiBuilder: SystemAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: SystemAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminRemoveSystemVariableDefaultController(
             buildRuntime: { request, context in
                 (

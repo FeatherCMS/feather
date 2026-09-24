@@ -4,8 +4,10 @@ import OpenAPIRuntime
 struct AdminEditWebSettings {
     let controller: any AdminEditWebSettingsController
 
-    init(apiBuilder: WebAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: WebAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminEditWebSettingsDefaultController(
             buildRuntime: { request, context in
                 (

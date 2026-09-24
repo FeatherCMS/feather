@@ -3,8 +3,10 @@ import FeatherAdmin
 struct AdminEditUserIdentity {
     let controller: any AdminEditUserIdentityController
 
-    init(apiBuilder: UserAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: UserAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminEditUserIdentityDefaultController(
             buildRuntime: { request, context in
                 (

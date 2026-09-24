@@ -16,7 +16,8 @@ struct AdminEditContactFormSubmissionDefaultController:
             any AdminEditContactFormSubmissionPresenter
         >
 
-    func update(request: Request, context: AuthenticatedRequestContext) async throws
+    func update(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

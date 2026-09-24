@@ -11,7 +11,10 @@ struct AdminRemoveRedirectRuleDefaultController:
             any AdminRemoveRedirectRulePresenter
         >
 
-    func getRemoveRedirectRule(request: Request, context: AuthenticatedRequestContext)
+    func getRemoveRedirectRule(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))

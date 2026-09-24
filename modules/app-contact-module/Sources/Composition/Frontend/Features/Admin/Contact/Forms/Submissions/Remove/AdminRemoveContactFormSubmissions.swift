@@ -4,8 +4,10 @@ import FeatherValidation
 struct AdminRemoveContactFormSubmissions {
     let controller: any AdminRemoveContactFormSubmissionsController
 
-    init(apiBuilder: ContactAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: ContactAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminRemoveContactFormSubmissionsDefaultController(
             buildRuntime: { request, context in
                 (

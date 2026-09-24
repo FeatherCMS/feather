@@ -10,7 +10,10 @@ struct AdminAddMediaVariantDefaultController: AdminAddMediaVariantController {
             any AdminAddMediaVariantPresenter
         >
 
-    func getAddMediaVariant(request: Request, context: AuthenticatedRequestContext)
+    func getAddMediaVariant(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
         let runtime = buildRuntime((request, context))
@@ -24,7 +27,10 @@ struct AdminAddMediaVariantDefaultController: AdminAddMediaVariantController {
         return try await runtime.presenter.renderAddPage(state: .empty())
     }
 
-    func postAddMediaVariant(request: Request, context: AuthenticatedRequestContext)
+    func postAddMediaVariant(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
         let runtime = buildRuntime((request, context))

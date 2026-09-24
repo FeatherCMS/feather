@@ -3,8 +3,7 @@ public import FeatherContracts
 public import Hummingbird
 public import SystemContracts
 
-public struct AdminAuthMiddleware: RouterMiddleware
-{
+public struct AdminAuthMiddleware: RouterMiddleware {
 
     public typealias Context = DefaultRequestContext
 

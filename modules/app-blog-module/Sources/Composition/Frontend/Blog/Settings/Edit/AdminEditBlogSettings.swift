@@ -14,8 +14,10 @@ import WebFrontend
 struct AdminEditBlogSettings {
     let controller: any AdminEditBlogSettingsController
 
-    init(apiBuilder: BlogAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: BlogAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminEditBlogSettingsDefaultController(
             buildRuntime: { request, context in
                 (

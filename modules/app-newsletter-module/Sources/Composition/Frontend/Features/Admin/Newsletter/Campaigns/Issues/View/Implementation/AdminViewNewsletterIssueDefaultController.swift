@@ -15,7 +15,8 @@ struct AdminViewNewsletterIssueDefaultController:
             any AdminViewNewsletterIssueInteractor,
             any AdminViewNewsletterIssuePresenter
         >
-    func get(request: Request, context: AuthenticatedRequestContext) async throws
+    func get(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))

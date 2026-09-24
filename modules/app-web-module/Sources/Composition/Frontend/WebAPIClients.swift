@@ -5,9 +5,9 @@ public import MediaFrontend
 import NIOCore
 import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
+public import SystemFrontend
 public import WebAdminAPI
 public import WebAppAPI
-public import SystemFrontend
 
 public struct WebAdminAPIClient: Sendable {
     public let client: WebAdminAPI.Client

@@ -5,8 +5,9 @@ struct AdminResendAccountInvitation {
 
     let controller: AdminResendAccountInvitationDefaultController
 
-    init(apiBuilder: AccountAPIBuilder,
-        ) {
+    init(
+        apiBuilder: AccountAPIBuilder,
+    ) {
         self.controller = .init(
             buildRepository: { context in
                 AdminResendAccountInvitationOpenAPIRepository(

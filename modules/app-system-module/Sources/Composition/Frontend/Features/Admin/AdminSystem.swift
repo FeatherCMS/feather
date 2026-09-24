@@ -7,7 +7,8 @@ public struct AdminSystem {
     public let renderingEngine: any RenderingEngine
     private let adminEvents: any EventPublisher
 
-    public init(apiBuilder: SystemAPIBuilder,
+    public init(
+        apiBuilder: SystemAPIBuilder,
         renderingEngine: any RenderingEngine,
         adminEvents: any EventPublisher
     ) {

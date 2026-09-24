@@ -5,8 +5,10 @@ public struct AccountAdmin {
     private let apiBuilder: AccountAPIBuilder
     public let renderingEngine: any RenderingEngine
 
-    public init(apiBuilder: AccountAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    public init(
+        apiBuilder: AccountAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.apiBuilder = apiBuilder
         self.renderingEngine = renderingEngine
     }

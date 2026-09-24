@@ -4,7 +4,8 @@ struct AdminAddAccountInvitation {
 
     let controller: any AdminAddAccountInvitationController
 
-    init(apiBuilder: AccountAPIBuilder,
+    init(
+        apiBuilder: AccountAPIBuilder,
         renderingEngine: any RenderingEngine
     ) {
         self.controller = AdminAddAccountInvitationDefaultController(

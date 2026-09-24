@@ -173,7 +173,8 @@ struct ErrorMiddleware: ServerMiddleware {
                 request: request,
                 operationID: operationID
             )
-            if let error = error.underlyingError as? any ErrorTraceRepresentable,
+            if let error = error.underlyingError
+                as? any ErrorTraceRepresentable,
                 let httpError = error.lookup((any HTTPErrorRepresentable).self)
             {
                 if let object = httpError.content {

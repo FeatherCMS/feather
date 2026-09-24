@@ -14,8 +14,10 @@ import WebFrontend
 struct AdminRemoveBlogPost {
     let controller: any AdminRemoveBlogPostController
 
-    init(apiBuilder: BlogAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: BlogAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminRemoveBlogPostDefaultController(
             buildRuntime: { request, context in
                 (

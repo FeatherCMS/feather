@@ -5,8 +5,10 @@ import OpenAPIRuntime
 struct AdminRemoveWebMenuItem {
     let controller: any AdminRemoveWebMenuItemController
 
-    init(apiBuilder: WebAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: WebAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminRemoveWebMenuItemDefaultController(
             buildRuntime: { request, context in
                 (

@@ -33,7 +33,8 @@ public struct RenderingEngineAssetConfiguration: Sendable {
 public struct DefaultRenderingEngine: RenderingEngine {
     public let publicOrigins: AppPublicOriginConfiguration
     public let adminEvents: any EventPublisher
-    public let adminPageRenderContextProvider: any AdminPageRenderContextProvider
+    public let adminPageRenderContextProvider:
+        any AdminPageRenderContextProvider
     public let assets: RenderingEngineAssetConfiguration
 
     public init(

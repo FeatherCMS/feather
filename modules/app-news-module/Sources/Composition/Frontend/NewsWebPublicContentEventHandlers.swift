@@ -13,7 +13,8 @@ public enum NewsWebPublicContentEventHandlers {
     ) {
         registry.register(
             event: WebPublicContentProvider.self,
-            context: WebPublicContentEventContext<PublicContentRuntimeContext>.self
+            context: WebPublicContentEventContext<PublicContentRuntimeContext>
+                .self
         ) { _, context in
             try await resolve(context)
         }

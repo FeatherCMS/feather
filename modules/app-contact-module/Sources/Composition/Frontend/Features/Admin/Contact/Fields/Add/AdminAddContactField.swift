@@ -9,8 +9,10 @@ import WebComponents
 
 struct AdminAddContactField {
     let controller: any AdminAddContactFieldController
-    init(apiBuilder: ContactAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: ContactAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminAddContactFieldDefaultController(
             buildRuntime: { request, context in
                 (

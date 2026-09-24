@@ -4,8 +4,10 @@ import Hummingbird
 struct AdminEditSystemPermission {
     let controller: any AdminEditSystemPermissionController
 
-    init(apiBuilder: SystemAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: SystemAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminEditSystemPermissionDefaultController(
             buildRuntime: { request, context in
                 (

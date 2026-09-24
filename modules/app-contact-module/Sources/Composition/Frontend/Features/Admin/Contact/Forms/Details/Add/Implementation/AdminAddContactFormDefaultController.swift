@@ -14,7 +14,8 @@ struct AdminAddContactFormDefaultController: AdminAddContactFormController {
             any AdminAddContactFormPresenter
         >
 
-    func add(request: Request, context: AuthenticatedRequestContext) async throws
+    func add(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -35,7 +36,8 @@ struct AdminAddContactFormDefaultController: AdminAddContactFormController {
         )
     }
 
-    func create(request: Request, context: AuthenticatedRequestContext) async throws
+    func create(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
         let (interactor, _) = buildRuntime((request, context))

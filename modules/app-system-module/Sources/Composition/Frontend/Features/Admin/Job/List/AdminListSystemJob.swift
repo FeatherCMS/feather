@@ -5,8 +5,10 @@ struct AdminListSystemJob {
 
     let controller: any AdminListSystemJobController
 
-    init(apiBuilder: SystemAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: SystemAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminListSystemJobDefaultController(
             buildRuntime: { request, context in
                 (

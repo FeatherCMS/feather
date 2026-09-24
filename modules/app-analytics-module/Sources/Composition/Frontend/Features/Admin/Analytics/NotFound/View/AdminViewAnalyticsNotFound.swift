@@ -4,7 +4,10 @@ public import Hummingbird
 public struct AdminViewAnalyticsNotFound {
     public let controller: any AdminViewAnalyticsNotFoundController
 
-    public init(apiBuilder: AnalyticsAPIBuilder, renderingEngine: any RenderingEngine) {
+    public init(
+        apiBuilder: AnalyticsAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminViewAnalyticsNotFoundDefaultController(
             buildRuntime: { request, context in
                 (

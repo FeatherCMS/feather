@@ -126,14 +126,15 @@ func buildRouter(
 
     // MARK: - admin
 
-    let adminRouter = authRouter
+    let adminRouter =
+        authRouter
         .add(
-        middleware: AdminAuthMiddleware(
-            loginPath: "/login/",
-            unauthorizedPath: "/"
+            middleware: AdminAuthMiddleware(
+                loginPath: "/login/",
+                unauthorizedPath: "/"
+            )
         )
-    )
-    .group(context: AuthenticatedRequestContext.self)
+        .group(context: AuthenticatedRequestContext.self)
     buildAdminRoutes(
         router: adminRouter,
         renderingEngine: renderingEngine,

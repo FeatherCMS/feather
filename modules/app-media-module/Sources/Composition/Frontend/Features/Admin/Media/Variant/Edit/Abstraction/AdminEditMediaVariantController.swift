@@ -2,7 +2,10 @@ import FeatherAdmin
 import Hummingbird
 
 protocol AdminEditMediaVariantController: Sendable {
-    func getEditMediaVariant(request: Request, context: AuthenticatedRequestContext)
+    func getEditMediaVariant(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     func getEditMediaVariantProcessor(
         request: Request,
@@ -12,7 +15,10 @@ protocol AdminEditMediaVariantController: Sendable {
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response
-    func postEditMediaVariant(request: Request, context: AuthenticatedRequestContext)
+    func postEditMediaVariant(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     func postAddMediaVariantProcessor(
         request: Request,

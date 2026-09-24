@@ -2,9 +2,11 @@ import FeatherAdmin
 import Hummingbird
 
 protocol AdminRemoveNewsletterCampaignController: Sendable {
-    func confirm(request: Request, context: AuthenticatedRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
-    func remove(request: Request, context: AuthenticatedRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     func removeSelected(request: Request, context: AuthenticatedRequestContext)
         async throws -> Response

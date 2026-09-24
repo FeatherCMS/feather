@@ -8,9 +8,11 @@ import WebBuilders
 import WebComponents
 
 protocol AdminRemoveContactFormFieldController: Sendable {
-    func confirm(request: Request, context: AuthenticatedRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
-    func remove(request: Request, context: AuthenticatedRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     func confirmSelected(request: Request, context: AuthenticatedRequestContext)
         async throws

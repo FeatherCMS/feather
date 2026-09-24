@@ -14,8 +14,10 @@ import WebFrontend
 struct AdminEditBlogAuthorLink {
     let controller: any AdminEditBlogAuthorLinkController
 
-    init(apiBuilder: BlogAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: BlogAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminEditBlogAuthorLinkDefaultController(
             buildRuntime: { request, context in
                 (

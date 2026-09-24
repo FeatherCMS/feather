@@ -5,8 +5,10 @@ import UserAdminAPI
 struct AdminAddUserRole {
     let controller: any AdminAddUserRoleController
 
-    init(apiBuilder: UserAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: UserAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminAddUserRoleDefaultController(
             buildRuntime: { request, context in
                 (

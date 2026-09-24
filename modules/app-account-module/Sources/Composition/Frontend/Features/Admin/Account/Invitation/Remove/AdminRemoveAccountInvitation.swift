@@ -3,8 +3,10 @@ import FeatherAdmin
 struct AdminRemoveAccountInvitation {
     let controller: any AdminRemoveAccountInvitationController
 
-    init(apiBuilder: AccountAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: AccountAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminRemoveAccountInvitationDefaultController(
             buildRuntime: { request, context in
                 (

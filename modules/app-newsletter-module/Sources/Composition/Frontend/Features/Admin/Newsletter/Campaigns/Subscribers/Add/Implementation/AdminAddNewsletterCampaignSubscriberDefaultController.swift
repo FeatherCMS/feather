@@ -15,7 +15,8 @@ struct AdminAddNewsletterCampaignSubscriberDefaultController:
             any AdminAddNewsletterCampaignSubscriberInteractor,
             any AdminAddNewsletterCampaignSubscriberPresenter
         >
-    func add(request: Request, context: AuthenticatedRequestContext) async throws
+    func add(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
         let (_, presenter) = buildRuntime((request, context))
@@ -31,7 +32,8 @@ struct AdminAddNewsletterCampaignSubscriberDefaultController:
             permissions: context.currentUserPermissions
         )
     }
-    func create(request: Request, context: AuthenticatedRequestContext) async throws
+    func create(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

@@ -14,8 +14,10 @@ import WebFrontend
 struct AdminAddBlogPost {
     let controller: any AdminAddBlogPostController
 
-    init(apiBuilder: BlogAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: BlogAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminAddBlogPostDefaultController(
             apiBuilder: apiBuilder,
             buildRuntime: { request, context in

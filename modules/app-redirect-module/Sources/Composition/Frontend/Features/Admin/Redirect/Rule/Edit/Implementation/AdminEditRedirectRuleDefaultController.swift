@@ -10,7 +10,10 @@ struct AdminEditRedirectRuleDefaultController: AdminEditRedirectRuleController {
             any AdminEditRedirectRulePresenter
         >
 
-    func getEditRedirectRule(request: Request, context: AuthenticatedRequestContext)
+    func getEditRedirectRule(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -33,7 +36,10 @@ struct AdminEditRedirectRuleDefaultController: AdminEditRedirectRuleController {
         }
     }
 
-    func postEditRedirectRule(request: Request, context: AuthenticatedRequestContext)
+    func postEditRedirectRule(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

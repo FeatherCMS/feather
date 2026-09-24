@@ -5,8 +5,10 @@ struct AdminListUserIdentity {
 
     let controller: any AdminListUserIdentityController
 
-    init(apiBuilder: UserAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: UserAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminListUserIdentityDefaultController(
             buildRuntime: { request, context in
                 (

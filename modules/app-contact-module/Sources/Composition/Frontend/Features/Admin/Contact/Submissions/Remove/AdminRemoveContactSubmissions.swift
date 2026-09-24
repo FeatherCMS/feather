@@ -2,8 +2,10 @@ import FeatherAdmin
 
 struct AdminRemoveContactSubmissions {
     let controller: any AdminRemoveContactSubmissionsController
-    init(apiBuilder: ContactAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: ContactAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminRemoveContactSubmissionsDefaultController(
             buildRuntime: { request, context in
                 (

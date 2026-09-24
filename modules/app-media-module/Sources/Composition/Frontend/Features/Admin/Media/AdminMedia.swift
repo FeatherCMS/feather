@@ -74,31 +74,31 @@ public struct AdminMedia {
             apiBuilder: apiBuilder,
             renderingEngine: renderingEngine
         )
-            .controller.route(on: router)
+        .controller.route(on: router)
 
         AdminAddMediaVariant(
             apiBuilder: apiBuilder,
             renderingEngine: renderingEngine
         )
-            .controller.route(on: router)
+        .controller.route(on: router)
 
         AdminEditMediaVariant(
             apiBuilder: apiBuilder,
             renderingEngine: renderingEngine
         )
-            .controller.route(on: router)
+        .controller.route(on: router)
 
         AdminListMediaVariantProcessors(
             apiBuilder: apiBuilder,
             renderingEngine: renderingEngine
         )
-            .controller.route(on: router)
+        .controller.route(on: router)
 
         AdminRemoveMediaVariant(
             apiBuilder: apiBuilder,
             renderingEngine: renderingEngine
         )
-            .controller.route(on: router)
+        .controller.route(on: router)
 
     }
 }

@@ -34,7 +34,9 @@ public struct DefaultAuthMiddleware:
     public func handle(
         _ request: Request,
         context: DefaultRequestContext,
-        next: @concurrent (Request, DefaultRequestContext) async throws -> Response
+        next:
+            @concurrent (Request, DefaultRequestContext) async throws ->
+            Response
     ) async throws -> Response {
         try await middleware.handle(request, context: context, next: next)
     }

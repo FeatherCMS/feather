@@ -48,12 +48,24 @@ public struct AdminAuth {
         )
         .controller.route(on: router)
 
-        AdminAddAuthEmail(apiBuilder: apiBuilder, renderingEngine: renderingEngine).controller
-            .route(on: router)
-        AdminEditAuthEmail(apiBuilder: apiBuilder, renderingEngine: renderingEngine).controller
-            .route(on: router)
-        AdminRemoveAuthEmail(apiBuilder: apiBuilder, renderingEngine: renderingEngine).controller
-            .route(on: router)
+        AdminAddAuthEmail(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller
+        .route(on: router)
+        AdminEditAuthEmail(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller
+        .route(on: router)
+        AdminRemoveAuthEmail(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller
+        .route(on: router)
 
         AdminListAuthMagicLink(
             apiBuilder: apiBuilder,
@@ -97,11 +109,17 @@ public struct AdminAuth {
         )
         .route(on: router)
 
-        AdminListAuthSession(apiBuilder: apiBuilder, renderingEngine: renderingEngine)
-            .controller
-            .route(on: router)
-        AdminRemoveAuthSession(apiBuilder: apiBuilder, renderingEngine: renderingEngine)
-            .controller
-            .route(on: router)
+        AdminListAuthSession(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller
+        .route(on: router)
+        AdminRemoveAuthSession(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller
+        .route(on: router)
     }
 }

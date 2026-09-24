@@ -17,9 +17,15 @@ import WebBuilders
 import WebComponents
 
 protocol AdminAddAuthCredentialController: Sendable {
-    func getAddCredential(request: Request, context: AuthenticatedRequestContext)
+    func getAddCredential(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
-    func postAddCredential(request: Request, context: AuthenticatedRequestContext)
+    func postAddCredential(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
 }
 

@@ -8,9 +8,15 @@ import WebBuilders
 import WebComponents
 
 protocol AdminAddContactFieldController: Sendable {
-    func getAddContactField(request: Request, context: AuthenticatedRequestContext)
+    func getAddContactField(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
-    func postAddContactField(request: Request, context: AuthenticatedRequestContext)
+    func postAddContactField(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
 }
 extension AdminAddContactFieldController {

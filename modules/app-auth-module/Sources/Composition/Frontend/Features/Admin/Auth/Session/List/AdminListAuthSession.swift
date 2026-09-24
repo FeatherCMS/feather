@@ -4,8 +4,10 @@ import Hummingbird
 struct AdminListAuthSession {
     let controller: any AdminListAuthSessionController
 
-    init(apiBuilder: AuthAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: AuthAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminListAuthSessionDefaultController(
             buildRuntime: { request, context in
                 (

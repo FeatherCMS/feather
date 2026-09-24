@@ -6,8 +6,10 @@ import UserFrontend
 struct AdminViewAccountInvitation {
     let controller: any AdminViewAccountInvitationController
 
-    init(apiBuilder: AccountAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: AccountAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminViewAccountInvitationDefaultController(
             buildRuntime: { request, context in
                 (

@@ -6,8 +6,10 @@ import SystemFrontend
 struct AdminAddWebMenuItem {
     let controller: any AdminAddWebMenuItemController
 
-    init(apiBuilder: WebAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: WebAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminAddWebMenuItemDefaultController(
             buildRuntime: { request, context in
                 (

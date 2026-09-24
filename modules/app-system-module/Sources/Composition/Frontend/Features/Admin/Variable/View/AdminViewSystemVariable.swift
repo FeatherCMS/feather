@@ -4,8 +4,10 @@ import Hummingbird
 struct AdminViewSystemVariable {
     let controller: any AdminViewSystemVariableController
 
-    init(apiBuilder: SystemAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: SystemAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminViewSystemVariableDefaultController(
             buildRuntime: { request, context in
                 (

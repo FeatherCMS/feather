@@ -20,7 +20,8 @@ struct AdminEditAuthAccessControl {
 
     let controller: any AdminEditAuthAccessControlController
 
-    init(apiBuilder: AuthAPIBuilder,
+    init(
+        apiBuilder: AuthAPIBuilder,
         renderingEngine: any RenderingEngine
     ) {
         self.controller = AdminEditAuthAccessControlDefaultController(

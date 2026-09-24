@@ -19,8 +19,10 @@ import WebComponents
 struct AdminEditAuthCredential {
     let controller: any AdminEditAuthCredentialController
 
-    init(apiBuilder: AuthAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: AuthAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminEditAuthCredentialDefaultController(
             buildRuntime: { request, context in
                 (

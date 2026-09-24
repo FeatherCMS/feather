@@ -19,8 +19,10 @@ import WebComponents
 struct AdminAddAuthMagicLink {
     let controller: any AdminAddAuthMagicLinkController
 
-    init(apiBuilder: AuthAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: AuthAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminAddAuthMagicLinkDefaultController(
             buildRuntime: { request, context in
                 (

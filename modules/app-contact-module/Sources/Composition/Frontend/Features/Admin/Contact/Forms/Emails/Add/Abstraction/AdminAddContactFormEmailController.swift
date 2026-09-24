@@ -8,9 +8,11 @@ import WebBuilders
 import WebComponents
 
 protocol AdminAddContactFormEmailController: Sendable {
-    func add(request: Request, context: AuthenticatedRequestContext) async throws
+    func add(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
-    func create(request: Request, context: AuthenticatedRequestContext) async throws
+    func create(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
 }
 

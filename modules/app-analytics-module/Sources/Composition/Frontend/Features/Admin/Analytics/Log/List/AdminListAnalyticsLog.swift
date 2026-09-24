@@ -3,7 +3,8 @@ import FeatherAdmin
 struct AdminListAnalyticsLog {
     let controller: any AdminListAnalyticsLogController
 
-    init(apiBuilder: AnalyticsAPIBuilder, renderingEngine: any RenderingEngine) {
+    init(apiBuilder: AnalyticsAPIBuilder, renderingEngine: any RenderingEngine)
+    {
         self.controller = AdminListAnalyticsLogDefaultController(
             buildRuntime: { request, context in
                 (

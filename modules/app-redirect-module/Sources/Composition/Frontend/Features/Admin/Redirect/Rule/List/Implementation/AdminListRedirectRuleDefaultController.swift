@@ -10,7 +10,10 @@ struct AdminListRedirectRuleDefaultController: AdminListRedirectRuleController {
             any AdminListRedirectRulePresenter
         >
 
-    func getRedirectRules(request: Request, context: AuthenticatedRequestContext)
+    func getRedirectRules(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))

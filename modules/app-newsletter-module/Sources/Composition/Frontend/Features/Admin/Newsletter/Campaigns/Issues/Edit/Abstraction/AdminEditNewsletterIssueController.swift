@@ -8,9 +8,11 @@ import WebBuilders
 import WebComponents
 
 protocol AdminEditNewsletterIssueController: Sendable {
-    func get(request: Request, context: AuthenticatedRequestContext) async throws
+    func get(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
-    func update(request: Request, context: AuthenticatedRequestContext) async throws
+    func update(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
 }
 

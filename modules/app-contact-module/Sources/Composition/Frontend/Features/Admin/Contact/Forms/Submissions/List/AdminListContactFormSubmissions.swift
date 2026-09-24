@@ -10,8 +10,10 @@ import WebComponents
 struct AdminListContactFormSubmissions {
     let controller: any AdminListContactFormSubmissionsController
 
-    init(apiBuilder: ContactAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: ContactAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminListContactFormSubmissionsDefaultController(
             buildRuntime: { request, context in
                 (

@@ -12,7 +12,8 @@ public enum WebPublicContentEventHandlers {
     ) {
         registry.register(
             event: WebPublicContentProvider.self,
-            context: WebPublicContentEventContext<PublicContentRuntimeContext>.self
+            context: WebPublicContentEventContext<PublicContentRuntimeContext>
+                .self
         ) { _, context in
             try await resolve(context)
         }
@@ -139,8 +140,10 @@ public enum WebPublicContentEventHandlers {
             "language": settings.locale,
             "description": settings.excerpt,
             "logo": mediaResolver.resolve(imagePath: settings.logo) ?? "",
-            "logoDark": mediaResolver.resolve(imagePath: settings.logoDark) ?? "",
-            "metaImage": mediaResolver.resolve(imagePath: settings.metaImage) ?? "",
+            "logoDark": mediaResolver.resolve(imagePath: settings.logoDark)
+                ?? "",
+            "metaImage": mediaResolver.resolve(imagePath: settings.metaImage)
+                ?? "",
             "primaryColor": settings.primaryColor,
             "secondaryColor": settings.secondaryColor,
             "tertiaryColor": settings.tertiaryColor,

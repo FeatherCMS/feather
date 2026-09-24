@@ -17,9 +17,15 @@ import WebBuilders
 import WebComponents
 
 protocol AdminEditAuthCredentialController: Sendable {
-    func getEditCredential(request: Request, context: AuthenticatedRequestContext)
+    func getEditCredential(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
-    func postEditCredential(request: Request, context: AuthenticatedRequestContext)
+    func postEditCredential(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
 }
 

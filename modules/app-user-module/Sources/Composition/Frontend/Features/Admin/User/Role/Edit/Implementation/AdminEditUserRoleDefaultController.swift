@@ -35,7 +35,10 @@ struct AdminEditUserRoleDefaultController: AdminEditUserRoleController {
         }
     }
 
-    func postEditUserRole(request: Request, context: AuthenticatedRequestContext)
+    func postEditUserRole(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

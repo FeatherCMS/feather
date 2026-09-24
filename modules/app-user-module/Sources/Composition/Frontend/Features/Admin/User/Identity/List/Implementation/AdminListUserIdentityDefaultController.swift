@@ -10,7 +10,10 @@ struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
             any AdminListUserIdentityPresenter
         >
 
-    func getUserIdentities(request: Request, context: AuthenticatedRequestContext)
+    func getUserIdentities(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))

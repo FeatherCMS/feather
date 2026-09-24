@@ -10,14 +10,18 @@ import WebComponents
 struct AdminRemoveNewsletterIssue {
     let controller: any AdminRemoveNewsletterIssueController
 
-    init(apiBuilder: NewsletterAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: NewsletterAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminRemoveNewsletterIssueDefaultController {
             request,
             context in
             (
                 AdminRemoveNewsletterIssueDefaultInteractor(
-                    repository: .init(api: apiBuilder.makeNewsletterAdmin(context))
+                    repository: .init(
+                        api: apiBuilder.makeNewsletterAdmin(context)
+                    )
                 ),
                 AdminRemoveNewsletterIssueDefaultPresenter(
                     request: request,

@@ -3,8 +3,10 @@ import FeatherAdmin
 struct AdminAddRedirectRule {
     let controller: any AdminAddRedirectRuleController
 
-    init(apiBuilder: RedirectAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: RedirectAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminAddRedirectRuleDefaultController(
             buildRuntime: { request, context in
                 (

@@ -4,8 +4,10 @@ import Hummingbird
 struct AdminViewUserIdentity {
     let controller: any AdminViewUserIdentityController
 
-    init(apiBuilder: UserAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: UserAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminViewUserIdentityDefaultController(
             buildRuntime: { request, context in
                 let userAPI = apiBuilder.makeUserAdmin(context)

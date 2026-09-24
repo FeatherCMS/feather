@@ -6,7 +6,8 @@ struct AdminListSystemVariable {
 
     let controller: any AdminListSystemVariableController
 
-    init(apiBuilder: SystemAPIBuilder,
+    init(
+        apiBuilder: SystemAPIBuilder,
         renderingEngine: any RenderingEngine
     ) {
         self.controller = AdminListSystemVariableDefaultController(

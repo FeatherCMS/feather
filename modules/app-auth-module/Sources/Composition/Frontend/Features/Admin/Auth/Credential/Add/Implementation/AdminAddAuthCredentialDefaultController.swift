@@ -25,7 +25,10 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
             any AdminAddAuthCredentialPresenter
         >
 
-    func getAddCredential(request: Request, context: AuthenticatedRequestContext)
+    func getAddCredential(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -44,7 +47,10 @@ struct AdminAddAuthCredentialDefaultController: AdminAddAuthCredentialController
         )
     }
 
-    func postAddCredential(request: Request, context: AuthenticatedRequestContext)
+    func postAddCredential(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

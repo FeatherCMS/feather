@@ -10,7 +10,10 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
             any AdminEditUserIdentityPresenter
         >
 
-    func getEditUserIdentity(request: Request, context: AuthenticatedRequestContext)
+    func getEditUserIdentity(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -41,7 +44,10 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
         }
     }
 
-    func postEditUserIdentity(request: Request, context: AuthenticatedRequestContext)
+    func postEditUserIdentity(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

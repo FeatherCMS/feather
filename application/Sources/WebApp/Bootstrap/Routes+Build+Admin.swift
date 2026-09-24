@@ -26,16 +26,29 @@ func buildAdminRoutes(
         renderingEngine: renderingEngine
     )
     .route(on: router)
-    AccountAdmin(apiBuilder: apiBuilder.account, renderingEngine: renderingEngine)
-        .route(on: router)
+    AccountAdmin(
+        apiBuilder: apiBuilder.account,
+        renderingEngine: renderingEngine
+    )
+    .route(on: router)
     AdminUser(apiBuilder: apiBuilder.user, renderingEngine: renderingEngine)
         .route(on: router)
-    AdminSystem(apiBuilder: apiBuilder.system, renderingEngine: renderingEngine, adminEvents: adminEvents)
-        .route(on: router)
-    AdminAnalytics(apiBuilder: apiBuilder.analytics, renderingEngine: renderingEngine)
-        .route(on: router)
-    AdminRedirect(apiBuilder: apiBuilder.redirect, renderingEngine: renderingEngine)
-        .route(on: router)
+    AdminSystem(
+        apiBuilder: apiBuilder.system,
+        renderingEngine: renderingEngine,
+        adminEvents: adminEvents
+    )
+    .route(on: router)
+    AdminAnalytics(
+        apiBuilder: apiBuilder.analytics,
+        renderingEngine: renderingEngine
+    )
+    .route(on: router)
+    AdminRedirect(
+        apiBuilder: apiBuilder.redirect,
+        renderingEngine: renderingEngine
+    )
+    .route(on: router)
     AdminBlog(
         apiBuilder: apiBuilder.blog,
         renderingEngine: renderingEngine,
@@ -51,8 +64,14 @@ func buildAdminRoutes(
     .route(on: router)
     AdminMedia(apiBuilder: apiBuilder.media, renderingEngine: renderingEngine)
         .route(on: router)
-    AdminNewsletter(apiBuilder: apiBuilder.newsletter, renderingEngine: renderingEngine)
-        .route(on: router)
-    AdminContact(apiBuilder: apiBuilder.contact, renderingEngine: renderingEngine)
-        .route(on: router)
+    AdminNewsletter(
+        apiBuilder: apiBuilder.newsletter,
+        renderingEngine: renderingEngine
+    )
+    .route(on: router)
+    AdminContact(
+        apiBuilder: apiBuilder.contact,
+        renderingEngine: renderingEngine
+    )
+    .route(on: router)
 }

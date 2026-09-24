@@ -17,7 +17,8 @@ struct AdminEditContactFieldDefaultController:
             any AdminEditContactFieldPresenter
         >
 
-    func edit(request: Request, context: AuthenticatedRequestContext) async throws
+    func edit(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
@@ -50,7 +51,8 @@ struct AdminEditContactFieldDefaultController:
         }
     }
 
-    func update(request: Request, context: AuthenticatedRequestContext) async throws
+    func update(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

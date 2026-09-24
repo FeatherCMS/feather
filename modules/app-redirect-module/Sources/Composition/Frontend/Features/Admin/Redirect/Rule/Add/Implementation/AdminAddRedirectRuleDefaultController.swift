@@ -10,7 +10,10 @@ struct AdminAddRedirectRuleDefaultController: AdminAddRedirectRuleController {
             any AdminAddRedirectRulePresenter
         >
 
-    func getAddRedirectRule(request: Request, context: AuthenticatedRequestContext)
+    func getAddRedirectRule(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
         let (_, presenter) = buildRuntime((request, context))
@@ -22,7 +25,10 @@ struct AdminAddRedirectRuleDefaultController: AdminAddRedirectRuleController {
         )
     }
 
-    func postAddRedirectRule(request: Request, context: AuthenticatedRequestContext)
+    func postAddRedirectRule(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))

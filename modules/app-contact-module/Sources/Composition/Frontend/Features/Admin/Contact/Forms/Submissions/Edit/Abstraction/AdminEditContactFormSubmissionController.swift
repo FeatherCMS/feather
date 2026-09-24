@@ -8,7 +8,8 @@ import WebBuilders
 import WebComponents
 
 protocol AdminEditContactFormSubmissionController: Sendable {
-    func update(request: Request, context: AuthenticatedRequestContext) async throws
+    func update(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
 }
 

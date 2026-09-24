@@ -5,8 +5,10 @@ struct AdminListRedirectRule {
 
     let controller: any AdminListRedirectRuleController
 
-    init(apiBuilder: RedirectAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: RedirectAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminListRedirectRuleDefaultController(
             buildRuntime: { request, context in
                 (

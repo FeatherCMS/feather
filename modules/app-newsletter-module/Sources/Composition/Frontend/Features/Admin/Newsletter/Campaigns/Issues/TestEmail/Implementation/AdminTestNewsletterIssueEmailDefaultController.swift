@@ -12,7 +12,8 @@ struct AdminTestNewsletterIssueEmailDefaultController:
     AdminTestNewsletterIssueEmailController
 {
     let apiBuilder: NewsletterAPIBuilder
-    func send(request: Request, context: AuthenticatedRequestContext) async throws
+    func send(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
         let newsletterId = try context.requiredParameter("newsletterId")

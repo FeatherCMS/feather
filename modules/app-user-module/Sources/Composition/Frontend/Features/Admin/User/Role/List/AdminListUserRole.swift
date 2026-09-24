@@ -6,8 +6,10 @@ struct AdminListUserRole {
 
     let controller: any AdminListUserRoleController
 
-    init(apiBuilder: UserAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: UserAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminListUserRoleDefaultController(
             buildRuntime: { request, context in
                 (

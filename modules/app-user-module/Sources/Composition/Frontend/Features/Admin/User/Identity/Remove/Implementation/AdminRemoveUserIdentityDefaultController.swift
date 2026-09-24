@@ -13,7 +13,10 @@ struct AdminRemoveUserIdentityDefaultController:
             any AdminRemoveUserIdentityPresenter
         >
 
-    func getRemoveUserIdentity(request: Request, context: AuthenticatedRequestContext)
+    func getRemoveUserIdentity(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))

@@ -16,7 +16,8 @@ public struct AdminBlog {
     public let renderingEngine: any RenderingEngine
     public let adminEvents: any EventPublisher
 
-    public init(apiBuilder: BlogAPIBuilder,
+    public init(
+        apiBuilder: BlogAPIBuilder,
         renderingEngine: any RenderingEngine,
         adminEvents: any EventPublisher
     ) {

@@ -17,9 +17,15 @@ import WebBuilders
 import WebComponents
 
 protocol AdminRemoveAuthCredentialController: Sendable {
-    func getRemoveCredential(request: Request, context: AuthenticatedRequestContext)
+    func getRemoveCredential(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
-    func postRemoveCredential(request: Request, context: AuthenticatedRequestContext)
+    func postRemoveCredential(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
 }
 

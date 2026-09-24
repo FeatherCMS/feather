@@ -6,8 +6,10 @@ import OpenAPIRuntime
 struct AdminViewWebPage {
     let controller: any AdminViewWebPageController
 
-    init(apiBuilder: WebAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: WebAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminViewWebPageDefaultController(
             buildRuntime: { request, context in
                 (

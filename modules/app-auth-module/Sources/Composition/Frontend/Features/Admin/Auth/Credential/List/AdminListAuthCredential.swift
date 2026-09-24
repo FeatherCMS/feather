@@ -19,8 +19,10 @@ import WebComponents
 struct AdminListAuthCredential {
     let controller: any AdminListAuthCredentialController
 
-    init(apiBuilder: AuthAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: AuthAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminListAuthCredentialDefaultController(
             buildRuntime: { request, context in
                 (

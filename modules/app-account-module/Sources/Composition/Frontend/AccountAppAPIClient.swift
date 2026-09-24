@@ -2,10 +2,10 @@ public import AccountAppAPI
 import AsyncHTTPClient
 public import FeatherAdmin
 public import Foundation
+public import MediaFrontend
 import NIOCore
 import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
-public import MediaFrontend
 public import UserFrontend
 
 public struct AccountAppAPIClient: Sendable {

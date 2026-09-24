@@ -19,8 +19,10 @@ import WebComponents
 struct AdminListAuthEmail {
     let controller: any AdminListAuthEmailController
 
-    init(apiBuilder: AuthAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: AuthAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminListAuthEmailDefaultController(
             buildRuntime: { request, context in
                 (

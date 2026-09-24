@@ -8,7 +8,8 @@ import WebBuilders
 import WebComponents
 
 protocol AdminListContactFieldsController: Sendable {
-    func list(request: Request, context: AuthenticatedRequestContext) async throws
+    func list(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
 }
 

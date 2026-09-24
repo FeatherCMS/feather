@@ -4,8 +4,10 @@ import Hummingbird
 struct AdminEditSettings {
     let controller: any AdminEditSettingsController
 
-    init(apiBuilder: AccountAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: AccountAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminEditSettingsDefaultController(
             buildRuntime: { request, context in
                 (

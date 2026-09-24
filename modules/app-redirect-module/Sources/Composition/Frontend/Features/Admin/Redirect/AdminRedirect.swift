@@ -5,8 +5,10 @@ public struct AdminRedirect {
     private let apiBuilder: RedirectAPIBuilder
     public let renderingEngine: any RenderingEngine
 
-    public init(apiBuilder: RedirectAPIBuilder,
-        renderingEngine: any RenderingEngine) {
+    public init(
+        apiBuilder: RedirectAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.apiBuilder = apiBuilder
         self.renderingEngine = renderingEngine
     }

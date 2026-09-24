@@ -27,7 +27,10 @@ struct AdminRemoveAuthCredentialDefaultController:
             any AdminRemoveAuthCredentialPresenter
         >
 
-    func getRemoveCredential(request: Request, context: AuthenticatedRequestContext)
+    func getRemoveCredential(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
         let id = try context.requiredID()
@@ -58,7 +61,10 @@ struct AdminRemoveAuthCredentialDefaultController:
         }
     }
 
-    func postRemoveCredential(request: Request, context: AuthenticatedRequestContext)
+    func postRemoveCredential(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
         let id = try context.requiredID()
