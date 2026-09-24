@@ -78,7 +78,7 @@ private struct ParsedTemplateSource {
 
 private enum TemplateFrontMatterError: Error {
     case missingClosingDelimiter
-    case invalidAutoloadEntry(String)
+    case invalidAssetEntry(String)
 }
 
 private func parseFrontMatter(_ source: String) throws -> ParsedTemplateSource {
@@ -101,7 +101,6 @@ private func parseFrontMatter(_ source: String) throws -> ParsedTemplateSource {
     var stylesheets: [String] = []
     var scripts: [String] = []
     var section: String?
-    var subsection: String?
 
     for rawLine in lines[lines.index(after: lines.startIndex)..<closingIndex] {
         let line = String(rawLine)
@@ -112,31 +111,26 @@ private func parseFrontMatter(_ source: String) throws -> ParsedTemplateSource {
 
         let indentation = line.prefix { $0 == " " }.count
         if indentation == 0 {
-            section = trimmed == "autoload:" ? "autoload" : nil
-            subsection = nil
-            continue
-        }
-
-        guard section == "autoload" else { continue }
-
-        if indentation == 2, trimmed.hasSuffix(":") {
+            guard trimmed.hasSuffix(":") else {
+                throw TemplateFrontMatterError.invalidAssetEntry(trimmed)
+            }
             let name = String(trimmed.dropLast())
             guard name == "css" || name == "js" else {
-                throw TemplateFrontMatterError.invalidAutoloadEntry(name)
+                throw TemplateFrontMatterError.invalidAssetEntry(name)
             }
-            subsection = name
+            section = name
             continue
         }
 
-        guard indentation >= 4, trimmed.hasPrefix("- "), let subsection else {
-            throw TemplateFrontMatterError.invalidAutoloadEntry(trimmed)
+        guard indentation >= 2, trimmed.hasPrefix("- "), let section else {
+            throw TemplateFrontMatterError.invalidAssetEntry(trimmed)
         }
         let value = String(trimmed.dropFirst(2))
             .trimmingCharacters(in: .whitespacesAndNewlines)
         guard isValidAssetPath(value) else {
-            throw TemplateFrontMatterError.invalidAutoloadEntry(value)
+            throw TemplateFrontMatterError.invalidAssetEntry(value)
         }
-        if subsection == "css" {
+        if section == "css" {
             stylesheets.append(value)
         } else {
             scripts.append(value)
