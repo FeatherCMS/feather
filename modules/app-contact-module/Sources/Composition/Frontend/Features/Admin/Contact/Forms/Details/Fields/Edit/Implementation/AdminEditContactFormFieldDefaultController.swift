@@ -11,14 +11,15 @@ struct AdminEditContactFormFieldDefaultController:
     AdminEditContactFormFieldController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditContactFormFieldInteractor,
-            presenter: any AdminEditContactFormFieldPresenter
-        )
-    func edit(request: Request, context: DefaultRequestContext) async throws
+        AuthenticatedRuntimeBuilder<
+            any AdminEditContactFormFieldInteractor,
+            any AdminEditContactFormFieldPresenter
+        >
+    func edit(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let formId = context.parameters.get("formId", as: String.self) ?? ""
         let id = try context.requiredParameter("fieldId")
         do {
@@ -47,10 +48,11 @@ struct AdminEditContactFormFieldDefaultController:
             )
         }
     }
-    func update(request: Request, context: DefaultRequestContext) async throws
+    func update(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let formId = context.parameters.get("formId", as: String.self) ?? ""
         let id = try context.requiredParameter("fieldId")
         let form = try await request.decode(

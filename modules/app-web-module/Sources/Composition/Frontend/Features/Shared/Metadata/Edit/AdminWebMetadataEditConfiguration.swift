@@ -1,4 +1,4 @@
-import FeatherAdmin
+public import FeatherAdmin
 
 public struct AdminWebMetadataEditConfiguration: Sendable {
     public let referenceType: String

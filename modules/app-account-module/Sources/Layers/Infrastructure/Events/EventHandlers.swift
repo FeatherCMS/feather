@@ -1,12 +1,8 @@
-import AccountApplication
 import AccountContracts
-import AccountDomain
-import FeatherContracts
+public import FeatherContracts
 import FeatherInfrastructure
 import SystemApplication
-import SystemContracts
 import UserApplication
-import UserContracts
 
 public enum EventHandlers {
 

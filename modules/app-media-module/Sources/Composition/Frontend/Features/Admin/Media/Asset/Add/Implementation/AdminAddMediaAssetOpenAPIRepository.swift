@@ -1,7 +1,6 @@
 import FeatherAdmin
 import FeatherContracts
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -23,21 +22,13 @@ struct AdminAddMediaAssetOpenAPIRepository {
                     body: .json(
                         .init(
                             parentId: payload.parentId
-                                .trimmingCharacters(
-                                    in: .whitespacesAndNewlines
-                                )
+                                .whitespaceTrimmed
                                 .emptyToNil,
-                            fileName: payload.fileName.trimmingCharacters(
-                                in: .whitespacesAndNewlines
-                            ),
-                            _extension: payload.extension.trimmingCharacters(
-                                in: .whitespacesAndNewlines
-                            ),
+                            fileName: payload.fileName.whitespaceTrimmed,
+                            _extension: payload.extension.whitespaceTrimmed,
                             title: payload.title.emptyToNil,
                             altText: payload.altText.emptyToNil,
-                            data: payload.data.trimmingCharacters(
-                                in: .whitespacesAndNewlines
-                            )
+                            data: payload.data.whitespaceTrimmed
                         )
                     )
                 )

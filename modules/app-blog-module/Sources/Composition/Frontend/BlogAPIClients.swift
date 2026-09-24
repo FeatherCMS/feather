@@ -1,25 +1,27 @@
 import AsyncHTTPClient
-import BlogAdminAPI
-import BlogAppAPI
-import FeatherAdmin
+public import BlogAdminAPI
+public import BlogAppAPI
+public import FeatherAdmin
 import FeatherValidation
-import Foundation
+public import Foundation
 import HTML
 import Hummingbird
-import MediaFrontend
+public import MediaFrontend
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
+public import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
-import WebFrontend
+public import WebFrontend
 
 public struct BlogAdminAPIClient: Sendable {
     public let client: BlogAdminAPI.Client
     public let sessionToken: String?
+    public let apiBaseURL: URL
 
     public init(apiBaseURL: URL, sessionToken: String? = nil) {
+        self.apiBaseURL = apiBaseURL
         self.sessionToken = sessionToken
         self.client = .init(
             serverURL: apiBaseURL,
@@ -53,7 +55,7 @@ public struct BlogAdminAPIClient: Sendable {
 
     public func mediaAdminAPI() -> MediaAdminAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: apiBaseURL,
             sessionToken: sessionToken
         )
     }
@@ -61,8 +63,10 @@ public struct BlogAdminAPIClient: Sendable {
 
 public struct BlogAppAPIClient: Sendable {
     public let client: BlogAppAPI.Client
+    public let apiBaseURL: URL
 
     public init(apiBaseURL: URL, sessionToken: String? = nil) {
+        self.apiBaseURL = apiBaseURL
         self.client = .init(
             serverURL: apiBaseURL,
             transport: AsyncHTTPClientTransport(
@@ -94,18 +98,36 @@ public struct BlogAppAPIClient: Sendable {
     }
 }
 
-extension DefaultRequestContext {
-    public func blogAdminAPI() -> BlogAdminAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+public struct BlogAPIBuilder: Sendable {
+    private let apiBaseURL: URL
+    public let web: WebAPIBuilder
+
+    public init(apiBaseURL: URL) {
+        self.apiBaseURL = apiBaseURL
+        self.web = .init(apiBaseURL: apiBaseURL)
     }
 
-    public func blogApplicationAPI() -> BlogAppAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+    public func makeBlogAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> BlogAdminAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeBlogApp(
+        _ context: DefaultRequestContext
+    ) -> BlogAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeBlogApp(
+        _ context: AuthenticatedRequestContext
+    ) -> BlogAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeWebAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> WebAdminAPIClient {
+        web.makeWebAdmin(context)
     }
 }

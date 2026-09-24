@@ -21,7 +21,7 @@ struct AdminListAuthMagicLinkDefaultPresenter:
     AdminListAuthMagicLinkPresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderEngine: any RenderingEngine
 
     func renderPage(

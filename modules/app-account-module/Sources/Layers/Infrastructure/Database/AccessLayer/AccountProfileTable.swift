@@ -3,7 +3,7 @@ import FeatherInfrastructure
 import Foundation
 
 extension AccountProfileTable.Row {
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.userId = try row.decode(column: "user_id", as: String.self)
         self.firstName = try row.decode(column: "first_name", as: String?.self)

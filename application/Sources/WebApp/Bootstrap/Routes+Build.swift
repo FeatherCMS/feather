@@ -18,7 +18,6 @@ import HummingbirdAuth
 import AuthFrontend
 import AccountFrontend
 import Logging
-import WebApplication
 
 func buildRouter(
     environment: AppEnvironment,
@@ -28,6 +27,10 @@ func buildRouter(
 ) async throws -> Router<DefaultRequestContext> {
 
     let router = Router(context: DefaultRequestContext.self)
+    let apiBuilder = APIBuilder(apiBaseURL: environment.apiBaseURL)
+    let mediaResolver = MediaResolver(
+        mediaBaseURL: environment.publicOrigins.mediaBaseURL
+    )
 
     router.addMiddleware {
         LogRequestsMiddleware(Logger.current.logLevel)
@@ -43,12 +46,6 @@ func buildRouter(
         Response(status: .ok)
     }
 
-    let authAppClient = AuthAppAPIClient(
-        apiBaseURL: environment.apiBaseURL
-    )
-    let publicContentRepository = WebPublicContentRepository(
-        apiBaseURL: environment.apiBaseURL
-    )
     var adminEvents = EventRegistry()
     WebFrontend.WebEventHandlers.register(in: &adminEvents)
     BlogFrontend.BlogEventHandlers.register(in: &adminEvents)
@@ -71,7 +68,13 @@ func buildRouter(
     WebAdminMenuEventHandlers.register(in: &adminEvents)
     let renderingEngine = DefaultRenderingEngine(
         publicOrigins: environment.publicOrigins,
-        adminEvents: adminEvents
+        adminEvents: adminEvents,
+        adminPageRenderContextProvider: DefaultAdminPageRenderContextProvider(
+            events: adminEvents,
+            accountAPIBuilder: .init(apiBaseURL: environment.apiBaseURL),
+            mediaAPIBuilder: .init(apiBaseURL: environment.apiBaseURL),
+            mediaResolver: mediaResolver
+        )
     )
     let applicationTemplatePaths = Bundle.module.url(
         forResource: "Templates",
@@ -98,7 +101,7 @@ func buildRouter(
     NewsletterMarkdownEventHandlers.register(in: &publicContentEvents)
 
     let authRouter = router.add(
-        middleware: DefaultAuthMiddleware<DefaultRequestContext>(
+        middleware: DefaultAuthMiddleware(
             apiBaseURL: environment.apiBaseURL,
             secureCookies: environment.publicOrigins.usesSecureCookies
         )
@@ -108,28 +111,35 @@ func buildRouter(
         authRouter: authRouter,
         renderingEngine: renderingEngine,
         themeRenderer: themeRenderer,
-        publicContentRepository: publicContentRepository,
-        publicContentEvents: publicContentEvents
+        publicContentEvents: publicContentEvents,
+        apiBuilder: apiBuilder,
+        mediaResolver: mediaResolver,
+        publicOrigins: environment.publicOrigins
     )
 
     AuthFrontendRoutes.registerAppRoutes(
         router: router,
         renderingEngine: renderingEngine,
-        authAppClient: authAppClient
+        authAPIBuilder: apiBuilder.auth,
+        usesSecureCookies: environment.publicOrigins.usesSecureCookies
     )
 
     // MARK: - admin
 
-    let adminRouter = authRouter.add(
-        middleware: AdminAuthMiddleware<DefaultRequestContext>(
-            loginPath: "/login/",
-            unauthorizedPath: "/"
+    let adminRouter =
+        authRouter
+        .add(
+            middleware: AdminAuthMiddleware(
+                loginPath: "/login/",
+                unauthorizedPath: "/"
+            )
         )
-    )
+        .group(context: AuthenticatedRequestContext.self)
     buildAdminRoutes(
         router: adminRouter,
         renderingEngine: renderingEngine,
-        adminEvents: adminEvents
+        adminEvents: adminEvents,
+        apiBuilder: apiBuilder
     )
 
     return router

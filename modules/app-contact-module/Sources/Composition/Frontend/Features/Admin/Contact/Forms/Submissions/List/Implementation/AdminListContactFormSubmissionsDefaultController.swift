@@ -12,15 +12,16 @@ struct AdminListContactFormSubmissionsDefaultController:
     AdminListContactFormSubmissionsController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListContactFormSubmissionsInteractor,
-            presenter: any AdminListContactFormSubmissionsPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminListContactFormSubmissionsInteractor,
+            any AdminListContactFormSubmissionsPresenter
+        >
 
-    func list(request: Request, context: DefaultRequestContext) async throws
+    func list(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let formId = try context.requiredParameter("formId")
         let search = request.querySearch() ?? ""
         do {

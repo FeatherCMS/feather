@@ -1,6 +1,6 @@
-import FeatherDomain
+public import FeatherDomain
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct Credential: Model {
 

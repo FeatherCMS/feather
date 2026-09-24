@@ -1,8 +1,6 @@
 import AnalyticsContracts
-import AnalyticsDomain
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
+public import FeatherApplication
+public import FeatherContracts
 
 //
 //  ListLogs.swift

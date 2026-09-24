@@ -1,8 +1,7 @@
-import FeatherApplication
 import AuthApplication
 import Hummingbird
-import OpenAPIRuntime
 import OpenAPIHummingbird
+import OpenAPIRuntime
 import Logging
 import SystemAdminAPI
 import SystemAppAPI
@@ -220,11 +219,14 @@ func buildRouter(
             middlewares: middlewares
         )
 
-    try MediaBackend.AdminAPIGateway(useCases: modules.media)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
+    try MediaBackend.AdminAPIGateway(
+        useCases: modules.media,
+        mediaResolver: modules.mediaResolver
+    )
+    .registerHandlers(
+        on: router,
+        middlewares: middlewares
+    )
 
     try BlogBackend.AppAPIGateway(useCases: modules.blog)
         .registerHandlers(

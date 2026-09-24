@@ -1,8 +1,8 @@
-import CSS
-import HTML
+public import CSS
+public import HTML
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 /// Consistent heading and supporting description for new admin pages.
 public struct NewAdminPageHeader: Component {

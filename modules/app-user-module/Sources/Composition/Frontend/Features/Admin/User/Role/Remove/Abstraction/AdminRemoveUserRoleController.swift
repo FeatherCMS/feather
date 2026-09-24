@@ -5,24 +5,30 @@ protocol AdminRemoveUserRoleController: Sendable {
 
     func getRemoveUserRole(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
     func postRemoveUserRole(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 
-    func getRemoveUserRoles(request: Request, context: DefaultRequestContext)
+    func getRemoveUserRoles(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
-    func postRemoveUserRoles(request: Request, context: DefaultRequestContext)
+    func postRemoveUserRoles(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
 }
 
 extension AdminRemoveUserRoleController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             UserRoleRoutes.remove(RouterPath("{id}")),

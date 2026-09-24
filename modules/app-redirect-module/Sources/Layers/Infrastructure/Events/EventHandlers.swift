@@ -1,6 +1,4 @@
-import FeatherContracts
-import FeatherInfrastructure
-import RedirectApplication
+public import FeatherContracts
 import RedirectContracts
 import SystemApplication
 

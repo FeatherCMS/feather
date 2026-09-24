@@ -1,6 +1,4 @@
-import FeatherAdmin
 import FeatherValidation
-import Foundation
 import RedirectContracts
 
 enum RedirectRuleEditFormFieldValidator {

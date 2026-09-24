@@ -1,6 +1,4 @@
 import FeatherAdmin
-import Foundation
-import Hummingbird
 
 struct AdminViewRedirectOverview {
     let controller: any AdminViewRedirectOverviewController

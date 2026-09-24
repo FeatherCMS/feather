@@ -5,10 +5,10 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherContracts
-import FeatherDomain
-import WebDomain
+public import FeatherDomain
+public import WebDomain
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct Post: Model {
 
@@ -112,7 +112,7 @@ extension Post {
             base: metadata
                 ?? .init(
                     template: "blog.post",
-                    slug: title.slugify()
+                    slug: title.slugified
                 )
         )
 

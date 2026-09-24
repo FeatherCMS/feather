@@ -1,34 +1,21 @@
-import AuthAdminAPI
-import AuthAppAPI
-import CSS
 import FeatherAdmin
 import FeatherValidation
-import FeatherValidationFoundation
 import Foundation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import SystemAdminAPI
-import SystemFrontend
-import UserAdminAPI
-import UserAppAPI
-import UserFrontend
-import WebBuilders
-import WebComponents
 
 struct AppLoginAuthDefaultController: AppLoginAuthController {
+    let usesSecureCookies: Bool
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AppLoginAuthInteractor,
-            presenter: any AppLoginAuthPresenter
-        )
+        RuntimeBuilder<
+            any AppLoginAuthInteractor,
+            any AppLoginAuthPresenter
+        >
 
     func getLogin(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         let redirectPath = request.queryString("redirect") ?? "/"
         return presenter.renderPage(
             form: presenter.formState(
@@ -45,7 +32,7 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         var lastPayload: LoginFormInput?
         do {
             let payload = try await request.decode(
@@ -70,8 +57,7 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
                 expires: Date().addingTimeInterval(oneDay),
                 maxAge: Int(oneDay),
                 path: "/",
-                secure: AppEnvironmentStore.current.publicOrigins
-                    .usesSecureCookies,
+                secure: usesSecureCookies,
                 httpOnly: true,
                 sameSite: .lax
             )

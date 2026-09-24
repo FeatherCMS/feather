@@ -1,6 +1,5 @@
 import FeatherAdmin
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -12,13 +11,16 @@ import WebComponents
 struct AdminEditMediaFolder {
     let controller: any AdminEditMediaFolderController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: MediaAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminEditMediaFolderDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminEditMediaFolderDefaultInteractor(
                         repository: AdminEditMediaFolderOpenAPIRepository(
-                            api: context.mediaAdminAPI()
+                            api: apiBuilder.makeMediaAdmin(context)
                         )
                     ),
                     presenter: AdminEditMediaFolderDefaultPresenter(

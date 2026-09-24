@@ -1,6 +1,5 @@
 import FeatherAdmin
 import HTML
-import RedirectContracts
 import WebBuilders
 import WebComponents
 

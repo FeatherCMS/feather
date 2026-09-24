@@ -1,6 +1,6 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -13,6 +13,6 @@ struct NewsletterIssueAddForm: Decodable {
     var content: String = ""
     var scheduledAt: String = ""
     var normalizedSubject: String {
-        subject.trimmingCharacters(in: .whitespacesAndNewlines)
+        subject.whitespaceTrimmed
     }
 }

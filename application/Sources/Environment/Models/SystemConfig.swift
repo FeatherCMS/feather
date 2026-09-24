@@ -1,4 +1,4 @@
-import Logging
+public import Logging
 
 public struct SystemConfig: Sendable {
 

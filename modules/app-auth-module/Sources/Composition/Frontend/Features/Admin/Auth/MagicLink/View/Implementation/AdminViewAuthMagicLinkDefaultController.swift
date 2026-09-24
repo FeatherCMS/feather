@@ -20,20 +20,17 @@ import WebComponents
 struct AdminViewAuthMagicLinkDefaultController: AdminViewAuthMagicLinkController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewAuthMagicLinkInteractor,
-            presenter: any AdminViewAuthMagicLinkPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminViewAuthMagicLinkInteractor,
+            any AdminViewAuthMagicLinkPresenter
+        >
 
     func getAuthMagicLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let id = try context.requiredID()
-        let (interactor, presenter) = buildRuntime(
-            request,
-            context
-        )
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         guard context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.read)
         else {

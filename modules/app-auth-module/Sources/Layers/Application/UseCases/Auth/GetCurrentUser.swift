@@ -4,9 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
-import FeatherContracts
-import UserApplication
+public import FeatherApplication
+public import FeatherContracts
+public import UserApplication
 
 public struct GetCurrentUser: UseCase {
     struct Action: PermissionAction {

@@ -1,22 +1,21 @@
 import AccountContracts
 import FeatherAdmin
 import Hummingbird
-import OpenAPIRuntime
 
 struct AdminListAccountInvitationDefaultController:
     AdminListAccountInvitationController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListAccountInvitationInteractor,
-            presenter: any AdminListAccountInvitationPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminListAccountInvitationInteractor,
+            any AdminListAccountInvitationPresenter
+        >
 
     func getAccountInvitations(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         let permissionScope = AccountPermissions.Invitations.list
         do {
@@ -74,9 +73,9 @@ struct AdminListAccountInvitationDefaultController:
 
     func getAccountInvitationsRemoveConfirmation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let selectedIds = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
@@ -105,7 +104,7 @@ struct AdminListAccountInvitationDefaultController:
 
     func postAccountInvitationsRemove(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
@@ -130,7 +129,7 @@ struct AdminListAccountInvitationDefaultController:
             )
         }
         let payload = nonceRequest.input
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         if !payload.normalizedIds.isEmpty {
             try await runtime.interactor.remove(
                 ids: payload.normalizedIds

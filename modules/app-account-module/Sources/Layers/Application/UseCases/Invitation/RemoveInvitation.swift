@@ -1,8 +1,7 @@
 import AccountContracts
 import AccountDomain
-import FeatherApplication
-import FeatherContracts
-import UserDomain
+public import FeatherApplication
+public import FeatherContracts
 
 //
 //  RemoveInvitation.swift

@@ -5,10 +5,10 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherContracts
-import FeatherDomain
-import WebDomain
+public import FeatherDomain
+public import WebDomain
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct Tag: Model {
 
@@ -102,7 +102,7 @@ extension Tag {
             base: metadata
                 ?? .init(
                     template: "blog.tag",
-                    slug: title.slugify()
+                    slug: title.slugified
                 )
         )
 

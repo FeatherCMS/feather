@@ -1,7 +1,5 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
-import Foundation
+public import FeatherApplication
+public import FeatherContracts
 import WebContracts
 import WebDomain
 

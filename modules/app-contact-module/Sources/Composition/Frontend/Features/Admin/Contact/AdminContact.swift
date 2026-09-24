@@ -1,65 +1,142 @@
-import FeatherAdmin
-import Hummingbird
+public import FeatherAdmin
+public import Hummingbird
 
 public struct AdminContact {
+    private let apiBuilder: ContactAPIBuilder
     public let renderingEngine: any RenderingEngine
 
-    public init(renderingEngine: any RenderingEngine) {
+    public init(
+        apiBuilder: ContactAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
+        self.apiBuilder = apiBuilder
         self.renderingEngine = renderingEngine
     }
 
-    public func route(on router: Router<DefaultRequestContext>) {
-        AdminViewContactOverview(renderingEngine: renderingEngine)
-            .controller.route(on: router)
+    public func route(on router: any RouterMethods<AuthenticatedRequestContext>)
+    {
+        AdminViewContactOverview(
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
 
-        AdminListContactForms(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminAddContactForm(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminEditContactForm(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminViewContactForm(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminRemoveContactForm(renderingEngine: renderingEngine)
-            .controller.route(on: router)
+        AdminListContactForms(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminAddContactForm(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminEditContactForm(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminViewContactForm(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminRemoveContactForm(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
 
-        AdminListContactFormEmails(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminAddContactFormEmail(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminEditContactFormEmail(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminRemoveContactFormEmail(renderingEngine: renderingEngine)
-            .controller.route(on: router)
+        AdminListContactFormEmails(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminAddContactFormEmail(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminEditContactFormEmail(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminRemoveContactFormEmail(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
 
-        AdminListContactFields(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminAddContactField(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminEditContactField(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminRemoveContactField(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminListContactFormFields(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminAddContactFormField(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminEditContactFormField(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminRemoveContactFormField(renderingEngine: renderingEngine)
-            .controller.route(on: router)
+        AdminListContactFields(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminAddContactField(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminEditContactField(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminRemoveContactField(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminListContactFormFields(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminAddContactFormField(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminEditContactFormField(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminRemoveContactFormField(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
 
-        AdminListContactFormSubmissions(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminViewContactFormSubmission(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminEditContactFormSubmission(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminRemoveContactFormSubmissions(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminListContactSubmissions(renderingEngine: renderingEngine)
-            .controller.route(on: router)
-        AdminRemoveContactSubmissions(renderingEngine: renderingEngine)
-            .controller.route(on: router)
+        AdminListContactFormSubmissions(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminViewContactFormSubmission(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminEditContactFormSubmission(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminRemoveContactFormSubmissions(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminListContactSubmissions(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminRemoveContactSubmissions(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
     }
 }

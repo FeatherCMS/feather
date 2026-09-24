@@ -5,15 +5,15 @@
 //  Created by Tibor Bödecs on 2026. 02. 20.
 //
 
-import FeatherDatabase
+public import FeatherDatabase
 import Logging
 
 public struct Migrator {
 
-    public let migrations: [Migration]
+    public let migrations: [any Migration]
 
     public init(
-        migrations: [Migration]
+        migrations: [any Migration]
     ) {
         self.migrations = migrations
     }

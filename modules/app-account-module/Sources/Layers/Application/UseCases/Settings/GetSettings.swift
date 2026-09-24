@@ -1,7 +1,6 @@
 import AccountContracts
-import AccountDomain
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 
 //
 //  GetSettings.swift

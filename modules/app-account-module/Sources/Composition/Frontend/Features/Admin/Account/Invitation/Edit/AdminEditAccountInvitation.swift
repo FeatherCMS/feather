@@ -1,16 +1,19 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminEditAccountInvitation {
     let controller: any AdminEditAccountInvitationController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: AccountAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminEditAccountInvitationDefaultController(
+            apiBuilder: apiBuilder,
             buildRuntime: { request, context in
                 (
                     interactor: AdminEditAccountInvitationDefaultInteractor(
                         repository: AdminEditAccountInvitationOpenAPIRepository(
-                            api: context.accountAdminAPI()
+                            api: apiBuilder.makeAccountAdmin(context)
                         )
                     ),
                     presenter: AdminEditAccountInvitationDefaultPresenter(

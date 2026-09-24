@@ -7,6 +7,7 @@ import OpenAPIRuntime
 //#else
 //import Foundation
 //#endif
+import FeatherContracts
 import Foundation
 
 struct ErrorMiddleware: ServerMiddleware {
@@ -79,7 +80,7 @@ struct ErrorMiddleware: ServerMiddleware {
                 component
                     .split(separator: ";", maxSplits: 1)
                     .first?
-                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .whitespaceTrimmed
                     .lowercased() ?? ""
             }
 
@@ -172,7 +173,8 @@ struct ErrorMiddleware: ServerMiddleware {
                 request: request,
                 operationID: operationID
             )
-            if let error = error.underlyingError as? ErrorTraceRepresentable,
+            if let error = error.underlyingError
+                as? any ErrorTraceRepresentable,
                 let httpError = error.lookup((any HTTPErrorRepresentable).self)
             {
                 if let object = httpError.content {
@@ -210,7 +212,7 @@ struct ErrorMiddleware: ServerMiddleware {
                         code: .internalServerError,
                         message: "Unknown error.",
                         reason: "\(error)",
-                        trace: (error as? ErrorTraceRepresentable)?.trace()
+                        trace: (error as? any ErrorTraceRepresentable)?.trace()
                     ),
                     request: request,
                     operationID: operationID

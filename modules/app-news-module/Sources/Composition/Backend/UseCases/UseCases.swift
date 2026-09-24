@@ -1,12 +1,10 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
+public import FeatherContracts
+public import FeatherDatabase
+public import FeatherDomain
 import FeatherInfrastructure
 import NewsApplication
 import NewsInfrastructure
 import SystemInfrastructure
-import WebDomain
 import WebInfrastructure
 
 public struct UseCases: Sendable {

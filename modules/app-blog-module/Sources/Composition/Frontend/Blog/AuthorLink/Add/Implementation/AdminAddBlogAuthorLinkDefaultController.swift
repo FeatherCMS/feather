@@ -14,16 +14,16 @@ import WebFrontend
 struct AdminAddBlogAuthorLinkDefaultController: AdminAddBlogAuthorLinkController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddBlogAuthorLinkInteractor,
-            presenter: any AdminAddBlogAuthorLinkPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminAddBlogAuthorLinkInteractor,
+            any AdminAddBlogAuthorLinkPresenter
+        >
 
     func getAddBlogAuthorLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
         return try await runtime.presenter.renderAddPage(
             menuId: menuId,
@@ -34,9 +34,9 @@ struct AdminAddBlogAuthorLinkDefaultController: AdminAddBlogAuthorLinkController
 
     func postAddBlogAuthorLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let permissions = context.currentUserPermissions
         var lastPayload: BlogAuthorLinkFormInput?

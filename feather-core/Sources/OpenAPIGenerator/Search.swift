@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import Foundation
 import OpenAPIKit30
 
 public struct SearchQuerySchema: ObjectSchemaRepresentable {

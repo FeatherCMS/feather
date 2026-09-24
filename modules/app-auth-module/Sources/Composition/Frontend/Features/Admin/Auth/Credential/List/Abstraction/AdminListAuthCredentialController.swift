@@ -19,13 +19,13 @@ import WebComponents
 protocol AdminListAuthCredentialController: Sendable {
     func getCredentials(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminListAuthCredentialController {
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(AuthCredentialRoutes.list, use: getCredentials)
     }

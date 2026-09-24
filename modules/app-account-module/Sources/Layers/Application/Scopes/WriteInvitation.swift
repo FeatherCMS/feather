@@ -4,10 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import AccountDomain
-import FeatherApplication
-import FeatherContracts
-import UserDomain
+public import AccountDomain
+public import FeatherContracts
+public import UserDomain
 
 public struct WriteInvitation: Scope {
     public let invitation: any InvitationRepository

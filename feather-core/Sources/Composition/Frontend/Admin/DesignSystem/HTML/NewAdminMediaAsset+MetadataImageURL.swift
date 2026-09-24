@@ -1,3 +1,4 @@
+import FeatherContracts
 import Foundation
 
 extension NewAdminMediaAsset {
@@ -6,22 +7,18 @@ extension NewAdminMediaAsset {
     ) -> NewAdminMediaAsset? {
         guard
             let rawValue = value?
-                .trimmingCharacters(in: .whitespacesAndNewlines),
+                .whitespaceTrimmed,
             rawValue.isEmpty == false,
             let url = URL(string: rawValue)
         else {
             return nil
         }
 
-        let mediaPrefix =
-            AppEnvironmentStore.current.publicOrigins.mediaBaseURL
-            .absoluteString
-            + "/media/assets/"
-        guard rawValue.hasPrefix(mediaPrefix) else {
+        guard let mediaPrefixRange = rawValue.range(of: "/media/assets/") else {
             return nil
         }
 
-        let relativePath = String(rawValue.dropFirst(mediaPrefix.count))
+        let relativePath = String(rawValue[mediaPrefixRange.upperBound...])
         let decodedPath = relativePath.removingPercentEncoding ?? relativePath
         let pathComponents = decodedPath.split(
             separator: "/",

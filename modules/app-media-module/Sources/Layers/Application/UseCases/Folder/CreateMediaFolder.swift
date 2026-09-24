@@ -1,6 +1,5 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDomain
+public import FeatherApplication
+public import FeatherContracts
 import Foundation
 import MediaContracts
 import MediaDomain
@@ -38,7 +37,7 @@ public struct CreateMediaFolder: UseCase {
         guard try await authorizer.can(subject: subject, perform: action) else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
-        let name = input.name.trimmingCharacters(in: .whitespacesAndNewlines)
+        let name = input.name.whitespaceTrimmed
         let slug = normalizedSlug(name)
         guard !name.isEmpty, !slug.isEmpty else { throw Error.invalidName }
         return try await transaction.run { scope in

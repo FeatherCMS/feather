@@ -1,17 +1,18 @@
-import CSS
+public import CSS
 import FeatherContracts
-import HTML
+public import HTML
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
-import struct HTML.Button
+public import struct HTML.Button
 
 public struct NewAdminFormFieldDatePicker: Component {
     public struct State: Sendable {
         public var name: String
         public var label: String
         public var value: String?
+        public var placeholder: String?
         public var error: String?
         public var help: String?
         public var id: String
@@ -22,6 +23,7 @@ public struct NewAdminFormFieldDatePicker: Component {
             name: String,
             label: String,
             value: String? = nil,
+            placeholder: String? = nil,
             error: String? = nil,
             help: String? = nil,
             id: String? = nil,
@@ -31,6 +33,7 @@ public struct NewAdminFormFieldDatePicker: Component {
             self.name = name
             self.label = label
             self.value = value
+            self.placeholder = placeholder
             self.error = error
             self.help = help
             self.id = id ?? name
@@ -291,10 +294,15 @@ public struct NewAdminFormFieldDatePicker: Component {
             .id(displayID)
             .if(state.value != nil) { $0.value(state.value) }
             .readOnly()
+            .ariaLabel(state.label)
             .ariaHasPopup(.dialog)
             .ariaControls(pickerID)
             .ariaExpanded("false")
             .ariaInvalid(state.error == nil ? .false : .true)
+
+        if let placeholder = state.placeholder {
+            input = input.placeholder(placeholder)
+        }
 
         if let describedBy {
             input = input.ariaDescribedBy(describedBy)

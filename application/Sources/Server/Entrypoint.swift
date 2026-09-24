@@ -1,4 +1,3 @@
-import FeatherApplication
 import Environment
 import Hummingbird
 import Logging

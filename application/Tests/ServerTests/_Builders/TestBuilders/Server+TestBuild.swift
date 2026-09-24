@@ -10,6 +10,7 @@ import FeatherStorage
 import FeatherStorageFS
 import Jobs
 import MediaInfrastructure
+import FeatherContracts
 #if canImport(FoundationEssentials)
 import FoundationEssentials
 #else
@@ -44,6 +45,9 @@ func buildTestServer(
             jobQueue: jobQueue,
             storage: StorageClientFS(rootPath: config.media.storageRootPath),
             storageKeyShard: .init()
+        ),
+        mediaResolver: MediaResolver(
+            mediaBaseURL: URL(string: "http://localhost:8080")!
         )
     )
 

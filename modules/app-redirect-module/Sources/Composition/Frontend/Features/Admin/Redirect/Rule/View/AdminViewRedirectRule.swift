@@ -1,17 +1,18 @@
 import FeatherAdmin
-import Foundation
-import Hummingbird
 
 struct AdminViewRedirectRule {
     let controller: any AdminViewRedirectRuleController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: RedirectAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminViewRedirectRuleDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminViewRedirectRuleDefaultInteractor(
                         repository: AdminViewRedirectRuleOpenAPIRepository(
-                            api: context.redirectAdminAPI()
+                            api: apiBuilder.makeRedirectAdmin(context)
                         )
                     ),
                     presenter: AdminViewRedirectRuleDefaultPresenter(

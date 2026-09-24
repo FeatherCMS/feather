@@ -6,10 +6,8 @@
 //
 
 import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherInfrastructure
-import SystemApplication
+public import FeatherInfrastructure
+public import SystemApplication
 
 extension VariableTable.Row {
 

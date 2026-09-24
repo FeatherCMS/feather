@@ -1,10 +1,7 @@
 import AnalyticsApplication
 import AnalyticsDomain
-import FeatherApplication
-import FeatherContracts
-import Foundation
 import HTTPTypes
-import Hummingbird
+public import Hummingbird
 
 public struct AnalyticsLogMiddleware: RouterMiddleware {
 

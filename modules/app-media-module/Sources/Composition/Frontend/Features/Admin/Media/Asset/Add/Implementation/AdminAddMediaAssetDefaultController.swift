@@ -12,19 +12,19 @@ import WebComponents
 
 struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddMediaAssetInteractor,
-            presenter: any AdminAddMediaAssetPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminAddMediaAssetInteractor,
+            any AdminAddMediaAssetPresenter
+        >
 
     func getAddMediaAsset(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let parentId =
             request.queryString("parent_id")?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
             .emptyToNil ?? ""
         let view = request.queryString("view") ?? "grid"
         let picker = pickerState(request: request)
@@ -53,9 +53,9 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
 
     func postAddMediaAsset(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let payload = try await request.decode(
             as: AssetAddForm.self,
             context: context
@@ -142,7 +142,7 @@ extension AdminAddMediaAssetDefaultController {
             allowedExtensions: request.queryString("extensions")?
                 .split(separator: ",")
                 .map {
-                    $0.trimmingCharacters(in: .whitespacesAndNewlines)
+                    $0.whitespaceTrimmed
                         .lowercased()
                 }
                 .filter { !$0.isEmpty } ?? [],

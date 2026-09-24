@@ -1,6 +1,3 @@
-import FeatherAdmin
-import Foundation
-
 protocol AdminViewUserRoleInteractor: Sendable {
 
     func load(

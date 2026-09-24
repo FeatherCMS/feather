@@ -1,7 +1,6 @@
-import FeatherDatabase
 import FeatherDomain
-import FeatherInfrastructure
-import MediaDomain
+public import FeatherInfrastructure
+public import MediaDomain
 
 extension MediaAssetStorageObjectTable.Row {
     var asDomain: MediaAssetStorageObject {

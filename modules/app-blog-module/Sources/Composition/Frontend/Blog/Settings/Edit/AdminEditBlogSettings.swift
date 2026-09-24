@@ -14,13 +14,16 @@ import WebFrontend
 struct AdminEditBlogSettings {
     let controller: any AdminEditBlogSettingsController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: BlogAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminEditBlogSettingsDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminEditBlogSettingsDefaultInteractor(
                         repository: AdminEditBlogSettingsOpenAPIRepository(
-                            api: context.blogAdminAPI()
+                            api: apiBuilder.makeBlogAdmin(context)
                         )
                     ),
                     presenter: AdminEditBlogSettingsDefaultPresenter(

@@ -1,11 +1,11 @@
 import AuthAdminAPI
 import AuthAppAPI
 import CSS
-import FeatherAdmin
+public import FeatherAdmin
 import FeatherValidation
 import FeatherValidationFoundation
 import HTML
-import Hummingbird
+public import Hummingbird
 import MediaFrontend
 import OpenAPIRuntime
 import SGML
@@ -22,19 +22,30 @@ public enum AuthFrontendRoutes {
     public static func registerAppRoutes(
         router: Router<DefaultRequestContext>,
         renderingEngine: any RenderingEngine,
-        authAppClient: AuthAppAPIClient
+        authAPIBuilder: AuthAPIBuilder,
+        usesSecureCookies: Bool
     ) {
         AppLoginAuth(
-            repository: AppLoginAuthOpenAPIRepository(appClient: authAppClient)
+            repository: AppLoginAuthOpenAPIRepository(
+                appClient: authAPIBuilder.makeAuthApp()
+            ),
+            usesSecureCookies: usesSecureCookies
         )
         .controller.route(on: router)
 
         AppLogoutAuth(
-            repository: AppLogoutAuthOpenAPIRepository(appClient: authAppClient)
+            repository: AppLogoutAuthOpenAPIRepository(
+                appClient: authAPIBuilder.makeAuthApp()
+            ),
+            usesSecureCookies: usesSecureCookies
         )
         .controller.route(on: router)
 
-        AppMagicLink(renderingEngine: renderingEngine).route(on: router)
+        AppMagicLink(
+            apiBuilder: authAPIBuilder,
+            usesSecureCookies: usesSecureCookies
+        )
+        .route(on: router)
     }
 
 }

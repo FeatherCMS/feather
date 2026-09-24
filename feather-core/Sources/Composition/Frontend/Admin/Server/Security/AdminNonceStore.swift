@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 /// Server-side, one-time tokens used to protect browser form submissions.
 public actor AdminNonceStore {

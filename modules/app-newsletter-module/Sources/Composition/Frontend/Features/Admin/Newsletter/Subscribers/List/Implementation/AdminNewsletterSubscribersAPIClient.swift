@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
@@ -54,7 +55,7 @@ struct AdminNewsletterSubscribersAPIClient {
                             id: subscriber.id,
                             email: subscriber.email,
                             name: "\(firstName) \(lastName)"
-                                .trimmingCharacters(in: .whitespaces),
+                                .whitespaceTrimmed,
                             newsletters: []
                         )
                     grouped[subscriber.id] = .init(

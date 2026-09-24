@@ -1,6 +1,5 @@
-import FeatherDatabase
-import FeatherInfrastructure
-import NewsletterDomain
+public import FeatherInfrastructure
+public import NewsletterDomain
 
 extension DeliveryTable.Row {
     var asDomain: Delivery {

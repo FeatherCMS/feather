@@ -1,5 +1,3 @@
-import Foundation
-
 enum AdminAddUserRoleError: Error, Sendable {
     case unauthorized
     case forbidden

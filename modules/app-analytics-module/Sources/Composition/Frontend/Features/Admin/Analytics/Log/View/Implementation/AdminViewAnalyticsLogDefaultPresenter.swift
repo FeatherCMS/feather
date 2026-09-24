@@ -3,7 +3,7 @@ import Hummingbird
 
 struct AdminViewAnalyticsLogDefaultPresenter: AdminViewAnalyticsLogPresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderPage(

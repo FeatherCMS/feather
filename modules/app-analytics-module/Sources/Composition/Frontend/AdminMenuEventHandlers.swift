@@ -1,6 +1,5 @@
 import FeatherAdmin
-import FeatherContracts
-import SystemContracts
+public import FeatherContracts
 
 public enum AnalyticsAdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {

@@ -1,4 +1,4 @@
-import Foundation
+import FeatherContracts
 
 public struct NewAdminStatusActionFormInput: Codable, Sendable, Equatable,
     Hashable
@@ -12,7 +12,7 @@ public struct NewAdminStatusActionFormInput: Codable, Sendable, Equatable,
     }
 
     public var normalizedReturnTo: String? {
-        let trimmed = returnTo?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let trimmed = returnTo?.whitespaceTrimmed
         guard let trimmed, trimmed.hasPrefix("/admin/") else {
             return nil
         }
@@ -21,7 +21,7 @@ public struct NewAdminStatusActionFormInput: Codable, Sendable, Equatable,
 
     public var normalizedStatus: String {
         status
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
             .lowercased()
     }
 }

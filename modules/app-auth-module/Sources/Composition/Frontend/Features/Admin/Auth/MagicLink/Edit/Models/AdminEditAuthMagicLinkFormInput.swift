@@ -1,10 +1,10 @@
 import AuthAdminAPI
 import AuthAppAPI
 import CSS
-import FeatherAdmin
+public import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import FeatherValidationFoundation
-import Foundation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -30,7 +30,7 @@ public struct AdminEditAuthMagicLinkFormInput: Codable, Sendable, Equatable,
     public let isPersistent: NewAdminFormFieldCheckbox.Input
 
     public var normalizedCredentialId: String {
-        credentialId.trimmingCharacters(in: .whitespacesAndNewlines)
+        credentialId.whitespaceTrimmed
     }
 
     public init(

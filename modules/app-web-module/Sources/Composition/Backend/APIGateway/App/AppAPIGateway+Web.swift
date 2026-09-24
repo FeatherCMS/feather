@@ -1,5 +1,4 @@
-import FeatherInfrastructure
-import WebAppAPI
+public import WebAppAPI
 import WebApplication
 
 extension AppAPIGateway {

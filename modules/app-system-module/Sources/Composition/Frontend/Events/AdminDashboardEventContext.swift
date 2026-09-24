@@ -1,5 +1,5 @@
-import FeatherContracts
-import Foundation
+public import FeatherContracts
+public import Foundation
 
 public struct AdminDashboardEventContext: ExecutionContext {
     public let apiBaseURL: URL

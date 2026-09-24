@@ -6,44 +6,23 @@
 //
 
 import FeatherContracts
-import Foundation
-import Hummingbird
+public import Hummingbird
 import OpenAPIRuntime
 
-public struct DefaultRequestContext: AuthRequestContext {
+public struct DefaultRequestContext: RequestParameterProviding, Sendable {
 
     public var coreContext: CoreRequestContextStorage
 
     public var sessionToken: String?
     public var account: AccountModel?
-    public var accountTopBarState: NewAdminTopBar.State
-
     public init(
         source: ApplicationRequestContextSource,
     ) {
         self.coreContext = .init(source: source)
-        self.accountTopBarState = .init()
     }
 
     public var requestDecoder: URLFormRequestDecoder {
         .init()
-    }
-
-    // MARK: -
-
-    public func requiredID() throws -> String {
-        try requiredParameter("id")
-    }
-
-    public func requiredParameter(
-        _ name: String
-    ) throws -> String {
-        guard
-            let value = parameters.get(name, as: String.self), !value.isEmpty
-        else {
-            throw HTTPError(.badRequest)
-        }
-        return value
     }
 
 }

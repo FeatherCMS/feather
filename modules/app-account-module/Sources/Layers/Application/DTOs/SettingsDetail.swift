@@ -4,10 +4,9 @@
 //
 //  Created by Binary Birds on 2026. 07. 16.
 
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct SettingsDetail: DTO {
 

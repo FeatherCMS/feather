@@ -1,4 +1,4 @@
-import NewsletterAppAPI
+public import NewsletterAppAPI
 
 public struct AppAPIGateway: Sendable, NewsletterAppAPI.APIProtocol {
     public let useCases: UseCases

@@ -6,19 +6,19 @@ protocol AdminEditSystemVariableController: Sendable {
 
     func getEditSystemVariable(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
     func postEditSystemVariable(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response
 }
 
 extension AdminEditSystemVariableController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             SystemVariableRoutes.edit(RouterPath("{id}")),

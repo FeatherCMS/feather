@@ -20,21 +20,18 @@ import WebComponents
 struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditAuthMagicLinkInteractor,
-            presenter: any AdminEditAuthMagicLinkPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditAuthMagicLinkInteractor,
+            any AdminEditAuthMagicLinkPresenter
+        >
 
     func getEditAuthMagicLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let id = try context.requiredID()
         let isEdited = request.hasQueryFlag("edited")
-        let (interactor, presenter) = buildRuntime(
-            request,
-            context
-        )
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.update)
@@ -70,13 +67,10 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
 
     func postEditAuthMagicLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let id = try context.requiredID()
-        let (interactor, presenter) = buildRuntime(
-            request,
-            context
-        )
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.update)
         else {
@@ -179,7 +173,7 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
 
     private func updateResponse(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         id: String,
         presenter: any AdminEditAuthMagicLinkPresenter,
         state: AuthMagicLinkForm.State

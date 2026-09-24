@@ -1,4 +1,4 @@
-import MediaDomain
+public import MediaDomain
 
 extension MediaAssetNodeFolder {
     public var asDetail: MediaFolderDetail {

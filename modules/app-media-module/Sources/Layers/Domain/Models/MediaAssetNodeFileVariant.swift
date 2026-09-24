@@ -1,6 +1,6 @@
-import FeatherDomain
+public import FeatherDomain
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct MediaAssetNodeFileVariant: Model {
     public struct New: Sendable {

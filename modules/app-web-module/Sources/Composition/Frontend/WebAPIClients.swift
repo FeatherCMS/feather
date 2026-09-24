@@ -1,21 +1,24 @@
 import AsyncHTTPClient
-import FeatherAdmin
-import Foundation
-import MediaFrontend
+public import FeatherAdmin
+public import Foundation
+public import MediaFrontend
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
-import WebAdminAPI
-import WebAppAPI
+public import OpenAPIRuntime
+public import SystemFrontend
+public import WebAdminAPI
+public import WebAppAPI
 
 public struct WebAdminAPIClient: Sendable {
     public let client: WebAdminAPI.Client
     public let sessionToken: String?
+    public let apiBaseURL: URL
 
     public init(
         apiBaseURL: URL,
         sessionToken: String? = nil
     ) {
+        self.apiBaseURL = apiBaseURL
         self.sessionToken = sessionToken
         self.client = .init(
             serverURL: apiBaseURL,
@@ -60,7 +63,7 @@ public struct WebAdminAPIClient: Sendable {
 
     public func mediaAdminAPI() -> MediaAdminAPIClient {
         .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
+            apiBaseURL: apiBaseURL,
             sessionToken: sessionToken
         )
     }
@@ -68,11 +71,13 @@ public struct WebAdminAPIClient: Sendable {
 
 public struct WebAppAPIClient: Sendable {
     public let client: WebAppAPI.Client
+    public let apiBaseURL: URL
 
     public init(
         apiBaseURL: URL,
         sessionToken: String? = nil
     ) {
+        self.apiBaseURL = apiBaseURL
         self.client = .init(
             serverURL: apiBaseURL,
             transport: AsyncHTTPClientTransport(
@@ -135,18 +140,40 @@ public struct WebAppAPIClient: Sendable {
     }
 }
 
-extension DefaultRequestContext {
-    public func webAdminAPI() -> WebAdminAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+public struct WebAPIBuilder: Sendable {
+    private let apiBaseURL: URL
+    public let media: MediaAPIBuilder
+    public let system: SystemAPIBuilder
+
+    public init(apiBaseURL: URL) {
+        self.apiBaseURL = apiBaseURL
+        self.media = .init(apiBaseURL: apiBaseURL)
+        self.system = .init(apiBaseURL: apiBaseURL)
     }
 
-    public func webApplicationAPI() -> WebAppAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+    public var baseURL: URL { apiBaseURL }
+
+    public func makeWebAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> WebAdminAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeWebApp(
+        _ context: DefaultRequestContext
+    ) -> WebAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeMediaAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> MediaAdminAPIClient {
+        media.makeMediaAdmin(context)
+    }
+
+    public func makeSystemAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> SystemAdminAPIClient {
+        system.makeSystemAdmin(context)
     }
 }

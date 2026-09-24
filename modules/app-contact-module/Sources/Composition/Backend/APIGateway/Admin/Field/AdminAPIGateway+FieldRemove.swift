@@ -1,4 +1,4 @@
-import ContactAdminAPI
+public import ContactAdminAPI
 import ContactApplication
 import FeatherApplication
 import FeatherBackend

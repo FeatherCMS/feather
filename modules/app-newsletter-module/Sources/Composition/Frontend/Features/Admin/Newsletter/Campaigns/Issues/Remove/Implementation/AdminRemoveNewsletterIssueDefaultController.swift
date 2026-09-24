@@ -11,24 +11,26 @@ struct AdminRemoveNewsletterIssueDefaultController:
     AdminRemoveNewsletterIssueController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveNewsletterIssueInteractor,
-            presenter: any AdminRemoveNewsletterIssuePresenter
-        )
-    func confirm(request: Request, context: DefaultRequestContext) async throws
+        AuthenticatedRuntimeBuilder<
+            any AdminRemoveNewsletterIssueInteractor,
+            any AdminRemoveNewsletterIssuePresenter
+        >
+    func confirm(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         let issueId = try context.requiredParameter("issueId")
         return try await presenter.render(
             newsletterId: try context.requiredParameter("newsletterId"),
             item: .init(id: issueId, label: issueId)
         )
     }
-    func remove(request: Request, context: DefaultRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         let newsletterId = try context.requiredParameter("newsletterId")
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,

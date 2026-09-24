@@ -2,9 +2,9 @@ import AuthAdminAPI
 import AuthAppAPI
 import CSS
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import FeatherValidationFoundation
-import Foundation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -25,15 +25,15 @@ public struct AdminAuthCredentialFormInput: Codable, Sendable, Equatable,
     public let password: String
 
     var normalizedEmail: String {
-        email.trimmingCharacters(in: .whitespacesAndNewlines)
+        email.whitespaceTrimmed
     }
 
     var normalizedPassword: String? {
-        let value = password.trimmingCharacters(in: .whitespacesAndNewlines)
+        let value = password.whitespaceTrimmed
         return value.isEmpty ? nil : value
     }
 
     var normalizedUserId: String {
-        userId.trimmingCharacters(in: .whitespacesAndNewlines)
+        userId.whitespaceTrimmed
     }
 }

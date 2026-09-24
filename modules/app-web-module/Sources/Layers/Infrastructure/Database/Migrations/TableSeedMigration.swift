@@ -1,10 +1,7 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
-import FeatherInfrastructure
-import SystemApplication
-import WebApplication
+public import FeatherContracts
+public import FeatherDatabase
+public import FeatherDomain
+public import FeatherInfrastructure
 import WebContracts
 import WebDomain
 
@@ -64,7 +61,7 @@ public struct TableSeedMigration: DatabaseMigration {
                 }
                     ?? .init(
                         template: "default",
-                        slug: definition.title.slugify(),
+                        slug: definition.title.slugified,
                         status: .published
                     )
             )

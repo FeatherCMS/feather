@@ -1,6 +1,5 @@
-import FeatherApplication
 import FeatherContracts
-import MediaAdminAPI
+public import MediaAdminAPI
 
 extension AdminAPIGateway {
     public func mediaAssetVariantSearch(

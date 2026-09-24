@@ -15,7 +15,7 @@ struct AdminViewBlogOverviewDefaultPresenter:
     AdminViewBlogOverviewPresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderOverview(

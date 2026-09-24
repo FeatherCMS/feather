@@ -5,11 +5,11 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherContracts
-import FeatherDomain
-import Foundation
-import WebDomain
+public import FeatherDomain
+public import Foundation
+public import WebDomain
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct Article: Model {
 
@@ -108,7 +108,7 @@ extension Article {
             base: metadata
                 ?? .init(
                     template: "news.article",
-                    slug: title.slugify()
+                    slug: title.slugified
                 )
         )
 

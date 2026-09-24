@@ -2,9 +2,9 @@ import AuthAdminAPI
 import AuthAppAPI
 import CSS
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import FeatherValidationFoundation
-import Foundation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -21,7 +21,7 @@ struct AdminEditAuthAccessControlDefaultPresenter:
     AdminEditAuthAccessControlPresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderEngine: any RenderingEngine
 
     func deniedPage(
@@ -74,7 +74,7 @@ struct AdminEditAuthAccessControlDefaultPresenter:
     private func normalizedSearch(
         _ search: String?
     ) -> String {
-        (search ?? "").trimmingCharacters(in: .whitespacesAndNewlines)
+        (search ?? "").whitespaceTrimmed
     }
 
 }

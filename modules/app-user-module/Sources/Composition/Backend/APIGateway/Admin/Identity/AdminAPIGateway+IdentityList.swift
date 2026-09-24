@@ -1,5 +1,4 @@
-import UserAdminAPI
-import UserApplication
+public import UserAdminAPI
 
 extension AdminAPIGateway {
 

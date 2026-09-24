@@ -1,10 +1,9 @@
 import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
-import FeatherInfrastructure
+public import FeatherDatabase
+public import FeatherDomain
+public import FeatherInfrastructure
 import NewsDomain
 import WebDomain
-import WebInfrastructure
 
 public struct TableSeedMigration: DatabaseMigration {
     public let connection: any DatabaseConnection

@@ -1,5 +1,4 @@
-import FeatherAdmin
-import Foundation
+import FeatherContracts
 import RedirectContracts
 
 public struct RedirectRuleAddFormInput: Decodable, Sendable, Equatable, Hashable
@@ -11,19 +10,19 @@ public struct RedirectRuleAddFormInput: Decodable, Sendable, Equatable, Hashable
     public let notes: String
 
     var normalizedSource: String {
-        source.trimmingCharacters(in: .whitespacesAndNewlines)
+        source.whitespaceTrimmed
     }
 
     var normalizedDestination: String {
-        destination.trimmingCharacters(in: .whitespacesAndNewlines)
+        destination.whitespaceTrimmed
     }
 
     var normalizedStatusCode: String {
-        statusCode.trimmingCharacters(in: .whitespacesAndNewlines)
+        statusCode.whitespaceTrimmed
     }
 
     var normalizedNotes: String {
-        notes.trimmingCharacters(in: .whitespacesAndNewlines)
+        notes.whitespaceTrimmed
     }
 
     var parsedStatusCode: StatusCode? {

@@ -5,7 +5,7 @@ protocol AdminListUserRoleController: Sendable {
 
     func getUserRoles(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
 }
@@ -13,7 +13,7 @@ protocol AdminListUserRoleController: Sendable {
 extension AdminListUserRoleController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             UserRoleRoutes.list,

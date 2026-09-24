@@ -1,25 +1,20 @@
 import FeatherAdmin
-import FeatherValidation
 import Foundation
-import HTML
 import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
 
 struct AdminListContactSubmissionsDefaultController:
     AdminListContactSubmissionsController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListContactSubmissionsInteractor,
-            presenter: any AdminListContactSubmissionsPresenter
-        )
-    func list(request: Request, context: DefaultRequestContext) async throws
+        AuthenticatedRuntimeBuilder<
+            any AdminListContactSubmissionsInteractor,
+            any AdminListContactSubmissionsPresenter
+        >
+    func list(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let search = request.querySearch() ?? ""
         do {
             let items = try await interactor.list()

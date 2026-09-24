@@ -1,10 +1,10 @@
 import FeatherApplication
-import FeatherBackend
+public import FeatherBackend
 import FeatherContracts
 import FeatherDomain
-import HTTPTypes
+public import HTTPTypes
 import Hummingbird
-import OpenAPIRuntime
+public import OpenAPIRuntime
 import UserApplication
 
 #if canImport(FoundationEssentials)

@@ -11,7 +11,9 @@ import WebComponents
 struct AdminTestNewsletterIssueEmailDefaultController:
     AdminTestNewsletterIssueEmailController
 {
-    func send(request: Request, context: DefaultRequestContext) async throws
+    let apiBuilder: NewsletterAPIBuilder
+    func send(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
         let newsletterId = try context.requiredParameter("newsletterId")
@@ -29,7 +31,7 @@ struct AdminTestNewsletterIssueEmailDefaultController:
                 )
             )
         if let issueId {
-            _ = try await context.newsletterAdminAPI()
+            _ = try await apiBuilder.makeNewsletterAdmin(context)
                 .newsletterIssueTestEmail(
                     path: .init(
                         newsletterCampaignId: newsletterId,
@@ -39,7 +41,7 @@ struct AdminTestNewsletterIssueEmailDefaultController:
                 )
         }
         else {
-            _ = try await context.newsletterAdminAPI()
+            _ = try await apiBuilder.makeNewsletterAdmin(context)
                 .newsletterCampaignTestEmail(
                     path: .init(newsletterCampaignId: newsletterId),
                     body: body

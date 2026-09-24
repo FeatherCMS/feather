@@ -1,7 +1,5 @@
-import FeatherApplication
-import FeatherBackend
 import FeatherContracts
-import WebAdminAPI
+public import WebAdminAPI
 import WebApplication
 
 extension AdminAPIGateway {

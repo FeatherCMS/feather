@@ -3,7 +3,6 @@ import BlogAppAPI
 import FeatherAdmin
 import FeatherContracts
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import MediaFrontend
@@ -75,20 +74,20 @@ public struct BlogPostFormInput: Codable, Sendable, Equatable, Hashable {
     }
 
     var normalizedTitle: String {
-        title.trimmingCharacters(in: .whitespacesAndNewlines)
+        title.whitespaceTrimmed
     }
 
     var normalizedContent: String {
-        content.trimmingCharacters(in: .whitespacesAndNewlines)
+        content.whitespaceTrimmed
     }
 
     var normalizedExcerpt: String {
-        excerpt.trimmingCharacters(in: .whitespacesAndNewlines)
+        excerpt.whitespaceTrimmed
     }
 
     var normalizedImageAssetId: String? {
         imageAssetId?
-            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .whitespaceTrimmed
             .emptyToNil
     }
 
@@ -120,7 +119,7 @@ public struct BlogPostFormInput: Codable, Sendable, Equatable, Hashable {
         Array(
             Set(
                 (values ?? [])
-                    .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                    .map { $0.whitespaceTrimmed }
                     .filter { !$0.isEmpty }
             )
         )

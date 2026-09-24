@@ -1,6 +1,4 @@
-import FeatherAdmin
-import FeatherValidation
-import FeatherValidationFoundation
+public import FeatherValidation
 
 enum AdminAddUserIdentityFormFieldValidator {
 

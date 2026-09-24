@@ -8,16 +8,16 @@ import SystemContracts
 struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddSystemVariableInteractor,
-            presenter: any AdminAddSystemVariablePresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminAddSystemVariableInteractor,
+            any AdminAddSystemVariablePresenter
+        >
 
     func getAddSystemVariable(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: SystemPermissions.Variables.create)
         else {
@@ -30,9 +30,9 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
 
     func postAddSystemVariable(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: SystemPermissions.Variables.create)
         else {

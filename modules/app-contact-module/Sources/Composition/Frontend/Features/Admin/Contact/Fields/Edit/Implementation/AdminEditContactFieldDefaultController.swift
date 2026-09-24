@@ -12,15 +12,16 @@ struct AdminEditContactFieldDefaultController:
     AdminEditContactFieldController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditContactFieldInteractor,
-            presenter: any AdminEditContactFieldPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditContactFieldInteractor,
+            any AdminEditContactFieldPresenter
+        >
 
-    func edit(request: Request, context: DefaultRequestContext) async throws
+    func edit(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.update)
         else {
             return try await presenter.renderForbiddenPage()
@@ -50,10 +51,11 @@ struct AdminEditContactFieldDefaultController:
         }
     }
 
-    func update(request: Request, context: DefaultRequestContext) async throws
+    func update(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.update)
         else {
             return

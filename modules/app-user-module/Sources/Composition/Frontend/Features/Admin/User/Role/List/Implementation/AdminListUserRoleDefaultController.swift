@@ -5,15 +5,15 @@ import UserContracts
 
 struct AdminListUserRoleDefaultController: AdminListUserRoleController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListUserRoleInteractor,
-            presenter: any AdminListUserRolePresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminListUserRoleInteractor,
+            any AdminListUserRolePresenter
+        >
 
-    func getUserRoles(request: Request, context: DefaultRequestContext)
+    func getUserRoles(request: Request, context: AuthenticatedRequestContext)
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Roles.list)
         else { return try await presenter.renderErrorPage(error: .forbidden) }
         do {

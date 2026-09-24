@@ -10,7 +10,7 @@ import WebComponents
 
 struct AdminListContactFormsDefaultPresenter: AdminListContactFormsPresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderList(

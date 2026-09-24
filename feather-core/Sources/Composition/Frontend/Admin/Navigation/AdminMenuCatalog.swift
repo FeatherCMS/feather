@@ -1,4 +1,4 @@
-import FeatherContracts
+public import FeatherContracts
 
 public struct AdminMenuCatalog: Sendable {
     public let menus: [AdminMenuDefinition]

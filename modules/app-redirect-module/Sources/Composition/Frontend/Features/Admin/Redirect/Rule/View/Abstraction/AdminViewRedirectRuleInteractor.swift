@@ -1,6 +1,3 @@
-import FeatherAdmin
-import Foundation
-
 protocol AdminViewRedirectRuleInteractor: Sendable {
 
     func load(

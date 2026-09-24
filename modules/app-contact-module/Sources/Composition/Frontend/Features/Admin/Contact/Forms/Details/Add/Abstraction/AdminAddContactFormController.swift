@@ -8,14 +8,16 @@ import WebBuilders
 import WebComponents
 
 protocol AdminAddContactFormController: Sendable {
-    func add(request: Request, context: DefaultRequestContext) async throws
+    func add(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
-    func create(request: Request, context: DefaultRequestContext) async throws
+    func create(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
 }
 
 extension AdminAddContactFormController {
-    func route(on router: Router<DefaultRequestContext>) {
+    func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.get(ContactAdminRoutes.formAdd, use: add)
         router.post(ContactAdminRoutes.formAdd, use: create)
     }

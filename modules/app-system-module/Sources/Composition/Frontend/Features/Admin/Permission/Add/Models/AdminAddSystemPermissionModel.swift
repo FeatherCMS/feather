@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 
 struct AdminAddSystemPermissionModel: Sendable {
     let key: String

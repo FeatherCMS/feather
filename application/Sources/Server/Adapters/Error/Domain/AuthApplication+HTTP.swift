@@ -1,5 +1,4 @@
-import AuthApplication
-import HTTPTypes
+public import AuthApplication
 import NIOHTTP1
 import OpenAPIRuntime
 

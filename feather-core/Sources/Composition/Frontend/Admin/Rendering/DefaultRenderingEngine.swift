@@ -1,10 +1,10 @@
 import CSS
-import FeatherContracts
-import HTML
-import Hummingbird
+public import FeatherContracts
+public import HTML
+public import Hummingbird
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct RenderingEngineAssetConfiguration: Sendable {
     public let publicStylesheetPaths: [String]
@@ -33,15 +33,19 @@ public struct RenderingEngineAssetConfiguration: Sendable {
 public struct DefaultRenderingEngine: RenderingEngine {
     public let publicOrigins: AppPublicOriginConfiguration
     public let adminEvents: any EventPublisher
+    public let adminPageRenderContextProvider:
+        any AdminPageRenderContextProvider
     public let assets: RenderingEngineAssetConfiguration
 
     public init(
         publicOrigins: AppPublicOriginConfiguration,
         adminEvents: any EventPublisher,
+        adminPageRenderContextProvider: any AdminPageRenderContextProvider,
         assets: RenderingEngineAssetConfiguration = .init()
     ) {
         self.publicOrigins = publicOrigins
         self.adminEvents = adminEvents
+        self.adminPageRenderContextProvider = adminPageRenderContextProvider
         self.assets = assets
     }
 
@@ -95,21 +99,21 @@ public struct DefaultRenderingEngine: RenderingEngine {
 
     public func renderNewAdminPage<T: Component>(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         title: String,
         content: T
     ) async throws -> HTMLResponse {
-        let menuGroups = try await context.adminMenuGroups(
+        let renderContext = try await adminPageRenderContextProvider.make(
             request: request,
-            events: adminEvents
+            context: context
         )
         let notification = AdminNotificationFlash.notification(from: request)
         var builderContext = BuilderContext()
         let layout = NewAdminBaseLayout(
             content: content,
-            menuGroups: menuGroups,
+            menuGroups: renderContext.menuGroups,
             notification: notification,
-            accountTopBarState: context.accountTopBarState
+            accountTopBarState: renderContext.accountTopBarState
         )
         return .init(
             builderContext.build(

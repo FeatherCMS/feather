@@ -15,16 +15,16 @@ struct AdminEditBlogAuthorLinkDefaultController:
     AdminEditBlogAuthorLinkController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditBlogAuthorLinkInteractor,
-            presenter: any AdminEditBlogAuthorLinkPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditBlogAuthorLinkInteractor,
+            any AdminEditBlogAuthorLinkPresenter
+        >
 
     func getEditBlogAuthorLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let permissions = context.currentUserPermissions
@@ -57,9 +57,9 @@ struct AdminEditBlogAuthorLinkDefaultController:
 
     func postEditBlogAuthorLink(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let permissions = context.currentUserPermissions

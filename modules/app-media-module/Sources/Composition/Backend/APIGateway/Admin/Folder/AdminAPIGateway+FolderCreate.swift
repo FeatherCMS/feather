@@ -1,7 +1,5 @@
-import FeatherApplication
 import FeatherContracts
-import FeatherDomain
-import MediaAdminAPI
+public import MediaAdminAPI
 import MediaApplication
 
 extension AdminAPIGateway {

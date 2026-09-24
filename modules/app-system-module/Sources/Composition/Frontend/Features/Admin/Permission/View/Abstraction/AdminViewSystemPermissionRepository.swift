@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 import SystemAdminAPI
 
 protocol AdminViewSystemPermissionRepository: Sendable {

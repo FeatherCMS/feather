@@ -1,6 +1,6 @@
 import HTML
 import SGML
-import SVG
+public import SVG
 import WebBuilders
 
 public enum FeatherIcons {

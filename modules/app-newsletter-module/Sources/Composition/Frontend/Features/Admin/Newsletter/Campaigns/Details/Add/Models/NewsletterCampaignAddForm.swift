@@ -1,22 +1,14 @@
-import FeatherAdmin
-import FeatherValidation
-import Foundation
-import HTML
-import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
+import FeatherContracts
 
 struct NewsletterCampaignAddForm: Decodable {
     var name: String = ""
     var fromEmail: String = ""
 
     var normalizedName: String {
-        name.trimmingCharacters(in: .whitespacesAndNewlines)
+        name.whitespaceTrimmed
     }
 
     var normalizedFromEmail: String {
-        fromEmail.trimmingCharacters(in: .whitespacesAndNewlines)
+        fromEmail.whitespaceTrimmed
     }
 }

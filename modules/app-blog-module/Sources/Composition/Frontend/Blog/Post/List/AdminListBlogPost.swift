@@ -14,13 +14,17 @@ import WebFrontend
 struct AdminListBlogPost {
     let controller: any AdminListBlogPostController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: BlogAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminListBlogPostDefaultController(
+            apiBuilder: apiBuilder,
             buildRuntime: { request, context in
                 (
                     interactor: AdminListBlogPostDefaultInteractor(
                         repository: AdminListBlogPostOpenAPIRepository(
-                            api: context.blogAdminAPI()
+                            api: apiBuilder.makeBlogAdmin(context)
                         )
                     ),
                     presenter: AdminListBlogPostDefaultPresenter(

@@ -6,15 +6,16 @@ struct AdminListNewsletterCampaignsDefaultController:
     AdminListNewsletterCampaignsController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListNewsletterCampaignsInteractor,
-            presenter: any AdminListNewsletterCampaignsPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminListNewsletterCampaignsInteractor,
+            any AdminListNewsletterCampaignsPresenter
+        >
 
-    func list(request: Request, context: DefaultRequestContext) async throws
+    func list(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserAdminListActions
         guard permissions.allows(Permissions.Campaigns.list) else {
             return try await presenter.render(

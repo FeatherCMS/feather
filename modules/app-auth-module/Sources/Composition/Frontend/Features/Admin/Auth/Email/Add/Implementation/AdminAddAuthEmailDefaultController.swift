@@ -20,16 +20,16 @@ import WebComponents
 struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
 
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddAuthEmailInteractor,
-            presenter: any AdminAddAuthEmailPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminAddAuthEmailInteractor,
+            any AdminAddAuthEmailPresenter
+        >
 
     func getAddAuthEmail(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.create)
         else { return try await presenter.renderForbiddenPage() }
         let identities = (try? await interactor.listIdentities()) ?? []
@@ -44,9 +44,9 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
 
     func postAddAuthEmail(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.create)
         else {
             return try await presenter.renderForbiddenPage()
@@ -136,7 +136,7 @@ struct AdminAddAuthEmailDefaultController: AdminAddAuthEmailController {
 
     private func createResponse(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         presenter: any AdminAddAuthEmailPresenter,
         state: AuthEmailForm.State
     ) async throws -> Response {

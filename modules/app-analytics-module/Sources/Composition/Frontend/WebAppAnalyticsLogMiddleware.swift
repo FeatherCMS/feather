@@ -1,9 +1,8 @@
 import AnalyticsAppAPI
-import FeatherAdmin
-import FeatherContracts
-import Foundation
+public import FeatherAdmin
+public import Foundation
 import HTTPTypes
-import Hummingbird
+public import Hummingbird
 
 public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
 

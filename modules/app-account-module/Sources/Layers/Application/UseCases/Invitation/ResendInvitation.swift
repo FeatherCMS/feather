@@ -1,7 +1,7 @@
 import AccountContracts
 import AccountDomain
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 import SystemApplication
 
 import struct Foundation.Date
@@ -62,7 +62,7 @@ public struct ResendInvitation: UseCase {
             )
             let configuredPublicBaseURL =
                 try await scope.variable.get("web-settings-public-base-url")?
-                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .whitespaceTrimmed
             let publicBaseURL =
                 configuredPublicBaseURL?.isEmpty == false
                 ? configuredPublicBaseURL!

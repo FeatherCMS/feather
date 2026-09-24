@@ -4,7 +4,7 @@ import FeatherInfrastructure
 import struct Foundation.Date
 
 extension MediaVariantTable.Row {
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         id = try row.decode(column: "id", as: String.self)
         key = try row.decode(column: "variant_key", as: String.self)
         name = try row.decode(column: "name", as: String.self)

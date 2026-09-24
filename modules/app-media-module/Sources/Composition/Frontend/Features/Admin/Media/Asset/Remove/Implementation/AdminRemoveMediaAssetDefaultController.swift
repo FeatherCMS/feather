@@ -1,6 +1,5 @@
 import FeatherAdmin
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -11,16 +10,16 @@ import WebComponents
 
 struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveMediaAssetInteractor,
-            presenter: any AdminRemoveMediaAssetPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminRemoveMediaAssetInteractor,
+            any AdminRemoveMediaAssetPresenter
+        >
 
     func getRemoveMediaAsset(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
         let model = try await interactor.getRemoveMediaAsset(id: id)
         return try await presenter.renderRemovePage(
@@ -30,9 +29,9 @@ struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
 
     func postRemoveMediaAsset(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
         let payload = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,

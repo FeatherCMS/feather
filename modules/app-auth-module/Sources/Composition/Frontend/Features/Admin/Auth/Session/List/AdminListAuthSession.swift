@@ -4,13 +4,16 @@ import Hummingbird
 struct AdminListAuthSession {
     let controller: any AdminListAuthSessionController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: AuthAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminListAuthSessionDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminListAuthSessionDefaultInteractor(
                         repository: AdminListAuthSessionOpenAPIRepository(
-                            api: context.authAdminAPI()
+                            api: apiBuilder.makeAuthAdmin(context)
                         )
                     ),
                     presenter: AdminListAuthSessionDefaultPresenter(

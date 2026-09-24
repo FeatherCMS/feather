@@ -1,13 +1,11 @@
 import FeatherAdmin
-import FeatherContracts
-import Foundation
 import Hummingbird
 
 struct AdminRemoveAccountInvitationDefaultPresenter:
     AdminRemoveAccountInvitationPresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderEngine: any RenderingEngine
 
     func renderRemovePage(

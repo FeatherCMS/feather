@@ -1,7 +1,6 @@
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct MediaFolderList: DTO {
     public struct Item: Sendable {

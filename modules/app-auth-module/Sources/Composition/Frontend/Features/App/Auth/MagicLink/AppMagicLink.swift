@@ -4,11 +4,20 @@ import FeatherAdmin
 import HTML
 import Hummingbird
 import OpenAPIRuntime
-import SGML
 import WebBuilders
 import WebComponents
 
 struct AppMagicLink {
+    let apiBuilder: AuthAPIBuilder
+    let usesSecureCookies: Bool
+
+    init(
+        apiBuilder: AuthAPIBuilder,
+        usesSecureCookies: Bool
+    ) {
+        self.apiBuilder = apiBuilder
+        self.usesSecureCookies = usesSecureCookies
+    }
 
     struct RequestInput: Codable, Sendable {
         let email: String
@@ -189,8 +198,6 @@ struct AppMagicLink {
         }
     }
 
-    let renderingEngine: any RenderingEngine
-
     func getRequest(
         request: Request,
         context: DefaultRequestContext
@@ -216,7 +223,7 @@ struct AppMagicLink {
             context: context
         )
         do {
-            let response = try await context.authAppAPI()
+            let response = try await apiBuilder.makeAuthApp(context)
                 .withOpenAPIRepositoryErrorMapping { client in
                     try await client.authMagicLink(
                         body: .json(
@@ -238,7 +245,7 @@ struct AppMagicLink {
                     context: &buildContext
                 )
             case .undocumented(let statusCode, let response):
-                throw try await context.authAppAPI()
+                throw try await apiBuilder.makeAuthApp(context)
                     .failure(
                         statusCode: statusCode,
                         responseBody: response.body
@@ -264,7 +271,7 @@ struct AppMagicLink {
         var buildContext = BuilderContext()
         let token = request.uri.queryParameters["token"].map(String.init) ?? ""
         do {
-            let response = try await context.authAppAPI()
+            let response = try await apiBuilder.makeAuthApp(context)
                 .withOpenAPIRepositoryErrorMapping { client in
                     try await client.authMagicLinkVerify(
                         headers: .init(accept: [.init(contentType: .json)]),
@@ -278,8 +285,7 @@ struct AppMagicLink {
                     name: "session_token",
                     value: result.token,
                     path: "/",
-                    secure: AppEnvironmentStore.current.publicOrigins
-                        .usesSecureCookies,
+                    secure: usesSecureCookies,
                     httpOnly: true,
                     sameSite: .lax
                 )
@@ -302,7 +308,7 @@ struct AppMagicLink {
                 )
                 .response(from: request, context: context)
             case .undocumented(let statusCode, let response):
-                throw try await context.authAppAPI()
+                throw try await apiBuilder.makeAuthApp(context)
                     .failure(
                         statusCode: statusCode,
                         responseBody: response.body

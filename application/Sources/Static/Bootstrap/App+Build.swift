@@ -1,7 +1,6 @@
 import Configuration
 import Hummingbird
 import Logging
-import ServiceLifecycle
 
 func buildApplication(
     reader: ConfigReader

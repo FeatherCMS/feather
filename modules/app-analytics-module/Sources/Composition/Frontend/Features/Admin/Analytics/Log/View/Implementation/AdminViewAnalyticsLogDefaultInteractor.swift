@@ -1,6 +1,3 @@
-import FeatherAdmin
-import Foundation
-
 struct AdminViewAnalyticsLogDefaultInteractor: AdminViewAnalyticsLogInteractor {
     private let repository: any AdminViewAnalyticsLogRepository
 

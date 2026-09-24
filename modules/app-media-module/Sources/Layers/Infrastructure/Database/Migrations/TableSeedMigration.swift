@@ -1,6 +1,6 @@
-import FeatherDatabase
-import FeatherDomain
-import FeatherInfrastructure
+public import FeatherDatabase
+public import FeatherDomain
+public import FeatherInfrastructure
 import MediaDomain
 
 public struct TableSeedMigration: DatabaseMigration {

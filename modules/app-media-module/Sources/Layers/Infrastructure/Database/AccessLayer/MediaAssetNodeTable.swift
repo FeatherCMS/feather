@@ -30,7 +30,7 @@ struct MediaAssetNodeTable {
         let updatedAt: Date
         let deletedAt: Date?
 
-        init(from row: DatabaseRow) throws {
+        init(from row: any DatabaseRow) throws {
             id = try row.decode(column: "id", as: String.self)
             parentId = try row.decode(column: "parent_id", as: String?.self)
             name = try row.decode(column: "name", as: String.self)
@@ -61,7 +61,7 @@ struct MediaAssetNodeTable {
         let createdAt: Date
         let updatedAt: Date
 
-        init(from row: DatabaseRow) throws {
+        init(from row: any DatabaseRow) throws {
             kind = try row.decode(column: "kind", as: String.self)
             id = try row.decode(column: "id", as: String.self)
             parentId = try row.decode(column: "parent_id", as: String?.self)

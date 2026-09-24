@@ -1,6 +1,3 @@
-import FeatherAdmin
-import Hummingbird
-
 protocol AdminListAnalyticsLogRepository: Sendable {
 
     func listAnalyticsLogs(
@@ -8,6 +5,8 @@ protocol AdminListAnalyticsLogRepository: Sendable {
         search: String?,
         source: String?,
         method: String?,
-        responseCode: Int?
+        responseCode: Int?,
+        from: Double?,
+        to: Double?
     ) async throws -> AdminListAnalyticsLogModel
 }

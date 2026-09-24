@@ -1,6 +1,5 @@
 import FeatherAdmin
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -12,16 +11,16 @@ import WebComponents
 struct AdminViewMediaOverviewDefaultController: AdminViewMediaOverviewController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewMediaOverviewInteractor,
-            presenter: any AdminViewMediaOverviewPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminViewMediaOverviewInteractor,
+            any AdminViewMediaOverviewPresenter
+        >
 
     func getOverview(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         return try await presenter.renderOverview(
             model: try await interactor.getOverview()
         )

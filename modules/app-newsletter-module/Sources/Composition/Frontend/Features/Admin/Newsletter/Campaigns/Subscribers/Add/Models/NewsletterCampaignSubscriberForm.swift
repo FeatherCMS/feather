@@ -1,5 +1,3 @@
-import Foundation
-
 struct NewsletterCampaignSubscriberForm: Decodable {
     let email: String
     let firstName: String

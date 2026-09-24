@@ -1,6 +1,4 @@
 import FeatherAdmin
-import Foundation
-import Hummingbird
 import OpenAPIRuntime
 import UserAdminAPI
 
@@ -9,13 +7,6 @@ struct AdminRemoveUserRoleOpenAPIRepository: AdminRemoveUserRoleRepository {
 
     init(api: UserAdminAPIClient) {
         self.api = api
-    }
-
-    init() {
-        self.api = UserAdminAPIClient(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: nil
-        )
     }
 
     private func name(

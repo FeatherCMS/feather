@@ -4,9 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
-import FeatherContracts
-import WebDomain
+public import FeatherContracts
+public import WebDomain
 
 public struct WriteMenuItem: Scope {
     public let menuItem: any MenuItemRepository

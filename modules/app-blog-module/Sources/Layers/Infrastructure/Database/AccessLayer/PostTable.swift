@@ -4,13 +4,13 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherDatabase
+public import FeatherDatabase
 import FeatherInfrastructure
 
-import struct Foundation.Data
-import struct Foundation.Date
-import class Foundation.JSONDecoder
-import class Foundation.JSONEncoder
+public import struct Foundation.Data
+public import struct Foundation.Date
+public import class Foundation.JSONDecoder
+public import class Foundation.JSONEncoder
 
 extension String {
 
@@ -36,7 +36,7 @@ extension Array where Element == String {
 
 extension PostTable.Row {
 
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.title = try row.decode(column: "title", as: String.self)
         self.excerpt = try row.decode(column: "excerpt", as: String.self)

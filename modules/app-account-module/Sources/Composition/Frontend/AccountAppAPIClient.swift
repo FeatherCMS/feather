@@ -1,10 +1,12 @@
-import AccountAppAPI
+public import AccountAppAPI
 import AsyncHTTPClient
-import FeatherAdmin
-import Foundation
+public import FeatherAdmin
+public import Foundation
+public import MediaFrontend
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
+public import OpenAPIRuntime
+public import UserFrontend
 
 public struct AccountAppAPIClient: Sendable {
     public let client: AccountAppAPI.Client
@@ -51,11 +53,44 @@ public struct AccountAppAPIClient: Sendable {
     }
 }
 
-extension DefaultRequestContext {
-    public func accountAppAPI() -> AccountAppAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+public struct AccountAPIBuilder: Sendable {
+    private let apiBaseURL: URL
+    public let media: MediaAPIBuilder
+    public let user: UserAPIBuilder
+
+    public init(apiBaseURL: URL) {
+        self.apiBaseURL = apiBaseURL
+        self.media = .init(apiBaseURL: apiBaseURL)
+        self.user = .init(apiBaseURL: apiBaseURL)
+    }
+
+    public func makeAccountApp(
+        _ context: DefaultRequestContext
+    ) -> AccountAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeAccountApp(
+        _ context: AuthenticatedRequestContext
+    ) -> AccountAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeAccountAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> AccountAdminAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeMediaAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> MediaAdminAPIClient {
+        media.makeMediaAdmin(context)
+    }
+
+    public func makeUserAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> UserAdminAPIClient {
+        user.makeUserAdmin(context)
     }
 }

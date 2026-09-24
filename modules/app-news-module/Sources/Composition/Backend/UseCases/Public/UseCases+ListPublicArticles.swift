@@ -1,12 +1,6 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
 import FeatherInfrastructure
-import NewsApplication
+public import NewsApplication
 import NewsInfrastructure
-import SystemInfrastructure
-import WebDomain
 import WebInfrastructure
 
 extension UseCases {

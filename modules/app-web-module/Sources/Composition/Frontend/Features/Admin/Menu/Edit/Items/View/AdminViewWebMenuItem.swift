@@ -5,13 +5,16 @@ import OpenAPIRuntime
 struct AdminViewWebMenuItem {
     let controller: any AdminViewWebMenuItemController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: WebAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminViewWebMenuItemDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminViewWebMenuItemDefaultInteractor(
                         repository: AdminViewWebMenuItemOpenAPIRepository(
-                            api: context.webAdminAPI()
+                            api: apiBuilder.makeWebAdmin(context)
                         )
                     ),
                     presenter: AdminViewWebMenuItemDefaultPresenter(

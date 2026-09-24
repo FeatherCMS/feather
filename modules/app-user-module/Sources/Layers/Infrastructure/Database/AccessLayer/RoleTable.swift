@@ -12,7 +12,7 @@ import struct Foundation.Date
 extension RoleTable.Row {
 
     init(
-        from row: DatabaseRow
+        from row: any DatabaseRow
     ) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.name = try row.decode(column: "name", as: String?.self)

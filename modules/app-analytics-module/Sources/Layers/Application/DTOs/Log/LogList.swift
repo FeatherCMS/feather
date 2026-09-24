@@ -4,8 +4,7 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
 
 public struct LogList: DTO {
 
@@ -76,6 +75,8 @@ public struct LogList: DTO {
         public let source: String?
         public let method: String?
         public let responseCode: Int?
+        public let from: Double?
+        public let to: Double?
 
         public init(
             page: Search.Page = .init(),
@@ -83,7 +84,9 @@ public struct LogList: DTO {
             search: String? = nil,
             source: String? = nil,
             method: String? = nil,
-            responseCode: Int? = nil
+            responseCode: Int? = nil,
+            from: Double? = nil,
+            to: Double? = nil
         ) {
             self.page = page
             self.sort = sort
@@ -91,6 +94,8 @@ public struct LogList: DTO {
             self.source = source
             self.method = method
             self.responseCode = responseCode
+            self.from = from
+            self.to = to
         }
     }
 

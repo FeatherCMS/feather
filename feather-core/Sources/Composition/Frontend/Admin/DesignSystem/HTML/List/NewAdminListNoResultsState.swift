@@ -1,8 +1,8 @@
-import HTML
+public import HTML
 import SGML
-import SVG
+public import SVG
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 public struct NewAdminListNoResultsState: Component {
 

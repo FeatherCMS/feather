@@ -1,11 +1,7 @@
 import AuthApplication
 import AuthInfrastructure
-import FeatherApplication
 import FeatherContracts
-import FeatherDatabase
 import FeatherInfrastructure
-import UserApplication
-import UserBackend
 import UserInfrastructure
 
 extension UseCases {

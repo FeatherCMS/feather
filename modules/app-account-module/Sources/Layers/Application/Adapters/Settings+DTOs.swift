@@ -4,7 +4,7 @@
 //
 //  Created by Binary Birds on 2026. 07. 16.
 
-import AccountDomain
+public import AccountDomain
 
 extension Settings {
 

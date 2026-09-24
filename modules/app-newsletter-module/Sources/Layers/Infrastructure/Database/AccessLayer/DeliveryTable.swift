@@ -1,12 +1,11 @@
 import FeatherDatabase
 import FeatherInfrastructure
-import NewsletterDomain
 
 import struct Foundation.Date
 
 extension DeliveryTable.Row {
 
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         self.issueId = try row.decode(column: "issue_id", as: String.self)
         self.newsletterId = try row.decode(
             column: "newsletter_id",

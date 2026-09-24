@@ -1,21 +1,19 @@
 import FeatherAdmin
-import FeatherValidation
-import HTML
-import Hummingbird
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
 
 struct AdminEditNewsletterCampaign {
     let controller: any AdminEditNewsletterCampaignController
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: NewsletterAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminEditNewsletterCampaignDefaultController {
             request,
             context in
             (
                 AdminEditNewsletterCampaignDefaultInteractor(
-                    repository: .init(api: context.newsletterAdminAPI())
+                    repository: .init(
+                        api: apiBuilder.makeNewsletterAdmin(context)
+                    )
                 ),
                 AdminEditNewsletterCampaignDefaultPresenter(
                     request: request,

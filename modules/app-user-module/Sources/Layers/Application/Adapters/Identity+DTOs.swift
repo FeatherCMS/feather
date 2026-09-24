@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 04. 11.
 //
 
-import UserDomain
+public import UserDomain
 
 extension Identity.Status {
 

@@ -1,7 +1,6 @@
-import FeatherDatabase
 import FeatherDomain
-import FeatherInfrastructure
-import NewsletterDomain
+public import FeatherInfrastructure
+public import NewsletterDomain
 
 extension CampaignTable.Row {
     var asDomain: Campaign {

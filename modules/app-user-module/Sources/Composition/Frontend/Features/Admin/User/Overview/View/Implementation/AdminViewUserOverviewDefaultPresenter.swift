@@ -4,7 +4,7 @@ import WebComponents
 
 struct AdminViewUserOverviewDefaultPresenter: AdminViewUserOverviewPresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderPage(model: AdminViewUserOverviewModel) async throws

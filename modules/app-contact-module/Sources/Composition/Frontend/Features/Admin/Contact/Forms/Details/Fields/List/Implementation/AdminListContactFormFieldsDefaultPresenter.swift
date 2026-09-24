@@ -12,7 +12,7 @@ struct AdminListContactFormFieldsDefaultPresenter:
     AdminListContactFormFieldsPresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
     func renderList(
         formId: String,

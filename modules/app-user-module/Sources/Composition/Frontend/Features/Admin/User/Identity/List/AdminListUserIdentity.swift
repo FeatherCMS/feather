@@ -1,18 +1,20 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminListUserIdentity {
     static let pageSize = 20
 
     let controller: any AdminListUserIdentityController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: UserAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminListUserIdentityDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminListUserIdentityDefaultInteractor(
                         repository: AdminListUserIdentityOpenAPIRepository(
-                            api: context.userAdminAPI()
+                            api: apiBuilder.makeUserAdmin(context)
                         )
                     ),
                     presenter: AdminListUserIdentityDefaultPresenter(

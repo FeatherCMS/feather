@@ -1,6 +1,5 @@
-import FeatherApplication
 import FeatherContracts
-import WebAppAPI
+public import WebAppAPI
 import WebApplication
 
 extension AppAPIGateway {

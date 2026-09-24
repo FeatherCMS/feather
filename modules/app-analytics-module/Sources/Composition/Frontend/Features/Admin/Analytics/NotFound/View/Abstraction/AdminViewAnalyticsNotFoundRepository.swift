@@ -1,6 +1,4 @@
 import AnalyticsAdminAPI
-import FeatherAdmin
-import Foundation
 
 protocol AdminViewAnalyticsNotFoundRepository: Sendable {
 

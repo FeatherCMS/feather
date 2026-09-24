@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
@@ -76,7 +77,7 @@ extension AdminListMediaAssetDefaultInteractor {
         let components =
             path
             .split(separator: "/")
-            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .map { $0.whitespaceTrimmed }
             .filter { !$0.isEmpty }
         guard !components.isEmpty else {
             return nil
@@ -146,8 +147,6 @@ extension AdminListMediaAssetDefaultInteractor {
     private func preferredPreview(
         from variants: [Components.Schemas.MediaAssetResolveVariantSchema]
     ) -> Components.Schemas.MediaAssetResolveVariantSchema? {
-        variants.first(where: {
-            $0.key == "preview" || $0.key == "display"
-        }) ?? variants.first
+        variants.first(where: { $0.key == "preview" })
     }
 }

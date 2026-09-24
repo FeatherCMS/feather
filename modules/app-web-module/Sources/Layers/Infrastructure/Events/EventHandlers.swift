@@ -1,9 +1,6 @@
-import FeatherContracts
-import FeatherInfrastructure
+public import FeatherContracts
 import SystemApplication
-import WebApplication
 import WebContracts
-import WebDomain
 
 public enum EventHandlers {
 

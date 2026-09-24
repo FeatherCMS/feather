@@ -5,13 +5,16 @@ struct AdminListMediaVariant {
     static let pageSize = 20
     let controller: any AdminListMediaVariantController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: MediaAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminListMediaVariantDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminListMediaVariantDefaultInteractor(
                         repository: AdminListMediaVariantOpenAPIRepository(
-                            api: context.mediaAdminAPI()
+                            api: apiBuilder.makeMediaAdmin(context)
                         )
                     ),
                     presenter: AdminListMediaVariantDefaultPresenter(

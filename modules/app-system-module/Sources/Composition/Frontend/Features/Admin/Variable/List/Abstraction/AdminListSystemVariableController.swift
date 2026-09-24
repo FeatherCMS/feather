@@ -5,7 +5,7 @@ protocol AdminListSystemVariableController: Sendable {
 
     func getSystemVariables(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
 }
@@ -13,7 +13,7 @@ protocol AdminListSystemVariableController: Sendable {
 extension AdminListSystemVariableController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             SystemVariableRoutes.list,

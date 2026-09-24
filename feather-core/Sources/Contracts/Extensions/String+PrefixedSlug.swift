@@ -6,10 +6,10 @@ extension String {
             prefix
             .split(separator: "/")
             .map(String.init)
-            .map { $0.slugify() }
+            .map(\.slugified)
             .filter { !$0.isEmpty }
 
-        let value = slugify()
+        let value = slugified
         return String(
             (prefixParts + [value]).joined(separator: "/").prefix(254)
         )

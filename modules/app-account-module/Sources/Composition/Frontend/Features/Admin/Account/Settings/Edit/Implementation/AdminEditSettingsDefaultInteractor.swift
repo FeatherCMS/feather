@@ -1,5 +1,3 @@
-import FeatherAdmin
-
 struct AdminEditSettingsDefaultInteractor:
     AdminEditSettingsInteractor
 {

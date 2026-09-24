@@ -1,8 +1,8 @@
-import CSS
-import HTML
+public import CSS
+public import HTML
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 /// A form field for entering a list of free-form values as removable tokens.
 public struct NewAdminFormFieldToken: Component {

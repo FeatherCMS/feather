@@ -1,6 +1,5 @@
-import AccountAppAPI
+public import AccountAppAPI
 import AccountApplication
-import FeatherApplication
 import FeatherContracts
 
 extension AppAPIGateway {

@@ -1,5 +1,3 @@
-import FeatherAdmin
-
 protocol AdminResendAccountInvitationRepository: Sendable {
 
     func resend(

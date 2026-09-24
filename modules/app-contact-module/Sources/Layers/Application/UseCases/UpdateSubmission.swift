@@ -1,7 +1,7 @@
 import ContactContracts
-import ContactDomain
-import FeatherApplication
-import FeatherContracts
+public import ContactDomain
+public import FeatherApplication
+public import FeatherContracts
 
 public struct UpdateSubmission: UseCase {
     struct Error: UseCaseError { let message: String }

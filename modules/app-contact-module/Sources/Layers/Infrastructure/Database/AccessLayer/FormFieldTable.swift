@@ -9,7 +9,7 @@ import class Foundation.JSONEncoder
 
 extension FormFieldTable.Row {
 
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         self.id = try row.decode(column: "id", as: String.self)
         self.formId = try row.decode(column: "form_id", as: String.self)
         self.key = try row.decode(column: "key", as: String.self)

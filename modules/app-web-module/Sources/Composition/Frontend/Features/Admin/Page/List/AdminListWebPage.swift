@@ -5,13 +5,17 @@ import OpenAPIRuntime
 struct AdminListWebPage {
     let controller: any AdminListWebPageController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: WebAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminListWebPageDefaultController(
+            apiBuilder: apiBuilder,
             buildRuntime: { request, context in
                 (
                     interactor: AdminListWebPageDefaultInteractor(
                         repository: AdminListWebPageOpenAPIRepository(
-                            api: context.webAdminAPI()
+                            api: apiBuilder.makeWebAdmin(context)
                         )
                     ),
                     presenter: AdminListWebPageDefaultPresenter(

@@ -4,9 +4,8 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import AuthDomain
-import FeatherApplication
-import FeatherContracts
+public import AuthDomain
+public import FeatherContracts
 
 public struct WriteMagicLink: Scope {
     public let magicLink: any MagicLinkRepository

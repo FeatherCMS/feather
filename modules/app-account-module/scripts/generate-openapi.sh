@@ -7,7 +7,7 @@ MODULE_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 WORKSPACE_DIR="$(cd "${MODULE_DIR}/../.." && pwd)"
 OPENAPI_PACKAGE_DIR="${OPENAPI_PACKAGE_DIR:-${WORKSPACE_DIR}/scripts}"
 SWIFT_OPENAPI_GENERATOR_GIT_URL="${SWIFT_OPENAPI_GENERATOR_GIT_URL:-https://github.com/apple/swift-openapi-generator}"
-SWIFT_OPENAPI_GENERATOR_GIT_TAG="${SWIFT_OPENAPI_GENERATOR_GIT_TAG:-1.10.4}"
+SWIFT_OPENAPI_GENERATOR_GIT_TAG="${SWIFT_OPENAPI_GENERATOR_GIT_TAG:-1.13.1}"
 SWIFT_OPENAPI_GENERATOR_CLONE_DIR="${SWIFT_OPENAPI_GENERATOR_CLONE_DIR:-${OPENAPI_PACKAGE_DIR}/.swift-openapi-generator}"
 SWIFT_OPENAPI_GENERATOR_BUILD_CONFIGURATION="${SWIFT_OPENAPI_GENERATOR_BUILD_CONFIGURATION:-debug}"
 SWIFT_OPENAPI_GENERATOR_BIN="${SWIFT_OPENAPI_GENERATOR_BIN:-${SWIFT_OPENAPI_GENERATOR_CLONE_DIR}/.build/${SWIFT_OPENAPI_GENERATOR_BUILD_CONFIGURATION}/swift-openapi-generator}"
@@ -46,6 +46,7 @@ generate_yaml() {
                 "${target}"
         )
     done
+
 }
 
 generate_types() {
@@ -58,6 +59,9 @@ generate_types() {
             --output-directory "${MODULE_DIR}/${OUTPUT_DIRECTORIES[${index}]}" \
             "${MODULE_DIR}/openapi/${SPECIFICATIONS[${index}]}"
     done
+
+    "${WORKSPACE_DIR}/scripts/normalize-openapi-generated.sh" \
+        "${MODULE_DIR}/Sources/APIs"
 }
 
 case "${1:-run}" in

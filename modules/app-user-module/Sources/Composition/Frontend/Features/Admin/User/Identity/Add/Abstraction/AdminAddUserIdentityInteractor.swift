@@ -1,6 +1,3 @@
-import FeatherAdmin
-import Foundation
-
 protocol AdminAddUserIdentityInteractor: Sendable {
 
     func loadRoleOptions() async throws -> [UserIdentityAddRoleOptionModel]

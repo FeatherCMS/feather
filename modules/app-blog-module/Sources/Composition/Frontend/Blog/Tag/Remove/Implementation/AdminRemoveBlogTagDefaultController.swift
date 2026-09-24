@@ -15,16 +15,16 @@ struct AdminRemoveBlogTagDefaultController:
     AdminRemoveBlogTagController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveBlogTagInteractor,
-            presenter: any AdminRemoveBlogTagPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminRemoveBlogTagInteractor,
+            any AdminRemoveBlogTagPresenter
+        >
 
     func getRemoveBlogTag(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         do {
             let page = try await runtime.interactor.get(id: id)
@@ -43,9 +43,9 @@ struct AdminRemoveBlogTagDefaultController:
 
     func postRemoveBlogTag(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,

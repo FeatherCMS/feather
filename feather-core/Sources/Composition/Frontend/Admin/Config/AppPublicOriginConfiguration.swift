@@ -1,4 +1,4 @@
-import Foundation
+public import Foundation
 
 public struct AppPublicOriginConfiguration: Sendable {
     public let siteBaseURL: String

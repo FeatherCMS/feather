@@ -12,14 +12,15 @@ struct AdminViewNewsletterCampaignDefaultController:
     AdminViewNewsletterCampaignController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewNewsletterCampaignInteractor,
-            presenter: any AdminViewNewsletterCampaignPresenter
-        )
-    func get(request: Request, context: DefaultRequestContext) async throws
+        AuthenticatedRuntimeBuilder<
+            any AdminViewNewsletterCampaignInteractor,
+            any AdminViewNewsletterCampaignPresenter
+        >
+    func get(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredParameter("newsletterId")
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.read)
         else {

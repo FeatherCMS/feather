@@ -1,5 +1,5 @@
 import FeatherAdmin
-import Foundation
+import FeatherContracts
 
 public struct AdminAddUserRoleFormInput: Decodable, Sendable, Equatable,
     Hashable
@@ -17,10 +17,10 @@ public struct AdminAddUserRoleFormInput: Decodable, Sendable, Equatable,
     }
 
     var normalizedName: String {
-        name.trimmingCharacters(in: .whitespacesAndNewlines)
+        name.whitespaceTrimmed
     }
 
     var normalizedNotes: String {
-        notes.trimmingCharacters(in: .whitespacesAndNewlines)
+        notes.whitespaceTrimmed
     }
 }

@@ -2,12 +2,10 @@ import FeatherAdmin
 import FeatherContracts
 import Hummingbird
 import UserAdminAPI
-import UserContracts
-import WebComponents
 
 struct AdminListUserRoleDefaultPresenter: AdminListUserRolePresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderListPage(

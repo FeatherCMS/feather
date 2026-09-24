@@ -13,16 +13,16 @@ import WebFrontend
 
 struct AdminViewBlogTagDefaultController: AdminViewBlogTagController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewBlogTagInteractor,
-            presenter: any AdminViewBlogTagPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminViewBlogTagInteractor,
+            any AdminViewBlogTagPresenter
+        >
 
     func getBlogTag(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         do {

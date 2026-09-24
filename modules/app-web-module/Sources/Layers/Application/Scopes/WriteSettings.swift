@@ -1,6 +1,5 @@
-import FeatherApplication
-import FeatherContracts
-import WebDomain
+public import FeatherContracts
+public import WebDomain
 
 public struct WriteSettings: Scope {
     public let settings: any SettingsRepository

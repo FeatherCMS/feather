@@ -1,5 +1,6 @@
 protocol AppPublicContentInteractor: Sendable {
+
     func resolve(
-        path: String
-    ) async throws -> AppPublicResolvedContent?
+        slug: String
+    ) async throws -> AppPublicContentModel
 }

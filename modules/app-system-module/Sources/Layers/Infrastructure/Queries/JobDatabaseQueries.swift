@@ -1,7 +1,7 @@
 import FeatherDatabase
-import FeatherInfrastructure
+public import FeatherInfrastructure
 import Foundation
-import SystemApplication
+public import SystemApplication
 
 private struct JobRow {
     let id: String
@@ -11,7 +11,7 @@ private struct JobRow {
     let lastModified: Date
     let payload: String
 
-    init(from row: DatabaseRow) throws {
+    init(from row: any DatabaseRow) throws {
         id = try row.decode(column: "id", as: String.self)
         queueName = try row.decode(column: "queue_name", as: String.self)
         status = try row.decode(column: "status", as: Int.self)

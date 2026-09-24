@@ -1,13 +1,13 @@
-import FeatherAdmin
-import FeatherContracts
-import Foundation
-import Hummingbird
+public import FeatherAdmin
+public import FeatherContracts
+public import Hummingbird
 import WebContracts
 
 public struct AdminWebMetadataEditHandler: Sendable {
     private let controller: AdminEditWebMetadataDefaultController
 
     public init(
+        apiBuilder: WebAPIBuilder,
         renderingEngine: any RenderingEngine,
         adminEvents: any EventPublisher
     ) {
@@ -16,7 +16,7 @@ public struct AdminWebMetadataEditHandler: Sendable {
                 (
                     interactor: AdminEditWebMetadataDefaultInteractor(
                         repository: AdminEditWebMetadataOpenAPIRepository(
-                            api: context.webAdminAPI()
+                            api: apiBuilder.makeWebAdmin(context)
                         ),
                         events: adminEvents
                     ),
@@ -32,7 +32,7 @@ public struct AdminWebMetadataEditHandler: Sendable {
 
     public func get(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         configuration: AdminWebMetadataEditConfiguration
     ) async throws -> HTMLResponse {
         try await controller.getEditWebMetadataForContent(
@@ -44,7 +44,7 @@ public struct AdminWebMetadataEditHandler: Sendable {
 
     public func post(
         request: Request,
-        context: DefaultRequestContext,
+        context: AuthenticatedRequestContext,
         configuration: AdminWebMetadataEditConfiguration
     ) async throws -> Response {
         try await controller.postEditWebMetadataForContent(

@@ -5,12 +5,10 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
 import FeatherDomain
-import FeatherInfrastructure
-import UserApplication
-import UserDomain
+public import FeatherInfrastructure
+public import UserApplication
+public import UserDomain
 
 extension IdentityTable.Row {
     var asDomain: Identity {

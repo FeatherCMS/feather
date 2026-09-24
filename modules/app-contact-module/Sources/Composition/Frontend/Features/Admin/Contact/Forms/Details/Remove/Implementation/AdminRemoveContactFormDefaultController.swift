@@ -10,15 +10,16 @@ import WebComponents
 struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminRemoveContactFormInteractor,
-            presenter: any AdminRemoveContactFormPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminRemoveContactFormInteractor,
+            any AdminRemoveContactFormPresenter
+        >
 
-    func confirm(request: Request, context: DefaultRequestContext) async throws
+    func confirm(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let selectedIds = request.queryStrings("selectedIds")
         guard selectedIds.count == 1, let formId = selectedIds.first else {
             return try await presenter.renderRemovePage(
@@ -31,7 +32,8 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
         )
     }
 
-    func remove(request: Request, context: DefaultRequestContext) async throws
+    func remove(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> Response
     {
         let payload = try await request.decode(
@@ -44,7 +46,7 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
                 sessionToken: context.sessionToken
             )
         else { return Response(status: .badRequest) }
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         try await interactor.remove(ids: payload.normalizedSelectedIds)
         return Response(
             status: .seeOther,

@@ -1,5 +1,4 @@
-import FeatherAdmin
-import Foundation
+import FeatherContracts
 
 public struct AdminAddUserIdentityFormInput: Decodable, Sendable, Equatable,
     Hashable
@@ -10,11 +9,11 @@ public struct AdminAddUserIdentityFormInput: Decodable, Sendable, Equatable,
     public let roleIds: [String]
 
     var normalizedName: String {
-        name.trimmingCharacters(in: .whitespacesAndNewlines)
+        name.whitespaceTrimmed
     }
 
     var normalizedStatus: String {
-        status.trimmingCharacters(in: .whitespacesAndNewlines)
+        status.whitespaceTrimmed
     }
 
     public init(

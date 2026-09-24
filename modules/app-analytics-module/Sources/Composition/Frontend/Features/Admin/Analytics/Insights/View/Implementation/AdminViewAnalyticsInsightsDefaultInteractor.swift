@@ -1,5 +1,4 @@
 import AnalyticsAdminAPI
-import FeatherAdmin
 
 struct AdminViewAnalyticsInsightsDefaultInteractor:
     AdminViewAnalyticsInsightsInteractor

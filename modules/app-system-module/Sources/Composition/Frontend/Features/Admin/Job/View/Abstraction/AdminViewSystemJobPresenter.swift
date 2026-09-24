@@ -1,5 +1,4 @@
 import FeatherAdmin
-import WebComponents
 
 protocol AdminViewSystemJobPresenter: Sendable {
     func renderDetailsPage(

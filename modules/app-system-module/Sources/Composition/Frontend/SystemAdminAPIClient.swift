@@ -1,11 +1,11 @@
 import AsyncHTTPClient
-import FeatherAdmin
-import Foundation
+public import FeatherAdmin
+public import Foundation
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
-import SystemAdminAPI
-import SystemAppAPI
+public import OpenAPIRuntime
+public import SystemAdminAPI
+public import SystemAppAPI
 
 public struct SystemAdminAPIClient: Sendable {
     public let client: SystemAdminAPI.Client
@@ -97,15 +97,6 @@ extension SystemAdminAPI.Client {
     }
 }
 
-extension DefaultRequestContext {
-    public func systemAdminAPI() -> SystemAdminAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
-    }
-}
-
 public struct SystemAppAPIClient: Sendable {
     public let client: SystemAppAPI.Client
 
@@ -155,11 +146,24 @@ public struct SystemAppAPIClient: Sendable {
     }
 }
 
-extension DefaultRequestContext {
-    public func systemAppAPI() -> SystemAppAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+public struct SystemAPIBuilder: Sendable {
+    private let apiBaseURL: URL
+
+    var baseURL: URL { apiBaseURL }
+
+    public init(apiBaseURL: URL) {
+        self.apiBaseURL = apiBaseURL
+    }
+
+    public func makeSystemAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> SystemAdminAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeSystemApp(
+        _ context: DefaultRequestContext
+    ) -> SystemAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
     }
 }

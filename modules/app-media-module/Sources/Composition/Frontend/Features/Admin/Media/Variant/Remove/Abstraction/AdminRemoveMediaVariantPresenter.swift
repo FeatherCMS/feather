@@ -1,7 +1,5 @@
 import FeatherAdmin
-import FeatherContracts
 import Hummingbird
-import WebComponents
 
 protocol AdminRemoveMediaVariantPresenter: Sendable {
     func renderRemovePage(items: [NewAdminRemoveItemContext], returnTo: String?)

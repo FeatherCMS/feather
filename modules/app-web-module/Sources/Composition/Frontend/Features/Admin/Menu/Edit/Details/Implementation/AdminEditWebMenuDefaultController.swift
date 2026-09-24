@@ -8,16 +8,16 @@ struct AdminEditWebMenuDefaultController:
     AdminEditWebMenuController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditWebMenuInteractor,
-            presenter: any AdminEditWebMenuPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditWebMenuInteractor,
+            any AdminEditWebMenuPresenter
+        >
 
     func getEditWebMenu(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         do {
@@ -44,9 +44,9 @@ struct AdminEditWebMenuDefaultController:
 
     func postEditWebMenu(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserPermissions
         var lastPayload: WebMenuFormInput?

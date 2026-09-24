@@ -1,8 +1,8 @@
-import CSS
-import HTML
+public import CSS
+public import HTML
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
 /// An autocomplete form field containing language codes and display names.
 public struct NewAdminFormFieldLanguage: Component {

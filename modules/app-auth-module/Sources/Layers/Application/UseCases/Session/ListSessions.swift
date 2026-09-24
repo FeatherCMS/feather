@@ -1,7 +1,6 @@
 import AuthContracts
-import AuthDomain
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 
 //
 //  ListSessions.swift

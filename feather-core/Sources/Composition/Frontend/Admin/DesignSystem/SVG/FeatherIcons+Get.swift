@@ -1,4 +1,4 @@
-import SVG
+public import SVG
 
 extension FeatherIcons {
 

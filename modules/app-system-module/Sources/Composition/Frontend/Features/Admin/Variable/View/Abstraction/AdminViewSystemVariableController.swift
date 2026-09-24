@@ -5,14 +5,14 @@ protocol AdminViewSystemVariableController: Sendable {
 
     func getSystemVariable(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 }
 
 extension AdminViewSystemVariableController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             SystemVariableRoutes.details(RouterPath("{id}")),

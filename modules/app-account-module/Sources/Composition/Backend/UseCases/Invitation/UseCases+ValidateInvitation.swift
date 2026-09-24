@@ -1,9 +1,6 @@
 import AccountApplication
 import AccountInfrastructure
-import FeatherApplication
-import FeatherDatabase
 import FeatherInfrastructure
-import UserInfrastructure
 
 extension UseCases {
 

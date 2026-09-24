@@ -1,5 +1,5 @@
 import FeatherDatabase
-import WebAppAPI
+public import WebAppAPI
 import WebApplication
 
 extension Error {

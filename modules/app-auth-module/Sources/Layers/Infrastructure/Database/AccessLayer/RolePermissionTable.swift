@@ -12,7 +12,7 @@ import struct Foundation.Date
 extension RolePermissionTable.Row {
 
     init(
-        from row: DatabaseRow
+        from row: any DatabaseRow
     ) throws {
         self.roleId = try row.decode(
             column: "role_id",

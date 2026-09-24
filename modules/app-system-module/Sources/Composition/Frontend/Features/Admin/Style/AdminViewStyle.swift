@@ -6,7 +6,7 @@ import WebComponents
 struct AdminViewStyle: Sendable {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.get(
             "/admin/style.css",
@@ -16,7 +16,7 @@ struct AdminViewStyle: Sendable {
 
     func getStyle(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> CSSResponse {
         let designSystem = NewAdminDesignSystem()
         let stylesheet = Stylesheet(designSystem.rules())

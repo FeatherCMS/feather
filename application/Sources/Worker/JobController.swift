@@ -7,9 +7,9 @@
 
 import FeatherMail
 import FeatherDatabase
-import FeatherDomain
 import FeatherInfrastructure
 import Environment
+import FeatherContracts
 import Foundation
 import Jobs
 import NewsletterDomain
@@ -62,12 +62,12 @@ struct EmailService {
                     .map(String.init)
                 guard parts.count == 2 else { return }
                 let key = parts[0]
-                    .trimmingCharacters(in: .whitespacesAndNewlines)
+                    .whitespaceTrimmed
                     .lowercased()
                 guard ["cc", "bcc", "reply-to"].contains(key) else { return }
                 result[key, default: []] += parts[1]
                     .split(separator: ",")
-                    .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+                    .map { $0.whitespaceTrimmed }
             }
     }
 }

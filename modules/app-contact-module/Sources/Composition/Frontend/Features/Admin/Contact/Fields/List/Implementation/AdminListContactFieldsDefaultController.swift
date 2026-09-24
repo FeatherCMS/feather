@@ -13,15 +13,16 @@ struct AdminListContactFieldsDefaultController:
     AdminListContactFieldsController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListContactFieldsInteractor,
-            presenter: any AdminListContactFieldsPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminListContactFieldsInteractor,
+            any AdminListContactFieldsPresenter
+        >
 
-    func list(request: Request, context: DefaultRequestContext) async throws
+    func list(request: Request, context: AuthenticatedRequestContext)
+        async throws
         -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.list)
         else {
             return try await presenter.renderForbiddenPage()

@@ -1,5 +1,5 @@
 import FeatherAdmin
-import Foundation
+import FeatherContracts
 import OpenAPIRuntime
 
 struct AdminEditWebSettingsHomePageModel:
@@ -13,9 +13,7 @@ struct AdminEditWebSettingsHomePageModel:
     let slug: String
 
     var displayLabel: String {
-        let normalizedSlug = slug.trimmingCharacters(
-            in: .whitespacesAndNewlines
-        )
+        let normalizedSlug = slug.whitespaceTrimmed
         guard !normalizedSlug.isEmpty else {
             return title
         }

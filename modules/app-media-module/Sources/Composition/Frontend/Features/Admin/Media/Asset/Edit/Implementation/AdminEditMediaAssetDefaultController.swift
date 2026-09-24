@@ -1,7 +1,6 @@
 import FeatherAdmin
 import FeatherContracts
 import FeatherValidation
-import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -12,16 +11,16 @@ import WebComponents
 
 struct AdminEditMediaAssetDefaultController: AdminEditMediaAssetController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditMediaAssetInteractor,
-            presenter: any AdminEditMediaAssetPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditMediaAssetInteractor,
+            any AdminEditMediaAssetPresenter
+        >
 
     func getEditMediaAsset(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserAdminListActions
         do {
@@ -43,9 +42,9 @@ struct AdminEditMediaAssetDefaultController: AdminEditMediaAssetController {
 
     func postEditMediaAsset(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         let id = try context.requiredID()
         let permissions = context.currentUserAdminListActions
         let payload = try await request.decode(

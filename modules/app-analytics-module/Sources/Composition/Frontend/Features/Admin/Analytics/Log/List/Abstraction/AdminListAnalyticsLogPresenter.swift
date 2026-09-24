@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Hummingbird
 
 protocol AdminListAnalyticsLogPresenter: Sendable {
 
@@ -10,6 +9,8 @@ protocol AdminListAnalyticsLogPresenter: Sendable {
         source: String?,
         method: String?,
         responseCode: String?,
+        from: String,
+        to: String,
         error: String?
     ) async throws -> HTMLResponse
 }

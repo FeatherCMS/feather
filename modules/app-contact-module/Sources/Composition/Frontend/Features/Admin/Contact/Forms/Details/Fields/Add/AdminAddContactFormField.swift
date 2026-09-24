@@ -9,13 +9,16 @@ import WebComponents
 
 struct AdminAddContactFormField {
     let controller: any AdminAddContactFormFieldController
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: ContactAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         controller = AdminAddContactFormFieldDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminAddContactFormFieldDefaultInteractor(
                         repository: AdminAddContactFormFieldOpenAPIRepository(
-                            api: context.contactAdminAPI()
+                            api: apiBuilder.makeContactAdmin(context)
                         )
                     ),
                     presenter: AdminAddContactFormFieldDefaultPresenter(

@@ -1,22 +1,20 @@
 import FeatherAdmin
-import FeatherContracts
 import FeatherValidation
-import HTML
 import Hummingbird
 import UserContracts
 
 struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddUserIdentityInteractor,
-            presenter: any AdminAddUserIdentityPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminAddUserIdentityInteractor,
+            any AdminAddUserIdentityPresenter
+        >
 
     func getAddUserIdentity(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.create)
         else {
@@ -30,9 +28,9 @@ struct AdminAddUserIdentityDefaultController: AdminAddUserIdentityController {
 
     func postAddUserIdentity(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.create)
         else {

@@ -1,7 +1,6 @@
 import BlogAdminAPI
 import BlogApplication
 import FeatherApplication
-import FeatherContracts
 import Foundation
 import WebAdminAPI
 import WebApplication

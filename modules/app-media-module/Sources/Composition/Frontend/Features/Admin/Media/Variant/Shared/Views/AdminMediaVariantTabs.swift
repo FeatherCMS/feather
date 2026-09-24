@@ -1,8 +1,6 @@
 import FeatherAdmin
 import HTML
 import Hummingbird
-import SGML
-import WebBuilders
 import WebComponents
 
 struct AdminMediaVariantTabs: Component {

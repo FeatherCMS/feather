@@ -5,9 +5,9 @@
 //  Created by Tibor Bödecs on 2026. 05. 28..
 //
 
-import Foundation
-import Hummingbird
-import OpenAPIRuntime
+public import Foundation
+public import Hummingbird
+public import OpenAPIRuntime
 
 public struct ClientAPIAuthMiddleware: ClientMiddleware {
 

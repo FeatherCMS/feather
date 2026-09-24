@@ -1,14 +1,14 @@
 import AsyncHTTPClient
-import ContactAdminAPI
-import ContactAppAPI
-import FeatherAdmin
+public import ContactAdminAPI
+public import ContactAppAPI
+public import FeatherAdmin
 import FeatherValidation
-import Foundation
+public import Foundation
 import HTML
 import Hummingbird
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
+public import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
@@ -83,18 +83,22 @@ public struct ContactAppAPIClient: Sendable {
     }
 }
 
-extension DefaultRequestContext {
-    public func contactAdminAPI() -> ContactAdminAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+public struct ContactAPIBuilder: Sendable {
+    private let apiBaseURL: URL
+
+    public init(apiBaseURL: URL) {
+        self.apiBaseURL = apiBaseURL
     }
 
-    public func contactApplicationAPI() -> ContactAppAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
-        )
+    public func makeContactAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> ContactAdminAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeContactApp(
+        _ context: DefaultRequestContext
+    ) -> ContactAppAPIClient {
+        .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
     }
 }

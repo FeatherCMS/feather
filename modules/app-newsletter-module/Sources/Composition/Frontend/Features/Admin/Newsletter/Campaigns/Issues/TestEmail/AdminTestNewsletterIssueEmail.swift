@@ -8,9 +8,12 @@ import WebBuilders
 import WebComponents
 
 struct AdminTestNewsletterIssueEmail {
+
     let controller: any AdminTestNewsletterIssueEmailController
 
-    init() {
-        controller = AdminTestNewsletterIssueEmailDefaultController()
+    init(apiBuilder: NewsletterAPIBuilder) {
+        controller = AdminTestNewsletterIssueEmailDefaultController(
+            apiBuilder: apiBuilder
+        )
     }
 }

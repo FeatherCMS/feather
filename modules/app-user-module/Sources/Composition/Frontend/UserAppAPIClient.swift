@@ -1,10 +1,10 @@
 import AsyncHTTPClient
-import FeatherAdmin
-import Foundation
+public import FeatherAdmin
+public import Foundation
 import NIOCore
 import OpenAPIAsyncHTTPClient
-import OpenAPIRuntime
-import UserAppAPI
+public import OpenAPIRuntime
+public import UserAppAPI
 
 public struct UserAppAPIClient: Sendable {
     public let client: UserAppAPI.Client
@@ -51,15 +51,6 @@ public struct UserAppAPIClient: Sendable {
         return OpenAPIRepositoryError.parsedFailure(
             statusCode: statusCode,
             responseBody: body
-        )
-    }
-}
-
-extension DefaultRequestContext {
-    public func userAppAPI() -> UserAppAPIClient {
-        .init(
-            apiBaseURL: AppEnvironmentStore.current.apiBaseURL,
-            sessionToken: sessionToken
         )
     }
 }

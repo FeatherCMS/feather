@@ -2,7 +2,7 @@ import AuthAdminAPI
 import AuthAppAPI
 import CSS
 import FeatherAdmin
-import FeatherValidation
+public import FeatherValidation
 import FeatherValidationFoundation
 import HTML
 import Hummingbird

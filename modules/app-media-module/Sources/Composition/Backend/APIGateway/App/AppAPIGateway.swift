@@ -1,4 +1,4 @@
-import MediaAppAPI
+public import MediaAppAPI
 
 public struct AppAPIGateway: Sendable, MediaAppAPI.APIProtocol {
     public let useCases: UseCases

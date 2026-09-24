@@ -15,17 +15,18 @@ import WebFrontend
 struct AdminListBlogPostDefaultController:
     AdminListBlogPostController
 {
+    let apiBuilder: BlogAPIBuilder
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListBlogPostInteractor,
-            presenter: any AdminListBlogPostPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminListBlogPostInteractor,
+            any AdminListBlogPostPresenter
+        >
 
     func getBlogPosts(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let page = request.queryPage()
         let search = request.querySearch()
         let permissions = context.currentUserPermissions
@@ -67,9 +68,9 @@ struct AdminListBlogPostDefaultController:
 
     func getBlogPostsRemoveConfirmation(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         let selectedIds = request.queryStrings("selectedIds")
         let page = request.queryPage()
         let search = request.querySearch()
@@ -96,9 +97,9 @@ struct AdminListBlogPostDefaultController:
 
     func postBlogPostsRemove(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, _) = buildRuntime(request, context)
+        let (interactor, _) = buildRuntime((request, context))
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
@@ -132,7 +133,7 @@ struct AdminListBlogPostDefaultController:
 
     func postBlogPostStatus(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
         let id = try context.requiredID()
         let payload = try await request.decode(
@@ -140,7 +141,7 @@ struct AdminListBlogPostDefaultController:
             context: context
         )
         let repository = AdminListBlogPostFormOpenAPIRepository(
-            api: context.blogAdminAPI()
+            api: apiBuilder.makeBlogAdmin(context)
         )
         let details = try await repository.load(id: id)
         let targetStatus = resolvedStatus(
@@ -148,7 +149,7 @@ struct AdminListBlogPostDefaultController:
             current: details.metadata
         )
         try await AdminWebMetadataStatusUpdater(
-            api: context.webAdminAPI()
+            api: apiBuilder.makeWebAdmin(context)
         )
         .update(
             referenceType: "blog.post",

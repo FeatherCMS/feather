@@ -16,11 +16,6 @@ import ServiceLifecycle
 import SotoCore
 import UnixSignals
 import MediaInfrastructure
-#if canImport(FoundationEssentials)
-import FoundationEssentials
-#else
-import Foundation
-#endif
 import Foundation
 import MediaApplication
 

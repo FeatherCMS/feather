@@ -1,29 +1,23 @@
 import FeatherAdmin
-import FeatherValidation
-import HTML
 import Hummingbird
 import NewsletterContracts
-import OpenAPIRuntime
-import SGML
-import WebBuilders
-import WebComponents
 
 struct AdminAddNewsletterCampaignDefaultController:
     AdminAddNewsletterCampaignController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminAddNewsletterCampaignInteractor,
-            presenter: any AdminAddNewsletterCampaignPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminAddNewsletterCampaignInteractor,
+            any AdminAddNewsletterCampaignPresenter
+        >
 
     func getAddNewsletterCampaign(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     )
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.create)
         else {
             return try await presenter.renderPage(
@@ -43,11 +37,11 @@ struct AdminAddNewsletterCampaignDefaultController:
 
     func postAddNewsletterCampaign(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     )
         async throws -> Response
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.create)
         else {
             return

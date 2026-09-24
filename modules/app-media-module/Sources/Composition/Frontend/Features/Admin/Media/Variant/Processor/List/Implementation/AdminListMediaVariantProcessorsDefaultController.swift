@@ -6,16 +6,16 @@ struct AdminListMediaVariantProcessorsDefaultController:
     AdminListMediaVariantProcessorsController
 {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListMediaVariantProcessorsInteractor,
-            presenter: any AdminListMediaVariantProcessorsPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminListMediaVariantProcessorsInteractor,
+            any AdminListMediaVariantProcessorsPresenter
+        >
 
     func getMediaVariantProcessors(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
                 to: MediaPermissions.VariantProcessors.list
@@ -42,9 +42,9 @@ struct AdminListMediaVariantProcessorsDefaultController:
 
     func getAddMediaVariantProcessor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (_, presenter) = buildRuntime(request, context)
+        let (_, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
                 to: MediaPermissions.VariantProcessors.create

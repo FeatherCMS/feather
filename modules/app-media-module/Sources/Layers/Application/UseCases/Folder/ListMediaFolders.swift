@@ -1,7 +1,6 @@
-import FeatherApplication
-import FeatherContracts
+public import FeatherApplication
+public import FeatherContracts
 import MediaContracts
-import MediaDomain
 
 //
 //  ListMediaFolders.swift

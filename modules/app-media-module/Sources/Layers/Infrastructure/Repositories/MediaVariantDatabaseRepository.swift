@@ -1,8 +1,7 @@
-import FeatherDatabase
 import FeatherDomain
-import FeatherInfrastructure
+public import FeatherInfrastructure
 import Foundation
-import MediaDomain
+public import MediaDomain
 
 extension MediaVariantTable.Row {
     var asDomain: MediaVariant {

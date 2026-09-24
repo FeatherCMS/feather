@@ -4,11 +4,10 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-import FeatherApplication
-import FeatherContracts
-import WebDomain
+public import FeatherApplication
+public import WebDomain
 
-import struct Foundation.Date
+public import struct Foundation.Date
 
 public struct MetadataList: DTO {
 

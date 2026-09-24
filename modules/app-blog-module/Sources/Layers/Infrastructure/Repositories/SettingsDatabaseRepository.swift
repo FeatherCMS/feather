@@ -1,7 +1,6 @@
-import BlogDomain
-import FeatherDatabase
-import FeatherInfrastructure
-import SystemDomain
+public import BlogDomain
+public import FeatherInfrastructure
+public import SystemDomain
 import SystemInfrastructure
 
 public struct SettingsDatabaseRepository: SettingsRepository {

@@ -1,5 +1,5 @@
-import FeatherAdmin
-import Foundation
+public import FeatherAdmin
+import FeatherContracts
 import OpenAPIRuntime
 
 public struct AdminEditWebSettingsFormInput: Codable, Sendable, Equatable,
@@ -156,12 +156,12 @@ public struct AdminEditWebSettingsFormInput: Codable, Sendable, Equatable,
     private static func normalizeText(
         _ value: String
     ) -> String {
-        value.trimmingCharacters(in: .whitespacesAndNewlines)
+        value.whitespaceTrimmed
     }
 
     private static func normalizeCode(
         _ value: String
     ) -> String {
-        value.trimmingCharacters(in: .whitespacesAndNewlines)
+        value.whitespaceTrimmed
     }
 }

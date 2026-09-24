@@ -5,15 +5,18 @@ import UserContracts
 
 struct AdminListUserIdentityDefaultController: AdminListUserIdentityController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminListUserIdentityInteractor,
-            presenter: any AdminListUserIdentityPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminListUserIdentityInteractor,
+            any AdminListUserIdentityPresenter
+        >
 
-    func getUserIdentities(request: Request, context: DefaultRequestContext)
+    func getUserIdentities(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> HTMLResponse
     {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: UserPermissions.Identities.list)
         else { return try await presenter.renderErrorPage(error: .forbidden) }
         let search = request.querySearch()

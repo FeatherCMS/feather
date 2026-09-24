@@ -8,7 +8,7 @@ struct AdminListSystemVariableDefaultPresenter:
     AdminListSystemVariablePresenter
 {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderListPage(

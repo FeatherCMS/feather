@@ -1,10 +1,4 @@
-import FeatherApplication
-import FeatherContracts
-import FeatherDatabase
-import FeatherDomain
 import FeatherInfrastructure
-import RedirectAdminAPI
-import RedirectAppAPI
 import RedirectApplication
 import RedirectInfrastructure
 

@@ -1,16 +1,18 @@
 import FeatherAdmin
-import Hummingbird
 
 struct AdminRemoveMediaVariant {
     let controller: any AdminRemoveMediaVariantController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: MediaAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminRemoveMediaVariantDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminRemoveMediaVariantDefaultInteractor(
                         repository: AdminRemoveMediaVariantOpenAPIRepository(
-                            api: context.mediaAdminAPI()
+                            api: apiBuilder.makeMediaAdmin(context)
                         )
                     ),
                     presenter: AdminRemoveMediaVariantDefaultPresenter(

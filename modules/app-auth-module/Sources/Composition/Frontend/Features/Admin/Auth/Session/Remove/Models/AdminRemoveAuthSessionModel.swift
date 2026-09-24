@@ -1,5 +1,4 @@
 import FeatherAdmin
-import Foundation
 
 struct AdminRemoveAuthSessionModel: Sendable {
     let identityId: String

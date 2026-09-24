@@ -1,6 +1,6 @@
-import FeatherApplication
-import FeatherContracts
-import RedirectContracts
+public import FeatherApplication
+public import FeatherContracts
+public import RedirectContracts
 import RedirectDomain
 
 //

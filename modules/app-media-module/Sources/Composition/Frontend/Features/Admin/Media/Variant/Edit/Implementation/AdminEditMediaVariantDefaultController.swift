@@ -6,15 +6,18 @@ import MediaContracts
 
 struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminEditMediaVariantInteractor,
-            presenter: any AdminEditMediaVariantPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminEditMediaVariantInteractor,
+            any AdminEditMediaVariantPresenter
+        >
 
-    func getEditMediaVariant(request: Request, context: DefaultRequestContext)
+    func getEditMediaVariant(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: MediaPermissions.Variants.update)
         else {
             return try await runtime.presenter
@@ -51,10 +54,13 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
         }
     }
 
-    func postEditMediaVariant(request: Request, context: DefaultRequestContext)
+    func postEditMediaVariant(
+        request: Request,
+        context: AuthenticatedRequestContext
+    )
         async throws -> Response
     {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard context.isCurrentUserAllowed(to: MediaPermissions.Variants.update)
         else {
             return try await runtime.presenter
@@ -106,9 +112,9 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
 
     func getEditMediaVariantProcessor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
                 to: MediaPermissions.VariantProcessors.update
@@ -141,9 +147,9 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
 
     func getRemoveMediaVariantProcessors(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
                 to: MediaPermissions.VariantProcessors.delete
@@ -185,9 +191,9 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
 
     func postAddMediaVariantProcessor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
                 to: MediaPermissions.VariantProcessors.create
@@ -227,9 +233,9 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
 
     func postEditMediaVariantProcessor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
                 to: MediaPermissions.VariantProcessors.update
@@ -271,9 +277,9 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
 
     func postRemoveMediaVariantProcessor(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
+        let runtime = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
                 to: MediaPermissions.VariantProcessors.delete
@@ -317,7 +323,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
         }
     }
 
-    private func map(_ error: Error) -> AdminEditMediaVariantError {
+    private func map(_ error: any Error) -> AdminEditMediaVariantError {
         if let error = error as? AdminEditMediaVariantError { return error }
         if let error = error as? ValidationError {
             _ = error

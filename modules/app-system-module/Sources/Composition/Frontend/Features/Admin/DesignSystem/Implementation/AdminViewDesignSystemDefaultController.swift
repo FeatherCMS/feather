@@ -4,16 +4,16 @@ import Hummingbird
 struct AdminViewDesignSystemDefaultController: AdminViewDesignSystemController {
 
     let buildRuntime:
-        @Sendable (Request, DefaultRequestContext) -> (
-            interactor: any AdminViewDesignSystemInteractor,
-            presenter: any AdminViewDesignSystemPresenter
-        )
+        AuthenticatedRuntimeBuilder<
+            any AdminViewDesignSystemInteractor,
+            any AdminViewDesignSystemPresenter
+        >
 
     func getDesignSystem(
         request: Request,
-        context: DefaultRequestContext
+        context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime(request, context)
+        let (interactor, presenter) = buildRuntime((request, context))
         let model = try await interactor.getDesignSystem()
         return try await presenter.renderPage(model: model)
     }

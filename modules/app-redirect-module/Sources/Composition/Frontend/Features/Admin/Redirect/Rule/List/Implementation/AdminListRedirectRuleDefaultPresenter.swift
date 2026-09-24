@@ -1,12 +1,10 @@
 import FeatherAdmin
 import Hummingbird
 import RedirectAdminAPI
-import RedirectContracts
-import WebComponents
 
 struct AdminListRedirectRuleDefaultPresenter: AdminListRedirectRulePresenter {
     let request: Request
-    let context: DefaultRequestContext
+    let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
     func renderListPage(

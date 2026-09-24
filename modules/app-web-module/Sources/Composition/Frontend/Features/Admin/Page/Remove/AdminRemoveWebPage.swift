@@ -5,13 +5,16 @@ import OpenAPIRuntime
 struct AdminRemoveWebPage {
     let controller: any AdminRemoveWebPageController
 
-    init(renderingEngine: any RenderingEngine) {
+    init(
+        apiBuilder: WebAPIBuilder,
+        renderingEngine: any RenderingEngine
+    ) {
         self.controller = AdminRemoveWebPageDefaultController(
             buildRuntime: { request, context in
                 (
                     interactor: AdminRemoveWebPageDefaultInteractor(
                         repository: AdminRemoveWebPageOpenAPIRepository(
-                            api: context.webAdminAPI()
+                            api: apiBuilder.makeWebAdmin(context)
                         )
                     ),
                     presenter: AdminRemoveWebPageDefaultPresenter(
