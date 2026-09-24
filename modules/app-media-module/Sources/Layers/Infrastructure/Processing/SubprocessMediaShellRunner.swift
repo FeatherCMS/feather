@@ -6,6 +6,11 @@
 
 public import MediaApplication
 import Subprocess
+#if canImport(System)
+import System
+#else
+import SystemPackage
+#endif
 
 public struct SubprocessMediaShellRunner: MediaShellRunner {
     public init() {}
@@ -50,7 +55,7 @@ extension SubprocessMediaShellRunner {
         command: String
     ) async throws -> MediaCommandResult {
         let result = try await Subprocess.run(
-            .name("/bin/sh"),
+            .path("/bin/sh"),
             arguments: .init(["-lc", command]),
             output: .string(limit: 1024 * 1024),
             error: .string(limit: 1024 * 1024)

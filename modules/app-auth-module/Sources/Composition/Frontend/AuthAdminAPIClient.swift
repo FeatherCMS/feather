@@ -13,10 +13,10 @@ import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
 import SGML
 import SystemAdminAPI
-public import SystemFrontend
+import SystemFrontend
 import UserAdminAPI
 import UserAppAPI
-public import UserFrontend
+import UserFrontend
 import WebBuilders
 import WebComponents
 
