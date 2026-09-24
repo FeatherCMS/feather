@@ -16,7 +16,7 @@ struct AdminTestNewsletterIssueEmailDefaultController:
         async throws
         -> Response
     {
-        let newsletterId = try context.requiredParameter("newsletterId")
+        let newsletterId = try request.requiredParameter("newsletterId")
         let issueId = context.parameters.get("issueId", as: String.self)
         let form = try await request.decode(
             as: NewsletterIssueTestEmailForm.self,

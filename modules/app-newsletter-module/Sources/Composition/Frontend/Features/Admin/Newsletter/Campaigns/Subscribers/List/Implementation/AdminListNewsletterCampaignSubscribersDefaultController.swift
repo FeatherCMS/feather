@@ -21,7 +21,7 @@ struct AdminListNewsletterCampaignSubscribersDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let newsletterId = try context.requiredParameter("newsletterId")
+        let newsletterId = try request.requiredParameter("newsletterId")
         let search = request.querySearch()
         let permissions = context.currentUserAdminListActions
         guard permissions.allows(Permissions.Subscribers.list) else {

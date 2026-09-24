@@ -23,7 +23,7 @@ struct AdminViewSystemVariableDefaultController:
                 error: .forbidden
             )
         }
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         do {
             let variable = try await runtime.interactor.execute(
                 entity: .init(id: id)

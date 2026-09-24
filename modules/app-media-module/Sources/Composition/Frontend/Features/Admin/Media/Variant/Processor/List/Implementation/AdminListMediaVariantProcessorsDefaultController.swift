@@ -25,9 +25,9 @@ struct AdminListMediaVariantProcessorsDefaultController:
         }
         do {
             return try await presenter.renderListPage(
-                variantId: try context.requiredID(),
+                variantId: try request.requiredID(),
                 model: try await interactor.list(
-                    variantId: try context.requiredID(),
+                    variantId: try request.requiredID(),
                     page: request.queryPage(),
                     search: request.querySearch()
                 ),
@@ -53,7 +53,7 @@ struct AdminListMediaVariantProcessorsDefaultController:
             return try await presenter.renderErrorPage(error: .forbidden)
         }
         return try await presenter.renderAddPage(
-            variantId: try context.requiredID()
+            variantId: try request.requiredID()
         )
     }
 }

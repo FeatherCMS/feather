@@ -135,7 +135,7 @@ struct AdminListBlogTagDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         let payload = try await request.decode(
             as: NewAdminStatusActionFormInput.self,
             context: context

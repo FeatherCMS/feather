@@ -20,7 +20,7 @@ struct AdminEditAccountInvitationDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         let isEdited = request.hasQueryFlag("edited")
         let permissions = context.currentUserPermissions
         do {
@@ -54,7 +54,7 @@ struct AdminEditAccountInvitationDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         let availableRoleOptions = await roleOptions(context, selected: [])
         var lastPayload: AdminEditAccountInvitationFormInput?
         do {

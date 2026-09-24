@@ -15,7 +15,7 @@ struct AdminViewWebPageDefaultController: AdminViewWebPageController {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         let permissions = context.currentUserAdminListActions
         do {
             let rule = try await runtime.interactor.execute(

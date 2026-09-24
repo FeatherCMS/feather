@@ -20,7 +20,7 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.update)
         else { return try await presenter.renderForbiddenPage() }
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         do {
             let identity = try await interactor.load(id: id)
             let roles = try await interactor.loadRoleOptions()
@@ -57,7 +57,7 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
             return try await presenter.renderForbiddenPage()
                 .response(from: request, context: context)
         }
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         let roleOptions = (try? await interactor.loadRoleOptions()) ?? []
         var lastPayload: AdminEditUserIdentityFormInput?
         do {

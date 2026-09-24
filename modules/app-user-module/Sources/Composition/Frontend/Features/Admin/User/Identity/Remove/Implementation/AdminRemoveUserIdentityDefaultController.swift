@@ -23,7 +23,7 @@ struct AdminRemoveUserIdentityDefaultController:
         guard
             context.isCurrentUserAllowed(to: UserPermissions.Identities.delete)
         else { return try await presenter.renderForbiddenPage() }
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         do {
             let names = try await interactor.names(ids: [id])
             return try await presenter.renderRemovePage(
@@ -50,7 +50,7 @@ struct AdminRemoveUserIdentityDefaultController:
             return try await presenter.renderForbiddenPage()
                 .response(from: request, context: context)
         }
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         do {
             let payload = try await request.decode(
                 as: NonceRequest<NewAdminListRemoveFormInput>.self,

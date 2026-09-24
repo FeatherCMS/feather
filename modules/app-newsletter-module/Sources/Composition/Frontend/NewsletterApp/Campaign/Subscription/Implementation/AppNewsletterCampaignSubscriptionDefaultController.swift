@@ -16,7 +16,7 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let campaignId = try context.requiredParameter("campaignId")
+        let campaignId = try request.requiredParameter("campaignId")
         let form = try await request.decode(
             as: AppNewsletterCampaignSubscriptionForm.self,
             context: context

@@ -15,8 +15,8 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let formId = try context.requiredParameter("formId")
-        let submissionId = try context.requiredParameter("submissionId")
+        let formId = try request.requiredParameter("formId")
+        let submissionId = try request.requiredParameter("submissionId")
         let submission = try await interactor.get(
             formId: formId,
             id: submissionId
@@ -32,8 +32,8 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         -> Response
     {
         let (interactor, _) = buildRuntime((request, context))
-        let formId = try context.requiredParameter("formId")
-        let submissionId = try context.requiredParameter("submissionId")
+        let formId = try request.requiredParameter("formId")
+        let submissionId = try request.requiredParameter("submissionId")
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
@@ -63,7 +63,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
     {
         let (_, presenter) = buildRuntime((request, context))
         return try await presenter.renderRemovePage(
-            formId: try context.requiredParameter("formId"),
+            formId: try request.requiredParameter("formId"),
             items: request.queryStrings("selectedIds")
                 .map {
                     .init(id: $0, label: $0)
@@ -75,7 +75,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         async throws
         -> Response
     {
-        let formId = try context.requiredParameter("formId")
+        let formId = try request.requiredParameter("formId")
         let payload = try await request.decode(
             as: NewAdminListRemoveFormInput.self,
             context: context

@@ -15,8 +15,8 @@ struct AdminViewContactFormSubmissionDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let formId = try context.requiredParameter("formId")
-        let submissionId = try context.requiredParameter("submissionId")
+        let formId = try request.requiredParameter("formId")
+        let submissionId = try request.requiredParameter("submissionId")
         do {
             return try await presenter.renderDetailsPage(
                 formId: formId,

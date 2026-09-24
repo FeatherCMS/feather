@@ -45,7 +45,7 @@ struct AdminEditWebMetadataDefaultController:
         configuration: AdminWebMetadataEditConfiguration
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
-        let id = try metadataID(context: context)
+        let id = try metadataID(request: request, context: context)
         let permissions = context.currentUserPermissions
         do {
             let entry = try await loadEntry(
@@ -100,7 +100,7 @@ struct AdminEditWebMetadataDefaultController:
         configuration: AdminWebMetadataEditConfiguration
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
-        let id = try metadataID(context: context)
+        let id = try metadataID(request: request, context: context)
         let permissions = context.currentUserPermissions
         let entry = try await loadEntry(
             runtime: runtime,
@@ -356,6 +356,7 @@ struct AdminEditWebMetadataDefaultController:
     }
 
     private func metadataID(
+        request: Request,
         context: AuthenticatedRequestContext
     ) throws -> String {
         if let metadataID = context.parameters.get(
@@ -364,7 +365,7 @@ struct AdminEditWebMetadataDefaultController:
         ) {
             return metadataID
         }
-        return try context.requiredID()
+        return try request.requiredID()
     }
 
     private func loadEntry(

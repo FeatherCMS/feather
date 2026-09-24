@@ -15,7 +15,7 @@ struct AdminEditNewsletterCampaignDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let id = try context.requiredParameter("newsletterId")
+        let id = try request.requiredParameter("newsletterId")
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.update)
         else {
             return try await presenter.render(
@@ -44,7 +44,7 @@ struct AdminEditNewsletterCampaignDefaultController:
         -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let id = try context.requiredParameter("newsletterId")
+        let id = try request.requiredParameter("newsletterId")
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.update)
         else {
             return Response(status: .forbidden)

@@ -12,7 +12,7 @@ struct AdminResendAccountInvitationDefaultController: Sendable {
     ) async throws -> Response {
         let repository = buildRepository(context)
         do {
-            try await repository.resend(id: context.requiredID())
+            try await repository.resend(id: request.requiredID())
             return Response(
                 status: .seeOther,
                 headers: [

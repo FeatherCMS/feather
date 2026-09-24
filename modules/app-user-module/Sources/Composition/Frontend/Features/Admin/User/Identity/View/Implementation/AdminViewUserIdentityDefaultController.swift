@@ -19,7 +19,7 @@ struct AdminViewUserIdentityDefaultController: AdminViewUserIdentityController {
         else {
             return try await presenter.renderErrorPage(error: .forbidden)
         }
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         do {
             let identity = try await interactor.load(id: id)
             let roleNames = try await interactor.roleNames(

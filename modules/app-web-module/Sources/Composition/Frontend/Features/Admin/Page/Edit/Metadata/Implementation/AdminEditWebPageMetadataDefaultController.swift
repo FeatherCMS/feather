@@ -21,9 +21,10 @@ struct AdminEditWebPageMetadataDefaultController:
     }
 
     private func configuration(
+        request: Request,
         context: AuthenticatedRequestContext
     ) throws -> AdminWebMetadataEditConfiguration {
-        let pageID = try context.requiredID()
+        let pageID = try request.requiredID()
         let metadataID =
             context.parameters.get(
                 "metadataID",
@@ -59,7 +60,7 @@ struct AdminEditWebPageMetadataDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let handler = makeHandler()
-        let configuration = try configuration(context: context)
+        let configuration = try configuration(request: request, context: context)
         return try await handler.get(
             request: request,
             context: context,
@@ -72,7 +73,7 @@ struct AdminEditWebPageMetadataDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let handler = makeHandler()
-        let configuration = try configuration(context: context)
+        let configuration = try configuration(request: request, context: context)
         return try await handler.post(
             request: request,
             context: context,

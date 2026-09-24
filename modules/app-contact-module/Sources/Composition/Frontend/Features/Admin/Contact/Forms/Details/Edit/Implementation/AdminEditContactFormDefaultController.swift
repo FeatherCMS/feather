@@ -19,7 +19,7 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let formId = try context.requiredParameter("formId")
+        let formId = try request.requiredParameter("formId")
         do {
             return try await presenter.renderPage(
                 item: try await interactor.get(id: formId),
@@ -50,7 +50,7 @@ struct AdminEditContactFormDefaultController: AdminEditContactFormController {
         -> Response
     {
         let (interactor, _) = buildRuntime((request, context))
-        let formId = try context.requiredParameter("formId")
+        let formId = try request.requiredParameter("formId")
         let form = try await request.decode(
             as: ContactFormEditForm.self,
             context: context

@@ -21,7 +21,7 @@ struct AdminViewNewsletterCampaignDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let id = try context.requiredParameter("newsletterId")
+        let id = try request.requiredParameter("newsletterId")
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.read)
         else {
             return try await presenter.render(

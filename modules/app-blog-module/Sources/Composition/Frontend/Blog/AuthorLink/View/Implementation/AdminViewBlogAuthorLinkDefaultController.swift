@@ -25,8 +25,8 @@ struct AdminViewBlogAuthorLinkDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
-        let menuId = try context.requiredID()
-        let id = try context.requiredParameter("itemId")
+        let menuId = try request.requiredID()
+        let id = try request.requiredParameter("itemId")
         let permissions = context.currentUserPermissions
         do {
             let rule = try await runtime.interactor.execute(

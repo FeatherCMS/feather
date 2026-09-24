@@ -18,7 +18,7 @@ struct AdminEditWebPageDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         let permissions = context.currentUserPermissions
         do {
             let page = try await runtime.interactor.load(id: id)
@@ -50,7 +50,7 @@ struct AdminEditWebPageDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         let permissions = context.currentUserPermissions
         var lastPayload: WebPageFormInput?
 

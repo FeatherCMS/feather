@@ -23,7 +23,7 @@ struct AdminViewBlogTagDefaultController: AdminViewBlogTagController {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         let permissions = context.currentUserPermissions
         do {
             let rule = try await runtime.interactor.execute(

@@ -17,8 +17,8 @@ struct AdminRemoveAuthSessionDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
-        let identityId = try context.requiredID()
-        let sessionId = try context.requiredParameter("sessionId")
+        let identityId = try request.requiredID()
+        let sessionId = try request.requiredParameter("sessionId")
         guard context.isCurrentUserAllowed(to: AuthPermissions.Sessions.delete)
         else {
             return try await presenter.errorPage(
@@ -52,8 +52,8 @@ struct AdminRemoveAuthSessionDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
-        let identityId = try context.requiredID()
-        let sessionId = try context.requiredParameter("sessionId")
+        let identityId = try request.requiredID()
+        let sessionId = try request.requiredParameter("sessionId")
         guard context.isCurrentUserAllowed(to: AuthPermissions.Sessions.delete)
         else {
             return

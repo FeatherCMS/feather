@@ -21,7 +21,7 @@ struct AdminRemoveContactFormEmailDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let formId = try context.requiredParameter("formId")
+        let formId = try request.requiredParameter("formId")
         let selectedIds = request.queryStrings("selectedIds")
         if selectedIds.count == 1, let mailId = selectedIds.first {
             let form = try await interactor.get(id: formId)
@@ -51,7 +51,7 @@ struct AdminRemoveContactFormEmailDefaultController:
             context: context
         )
         let (interactor, _) = buildRuntime((request, context))
-        let formId = try context.requiredParameter("formId")
+        let formId = try request.requiredParameter("formId")
         guard
             await AdminNonceStore.shared.consume(
                 payload.nonce,

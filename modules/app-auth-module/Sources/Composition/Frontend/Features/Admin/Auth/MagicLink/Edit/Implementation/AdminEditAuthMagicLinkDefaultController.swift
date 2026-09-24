@@ -29,7 +29,7 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         let isEdited = request.hasQueryFlag("edited")
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
@@ -69,7 +69,7 @@ struct AdminEditAuthMagicLinkDefaultController: AdminEditAuthMagicLinkController
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.update)

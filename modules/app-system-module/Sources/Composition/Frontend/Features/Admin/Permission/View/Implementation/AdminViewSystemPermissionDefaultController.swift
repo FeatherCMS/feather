@@ -21,7 +21,7 @@ struct AdminViewSystemPermissionDefaultController:
         else {
             return try await presenter.renderErrorPage(error: .forbidden)
         }
-        let id = try context.requiredID()
+        let id = try request.requiredID()
         do {
             let permission = try await interactor.execute(entity: .init(id: id))
             return try await presenter.renderDetailsPage(
