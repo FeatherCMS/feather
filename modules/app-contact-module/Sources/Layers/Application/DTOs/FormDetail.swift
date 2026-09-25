@@ -4,6 +4,7 @@ public import struct Foundation.Date
 
 public struct FormDetail: DTO {
     public let id: String
+    public let key: String
     public let name: String
     public let successMessage: String
     public let failureMessage: String
@@ -15,6 +16,7 @@ public struct FormDetail: DTO {
 
     package init(
         id: String,
+        key: String,
         name: String,
         successMessage: String,
         failureMessage: String,
@@ -25,6 +27,7 @@ public struct FormDetail: DTO {
         updatedAt: Date
     ) {
         self.id = id
+        self.key = key
         self.name = name
         self.successMessage = successMessage
         self.failureMessage = failureMessage

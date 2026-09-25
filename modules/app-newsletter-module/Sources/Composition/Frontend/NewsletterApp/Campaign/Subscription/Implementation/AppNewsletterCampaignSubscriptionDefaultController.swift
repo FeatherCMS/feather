@@ -24,7 +24,7 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
         let response = try await apiBuilder.makeNewsletterApp(context)
             .withOpenAPIRepositoryErrorMapping { client in
                 try await client.appNewsletterCampaignSubscribe(
-                    path: .init(newsletterCampaignId: campaignId),
+                    path: .init(newsletterCampaignKey: campaignId),
                     body: .json(.init(email: form.email))
                 )
             }

@@ -41,7 +41,7 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe"
+                "/api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe"
             )
         )
         try transport.register(
@@ -54,15 +54,15 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe"
+                "/api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe"
             )
         )
     }
 }
 
 extension UniversalServer where APIHandler: APIProtocol {
-    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe`.
-    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe/post(appNewsletterCampaignSubscribe)`.
+    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe/post(appNewsletterCampaignSubscribe)`.
     fileprivate func appNewsletterCampaignSubscribe(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -79,12 +79,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let path: Operations.AppNewsletterCampaignSubscribe.Input.Path =
                     .init(
-                        newsletterCampaignId:
+                        newsletterCampaignKey:
                             try converter.getPathParameterAsURI(
                                 in: metadata.pathParameters,
-                                name: "newsletterCampaignId",
+                                name: "newsletterCampaignKey",
                                 as: Components.Parameters
-                                    .AppNewsletterCampaignIdParameter.self
+                                    .AppNewsletterCampaignKeyParameter.self
                             )
                     )
                 let contentType = converter.extractContentTypeIfPresent(
@@ -132,8 +132,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe`.
-    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
+    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
     fileprivate func appNewsletterCampaignUnsubscribe(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -151,12 +151,12 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let path:
                     Operations.AppNewsletterCampaignUnsubscribe.Input.Path =
                         .init(
-                            newsletterCampaignId:
+                            newsletterCampaignKey:
                                 try converter.getPathParameterAsURI(
                                     in: metadata.pathParameters,
-                                    name: "newsletterCampaignId",
+                                    name: "newsletterCampaignKey",
                                     as: Components.Parameters
-                                        .AppNewsletterCampaignIdParameter.self
+                                        .AppNewsletterCampaignKeyParameter.self
                                 )
                         )
                 let contentType = converter.extractContentTypeIfPresent(

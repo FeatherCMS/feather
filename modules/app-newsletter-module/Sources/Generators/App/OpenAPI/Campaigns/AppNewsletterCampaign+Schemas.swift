@@ -2,6 +2,7 @@ import FeatherOpenAPI
 import OpenAPIKit30
 
 struct AppNewsletterIdField: StringSchemaRepresentable {}
+struct AppNewsletterKeyField: StringSchemaRepresentable {}
 struct AppNewsletterEmailField: StringSchemaRepresentable {}
 struct AppNewsletterNameField: StringSchemaRepresentable {}
 struct AppNewsletterContentField: StringSchemaRepresentable {}

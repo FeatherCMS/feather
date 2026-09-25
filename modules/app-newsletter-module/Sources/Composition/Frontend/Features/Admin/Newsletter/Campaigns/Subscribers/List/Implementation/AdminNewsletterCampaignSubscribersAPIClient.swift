@@ -16,7 +16,7 @@ struct AdminNewsletterCampaignSubscribersAPIClient {
     {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.newsletterSubscriberList(
-                path: .init(newsletterCampaignId: newsletterId)
+                path: .init(newsletterCampaignKey: newsletterId)
             )
             switch response {
             case .ok(let value):
@@ -47,7 +47,7 @@ struct AdminNewsletterCampaignSubscribersAPIClient {
     {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.newsletterSubscriberCreate(
-                path: .init(newsletterCampaignId: newsletterId),
+                path: .init(newsletterCampaignKey: newsletterId),
                 body: .json(
                     .init(
                         email: form.email,
@@ -81,7 +81,7 @@ struct AdminNewsletterCampaignSubscribersAPIClient {
         )
         return try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.newsletterSubscriberGet(
-                path: .init(newsletterCampaignId: newsletterId, email: email)
+                path: .init(newsletterCampaignKey: newsletterId, email: email)
             )
             switch response {
             case .ok(let value):
@@ -119,7 +119,7 @@ struct AdminNewsletterCampaignSubscribersAPIClient {
         )
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.newsletterSubscriberUpdate(
-                path: .init(newsletterCampaignId: newsletterId, email: email),
+                path: .init(newsletterCampaignKey: newsletterId, email: email),
                 body: .json(
                     .init(
                         firstName: form.firstName,
@@ -152,7 +152,7 @@ struct AdminNewsletterCampaignSubscribersAPIClient {
         )
         try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.newsletterSubscriberRemove(
-                path: .init(newsletterCampaignId: newsletterId),
+                path: .init(newsletterCampaignKey: newsletterId),
                 body: .json(.init(ids: [email], results: false, summary: true))
             )
         }

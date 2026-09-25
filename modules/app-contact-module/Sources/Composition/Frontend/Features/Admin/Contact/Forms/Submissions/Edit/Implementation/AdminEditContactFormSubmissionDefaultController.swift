@@ -21,7 +21,7 @@ struct AdminEditContactFormSubmissionDefaultController:
         -> Response
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let formId = try context.requiredParameter("formId")
+        let formId = try context.requiredParameter("formKey")
         let submissionId = try context.requiredParameter("submissionId")
         let form = try await request.decode(
             as: ContactFormSubmissionStatusForm.self,

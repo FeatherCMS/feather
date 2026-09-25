@@ -19,7 +19,7 @@ struct AdminAddNewsletterSubscriberOpenAPIRepository {
             switch response {
             case .ok(let value):
                 return try value.body.json.map {
-                    .init(id: $0.id, name: $0.name)
+                    .init(id: $0.key, name: $0.name)
                 }
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized
@@ -43,7 +43,7 @@ struct AdminAddNewsletterSubscriberOpenAPIRepository {
             where form.selectedCampaignIds.contains(campaign.id) {
                 let response =
                     try await client.newsletterSubscriberCreate(
-                        path: .init(newsletterCampaignId: campaign.id),
+                        path: .init(newsletterCampaignKey: campaign.id),
                         body: .json(
                             .init(
                                 email: form.email,

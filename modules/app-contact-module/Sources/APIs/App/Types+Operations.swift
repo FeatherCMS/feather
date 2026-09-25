@@ -12,29 +12,29 @@ public import struct Foundation.Date
 #endif
 /// API operations, with input and output types, generated from `#/paths` in the OpenAPI document.
 public enum Operations {
-    /// - Remark: HTTP `GET /api/v1/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormId}/get(appContactFormGet)`.
+    /// - Remark: HTTP `GET /api/v1/contact/form/{contactFormKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/get(appContactFormGet)`.
     public enum AppContactFormGet {
         public static let id: Swift.String = "appContactFormGet"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/contact/form/{contactFormId}/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/contact/form/{contactFormKey}/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/contact/form/{contactFormId}/GET/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.AppContactFormIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/contact/form/{contactFormKey}/GET/path/contactFormKey`.
+                public var contactFormKey:
+                    Components.Parameters.AppContactFormKeyParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - contactFormId:
+                ///   - contactFormKey:
                 public init(
-                    contactFormId: Components.Parameters
-                        .AppContactFormIdParameter
+                    contactFormKey: Components.Parameters
+                        .AppContactFormKeyParameter
                 ) {
-                    self.contactFormId = contactFormId
+                    self.contactFormKey = contactFormKey
                 }
             }
             public var path: Operations.AppContactFormGet.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/contact/form/{contactFormId}/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/contact/form/{contactFormKey}/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
@@ -69,7 +69,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Contact form response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormId}/get(appContactFormGet)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/get(appContactFormGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.AppContactFormResponse)
@@ -124,29 +124,29 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/contact/form/{contactFormId}/submit`.
-    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormId}/submit/post(appContactFormSubmission)`.
+    /// - Remark: HTTP `POST /api/v1/contact/form/{contactFormKey}/submit`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/submit/post(appContactFormSubmission)`.
     public enum AppContactFormSubmission {
         public static let id: Swift.String = "appContactFormSubmission"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/contact/form/{contactFormId}/submit/POST/path`.
+            /// - Remark: Generated from `#/paths/api/v1/contact/form/{contactFormKey}/submit/POST/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/contact/form/{contactFormId}/submit/POST/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.AppContactFormIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/contact/form/{contactFormKey}/submit/POST/path/contactFormKey`.
+                public var contactFormKey:
+                    Components.Parameters.AppContactFormKeyParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - contactFormId:
+                ///   - contactFormKey:
                 public init(
-                    contactFormId: Components.Parameters
-                        .AppContactFormIdParameter
+                    contactFormKey: Components.Parameters
+                        .AppContactFormKeyParameter
                 ) {
-                    self.contactFormId = contactFormId
+                    self.contactFormKey = contactFormKey
                 }
             }
             public var path: Operations.AppContactFormSubmission.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/contact/form/{contactFormId}/submit/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/contact/form/{contactFormKey}/submit/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
@@ -191,7 +191,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Contact form submission response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormId}/submit/post(appContactFormSubmission)/responses/201`.
+            /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/submit/post(appContactFormSubmission)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
             case created(Components.Responses.AppContactFormSubmissionResponse)

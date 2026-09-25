@@ -87,27 +87,6 @@ public struct AdminContact {
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
-        AdminListContactFormFields(
-            apiBuilder: apiBuilder,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminAddContactFormField(
-            apiBuilder: apiBuilder,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminEditContactFormField(
-            apiBuilder: apiBuilder,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-        AdminRemoveContactFormField(
-            apiBuilder: apiBuilder,
-            renderingEngine: renderingEngine
-        )
-        .controller.route(on: router)
-
         AdminListContactFormSubmissions(
             apiBuilder: apiBuilder,
             renderingEngine: renderingEngine

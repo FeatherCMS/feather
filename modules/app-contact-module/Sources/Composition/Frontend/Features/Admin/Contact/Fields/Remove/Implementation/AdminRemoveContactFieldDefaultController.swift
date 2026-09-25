@@ -80,7 +80,7 @@ struct AdminRemoveContactFieldDefaultController:
             return try await presenter.renderForbiddenPage()
         }
         return try await presenter.renderRemovePage(
-            items: request.queryStrings("selectedIds")
+            items: request.queryStrings("ids")
                 .map {
                     .init(id: $0, label: $0)
                 }
@@ -92,7 +92,7 @@ struct AdminRemoveContactFieldDefaultController:
         -> Response
     {
         let payload = try await request.decode(
-            as: NewAdminListRemoveFormInput.self,
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
         let (interactor, presenter) = buildRuntime((request, context))
@@ -111,14 +111,14 @@ struct AdminRemoveContactFieldDefaultController:
         else {
             return Response(status: .badRequest)
         }
-        try await interactor.remove(ids: payload.normalizedSelectedIds)
+        try await interactor.remove(ids: payload.input.normalizedIds)
         return Response(
             status: .seeOther,
             headers: [
                 .location: AdminListRemoveRedirect.location(
                     path: "/admin/contact/fields/",
-                    page: payload.normalizedPage,
-                    search: payload.normalizedSearch,
+                    page: payload.input.normalizedPage,
+                    search: payload.input.normalizedSearch,
                     title: "Removed",
                     message: "Contact fields removed successfully."
                 )

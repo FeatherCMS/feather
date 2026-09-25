@@ -242,7 +242,7 @@ private struct BlogAuthorTableContent: Component {
                                                                     "Actions",
                                                                 actions: [
                                                                     .init(
-                                                                        "Details",
+                                                                        "View",
                                                                         href:
                                                                             BlogAdminRoutes
                                                                             .author(
@@ -252,6 +252,10 @@ private struct BlogAuthorTableContent: Component {
                                                                                 )
                                                                             )
                                                                             .description,
+                                                                        style:
+                                                                            .ghost(
+                                                                                .primary
+                                                                            ),
                                                                         permission:
                                                                             BlogPermissions
                                                                             .Authors
@@ -278,7 +282,7 @@ private struct BlogAuthorTableContent: Component {
                                                                             .update
                                                                     ),
                                                                     .init(
-                                                                        "Remove",
+                                                                        "Delete",
                                                                         href:
                                                                             NewAdminLocation
                                                                             .remove(

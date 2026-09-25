@@ -17,10 +17,10 @@ public struct ListIssues: UseCase {
     }
 
     public struct Input: DTO {
-        public let newsletterId: String
+        public let campaignKey: String
 
-        public init(newsletterId: String) {
-            self.newsletterId = newsletterId
+        public init(campaignKey: String) {
+            self.campaignKey = campaignKey
         }
     }
 
@@ -33,8 +33,15 @@ public struct ListIssues: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            try await scope.issue.list(newsletterId: input.newsletterId)
+            guard
+                let campaign = try await scope.newsletter.findBy(
+                    key: input.campaignKey
+                )
+            else { throw Error.campaignNotFound }
+            return try await scope.issue.list(newsletterId: campaign.id)
                 .map(\.asDetail)
         }
     }
+
+    public enum Error: UseCaseError { case campaignNotFound }
 }

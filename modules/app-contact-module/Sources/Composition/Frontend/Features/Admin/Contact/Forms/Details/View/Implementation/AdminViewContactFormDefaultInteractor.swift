@@ -10,7 +10,7 @@ import WebComponents
 struct AdminViewContactFormDefaultInteractor: AdminViewContactFormInteractor {
     let repository: AdminViewContactFormOpenAPIRepository
 
-    func get(id: String) async throws -> AdminContactFormDetailsItem {
-        try await repository.get(id: id)
+    func get(key: String) async throws -> AdminContactFormDetailsItem {
+        try await repository.get(key: key)
     }
 }

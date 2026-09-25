@@ -8,7 +8,7 @@ struct JobContactMailQueue: ContactMailQueue {
         mailFrom: String,
         mailTo: String,
         subject: String,
-        additionalHeaders: String,
+        additionalHeaders: [String],
         messageBody: String
     ) async throws {
         try await queue.enqueueSubmissionMail(

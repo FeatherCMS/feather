@@ -10,7 +10,7 @@ struct AppNewsletterTag: TagRepresentable {
 struct AppNewsletterCampaignSubscribeOperation: OperationRepresentable {
     var tags: [TagRepresentable] { [AppNewsletterTag()] }
     var parameters: [ParameterRepresentable] {
-        [AppNewsletterCampaignIdParameter().reference()]
+        [AppNewsletterCampaignKeyParameter().reference()]
     }
     var requestBody: RequestBodyRepresentable? {
         AppNewsletterCampaignSubscriptionRequestBody().reference()
@@ -22,7 +22,7 @@ struct AppNewsletterCampaignSubscribeOperation: OperationRepresentable {
 struct AppNewsletterCampaignUnsubscribeOperation: OperationRepresentable {
     var tags: [TagRepresentable] { [AppNewsletterTag()] }
     var parameters: [ParameterRepresentable] {
-        [AppNewsletterCampaignIdParameter().reference()]
+        [AppNewsletterCampaignKeyParameter().reference()]
     }
     var requestBody: RequestBodyRepresentable? {
         AppNewsletterCampaignSubscriptionRequestBody().reference()

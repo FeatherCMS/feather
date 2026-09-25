@@ -31,23 +31,12 @@ struct AdminEditContactFieldDefaultController:
             return try await presenter.renderPage(
                 field: try await interactor.get(id: id),
                 error: nil,
+                fieldErrors: [:],
                 permissions: context.currentUserPermissions
             )
         }
-        catch {
-            return try await presenter.renderPage(
-                field: .init(
-                    id: id,
-                    key: "",
-                    type: "text",
-                    label: "",
-                    allowedValues: "",
-                    isRequired: false,
-                    position: "0"
-                ),
-                error: error.displayMessage,
-                permissions: context.currentUserPermissions
-            )
+        catch let error as AdminEditContactFieldError {
+            return try await presenter.renderErrorPage(error: error)
         }
     }
 
@@ -68,6 +57,24 @@ struct AdminEditContactFieldDefaultController:
             as: ContactFieldFormInput.self,
             context: context
         )
+        if let error = form.allowedValuesValidationError {
+            return
+                try await presenter.renderPage(
+                    field: .init(
+                        id: id,
+                        key: form.key,
+                        type: form.type,
+                        label: form.label,
+                        allowedValues: form.allowedValues,
+                        isRequired: form.isRequiredValue,
+                        position: form.position
+                    ),
+                    error: nil,
+                    fieldErrors: ["allowedValues": error],
+                    permissions: context.currentUserPermissions
+                )
+                .response(from: request, context: context)
+        }
         do {
             try await interactor.update(id: id, form: form)
             return Response(
@@ -81,9 +88,9 @@ struct AdminEditContactFieldDefaultController:
                 ]
             )
         }
-        catch {
+        catch let error as AdminEditContactFieldError {
             return
-                try await presenter.renderPage(
+                try await presenter.renderEditError(
                     field: .init(
                         id: id,
                         key: form.key,
@@ -93,7 +100,7 @@ struct AdminEditContactFieldDefaultController:
                         isRequired: form.isRequiredValue,
                         position: form.position
                     ),
-                    error: error.displayMessage,
+                    error: error,
                     permissions: context.currentUserPermissions
                 )
                 .response(from: request, context: context)

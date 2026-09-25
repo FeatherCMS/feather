@@ -117,7 +117,7 @@ struct NewsletterCampaignsTableContent: Component {
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
-                                                    Th("ID")
+                                                    Th("Key")
                                                     Th("Name")
                                                     Th("Actions")
                                                 }

@@ -80,7 +80,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/newsletter/campaign/{newsletterCampaignId}"
+                "/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}"
             )
         )
         try transport.register(
@@ -93,7 +93,7 @@ extension APIProtocol {
             },
             method: .patch,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/newsletter/campaign/{newsletterCampaignId}"
+                "/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}"
             )
         )
         try transport.register(
@@ -106,7 +106,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues"
+                "/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues"
             )
         )
         try transport.register(
@@ -119,7 +119,7 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues"
+                "/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues"
             )
         )
         try transport.register(
@@ -132,7 +132,7 @@ extension APIProtocol {
             },
             method: .delete,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues"
+                "/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues"
             )
         )
         try transport.register(
@@ -145,7 +145,7 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email"
+                "/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email"
             )
         )
         try transport.register(
@@ -158,7 +158,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}"
+                "/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}"
             )
         )
         try transport.register(
@@ -171,7 +171,7 @@ extension APIProtocol {
             },
             method: .patch,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}"
+                "/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}"
             )
         )
         try transport.register(
@@ -184,7 +184,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries"
+                "/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries"
             )
         )
         try transport.register(
@@ -197,7 +197,7 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email"
+                "/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email"
             )
         )
         try transport.register(
@@ -210,7 +210,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers"
+                "/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers"
             )
         )
         try transport.register(
@@ -223,7 +223,7 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers"
+                "/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers"
             )
         )
         try transport.register(
@@ -236,7 +236,7 @@ extension APIProtocol {
             },
             method: .delete,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers"
+                "/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers"
             )
         )
         try transport.register(
@@ -249,7 +249,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}"
+                "/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}"
             )
         )
         try transport.register(
@@ -262,7 +262,7 @@ extension APIProtocol {
             },
             method: .patch,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}"
+                "/api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}"
             )
         )
     }
@@ -504,8 +504,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/get(newsletterCampaignGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/get(newsletterCampaignGet)`.
     fileprivate func newsletterCampaignGet(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -521,10 +521,10 @@ extension UniversalServer where APIHandler: APIProtocol {
             },
             deserializer: { request, requestBody, metadata in
                 let path: Operations.NewsletterCampaignGet.Input.Path = .init(
-                    newsletterCampaignId: try converter.getPathParameterAsURI(
+                    newsletterCampaignKey: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "newsletterCampaignId",
-                        as: Components.Parameters.NewsletterCampaignIdParameter
+                        name: "newsletterCampaignKey",
+                        as: Components.Parameters.NewsletterCampaignKeyParameter
                             .self
                     )
                 )
@@ -580,8 +580,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/patch(newsletterCampaignUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/patch(newsletterCampaignUpdate)`.
     fileprivate func newsletterCampaignUpdate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -598,12 +598,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let path: Operations.NewsletterCampaignUpdate.Input.Path =
                     .init(
-                        newsletterCampaignId:
+                        newsletterCampaignKey:
                             try converter.getPathParameterAsURI(
                                 in: metadata.pathParameters,
-                                name: "newsletterCampaignId",
+                                name: "newsletterCampaignKey",
                                 as: Components.Parameters
-                                    .NewsletterCampaignIdParameter.self
+                                    .NewsletterCampaignKeyParameter.self
                             )
                     )
                 let headers: Operations.NewsletterCampaignUpdate.Input.Headers =
@@ -684,8 +684,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/get(newsletterIssueList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/get(newsletterIssueList)`.
     fileprivate func newsletterIssueList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -701,10 +701,10 @@ extension UniversalServer where APIHandler: APIProtocol {
             },
             deserializer: { request, requestBody, metadata in
                 let path: Operations.NewsletterIssueList.Input.Path = .init(
-                    newsletterCampaignId: try converter.getPathParameterAsURI(
+                    newsletterCampaignKey: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "newsletterCampaignId",
-                        as: Components.Parameters.NewsletterCampaignIdParameter
+                        name: "newsletterCampaignKey",
+                        as: Components.Parameters.NewsletterCampaignKeyParameter
                             .self
                     )
                 )
@@ -755,8 +755,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/post(newsletterIssueCreate)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/post(newsletterIssueCreate)`.
     fileprivate func newsletterIssueCreate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -772,10 +772,10 @@ extension UniversalServer where APIHandler: APIProtocol {
             },
             deserializer: { request, requestBody, metadata in
                 let path: Operations.NewsletterIssueCreate.Input.Path = .init(
-                    newsletterCampaignId: try converter.getPathParameterAsURI(
+                    newsletterCampaignKey: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "newsletterCampaignId",
-                        as: Components.Parameters.NewsletterCampaignIdParameter
+                        name: "newsletterCampaignKey",
+                        as: Components.Parameters.NewsletterCampaignKeyParameter
                             .self
                     )
                 )
@@ -852,8 +852,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)`.
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/delete(newsletterIssueRemove)`.
     fileprivate func newsletterIssueRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -869,10 +869,10 @@ extension UniversalServer where APIHandler: APIProtocol {
             },
             deserializer: { request, requestBody, metadata in
                 let path: Operations.NewsletterIssueRemove.Input.Path = .init(
-                    newsletterCampaignId: try converter.getPathParameterAsURI(
+                    newsletterCampaignKey: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "newsletterCampaignId",
-                        as: Components.Parameters.NewsletterCampaignIdParameter
+                        name: "newsletterCampaignKey",
+                        as: Components.Parameters.NewsletterCampaignKeyParameter
                             .self
                     )
                 )
@@ -948,8 +948,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/post(newsletterCampaignTestEmail)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/post(newsletterCampaignTestEmail)`.
     fileprivate func newsletterCampaignTestEmail(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -966,12 +966,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let path: Operations.NewsletterCampaignTestEmail.Input.Path =
                     .init(
-                        newsletterCampaignId:
+                        newsletterCampaignKey:
                             try converter.getPathParameterAsURI(
                                 in: metadata.pathParameters,
-                                name: "newsletterCampaignId",
+                                name: "newsletterCampaignKey",
                                 as: Components.Parameters
-                                    .NewsletterCampaignIdParameter.self
+                                    .NewsletterCampaignKeyParameter.self
                             )
                     )
                 let contentType = converter.extractContentTypeIfPresent(
@@ -1027,8 +1027,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/get(newsletterIssueGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/get(newsletterIssueGet)`.
     fileprivate func newsletterIssueGet(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -1044,10 +1044,10 @@ extension UniversalServer where APIHandler: APIProtocol {
             },
             deserializer: { request, requestBody, metadata in
                 let path: Operations.NewsletterIssueGet.Input.Path = .init(
-                    newsletterCampaignId: try converter.getPathParameterAsURI(
+                    newsletterCampaignKey: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "newsletterCampaignId",
-                        as: Components.Parameters.NewsletterCampaignIdParameter
+                        name: "newsletterCampaignKey",
+                        as: Components.Parameters.NewsletterCampaignKeyParameter
                             .self
                     ),
                     newsletterIssueId: try converter.getPathParameterAsURI(
@@ -1109,8 +1109,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)`.
     fileprivate func newsletterIssueUpdate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -1126,10 +1126,10 @@ extension UniversalServer where APIHandler: APIProtocol {
             },
             deserializer: { request, requestBody, metadata in
                 let path: Operations.NewsletterIssueUpdate.Input.Path = .init(
-                    newsletterCampaignId: try converter.getPathParameterAsURI(
+                    newsletterCampaignKey: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "newsletterCampaignId",
-                        as: Components.Parameters.NewsletterCampaignIdParameter
+                        name: "newsletterCampaignKey",
+                        as: Components.Parameters.NewsletterCampaignKeyParameter
                             .self
                     ),
                     newsletterIssueId: try converter.getPathParameterAsURI(
@@ -1217,8 +1217,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)`.
     fileprivate func newsletterIssueDeliveryList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -1235,12 +1235,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let path: Operations.NewsletterIssueDeliveryList.Input.Path =
                     .init(
-                        newsletterCampaignId:
+                        newsletterCampaignKey:
                             try converter.getPathParameterAsURI(
                                 in: metadata.pathParameters,
-                                name: "newsletterCampaignId",
+                                name: "newsletterCampaignKey",
                                 as: Components.Parameters
-                                    .NewsletterCampaignIdParameter.self
+                                    .NewsletterCampaignKeyParameter.self
                             ),
                         newsletterIssueId: try converter.getPathParameterAsURI(
                             in: metadata.pathParameters,
@@ -1302,8 +1302,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)`.
     fileprivate func newsletterIssueTestEmail(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -1320,12 +1320,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let path: Operations.NewsletterIssueTestEmail.Input.Path =
                     .init(
-                        newsletterCampaignId:
+                        newsletterCampaignKey:
                             try converter.getPathParameterAsURI(
                                 in: metadata.pathParameters,
-                                name: "newsletterCampaignId",
+                                name: "newsletterCampaignKey",
                                 as: Components.Parameters
-                                    .NewsletterCampaignIdParameter.self
+                                    .NewsletterCampaignKeyParameter.self
                             ),
                         newsletterIssueId: try converter.getPathParameterAsURI(
                             in: metadata.pathParameters,
@@ -1392,8 +1392,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/get(newsletterSubscriberList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/get(newsletterSubscriberList)`.
     fileprivate func newsletterSubscriberList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -1410,12 +1410,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let path: Operations.NewsletterSubscriberList.Input.Path =
                     .init(
-                        newsletterCampaignId:
+                        newsletterCampaignKey:
                             try converter.getPathParameterAsURI(
                                 in: metadata.pathParameters,
-                                name: "newsletterCampaignId",
+                                name: "newsletterCampaignKey",
                                 as: Components.Parameters
-                                    .NewsletterCampaignIdParameter.self
+                                    .NewsletterCampaignKeyParameter.self
                             )
                     )
                 let headers: Operations.NewsletterSubscriberList.Input.Headers =
@@ -1465,8 +1465,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/post(newsletterSubscriberCreate)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/post(newsletterSubscriberCreate)`.
     fileprivate func newsletterSubscriberCreate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -1483,12 +1483,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let path: Operations.NewsletterSubscriberCreate.Input.Path =
                     .init(
-                        newsletterCampaignId:
+                        newsletterCampaignKey:
                             try converter.getPathParameterAsURI(
                                 in: metadata.pathParameters,
-                                name: "newsletterCampaignId",
+                                name: "newsletterCampaignKey",
                                 as: Components.Parameters
-                                    .NewsletterCampaignIdParameter.self
+                                    .NewsletterCampaignKeyParameter.self
                             )
                     )
                 let headers:
@@ -1566,8 +1566,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)`.
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/delete(newsletterSubscriberRemove)`.
     fileprivate func newsletterSubscriberRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -1584,12 +1584,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let path: Operations.NewsletterSubscriberRemove.Input.Path =
                     .init(
-                        newsletterCampaignId:
+                        newsletterCampaignKey:
                             try converter.getPathParameterAsURI(
                                 in: metadata.pathParameters,
-                                name: "newsletterCampaignId",
+                                name: "newsletterCampaignKey",
                                 as: Components.Parameters
-                                    .NewsletterCampaignIdParameter.self
+                                    .NewsletterCampaignKeyParameter.self
                             )
                     )
                 let headers:
@@ -1664,8 +1664,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/get(newsletterSubscriberGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/get(newsletterSubscriberGet)`.
     fileprivate func newsletterSubscriberGet(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -1681,10 +1681,10 @@ extension UniversalServer where APIHandler: APIProtocol {
             },
             deserializer: { request, requestBody, metadata in
                 let path: Operations.NewsletterSubscriberGet.Input.Path = .init(
-                    newsletterCampaignId: try converter.getPathParameterAsURI(
+                    newsletterCampaignKey: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "newsletterCampaignId",
-                        as: Components.Parameters.NewsletterCampaignIdParameter
+                        name: "newsletterCampaignKey",
+                        as: Components.Parameters.NewsletterCampaignKeyParameter
                             .self
                     ),
                     email: try converter.getPathParameterAsURI(
@@ -1746,8 +1746,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/patch(newsletterSubscriberUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/patch(newsletterSubscriberUpdate)`.
     fileprivate func newsletterSubscriberUpdate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -1764,12 +1764,12 @@ extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let path: Operations.NewsletterSubscriberUpdate.Input.Path =
                     .init(
-                        newsletterCampaignId:
+                        newsletterCampaignKey:
                             try converter.getPathParameterAsURI(
                                 in: metadata.pathParameters,
-                                name: "newsletterCampaignId",
+                                name: "newsletterCampaignKey",
                                 as: Components.Parameters
-                                    .NewsletterCampaignIdParameter.self
+                                    .NewsletterCampaignKeyParameter.self
                             ),
                         email: try converter.getPathParameterAsURI(
                             in: metadata.pathParameters,

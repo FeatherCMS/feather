@@ -42,4 +42,12 @@ struct AdminListNewsletterSubscribersDefaultInteractor:
             )
         )
     }
+
+    func get(id: String) async throws -> AdminNewsletterSubscriberListItem {
+        try await repository.get(id: id)
+    }
+
+    func names(ids: [String]) async throws -> [String] {
+        try await repository.names(ids: ids)
+    }
 }

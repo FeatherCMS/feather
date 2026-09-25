@@ -21,6 +21,7 @@ public struct NewAdminFormFieldSelect: Component {
         public var value: String?
         public var options: [SelectOption]
         public var error: String?
+        public var help: String?
         public var isRequired: Bool
         public var isDisabled: Bool
 
@@ -30,6 +31,7 @@ public struct NewAdminFormFieldSelect: Component {
             value: String? = nil,
             options: [SelectOption],
             error: String? = nil,
+            help: String? = nil,
             isRequired: Bool = false,
             isDisabled: Bool = false
         ) {
@@ -38,6 +40,7 @@ public struct NewAdminFormFieldSelect: Component {
             self.value = value
             self.options = options
             self.error = error
+            self.help = help
             self.isRequired = isRequired
             self.isDisabled = isDisabled
         }
@@ -140,6 +143,9 @@ public struct NewAdminFormFieldSelect: Component {
                 .if(state.isDisabled) { $0.disabled() }
             }
             .for(state.name)
+            if let help = state.help {
+                context.build(NewAdminFormFieldHelp(help))
+            }
             if let error = state.error {
                 Span(error).id(errorID).class("field-error")
             }

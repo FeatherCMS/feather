@@ -8,6 +8,10 @@ public protocol FormRepository: Repository {
         id: String
     ) async throws -> Form?
 
+    func findBy(
+        key: String
+    ) async throws -> Form?
+
     func insert(
         _ model: Form.New
     ) async throws -> Form

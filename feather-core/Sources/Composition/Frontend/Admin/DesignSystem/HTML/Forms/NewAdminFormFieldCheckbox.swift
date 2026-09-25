@@ -36,7 +36,7 @@ public struct NewAdminFormFieldCheckbox: Component {
 
     public struct State: Sendable {
         public let name: String
-        public let label: String
+        public let label: String?
         public let checkboxLabel: String
         public let isChecked: Bool
         public let error: String?
@@ -45,7 +45,7 @@ public struct NewAdminFormFieldCheckbox: Component {
 
         public init(
             name: String,
-            label: String,
+            label: String? = nil,
             checkboxLabel: String,
             isChecked: Bool = false,
             error: String? = nil,
@@ -82,10 +82,6 @@ public struct NewAdminFormFieldCheckbox: Component {
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 Cursor(.pointer)
             },
-            Custom(".new-admin-form-checkbox .field-help") {
-                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                FontSize(0.86.rem)
-            },
             Custom(".new-admin-form-checkbox .field-error") {
                 Color(.red)
                 FontSize(0.86.rem)
@@ -96,7 +92,9 @@ public struct NewAdminFormFieldCheckbox: Component {
     public func html(context: inout BuilderContext) -> Section {
         let errorID = "\(state.name)-error"
         return Section {
-            context.build(NewAdminFormFieldLabel(text: state.label))
+            if let label = state.label {
+                context.build(NewAdminFormFieldLabel(text: label))
+            }
             Label {
                 context.build(
                     NewAdminCheckbox(
@@ -113,7 +111,9 @@ public struct NewAdminFormFieldCheckbox: Component {
             }
             .class("new-admin-form-checkbox__label")
             .for(state.name)
-            if let help = state.help { Span(help).class("field-help") }
+            if let help = state.help {
+                context.build(NewAdminFormFieldHelp(help))
+            }
             if let error = state.error {
                 Span(error).id(errorID).class("field-error")
             }

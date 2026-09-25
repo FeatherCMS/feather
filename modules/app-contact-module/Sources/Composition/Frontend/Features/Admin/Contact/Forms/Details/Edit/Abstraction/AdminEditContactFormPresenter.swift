@@ -13,4 +13,15 @@ protocol AdminEditContactFormPresenter: Sendable {
         error: String?,
         permissions: Set<String>
     ) async throws -> HTMLResponse
+
+    func renderEditError(
+        key: String,
+        item: AdminContactFormDetailsItem,
+        error: AdminEditContactFormError,
+        permissions: Set<String>
+    ) async throws -> HTMLResponse
+
+    func renderErrorPage(
+        error: AdminEditContactFormError
+    ) async throws -> HTMLResponse
 }

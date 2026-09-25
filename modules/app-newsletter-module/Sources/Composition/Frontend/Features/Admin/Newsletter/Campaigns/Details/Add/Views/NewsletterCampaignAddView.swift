@@ -7,6 +7,7 @@ import WebComponents
 
 struct NewsletterCampaignAddView: Component {
     struct State {
+        let key: String
         let name: String
         let fromEmail: String
         let error: String?
@@ -41,6 +42,7 @@ struct NewsletterCampaignAddView: Component {
             context.build(
                 NewsletterCampaignForm(
                     state: .init(
+                        key: state.key,
                         name: state.name,
                         fromEmail: state.fromEmail,
                         error: state.error,

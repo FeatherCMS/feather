@@ -12,7 +12,7 @@ extension AppAPIGateway {
         _ = try await self.useCases.makeSubscribeToNewsletter()
             .execute(
                 .init(
-                    newsletterId: input.path.newsletterCampaignId,
+                    campaignKey: input.path.newsletterCampaignKey,
                     email: body.email,
                     firstName: body.firstName ?? "",
                     lastName: body.lastName ?? ""
@@ -31,7 +31,7 @@ extension AppAPIGateway {
         _ = try await self.useCases.makeUnsubscribeFromNewsletter()
             .execute(
                 .init(
-                    newsletterId: input.path.newsletterCampaignId,
+                    campaignKey: input.path.newsletterCampaignKey,
                     email: body.email
                 )
             )

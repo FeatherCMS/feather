@@ -50,24 +50,37 @@ struct AdminAddContactFieldDefaultController:
             as: ContactFieldFormInput.self,
             context: context
         )
-        let model = try await interactor.postAddContactField(payload: payload)
-        if model.error == nil {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminNotificationRedirect.location(
-                        defaultPath: "/admin/contact/fields/",
-                        title: "Added",
-                        message: "Form field added successfully."
-                    )
-                ]
+        do {
+            let model = try await interactor.postAddContactField(
+                payload: payload
             )
+            if model.fieldErrors.isEmpty {
+                return Response(
+                    status: .seeOther,
+                    headers: [
+                        .location: AdminNotificationRedirect.location(
+                            defaultPath: "/admin/contact/fields/",
+                            title: "Added",
+                            message: "Form field added successfully."
+                        )
+                    ]
+                )
+            }
+            return
+                try await presenter.renderPage(
+                    model: model,
+                    permissions: context.currentUserPermissions
+                )
+                .response(from: request, context: context)
         }
-        return
-            try await presenter.renderPage(
-                model: model,
-                permissions: context.currentUserPermissions
-            )
-            .response(from: request, context: context)
+        catch let error as AdminAddContactFieldError {
+            return
+                try await presenter.renderAddError(
+                    input: payload,
+                    error: error,
+                    permissions: context.currentUserPermissions
+                )
+                .response(from: request, context: context)
+        }
     }
 }

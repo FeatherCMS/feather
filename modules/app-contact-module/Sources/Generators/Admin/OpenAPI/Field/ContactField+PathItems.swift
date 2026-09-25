@@ -9,12 +9,3 @@ struct ContactFieldIDPathItems: PathItemRepresentable {
     var get: OperationRepresentable? { ContactFieldGetOperation() }
     var put: OperationRepresentable? { ContactFieldUpdateOperation() }
 }
-struct FormFieldPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { FormFieldListOperation() }
-    var post: OperationRepresentable? { FormFieldCreateOperation() }
-    var delete: OperationRepresentable? { FormFieldRemoveOperation() }
-}
-struct FormFieldIDPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { FormFieldGetOperation() }
-    var put: OperationRepresentable? { FormFieldUpdateOperation() }
-}

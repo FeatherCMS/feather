@@ -12,14 +12,14 @@ extension AdminAPIGateway {
         }
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeRemoveNewsletterCampaign()
-        let deletedIds = try await useCase.execute(
+        let deletedKeys = try await useCase.execute(
             subject: subject,
-            input: .init(ids: body.ids)
+            input: .init(keys: body.ids)
         )
         let results = body.ids.map {
             Components.Schemas.DeleteResultListSchemaPayload(
                 id: $0,
-                status: deletedIds.contains($0) ? .deleted : .notFound
+                status: deletedKeys.contains($0) ? .deleted : .notFound
             )
         }
         return .ok(
@@ -54,7 +54,10 @@ extension AdminAPIGateway {
         let useCase = useCases.makeRemoveNewsletterIssue()
         let deletedIds = try await useCase.execute(
             subject: subject,
-            input: .init(ids: body.ids)
+            input: .init(
+                campaignKey: input.path.newsletterCampaignKey,
+                ids: body.ids
+            )
         )
         let results = body.ids.map {
             Components.Schemas.DeleteResultListSchemaPayload(
@@ -95,7 +98,7 @@ extension AdminAPIGateway {
         let deletedIds = try await useCase.execute(
             subject: subject,
             input: .init(
-                newsletterId: input.path.newsletterCampaignId,
+                campaignKey: input.path.newsletterCampaignKey,
                 emails: body.ids
             )
         )

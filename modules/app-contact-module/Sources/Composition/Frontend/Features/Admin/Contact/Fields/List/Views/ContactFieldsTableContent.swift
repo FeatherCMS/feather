@@ -270,6 +270,7 @@ struct ContactFieldsTableContent: Component {
         case "select": color = .green
         case "radio": color = .orange
         case "toggle": color = .yellow
+        case "hidden": color = .gray
         default: color = .blue
         }
         return .init(label: type.capitalized, color: color)

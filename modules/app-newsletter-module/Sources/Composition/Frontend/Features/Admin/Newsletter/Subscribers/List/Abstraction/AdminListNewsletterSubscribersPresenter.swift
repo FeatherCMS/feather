@@ -13,4 +13,12 @@ protocol AdminListNewsletterSubscribersPresenter: Sendable {
         error: String?,
         permissions: Set<String>
     ) async throws -> HTMLResponse
+    func renderDetailsPage(
+        item: AdminNewsletterSubscriberListItem,
+        permissions: Set<String>
+    ) async throws -> HTMLResponse
+    func renderDetailsErrorPage(
+        message: String,
+        status: HTTPResponse.Status
+    ) async throws -> HTMLResponse
 }

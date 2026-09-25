@@ -260,8 +260,8 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/get(contactFormGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)`.
     public func contactFormGet(_ input: Operations.ContactFormGet.Input)
         async throws -> Operations.ContactFormGet.Output
     {
@@ -272,7 +272,7 @@ public struct Client: APIProtocol {
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/contact/form/{}",
                     parameters: [
-                        input.path.contactFormId
+                        input.path.contactFormKey
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -332,8 +332,8 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/put(contactFormUpdate)`.
+    /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/put(contactFormUpdate)`.
     public func contactFormUpdate(_ input: Operations.ContactFormUpdate.Input)
         async throws -> Operations.ContactFormUpdate.Output
     {
@@ -344,7 +344,7 @@ public struct Client: APIProtocol {
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/contact/form/{}",
                     parameters: [
-                        input.path.contactFormId
+                        input.path.contactFormKey
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -384,389 +384,6 @@ public struct Client: APIProtocol {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
                             Components.Schemas.ContactFormSchema.self,
-                            from: responseBody,
-                            transforming: { value in
-                                .json(value)
-                            }
-                        )
-                    default:
-                        preconditionFailure(
-                            "bestContentType chose an invalid content type."
-                        )
-                    }
-                    return .ok(.init(body: body))
-                case 404:
-                    return .notFound(.init())
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)`.
-    public func formFieldList(_ input: Operations.FormFieldList.Input)
-        async throws -> Operations.FormFieldList.Output
-    {
-        try await client.send(
-            input: input,
-            forOperation: Operations.FormFieldList.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/contact/form/{}/field",
-                    parameters: [
-                        input.path.contactFormId
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .get
-                )
-                suppressMutabilityWarning(&request)
-                converter.setAcceptHeader(
-                    in: &request.headerFields,
-                    contentTypes: input.headers.accept
-                )
-                return (request, nil)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 200:
-                    let contentType = converter.extractContentTypeIfPresent(
-                        in: response.headerFields
-                    )
-                    let body: Components.Responses.FormFieldListResponse.Body
-                    let chosenContentType = try converter.bestContentType(
-                        received: contentType,
-                        options: [
-                            "application/json"
-                        ]
-                    )
-                    switch chosenContentType {
-                    case "application/json":
-                        body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.FormFieldListSchema.self,
-                            from: responseBody,
-                            transforming: { value in
-                                .json(value)
-                            }
-                        )
-                    default:
-                        preconditionFailure(
-                            "bestContentType chose an invalid content type."
-                        )
-                    }
-                    return .ok(.init(body: body))
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/post(formFieldCreate)`.
-    public func formFieldCreate(_ input: Operations.FormFieldCreate.Input)
-        async throws -> Operations.FormFieldCreate.Output
-    {
-        try await client.send(
-            input: input,
-            forOperation: Operations.FormFieldCreate.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/contact/form/{}/field",
-                    parameters: [
-                        input.path.contactFormId
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .post
-                )
-                suppressMutabilityWarning(&request)
-                converter.setAcceptHeader(
-                    in: &request.headerFields,
-                    contentTypes: input.headers.accept
-                )
-                let body: OpenAPIRuntime.HTTPBody?
-                switch input.body {
-                case .json(let value):
-                    body = try converter.setRequiredRequestBodyAsJSON(
-                        value,
-                        headerFields: &request.headerFields,
-                        contentType: "application/json; charset=utf-8"
-                    )
-                }
-                return (request, body)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 201:
-                    let contentType = converter.extractContentTypeIfPresent(
-                        in: response.headerFields
-                    )
-                    let body: Components.Responses.FormFieldResponse.Body
-                    let chosenContentType = try converter.bestContentType(
-                        received: contentType,
-                        options: [
-                            "application/json"
-                        ]
-                    )
-                    switch chosenContentType {
-                    case "application/json":
-                        body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.FormFieldSchema.self,
-                            from: responseBody,
-                            transforming: { value in
-                                .json(value)
-                            }
-                        )
-                    default:
-                        preconditionFailure(
-                            "bestContentType chose an invalid content type."
-                        )
-                    }
-                    return .created(.init(body: body))
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)`.
-    public func formFieldRemove(_ input: Operations.FormFieldRemove.Input)
-        async throws -> Operations.FormFieldRemove.Output
-    {
-        try await client.send(
-            input: input,
-            forOperation: Operations.FormFieldRemove.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/contact/form/{}/field",
-                    parameters: [
-                        input.path.contactFormId
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .delete
-                )
-                suppressMutabilityWarning(&request)
-                converter.setAcceptHeader(
-                    in: &request.headerFields,
-                    contentTypes: input.headers.accept
-                )
-                let body: OpenAPIRuntime.HTTPBody?
-                switch input.body {
-                case .json(let value):
-                    body = try converter.setRequiredRequestBodyAsJSON(
-                        value,
-                        headerFields: &request.headerFields,
-                        contentType: "application/json; charset=utf-8"
-                    )
-                }
-                return (request, body)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 200:
-                    let contentType = converter.extractContentTypeIfPresent(
-                        in: response.headerFields
-                    )
-                    let body: Components.Responses.DeleteResponse.Body
-                    let chosenContentType = try converter.bestContentType(
-                        received: contentType,
-                        options: [
-                            "application/json"
-                        ]
-                    )
-                    switch chosenContentType {
-                    case "application/json":
-                        body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.DeleteResponseSchema.self,
-                            from: responseBody,
-                            transforming: { value in
-                                .json(value)
-                            }
-                        )
-                    default:
-                        preconditionFailure(
-                            "bestContentType chose an invalid content type."
-                        )
-                    }
-                    return .ok(.init(body: body))
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)`.
-    public func formFieldGet(_ input: Operations.FormFieldGet.Input)
-        async throws -> Operations.FormFieldGet.Output
-    {
-        try await client.send(
-            input: input,
-            forOperation: Operations.FormFieldGet.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/contact/form/{}/field/{}",
-                    parameters: [
-                        input.path.contactFormId,
-                        input.path.formFieldId,
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .get
-                )
-                suppressMutabilityWarning(&request)
-                converter.setAcceptHeader(
-                    in: &request.headerFields,
-                    contentTypes: input.headers.accept
-                )
-                return (request, nil)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 200:
-                    let contentType = converter.extractContentTypeIfPresent(
-                        in: response.headerFields
-                    )
-                    let body: Components.Responses.FormFieldResponse.Body
-                    let chosenContentType = try converter.bestContentType(
-                        received: contentType,
-                        options: [
-                            "application/json"
-                        ]
-                    )
-                    switch chosenContentType {
-                    case "application/json":
-                        body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.FormFieldSchema.self,
-                            from: responseBody,
-                            transforming: { value in
-                                .json(value)
-                            }
-                        )
-                    default:
-                        preconditionFailure(
-                            "bestContentType chose an invalid content type."
-                        )
-                    }
-                    return .ok(.init(body: body))
-                case 404:
-                    return .notFound(.init())
-                case 401:
-                    return .unauthorized(.init())
-                case 403:
-                    return .forbidden(.init())
-                default:
-                    return .undocumented(
-                        statusCode: response.status.code,
-                        .init(
-                            headerFields: response.headerFields,
-                            body: responseBody
-                        )
-                    )
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)`.
-    public func formFieldUpdate(_ input: Operations.FormFieldUpdate.Input)
-        async throws -> Operations.FormFieldUpdate.Output
-    {
-        try await client.send(
-            input: input,
-            forOperation: Operations.FormFieldUpdate.id,
-            serializer: { input in
-                let path = try converter.renderedPath(
-                    template: "/api/v1/admin/contact/form/{}/field/{}",
-                    parameters: [
-                        input.path.contactFormId,
-                        input.path.formFieldId,
-                    ]
-                )
-                var request: HTTPTypes.HTTPRequest = .init(
-                    soar_path: path,
-                    method: .put
-                )
-                suppressMutabilityWarning(&request)
-                converter.setAcceptHeader(
-                    in: &request.headerFields,
-                    contentTypes: input.headers.accept
-                )
-                let body: OpenAPIRuntime.HTTPBody?
-                switch input.body {
-                case .json(let value):
-                    body = try converter.setRequiredRequestBodyAsJSON(
-                        value,
-                        headerFields: &request.headerFields,
-                        contentType: "application/json; charset=utf-8"
-                    )
-                }
-                return (request, body)
-            },
-            deserializer: { response, responseBody in
-                switch response.status.code {
-                case 200:
-                    let contentType = converter.extractContentTypeIfPresent(
-                        in: response.headerFields
-                    )
-                    let body: Components.Responses.FormFieldResponse.Body
-                    let chosenContentType = try converter.bestContentType(
-                        received: contentType,
-                        options: [
-                            "application/json"
-                        ]
-                    )
-                    switch chosenContentType {
-                    case "application/json":
-                        body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.FormFieldSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -1171,8 +788,8 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/get(contactFormSubmissionList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}/submission`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/get(contactFormSubmissionList)`.
     public func contactFormSubmissionList(
         _ input: Operations.ContactFormSubmissionList.Input
     ) async throws -> Operations.ContactFormSubmissionList.Output {
@@ -1183,7 +800,7 @@ public struct Client: APIProtocol {
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/contact/form/{}/submission",
                     parameters: [
-                        input.path.contactFormId
+                        input.path.contactFormKey
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -1244,8 +861,8 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)`.
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormKey}/submission`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/delete(contactFormSubmissionRemove)`.
     public func contactFormSubmissionRemove(
         _ input: Operations.ContactFormSubmissionRemove.Input
     ) async throws -> Operations.ContactFormSubmissionRemove.Output {
@@ -1256,7 +873,7 @@ public struct Client: APIProtocol {
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/contact/form/{}/submission",
                     parameters: [
-                        input.path.contactFormId
+                        input.path.contactFormKey
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -1323,8 +940,8 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)`.
     public func contactFormSubmissionGet(
         _ input: Operations.ContactFormSubmissionGet.Input
     ) async throws -> Operations.ContactFormSubmissionGet.Output {
@@ -1335,7 +952,7 @@ public struct Client: APIProtocol {
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/contact/form/{}/submission/{}",
                     parameters: [
-                        input.path.contactFormId,
+                        input.path.contactFormKey,
                         input.path.contactFormSubmissionId,
                     ]
                 )
@@ -1397,8 +1014,8 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
     public func contactFormSubmissionUpdate(
         _ input: Operations.ContactFormSubmissionUpdate.Input
     ) async throws -> Operations.ContactFormSubmissionUpdate.Output {
@@ -1409,7 +1026,7 @@ public struct Client: APIProtocol {
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/contact/form/{}/submission/{}",
                     parameters: [
-                        input.path.contactFormId,
+                        input.path.contactFormKey,
                         input.path.contactFormSubmissionId,
                     ]
                 )

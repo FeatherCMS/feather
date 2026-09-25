@@ -15,6 +15,7 @@ struct AdminAddContactFormDefaultInteractor: AdminAddContactFormInteractor {
     }
 
     func create(
+        key: String,
         name: String,
         successMessage: String,
         failureMessage: String,
@@ -22,13 +23,28 @@ struct AdminAddContactFormDefaultInteractor: AdminAddContactFormInteractor {
         fieldIDs: [String],
         mails: [AdminContactFormEmail]
     ) async throws {
-        _ = try await repository.create(
-            name: name,
-            successMessage: successMessage,
-            failureMessage: failureMessage,
-            redirectUrl: redirectUrl,
-            fieldIDs: fieldIDs,
-            mails: mails
-        )
+        do {
+            _ = try await repository.create(
+                key: key,
+                name: name,
+                successMessage: successMessage,
+                failureMessage: failureMessage,
+                redirectUrl: redirectUrl,
+                fieldIDs: fieldIDs,
+                mails: mails
+            )
+        }
+        catch let error as OpenAPIRepositoryError {
+            switch error {
+            case .unauthorized:
+                throw AdminAddContactFormError.unauthorized
+            case .forbidden:
+                throw AdminAddContactFormError.forbidden
+            case .conflict:
+                throw AdminAddContactFormError.conflict
+            case .notFound, .failure, .transport:
+                throw AdminAddContactFormError.unavailable
+            }
+        }
     }
 }

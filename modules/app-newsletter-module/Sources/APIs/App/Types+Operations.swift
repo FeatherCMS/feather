@@ -12,25 +12,25 @@ public import struct Foundation.Date
 #endif
 /// API operations, with input and output types, generated from `#/paths` in the OpenAPI document.
 public enum Operations {
-    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe`.
-    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe/post(appNewsletterCampaignSubscribe)`.
+    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe/post(appNewsletterCampaignSubscribe)`.
     public enum AppNewsletterCampaignSubscribe {
         public static let id: Swift.String = "appNewsletterCampaignSubscribe"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe/POST/path`.
+            /// - Remark: Generated from `#/paths/api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe/POST/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe/POST/path/newsletterCampaignId`.
-                public var newsletterCampaignId:
-                    Components.Parameters.AppNewsletterCampaignIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe/POST/path/newsletterCampaignKey`.
+                public var newsletterCampaignKey:
+                    Components.Parameters.AppNewsletterCampaignKeyParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignId:
+                ///   - newsletterCampaignKey:
                 public init(
-                    newsletterCampaignId: Components.Parameters
-                        .AppNewsletterCampaignIdParameter
+                    newsletterCampaignKey: Components.Parameters
+                        .AppNewsletterCampaignKeyParameter
                 ) {
-                    self.newsletterCampaignId = newsletterCampaignId
+                    self.newsletterCampaignKey = newsletterCampaignKey
                 }
             }
             public var path:
@@ -59,7 +59,7 @@ public enum Operations {
             }
             /// Subscriber added
             ///
-            /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe/post(appNewsletterCampaignSubscribe)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe/post(appNewsletterCampaignSubscribe)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             case noContent(
@@ -67,7 +67,7 @@ public enum Operations {
             )
             /// Subscriber added
             ///
-            /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe/post(appNewsletterCampaignSubscribe)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe/post(appNewsletterCampaignSubscribe)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             public static var noContent: Self {
@@ -101,25 +101,25 @@ public enum Operations {
             )
         }
     }
-    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe`.
-    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
+    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
     public enum AppNewsletterCampaignUnsubscribe {
         public static let id: Swift.String = "appNewsletterCampaignUnsubscribe"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe/POST/path`.
+            /// - Remark: Generated from `#/paths/api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/POST/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe/POST/path/newsletterCampaignId`.
-                public var newsletterCampaignId:
-                    Components.Parameters.AppNewsletterCampaignIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/POST/path/newsletterCampaignKey`.
+                public var newsletterCampaignKey:
+                    Components.Parameters.AppNewsletterCampaignKeyParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - newsletterCampaignId:
+                ///   - newsletterCampaignKey:
                 public init(
-                    newsletterCampaignId: Components.Parameters
-                        .AppNewsletterCampaignIdParameter
+                    newsletterCampaignKey: Components.Parameters
+                        .AppNewsletterCampaignKeyParameter
                 ) {
-                    self.newsletterCampaignId = newsletterCampaignId
+                    self.newsletterCampaignKey = newsletterCampaignKey
                 }
             }
             public var path:
@@ -148,7 +148,7 @@ public enum Operations {
             }
             /// Subscriber unsubscribed
             ///
-            /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe/post(appNewsletterCampaignUnsubscribe)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/post(appNewsletterCampaignUnsubscribe)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             case noContent(
@@ -156,7 +156,7 @@ public enum Operations {
             )
             /// Subscriber unsubscribed
             ///
-            /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe/post(appNewsletterCampaignUnsubscribe)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/post(appNewsletterCampaignUnsubscribe)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             public static var noContent: Self {

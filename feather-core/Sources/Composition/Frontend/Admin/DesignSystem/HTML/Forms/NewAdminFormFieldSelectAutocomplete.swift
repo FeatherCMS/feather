@@ -33,6 +33,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
         public let placeholder: String
         public let options: [Option]
         public let error: String?
+        public let help: String?
         public let isRequired: Bool
         public let isDisabled: Bool
         public let selectionMode: SelectionMode
@@ -44,6 +45,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
             placeholder: String = "",
             options: [Option],
             error: String? = nil,
+            help: String? = nil,
             isRequired: Bool = false,
             isDisabled: Bool = false,
             selectionMode: SelectionMode = .single,
@@ -54,6 +56,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
             self.placeholder = placeholder
             self.options = options
             self.error = error
+            self.help = help
             self.isRequired = isRequired
             self.isDisabled = isDisabled
             self.selectionMode = selectionMode
@@ -396,6 +399,9 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                 .class("new-admin-autocomplete__status")
                 .role("status")
                 .ariaLive(.polite)
+            if let help = state.help {
+                context.build(NewAdminFormFieldHelp(help))
+            }
             if let error = state.error {
                 Span(error).id(errorID).class("field-error")
             }

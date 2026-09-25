@@ -10,13 +10,14 @@ struct ContactDomainTestSuite {
     @Test
     func formRejectsEmptyName() {
         #expect(throws: Form.Error.nameTooShort) {
-            try Form.create(name: "")
+            try Form.create(key: "contact", name: "")
         }
     }
 
     @Test
     func formCreatePreservesMessagesAndRedirect() throws {
         let form = try Form.create(
+            key: "contact",
             name: "Contact",
             successMessage: "Thanks",
             failureMessage: "Try again",
@@ -40,6 +41,21 @@ struct ContactDomainTestSuite {
             position: 0
         )
         #expect(item.allowedValues.count == 1)
+    }
+
+    @Test
+    func hiddenFieldCanBeCreatedWithoutAllowedValues() throws {
+        let field = try FormField.create(
+            formId: "form-1",
+            key: "patient",
+            type: .hidden,
+            label: "Patient inquiry marker",
+            isRequired: true
+        )
+
+        #expect(field.type == .hidden)
+        #expect(field.allowedValues.isEmpty)
+        #expect(field.isRequired)
     }
 
     @Test

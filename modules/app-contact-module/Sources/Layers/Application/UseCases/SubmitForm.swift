@@ -6,14 +6,6 @@ import Foundation
 import struct Foundation.Date
 
 public struct SubmitForm: UseCase {
-    public struct Error: UseCaseError {
-        public let message: String
-
-        public init(message: String) {
-            self.message = message
-        }
-    }
-
     let transaction: any TransactionExecutor<WriteForm>
 
     public init(
@@ -23,18 +15,18 @@ public struct SubmitForm: UseCase {
     }
 
     public struct Input: DTO {
-        public let formId: String
+        public let formKey: String
         public let valuesJSON: String
         public let itemsSnapshotJSON: String
         public let metadataJSON: String?
 
         public init(
-            formId: String,
+            formKey: String,
             valuesJSON: String,
             itemsSnapshotJSON: String,
             metadataJSON: String? = nil
         ) {
-            self.formId = formId
+            self.formKey = formKey
             self.valuesJSON = valuesJSON
             self.itemsSnapshotJSON = itemsSnapshotJSON
             self.metadataJSON = metadataJSON
@@ -45,14 +37,18 @@ public struct SubmitForm: UseCase {
         _ input: Input
     ) async throws -> SubmissionDetail {
         try await transaction.run { scope in
-            let fields = try await scope.field.listBy(formId: input.formId)
+            guard let form = try await scope.form.findBy(key: input.formKey)
+            else {
+                throw Error.formNotFound
+            }
+            let fields = try await scope.field.listBy(formId: form.id)
             try validate(
                 valuesJSON: input.valuesJSON,
                 against: fields
             )
 
             let model = Submission.create(
-                formId: input.formId,
+                formId: form.id,
                 valuesJSON: input.valuesJSON,
                 itemsSnapshotJSON: input.itemsSnapshotJSON,
                 metadataJSON: input.metadataJSON,
@@ -70,14 +66,14 @@ public struct SubmitForm: UseCase {
             let object = try? JSONSerialization.jsonObject(with: data),
             let values = object as? [String: Any]
         else {
-            throw Error(message: "Form values must be a JSON object")
+            throw Error.invalidValues("Form values must be a JSON object")
         }
 
         for field in fields {
             guard let value = values[field.key] else {
                 if field.isRequired {
-                    throw Error(
-                        message: "Missing required form field: (field.key)"
+                    throw Error.invalidValues(
+                        "Missing required form field: \(field.key)"
                     )
                 }
                 continue
@@ -86,8 +82,8 @@ public struct SubmitForm: UseCase {
             switch field.type {
             case .text, .textarea:
                 guard value is String else {
-                    throw Error(
-                        message: "Invalid value for form field: (field.key)"
+                    throw Error.invalidValues(
+                        "Invalid value for form field: \(field.key)"
                     )
                 }
             case .select, .radio:
@@ -97,17 +93,31 @@ public struct SubmitForm: UseCase {
                         $0.value == stringValue
                     })
                 else {
-                    throw Error(
-                        message: "Invalid option for form field: (field.key)"
+                    throw Error.invalidValues(
+                        "Invalid option for form field: \(field.key)"
                     )
                 }
             case .toggle:
-                guard value is Bool else {
-                    throw Error(
-                        message: "Invalid value for form field: (field.key)"
+                guard
+                    let stringValue = value as? String,
+                    ["true", "false"].contains(stringValue)
+                else {
+                    throw Error.invalidValues(
+                        "Invalid value for form field: \(field.key)"
+                    )
+                }
+            case .hidden:
+                guard value is String else {
+                    throw Error.invalidValues(
+                        "Invalid value for form field: \(field.key)"
                     )
                 }
             }
         }
+    }
+
+    public enum Error: UseCaseError {
+        case formNotFound
+        case invalidValues(String)
     }
 }

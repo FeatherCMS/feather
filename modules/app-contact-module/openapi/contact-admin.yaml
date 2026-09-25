@@ -54,13 +54,13 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/contact/form/{contactFormId}:
+  /api/v1/admin/contact/form/{contactFormKey}:
     get:
       tags:
       - ContactForms
       operationId: contactFormGet
       parameters:
-      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/ContactFormKeyParameter'
       responses:
         200:
           $ref: '#/components/responses/ContactFormResponse'
@@ -77,7 +77,7 @@ paths:
       - ContactForms
       operationId: contactFormUpdate
       parameters:
-      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/ContactFormKeyParameter'
       requestBody:
         $ref: '#/components/requestBodies/ContactFormCreateRequestBody'
       responses:
@@ -85,95 +85,6 @@ paths:
           $ref: '#/components/responses/ContactFormResponse'
         404:
           description: Contact form not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/contact/form/{contactFormId}/field:
-    get:
-      tags:
-      - ContactForms
-      operationId: formFieldList
-      parameters:
-      - $ref: '#/components/parameters/ContactFormIdParameter'
-      responses:
-        200:
-          $ref: '#/components/responses/FormFieldListResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    post:
-      tags:
-      - ContactForms
-      operationId: formFieldCreate
-      parameters:
-      - $ref: '#/components/parameters/ContactFormIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/FormFieldCreateRequestBody'
-      responses:
-        201:
-          $ref: '#/components/responses/FormFieldResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    delete:
-      tags:
-      - ContactForms
-      operationId: formFieldRemove
-      parameters:
-      - $ref: '#/components/parameters/ContactFormIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/DeleteRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-  /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}:
-    get:
-      tags:
-      - ContactForms
-      operationId: formFieldGet
-      parameters:
-      - $ref: '#/components/parameters/ContactFormIdParameter'
-      - $ref: '#/components/parameters/FormFieldIdParameter'
-      responses:
-        200:
-          $ref: '#/components/responses/FormFieldResponse'
-        404:
-          description: Contact form field not found
-        401:
-          description: Unauthorized
-        403:
-          description: Forbidden
-      security:
-      - bearerAuth: []
-    put:
-      tags:
-      - ContactForms
-      operationId: formFieldUpdate
-      parameters:
-      - $ref: '#/components/parameters/ContactFormIdParameter'
-      - $ref: '#/components/parameters/FormFieldIdParameter'
-      requestBody:
-        $ref: '#/components/requestBodies/FormFieldPatchRequestBody'
-      responses:
-        200:
-          $ref: '#/components/responses/FormFieldResponse'
-        404:
-          description: Contact form field not found
         401:
           description: Unauthorized
         403:
@@ -261,13 +172,13 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/contact/form/{contactFormId}/submission:
+  /api/v1/admin/contact/form/{contactFormKey}/submission:
     get:
       tags:
       - ContactForms
       operationId: contactFormSubmissionList
       parameters:
-      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/ContactFormKeyParameter'
       responses:
         200:
           $ref: '#/components/responses/ContactFormSubmissionListResponse'
@@ -282,7 +193,7 @@ paths:
       - ContactForms
       operationId: contactFormSubmissionRemove
       parameters:
-      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/ContactFormKeyParameter'
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -294,13 +205,13 @@ paths:
           description: Forbidden
       security:
       - bearerAuth: []
-  /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}:
+  /api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}:
     get:
       tags:
       - ContactForms
       operationId: contactFormSubmissionGet
       parameters:
-      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/ContactFormKeyParameter'
       - $ref: '#/components/parameters/ContactFormSubmissionIdParameter'
       responses:
         200:
@@ -318,7 +229,7 @@ paths:
       - ContactForms
       operationId: contactFormSubmissionUpdate
       parameters:
-      - $ref: '#/components/parameters/ContactFormIdParameter'
+      - $ref: '#/components/parameters/ContactFormKeyParameter'
       - $ref: '#/components/parameters/ContactFormSubmissionIdParameter'
       requestBody:
         $ref: '#/components/requestBodies/ContactFormSubmissionPatchRequestBody'
@@ -342,7 +253,7 @@ components:
     ContactFormSchema:
       type: object
       properties:
-        id:
+        key:
           type: string
         name:
           type: string
@@ -363,7 +274,7 @@ components:
           type: number
           format: double
       required:
-      - id
+      - key
       - name
       - successMessage
       - failureMessage
@@ -379,8 +290,6 @@ components:
       type: object
       properties:
         id:
-          type: string
-        formId:
           type: string
         key:
           type: string
@@ -402,7 +311,6 @@ components:
           format: double
       required:
       - id
-      - formId
       - key
       - type
       - label
@@ -423,8 +331,6 @@ components:
       properties:
         id:
           type: string
-        formId:
-          type: string
         mailFrom:
           type: string
         mailTo:
@@ -432,7 +338,9 @@ components:
         subject:
           type: string
         additionalHeaders:
-          type: string
+          type: array
+          items:
+            type: string
         messageBody:
           type: string
         createdAt:
@@ -443,7 +351,6 @@ components:
           format: double
       required:
       - id
-      - formId
       - mailFrom
       - mailTo
       - subject
@@ -454,6 +361,8 @@ components:
     ContactFormCreateSchema:
       type: object
       properties:
+        key:
+          type: string
         name:
           type: string
         successMessage:
@@ -467,6 +376,7 @@ components:
         mails:
           $ref: '#/components/schemas/SubmissionMailInputsSchema'
       required:
+      - key
       - name
     ContactFieldIDsSchema:
       type: array
@@ -486,7 +396,7 @@ components:
         subject:
           type: string
         additionalHeaders:
-          $ref: '#/components/schemas/ContactContentField'
+          $ref: '#/components/schemas/ContactAdditionalHeadersSchema'
         messageBody:
           type: string
       required:
@@ -494,6 +404,10 @@ components:
       - mailTo
       - subject
       - messageBody
+    ContactAdditionalHeadersSchema:
+      type: array
+      items:
+        type: string
     DeleteRequestSchema:
       type: object
       properties:
@@ -553,7 +467,7 @@ components:
       - requested
       - deleted
       - omitted
-    ContactIdField:
+    ContactFormKeyField:
       type: string
     FormFieldListSchema:
       type: array
@@ -582,6 +496,8 @@ components:
       type: boolean
     FormFieldPositionField:
       type: integer
+    ContactIdField:
+      type: string
     FormFieldPatchSchema:
       type: object
       properties:
@@ -612,7 +528,7 @@ components:
       properties:
         id:
           type: string
-        formId:
+        formKey:
           type: string
         values:
           type: object
@@ -636,7 +552,7 @@ components:
           format: double
       required:
       - id
-      - formId
+      - formKey
       - values
       - itemsSnapshot
       - metadata
@@ -694,12 +610,12 @@ components:
           schema:
             $ref: '#/components/schemas/ContactFormSubmissionSchema'
   parameters:
-    ContactFormIdParameter:
-      name: contactFormId
+    ContactFormKeyParameter:
+      name: contactFormKey
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/ContactIdField'
+        $ref: '#/components/schemas/ContactFormKeyField'
     FormFieldIdParameter:
       name: formFieldId
       in: path

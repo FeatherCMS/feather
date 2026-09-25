@@ -15,8 +15,15 @@ public struct GetCampaign: UseCase {
         self.transaction = transaction
     }
     public struct Input: DTO {
-        public let id: String
-        public init(id: String) { self.id = id }
+        enum Identifier: Sendable {
+            case id(String)
+            case key(String)
+        }
+
+        let identifier: Identifier
+
+        public init(key: String) { self.identifier = .key(key) }
+        public init(id: String) { self.identifier = .id(id) }
     }
     public func execute(subject: Subject, input: Input) async throws
         -> CampaignDetail
@@ -26,7 +33,14 @@ public struct GetCampaign: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            guard let value = try await scope.newsletter.findBy(id: input.id)
+            let value: Campaign?
+            switch input.identifier {
+            case .id(let id):
+                value = try await scope.newsletter.findBy(id: id)
+            case .key(let key):
+                value = try await scope.newsletter.findBy(key: key)
+            }
+            guard let value
             else { throw Error.notFound }
             return value.asDetail
         }

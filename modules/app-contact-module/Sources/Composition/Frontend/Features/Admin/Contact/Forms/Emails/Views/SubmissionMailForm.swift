@@ -44,12 +44,14 @@ struct SubmissionMailForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldTextArea(
+                NewAdminFormFieldMultiInput(
                     state: .init(
-                        name: "additionalHeaders",
+                        name: "additionalHeaders[]",
                         label: "Additional headers",
-                        value: mail.additionalHeaders,
-                        style: .small
+                        values: mail.additionalHeaders,
+                        help:
+                            "Type a header and press Enter to add it. Examples: Reply-To: {{email}}, CC: manager@example.com, BCC: archive@example.com.",
+                        commitsOnComma: false
                     )
                 )
             )

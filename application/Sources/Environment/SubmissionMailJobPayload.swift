@@ -4,7 +4,7 @@ public struct SubmissionMailJobPayload: Codable, Sendable {
     public let mailFrom: String
     public let mailTo: String
     public let subject: String
-    public let additionalHeaders: String
+    public let additionalHeaders: [String]
     public let messageBody: String
     public let deliveryIssueId: String?
     public let deliveryNewsletterId: String?
@@ -13,7 +13,7 @@ public struct SubmissionMailJobPayload: Codable, Sendable {
         mailFrom: String,
         mailTo: String,
         subject: String,
-        additionalHeaders: String,
+        additionalHeaders: [String],
         messageBody: String,
         deliveryIssueId: String? = nil,
         deliveryNewsletterId: String? = nil

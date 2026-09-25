@@ -3,6 +3,7 @@ import FeatherValidation
 import HTML
 import Hummingbird
 import NewsletterAdminAPI
+import NewsletterContracts
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -12,55 +13,101 @@ struct AdminTestNewsletterIssueEmailDefaultController:
     AdminTestNewsletterIssueEmailController
 {
     let apiBuilder: NewsletterAPIBuilder
+
     func send(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> Response
     {
-        let newsletterId = try context.requiredParameter("newsletterId")
+        guard context.isCurrentUserAllowed(to: Permissions.Issues.update)
+        else { return Response(status: .forbidden) }
+        let newsletterKey = try context.requiredParameter("newsletterId")
         let issueId = context.parameters.get("issueId", as: String.self)
-        let form = try await request.decode(
-            as: NewsletterIssueTestEmailForm.self,
-            context: context
-        )
-        let body = Components.RequestBodies
-            .NewsletterIssueTestEmailRequestBody.json(
-                .init(
-                    email: form.email,
-                    subject: form.subject,
-                    content: form.content
-                )
-            )
-        if let issueId {
-            _ = try await apiBuilder.makeNewsletterAdmin(context)
-                .newsletterIssueTestEmail(
-                    path: .init(
-                        newsletterCampaignId: newsletterId,
-                        newsletterIssueId: issueId
-                    ),
-                    body: body
-                )
-        }
-        else {
-            _ = try await apiBuilder.makeNewsletterAdmin(context)
-                .newsletterCampaignTestEmail(
-                    path: .init(newsletterCampaignId: newsletterId),
-                    body: body
-                )
-        }
-        return AdminNotificationFlash.redirect(
-            to: issueId.map {
+        let location =
+            issueId.map {
                 NewsletterAdminRoutes.issueEdit(
-                    newsletterID: RouterPath(newsletterId),
+                    newsletterID: RouterPath(newsletterKey),
                     issueID: RouterPath($0)
                 )
                 .description
             }
-                ?? NewsletterAdminRoutes.issueAdd(RouterPath(newsletterId))
-                .description,
-            notification: .init(
-                title: "Sent",
-                message: "Test email queued successfully."
+            ?? NewsletterAdminRoutes.issueAdd(RouterPath(newsletterKey))
+            .description
+
+        do {
+            let form = try await request.decode(
+                as: NewsletterIssueTestEmailForm.self,
+                context: context
             )
-        )
+            let body = Components.RequestBodies
+                .NewsletterIssueTestEmailRequestBody.json(
+                    .init(
+                        email: form.email,
+                        subject: form.subject,
+                        content: form.content
+                    )
+                )
+            let api = apiBuilder.makeNewsletterAdmin(context)
+
+            if let issueId {
+                let response = try await api.newsletterIssueTestEmail(
+                    path: .init(
+                        newsletterCampaignKey: newsletterKey,
+                        newsletterIssueId: issueId
+                    ),
+                    body: body
+                )
+                switch response {
+                case .noContent:
+                    break
+                case .notFound:
+                    throw OpenAPIRepositoryError.notFound
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
+            else {
+                let response = try await api.newsletterCampaignTestEmail(
+                    path: .init(newsletterCampaignKey: newsletterKey),
+                    body: body
+                )
+                switch response {
+                case .noContent:
+                    break
+                case .unauthorized:
+                    throw OpenAPIRepositoryError.unauthorized
+                case .forbidden:
+                    throw OpenAPIRepositoryError.forbidden
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
+
+            return AdminNotificationFlash.redirect(
+                to: location,
+                notification: .init(
+                    title: "Sent",
+                    message: "Test email queued successfully."
+                )
+            )
+        }
+        catch {
+            return AdminNotificationFlash.redirect(
+                to: location,
+                notification: .init(
+                    title: "Test email failed",
+                    message: error.displayMessage
+                )
+            )
+        }
     }
 }

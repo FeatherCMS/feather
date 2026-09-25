@@ -16,12 +16,16 @@ extension AdminAPIGateway {
         let current = try await self.useCases.makeGetNewsletterIssue()
             .execute(
                 subject: subject,
-                input: .init(id: input.path.newsletterIssueId)
+                input: .init(
+                    campaignKey: input.path.newsletterCampaignKey,
+                    id: input.path.newsletterIssueId
+                )
             )
         let result = try await self.useCases.makeUpdateNewsletterIssue()
             .execute(
                 subject: subject,
                 input: .init(
+                    campaignKey: input.path.newsletterCampaignKey,
                     id: current.id,
                     subject: body.subject ?? current.subject,
                     content: body.content ?? current.content,
@@ -30,9 +34,15 @@ extension AdminAPIGateway {
                     } ?? current.scheduledDate
                 )
             )
-        if result.scheduledDate == nil && result.status == .draft {
+        if current.scheduledDate == nil {
             try await useCases.enqueueIssueEmails(issue: result)
         }
-        return .ok(.init(body: .json(map(result))))
+        return .ok(
+            .init(
+                body: .json(
+                    map(result, campaignKey: input.path.newsletterCampaignKey)
+                )
+            )
+        )
     }
 }

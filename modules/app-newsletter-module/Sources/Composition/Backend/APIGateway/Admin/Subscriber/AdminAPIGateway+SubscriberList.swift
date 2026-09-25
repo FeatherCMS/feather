@@ -12,8 +12,19 @@ extension AdminAPIGateway {
             .makeListNewsletterSubscribers()
             .execute(
                 subject: subject,
-                input: .init(newsletterId: input.path.newsletterCampaignId)
+                input: .init(campaignKey: input.path.newsletterCampaignKey)
             )
-        return .ok(.init(body: .json(result.map(map))))
+        return .ok(
+            .init(
+                body: .json(
+                    result.map {
+                        map(
+                            $0,
+                            campaignKey: input.path.newsletterCampaignKey
+                        )
+                    }
+                )
+            )
+        )
     }
 }

@@ -21,8 +21,8 @@ public struct GetForm: UseCase {
         self.transaction = transaction
     }
     public struct Input: DTO {
-        public let id: String
-        public init(id: String) { self.id = id }
+        public let key: String
+        public init(key: String) { self.key = key }
     }
     public func execute(
         subject: Subject,
@@ -45,15 +45,15 @@ public struct GetForm: UseCase {
             )
         }
         return try await transaction.run { scope in
-            guard let value = try await scope.form.findBy(id: input.id) else {
-                throw Error.notFound
+            guard let value = try await scope.form.findBy(key: input.key) else {
+                throw Error.formNotFound
             }
-            let fields = try await scope.field.listBy(formId: input.id)
+            let fields = try await scope.field.listBy(formId: value.id)
                 .map(\.asDetail)
-            let mails = try await scope.mail.listBy(formId: input.id)
+            let mails = try await scope.mail.listBy(formId: value.id)
                 .map(\.asDetail)
             return value.asDetail(fields: fields, mails: mails)
         }
     }
-    public enum Error: UseCaseError { case notFound }
+    public enum Error: UseCaseError { case formNotFound }
 }

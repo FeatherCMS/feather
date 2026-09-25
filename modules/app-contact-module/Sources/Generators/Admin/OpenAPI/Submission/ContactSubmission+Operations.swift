@@ -5,14 +5,14 @@ import OpenAPIKit30
 protocol ContactFormSubmissionOperation: ContactFormOperation {}
 extension ContactFormSubmissionOperation {
     var parameters: [ParameterRepresentable] {
-        [ContactFormIdParameter().reference()]
+        [ContactFormKeyParameter().reference()]
     }
 }
 protocol ContactFormSubmissionIDOperation: ContactFormSubmissionOperation {}
 extension ContactFormSubmissionIDOperation {
     var parameters: [ParameterRepresentable] {
         [
-            ContactFormIdParameter().reference(),
+            ContactFormKeyParameter().reference(),
             ContactFormSubmissionIdParameter().reference(),
         ]
     }

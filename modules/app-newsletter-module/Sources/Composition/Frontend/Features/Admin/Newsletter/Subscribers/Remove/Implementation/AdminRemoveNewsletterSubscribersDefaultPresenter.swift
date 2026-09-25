@@ -13,17 +13,25 @@ struct AdminRemoveNewsletterSubscribersDefaultPresenter:
     func renderRemovePage(
         items: [NewAdminRemoveItemContext],
         search: String?,
-        campaignId: String?
+        campaignId: String?,
+        returnTo: String?
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        let cancel = NewAdminLocation.url(
+        let list = NewAdminLocation.url(
             path: NewsletterAdminRoutes.subscribers.description,
             search: search,
             queryItems: campaignId?.emptyToNil.map { [("campaignId", $0)] }
                 ?? []
         )
+        let cancel =
+            returnTo.map {
+                NewAdminLocation.removeCancel(
+                    path: NewsletterAdminRoutes.subscribers.description,
+                    returnTo: $0
+                )
+            } ?? list
         return try await renderingEngine.renderNewAdminPage(
             request: request,
             context: context,

@@ -133,4 +133,13 @@ struct DeliveryTable {
             return try Row(from: row)
         }
     }
+
+    func delete(
+        issueId: String
+    ) async throws {
+        try await connection.run(
+            query:
+                #"DELETE FROM newsletter_delivery WHERE issue_id = \#(issueId);"#
+        ) { _ in }
+    }
 }

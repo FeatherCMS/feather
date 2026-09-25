@@ -13,7 +13,10 @@ struct AdminEditContactFormSubmissionOpenAPIRepository {
     func update(formId: String, id: String, status: String) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.contactFormSubmissionUpdate(
-                path: .init(contactFormId: formId, contactFormSubmissionId: id),
+                path: .init(
+                    contactFormKey: formId,
+                    contactFormSubmissionId: id
+                ),
                 body: .json(.init(status: status))
             )
             switch response {

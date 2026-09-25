@@ -26,13 +26,13 @@ struct AdminListContactFormEmailsDefaultPresenter:
             title: "Contact form emails",
             content: ContactFormEmailsTable(
                 state: .init(
-                    id: item.id,
+                    id: item.key,
                     mails: item.mails,
                     permissions: .init(
                         Set(permissions.map(PermissionKey.init))
                     ),
                     breadcrumb: ContactAdminRoutes.formEmailsBreadcrumb(
-                        RouterPath(item.id)
+                        RouterPath(item.key)
                     ),
                     error: error
                 )

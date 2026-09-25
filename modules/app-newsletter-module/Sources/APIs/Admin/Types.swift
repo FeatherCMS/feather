@@ -27,72 +27,72 @@ public protocol APIProtocol: Sendable {
     func newsletterCampaignRemove(
         _ input: Operations.NewsletterCampaignRemove.Input
     ) async throws -> Operations.NewsletterCampaignRemove.Output
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/get(newsletterCampaignGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/get(newsletterCampaignGet)`.
     func newsletterCampaignGet(_ input: Operations.NewsletterCampaignGet.Input)
         async throws -> Operations.NewsletterCampaignGet.Output
-    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/patch(newsletterCampaignUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/patch(newsletterCampaignUpdate)`.
     func newsletterCampaignUpdate(
         _ input: Operations.NewsletterCampaignUpdate.Input
     ) async throws -> Operations.NewsletterCampaignUpdate.Output
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/get(newsletterIssueList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/get(newsletterIssueList)`.
     func newsletterIssueList(_ input: Operations.NewsletterIssueList.Input)
         async throws -> Operations.NewsletterIssueList.Output
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/post(newsletterIssueCreate)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/post(newsletterIssueCreate)`.
     func newsletterIssueCreate(_ input: Operations.NewsletterIssueCreate.Input)
         async throws -> Operations.NewsletterIssueCreate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)`.
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/delete(newsletterIssueRemove)`.
     func newsletterIssueRemove(_ input: Operations.NewsletterIssueRemove.Input)
         async throws -> Operations.NewsletterIssueRemove.Output
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/post(newsletterCampaignTestEmail)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/post(newsletterCampaignTestEmail)`.
     func newsletterCampaignTestEmail(
         _ input: Operations.NewsletterCampaignTestEmail.Input
     ) async throws -> Operations.NewsletterCampaignTestEmail.Output
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/get(newsletterIssueGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/get(newsletterIssueGet)`.
     func newsletterIssueGet(_ input: Operations.NewsletterIssueGet.Input)
         async throws -> Operations.NewsletterIssueGet.Output
-    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)`.
     func newsletterIssueUpdate(_ input: Operations.NewsletterIssueUpdate.Input)
         async throws -> Operations.NewsletterIssueUpdate.Output
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)`.
     func newsletterIssueDeliveryList(
         _ input: Operations.NewsletterIssueDeliveryList.Input
     ) async throws -> Operations.NewsletterIssueDeliveryList.Output
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)`.
     func newsletterIssueTestEmail(
         _ input: Operations.NewsletterIssueTestEmail.Input
     ) async throws -> Operations.NewsletterIssueTestEmail.Output
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/get(newsletterSubscriberList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/get(newsletterSubscriberList)`.
     func newsletterSubscriberList(
         _ input: Operations.NewsletterSubscriberList.Input
     ) async throws -> Operations.NewsletterSubscriberList.Output
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/post(newsletterSubscriberCreate)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/post(newsletterSubscriberCreate)`.
     func newsletterSubscriberCreate(
         _ input: Operations.NewsletterSubscriberCreate.Input
     ) async throws -> Operations.NewsletterSubscriberCreate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)`.
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/delete(newsletterSubscriberRemove)`.
     func newsletterSubscriberRemove(
         _ input: Operations.NewsletterSubscriberRemove.Input
     ) async throws -> Operations.NewsletterSubscriberRemove.Output
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/get(newsletterSubscriberGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/get(newsletterSubscriberGet)`.
     func newsletterSubscriberGet(
         _ input: Operations.NewsletterSubscriberGet.Input
     ) async throws -> Operations.NewsletterSubscriberGet.Output
-    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/patch(newsletterSubscriberUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/patch(newsletterSubscriberUpdate)`.
     func newsletterSubscriberUpdate(
         _ input: Operations.NewsletterSubscriberUpdate.Input
     ) async throws -> Operations.NewsletterSubscriberUpdate.Output
@@ -135,8 +135,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/get(newsletterCampaignGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/get(newsletterCampaignGet)`.
     public func newsletterCampaignGet(
         path: Operations.NewsletterCampaignGet.Input.Path,
         headers: Operations.NewsletterCampaignGet.Input.Headers = .init()
@@ -148,8 +148,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/patch(newsletterCampaignUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/patch(newsletterCampaignUpdate)`.
     public func newsletterCampaignUpdate(
         path: Operations.NewsletterCampaignUpdate.Input.Path,
         headers: Operations.NewsletterCampaignUpdate.Input.Headers = .init(),
@@ -163,8 +163,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/get(newsletterIssueList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/get(newsletterIssueList)`.
     public func newsletterIssueList(
         path: Operations.NewsletterIssueList.Input.Path,
         headers: Operations.NewsletterIssueList.Input.Headers = .init()
@@ -176,8 +176,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/post(newsletterIssueCreate)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/post(newsletterIssueCreate)`.
     public func newsletterIssueCreate(
         path: Operations.NewsletterIssueCreate.Input.Path,
         headers: Operations.NewsletterIssueCreate.Input.Headers = .init(),
@@ -191,8 +191,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/delete(newsletterIssueRemove)`.
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/delete(newsletterIssueRemove)`.
     public func newsletterIssueRemove(
         path: Operations.NewsletterIssueRemove.Input.Path,
         headers: Operations.NewsletterIssueRemove.Input.Headers = .init(),
@@ -206,8 +206,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email/post(newsletterCampaignTestEmail)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/post(newsletterCampaignTestEmail)`.
     public func newsletterCampaignTestEmail(
         path: Operations.NewsletterCampaignTestEmail.Input.Path,
         body: Components.RequestBodies.NewsletterIssueTestEmailRequestBody
@@ -219,8 +219,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/get(newsletterIssueGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/get(newsletterIssueGet)`.
     public func newsletterIssueGet(
         path: Operations.NewsletterIssueGet.Input.Path,
         headers: Operations.NewsletterIssueGet.Input.Headers = .init()
@@ -232,8 +232,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/patch(newsletterIssueUpdate)`.
     public func newsletterIssueUpdate(
         path: Operations.NewsletterIssueUpdate.Input.Path,
         headers: Operations.NewsletterIssueUpdate.Input.Headers = .init(),
@@ -247,8 +247,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries/get(newsletterIssueDeliveryList)`.
     public func newsletterIssueDeliveryList(
         path: Operations.NewsletterIssueDeliveryList.Input.Path,
         headers: Operations.NewsletterIssueDeliveryList.Input.Headers = .init()
@@ -260,8 +260,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)`.
     public func newsletterIssueTestEmail(
         path: Operations.NewsletterIssueTestEmail.Input.Path,
         body: Components.RequestBodies.NewsletterIssueTestEmailRequestBody
@@ -273,8 +273,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/get(newsletterSubscriberList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/get(newsletterSubscriberList)`.
     public func newsletterSubscriberList(
         path: Operations.NewsletterSubscriberList.Input.Path,
         headers: Operations.NewsletterSubscriberList.Input.Headers = .init()
@@ -286,8 +286,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/post(newsletterSubscriberCreate)`.
+    /// - Remark: HTTP `POST /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/post(newsletterSubscriberCreate)`.
     public func newsletterSubscriberCreate(
         path: Operations.NewsletterSubscriberCreate.Input.Path,
         headers: Operations.NewsletterSubscriberCreate.Input.Headers = .init(),
@@ -301,8 +301,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/delete(newsletterSubscriberRemove)`.
+    /// - Remark: HTTP `DELETE /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/delete(newsletterSubscriberRemove)`.
     public func newsletterSubscriberRemove(
         path: Operations.NewsletterSubscriberRemove.Input.Path,
         headers: Operations.NewsletterSubscriberRemove.Input.Headers = .init(),
@@ -316,8 +316,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/get(newsletterSubscriberGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/get(newsletterSubscriberGet)`.
     public func newsletterSubscriberGet(
         path: Operations.NewsletterSubscriberGet.Input.Path,
         headers: Operations.NewsletterSubscriberGet.Input.Headers = .init()
@@ -329,8 +329,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}/patch(newsletterSubscriberUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}/patch(newsletterSubscriberUpdate)`.
     public func newsletterSubscriberUpdate(
         path: Operations.NewsletterSubscriberUpdate.Input.Path,
         headers: Operations.NewsletterSubscriberUpdate.Input.Headers = .init(),

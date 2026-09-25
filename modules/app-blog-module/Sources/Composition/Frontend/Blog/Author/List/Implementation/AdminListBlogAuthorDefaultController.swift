@@ -71,10 +71,10 @@ struct AdminListBlogAuthorDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (_, presenter) = buildRuntime((request, context))
-        let selectedIds = request.queryStrings("selectedIds")
+        let ids = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
-        guard !selectedIds.isEmpty else {
+        guard !ids.isEmpty else {
             return Response(
                 status: .seeOther,
                 headers: [
@@ -90,7 +90,7 @@ struct AdminListBlogAuthorDefaultController:
             try await presenter.renderRemovePage(
                 page: page,
                 search: search,
-                items: selectedIds.map { .init(id: $0, label: $0) }
+                items: ids.map { .init(id: $0, label: $0) }
             )
             .response(from: request, context: context)
     }

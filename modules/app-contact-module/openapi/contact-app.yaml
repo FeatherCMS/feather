@@ -8,23 +8,23 @@ tags:
 servers:
 - url: http://127.0.0.1:8080/
 paths:
-  /api/v1/contact/form/{contactFormId}:
+  /api/v1/contact/form/{contactFormKey}:
     get:
       tags:
       - ContactForms
       operationId: appContactFormGet
       parameters:
-      - $ref: '#/components/parameters/AppContactFormIdParameter'
+      - $ref: '#/components/parameters/AppContactFormKeyParameter'
       responses:
         200:
           $ref: '#/components/responses/AppContactFormResponse'
-  /api/v1/contact/form/{contactFormId}/submit:
+  /api/v1/contact/form/{contactFormKey}/submit:
     post:
       tags:
       - ContactForms
       operationId: appContactFormSubmission
       parameters:
-      - $ref: '#/components/parameters/AppContactFormIdParameter'
+      - $ref: '#/components/parameters/AppContactFormKeyParameter'
       requestBody:
         $ref: '#/components/requestBodies/AppContactFormSubmissionRequestBody'
       responses:
@@ -32,12 +32,12 @@ paths:
           $ref: '#/components/responses/AppContactFormSubmissionResponse'
 components:
   schemas:
-    AppContactIdField:
+    AppContactKeyField:
       type: string
     AppContactFormSchema:
       type: object
       properties:
-        id:
+        key:
           type: string
         name:
           type: string
@@ -52,7 +52,7 @@ components:
           items:
             $ref: '#/components/schemas/AppFormFieldSchema'
       required:
-      - id
+      - key
       - name
       - successMessage
       - failureMessage
@@ -121,12 +121,12 @@ components:
           schema:
             $ref: '#/components/schemas/AppContactFormSubmissionResponseSchema'
   parameters:
-    AppContactFormIdParameter:
-      name: contactFormId
+    AppContactFormKeyParameter:
+      name: contactFormKey
       in: path
       required: true
       schema:
-        $ref: '#/components/schemas/AppContactIdField'
+        $ref: '#/components/schemas/AppContactKeyField'
   requestBodies:
     AppContactFormSubmissionRequestBody:
       content:

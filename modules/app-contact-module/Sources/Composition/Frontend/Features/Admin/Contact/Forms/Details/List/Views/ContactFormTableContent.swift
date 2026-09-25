@@ -105,7 +105,7 @@ struct ContactFormTableContent: Component {
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
-                                                    Th("ID")
+                                                    Th("Key")
                                                     Th("Name")
                                                     Th("Actions")
                                                 }
@@ -116,7 +116,7 @@ struct ContactFormTableContent: Component {
                                                         if canDelete {
                                                             context.build(
                                                                 NewAdminListRowCheckbox(
-                                                                    id: item.id
+                                                                    id: item.key
                                                                 )
                                                             )
                                                         }
@@ -131,7 +131,7 @@ struct ContactFormTableContent: Component {
                                                                 .type(.button)
                                                                 .data(
                                                                     "mce-picker-item",
-                                                                    item.id
+                                                                    item.key
                                                                 )
                                                                 .data(
                                                                     "mce-picker-label",
@@ -166,7 +166,7 @@ struct ContactFormTableContent: Component {
                                                                             .formDetails(
                                                                                 RouterPath(
                                                                                     item
-                                                                                        .id
+                                                                                        .key
                                                                                 )
                                                                             )
                                                                             .description,
@@ -186,7 +186,7 @@ struct ContactFormTableContent: Component {
                                                                             .formEdit(
                                                                                 RouterPath(
                                                                                     item
-                                                                                        .id
+                                                                                        .key
                                                                                 )
                                                                             )
                                                                             .description,
@@ -210,7 +210,7 @@ struct ContactFormTableContent: Component {
                                                                                     .description,
                                                                                 ids: [
                                                                                     item
-                                                                                        .id
+                                                                                        .key
                                                                                 ],
                                                                                 returnTo:
                                                                                     returnTo
@@ -285,15 +285,15 @@ struct ContactFormTableContent: Component {
     private func identifierCell(item: AdminContactFormDetailsItem) -> Td {
         Td {
             Span {
-                Span(item.id)
+                Span(item.key)
                 if permissions.allows(ContactPermissions.Forms.read) {
                     Button {
                         FeatherIcons.clipboard()
                     }
                     .type(.button)
-                    .ariaLabel("Copy contact form identifier \(item.id)")
+                    .ariaLabel("Copy contact form key \(item.key)")
                     .onClick(
-                        "navigator.clipboard.writeText('@ContactForm(id: \(item.id))').then(()=>window.toast&&window.toast.success('Copied','Contact form identifier copied to clipboard'))"
+                        "navigator.clipboard.writeText('@ContactForm(key: \(item.key))').then(()=>window.toast&&window.toast.success('Copied','Contact form key copied to clipboard'))"
                     )
                     .style(
                         "display:inline-flex;align-items:center;justify-content:center;width:0.95rem;height:0.95rem;flex:0 0 auto;padding:0;border:0;background:transparent;color:var(--cms-link);cursor:pointer;"
@@ -304,6 +304,6 @@ struct ContactFormTableContent: Component {
                 "display:inline-flex;align-items:center;gap:0.35rem;vertical-align:middle;line-height:1.25;"
             )
         }
-        .data("label", "ID")
+        .data("label", "Key")
     }
 }

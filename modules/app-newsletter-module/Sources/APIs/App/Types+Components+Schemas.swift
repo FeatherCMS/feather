@@ -13,8 +13,8 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/schemas` section of the OpenAPI document.
     public enum Schemas {
-        /// - Remark: Generated from `#/components/schemas/AppNewsletterIdField`.
-        public typealias AppNewsletterIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AppNewsletterKeyField`.
+        public typealias AppNewsletterKeyField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AppNewsletterCampaignSubscriptionSchema`.
         public struct AppNewsletterCampaignSubscriptionSchema: Codable,
             Hashable, Sendable

@@ -24,34 +24,14 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)`.
     func contactFormRemove(_ input: Operations.ContactFormRemove.Input)
         async throws -> Operations.ContactFormRemove.Output
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/get(contactFormGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)`.
     func contactFormGet(_ input: Operations.ContactFormGet.Input) async throws
         -> Operations.ContactFormGet.Output
-    /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/put(contactFormUpdate)`.
+    /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/put(contactFormUpdate)`.
     func contactFormUpdate(_ input: Operations.ContactFormUpdate.Input)
         async throws -> Operations.ContactFormUpdate.Output
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)`.
-    func formFieldList(_ input: Operations.FormFieldList.Input) async throws
-        -> Operations.FormFieldList.Output
-    /// - Remark: HTTP `POST /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/post(formFieldCreate)`.
-    func formFieldCreate(_ input: Operations.FormFieldCreate.Input) async throws
-        -> Operations.FormFieldCreate.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)`.
-    func formFieldRemove(_ input: Operations.FormFieldRemove.Input) async throws
-        -> Operations.FormFieldRemove.Output
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)`.
-    func formFieldGet(_ input: Operations.FormFieldGet.Input) async throws
-        -> Operations.FormFieldGet.Output
-    /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)`.
-    func formFieldUpdate(_ input: Operations.FormFieldUpdate.Input) async throws
-        -> Operations.FormFieldUpdate.Output
     /// - Remark: HTTP `GET /api/v1/admin/contact/field`.
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/get(contactFieldList)`.
     func contactFieldList(_ input: Operations.ContactFieldList.Input)
@@ -72,23 +52,23 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/put(contactFieldUpdate)`.
     func contactFieldUpdate(_ input: Operations.ContactFieldUpdate.Input)
         async throws -> Operations.ContactFieldUpdate.Output
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/get(contactFormSubmissionList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}/submission`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/get(contactFormSubmissionList)`.
     func contactFormSubmissionList(
         _ input: Operations.ContactFormSubmissionList.Input
     ) async throws -> Operations.ContactFormSubmissionList.Output
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)`.
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormKey}/submission`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/delete(contactFormSubmissionRemove)`.
     func contactFormSubmissionRemove(
         _ input: Operations.ContactFormSubmissionRemove.Input
     ) async throws -> Operations.ContactFormSubmissionRemove.Output
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)`.
     func contactFormSubmissionGet(
         _ input: Operations.ContactFormSubmissionGet.Input
     ) async throws -> Operations.ContactFormSubmissionGet.Output
-    /// - Remark: HTTP `PATCH /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
     func contactFormSubmissionUpdate(
         _ input: Operations.ContactFormSubmissionUpdate.Input
     ) async throws -> Operations.ContactFormSubmissionUpdate.Output
@@ -131,8 +111,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/get(contactFormGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)`.
     public func contactFormGet(
         path: Operations.ContactFormGet.Input.Path,
         headers: Operations.ContactFormGet.Input.Headers = .init()
@@ -144,8 +124,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/put(contactFormUpdate)`.
+    /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/put(contactFormUpdate)`.
     public func contactFormUpdate(
         path: Operations.ContactFormUpdate.Input.Path,
         headers: Operations.ContactFormUpdate.Input.Headers = .init(),
@@ -153,77 +133,6 @@ extension APIProtocol {
     ) async throws -> Operations.ContactFormUpdate.Output {
         try await contactFormUpdate(
             Operations.ContactFormUpdate.Input(
-                path: path,
-                headers: headers,
-                body: body
-            )
-        )
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)`.
-    public func formFieldList(
-        path: Operations.FormFieldList.Input.Path,
-        headers: Operations.FormFieldList.Input.Headers = .init()
-    ) async throws -> Operations.FormFieldList.Output {
-        try await formFieldList(
-            Operations.FormFieldList.Input(
-                path: path,
-                headers: headers
-            )
-        )
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/post(formFieldCreate)`.
-    public func formFieldCreate(
-        path: Operations.FormFieldCreate.Input.Path,
-        headers: Operations.FormFieldCreate.Input.Headers = .init(),
-        body: Components.RequestBodies.FormFieldCreateRequestBody
-    ) async throws -> Operations.FormFieldCreate.Output {
-        try await formFieldCreate(
-            Operations.FormFieldCreate.Input(
-                path: path,
-                headers: headers,
-                body: body
-            )
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)`.
-    public func formFieldRemove(
-        path: Operations.FormFieldRemove.Input.Path,
-        headers: Operations.FormFieldRemove.Input.Headers = .init(),
-        body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.FormFieldRemove.Output {
-        try await formFieldRemove(
-            Operations.FormFieldRemove.Input(
-                path: path,
-                headers: headers,
-                body: body
-            )
-        )
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)`.
-    public func formFieldGet(
-        path: Operations.FormFieldGet.Input.Path,
-        headers: Operations.FormFieldGet.Input.Headers = .init()
-    ) async throws -> Operations.FormFieldGet.Output {
-        try await formFieldGet(
-            Operations.FormFieldGet.Input(
-                path: path,
-                headers: headers
-            )
-        )
-    }
-    /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)`.
-    public func formFieldUpdate(
-        path: Operations.FormFieldUpdate.Input.Path,
-        headers: Operations.FormFieldUpdate.Input.Headers = .init(),
-        body: Components.RequestBodies.FormFieldPatchRequestBody
-    ) async throws -> Operations.FormFieldUpdate.Output {
-        try await formFieldUpdate(
-            Operations.FormFieldUpdate.Input(
                 path: path,
                 headers: headers,
                 body: body
@@ -293,8 +202,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/get(contactFormSubmissionList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}/submission`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/get(contactFormSubmissionList)`.
     public func contactFormSubmissionList(
         path: Operations.ContactFormSubmissionList.Input.Path,
         headers: Operations.ContactFormSubmissionList.Input.Headers = .init()
@@ -306,8 +215,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)`.
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormKey}/submission`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/delete(contactFormSubmissionRemove)`.
     public func contactFormSubmissionRemove(
         path: Operations.ContactFormSubmissionRemove.Input.Path,
         headers: Operations.ContactFormSubmissionRemove.Input.Headers = .init(),
@@ -321,8 +230,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)`.
     public func contactFormSubmissionGet(
         path: Operations.ContactFormSubmissionGet.Input.Path,
         headers: Operations.ContactFormSubmissionGet.Input.Headers = .init()
@@ -334,8 +243,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
     public func contactFormSubmissionUpdate(
         path: Operations.ContactFormSubmissionUpdate.Input.Path,
         headers: Operations.ContactFormSubmissionUpdate.Input.Headers = .init(),

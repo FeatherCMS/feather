@@ -274,9 +274,7 @@ public struct NewAdminFormFieldDatePicker: Component {
             Script(script())
 
             if let help = state.help {
-                Span(help)
-                    .id(helpID)
-                    .class("field-help")
+                context.build(NewAdminFormFieldHelp(help, id: helpID))
             }
             if let error = state.error {
                 Span(error)

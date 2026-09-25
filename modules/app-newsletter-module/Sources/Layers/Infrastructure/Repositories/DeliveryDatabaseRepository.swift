@@ -91,4 +91,11 @@ public struct DeliveryDatabaseRepository:
         )
         return try updated.asDomain
     }
+
+    public func delete(
+        issueId: String
+    ) async throws {
+        try await DeliveryTable(connection: context.connection)
+            .delete(issueId: issueId)
+    }
 }

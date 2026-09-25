@@ -11,7 +11,7 @@ struct AdminNewsletterCampaignAPIClient {
             switch response {
             case .ok(let value):
                 return try value.body.json.map {
-                    .init(id: $0.id, name: $0.name, fromEmail: $0.fromEmail)
+                    .init(id: $0.key, name: $0.name, fromEmail: $0.fromEmail)
                 }
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized
@@ -29,13 +29,13 @@ struct AdminNewsletterCampaignAPIClient {
     func get(id: String) async throws -> AdminNewsletterCampaignItem {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.newsletterCampaignGet(
-                path: .init(newsletterCampaignId: id)
+                path: .init(newsletterCampaignKey: id)
             )
             switch response {
             case .ok(let value):
                 let item = try value.body.json
                 return .init(
-                    id: item.id,
+                    id: item.key,
                     name: item.name,
                     fromEmail: item.fromEmail
                 )
@@ -54,19 +54,24 @@ struct AdminNewsletterCampaignAPIClient {
         }
     }
 
-    func update(id: String, name: String, fromEmail: String) async throws
-        -> AdminNewsletterCampaignItem
-    {
+    func update(
+        id: String,
+        newKey: String,
+        name: String,
+        fromEmail: String
+    ) async throws -> AdminNewsletterCampaignItem {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.newsletterCampaignUpdate(
-                path: .init(newsletterCampaignId: id),
-                body: .json(.init(name: name, fromEmail: fromEmail))
+                path: .init(newsletterCampaignKey: id),
+                body: .json(
+                    .init(key: newKey, name: name, fromEmail: fromEmail)
+                )
             )
             switch response {
             case .ok(let value):
                 let item = try value.body.json
                 return .init(
-                    id: item.id,
+                    id: item.key,
                     name: item.name,
                     fromEmail: item.fromEmail
                 )

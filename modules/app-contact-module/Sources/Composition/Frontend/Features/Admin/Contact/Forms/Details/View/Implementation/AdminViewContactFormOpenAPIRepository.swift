@@ -10,10 +10,10 @@ import WebComponents
 
 struct AdminViewContactFormOpenAPIRepository {
     let api: ContactAdminAPIClient
-    func get(id: String) async throws -> AdminContactFormDetailsItem {
+    func get(key: String) async throws -> AdminContactFormDetailsItem {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.contactFormGet(
-                path: .init(contactFormId: id)
+                path: .init(contactFormKey: key)
             )
             switch response {
             case .ok(let value):
@@ -36,7 +36,7 @@ struct AdminViewContactFormOpenAPIRepository {
                     )
                 }
                 return .init(
-                    id: item.id,
+                    key: item.key,
                     name: item.name,
                     successMessage: item.successMessage,
                     failureMessage: item.failureMessage,

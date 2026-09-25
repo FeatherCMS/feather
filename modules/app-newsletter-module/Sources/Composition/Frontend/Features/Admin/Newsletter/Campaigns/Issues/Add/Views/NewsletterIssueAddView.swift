@@ -113,12 +113,11 @@ struct NewsletterIssueAddView: Component {
                     )
                 )
                 context.build(
-                    NewAdminFormFieldInput(
+                    NewAdminFormFieldDatePicker(
                         state: .init(
                             name: "scheduledAt",
                             label: "Schedule",
-                            value: state.scheduledAt,
-                            help: "Optional Unix timestamp."
+                            value: state.scheduledAt
                         )
                     )
                 )
@@ -129,17 +128,20 @@ struct NewsletterIssueAddView: Component {
                             style: .primary
                         )
                     )
+                    context.build(
+                        NewAdminControlButton(
+                            "Send test email",
+                            style: .secondary
+                        )
+                    )
+                    .data(
+                        "newsletter-test-email-open",
+                        "newsletterTestEmailModal"
+                    )
                 }
                 .class("new-admin-form__actions")
             }
             context.build(form)
-            Div {
-                context.build(
-                    NewAdminControlButton("Send test email", style: .secondary)
-                )
-                .data("newsletter-test-email-open", "newsletterTestEmailModal")
-            }
-            .class("new-admin-form__actions")
             Div {
                 Div {
                     Div {
@@ -167,8 +169,12 @@ struct NewsletterIssueAddView: Component {
                                 )
                                 .description
                             }
-                                ?? NewsletterAdminRoutes
-                                .issueTestEmailSelectedRoute.description,
+                                ?? NewsletterAdminRoutes.issueTestEmail(
+                                    newsletterID: RouterPath(
+                                        state.newsletterId
+                                    )
+                                )
+                                .description,
                             hiddenFields: [
                                 .init(name: "subject", value: state.subject),
                                 .init(name: "content", value: state.content),
@@ -204,13 +210,13 @@ struct NewsletterIssueAddView: Component {
                 """
                     .newsletter-test-email-lightbox { display: none; position: fixed; inset: 0; z-index: 1000; align-items: center; justify-content: center; background: rgb(0 0 0 / .7); padding: 1rem; }
                     .newsletter-test-email-lightbox.is-visible { display: flex; }
-                    .newsletter-test-email-lightbox-card { width: min(32rem, 100%); background: var(--cms-white); color: var(--cms-strong-font); padding: 1.5rem; border-radius: .5rem; box-shadow: 0 1rem 3rem rgb(15 23 42 / .22); }
+                    .newsletter-test-email-lightbox-card { --material-color-primary-tint: #fff; --material-color-primary-text: #000; --material-color-primary-border: #d8dee7; --material-color-primary-hover: #f5f6f8; --material-color-secondary-tint: #f8fafc; --material-color-secondary-text: #111827; --material-color-secondary-border: #edf0f4; --material-color-secondary-hover: #edf0f4; --material-color-tertiary-tint: #f2f2f7; --material-color-tertiary-text: #374151; --material-color-tertiary-border: #d9dce1; --material-color-tertiary-hover: #e6e8eb; width: min(32rem, 100%); background: #fff; color: #000; color-scheme: light; padding: 1.5rem; border-radius: .5rem; box-shadow: 0 1rem 3rem rgb(15 23 42 / .22); }
                     .newsletter-test-email-lightbox-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
                 """
             )
             Script(
                 """
-                    (function() { var modal = document.getElementById('newsletterTestEmailModal'); if (!modal) return; document.querySelectorAll('[data-newsletter-test-email-open="newsletterTestEmailModal"]').forEach(function(button) { button.addEventListener('click', function() { modal.classList.add('is-visible'); modal.querySelector('input[name="email"]').focus(); }); }); document.querySelectorAll('[data-newsletter-test-email-close="newsletterTestEmailModal"]').forEach(function(button) { button.addEventListener('click', function() { modal.classList.remove('is-visible'); }); }); modal.addEventListener('click', function(event) { if (event.target === modal) modal.classList.remove('is-visible'); }); }());
+                    (function() { var modal = document.getElementById('newsletterTestEmailModal'); if (!modal) return; document.querySelectorAll('[data-newsletter-test-email-open="newsletterTestEmailModal"]').forEach(function(button) { button.addEventListener('click', function() { var issueForm = document.querySelector('.new-admin-form'); if (issueForm) { var subject = issueForm.querySelector('[name="subject"]'); var content = issueForm.querySelector('[name="content"]'); var testSubject = modal.querySelector('input[type="hidden"][name="subject"]'); var testContent = modal.querySelector('input[type="hidden"][name="content"]'); if (subject && testSubject) testSubject.value = subject.value; if (content && testContent) testContent.value = content.value; } modal.classList.add('is-visible'); modal.querySelector('input[name="email"]').focus(); }); }); document.querySelectorAll('[data-newsletter-test-email-close="newsletterTestEmailModal"]').forEach(function(button) { button.addEventListener('click', function() { modal.classList.remove('is-visible'); }); }); modal.addEventListener('click', function(event) { if (event.target === modal) modal.classList.remove('is-visible'); }); }());
                 """
             )
         }

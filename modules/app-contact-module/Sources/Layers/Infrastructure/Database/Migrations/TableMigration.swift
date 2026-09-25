@@ -17,6 +17,7 @@ public struct TableMigration: DatabaseMigration {
             #"""
             CREATE TABLE IF NOT EXISTS contact_form (
                 id TEXT PRIMARY KEY,
+                key TEXT NOT NULL UNIQUE,
                 name TEXT NOT NULL,
                 success_message TEXT NOT NULL DEFAULT '',
                 failure_message TEXT NOT NULL DEFAULT '',
@@ -25,6 +26,7 @@ public struct TableMigration: DatabaseMigration {
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
             );
             """#,
+            #"CREATE INDEX IF NOT EXISTS contact_form_key_idx ON contact_form (key);"#,
             #"""
             CREATE TABLE IF NOT EXISTS contact_form_mail (
                 id TEXT PRIMARY KEY,
@@ -44,7 +46,7 @@ public struct TableMigration: DatabaseMigration {
             CREATE TABLE IF NOT EXISTS contact_form_field (
                 id TEXT PRIMARY KEY,
                 key TEXT NOT NULL,
-                type TEXT NOT NULL CHECK (type IN ('text', 'textarea', 'select', 'radio', 'toggle')),
+                type TEXT NOT NULL CHECK (type IN ('text', 'textarea', 'select', 'radio', 'toggle', 'hidden')),
                 label TEXT NOT NULL,
                 allowed_values JSONB NOT NULL DEFAULT '[]'::jsonb,
                 is_required BOOLEAN NOT NULL DEFAULT FALSE,
@@ -53,7 +55,7 @@ public struct TableMigration: DatabaseMigration {
                 UNIQUE (key),
                 CHECK (
                     (type IN ('select', 'radio') AND jsonb_array_length(allowed_values) > 0)
-                    OR (type IN ('text', 'textarea', 'toggle') AND allowed_values = '[]'::jsonb)
+                    OR (type IN ('text', 'textarea', 'toggle', 'hidden') AND allowed_values = '[]'::jsonb)
                 )
             );
             """#,

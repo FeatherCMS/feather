@@ -7,21 +7,21 @@ struct PathCollection: PathCollectionRepresentable {
     var pathMap: PathMap {
         [
             "api/v1/admin/newsletter/campaign": NewsletterCampaignPathItems(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignId}":
+            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}":
                 NewsletterCampaignIDPathItems(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues":
+            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues":
                 NewsletterIssuePathItems(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/test-email":
+            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email":
                 NewsletterCampaignTestEmailPathItems(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}":
+            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}":
                 NewsletterIssueIDPathItems(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/deliveries":
+            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries":
                 NewsletterIssueDeliveryListPathItems(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignId}/issues/{newsletterIssueId}/test-email":
+            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email":
                 NewsletterIssueTestEmailPathItems(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers":
+            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers":
                 NewsletterSubscriberPathItems(),
-            "api/v1/admin/newsletter/campaign/{newsletterCampaignId}/subscribers/{email}":
+            "api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}":
                 NewsletterSubscriberIDPathItems(),
         ]
     }
