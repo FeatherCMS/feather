@@ -6,17 +6,17 @@ public struct BlogWebTemplateProvider: WebTemplateProvider {
         .init(
             id: "blog.post",
             title: "Blog post",
-            path: "blog/post/default"
+            path: "blog/post"
         ),
         .init(
             id: "blog.author",
             title: "Blog author",
-            path: "blog/author/default"
+            path: "blog/author"
         ),
         .init(
             id: "blog.tag",
             title: "Blog tag",
-            path: "blog/tag/default"
+            path: "blog/tag"
         ),
         .init(
             id: "blog.posts",

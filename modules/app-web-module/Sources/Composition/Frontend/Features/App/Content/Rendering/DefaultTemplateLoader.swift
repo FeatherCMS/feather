@@ -49,13 +49,28 @@ public struct DefaultTemplateLoader: TemplateLoader {
                     relativePath.dropLast(".mustache".count)
                 )
                 let parsed = try parseFrontMatter(contents)
-                sources.append(
-                    .init(
-                        id: templateID,
-                        body: parsed.body,
-                        metadata: parsed.metadata
-                    )
+                let source = LoadedTemplateSource(
+                    id: templateID,
+                    body: parsed.body,
+                    metadata: parsed.metadata
                 )
+                sources.append(source)
+
+                // Template paths use `/`, while template identifiers used by
+                // Mustache inheritance use the dot-separated module style.
+                let identifier = templateID.replacingOccurrences(
+                    of: "/",
+                    with: "."
+                )
+                if identifier != templateID {
+                    sources.append(
+                        .init(
+                            id: identifier,
+                            body: parsed.body,
+                            metadata: parsed.metadata
+                        )
+                    )
+                }
             }
         }
 
