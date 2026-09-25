@@ -665,6 +665,46 @@
         "target": "AccountAppOpenAPIGenerator",
         "configuration": "release",
         "preLaunchTask": "swift: Build Release AccountAppOpenAPIGenerator (modules/app-account-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-media-module",
+        "name": "Debug MediaAppOpenAPIGenerator (modules/app-media-module)",
+        "target": "MediaAppOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug MediaAppOpenAPIGenerator (modules/app-media-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-media-module",
+        "name": "Release MediaAppOpenAPIGenerator (modules/app-media-module)",
+        "target": "MediaAppOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release MediaAppOpenAPIGenerator (modules/app-media-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-news-module",
+        "name": "Debug NewsAppOpenAPIGenerator (modules/app-news-module)",
+        "target": "NewsAppOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug NewsAppOpenAPIGenerator (modules/app-news-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-news-module",
+        "name": "Release NewsAppOpenAPIGenerator (modules/app-news-module)",
+        "target": "NewsAppOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release NewsAppOpenAPIGenerator (modules/app-news-module)"
     }
 ],
   "compounds": [
