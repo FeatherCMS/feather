@@ -105,7 +105,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
           let modal = document.getElementById('mceEmbedPicker');
           if (!modal) {
             modal = document.createElement('div'); modal.id = 'mceEmbedPicker'; modal.className = 'mce-embed-picker';
-            modal.innerHTML = '<div class="mce-embed-picker-dialog"><div class="mce-embed-picker-header"><strong></strong><button type="button" data-embed-picker-close>×</button></div><div class="mce-embed-picker-search"><input type="search" placeholder="Search…"><button type="button">Search</button></div><div class="mce-embed-picker-list"></div></div>';
+            modal.innerHTML = '<div class="mce-embed-picker-dialog"><div class="mce-embed-picker-header"><strong></strong><button type="button" class="button secondary-ghost mce-embed-picker-close" aria-label="Close" title="Close" data-embed-picker-close>Close</button></div><div class="mce-embed-picker-search"><input type="search" placeholder="Search…"><button type="button">Search</button></div><div class="mce-embed-picker-list"></div></div>';
             editorRoot.append(modal);
             modal.querySelector('[data-embed-picker-close]').addEventListener('click', () => modal.classList.remove('is-visible'));
             modal.querySelector('.mce-embed-picker-search button').addEventListener('click', () => loadEmbedPicker(modal));
@@ -168,7 +168,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             item.innerHTML = `<div class="drag-controls"><span class="drag-handle" title="Drag to rearrange" aria-label="Drag to rearrange">⠿</span><button class="move-button" data-move="up" title="Move up" aria-label="Move up">↑</button><button class="move-button" data-move="down" title="Move down" aria-label="Move down">↓</button></div><div class="block-body"><label class="block-label">${block.type === 'heading' ? `Heading ${block.level}` : block.type}</label></div><button class="remove" title="Remove component" aria-label="Remove component">×</button>`;
             const body = item.querySelector('.block-body');
             if (block.type === 'newsletter' || block.type === 'contact-form') { renderEmbedControl(body, block, (key, value) => updateBlock(block.id, key, value)); body.querySelector('.block-label').textContent = block.type === 'newsletter' ? 'Newsletter campaign' : 'Contact form'; }
-            if (block.type === 'separator') { const rule = document.createElement('div'); rule.className = 'preview-content'; rule.innerHTML = '<hr>'; body.querySelector('.block-label').textContent = 'Separator'; body.append(rule); }
+            else if (block.type === 'separator') { const rule = document.createElement('div'); rule.className = 'preview-content'; rule.innerHTML = '<hr>'; body.querySelector('.block-label').textContent = 'Separator'; body.append(rule); }
             else if (block.type === 'ul' || block.type === 'ol') { const toolbar = document.createElement('div'); toolbar.className = 'format-toolbar'; toolbar.setAttribute('aria-label', 'Text formatting'); toolbar.innerHTML = '<button type="button" data-format="bold" title="Bold"><strong>B</strong></button><button type="button" data-format="italic" title="Italic"><em>I</em></button><button type="button" data-format="underline" title="Underline"><u>U</u></button><button type="button" data-format="strike" title="Strikethrough"><del>S</del></button><button type="button" data-format="link" title="Add link">↗</button>'; const field = document.createElement('textarea'); field.className = 'list-editor'; field.value = block.value; field.placeholder = 'One list item per line…'; field.setAttribute('aria-label', `${block.type === 'ul' ? 'Unordered' : 'Ordered'} list items`); field.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); body.querySelector('.block-label').textContent = block.type === 'ul' ? 'Unordered list' : 'Ordered list'; body.append(toolbar, field); toolbar.querySelectorAll('[data-format]').forEach(button => button.addEventListener('click', () => formatSelection(field, block.id, button.dataset.format))); }
             else if (block.type === 'blockquote') { const fields = document.createElement('div'); fields.className = 'quote-fields'; const quote = document.createElement('textarea'); quote.value = block.value; quote.placeholder = 'Quote text…'; quote.setAttribute('aria-label', 'Blockquote text'); quote.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); const cite = document.createElement('input'); cite.value = block.cite || ''; cite.placeholder = 'Citation (optional)'; cite.setAttribute('aria-label', 'Blockquote citation'); cite.addEventListener('input', e => updateBlock(block.id, 'cite', e.target.value)); fields.append(quote, cite); body.querySelector('.block-label').textContent = 'Blockquote'; body.append(fields); }
             else if (block.type === 'heading') { const toolbar = document.createElement('div'); toolbar.className = 'heading-toolbar'; toolbar.setAttribute('aria-label', 'Heading level'); toolbar.innerHTML = [1,2,3,4,5,6].map(level => `<button type="button" class="${level === block.level ? 'active' : ''}" data-level="${level}" title="Heading ${level}">H${level}</button>`).join(''); toolbar.querySelectorAll('[data-level]').forEach(button => button.addEventListener('click', () => { updateBlock(block.id, 'level', Number(button.dataset.level)); render(); })); const field = document.createElement('input'); field.value = block.value; field.placeholder = 'Heading text…'; field.setAttribute('aria-label', 'Heading text'); field.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); body.querySelector('.block-label').after(toolbar, field); }
@@ -626,6 +626,9 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 Display(.grid)
                 Gap(8.px)
             },
+            Custom("\(root) .embed-fields") {
+                Margin(bottom: 8.px)
+            },
             Custom("\(root) .grid-columns") {
                 Display(.grid)
                 GridTemplateColumns(.repeat(3, .fraction(1.fr)))
@@ -685,12 +688,23 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 AlignItems(.center)
                 JustifyContent(.center)
                 Padding(24.px)
-                Background(.variable(TokenKey.Colors.Materials.Primary.text))
+                Background(.transparent)
+            },
+            Custom("\(root) .mce-embed-picker::before") {
+                Content(.string("\"\""))
+                Position(.absolute)
+                UnsafeRawProperty(name: "inset", value: "0")
+                Background(
+                    .variable(TokenKey.Colors.Materials.Primary.tint)
+                )
+                Opacity(0.75)
             },
             Custom("\(root) .mce-embed-picker.is-visible") {
                 Display(.flex)
             },
             Custom("\(root) .mce-embed-picker-dialog") {
+                Position(.relative)
+                ZIndex(.number(1))
                 Width(90.percent)
                 MaxWidth(720.px)
                 MaxHeight(90.vh)
