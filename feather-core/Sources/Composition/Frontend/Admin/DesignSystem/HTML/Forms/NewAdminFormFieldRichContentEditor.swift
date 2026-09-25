@@ -105,7 +105,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
           let modal = document.getElementById('mceEmbedPicker');
           if (!modal) {
             modal = document.createElement('div'); modal.id = 'mceEmbedPicker'; modal.className = 'mce-embed-picker';
-            modal.innerHTML = '<div class="mce-embed-picker-dialog"><div class="mce-embed-picker-header"><strong></strong><button type="button" data-embed-picker-close>×</button></div><div class="mce-embed-picker-search"><input type="search" placeholder="Search…"><button type="button">Search</button></div><div class="mce-embed-picker-list"></div></div>';
+            modal.innerHTML = '<div class="mce-embed-picker-dialog"><div class="mce-embed-picker-header"><strong></strong><button type="button" class="button secondary-ghost mce-embed-picker-close" aria-label="Close" title="Close" data-embed-picker-close>Close</button></div><div class="mce-embed-picker-search"><input type="search" placeholder="Search…"><button type="button">Search</button></div><div class="mce-embed-picker-list"></div></div>';
             editorRoot.append(modal);
             modal.querySelector('[data-embed-picker-close]').addEventListener('click', () => modal.classList.remove('is-visible'));
             modal.querySelector('.mce-embed-picker-search button').addEventListener('click', () => loadEmbedPicker(modal));
@@ -138,11 +138,33 @@ public struct NewAdminFormFieldRichContentEditor: Component {
         function renderPreviewBlock(block) { let element; if (block.type === 'heading') { element = document.createElement(`h${block.level}`); element.innerHTML = inlineMarkdown(block.value); } else if (block.type === 'text') { element = document.createElement('p'); element.innerHTML = inlineMarkdown(block.value); } else if (block.type === 'separator') element = document.createElement('hr'); else if (block.type === 'ul' || block.type === 'ol') { element = document.createElement(block.type); block.value.split('\n').filter(Boolean).forEach(item => { const li = document.createElement('li'); li.innerHTML = inlineMarkdown(item); element.append(li); }); } else if (block.type === 'blockquote') { element = document.createElement('blockquote'); element.innerHTML = inlineMarkdown(block.value.replace(/\n/g, '<br>')); if (block.cite) { const cite = document.createElement('cite'); cite.textContent = `— ${block.cite}`; element.append(cite); } } else if (block.type === 'image') { element = document.createElement('img'); element.src = mediaURL(block.value); element.alt = block.alt || ''; } else if (block.type === 'video') { element = document.createElement('video'); element.src = mediaURL(block.value); element.controls = true; } else if (block.type === 'code') { element = document.createElement('pre'); const code = document.createElement('code'); code.textContent = block.value; element.append(code); } else if (block.type === 'html') { element = document.createElement('div'); element.innerHTML = block.value; } else if (block.type === 'grid') { const settings = block.settings || { desktop: 3, tablet: 2, mobile: 1 }; element = document.createElement('div'); element.className = 'preview-grid'; element.style.setProperty('--grid-desktop', settings.desktop); element.style.setProperty('--grid-tablet', settings.tablet); element.style.setProperty('--grid-mobile', settings.mobile); (block.columns || []).forEach(column => { const columnElement = document.createElement('div'); columnElement.className = 'preview-grid-column'; (column.blocks || []).forEach(child => columnElement.append(renderPreviewBlock(child))); element.append(columnElement); }); } else { element = document.createElement('pre'); element.className = 'preview-custom'; element.textContent = serializeBlock(block); } return element; }
         function renderPreview() { previewContent.innerHTML = ''; if (!state.blocks.length) { previewContent.innerHTML = '<div class="preview-empty">Nothing to preview yet.</div>'; return; } state.blocks.forEach(block => previewContent.append(renderPreviewBlock(block))); }
         function configureTextEditor(field) {
-          field.className = 'text-editor';
+          field.classList.add('text-editor');
           field.rows = 1;
           const resize = () => { field.style.height = 'auto'; field.style.height = `${field.scrollHeight}px`; };
-          field.addEventListener('input', resize);
+          if (field.dataset.textEditorAutosize !== 'true') {
+            field.dataset.textEditorAutosize = 'true';
+            field.addEventListener('input', resize);
+          }
           requestAnimationFrame(resize);
+        }
+        if (editorRoot && editorRoot.dataset.textEditorAutosize !== 'true') {
+          editorRoot.dataset.textEditorAutosize = 'true';
+          let resizeFrame;
+          window.addEventListener('resize', () => {
+            cancelAnimationFrame(resizeFrame);
+            resizeFrame = requestAnimationFrame(() => {
+              editorRoot.querySelectorAll('.block textarea.text-editor').forEach(field => {
+                field.style.height = 'auto';
+                field.style.height = `${field.scrollHeight}px`;
+              });
+            });
+          });
+          const textEditorObserver = new MutationObserver(() => {
+            requestAnimationFrame(() => {
+              editorRoot.querySelectorAll('.block textarea').forEach(configureTextEditor);
+            });
+          });
+          textEditorObserver.observe(editorRoot, { childList: true, subtree: true });
         }
         function makeGridBlock() { return Object.assign(newBlock('grid', ''), { settings: { desktop: 3, tablet: 2, mobile: 1 }, columnCount: 3, columns: [0, 1, 2].map(() => ({ blocks: [] })) }); }
         function ensureGridColumns(block) { block.columns = block.columns || []; block.columnCount = Math.max(1, Math.min(12, block.columnCount || block.columns.length || 1)); while (block.columns.length < block.columnCount) block.columns.push({ blocks: [] }); }
@@ -168,7 +190,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             item.innerHTML = `<div class="drag-controls"><span class="drag-handle" title="Drag to rearrange" aria-label="Drag to rearrange">⠿</span><button class="move-button" data-move="up" title="Move up" aria-label="Move up">↑</button><button class="move-button" data-move="down" title="Move down" aria-label="Move down">↓</button></div><div class="block-body"><label class="block-label">${block.type === 'heading' ? `Heading ${block.level}` : block.type}</label></div><button class="remove" title="Remove component" aria-label="Remove component">×</button>`;
             const body = item.querySelector('.block-body');
             if (block.type === 'newsletter' || block.type === 'contact-form') { renderEmbedControl(body, block, (key, value) => updateBlock(block.id, key, value)); body.querySelector('.block-label').textContent = block.type === 'newsletter' ? 'Newsletter campaign' : 'Contact form'; }
-            if (block.type === 'separator') { const rule = document.createElement('div'); rule.className = 'preview-content'; rule.innerHTML = '<hr>'; body.querySelector('.block-label').textContent = 'Separator'; body.append(rule); }
+            else if (block.type === 'separator') { const rule = document.createElement('div'); rule.className = 'preview-content'; rule.innerHTML = '<hr>'; body.querySelector('.block-label').textContent = 'Separator'; body.append(rule); }
             else if (block.type === 'ul' || block.type === 'ol') { const toolbar = document.createElement('div'); toolbar.className = 'format-toolbar'; toolbar.setAttribute('aria-label', 'Text formatting'); toolbar.innerHTML = '<button type="button" data-format="bold" title="Bold"><strong>B</strong></button><button type="button" data-format="italic" title="Italic"><em>I</em></button><button type="button" data-format="underline" title="Underline"><u>U</u></button><button type="button" data-format="strike" title="Strikethrough"><del>S</del></button><button type="button" data-format="link" title="Add link">↗</button>'; const field = document.createElement('textarea'); field.className = 'list-editor'; field.value = block.value; field.placeholder = 'One list item per line…'; field.setAttribute('aria-label', `${block.type === 'ul' ? 'Unordered' : 'Ordered'} list items`); field.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); body.querySelector('.block-label').textContent = block.type === 'ul' ? 'Unordered list' : 'Ordered list'; body.append(toolbar, field); toolbar.querySelectorAll('[data-format]').forEach(button => button.addEventListener('click', () => formatSelection(field, block.id, button.dataset.format))); }
             else if (block.type === 'blockquote') { const fields = document.createElement('div'); fields.className = 'quote-fields'; const quote = document.createElement('textarea'); quote.value = block.value; quote.placeholder = 'Quote text…'; quote.setAttribute('aria-label', 'Blockquote text'); quote.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); const cite = document.createElement('input'); cite.value = block.cite || ''; cite.placeholder = 'Citation (optional)'; cite.setAttribute('aria-label', 'Blockquote citation'); cite.addEventListener('input', e => updateBlock(block.id, 'cite', e.target.value)); fields.append(quote, cite); body.querySelector('.block-label').textContent = 'Blockquote'; body.append(fields); }
             else if (block.type === 'heading') { const toolbar = document.createElement('div'); toolbar.className = 'heading-toolbar'; toolbar.setAttribute('aria-label', 'Heading level'); toolbar.innerHTML = [1,2,3,4,5,6].map(level => `<button type="button" class="${level === block.level ? 'active' : ''}" data-level="${level}" title="Heading ${level}">H${level}</button>`).join(''); toolbar.querySelectorAll('[data-level]').forEach(button => button.addEventListener('click', () => { updateBlock(block.id, 'level', Number(button.dataset.level)); render(); })); const field = document.createElement('input'); field.value = block.value; field.placeholder = 'Heading text…'; field.setAttribute('aria-label', 'Heading text'); field.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); body.querySelector('.block-label').after(toolbar, field); }
@@ -480,6 +502,13 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 UnsafeRawProperty(name: "overflow-y", value: "hidden")
                 Resize(.none)
             },
+            Custom("\(root) .block textarea.code-editor") {
+                Display(.block)
+                Margin(top: 8.px)
+            },
+            Custom("\(root) .block input.code-language") {
+                Display(.block)
+            },
             Custom(
                 "\(root) .block input:focus, \(root) .block textarea:focus, \(root) #markdownInput:focus"
             ) {
@@ -626,6 +655,9 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 Display(.grid)
                 Gap(8.px)
             },
+            Custom("\(root) .embed-fields") {
+                Margin(bottom: 8.px)
+            },
             Custom("\(root) .grid-columns") {
                 Display(.grid)
                 GridTemplateColumns(.repeat(3, .fraction(1.fr)))
@@ -685,12 +717,23 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 AlignItems(.center)
                 JustifyContent(.center)
                 Padding(24.px)
-                Background(.variable(TokenKey.Colors.Materials.Primary.text))
+                Background(.transparent)
+            },
+            Custom("\(root) .mce-embed-picker::before") {
+                Content(.string("\"\""))
+                Position(.absolute)
+                UnsafeRawProperty(name: "inset", value: "0")
+                Background(
+                    .variable(TokenKey.Colors.Materials.Primary.tint)
+                )
+                Opacity(0.75)
             },
             Custom("\(root) .mce-embed-picker.is-visible") {
                 Display(.flex)
             },
             Custom("\(root) .mce-embed-picker-dialog") {
+                Position(.relative)
+                ZIndex(.number(1))
                 Width(90.percent)
                 MaxWidth(720.px)
                 MaxHeight(90.vh)
