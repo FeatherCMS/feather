@@ -138,11 +138,33 @@ public struct NewAdminFormFieldRichContentEditor: Component {
         function renderPreviewBlock(block) { let element; if (block.type === 'heading') { element = document.createElement(`h${block.level}`); element.innerHTML = inlineMarkdown(block.value); } else if (block.type === 'text') { element = document.createElement('p'); element.innerHTML = inlineMarkdown(block.value); } else if (block.type === 'separator') element = document.createElement('hr'); else if (block.type === 'ul' || block.type === 'ol') { element = document.createElement(block.type); block.value.split('\n').filter(Boolean).forEach(item => { const li = document.createElement('li'); li.innerHTML = inlineMarkdown(item); element.append(li); }); } else if (block.type === 'blockquote') { element = document.createElement('blockquote'); element.innerHTML = inlineMarkdown(block.value.replace(/\n/g, '<br>')); if (block.cite) { const cite = document.createElement('cite'); cite.textContent = `— ${block.cite}`; element.append(cite); } } else if (block.type === 'image') { element = document.createElement('img'); element.src = mediaURL(block.value); element.alt = block.alt || ''; } else if (block.type === 'video') { element = document.createElement('video'); element.src = mediaURL(block.value); element.controls = true; } else if (block.type === 'code') { element = document.createElement('pre'); const code = document.createElement('code'); code.textContent = block.value; element.append(code); } else if (block.type === 'html') { element = document.createElement('div'); element.innerHTML = block.value; } else if (block.type === 'grid') { const settings = block.settings || { desktop: 3, tablet: 2, mobile: 1 }; element = document.createElement('div'); element.className = 'preview-grid'; element.style.setProperty('--grid-desktop', settings.desktop); element.style.setProperty('--grid-tablet', settings.tablet); element.style.setProperty('--grid-mobile', settings.mobile); (block.columns || []).forEach(column => { const columnElement = document.createElement('div'); columnElement.className = 'preview-grid-column'; (column.blocks || []).forEach(child => columnElement.append(renderPreviewBlock(child))); element.append(columnElement); }); } else { element = document.createElement('pre'); element.className = 'preview-custom'; element.textContent = serializeBlock(block); } return element; }
         function renderPreview() { previewContent.innerHTML = ''; if (!state.blocks.length) { previewContent.innerHTML = '<div class="preview-empty">Nothing to preview yet.</div>'; return; } state.blocks.forEach(block => previewContent.append(renderPreviewBlock(block))); }
         function configureTextEditor(field) {
-          field.className = 'text-editor';
+          field.classList.add('text-editor');
           field.rows = 1;
           const resize = () => { field.style.height = 'auto'; field.style.height = `${field.scrollHeight}px`; };
-          field.addEventListener('input', resize);
+          if (field.dataset.textEditorAutosize !== 'true') {
+            field.dataset.textEditorAutosize = 'true';
+            field.addEventListener('input', resize);
+          }
           requestAnimationFrame(resize);
+        }
+        if (editorRoot && editorRoot.dataset.textEditorAutosize !== 'true') {
+          editorRoot.dataset.textEditorAutosize = 'true';
+          let resizeFrame;
+          window.addEventListener('resize', () => {
+            cancelAnimationFrame(resizeFrame);
+            resizeFrame = requestAnimationFrame(() => {
+              editorRoot.querySelectorAll('.block textarea.text-editor').forEach(field => {
+                field.style.height = 'auto';
+                field.style.height = `${field.scrollHeight}px`;
+              });
+            });
+          });
+          const textEditorObserver = new MutationObserver(() => {
+            requestAnimationFrame(() => {
+              editorRoot.querySelectorAll('.block textarea').forEach(configureTextEditor);
+            });
+          });
+          textEditorObserver.observe(editorRoot, { childList: true, subtree: true });
         }
         function makeGridBlock() { return Object.assign(newBlock('grid', ''), { settings: { desktop: 3, tablet: 2, mobile: 1 }, columnCount: 3, columns: [0, 1, 2].map(() => ({ blocks: [] })) }); }
         function ensureGridColumns(block) { block.columns = block.columns || []; block.columnCount = Math.max(1, Math.min(12, block.columnCount || block.columns.length || 1)); while (block.columns.length < block.columnCount) block.columns.push({ blocks: [] }); }
@@ -479,6 +501,13 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 UnsafeRawProperty(name: "min-height", value: "3lh")
                 UnsafeRawProperty(name: "overflow-y", value: "hidden")
                 Resize(.none)
+            },
+            Custom("\(root) .block textarea.code-editor") {
+                Display(.block)
+                Margin(top: 8.px)
+            },
+            Custom("\(root) .block input.code-language") {
+                Display(.block)
             },
             Custom(
                 "\(root) .block input:focus, \(root) .block textarea:focus, \(root) #markdownInput:focus"
