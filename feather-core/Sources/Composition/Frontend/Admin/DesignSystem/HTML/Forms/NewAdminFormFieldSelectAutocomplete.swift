@@ -489,7 +489,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                         return values.map(function (item) {
                             return Object.assign({}, item, {
                                 label: String(item.label || item.value || item.name || ""),
-                                value: String(item.value || item.id || "")
+                                value: String(item.id || item.value || "")
                             });
                         }).filter(function (item) {
                             return item.label && item.value;

@@ -7,7 +7,7 @@ public import OpenAPIRuntime
 
 public struct AuthSubjectMiddleware: ServerMiddleware {
 
-    private static let sessionCookieName = "session"
+    private static let sessionCookieName = "session_token"
     private let auth: AuthBackend.UseCases
 
     public init(auth: AuthBackend.UseCases) {
