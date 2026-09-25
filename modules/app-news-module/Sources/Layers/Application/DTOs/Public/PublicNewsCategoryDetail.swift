@@ -17,6 +17,9 @@ public struct PublicNewsCategoryDetail: DTO {
     public let media: PublicContentMedia?
     public let metadata: MetadataDetail
     public let articles: [PublicNewsArticleSummary]
+    public let total: Int
+    public let page: Int
+    public let pageSize: Int
 
     public init(
         id: String,
@@ -27,7 +30,10 @@ public struct PublicNewsCategoryDetail: DTO {
         imageURL: String,
         media: PublicContentMedia?,
         metadata: MetadataDetail,
-        articles: [PublicNewsArticleSummary]
+        articles: [PublicNewsArticleSummary],
+        total: Int = 0,
+        page: Int = 1,
+        pageSize: Int = 0
     ) {
         self.id = id
         self.title = title
@@ -38,5 +44,8 @@ public struct PublicNewsCategoryDetail: DTO {
         self.media = media
         self.metadata = metadata
         self.articles = articles
+        self.total = total
+        self.page = page
+        self.pageSize = pageSize
     }
 }

@@ -80,9 +80,18 @@ func buildRouter(
         forResource: "Templates",
         withExtension: nil
     )
+    var resolvedTemplatePaths =
+        templatePaths + (applicationTemplatePaths.map { [$0] } ?? [])
+    #if DEBUG
+    let applicationSourceTemplatePath = URL(fileURLWithPath: #filePath)
+        .deletingLastPathComponent()
+        .deletingLastPathComponent()
+        .appendingPathComponent("Resources/Templates", isDirectory: true)
+    resolvedTemplatePaths.append(applicationSourceTemplatePath)
+    #endif
     let themeRenderer = try DefaultThemeRenderer(
         templateLoader: DefaultTemplateLoader(
-            paths: templatePaths + (applicationTemplatePaths.map { [$0] } ?? [])
+            paths: resolvedTemplatePaths
         ),
         templatePath: { identifier in
             templateDefinitions.first { $0.id == identifier }?.path

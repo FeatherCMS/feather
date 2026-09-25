@@ -10,7 +10,19 @@ public struct DefaultTemplateLoader: TemplateLoader {
     }
 
     public func load() throws -> [String: MustacheTemplate] {
-        var templates: [String: MustacheTemplate] = [:]
+        try loadSources().reduce(into: [:]) { templates, source in
+            templates[source.id] = try MustacheTemplate(string: source.body)
+        }
+    }
+
+    public func loadMetadata() throws -> [String: TemplateMetadata] {
+        try loadSources().reduce(into: [:]) { metadata, source in
+            metadata[source.id] = source.metadata
+        }
+    }
+
+    private func loadSources() throws -> [LoadedTemplateSource] {
+        var sources: [LoadedTemplateSource] = []
         let fileManager = FileManager.default
 
         for path in paths {
@@ -36,10 +48,112 @@ public struct DefaultTemplateLoader: TemplateLoader {
                 let templateID = String(
                     relativePath.dropLast(".mustache".count)
                 )
-                templates[templateID] = try MustacheTemplate(string: contents)
+                let parsed = try parseFrontMatter(contents)
+                sources.append(
+                    .init(
+                        id: templateID,
+                        body: parsed.body,
+                        metadata: parsed.metadata
+                    )
+                )
             }
         }
 
-        return templates
+        return sources
     }
+}
+
+private struct LoadedTemplateSource {
+
+    let id: String
+    let body: String
+    let metadata: TemplateMetadata
+}
+
+private struct ParsedTemplateSource {
+
+    let body: String
+    let metadata: TemplateMetadata
+}
+
+private enum TemplateFrontMatterError: Error {
+    case missingClosingDelimiter
+    case invalidAssetEntry(String)
+}
+
+private func parseFrontMatter(_ source: String) throws -> ParsedTemplateSource {
+    let lines = source.split(
+        omittingEmptySubsequences: false,
+        whereSeparator: { character in
+            character == "\r" || character == "\n"
+        }
+    )
+    guard lines.first.map(String.init)?.trimmingCharacters(in: .whitespaces) == "---" else {
+        return .init(body: source, metadata: .init())
+    }
+
+    guard let closingIndex = lines.dropFirst().firstIndex(where: {
+        String($0).trimmingCharacters(in: .whitespaces) == "---"
+    }) else {
+        throw TemplateFrontMatterError.missingClosingDelimiter
+    }
+
+    var stylesheets: [String] = []
+    var scripts: [String] = []
+    var section: String?
+
+    for rawLine in lines[lines.index(after: lines.startIndex)..<closingIndex] {
+        let line = String(rawLine)
+        let trimmed = line.trimmingCharacters(in: .whitespaces)
+        if trimmed.isEmpty || trimmed.hasPrefix("#") {
+            continue
+        }
+
+        let indentation = line.prefix { $0 == " " }.count
+        if indentation == 0 {
+            guard trimmed.hasSuffix(":") else {
+                throw TemplateFrontMatterError.invalidAssetEntry(trimmed)
+            }
+            let name = String(trimmed.dropLast())
+            guard name == "css" || name == "js" else {
+                throw TemplateFrontMatterError.invalidAssetEntry(name)
+            }
+            section = name
+            continue
+        }
+
+        guard indentation >= 2, trimmed.hasPrefix("- "), let section else {
+            throw TemplateFrontMatterError.invalidAssetEntry(trimmed)
+        }
+        let value = String(trimmed.dropFirst(2))
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        guard isValidAssetPath(value) else {
+            throw TemplateFrontMatterError.invalidAssetEntry(value)
+        }
+        if section == "css" {
+            stylesheets.append(value)
+        } else {
+            scripts.append(value)
+        }
+    }
+
+    let bodyStart = lines.index(after: closingIndex)
+    let body = lines[bodyStart...].map(String.init).joined(separator: "\n")
+    return .init(
+        body: body,
+        metadata: .init(
+            stylesheets: stylesheets,
+            scripts: scripts
+        )
+    )
+}
+
+private func isValidAssetPath(_ value: String) -> Bool {
+    guard !value.isEmpty, !value.contains(".."), !value.contains("\u{0}") else {
+        return false
+    }
+    return value.hasPrefix("/")
+        || value.hasPrefix("http://")
+        || value.hasPrefix("https://")
+        || !value.contains(":")
 }
