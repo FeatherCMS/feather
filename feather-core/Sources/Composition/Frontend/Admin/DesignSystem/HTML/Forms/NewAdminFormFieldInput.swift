@@ -116,7 +116,9 @@ public struct NewAdminFormFieldInput: Component {
                     .if(state.isReadOnly) { $0.readOnly() }
             }
             .for(state.name)
-            if let help = state.help { Span(help).class("field-help") }
+            if let help = state.help {
+                context.build(NewAdminFormFieldHelp(help))
+            }
             if let error = state.error {
                 Span(error).id(errorID).class("field-error")
             }

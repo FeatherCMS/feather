@@ -8,7 +8,7 @@ struct ContactFormSubmissionSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "id": ContactIdField(),
-            "formId": ContactIdField(),
+            "formKey": ContactFormKeyField(),
             "values": ContactJSONField(),
             "itemsSnapshot": ContactJSONField(),
             "metadata": ContactJSONField(),

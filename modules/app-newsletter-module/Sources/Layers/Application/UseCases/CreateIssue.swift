@@ -17,18 +17,18 @@ public struct CreateIssue: UseCase {
     }
 
     public struct Input: DTO {
-        public let newsletterId: String
+        public let campaignKey: String
         public let subject: String
         public let previewText: String
         public let content: String
 
         public init(
-            newsletterId: String,
+            campaignKey: String,
             subject: String,
             previewText: String = "",
             content: String
         ) {
-            self.newsletterId = newsletterId
+            self.campaignKey = campaignKey
             self.subject = subject
             self.previewText = previewText
             self.content = content
@@ -44,8 +44,13 @@ public struct CreateIssue: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
+            guard
+                let campaign = try await scope.newsletter.findBy(
+                    key: input.campaignKey
+                )
+            else { throw Error.campaignNotFound }
             let model = try Issue.create(
-                newsletterId: input.newsletterId,
+                newsletterId: campaign.id,
                 subject: input.subject,
                 previewText: input.previewText,
                 content: input.content
@@ -53,4 +58,6 @@ public struct CreateIssue: UseCase {
             return (try await scope.issue.insert(model)).asDetail
         }
     }
+
+    public enum Error: UseCaseError { case campaignNotFound }
 }

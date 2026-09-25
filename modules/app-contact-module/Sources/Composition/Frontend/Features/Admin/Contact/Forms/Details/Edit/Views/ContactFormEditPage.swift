@@ -7,7 +7,7 @@ import WebComponents
 
 struct ContactFormEditPage: Component {
     struct State {
-        let id: String
+        let key: String
         let isReadOnly: Bool
         let form: ContactFormForm.State
         let breadcrumb: [NewAdminBreadcrumb.Link]
@@ -18,7 +18,7 @@ struct ContactFormEditPage: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                AdminContactFormTabs(formId: state.id, active: .details)
+                AdminContactFormTabs(formId: state.key, active: .details)
             )
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
@@ -35,7 +35,7 @@ struct ContactFormEditPage: Component {
             context.build(
                 ContactFormForm(
                     state: state.form,
-                    action: ContactAdminRoutes.formEdit(RouterPath(state.id))
+                    action: ContactAdminRoutes.formEdit(RouterPath(state.key))
                         .description,
                     submitLabel: "Save changes",
                     isReadOnly: state.isReadOnly

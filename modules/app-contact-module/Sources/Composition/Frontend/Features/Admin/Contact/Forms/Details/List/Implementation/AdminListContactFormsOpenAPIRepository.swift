@@ -17,7 +17,7 @@ struct AdminListContactFormsOpenAPIRepository {
             case .ok(let value):
                 return try value.body.json.map {
                     .init(
-                        id: $0.id,
+                        key: $0.key,
                         name: $0.name,
                         successMessage: $0.successMessage,
                         failureMessage: $0.failureMessage,

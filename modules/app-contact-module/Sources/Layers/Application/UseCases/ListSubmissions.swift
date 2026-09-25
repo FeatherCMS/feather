@@ -18,8 +18,8 @@ public struct ListSubmissions: UseCase {
         self.transaction = transaction
     }
     public struct Input: DTO {
-        public let formId: String
-        public init(formId: String) { self.formId = formId }
+        public let formKey: String
+        public init(formKey: String) { self.formKey = formKey }
     }
     public func execute(
         subject: Subject,
@@ -30,8 +30,16 @@ public struct ListSubmissions: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            try await scope.submission.listBy(formId: input.formId)
+            guard let form = try await scope.form.findBy(key: input.formKey)
+            else {
+                throw Error.formNotFound
+            }
+            return try await scope.submission.listBy(formId: form.id)
                 .map(\.asDetail)
         }
+    }
+
+    public enum Error: UseCaseError {
+        case formNotFound
     }
 }

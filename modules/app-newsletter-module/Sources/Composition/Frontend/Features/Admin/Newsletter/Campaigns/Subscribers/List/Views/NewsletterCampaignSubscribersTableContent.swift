@@ -90,8 +90,11 @@ struct NewsletterCampaignSubscribersTableContent: Component {
                             NewAdminListSelectionForm(
                                 state: .init(
                                     action: NewAdminLocation.remove(
-                                        path: NewsletterAdminRoutes
-                                            .campaignSubscriberRemoveSelectedRoute
+                                        path:
+                                            NewsletterAdminRoutes
+                                            .campaignSubscriberRemoveSelected(
+                                                RouterPath(newsletterId)
+                                            )
                                             .description,
                                         ids: [],
                                         returnTo: returnTo

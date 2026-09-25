@@ -6,10 +6,10 @@ protocol NewsletterCampaignOperation: BearerProtectedOperation {}
 extension NewsletterCampaignOperation {
     var tags: [TagRepresentable] { [NewsletterTag()] }
 }
-protocol NewsletterCampaignIDOperation: NewsletterCampaignOperation {}
-extension NewsletterCampaignIDOperation {
+protocol NewsletterCampaignKeyOperation: NewsletterCampaignOperation {}
+extension NewsletterCampaignKeyOperation {
     var parameters: [ParameterRepresentable] {
-        [NewsletterCampaignIdParameter().reference()]
+        [NewsletterCampaignKeyParameter().reference()]
     }
 }
 
@@ -26,7 +26,7 @@ struct NewsletterCampaignCreateOperation: NewsletterCampaignOperation {
         [201: NewsletterCampaignResponse().reference()]
     }
 }
-struct NewsletterCampaignGetOperation: NewsletterCampaignIDOperation {
+struct NewsletterCampaignGetOperation: NewsletterCampaignKeyOperation {
     var responseMap: ResponseMap {
         [
             200: NewsletterCampaignResponse().reference(),
@@ -34,7 +34,7 @@ struct NewsletterCampaignGetOperation: NewsletterCampaignIDOperation {
         ]
     }
 }
-struct NewsletterCampaignUpdateOperation: NewsletterCampaignIDOperation {
+struct NewsletterCampaignUpdateOperation: NewsletterCampaignKeyOperation {
     var requestBody: RequestBodyRepresentable? {
         NewsletterCampaignPatchRequestBody().reference()
     }

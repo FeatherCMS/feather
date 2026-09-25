@@ -9,13 +9,13 @@ extension AppAPIGateway {
     ) async throws -> Operations.AppContactFormGet.Output {
         let result = try await self.useCases.makeGetPublicForm()
             .execute(
-                .init(id: input.path.contactFormId)
+                .init(key: input.path.contactFormKey)
             )
         return .ok(
             .init(
                 body: .json(
                     .init(
-                        id: result.id,
+                        key: result.key,
                         name: result.name,
                         successMessage: result.successMessage,
                         failureMessage: result.failureMessage,
@@ -53,11 +53,11 @@ extension AppAPIGateway {
             try String(decoding: JSONEncoder().encode($0), as: UTF8.self)
         }
         let form = try await self.useCases.makeGetPublicForm()
-            .execute(.init(id: input.path.contactFormId))
+            .execute(.init(key: input.path.contactFormKey))
         _ = try await self.useCases.makeSubmitContactForm()
             .execute(
                 .init(
-                    formId: input.path.contactFormId,
+                    formKey: input.path.contactFormKey,
                     valuesJSON: valuesJSON,
                     itemsSnapshotJSON: "{}",
                     metadataJSON: metadataJSON

@@ -17,6 +17,7 @@ public struct NewAdminFormFieldLanguage: Component {
         public var options: [Option]?
         public var placeholder: String?
         public var error: String?
+        public var help: String?
         public var isRequired: Bool
         public var isDisabled: Bool
         public var selectionMode: SelectionMode
@@ -29,6 +30,7 @@ public struct NewAdminFormFieldLanguage: Component {
             options: [Option]? = nil,
             placeholder: String? = nil,
             error: String? = nil,
+            help: String? = nil,
             isRequired: Bool = false,
             isDisabled: Bool = false,
             selectionMode: SelectionMode = .single,
@@ -40,6 +42,7 @@ public struct NewAdminFormFieldLanguage: Component {
             self.options = options
             self.placeholder = placeholder
             self.error = error
+            self.help = help
             self.isRequired = isRequired
             self.isDisabled = isDisabled
             self.selectionMode = selectionMode
@@ -81,6 +84,7 @@ public struct NewAdminFormFieldLanguage: Component {
                         ?? defaultPlaceholder,
                     options: options,
                     error: state.error,
+                    help: state.help,
                     isRequired: state.isRequired,
                     isDisabled: state.isDisabled,
                     selectionMode: state.selectionMode,

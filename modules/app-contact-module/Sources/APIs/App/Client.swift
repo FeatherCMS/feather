@@ -38,8 +38,8 @@ public struct Client: APIProtocol {
     private var converter: Converter {
         client.converter
     }
-    /// - Remark: HTTP `GET /api/v1/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormId}/get(appContactFormGet)`.
+    /// - Remark: HTTP `GET /api/v1/contact/form/{contactFormKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/get(appContactFormGet)`.
     public func appContactFormGet(_ input: Operations.AppContactFormGet.Input)
         async throws -> Operations.AppContactFormGet.Output
     {
@@ -50,7 +50,7 @@ public struct Client: APIProtocol {
                 let path = try converter.renderedPath(
                     template: "/api/v1/contact/form/{}",
                     parameters: [
-                        input.path.contactFormId
+                        input.path.contactFormKey
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -104,8 +104,8 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/contact/form/{contactFormId}/submit`.
-    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormId}/submit/post(appContactFormSubmission)`.
+    /// - Remark: HTTP `POST /api/v1/contact/form/{contactFormKey}/submit`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/submit/post(appContactFormSubmission)`.
     public func appContactFormSubmission(
         _ input: Operations.AppContactFormSubmission.Input
     ) async throws -> Operations.AppContactFormSubmission.Output {
@@ -116,7 +116,7 @@ public struct Client: APIProtocol {
                 let path = try converter.renderedPath(
                     template: "/api/v1/contact/form/{}/submit",
                     parameters: [
-                        input.path.contactFormId
+                        input.path.contactFormKey
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(

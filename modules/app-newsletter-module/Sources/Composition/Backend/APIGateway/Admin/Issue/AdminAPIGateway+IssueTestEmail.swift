@@ -21,14 +21,19 @@ extension AdminAPIGateway {
         switch input.body {
         case .json(let value): body = value
         }
-        let issue = try await self.useCases.makeGetNewsletterIssue()
+        _ = try await self.useCases.makeGetNewsletterIssue()
             .execute(
                 subject: subject,
-                input: .init(id: input.path.newsletterIssueId)
+                input: .init(
+                    campaignKey: input.path.newsletterCampaignKey,
+                    id: input.path.newsletterIssueId
+                )
             )
         try await useCases.enqueueIssueTestEmail(
-            issue: issue,
-            email: body.email
+            newsletterKey: input.path.newsletterCampaignKey,
+            email: body.email,
+            subject: body.subject,
+            content: body.content
         )
         return .noContent
     }

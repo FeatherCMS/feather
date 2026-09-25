@@ -20,10 +20,15 @@ extension AdminAPIGateway {
                 subject: try await CurrentSubject.require(),
                 input:
                     .init(
+                        formKey: input.path.contactFormKey,
                         id: input.path.contactFormSubmissionId,
                         status: status
                     )
             )
-        return .ok(.init(body: .json(map(result))))
+        return .ok(
+            .init(
+                body: .json(map(result, formKey: input.path.contactFormKey))
+            )
+        )
     }
 }

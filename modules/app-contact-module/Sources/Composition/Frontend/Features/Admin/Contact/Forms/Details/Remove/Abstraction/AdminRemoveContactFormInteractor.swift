@@ -8,6 +8,6 @@ import WebBuilders
 import WebComponents
 
 protocol AdminRemoveContactFormInteractor: Sendable {
-    func get(id: String) async throws -> AdminContactFormDetailsItem
-    func remove(ids: [String]) async throws
+    func get(key: String) async throws -> AdminContactFormDetailsItem
+    func remove(keys: [String]) async throws
 }

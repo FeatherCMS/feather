@@ -80,7 +80,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/contact/form/{contactFormId}"
+                "/api/v1/admin/contact/form/{contactFormKey}"
             )
         )
         try transport.register(
@@ -93,72 +93,7 @@ extension APIProtocol {
             },
             method: .put,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/contact/form/{contactFormId}"
-            )
-        )
-        try transport.register(
-            {
-                try await server.formFieldList(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .get,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/contact/form/{contactFormId}/field"
-            )
-        )
-        try transport.register(
-            {
-                try await server.formFieldCreate(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .post,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/contact/form/{contactFormId}/field"
-            )
-        )
-        try transport.register(
-            {
-                try await server.formFieldRemove(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .delete,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/contact/form/{contactFormId}/field"
-            )
-        )
-        try transport.register(
-            {
-                try await server.formFieldGet(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .get,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}"
-            )
-        )
-        try transport.register(
-            {
-                try await server.formFieldUpdate(
-                    request: $0,
-                    body: $1,
-                    metadata: $2
-                )
-            },
-            method: .put,
-            path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}"
+                "/api/v1/admin/contact/form/{contactFormKey}"
             )
         )
         try transport.register(
@@ -236,7 +171,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/contact/form/{contactFormId}/submission"
+                "/api/v1/admin/contact/form/{contactFormKey}/submission"
             )
         )
         try transport.register(
@@ -249,7 +184,7 @@ extension APIProtocol {
             },
             method: .delete,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/contact/form/{contactFormId}/submission"
+                "/api/v1/admin/contact/form/{contactFormKey}/submission"
             )
         )
         try transport.register(
@@ -262,7 +197,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}"
+                "/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}"
             )
         )
         try transport.register(
@@ -275,7 +210,7 @@ extension APIProtocol {
             },
             method: .patch,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}"
+                "/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}"
             )
         )
     }
@@ -513,8 +448,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/get(contactFormGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)`.
     fileprivate func contactFormGet(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -530,10 +465,10 @@ extension UniversalServer where APIHandler: APIProtocol {
             },
             deserializer: { request, requestBody, metadata in
                 let path: Operations.ContactFormGet.Input.Path = .init(
-                    contactFormId: try converter.getPathParameterAsURI(
+                    contactFormKey: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "contactFormId",
-                        as: Components.Parameters.ContactFormIdParameter.self
+                        name: "contactFormKey",
+                        as: Components.Parameters.ContactFormKeyParameter.self
                     )
                 )
                 let headers: Operations.ContactFormGet.Input.Headers = .init(
@@ -587,8 +522,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/put(contactFormUpdate)`.
+    /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/put(contactFormUpdate)`.
     fileprivate func contactFormUpdate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -604,10 +539,10 @@ extension UniversalServer where APIHandler: APIProtocol {
             },
             deserializer: { request, requestBody, metadata in
                 let path: Operations.ContactFormUpdate.Input.Path = .init(
-                    contactFormId: try converter.getPathParameterAsURI(
+                    contactFormKey: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "contactFormId",
-                        as: Components.Parameters.ContactFormIdParameter.self
+                        name: "contactFormKey",
+                        as: Components.Parameters.ContactFormKeyParameter.self
                     )
                 )
                 let headers: Operations.ContactFormUpdate.Input.Headers = .init(
@@ -640,446 +575,6 @@ extension UniversalServer where APIHandler: APIProtocol {
                     )
                 }
                 return Operations.ContactFormUpdate.Input(
-                    path: path,
-                    headers: headers,
-                    body: body
-                )
-            },
-            serializer: { output, request in
-                switch output {
-                case .ok(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case .json(let value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)`.
-    fileprivate func formFieldList(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.FormFieldList.id,
-            using: {
-                APIHandler.formFieldList($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.FormFieldList.Input.Path = .init(
-                    contactFormId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "contactFormId",
-                        as: Components.Parameters.ContactFormIdParameter.self
-                    )
-                )
-                let headers: Operations.FormFieldList.Input.Headers = .init(
-                    accept: try converter.extractAcceptHeaderIfPresent(
-                        in: request.headerFields
-                    )
-                )
-                return Operations.FormFieldList.Input(
-                    path: path,
-                    headers: headers
-                )
-            },
-            serializer: { output, request in
-                switch output {
-                case .ok(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case .json(let value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/post(formFieldCreate)`.
-    fileprivate func formFieldCreate(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.FormFieldCreate.id,
-            using: {
-                APIHandler.formFieldCreate($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.FormFieldCreate.Input.Path = .init(
-                    contactFormId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "contactFormId",
-                        as: Components.Parameters.ContactFormIdParameter.self
-                    )
-                )
-                let headers: Operations.FormFieldCreate.Input.Headers = .init(
-                    accept: try converter.extractAcceptHeaderIfPresent(
-                        in: request.headerFields
-                    )
-                )
-                let contentType = converter.extractContentTypeIfPresent(
-                    in: request.headerFields
-                )
-                let body: Components.RequestBodies.FormFieldCreateRequestBody
-                let chosenContentType = try converter.bestContentType(
-                    received: contentType,
-                    options: [
-                        "application/json"
-                    ]
-                )
-                switch chosenContentType {
-                case "application/json":
-                    body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.FormFieldCreateSchema.self,
-                        from: requestBody,
-                        transforming: { value in
-                            .json(value)
-                        }
-                    )
-                default:
-                    preconditionFailure(
-                        "bestContentType chose an invalid content type."
-                    )
-                }
-                return Operations.FormFieldCreate.Input(
-                    path: path,
-                    headers: headers,
-                    body: body
-                )
-            },
-            serializer: { output, request in
-                switch output {
-                case .created(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case .json(let value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)`.
-    fileprivate func formFieldRemove(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.FormFieldRemove.id,
-            using: {
-                APIHandler.formFieldRemove($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.FormFieldRemove.Input.Path = .init(
-                    contactFormId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "contactFormId",
-                        as: Components.Parameters.ContactFormIdParameter.self
-                    )
-                )
-                let headers: Operations.FormFieldRemove.Input.Headers = .init(
-                    accept: try converter.extractAcceptHeaderIfPresent(
-                        in: request.headerFields
-                    )
-                )
-                let contentType = converter.extractContentTypeIfPresent(
-                    in: request.headerFields
-                )
-                let body: Components.RequestBodies.DeleteRequestBody
-                let chosenContentType = try converter.bestContentType(
-                    received: contentType,
-                    options: [
-                        "application/json"
-                    ]
-                )
-                switch chosenContentType {
-                case "application/json":
-                    body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.DeleteRequestSchema.self,
-                        from: requestBody,
-                        transforming: { value in
-                            .json(value)
-                        }
-                    )
-                default:
-                    preconditionFailure(
-                        "bestContentType chose an invalid content type."
-                    )
-                }
-                return Operations.FormFieldRemove.Input(
-                    path: path,
-                    headers: headers,
-                    body: body
-                )
-            },
-            serializer: { output, request in
-                switch output {
-                case .ok(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case .json(let value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)`.
-    fileprivate func formFieldGet(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.FormFieldGet.id,
-            using: {
-                APIHandler.formFieldGet($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.FormFieldGet.Input.Path = .init(
-                    contactFormId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "contactFormId",
-                        as: Components.Parameters.ContactFormIdParameter.self
-                    ),
-                    formFieldId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "formFieldId",
-                        as: Components.Parameters.FormFieldIdParameter.self
-                    )
-                )
-                let headers: Operations.FormFieldGet.Input.Headers = .init(
-                    accept: try converter.extractAcceptHeaderIfPresent(
-                        in: request.headerFields
-                    )
-                )
-                return Operations.FormFieldGet.Input(
-                    path: path,
-                    headers: headers
-                )
-            },
-            serializer: { output, request in
-                switch output {
-                case .ok(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
-                    suppressMutabilityWarning(&response)
-                    let body: OpenAPIRuntime.HTTPBody
-                    switch value.body {
-                    case .json(let value):
-                        try converter.validateAcceptIfPresent(
-                            "application/json",
-                            in: request.headerFields
-                        )
-                        body = try converter.setResponseBodyAsJSON(
-                            value,
-                            headerFields: &response.headerFields,
-                            contentType: "application/json; charset=utf-8"
-                        )
-                    }
-                    return (response, body)
-                case .notFound(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .unauthorized(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .forbidden(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .undocumented(let statusCode, _):
-                    return (.init(soar_statusCode: statusCode), nil)
-                }
-            }
-        )
-    }
-    /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)`.
-    fileprivate func formFieldUpdate(
-        request: HTTPTypes.HTTPRequest,
-        body: OpenAPIRuntime.HTTPBody?,
-        metadata: OpenAPIRuntime.ServerRequestMetadata
-    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
-        try await handle(
-            request: request,
-            requestBody: body,
-            metadata: metadata,
-            forOperation: Operations.FormFieldUpdate.id,
-            using: {
-                APIHandler.formFieldUpdate($0)
-            },
-            deserializer: { request, requestBody, metadata in
-                let path: Operations.FormFieldUpdate.Input.Path = .init(
-                    contactFormId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "contactFormId",
-                        as: Components.Parameters.ContactFormIdParameter.self
-                    ),
-                    formFieldId: try converter.getPathParameterAsURI(
-                        in: metadata.pathParameters,
-                        name: "formFieldId",
-                        as: Components.Parameters.FormFieldIdParameter.self
-                    )
-                )
-                let headers: Operations.FormFieldUpdate.Input.Headers = .init(
-                    accept: try converter.extractAcceptHeaderIfPresent(
-                        in: request.headerFields
-                    )
-                )
-                let contentType = converter.extractContentTypeIfPresent(
-                    in: request.headerFields
-                )
-                let body: Components.RequestBodies.FormFieldPatchRequestBody
-                let chosenContentType = try converter.bestContentType(
-                    received: contentType,
-                    options: [
-                        "application/json"
-                    ]
-                )
-                switch chosenContentType {
-                case "application/json":
-                    body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.FormFieldPatchSchema.self,
-                        from: requestBody,
-                        transforming: { value in
-                            .json(value)
-                        }
-                    )
-                default:
-                    preconditionFailure(
-                        "bestContentType chose an invalid content type."
-                    )
-                }
-                return Operations.FormFieldUpdate.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -1533,8 +1028,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/get(contactFormSubmissionList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}/submission`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/get(contactFormSubmissionList)`.
     fileprivate func contactFormSubmissionList(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -1551,10 +1046,10 @@ extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let path: Operations.ContactFormSubmissionList.Input.Path =
                     .init(
-                        contactFormId: try converter.getPathParameterAsURI(
+                        contactFormKey: try converter.getPathParameterAsURI(
                             in: metadata.pathParameters,
-                            name: "contactFormId",
-                            as: Components.Parameters.ContactFormIdParameter
+                            name: "contactFormKey",
+                            as: Components.Parameters.ContactFormKeyParameter
                                 .self
                         )
                     )
@@ -1605,8 +1100,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)`.
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormKey}/submission`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/delete(contactFormSubmissionRemove)`.
     fileprivate func contactFormSubmissionRemove(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -1623,10 +1118,10 @@ extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let path: Operations.ContactFormSubmissionRemove.Input.Path =
                     .init(
-                        contactFormId: try converter.getPathParameterAsURI(
+                        contactFormKey: try converter.getPathParameterAsURI(
                             in: metadata.pathParameters,
-                            name: "contactFormId",
-                            as: Components.Parameters.ContactFormIdParameter
+                            name: "contactFormKey",
+                            as: Components.Parameters.ContactFormKeyParameter
                                 .self
                         )
                     )
@@ -1703,8 +1198,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)`.
     fileprivate func contactFormSubmissionGet(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -1721,10 +1216,10 @@ extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let path: Operations.ContactFormSubmissionGet.Input.Path =
                     .init(
-                        contactFormId: try converter.getPathParameterAsURI(
+                        contactFormKey: try converter.getPathParameterAsURI(
                             in: metadata.pathParameters,
-                            name: "contactFormId",
-                            as: Components.Parameters.ContactFormIdParameter
+                            name: "contactFormKey",
+                            as: Components.Parameters.ContactFormKeyParameter
                                 .self
                         ),
                         contactFormSubmissionId:
@@ -1787,8 +1282,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
     fileprivate func contactFormSubmissionUpdate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -1805,10 +1300,10 @@ extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let path: Operations.ContactFormSubmissionUpdate.Input.Path =
                     .init(
-                        contactFormId: try converter.getPathParameterAsURI(
+                        contactFormKey: try converter.getPathParameterAsURI(
                             in: metadata.pathParameters,
-                            name: "contactFormId",
-                            as: Components.Parameters.ContactFormIdParameter
+                            name: "contactFormKey",
+                            as: Components.Parameters.ContactFormKeyParameter
                                 .self
                         ),
                         contactFormSubmissionId:

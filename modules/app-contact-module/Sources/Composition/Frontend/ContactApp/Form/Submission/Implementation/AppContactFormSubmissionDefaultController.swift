@@ -17,7 +17,7 @@ struct AppContactFormSubmissionDefaultController:
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
-        let formId = try context.requiredParameter("formId")
+        let formId = try context.requiredParameter("formKey")
         let form = try await request.decode(
             as: AppContactFormSubmissionForm.self,
             context: context
@@ -25,7 +25,7 @@ struct AppContactFormSubmissionDefaultController:
         let response = try await apiBuilder.makeContactApp(context)
             .withOpenAPIRepositoryErrorMapping { client in
                 try await client.appContactFormSubmission(
-                    path: .init(contactFormId: formId),
+                    path: .init(contactFormKey: formId),
                     body: .json(
                         .init(
                             values: .init(additionalProperties: form.values)

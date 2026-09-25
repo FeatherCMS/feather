@@ -26,6 +26,7 @@ struct ContactFormDetailsView: Component {
                         description: "Review the contact form configuration."
                     ),
                     fields: [
+                        .init(label: "Key", value: item.key),
                         .init(label: "Name", value: item.name),
                         .init(
                             label: "Success message",
@@ -66,7 +67,7 @@ struct ContactFormDetailsView: Component {
             result.append(
                 .init(
                     label: "Edit",
-                    href: ContactAdminRoutes.formEdit(RouterPath(item.id))
+                    href: ContactAdminRoutes.formEdit(RouterPath(item.key))
                         .description,
                     style: .primary
                 )
@@ -78,9 +79,9 @@ struct ContactFormDetailsView: Component {
                     label: "Remove",
                     href: NewAdminLocation.remove(
                         path: ContactAdminRoutes.formRemove.description,
-                        ids: [item.id],
+                        ids: [item.key],
                         returnTo:
-                            ContactAdminRoutes.formDetails(RouterPath(item.id))
+                            ContactAdminRoutes.formDetails(RouterPath(item.key))
                             .description
                     ),
                     style: .destructive

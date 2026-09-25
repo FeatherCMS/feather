@@ -38,8 +38,8 @@ public struct Client: APIProtocol {
     private var converter: Converter {
         client.converter
     }
-    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe`.
-    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe/post(appNewsletterCampaignSubscribe)`.
+    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe/post(appNewsletterCampaignSubscribe)`.
     public func appNewsletterCampaignSubscribe(
         _ input: Operations.AppNewsletterCampaignSubscribe.Input
     ) async throws -> Operations.AppNewsletterCampaignSubscribe.Output {
@@ -50,7 +50,7 @@ public struct Client: APIProtocol {
                 let path = try converter.renderedPath(
                     template: "/api/v1/newsletter/campaign/{}/subscribe",
                     parameters: [
-                        input.path.newsletterCampaignId
+                        input.path.newsletterCampaignKey
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
@@ -85,8 +85,8 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe`.
-    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
+    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
     public func appNewsletterCampaignUnsubscribe(
         _ input: Operations.AppNewsletterCampaignUnsubscribe.Input
     ) async throws -> Operations.AppNewsletterCampaignUnsubscribe.Output {
@@ -97,7 +97,7 @@ public struct Client: APIProtocol {
                 let path = try converter.renderedPath(
                     template: "/api/v1/newsletter/campaign/{}/unsubscribe",
                     parameters: [
-                        input.path.newsletterCampaignId
+                        input.path.newsletterCampaignKey
                     ]
                 )
                 var request: HTTPTypes.HTTPRequest = .init(

@@ -15,7 +15,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let formId = try context.requiredParameter("formId")
+        let formId = try context.requiredParameter("formKey")
         let submissionId = try context.requiredParameter("submissionId")
         let submission = try await interactor.get(
             formId: formId,
@@ -32,7 +32,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         -> Response
     {
         let (interactor, _) = buildRuntime((request, context))
-        let formId = try context.requiredParameter("formId")
+        let formId = try context.requiredParameter("formKey")
         let submissionId = try context.requiredParameter("submissionId")
         let nonceRequest = try await request.decode(
             as: NonceRequest<NewAdminListRemoveFormInput>.self,
@@ -63,8 +63,8 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
     {
         let (_, presenter) = buildRuntime((request, context))
         return try await presenter.renderRemovePage(
-            formId: try context.requiredParameter("formId"),
-            items: request.queryStrings("selectedIds")
+            formId: try context.requiredParameter("formKey"),
+            items: request.queryStrings("ids")
                 .map {
                     .init(id: $0, label: $0)
                 }
@@ -75,9 +75,9 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         async throws
         -> Response
     {
-        let formId = try context.requiredParameter("formId")
+        let formId = try context.requiredParameter("formKey")
         let payload = try await request.decode(
-            as: NewAdminListRemoveFormInput.self,
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -89,15 +89,15 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         let (interactor, _) = buildRuntime((request, context))
         try await interactor.remove(
             formId: formId,
-            ids: payload.normalizedSelectedIds
+            ids: payload.input.normalizedIds
         )
         return Response(
             status: .seeOther,
             headers: [
                 .location: AdminListRemoveRedirect.location(
                     path: "/admin/contact/forms/\(formId)/submissions/",
-                    page: payload.normalizedPage,
-                    search: payload.normalizedSearch,
+                    page: payload.input.normalizedPage,
+                    search: payload.input.normalizedSearch,
                     title: "Removed",
                     message: "Contact form submissions removed successfully."
                 )

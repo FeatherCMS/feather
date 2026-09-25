@@ -11,10 +11,10 @@ struct AdminRemoveContactFormDefaultInteractor: AdminRemoveContactFormInteractor
 {
     let repository: AdminRemoveContactFormOpenAPIRepository
 
-    func get(id: String) async throws -> AdminContactFormDetailsItem {
-        try await repository.get(id: id)
+    func get(key: String) async throws -> AdminContactFormDetailsItem {
+        try await repository.get(key: key)
     }
-    func remove(ids: [String]) async throws {
-        try await repository.remove(ids: ids)
+    func remove(keys: [String]) async throws {
+        try await repository.remove(keys: keys)
     }
 }

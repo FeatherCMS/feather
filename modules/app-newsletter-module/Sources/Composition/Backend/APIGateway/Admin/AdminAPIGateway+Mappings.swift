@@ -12,7 +12,7 @@ extension AdminAPIGateway {
         _ value: CampaignDetail
     ) -> Components.Schemas.NewsletterCampaignSchema {
         .init(
-            id: value.id,
+            key: value.key,
             name: value.name,
             fromEmail: value.fromEmail,
             createdAt: timestamp(value.createdAt),
@@ -21,11 +21,12 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ value: IssueDetail
+        _ value: IssueDetail,
+        campaignKey: String
     ) -> Components.Schemas.NewsletterIssueSchema {
         .init(
             id: value.id,
-            newsletterId: value.newsletterId,
+            campaignKey: campaignKey,
             subject: value.subject,
             content: value.content,
             status: value.status.rawValue,
@@ -37,11 +38,12 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ value: SubscriberDetail
+        _ value: SubscriberDetail,
+        campaignKey: String
     ) -> Components.Schemas.NewsletterSubscriberSchema {
         .init(
             id: subscriberID(value.email),
-            newsletterId: value.newsletterId,
+            campaignKey: campaignKey,
             email: value.email,
             status: value.status.rawValue,
             subscriptionDate: timestamp(value.subscriptionDate),

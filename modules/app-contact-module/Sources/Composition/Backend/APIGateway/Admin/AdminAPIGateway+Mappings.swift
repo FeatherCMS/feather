@@ -12,7 +12,7 @@ extension AdminAPIGateway {
         _ value: FormDetail
     ) -> Components.Schemas.ContactFormSchema {
         .init(
-            id: value.id,
+            key: value.key,
             name: value.name,
             successMessage: value.successMessage,
             failureMessage: value.failureMessage,
@@ -29,7 +29,6 @@ extension AdminAPIGateway {
     ) -> Components.Schemas.FormFieldSchema {
         .init(
             id: value.id,
-            formId: value.formId,
             key: value.key,
             _type: value.type.rawValue,
             label: value.label,
@@ -46,7 +45,6 @@ extension AdminAPIGateway {
     ) -> Components.Schemas.SubmissionMailSchema {
         .init(
             id: value.id,
-            formId: value.formId,
             mailFrom: value.mailFrom,
             mailTo: value.mailTo,
             subject: value.subject,
@@ -58,11 +56,12 @@ extension AdminAPIGateway {
     }
 
     public func map(
-        _ value: SubmissionDetail
+        _ value: SubmissionDetail,
+        formKey: String
     ) -> Components.Schemas.ContactFormSubmissionSchema {
         .init(
             id: value.id,
-            formId: value.formId,
+            formKey: formKey,
             values: .init(
                 additionalProperties: jsonProperties(value.valuesJSON)
             ),

@@ -33,6 +33,7 @@ struct AdminAddContactFormOpenAPIRepository {
     }
 
     func create(
+        key: String,
         name: String,
         successMessage: String,
         failureMessage: String,
@@ -44,6 +45,7 @@ struct AdminAddContactFormOpenAPIRepository {
             let response = try await client.contactFormCreate(
                 body: .json(
                     .init(
+                        key: key,
                         name: name,
                         successMessage: successMessage,
                         failureMessage: failureMessage,
@@ -65,7 +67,7 @@ struct AdminAddContactFormOpenAPIRepository {
             case .created(let value):
                 let item = try value.body.json
                 return .init(
-                    id: item.id,
+                    key: item.key,
                     name: item.name,
                     successMessage: item.successMessage,
                     failureMessage: item.failureMessage,

@@ -85,6 +85,21 @@ public struct AdminNewsletter {
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
+        AdminAddNewsletterCampaignSubscriber(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminEditNewsletterCampaignSubscriber(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
+        AdminRemoveNewsletterCampaignSubscriber(
+            apiBuilder: apiBuilder,
+            renderingEngine: renderingEngine
+        )
+        .controller.route(on: router)
         AdminListNewsletterSubscribers(
             apiBuilder: apiBuilder,
             renderingEngine: renderingEngine

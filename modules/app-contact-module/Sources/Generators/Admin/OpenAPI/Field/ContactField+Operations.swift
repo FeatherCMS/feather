@@ -10,22 +10,6 @@ extension ContactFieldIDOperation {
     }
 }
 
-protocol FormFieldOperation: ContactFormOperation {}
-extension FormFieldOperation {
-    var parameters: [ParameterRepresentable] {
-        [ContactFormIdParameter().reference()]
-    }
-}
-protocol FormFieldIDOperation: FormFieldOperation {}
-extension FormFieldIDOperation {
-    var parameters: [ParameterRepresentable] {
-        [
-            ContactFormIdParameter().reference(),
-            FormFieldIdParameter().reference(),
-        ]
-    }
-}
-
 struct ContactFieldListOperation: ContactFieldOperation {
     var responseMap: ResponseMap {
         [200: FormFieldListResponse().reference()]
@@ -59,41 +43,5 @@ struct ContactFieldUpdateOperation: ContactFieldIDOperation {
     }
 }
 struct ContactFieldRemoveOperation: ContactFieldOperation,
-    DeleteOperation
-{}
-
-struct FormFieldListOperation: FormFieldOperation {
-    var responseMap: ResponseMap {
-        [200: FormFieldListResponse().reference()]
-    }
-}
-struct FormFieldCreateOperation: FormFieldOperation {
-    var requestBody: RequestBodyRepresentable? {
-        FormFieldCreateRequestBody().reference()
-    }
-    var responseMap: ResponseMap {
-        [201: FormFieldResponse().reference()]
-    }
-}
-struct FormFieldGetOperation: FormFieldIDOperation {
-    var responseMap: ResponseMap {
-        [
-            200: FormFieldResponse().reference(),
-            404: CustomResponse(description: "Contact form field not found"),
-        ]
-    }
-}
-struct FormFieldUpdateOperation: FormFieldIDOperation {
-    var requestBody: RequestBodyRepresentable? {
-        FormFieldPatchRequestBody().reference()
-    }
-    var responseMap: ResponseMap {
-        [
-            200: FormFieldResponse().reference(),
-            404: CustomResponse(description: "Contact form field not found"),
-        ]
-    }
-}
-struct FormFieldRemoveOperation: FormFieldOperation,
     DeleteOperation
 {}

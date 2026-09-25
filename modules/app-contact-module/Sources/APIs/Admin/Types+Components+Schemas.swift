@@ -18,8 +18,8 @@ extension Components {
             .ContactFormSchema]
         /// - Remark: Generated from `#/components/schemas/ContactFormSchema`.
         public struct ContactFormSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/ContactFormSchema/id`.
-            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormSchema/key`.
+            public var key: Swift.String
             /// - Remark: Generated from `#/components/schemas/ContactFormSchema/name`.
             public var name: Swift.String
             /// - Remark: Generated from `#/components/schemas/ContactFormSchema/successMessage`.
@@ -39,7 +39,7 @@ extension Components {
             /// Creates a new `ContactFormSchema`.
             ///
             /// - Parameters:
-            ///   - id:
+            ///   - key:
             ///   - name:
             ///   - successMessage:
             ///   - failureMessage:
@@ -49,7 +49,7 @@ extension Components {
             ///   - createdAt:
             ///   - updatedAt:
             public init(
-                id: Swift.String,
+                key: Swift.String,
                 name: Swift.String,
                 successMessage: Swift.String,
                 failureMessage: Swift.String,
@@ -59,7 +59,7 @@ extension Components {
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
             ) {
-                self.id = id
+                self.key = key
                 self.name = name
                 self.successMessage = successMessage
                 self.failureMessage = failureMessage
@@ -70,7 +70,7 @@ extension Components {
                 self.updatedAt = updatedAt
             }
             public enum CodingKeys: String, CodingKey {
-                case id
+                case key
                 case name
                 case successMessage
                 case failureMessage
@@ -89,8 +89,6 @@ extension Components {
         public struct FormFieldSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/FormFieldSchema/id`.
             public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/FormFieldSchema/formId`.
-            public var formId: Swift.String
             /// - Remark: Generated from `#/components/schemas/FormFieldSchema/key`.
             public var key: Swift.String
             /// - Remark: Generated from `#/components/schemas/FormFieldSchema/type`.
@@ -112,7 +110,6 @@ extension Components {
             ///
             /// - Parameters:
             ///   - id:
-            ///   - formId:
             ///   - key:
             ///   - _type:
             ///   - label:
@@ -123,7 +120,6 @@ extension Components {
             ///   - updatedAt:
             public init(
                 id: Swift.String,
-                formId: Swift.String,
                 key: Swift.String,
                 _type: Swift.String,
                 label: Swift.String,
@@ -135,7 +131,6 @@ extension Components {
                 updatedAt: Swift.Double
             ) {
                 self.id = id
-                self.formId = formId
                 self.key = key
                 self._type = _type
                 self.label = label
@@ -147,7 +142,6 @@ extension Components {
             }
             public enum CodingKeys: String, CodingKey {
                 case id
-                case formId
                 case key
                 case _type = "type"
                 case label
@@ -167,8 +161,6 @@ extension Components {
         public struct SubmissionMailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/SubmissionMailSchema/id`.
             public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/SubmissionMailSchema/formId`.
-            public var formId: Swift.String
             /// - Remark: Generated from `#/components/schemas/SubmissionMailSchema/mailFrom`.
             public var mailFrom: Swift.String
             /// - Remark: Generated from `#/components/schemas/SubmissionMailSchema/mailTo`.
@@ -176,7 +168,7 @@ extension Components {
             /// - Remark: Generated from `#/components/schemas/SubmissionMailSchema/subject`.
             public var subject: Swift.String
             /// - Remark: Generated from `#/components/schemas/SubmissionMailSchema/additionalHeaders`.
-            public var additionalHeaders: Swift.String
+            public var additionalHeaders: [Swift.String]
             /// - Remark: Generated from `#/components/schemas/SubmissionMailSchema/messageBody`.
             public var messageBody: Swift.String
             /// - Remark: Generated from `#/components/schemas/SubmissionMailSchema/createdAt`.
@@ -187,7 +179,6 @@ extension Components {
             ///
             /// - Parameters:
             ///   - id:
-            ///   - formId:
             ///   - mailFrom:
             ///   - mailTo:
             ///   - subject:
@@ -197,17 +188,15 @@ extension Components {
             ///   - updatedAt:
             public init(
                 id: Swift.String,
-                formId: Swift.String,
                 mailFrom: Swift.String,
                 mailTo: Swift.String,
                 subject: Swift.String,
-                additionalHeaders: Swift.String,
+                additionalHeaders: [Swift.String],
                 messageBody: Swift.String,
                 createdAt: Swift.Double,
                 updatedAt: Swift.Double
             ) {
                 self.id = id
-                self.formId = formId
                 self.mailFrom = mailFrom
                 self.mailTo = mailTo
                 self.subject = subject
@@ -218,7 +207,6 @@ extension Components {
             }
             public enum CodingKeys: String, CodingKey {
                 case id
-                case formId
                 case mailFrom
                 case mailTo
                 case subject
@@ -230,6 +218,8 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema`.
         public struct ContactFormCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/key`.
+            public var key: Swift.String
             /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/name`.
             public var name: Swift.String
             /// - Remark: Generated from `#/components/schemas/ContactFormCreateSchema/successMessage`.
@@ -245,6 +235,7 @@ extension Components {
             /// Creates a new `ContactFormCreateSchema`.
             ///
             /// - Parameters:
+            ///   - key:
             ///   - name:
             ///   - successMessage:
             ///   - failureMessage:
@@ -252,6 +243,7 @@ extension Components {
             ///   - fieldIds:
             ///   - mails:
             public init(
+                key: Swift.String,
                 name: Swift.String,
                 successMessage: Components.Schemas.ContactContentField? = nil,
                 failureMessage: Components.Schemas.ContactContentField? = nil,
@@ -259,6 +251,7 @@ extension Components {
                 fieldIds: Components.Schemas.ContactFieldIDsSchema? = nil,
                 mails: Components.Schemas.SubmissionMailInputsSchema? = nil
             ) {
+                self.key = key
                 self.name = name
                 self.successMessage = successMessage
                 self.failureMessage = failureMessage
@@ -267,6 +260,7 @@ extension Components {
                 self.mails = mails
             }
             public enum CodingKeys: String, CodingKey {
+                case key
                 case name
                 case successMessage
                 case failureMessage
@@ -290,7 +284,7 @@ extension Components {
             public var subject: Swift.String
             /// - Remark: Generated from `#/components/schemas/SubmissionMailInputSchema/additionalHeaders`.
             public var additionalHeaders:
-                Components.Schemas.ContactContentField?
+                Components.Schemas.ContactAdditionalHeadersSchema?
             /// - Remark: Generated from `#/components/schemas/SubmissionMailInputSchema/messageBody`.
             public var messageBody: Swift.String
             /// Creates a new `SubmissionMailInputSchema`.
@@ -305,8 +299,8 @@ extension Components {
                 mailFrom: Swift.String,
                 mailTo: Swift.String,
                 subject: Swift.String,
-                additionalHeaders: Components.Schemas.ContactContentField? =
-                    nil,
+                additionalHeaders: Components.Schemas
+                    .ContactAdditionalHeadersSchema? = nil,
                 messageBody: Swift.String
             ) {
                 self.mailFrom = mailFrom
@@ -323,6 +317,8 @@ extension Components {
                 case messageBody
             }
         }
+        /// - Remark: Generated from `#/components/schemas/ContactAdditionalHeadersSchema`.
+        public typealias ContactAdditionalHeadersSchema = [Swift.String]
         /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
         public struct DeleteRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
@@ -442,8 +438,8 @@ extension Components {
                 case omitted
             }
         }
-        /// - Remark: Generated from `#/components/schemas/ContactIdField`.
-        public typealias ContactIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/ContactFormKeyField`.
+        public typealias ContactFormKeyField = Swift.String
         /// - Remark: Generated from `#/components/schemas/FormFieldListSchema`.
         public typealias FormFieldListSchema = [Components.Schemas
             .FormFieldSchema]
@@ -500,6 +496,8 @@ extension Components {
         public typealias ContactRequiredField = Swift.Bool
         /// - Remark: Generated from `#/components/schemas/FormFieldPositionField`.
         public typealias FormFieldPositionField = Swift.Int
+        /// - Remark: Generated from `#/components/schemas/ContactIdField`.
+        public typealias ContactIdField = Swift.String
         /// - Remark: Generated from `#/components/schemas/FormFieldPatchSchema`.
         public struct FormFieldPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/FormFieldPatchSchema/key`.
@@ -562,8 +560,8 @@ extension Components {
         public struct ContactFormSubmissionSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/id`.
             public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/formId`.
-            public var formId: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/formKey`.
+            public var formKey: Swift.String
             /// - Remark: Generated from `#/components/schemas/ContactFormSubmissionSchema/values`.
             public struct ValuesPayload: Codable, Hashable, Sendable {
                 /// A container of undocumented properties.
@@ -647,7 +645,7 @@ extension Components {
             ///
             /// - Parameters:
             ///   - id:
-            ///   - formId:
+            ///   - formKey:
             ///   - values:
             ///   - itemsSnapshot:
             ///   - metadata:
@@ -656,7 +654,7 @@ extension Components {
             ///   - updatedAt:
             public init(
                 id: Swift.String,
-                formId: Swift.String,
+                formKey: Swift.String,
                 values: Components.Schemas.ContactFormSubmissionSchema
                     .ValuesPayload,
                 itemsSnapshot: Components.Schemas.ContactFormSubmissionSchema
@@ -668,7 +666,7 @@ extension Components {
                 updatedAt: Swift.Double
             ) {
                 self.id = id
-                self.formId = formId
+                self.formKey = formKey
                 self.values = values
                 self.itemsSnapshot = itemsSnapshot
                 self.metadata = metadata
@@ -678,7 +676,7 @@ extension Components {
             }
             public enum CodingKeys: String, CodingKey {
                 case id
-                case formId
+                case formKey
                 case values
                 case itemsSnapshot
                 case metadata

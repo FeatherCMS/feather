@@ -18,10 +18,10 @@ public struct GetSubscriber: UseCase {
     }
 
     public struct Input: DTO {
-        public let newsletterId: String
+        public let campaignKey: String
         public let email: String
-        public init(newsletterId: String, email: String) {
-            self.newsletterId = newsletterId
+        public init(campaignKey: String, email: String) {
+            self.campaignKey = campaignKey
             self.email = email
         }
     }
@@ -36,8 +36,13 @@ public struct GetSubscriber: UseCase {
         }
         return try await transaction.run { scope in
             guard
+                let campaign = try await scope.newsletter.findBy(
+                    key: input.campaignKey
+                )
+            else { throw Error(message: "Newsletter campaign not found") }
+            guard
                 let value = try await scope.subscriber.findBy(
-                    newsletterId: input.newsletterId,
+                    newsletterId: campaign.id,
                     email: input.email
                 )
             else { throw Error(message: "Newsletter subscriber not found") }

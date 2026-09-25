@@ -10,13 +10,13 @@ import WebComponents
 
 struct AdminRemoveContactFormOpenAPIRepository {
     let api: ContactAdminAPIClient
-    func get(id: String) async throws -> AdminContactFormDetailsItem {
-        try await AdminViewContactFormOpenAPIRepository(api: api).get(id: id)
+    func get(key: String) async throws -> AdminContactFormDetailsItem {
+        try await AdminViewContactFormOpenAPIRepository(api: api).get(key: key)
     }
-    func remove(ids: [String]) async throws {
+    func remove(keys: [String]) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.contactFormRemove(
-                body: .json(.init(ids: ids, results: false, summary: true))
+                body: .json(.init(ids: keys, results: false, summary: true))
             )
         }
     }

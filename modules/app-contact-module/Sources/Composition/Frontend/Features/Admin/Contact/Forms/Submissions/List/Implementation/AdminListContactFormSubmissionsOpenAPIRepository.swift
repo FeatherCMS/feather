@@ -13,7 +13,7 @@ struct AdminListContactFormSubmissionsOpenAPIRepository {
     func list(formId: String) async throws -> [AdminContactFormSubmissionItem] {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.contactFormSubmissionList(
-                path: .init(contactFormId: formId)
+                path: .init(contactFormKey: formId)
             )
             switch response {
             case .ok(let value): return try value.body.json.map(map)
@@ -35,7 +35,7 @@ struct AdminListContactFormSubmissionsOpenAPIRepository {
         let values = item.values.additionalProperties
         return .init(
             id: item.id,
-            formId: item.formId,
+            formId: item.formKey,
             status: item.status,
             createdAt: DateFormatting.formatUnixTimestamp(item.createdAt),
             email: values.first { $0.key.lowercased() == "email" }?.value,

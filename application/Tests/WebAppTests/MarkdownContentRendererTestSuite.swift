@@ -13,7 +13,7 @@ struct MarkdownContentRendererTestSuite {
         func render(
             request: WebMarkdownBlockRendererRequest
         ) async -> String? {
-            guard let identifier = request.arguments["id"] else { return nil }
+            guard let identifier = request.arguments["key"] else { return nil }
             return "<form data-id=\"\(identifier)\"></form>"
         }
     }
@@ -53,7 +53,8 @@ struct MarkdownContentRendererTestSuite {
         )
 
         let output = await renderer.render(
-            markdown: "# Welcome\n\n@ContactForm(id: form-123)"
+            markdown: "# Welcome\n\n@ContactForm(key: form-123)",
+            requestPath: "/"
         )
 
         #expect(output.contains("<h1>Welcome</h1>"))

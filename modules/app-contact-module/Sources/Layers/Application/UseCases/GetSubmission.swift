@@ -4,7 +4,6 @@ public import FeatherApplication
 public import FeatherContracts
 
 public struct GetSubmission: UseCase {
-    struct Error: UseCaseError { let message: String }
     struct Action: PermissionAction {
         let key = ContactPermissions.Submissions.read
     }
@@ -19,8 +18,15 @@ public struct GetSubmission: UseCase {
         self.transaction = transaction
     }
     public struct Input: DTO {
+        public let formKey: String
         public let id: String
-        public init(id: String) { self.id = id }
+        public init(
+            formKey: String,
+            id: String
+        ) {
+            self.formKey = formKey
+            self.id = id
+        }
     }
     public func execute(
         subject: Subject,
@@ -31,9 +37,18 @@ public struct GetSubmission: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            guard let value = try await scope.submission.findBy(id: input.id)
-            else { throw Error(message: "Contact form submission not found") }
+            guard let form = try await scope.form.findBy(key: input.formKey)
+            else { throw Error.formNotFound }
+            guard
+                let value = try await scope.submission.findBy(id: input.id),
+                value.formId == form.id
+            else { throw Error.submissionNotFound }
             return value.asDetail
         }
+    }
+
+    public enum Error: UseCaseError {
+        case formNotFound
+        case submissionNotFound
     }
 }

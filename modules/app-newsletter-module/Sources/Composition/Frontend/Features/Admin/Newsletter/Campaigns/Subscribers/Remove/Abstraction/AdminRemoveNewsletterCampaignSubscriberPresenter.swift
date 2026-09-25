@@ -10,6 +10,7 @@ import WebComponents
 protocol AdminRemoveNewsletterCampaignSubscriberPresenter: Sendable {
     func render(
         newsletterId: String,
-        item: NewAdminRemoveItemContext
+        items: [NewAdminRemoveItemContext],
+        returnTo: String?
     ) async throws -> HTMLResponse
 }

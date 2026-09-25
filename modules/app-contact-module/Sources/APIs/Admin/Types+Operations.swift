@@ -515,28 +515,29 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/get(contactFormGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)`.
     public enum ContactFormGet {
         public static let id: Swift.String = "contactFormGet"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/GET/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.ContactFormIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/GET/path/contactFormKey`.
+                public var contactFormKey:
+                    Components.Parameters.ContactFormKeyParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - contactFormId:
+                ///   - contactFormKey:
                 public init(
-                    contactFormId: Components.Parameters.ContactFormIdParameter
+                    contactFormKey: Components.Parameters
+                        .ContactFormKeyParameter
                 ) {
-                    self.contactFormId = contactFormId
+                    self.contactFormKey = contactFormKey
                 }
             }
             public var path: Operations.ContactFormGet.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
@@ -571,7 +572,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Contact form response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/get(contactFormGet)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.ContactFormResponse)
@@ -598,13 +599,13 @@ public enum Operations {
             }
             /// Contact form not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/get(contactFormGet)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.ContactFormGet.Output.NotFound)
             /// Contact form not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/get(contactFormGet)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             public static var notFound: Self {
@@ -633,13 +634,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/get(contactFormGet)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFormGet.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/get(contactFormGet)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -670,13 +671,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/get(contactFormGet)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFormGet.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/get(contactFormGet)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -733,28 +734,29 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/put(contactFormUpdate)`.
+    /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/put(contactFormUpdate)`.
     public enum ContactFormUpdate {
         public static let id: Swift.String = "contactFormUpdate"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/PUT/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/PUT/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/PUT/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.ContactFormIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/PUT/path/contactFormKey`.
+                public var contactFormKey:
+                    Components.Parameters.ContactFormKeyParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - contactFormId:
+                ///   - contactFormKey:
                 public init(
-                    contactFormId: Components.Parameters.ContactFormIdParameter
+                    contactFormKey: Components.Parameters
+                        .ContactFormKeyParameter
                 ) {
-                    self.contactFormId = contactFormId
+                    self.contactFormKey = contactFormKey
                 }
             }
             public var path: Operations.ContactFormUpdate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/PUT/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/PUT/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
@@ -794,7 +796,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Contact form response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/put(contactFormUpdate)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/put(contactFormUpdate)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.ContactFormResponse)
@@ -821,13 +823,13 @@ public enum Operations {
             }
             /// Contact form not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/put(contactFormUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/put(contactFormUpdate)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.ContactFormUpdate.Output.NotFound)
             /// Contact form not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/put(contactFormUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/put(contactFormUpdate)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             public static var notFound: Self {
@@ -856,13 +858,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/put(contactFormUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/put(contactFormUpdate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFormUpdate.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/put(contactFormUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/put(contactFormUpdate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -893,13 +895,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/put(contactFormUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/put(contactFormUpdate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFormUpdate.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/put(contactFormUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/put(contactFormUpdate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -911,1014 +913,6 @@ public enum Operations {
             /// - SeeAlso: `.forbidden`.
             public var forbidden: Operations.ContactFormUpdate.Output.Forbidden
             {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
-        }
-        @frozen public enum AcceptableContentType: AcceptableProtocol {
-            case json
-            case other(Swift.String)
-            public init?(rawValue: Swift.String) {
-                switch rawValue.lowercased() {
-                case "application/json":
-                    self = .json
-                default:
-                    self = .other(rawValue)
-                }
-            }
-            public var rawValue: Swift.String {
-                switch self {
-                case .other(let string):
-                    return string
-                case .json:
-                    return "application/json"
-                }
-            }
-            public static var allCases: [Self] {
-                [
-                    .json
-                ]
-            }
-        }
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)`.
-    public enum FormFieldList {
-        public static let id: Swift.String = "formFieldList"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/GET/path`.
-            public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/GET/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.ContactFormIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - contactFormId:
-                public init(
-                    contactFormId: Components.Parameters.ContactFormIdParameter
-                ) {
-                    self.contactFormId = contactFormId
-                }
-            }
-            public var path: Operations.FormFieldList.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/GET/header`.
-            public struct Headers: Sendable, Hashable {
-                public var accept:
-                    [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.FormFieldList.AcceptableContentType
-                    >]
-                /// Creates a new `Headers`.
-                ///
-                /// - Parameters:
-                ///   - accept:
-                public init(
-                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.FormFieldList.AcceptableContentType
-                    >] = .defaultValues()
-                ) {
-                    self.accept = accept
-                }
-            }
-            public var headers: Operations.FormFieldList.Input.Headers
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            ///   - headers:
-            public init(
-                path: Operations.FormFieldList.Input.Path,
-                headers: Operations.FormFieldList.Input.Headers = .init()
-            ) {
-                self.path = path
-                self.headers = headers
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            /// Contact form field list response
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)/responses/200`.
-            ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.FormFieldListResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
-            ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.FormFieldListResponse {
-                get throws {
-                    switch self {
-                    case .ok(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.FormFieldList.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.FormFieldList.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.FormFieldList.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/get(formFieldList)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.FormFieldList.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
-        }
-        @frozen public enum AcceptableContentType: AcceptableProtocol {
-            case json
-            case other(Swift.String)
-            public init?(rawValue: Swift.String) {
-                switch rawValue.lowercased() {
-                case "application/json":
-                    self = .json
-                default:
-                    self = .other(rawValue)
-                }
-            }
-            public var rawValue: Swift.String {
-                switch self {
-                case .other(let string):
-                    return string
-                case .json:
-                    return "application/json"
-                }
-            }
-            public static var allCases: [Self] {
-                [
-                    .json
-                ]
-            }
-        }
-    }
-    /// - Remark: HTTP `POST /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/post(formFieldCreate)`.
-    public enum FormFieldCreate {
-        public static let id: Swift.String = "formFieldCreate"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/POST/path`.
-            public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/POST/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.ContactFormIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - contactFormId:
-                public init(
-                    contactFormId: Components.Parameters.ContactFormIdParameter
-                ) {
-                    self.contactFormId = contactFormId
-                }
-            }
-            public var path: Operations.FormFieldCreate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/POST/header`.
-            public struct Headers: Sendable, Hashable {
-                public var accept:
-                    [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.FormFieldCreate.AcceptableContentType
-                    >]
-                /// Creates a new `Headers`.
-                ///
-                /// - Parameters:
-                ///   - accept:
-                public init(
-                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.FormFieldCreate.AcceptableContentType
-                    >] = .defaultValues()
-                ) {
-                    self.accept = accept
-                }
-            }
-            public var headers: Operations.FormFieldCreate.Input.Headers
-            public var body: Components.RequestBodies.FormFieldCreateRequestBody
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            ///   - headers:
-            ///   - body:
-            public init(
-                path: Operations.FormFieldCreate.Input.Path,
-                headers: Operations.FormFieldCreate.Input.Headers = .init(),
-                body: Components.RequestBodies.FormFieldCreateRequestBody
-            ) {
-                self.path = path
-                self.headers = headers
-                self.body = body
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            /// Contact form field response
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/post(formFieldCreate)/responses/201`.
-            ///
-            /// HTTP response code: `201 created`.
-            case created(Components.Responses.FormFieldResponse)
-            /// The associated value of the enum case if `self` is `.created`.
-            ///
-            /// - Throws: An error if `self` is not `.created`.
-            /// - SeeAlso: `.created`.
-            public var created: Components.Responses.FormFieldResponse {
-                get throws {
-                    switch self {
-                    case .created(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "created",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/post(formFieldCreate)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.FormFieldCreate.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/post(formFieldCreate)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.FormFieldCreate.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/post(formFieldCreate)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.FormFieldCreate.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/post(formFieldCreate)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.FormFieldCreate.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
-        }
-        @frozen public enum AcceptableContentType: AcceptableProtocol {
-            case json
-            case other(Swift.String)
-            public init?(rawValue: Swift.String) {
-                switch rawValue.lowercased() {
-                case "application/json":
-                    self = .json
-                default:
-                    self = .other(rawValue)
-                }
-            }
-            public var rawValue: Swift.String {
-                switch self {
-                case .other(let string):
-                    return string
-                case .json:
-                    return "application/json"
-                }
-            }
-            public static var allCases: [Self] {
-                [
-                    .json
-                ]
-            }
-        }
-    }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/field`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)`.
-    public enum FormFieldRemove {
-        public static let id: Swift.String = "formFieldRemove"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/DELETE/path`.
-            public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/DELETE/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.ContactFormIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - contactFormId:
-                public init(
-                    contactFormId: Components.Parameters.ContactFormIdParameter
-                ) {
-                    self.contactFormId = contactFormId
-                }
-            }
-            public var path: Operations.FormFieldRemove.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/DELETE/header`.
-            public struct Headers: Sendable, Hashable {
-                public var accept:
-                    [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.FormFieldRemove.AcceptableContentType
-                    >]
-                /// Creates a new `Headers`.
-                ///
-                /// - Parameters:
-                ///   - accept:
-                public init(
-                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.FormFieldRemove.AcceptableContentType
-                    >] = .defaultValues()
-                ) {
-                    self.accept = accept
-                }
-            }
-            public var headers: Operations.FormFieldRemove.Input.Headers
-            public var body: Components.RequestBodies.DeleteRequestBody
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            ///   - headers:
-            ///   - body:
-            public init(
-                path: Operations.FormFieldRemove.Input.Path,
-                headers: Operations.FormFieldRemove.Input.Headers = .init(),
-                body: Components.RequestBodies.DeleteRequestBody
-            ) {
-                self.path = path
-                self.headers = headers
-                self.body = body
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            /// Delete response
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)/responses/200`.
-            ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.DeleteResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
-            ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.DeleteResponse {
-                get throws {
-                    switch self {
-                    case .ok(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.FormFieldRemove.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.FormFieldRemove.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.FormFieldRemove.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/delete(formFieldRemove)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.FormFieldRemove.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
-        }
-        @frozen public enum AcceptableContentType: AcceptableProtocol {
-            case json
-            case other(Swift.String)
-            public init?(rawValue: Swift.String) {
-                switch rawValue.lowercased() {
-                case "application/json":
-                    self = .json
-                default:
-                    self = .other(rawValue)
-                }
-            }
-            public var rawValue: Swift.String {
-                switch self {
-                case .other(let string):
-                    return string
-                case .json:
-                    return "application/json"
-                }
-            }
-            public static var allCases: [Self] {
-                [
-                    .json
-                ]
-            }
-        }
-    }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)`.
-    public enum FormFieldGet {
-        public static let id: Swift.String = "formFieldGet"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/GET/path`.
-            public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/GET/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.ContactFormIdParameter
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/GET/path/formFieldId`.
-                public var formFieldId:
-                    Components.Parameters.FormFieldIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - contactFormId:
-                ///   - formFieldId:
-                public init(
-                    contactFormId: Components.Parameters.ContactFormIdParameter,
-                    formFieldId: Components.Parameters.FormFieldIdParameter
-                ) {
-                    self.contactFormId = contactFormId
-                    self.formFieldId = formFieldId
-                }
-            }
-            public var path: Operations.FormFieldGet.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/GET/header`.
-            public struct Headers: Sendable, Hashable {
-                public var accept:
-                    [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.FormFieldGet.AcceptableContentType
-                    >]
-                /// Creates a new `Headers`.
-                ///
-                /// - Parameters:
-                ///   - accept:
-                public init(
-                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.FormFieldGet.AcceptableContentType
-                    >] = .defaultValues()
-                ) {
-                    self.accept = accept
-                }
-            }
-            public var headers: Operations.FormFieldGet.Input.Headers
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            ///   - headers:
-            public init(
-                path: Operations.FormFieldGet.Input.Path,
-                headers: Operations.FormFieldGet.Input.Headers = .init()
-            ) {
-                self.path = path
-                self.headers = headers
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            /// Contact form field response
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)/responses/200`.
-            ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.FormFieldResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
-            ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.FormFieldResponse {
-                get throws {
-                    switch self {
-                    case .ok(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// Contact form field not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.FormFieldGet.Output.NotFound)
-            /// Contact form field not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.FormFieldGet.Output.NotFound {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.FormFieldGet.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.FormFieldGet.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.FormFieldGet.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/get(formFieldGet)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.FormFieldGet.Output.Forbidden {
-                get throws {
-                    switch self {
-                    case .forbidden(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "forbidden",
-                            response: self
-                        )
-                    }
-                }
-            }
-            /// Undocumented response.
-            ///
-            /// A response with a code that is not documented in the OpenAPI document.
-            case undocumented(
-                statusCode: Swift.Int,
-                OpenAPIRuntime.UndocumentedPayload
-            )
-        }
-        @frozen public enum AcceptableContentType: AcceptableProtocol {
-            case json
-            case other(Swift.String)
-            public init?(rawValue: Swift.String) {
-                switch rawValue.lowercased() {
-                case "application/json":
-                    self = .json
-                default:
-                    self = .other(rawValue)
-                }
-            }
-            public var rawValue: Swift.String {
-                switch self {
-                case .other(let string):
-                    return string
-                case .json:
-                    return "application/json"
-                }
-            }
-            public static var allCases: [Self] {
-                [
-                    .json
-                ]
-            }
-        }
-    }
-    /// - Remark: HTTP `PUT /api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)`.
-    public enum FormFieldUpdate {
-        public static let id: Swift.String = "formFieldUpdate"
-        public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/PUT/path`.
-            public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/PUT/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.ContactFormIdParameter
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/PUT/path/formFieldId`.
-                public var formFieldId:
-                    Components.Parameters.FormFieldIdParameter
-                /// Creates a new `Path`.
-                ///
-                /// - Parameters:
-                ///   - contactFormId:
-                ///   - formFieldId:
-                public init(
-                    contactFormId: Components.Parameters.ContactFormIdParameter,
-                    formFieldId: Components.Parameters.FormFieldIdParameter
-                ) {
-                    self.contactFormId = contactFormId
-                    self.formFieldId = formFieldId
-                }
-            }
-            public var path: Operations.FormFieldUpdate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/PUT/header`.
-            public struct Headers: Sendable, Hashable {
-                public var accept:
-                    [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.FormFieldUpdate.AcceptableContentType
-                    >]
-                /// Creates a new `Headers`.
-                ///
-                /// - Parameters:
-                ///   - accept:
-                public init(
-                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.FormFieldUpdate.AcceptableContentType
-                    >] = .defaultValues()
-                ) {
-                    self.accept = accept
-                }
-            }
-            public var headers: Operations.FormFieldUpdate.Input.Headers
-            public var body: Components.RequestBodies.FormFieldPatchRequestBody
-            /// Creates a new `Input`.
-            ///
-            /// - Parameters:
-            ///   - path:
-            ///   - headers:
-            ///   - body:
-            public init(
-                path: Operations.FormFieldUpdate.Input.Path,
-                headers: Operations.FormFieldUpdate.Input.Headers = .init(),
-                body: Components.RequestBodies.FormFieldPatchRequestBody
-            ) {
-                self.path = path
-                self.headers = headers
-                self.body = body
-            }
-        }
-        @frozen public enum Output: Sendable, Hashable {
-            /// Contact form field response
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)/responses/200`.
-            ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.FormFieldResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
-            ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.FormFieldResponse {
-                get throws {
-                    switch self {
-                    case .ok(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct NotFound: Sendable, Hashable {
-                /// Creates a new `NotFound`.
-                public init() {}
-            }
-            /// Contact form field not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            case notFound(Operations.FormFieldUpdate.Output.NotFound)
-            /// Contact form field not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
-            /// The associated value of the enum case if `self` is `.notFound`.
-            ///
-            /// - Throws: An error if `self` is not `.notFound`.
-            /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.FormFieldUpdate.Output.NotFound {
-                get throws {
-                    switch self {
-                    case .notFound(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "notFound",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Unauthorized: Sendable, Hashable {
-                /// Creates a new `Unauthorized`.
-                public init() {}
-            }
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.FormFieldUpdate.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
-            /// The associated value of the enum case if `self` is `.unauthorized`.
-            ///
-            /// - Throws: An error if `self` is not `.unauthorized`.
-            /// - SeeAlso: `.unauthorized`.
-            public var unauthorized:
-                Operations.FormFieldUpdate.Output.Unauthorized
-            {
-                get throws {
-                    switch self {
-                    case .unauthorized(let response):
-                        return response
-                    default:
-                        try throwUnexpectedResponseStatus(
-                            expectedStatus: "unauthorized",
-                            response: self
-                        )
-                    }
-                }
-            }
-            public struct Forbidden: Sendable, Hashable {
-                /// Creates a new `Forbidden`.
-                public init() {}
-            }
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.FormFieldUpdate.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/field/{formFieldId}/put(formFieldUpdate)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
-            /// The associated value of the enum case if `self` is `.forbidden`.
-            ///
-            /// - Throws: An error if `self` is not `.forbidden`.
-            /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.FormFieldUpdate.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):
@@ -2908,28 +1902,29 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/get(contactFormSubmissionList)`.
+    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}/submission`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/get(contactFormSubmissionList)`.
     public enum ContactFormSubmissionList {
         public static let id: Swift.String = "contactFormSubmissionList"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/GET/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.ContactFormIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/GET/path/contactFormKey`.
+                public var contactFormKey:
+                    Components.Parameters.ContactFormKeyParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - contactFormId:
+                ///   - contactFormKey:
                 public init(
-                    contactFormId: Components.Parameters.ContactFormIdParameter
+                    contactFormKey: Components.Parameters
+                        .ContactFormKeyParameter
                 ) {
-                    self.contactFormId = contactFormId
+                    self.contactFormKey = contactFormKey
                 }
             }
             public var path: Operations.ContactFormSubmissionList.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
@@ -2968,7 +1963,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Contact form submission list response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/get(contactFormSubmissionList)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/get(contactFormSubmissionList)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.ContactFormSubmissionListResponse)
@@ -2997,7 +1992,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/get(contactFormSubmissionList)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/get(contactFormSubmissionList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
@@ -3005,7 +2000,7 @@ public enum Operations {
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/get(contactFormSubmissionList)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/get(contactFormSubmissionList)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3036,7 +2031,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/get(contactFormSubmissionList)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/get(contactFormSubmissionList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(
@@ -3044,7 +2039,7 @@ public enum Operations {
             )
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/get(contactFormSubmissionList)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/get(contactFormSubmissionList)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3103,28 +2098,29 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormId}/submission`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)`.
+    /// - Remark: HTTP `DELETE /api/v1/admin/contact/form/{contactFormKey}/submission`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/delete(contactFormSubmissionRemove)`.
     public enum ContactFormSubmissionRemove {
         public static let id: Swift.String = "contactFormSubmissionRemove"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/DELETE/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/DELETE/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/DELETE/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.ContactFormIdParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/DELETE/path/contactFormKey`.
+                public var contactFormKey:
+                    Components.Parameters.ContactFormKeyParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - contactFormId:
+                ///   - contactFormKey:
                 public init(
-                    contactFormId: Components.Parameters.ContactFormIdParameter
+                    contactFormKey: Components.Parameters
+                        .ContactFormKeyParameter
                 ) {
-                    self.contactFormId = contactFormId
+                    self.contactFormKey = contactFormKey
                 }
             }
             public var path: Operations.ContactFormSubmissionRemove.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/DELETE/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/DELETE/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
@@ -3167,7 +2163,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/delete(contactFormSubmissionRemove)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.DeleteResponse)
@@ -3194,7 +2190,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/delete(contactFormSubmissionRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
@@ -3202,7 +2198,7 @@ public enum Operations {
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/delete(contactFormSubmissionRemove)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3233,7 +2229,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/delete(contactFormSubmissionRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(
@@ -3241,7 +2237,7 @@ public enum Operations {
             )
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/delete(contactFormSubmissionRemove)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/delete(contactFormSubmissionRemove)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3300,35 +2296,36 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)`.
+    /// - Remark: HTTP `GET /api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)`.
     public enum ContactFormSubmissionGet {
         public static let id: Swift.String = "contactFormSubmissionGet"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/GET/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/GET/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/GET/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.ContactFormIdParameter
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/GET/path/contactFormSubmissionId`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/GET/path/contactFormKey`.
+                public var contactFormKey:
+                    Components.Parameters.ContactFormKeyParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/GET/path/contactFormSubmissionId`.
                 public var contactFormSubmissionId:
                     Components.Parameters.ContactFormSubmissionIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - contactFormId:
+                ///   - contactFormKey:
                 ///   - contactFormSubmissionId:
                 public init(
-                    contactFormId: Components.Parameters.ContactFormIdParameter,
+                    contactFormKey: Components.Parameters
+                        .ContactFormKeyParameter,
                     contactFormSubmissionId: Components.Parameters
                         .ContactFormSubmissionIdParameter
                 ) {
-                    self.contactFormId = contactFormId
+                    self.contactFormKey = contactFormKey
                     self.contactFormSubmissionId = contactFormSubmissionId
                 }
             }
             public var path: Operations.ContactFormSubmissionGet.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/GET/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
@@ -3367,7 +2364,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Contact form submission response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.ContactFormSubmissionResponse)
@@ -3394,13 +2391,13 @@ public enum Operations {
             }
             /// Contact form submission not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.ContactFormSubmissionGet.Output.NotFound)
             /// Contact form submission not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             public static var notFound: Self {
@@ -3431,7 +2428,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
@@ -3439,7 +2436,7 @@ public enum Operations {
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3470,13 +2467,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFormSubmissionGet.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -3535,35 +2532,36 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `PATCH /api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
+    /// - Remark: HTTP `PATCH /api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)`.
     public enum ContactFormSubmissionUpdate {
         public static let id: Swift.String = "contactFormSubmissionUpdate"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/PATCH/path`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/PATCH/path/contactFormId`.
-                public var contactFormId:
-                    Components.Parameters.ContactFormIdParameter
-                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/PATCH/path/contactFormSubmissionId`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/path/contactFormKey`.
+                public var contactFormKey:
+                    Components.Parameters.ContactFormKeyParameter
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/path/contactFormSubmissionId`.
                 public var contactFormSubmissionId:
                     Components.Parameters.ContactFormSubmissionIdParameter
                 /// Creates a new `Path`.
                 ///
                 /// - Parameters:
-                ///   - contactFormId:
+                ///   - contactFormKey:
                 ///   - contactFormSubmissionId:
                 public init(
-                    contactFormId: Components.Parameters.ContactFormIdParameter,
+                    contactFormKey: Components.Parameters
+                        .ContactFormKeyParameter,
                     contactFormSubmissionId: Components.Parameters
                         .ContactFormSubmissionIdParameter
                 ) {
-                    self.contactFormId = contactFormId
+                    self.contactFormKey = contactFormKey
                     self.contactFormSubmissionId = contactFormSubmissionId
                 }
             }
             public var path: Operations.ContactFormSubmissionUpdate.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/PATCH/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
@@ -3608,7 +2606,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Contact form submission response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.ContactFormSubmissionResponse)
@@ -3635,7 +2633,7 @@ public enum Operations {
             }
             /// Contact form submission not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(
@@ -3643,7 +2641,7 @@ public enum Operations {
             )
             /// Contact form submission not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
             public static var notFound: Self {
@@ -3674,7 +2672,7 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(
@@ -3682,7 +2680,7 @@ public enum Operations {
             )
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -3713,7 +2711,7 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(
@@ -3721,7 +2719,7 @@ public enum Operations {
             )
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormId}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {

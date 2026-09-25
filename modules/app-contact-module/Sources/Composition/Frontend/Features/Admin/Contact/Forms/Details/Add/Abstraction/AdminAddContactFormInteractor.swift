@@ -10,6 +10,7 @@ import WebComponents
 protocol AdminAddContactFormInteractor: Sendable {
     func availableFields() async throws -> [AdminContactFormFieldOption]
     func create(
+        key: String,
         name: String,
         successMessage: String,
         failureMessage: String,

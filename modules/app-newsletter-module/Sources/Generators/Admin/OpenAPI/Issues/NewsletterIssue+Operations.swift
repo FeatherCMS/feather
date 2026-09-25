@@ -5,14 +5,14 @@ import OpenAPIKit30
 protocol NewsletterIssueOperation: NewsletterCampaignOperation {}
 extension NewsletterIssueOperation {
     var parameters: [ParameterRepresentable] {
-        [NewsletterCampaignIdParameter().reference()]
+        [NewsletterCampaignKeyParameter().reference()]
     }
 }
 protocol NewsletterIssueIDOperation: NewsletterIssueOperation {}
 extension NewsletterIssueIDOperation {
     var parameters: [ParameterRepresentable] {
         [
-            NewsletterCampaignIdParameter().reference(),
+            NewsletterCampaignKeyParameter().reference(),
             NewsletterIssueIdParameter().reference(),
         ]
     }

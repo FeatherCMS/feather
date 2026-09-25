@@ -18,4 +18,8 @@ public protocol DeliveryRepository: Repository {
     func update(
         _ model: Delivery
     ) async throws -> Delivery
+
+    func delete(
+        issueId: String
+    ) async throws
 }

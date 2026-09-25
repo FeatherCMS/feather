@@ -8,7 +8,12 @@ struct AdminAddNewsletterCampaignDefaultInteractor:
     func getAddNewsletterCampaign() async throws
         -> AdminAddNewsletterCampaignModel
     {
-        .init(name: "", fromEmail: "", error: nil)
+        .init(
+            key: "",
+            name: "",
+            fromEmail: "",
+            error: nil
+        )
     }
 
     func postAddNewsletterCampaign(payload: NewsletterCampaignAddForm)
@@ -16,17 +21,28 @@ struct AdminAddNewsletterCampaignDefaultInteractor:
     {
         do {
             try await repository.createNewsletter(
+                key: payload.normalizedKey,
                 name: payload.normalizedName,
                 fromEmail: payload.normalizedFromEmail
             )
-            return .init(name: "", fromEmail: "", error: nil)
+            return .init(
+                key: "",
+                name: "",
+                fromEmail: "",
+                error: nil
+            )
         }
         catch let error as OpenAPIRepositoryError {
-            return .init(
-                name: payload.name,
-                fromEmail: payload.fromEmail,
-                error: error.errorDescription
-            )
+            switch error {
+            case .unauthorized:
+                throw AdminAddNewsletterCampaignError.unauthorized
+            case .forbidden:
+                throw AdminAddNewsletterCampaignError.forbidden
+            case .conflict:
+                throw AdminAddNewsletterCampaignError.conflict
+            case .notFound, .failure, .transport:
+                throw AdminAddNewsletterCampaignError.unavailable
+            }
         }
     }
 }

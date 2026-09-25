@@ -1,6 +1,8 @@
 import FeatherOpenAPI
 
-struct ContactFormIdParameter: PathParameterRepresentable {
-    var name: String { "contactFormId" }
-    var schema: any OpenAPISchemaRepresentable { ContactIdField().reference() }
+struct ContactFormKeyParameter: PathParameterRepresentable {
+    var name: String { "contactFormKey" }
+    var schema: any OpenAPISchemaRepresentable {
+        ContactFormKeyField().reference()
+    }
 }

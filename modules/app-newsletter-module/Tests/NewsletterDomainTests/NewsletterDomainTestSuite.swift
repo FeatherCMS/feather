@@ -9,6 +9,7 @@ struct NewsletterDomainTestSuite {
     @Test
     func newsletterValidatesName() throws {
         let newsletter = try Campaign.create(
+            key: "product-updates",
             name: "Product updates"
         )
         #expect(newsletter.name == "Product updates")

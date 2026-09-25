@@ -13,12 +13,12 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/schemas` section of the OpenAPI document.
     public enum Schemas {
-        /// - Remark: Generated from `#/components/schemas/AppContactIdField`.
-        public typealias AppContactIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AppContactKeyField`.
+        public typealias AppContactKeyField = Swift.String
         /// - Remark: Generated from `#/components/schemas/AppContactFormSchema`.
         public struct AppContactFormSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/id`.
-            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/key`.
+            public var key: Swift.String
             /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/name`.
             public var name: Swift.String
             /// - Remark: Generated from `#/components/schemas/AppContactFormSchema/successMessage`.
@@ -32,21 +32,21 @@ extension Components {
             /// Creates a new `AppContactFormSchema`.
             ///
             /// - Parameters:
-            ///   - id:
+            ///   - key:
             ///   - name:
             ///   - successMessage:
             ///   - failureMessage:
             ///   - redirectUrl:
             ///   - items:
             public init(
-                id: Swift.String,
+                key: Swift.String,
                 name: Swift.String,
                 successMessage: Swift.String,
                 failureMessage: Swift.String,
                 redirectUrl: Components.Schemas.AppContactContentField? = nil,
                 items: [Components.Schemas.AppFormFieldSchema]
             ) {
-                self.id = id
+                self.key = key
                 self.name = name
                 self.successMessage = successMessage
                 self.failureMessage = failureMessage
@@ -54,7 +54,7 @@ extension Components {
                 self.items = items
             }
             public enum CodingKeys: String, CodingKey {
-                case id
+                case key
                 case name
                 case successMessage
                 case failureMessage

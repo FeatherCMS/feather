@@ -6,10 +6,10 @@ protocol ContactFormOperation: BearerProtectedOperation {}
 extension ContactFormOperation {
     var tags: [TagRepresentable] { [ContactFormsTag()] }
 }
-protocol ContactFormIDOperation: ContactFormOperation {}
-extension ContactFormIDOperation {
+protocol ContactFormKeyOperation: ContactFormOperation {}
+extension ContactFormKeyOperation {
     var parameters: [ParameterRepresentable] {
-        [ContactFormIdParameter().reference()]
+        [ContactFormKeyParameter().reference()]
     }
 }
 
@@ -24,7 +24,7 @@ struct ContactFormCreateOperation: ContactFormOperation {
     }
     var responseMap: ResponseMap { [201: ContactFormResponse().reference()] }
 }
-struct ContactFormGetOperation: ContactFormIDOperation {
+struct ContactFormGetOperation: ContactFormKeyOperation {
     var responseMap: ResponseMap {
         [
             200: ContactFormResponse().reference(),
@@ -32,7 +32,7 @@ struct ContactFormGetOperation: ContactFormIDOperation {
         ]
     }
 }
-struct ContactFormUpdateOperation: ContactFormIDOperation {
+struct ContactFormUpdateOperation: ContactFormKeyOperation {
     var requestBody: RequestBodyRepresentable? {
         ContactFormCreateRequestBody().reference()
     }

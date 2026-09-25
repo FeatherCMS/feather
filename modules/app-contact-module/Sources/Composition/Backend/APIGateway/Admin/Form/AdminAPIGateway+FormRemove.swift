@@ -13,14 +13,14 @@ extension AdminAPIGateway {
         switch input.body {
         case .json(let value): body = value
         }
-        let deletedIds = try await useCase.execute(
+        let deletedKeys = try await useCase.execute(
             subject: try await CurrentSubject.require(),
-            input: .init(ids: body.ids)
+            input: .init(keys: body.ids)
         )
         let results = body.ids.map {
             Components.Schemas.DeleteResultListSchemaPayload(
                 id: $0,
-                status: deletedIds.contains($0) ? .deleted : .notFound
+                status: deletedKeys.contains($0) ? .deleted : .notFound
             )
         }
         return .ok(
@@ -31,7 +31,7 @@ extension AdminAPIGateway {
                         summary: body.summary
                             ? .init(
                                 requested: body.ids.count,
-                                deleted: deletedIds.count,
+                                deleted: deletedKeys.count,
                                 omitted:
                                     results.filter { $0.status != .deleted }
                                     .count

@@ -12,12 +12,12 @@ public import struct Foundation.Date
 #endif
 /// A type that performs HTTP operations defined by the OpenAPI document.
 public protocol APIProtocol: Sendable {
-    /// - Remark: HTTP `GET /api/v1/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormId}/get(appContactFormGet)`.
+    /// - Remark: HTTP `GET /api/v1/contact/form/{contactFormKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/get(appContactFormGet)`.
     func appContactFormGet(_ input: Operations.AppContactFormGet.Input)
         async throws -> Operations.AppContactFormGet.Output
-    /// - Remark: HTTP `POST /api/v1/contact/form/{contactFormId}/submit`.
-    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormId}/submit/post(appContactFormSubmission)`.
+    /// - Remark: HTTP `POST /api/v1/contact/form/{contactFormKey}/submit`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/submit/post(appContactFormSubmission)`.
     func appContactFormSubmission(
         _ input: Operations.AppContactFormSubmission.Input
     ) async throws -> Operations.AppContactFormSubmission.Output
@@ -25,8 +25,8 @@ public protocol APIProtocol: Sendable {
 
 /// Convenience overloads for operation inputs.
 extension APIProtocol {
-    /// - Remark: HTTP `GET /api/v1/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormId}/get(appContactFormGet)`.
+    /// - Remark: HTTP `GET /api/v1/contact/form/{contactFormKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/get(appContactFormGet)`.
     public func appContactFormGet(
         path: Operations.AppContactFormGet.Input.Path,
         headers: Operations.AppContactFormGet.Input.Headers = .init()
@@ -38,8 +38,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `POST /api/v1/contact/form/{contactFormId}/submit`.
-    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormId}/submit/post(appContactFormSubmission)`.
+    /// - Remark: HTTP `POST /api/v1/contact/form/{contactFormKey}/submit`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/submit/post(appContactFormSubmission)`.
     public func appContactFormSubmission(
         path: Operations.AppContactFormSubmission.Input.Path,
         headers: Operations.AppContactFormSubmission.Input.Headers = .init(),

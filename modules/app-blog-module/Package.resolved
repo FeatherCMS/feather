@@ -238,7 +238,7 @@
     {
       "identity" : "swift-nanoid",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/BinaryBirds/swift-nanoid",
+      "location" : "https://github.com/binarybirds/swift-nanoid",
       "state" : {
         "revision" : "cb73f19b3a25cc5aa14512fa43b08f2ff63002db",
         "version" : "1.1.1"

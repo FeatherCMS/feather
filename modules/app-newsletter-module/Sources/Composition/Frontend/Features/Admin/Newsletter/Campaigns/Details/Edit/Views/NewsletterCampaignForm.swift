@@ -5,6 +5,7 @@ import WebComponents
 
 struct NewsletterCampaignForm: Component {
     struct State {
+        let key: String
         let name: String
         let fromEmail: String
         let error: String?
@@ -20,6 +21,16 @@ struct NewsletterCampaignForm: Component {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
+            context.build(
+                NewAdminFormFieldInput(
+                    state: .init(
+                        name: "key",
+                        label: "Key",
+                        value: state.key,
+                        isRequired: true
+                    )
+                )
+            )
             context.build(
                 NewAdminFormFieldInput(
                     state: .init(

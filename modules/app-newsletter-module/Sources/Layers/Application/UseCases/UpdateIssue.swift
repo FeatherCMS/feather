@@ -18,17 +18,20 @@ public struct UpdateIssue: UseCase {
     }
 
     public struct Input: DTO {
+        public let campaignKey: String
         public let id: String
         public let subject: String
         public let content: String
         public let scheduledDate: Date?
 
         public init(
+            campaignKey: String,
             id: String,
             subject: String,
             content: String,
             scheduledDate: Date?
         ) {
+            self.campaignKey = campaignKey
             self.id = id
             self.subject = subject
             self.content = content
@@ -45,7 +48,16 @@ public struct UpdateIssue: UseCase {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await transaction.run { scope in
-            guard var issue = try await scope.issue.findBy(id: input.id)
+            guard
+                let campaign = try await scope.newsletter.findBy(
+                    key: input.campaignKey
+                )
+            else {
+                throw Error.notFound
+            }
+            guard
+                var issue = try await scope.issue.findBy(id: input.id),
+                issue.newsletterId == campaign.id
             else {
                 throw Error.notFound
             }

@@ -1,6 +1,8 @@
 import FeatherAdmin
 
 protocol AdminRemoveNewsletterCampaignPresenter: Sendable {
-    func render(item: NewAdminRemoveItemContext) async throws
-        -> HTMLResponse
+    func renderRemovePage(
+        items: [NewAdminRemoveItemContext],
+        returnTo: String?
+    ) async throws -> HTMLResponse
 }

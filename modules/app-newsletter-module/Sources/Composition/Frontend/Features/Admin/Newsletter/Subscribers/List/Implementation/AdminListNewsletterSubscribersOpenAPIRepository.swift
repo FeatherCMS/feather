@@ -18,4 +18,12 @@ struct AdminListNewsletterSubscribersOpenAPIRepository {
     func list() async throws -> [AdminNewsletterSubscriberListItem] {
         try await AdminNewsletterSubscribersAPIClient(api: api).list()
     }
+
+    func get(id: String) async throws -> AdminNewsletterSubscriberListItem {
+        try await AdminNewsletterSubscribersAPIClient(api: api).get(id: id)
+    }
+
+    func names(ids: [String]) async throws -> [String] {
+        try await AdminNewsletterSubscribersAPIClient(api: api).names(ids: ids)
+    }
 }

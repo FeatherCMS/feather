@@ -2,6 +2,7 @@ import FeatherOpenAPI
 import OpenAPIKit30
 
 struct NewsletterIdField: StringSchemaRepresentable {}
+struct NewsletterKeyField: StringSchemaRepresentable {}
 struct NewsletterNameField: StringSchemaRepresentable {}
 struct NewsletterEmailField: StringSchemaRepresentable {}
 struct NewsletterTimestampField: DoubleSchemaRepresentable {}
@@ -32,7 +33,7 @@ struct NewsletterJSONField: SchemaRepresentable {
 struct NewsletterCampaignSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
-            "id": NewsletterIdField(),
+            "key": NewsletterKeyField(),
             "name": NewsletterNameField(),
             "fromEmail": NewsletterEmailField(),
             "createdAt": NewsletterTimestampField(),
@@ -46,12 +47,17 @@ struct NewsletterCampaignListSchema: ArraySchemaRepresentable {
 }
 struct NewsletterCampaignCreateSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
-        ["name": NewsletterNameField(), "fromEmail": NewsletterEmailField()]
+        [
+            "key": NewsletterKeyField(),
+            "name": NewsletterNameField(),
+            "fromEmail": NewsletterEmailField(),
+        ]
     }
 }
 struct NewsletterCampaignPatchSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
+            "key": NewsletterKeyField().reference(required: false),
             "name": NewsletterNameField().reference(required: false),
             "fromEmail": NewsletterEmailField().reference(required: false),
         ]

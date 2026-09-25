@@ -3,8 +3,13 @@ struct AdminEditNewsletterCampaignOpenAPIRepository {
     func get(id: String) async throws -> AdminNewsletterCampaignItem {
         try await AdminNewsletterCampaignAPIClient(api: api).get(id: id)
     }
-    func update(id: String, name: String, fromEmail: String) async throws {
+    func update(
+        id: String,
+        newKey: String,
+        name: String,
+        fromEmail: String
+    ) async throws {
         _ = try await AdminNewsletterCampaignAPIClient(api: api)
-            .update(id: id, name: name, fromEmail: fromEmail)
+            .update(id: id, newKey: newKey, name: name, fromEmail: fromEmail)
     }
 }

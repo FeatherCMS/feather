@@ -15,11 +15,12 @@ struct AdminAddNewsletterIssueOpenAPIRepository {
     {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.newsletterIssueCreate(
-                path: .init(newsletterCampaignId: newsletterId),
+                path: .init(newsletterCampaignKey: newsletterId),
                 body: .json(
                     .init(
                         subject: form.normalizedSubject,
-                        content: form.content
+                        content: form.content,
+                        scheduledAt: form.scheduledAtTimestamp
                     )
                 )
             )

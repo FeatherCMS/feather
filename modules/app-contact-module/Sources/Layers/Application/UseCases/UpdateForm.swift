@@ -27,7 +27,8 @@ public struct UpdateForm: UseCase {
         self.transaction = transaction
     }
     public struct Input: DTO {
-        public let id: String
+        public let key: String
+        public let newKey: String
         public let name: String
         public let successMessage: String
         public let failureMessage: String
@@ -36,7 +37,8 @@ public struct UpdateForm: UseCase {
         public let mails: [SubmissionMailInput]
 
         public init(
-            id: String,
+            key: String,
+            newKey: String,
             name: String,
             successMessage: String = "",
             failureMessage: String = "",
@@ -44,7 +46,8 @@ public struct UpdateForm: UseCase {
             fieldIds: [String] = [],
             mails: [SubmissionMailInput] = []
         ) {
-            self.id = id
+            self.key = key
+            self.newKey = newKey
             self.name = name
             self.successMessage = successMessage
             self.failureMessage = failureMessage
@@ -100,34 +103,35 @@ public struct UpdateForm: UseCase {
             }
         }
         return try await transaction.run { scope in
-            guard var value = try await scope.form.findBy(id: input.id) else {
-                throw Error.notFound
+            guard var value = try await scope.form.findBy(key: input.key) else {
+                throw Error.formNotFound
             }
             try value.update(
+                key: input.newKey,
                 name: input.name,
                 successMessage: input.successMessage,
                 failureMessage: input.failureMessage,
                 redirectUrl: input.redirectUrl
             )
-            let current = try await scope.field.listBy(formId: input.id)
+            let current = try await scope.field.listBy(formId: value.id)
             for item in current where !input.fieldIds.contains(item.id) {
                 try await scope.field.unassign(
-                    formId: input.id,
+                    formId: value.id,
                     fieldId: item.id
                 )
             }
             for (position, fieldId) in input.fieldIds.enumerated() {
                 try await scope.field.assign(
-                    formId: input.id,
+                    formId: value.id,
                     fieldId: fieldId,
                     position: position
                 )
             }
-            try await scope.mail.deleteBy(formId: input.id)
+            try await scope.mail.deleteBy(formId: value.id)
             for mail in input.mails {
                 _ = try await scope.mail.insert(
                     .init(
-                        formId: input.id,
+                        formId: value.id,
                         mailFrom: mail.mailFrom,
                         mailTo: mail.mailTo,
                         subject: mail.subject,
@@ -137,12 +141,12 @@ public struct UpdateForm: UseCase {
                 )
             }
             let saved = try await scope.form.update(value)
-            let fields = try await scope.field.listBy(formId: input.id)
+            let fields = try await scope.field.listBy(formId: value.id)
                 .map(\.asDetail)
-            let mails = try await scope.mail.listBy(formId: input.id)
+            let mails = try await scope.mail.listBy(formId: value.id)
                 .map(\.asDetail)
             return saved.asDetail(fields: fields, mails: mails)
         }
     }
-    public enum Error: UseCaseError { case notFound }
+    public enum Error: UseCaseError { case formNotFound }
 }

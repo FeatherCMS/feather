@@ -22,13 +22,19 @@ extension AdminAPIGateway {
             .execute(
                 subject: subject,
                 input: .init(
-                    newsletterId: input.path.newsletterCampaignId,
+                    campaignKey: input.path.newsletterCampaignKey,
                     email: body.email,
                     firstName: body.firstName ?? "",
                     lastName: body.lastName ?? "",
                     status: status
                 )
             )
-        return .created(.init(body: .json(map(result))))
+        return .created(
+            .init(
+                body: .json(
+                    map(result, campaignKey: input.path.newsletterCampaignKey)
+                )
+            )
+        )
     }
 }

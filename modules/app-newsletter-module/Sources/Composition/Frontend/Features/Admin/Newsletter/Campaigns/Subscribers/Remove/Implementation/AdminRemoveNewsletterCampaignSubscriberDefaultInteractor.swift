@@ -19,6 +19,14 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultInteractor:
             subscriberId: subscriberId
         )
     }
+    func names(newsletterId: String, subscriberIds: [String]) async throws
+        -> [String]
+    {
+        try await repository.names(
+            newsletterId: newsletterId,
+            subscriberIds: subscriberIds
+        )
+    }
     func remove(newsletterId: String, subscriberId: String) async throws {
         try await repository.remove(
             newsletterId: newsletterId,

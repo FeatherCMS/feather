@@ -13,9 +13,9 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/parameters` section of the OpenAPI document.
     public enum Parameters {
-        /// - Remark: Generated from `#/components/parameters/AppContactFormIdParameter`.
-        public typealias AppContactFormIdParameter = Components.Schemas
-            .AppContactIdField
+        /// - Remark: Generated from `#/components/parameters/AppContactFormKeyParameter`.
+        public typealias AppContactFormKeyParameter = Components.Schemas
+            .AppContactKeyField
     }
 }
 

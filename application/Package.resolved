@@ -1,5 +1,5 @@
 {
-  "originHash" : "4b94755f6d2e78b04fe3fc780ac312474fb0e5be55dfeb2cf1e5603891a24e8d",
+  "originHash" : "f7c2bc3c5621c90e47cca99543e41aadc67fedc72f9249e5dbbcb1a7187d97a0",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -274,7 +274,7 @@
     {
       "identity" : "swift-configuration",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-configuration",
+      "location" : "https://github.com/apple/swift-configuration.git",
       "state" : {
         "revision" : "b4768bd68d8a6fb356bd372cb41905046244fcae",
         "version" : "1.0.2"
@@ -373,7 +373,7 @@
     {
       "identity" : "swift-mustache",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/hummingbird-project/swift-mustache",
+      "location" : "https://github.com/hummingbird-project/swift-mustache.git",
       "state" : {
         "revision" : "0b91b3127baee1d97c45a7390a49779256b4295d",
         "version" : "2.1.0"
@@ -382,7 +382,7 @@
     {
       "identity" : "swift-nanoid",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/binarybirds/swift-nanoid",
+      "location" : "https://github.com/BinaryBirds/swift-nanoid",
       "state" : {
         "revision" : "cb73f19b3a25cc5aa14512fa43b08f2ff63002db",
         "version" : "1.1.1"
@@ -465,8 +465,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-runtime",
       "state" : {
-        "revision" : "3d3a8457661daf7fb260ceeb9f0e24e5204ba5fb",
-        "version" : "1.12.0"
+        "revision" : "9e53df53e043b53046a371b31aaf0a1e26eef946",
+        "version" : "1.12.1"
       }
     },
     {
@@ -492,8 +492,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swiftlang/swift-subprocess.git",
       "state" : {
-        "revision" : "13d087685b95d64d6aac9b94500d347bbe84c39b",
-        "version" : "0.4.0"
+        "revision" : "b3937ab85dd32f6e9435914599c1519074769c1a",
+        "version" : "1.0.0"
       }
     },
     {

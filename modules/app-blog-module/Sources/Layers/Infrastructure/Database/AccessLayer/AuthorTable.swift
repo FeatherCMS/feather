@@ -4,10 +4,10 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-public import FeatherDatabase
+import FeatherDatabase
 import FeatherInfrastructure
 
-public import struct Foundation.Date
+import struct Foundation.Date
 
 extension AuthorTable.Row {
 

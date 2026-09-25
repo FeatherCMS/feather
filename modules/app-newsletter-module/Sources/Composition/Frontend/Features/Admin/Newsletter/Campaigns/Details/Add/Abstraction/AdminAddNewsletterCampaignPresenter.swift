@@ -5,4 +5,10 @@ protocol AdminAddNewsletterCampaignPresenter: Sendable {
         model: AdminAddNewsletterCampaignModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse
+
+    func renderAddError(
+        input: NewsletterCampaignAddForm,
+        error: AdminAddNewsletterCampaignError,
+        permissions: Set<String>
+    ) async throws -> HTMLResponse
 }

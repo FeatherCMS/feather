@@ -12,13 +12,13 @@ public import struct Foundation.Date
 #endif
 /// A type that performs HTTP operations defined by the OpenAPI document.
 public protocol APIProtocol: Sendable {
-    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe`.
-    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe/post(appNewsletterCampaignSubscribe)`.
+    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe/post(appNewsletterCampaignSubscribe)`.
     func appNewsletterCampaignSubscribe(
         _ input: Operations.AppNewsletterCampaignSubscribe.Input
     ) async throws -> Operations.AppNewsletterCampaignSubscribe.Output
-    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe`.
-    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
+    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
     func appNewsletterCampaignUnsubscribe(
         _ input: Operations.AppNewsletterCampaignUnsubscribe.Input
     ) async throws -> Operations.AppNewsletterCampaignUnsubscribe.Output
@@ -26,8 +26,8 @@ public protocol APIProtocol: Sendable {
 
 /// Convenience overloads for operation inputs.
 extension APIProtocol {
-    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe`.
-    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignId}/subscribe/post(appNewsletterCampaignSubscribe)`.
+    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/subscribe/post(appNewsletterCampaignSubscribe)`.
     public func appNewsletterCampaignSubscribe(
         path: Operations.AppNewsletterCampaignSubscribe.Input.Path,
         body: Components.RequestBodies
@@ -40,8 +40,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe`.
-    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignId}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
+    /// - Remark: HTTP `POST /api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe`.
+    /// - Remark: Generated from `#/paths//api/v1/newsletter/campaign/{newsletterCampaignKey}/unsubscribe/post(appNewsletterCampaignUnsubscribe)`.
     public func appNewsletterCampaignUnsubscribe(
         path: Operations.AppNewsletterCampaignUnsubscribe.Input.Path,
         body: Components.RequestBodies

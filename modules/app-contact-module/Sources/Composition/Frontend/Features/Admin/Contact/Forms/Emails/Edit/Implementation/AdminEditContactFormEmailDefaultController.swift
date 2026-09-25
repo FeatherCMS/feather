@@ -21,7 +21,7 @@ struct AdminEditContactFormEmailDefaultController:
         -> HTMLResponse
     {
         let (interactor, presenter) = buildRuntime((request, context))
-        let formId = try context.requiredParameter("formId")
+        let formId = try context.requiredParameter("formKey")
         let mailId = try context.requiredParameter("mailId")
         do {
             let form = try await interactor.get(id: formId)
@@ -47,7 +47,7 @@ struct AdminEditContactFormEmailDefaultController:
                     mailFrom: "",
                     mailTo: "",
                     subject: "",
-                    additionalHeaders: "",
+                    additionalHeaders: [],
                     messageBody: ""
                 ),
                 availableFields: [],
@@ -62,7 +62,7 @@ struct AdminEditContactFormEmailDefaultController:
         -> Response
     {
         let (interactor, _) = buildRuntime((request, context))
-        let formId = try context.requiredParameter("formId")
+        let formId = try context.requiredParameter("formKey")
         let mailId = try context.requiredParameter("mailId")
         let input = try await request.decode(
             as: SubmissionMailFormInput.self,

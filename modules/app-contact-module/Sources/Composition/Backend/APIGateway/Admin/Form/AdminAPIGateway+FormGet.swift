@@ -10,7 +10,7 @@ extension AdminAPIGateway {
         let result = try await self.useCases.makeGetContactForm()
             .execute(
                 subject: try await CurrentSubject.require(),
-                input: .init(id: input.path.contactFormId)
+                input: .init(key: input.path.contactFormKey)
             )
         return .ok(.init(body: .json(map(result))))
     }

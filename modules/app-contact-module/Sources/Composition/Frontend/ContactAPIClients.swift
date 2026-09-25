@@ -41,7 +41,10 @@ public struct ContactAdminAPIClient: Sendable {
     public func failure(statusCode: Int, responseBody: HTTPBody?) async throws
         -> OpenAPIRepositoryError
     {
-        OpenAPIRepositoryError.parsedFailure(
+        if statusCode == 409 {
+            return .conflict
+        }
+        return OpenAPIRepositoryError.parsedFailure(
             statusCode: statusCode,
             responseBody: try await responseBody?.collectString()
         )

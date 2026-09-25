@@ -41,7 +41,7 @@ extension APIProtocol {
             },
             method: .get,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/contact/form/{contactFormId}"
+                "/api/v1/contact/form/{contactFormKey}"
             )
         )
         try transport.register(
@@ -54,15 +54,15 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/contact/form/{contactFormId}/submit"
+                "/api/v1/contact/form/{contactFormKey}/submit"
             )
         )
     }
 }
 
 extension UniversalServer where APIHandler: APIProtocol {
-    /// - Remark: HTTP `GET /api/v1/contact/form/{contactFormId}`.
-    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormId}/get(appContactFormGet)`.
+    /// - Remark: HTTP `GET /api/v1/contact/form/{contactFormKey}`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/get(appContactFormGet)`.
     fileprivate func appContactFormGet(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -78,10 +78,11 @@ extension UniversalServer where APIHandler: APIProtocol {
             },
             deserializer: { request, requestBody, metadata in
                 let path: Operations.AppContactFormGet.Input.Path = .init(
-                    contactFormId: try converter.getPathParameterAsURI(
+                    contactFormKey: try converter.getPathParameterAsURI(
                         in: metadata.pathParameters,
-                        name: "contactFormId",
-                        as: Components.Parameters.AppContactFormIdParameter.self
+                        name: "contactFormKey",
+                        as: Components.Parameters.AppContactFormKeyParameter
+                            .self
                     )
                 )
                 let headers: Operations.AppContactFormGet.Input.Headers = .init(
@@ -120,8 +121,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/contact/form/{contactFormId}/submit`.
-    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormId}/submit/post(appContactFormSubmission)`.
+    /// - Remark: HTTP `POST /api/v1/contact/form/{contactFormKey}/submit`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/submit/post(appContactFormSubmission)`.
     fileprivate func appContactFormSubmission(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
@@ -138,10 +139,10 @@ extension UniversalServer where APIHandler: APIProtocol {
             deserializer: { request, requestBody, metadata in
                 let path: Operations.AppContactFormSubmission.Input.Path =
                     .init(
-                        contactFormId: try converter.getPathParameterAsURI(
+                        contactFormKey: try converter.getPathParameterAsURI(
                             in: metadata.pathParameters,
-                            name: "contactFormId",
-                            as: Components.Parameters.AppContactFormIdParameter
+                            name: "contactFormKey",
+                            as: Components.Parameters.AppContactFormKeyParameter
                                 .self
                         )
                     )

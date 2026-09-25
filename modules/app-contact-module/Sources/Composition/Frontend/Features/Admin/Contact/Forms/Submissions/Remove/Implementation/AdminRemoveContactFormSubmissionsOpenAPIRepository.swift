@@ -11,7 +11,7 @@ struct AdminRemoveContactFormSubmissionsOpenAPIRepository {
     func remove(formId: String, id: String) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.contactFormSubmissionRemove(
-                path: .init(contactFormId: formId),
+                path: .init(contactFormKey: formId),
                 body: .json(.init(ids: [id], results: false, summary: true))
             )
         }
@@ -19,7 +19,7 @@ struct AdminRemoveContactFormSubmissionsOpenAPIRepository {
     func remove(formId: String, ids: [String]) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.contactFormSubmissionRemove(
-                path: .init(contactFormId: formId),
+                path: .init(contactFormKey: formId),
                 body: .json(.init(ids: ids, results: false, summary: true))
             )
         }

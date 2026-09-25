@@ -7,6 +7,7 @@ import WebComponents
 
 struct ContactFormForm: Component {
     struct State: FeatherAdmin.Object {
+        var key: String
         var name: String
         var successMessage: String
         var failureMessage: String
@@ -113,6 +114,17 @@ struct ContactFormForm: Component {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
+            context.build(
+                NewAdminFormFieldInput(
+                    state: .init(
+                        name: "key",
+                        label: "Key",
+                        value: state.key,
+                        isRequired: true,
+                        isReadOnly: isReadOnly
+                    )
+                )
+            )
             context.build(
                 NewAdminFormFieldInput(
                     state: .init(
