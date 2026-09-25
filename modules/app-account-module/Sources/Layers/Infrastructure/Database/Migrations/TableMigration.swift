@@ -35,7 +35,7 @@ public struct TableMigration: DatabaseMigration {
         ) { _ in }
         try await connection.run(
             query: #"""
-                CREATE TABLE IF NOT EXISTS settings (
+                CREATE TABLE IF NOT EXISTS account_settings (
                     id TEXT PRIMARY KEY,
                     user_id TEXT NOT NULL UNIQUE REFERENCES user_identity(id) ON DELETE CASCADE,
                     language TEXT NOT NULL DEFAULT 'en',
@@ -43,7 +43,7 @@ public struct TableMigration: DatabaseMigration {
                     page_size INT NOT NULL DEFAULT 20,
                     created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                     updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
-                    CONSTRAINT settings_page_size_check
+                    CONSTRAINT account_settings_page_size_check
                         CHECK (page_size IN (10, 20, 50, 100))
                 );
                 """#
