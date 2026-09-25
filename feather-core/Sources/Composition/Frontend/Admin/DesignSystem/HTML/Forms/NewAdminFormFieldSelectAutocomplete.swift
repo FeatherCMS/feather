@@ -38,6 +38,9 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
         public let isDisabled: Bool
         public let selectionMode: SelectionMode
         public let submitsValues: Bool
+        public let remoteSourceURL: String?
+        public let remoteQueryParameter: String
+        public let remoteMinimumQueryLength: Int
 
         public init(
             name: String,
@@ -49,7 +52,10 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
             isRequired: Bool = false,
             isDisabled: Bool = false,
             selectionMode: SelectionMode = .single,
-            submitsValues: Bool = true
+            submitsValues: Bool = true,
+            remoteSourceURL: String? = nil,
+            remoteQueryParameter: String = "q",
+            remoteMinimumQueryLength: Int = 2
         ) {
             self.name = name
             self.label = label
@@ -61,6 +67,9 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
             self.isDisabled = isDisabled
             self.selectionMode = selectionMode
             self.submitsValues = submitsValues
+            self.remoteSourceURL = remoteSourceURL
+            self.remoteQueryParameter = remoteQueryParameter
+            self.remoteMinimumQueryLength = remoteMinimumQueryLength
         }
     }
 
@@ -416,6 +425,14 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
         .data("mode", state.selectionMode.rawValue)
         .data("required", state.isRequired ? "true" : "false")
         .data("submits-values", state.submitsValues ? "true" : "false")
+        .if(state.remoteSourceURL != nil) {
+            $0.data("source-url", state.remoteSourceURL ?? "")
+                .data("source-query-parameter", state.remoteQueryParameter)
+                .data(
+                    "source-minimum-query-length",
+                    String(state.remoteMinimumQueryLength)
+                )
+        }
         .data("error-id", errorID)
     }
 
@@ -437,6 +454,11 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                     var multiple = root.dataset.mode === "multiple";
                     var required = root.dataset.required === "true";
                     var submitsValues = root.dataset.submitsValues === "true";
+                    var sourceURL = root.dataset.sourceUrl || "";
+                    var sourceQueryParameter = root.dataset.sourceQueryParameter || "q";
+                    var sourceMinimumQueryLength = parseInt(root.dataset.sourceMinimumQueryLength || "2", 10);
+                    var requestSequence = 0;
+                    var requestTimer = null;
                     var options = [];
                     try { options = JSON.parse(source.textContent || "[]"); } catch (_) { options = []; }
                     var selectedValues = Array.prototype.map.call(
@@ -458,6 +480,54 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                             if (multiple && selectedValues.indexOf(item.value) >= 0) { return false; }
                             return !query || item.label.toLowerCase().indexOf(query) >= 0 || item.value.toLowerCase().indexOf(query) >= 0;
                         });
+                    }
+
+                    function normalizeRemoteOptions(payload) {
+                        var values = Array.isArray(payload)
+                            ? payload
+                            : (payload && Array.isArray(payload.items) ? payload.items : []);
+                        return values.map(function (item) {
+                            return Object.assign({}, item, {
+                                label: String(item.label || item.value || item.name || ""),
+                                value: String(item.value || item.id || "")
+                            });
+                        }).filter(function (item) {
+                            return item.label && item.value;
+                        });
+                    }
+
+                    function fetchRemoteOptions() {
+                        if (!sourceURL) { return; }
+                        var query = (input.value || "").trim();
+                        var sequence = ++requestSequence;
+                        if (requestTimer) { window.clearTimeout(requestTimer); }
+                        if (query.length < sourceMinimumQueryLength) {
+                            options = [];
+                            active = -1;
+                            render();
+                            return;
+                        }
+                        requestTimer = window.setTimeout(function () {
+                            var separator = sourceURL.indexOf("?") >= 0 ? "&" : "?";
+                            var url = sourceURL + separator + encodeURIComponent(sourceQueryParameter) + "=" + encodeURIComponent(query);
+                            fetch(url, { credentials: "include", headers: { "Accept": "application/json" } })
+                                .then(function (response) {
+                                    if (!response.ok) { throw new Error("Location lookup failed"); }
+                                    return response.json();
+                                })
+                                .then(function (payload) {
+                                    if (sequence !== requestSequence) { return; }
+                                    options = normalizeRemoteOptions(payload);
+                                    active = options.length ? 0 : -1;
+                                    render();
+                                })
+                                .catch(function () {
+                                    if (sequence !== requestSequence) { return; }
+                                    options = [];
+                                    active = -1;
+                                    render();
+                                });
+                        }, 220);
                     }
 
                     function syncHiddenInputs() {
@@ -548,6 +618,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                             renderSelected();
                             updateRequired();
                             if (status) { status.textContent = item.label + " selected."; }
+                            root.dispatchEvent(new CustomEvent("new-admin-autocomplete-option-selected", { bubbles: true, detail: item }));
                             setOpen(true);
                             return;
                         }
@@ -556,7 +627,8 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                         syncHiddenInputs();
                         updateRequired();
                         if (status) { status.textContent = item.label + " selected."; }
-                        setOpen(true);
+                        root.dispatchEvent(new CustomEvent("new-admin-autocomplete-option-selected", { bubbles: true, detail: item }));
+                        setOpen(false);
                     }
 
                     function removeSelected(value) {
@@ -577,6 +649,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                         }
                         active = 0;
                         setOpen(true);
+                        if (sourceURL) { fetchRemoteOptions(); }
                     });
                     if (inputWrap && selectedContainer) {
                         selectedContainer.addEventListener("click", function (event) {
