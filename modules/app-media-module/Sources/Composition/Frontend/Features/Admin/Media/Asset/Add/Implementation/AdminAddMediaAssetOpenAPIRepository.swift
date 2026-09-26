@@ -13,24 +13,22 @@ struct AdminAddMediaAssetOpenAPIRepository {
     let api: MediaAdminAPIClient
 
     func createAsset(
-        payload: AssetAddForm
+        payload: AssetAddUpload
     ) async throws -> Components.Schemas.MediaAssetDetailSchema {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
                 .mediaAssetCreate(
-                    body: .json(
-                        .init(
-                            parentId: payload.parentId
-                                .whitespaceTrimmed
-                                .emptyToNil,
-                            fileName: payload.fileName.whitespaceTrimmed,
-                            _extension: payload.extension.whitespaceTrimmed,
-                            title: payload.title.emptyToNil,
-                            altText: payload.altText.emptyToNil,
-                            data: payload.data.whitespaceTrimmed
-                        )
-                    )
+                    headers: .init(
+                        xMediaAssetParentID: payload.parentId
+                            .whitespaceTrimmed
+                            .emptyToNil,
+                        xMediaAssetFileName: payload.fileName.whitespaceTrimmed,
+                        xMediaAssetExtension: payload.extension.whitespaceTrimmed,
+                        xMediaAssetTitle: payload.title.emptyToNil,
+                        xMediaAssetAltText: payload.altText.emptyToNil
+                    ),
+                    body: .binary(payload.content)
                 )
             switch response {
             case .created(let created):

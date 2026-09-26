@@ -610,41 +610,38 @@ extension NewAdminFormFieldMediaPicker {
             return "bin";
           }
 
-          function readFile(file) {
-            return new Promise(function(resolve, reject) {
-              var reader = new FileReader();
-              reader.onload = function() {
-                var result = String(reader.result || "");
-                var comma = result.indexOf(",");
-                resolve(comma >= 0 ? result.slice(comma + 1) : result);
-              };
-              reader.onerror = function() { reject(new Error("File read failed.")); };
-              reader.readAsDataURL(file);
-            });
+          function encoded(value) {
+            return encodeURIComponent(String(value || ""));
           }
 
           async function prepareUpload(container) {
             var fileInput = container.querySelector('input[type="file"][name="file"]');
-            var dataInput = container.querySelector('input[name="data"]');
             var extensionInput = container.querySelector('input[name="extension"]');
             var nameInput = container.querySelector('input[name="fileName"]');
             var file = fileInput && fileInput.files && fileInput.files[0];
-            if (!file || !dataInput || !extensionInput || !nameInput) {
+            if (!file || !extensionInput || !nameInput) {
               throw new Error("Please choose a file.");
             }
             extensionInput.value = normalizeExtension(file.name, file.type);
             nameInput.value = file.name || "";
-            dataInput.value = await readFile(file);
-          }
-
-          function uploadPayload(container) {
-            var payload = new URLSearchParams();
-            container.querySelectorAll("[name]").forEach(function(element) {
-              if (element.type === "file") { return; }
-              if ((element.type === "checkbox" || element.type === "radio") && !element.checked) { return; }
-              payload.append(element.name, element.value || "");
+            var value = function(name) {
+              var input = container.querySelector('[name="' + name + '"]');
+              return input ? input.value : "";
+            };
+            var headers = {
+              "Content-Type": "application/octet-stream",
+              "X-Media-Asset-File-Name": encoded(file.name || ""),
+              "X-Media-Asset-Extension": encoded(extensionInput.value || "bin")
+            };
+            [
+              ["parentId", "X-Media-Asset-Parent-ID"],
+              ["title", "X-Media-Asset-Title"],
+              ["altText", "X-Media-Asset-Alt-Text"]
+            ].forEach(function(item) {
+              var current = value(item[0]);
+              if (current) { headers[item[1]] = encoded(current); }
             });
-            return payload;
+            return { file: file, headers: headers };
           }
 
           async function load(field, tab, url, options) {
@@ -733,12 +730,12 @@ extension NewAdminFormFieldMediaPicker {
               var modal = field && modalFor(field);
               if (!container || !field || !modal) { return; }
               try {
-                await prepareUpload(container);
+                var uploadRequest = await prepareUpload(container);
                 var response = await fetch(container.getAttribute("data-action") || uploadPath(modal), {
                   method: "POST",
-                  body: uploadPayload(container),
+                  body: uploadRequest.file,
                   credentials: "same-origin",
-                  headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" }
+                  headers: uploadRequest.headers
                 });
                 var documentHTML = await response.text();
                 var uploadDocument = new DOMParser().parseFromString(documentHTML, "text/html");
@@ -754,10 +751,15 @@ extension NewAdminFormFieldMediaPicker {
                   hide(modal);
                 }
                 else {
-                  load(field, "upload", uploadPath(modal), {
-                    method: "POST",
-                    body: uploadPayload(container)
-                  });
+                  var section = extractSection(uploadDocument);
+                  if (section) {
+                    panel.innerHTML = section.outerHTML;
+                    executeScripts(panel, section);
+                    isolatePanelControls(field, panel);
+                  }
+                  else {
+                    load(field, "upload", uploadPath(modal));
+                  }
                 }
               }
               catch (error) {

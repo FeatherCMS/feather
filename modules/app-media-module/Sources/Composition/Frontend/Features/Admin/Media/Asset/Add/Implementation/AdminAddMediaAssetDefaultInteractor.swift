@@ -28,7 +28,7 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
     }
 
     func postAddMediaAsset(
-        payload: AssetAddForm
+        payload: AssetAddUpload
     ) async throws -> AdminAddMediaAssetModel {
         do {
             let asset = try await repository.createAsset(payload: payload)
@@ -53,7 +53,7 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
                 extension: payload.extension,
                 title: payload.title,
                 altText: payload.altText,
-                data: payload.data,
+                data: "",
                 error:
                     "Failed to create media asset: \(error.errorDescription)",
                 view: payload.view,

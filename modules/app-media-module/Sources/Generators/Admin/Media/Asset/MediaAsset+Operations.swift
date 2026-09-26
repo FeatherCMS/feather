@@ -17,6 +17,16 @@ extension MediaAssetIDOperation {
 }
 
 struct MediaAssetCreateOperation: MediaAssetOperation {
+    var parameters: [ParameterRepresentable] {
+        [
+            MediaAssetParentIDHeader().reference(),
+            MediaAssetFileNameHeader().reference(),
+            MediaAssetExtensionHeader().reference(),
+            MediaAssetTitleHeader().reference(),
+            MediaAssetAltTextHeader().reference(),
+        ]
+    }
+
     var requestBody: RequestBodyRepresentable? {
         MediaAssetCreateRequestBody().reference()
     }

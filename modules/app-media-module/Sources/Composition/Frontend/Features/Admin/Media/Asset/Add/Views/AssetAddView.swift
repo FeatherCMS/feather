@@ -119,32 +119,54 @@ struct AssetAddView: Component {
                         if (extensionInput) { extensionInput.value = normalizeExtension(file.name, file.type); }
                         if (fileNameInput) { fileNameInput.value = file.name || ""; }
                     }
-                    function readFileBase64(file) {
-                        return new Promise(function (resolve, reject) {
-                            var reader = new FileReader();
-                            reader.onload = function () {
-                                var result = String(reader.result || "");
-                                var idx = result.indexOf(",");
-                                resolve(idx >= 0 ? result.slice(idx + 1) : result);
-                            };
-                            reader.onerror = function () { reject(new Error("File read failed")); };
-                            reader.readAsDataURL(file);
+                    function encoded(value) {
+                        return encodeURIComponent(String(value || ""));
+                    }
+                    function uploadHeaders(form, file) {
+                        var value = function (name) {
+                            var input = form.querySelector('[name="' + name + '"]');
+                            return input ? input.value : "";
+                        };
+                        var headers = {
+                            "Content-Type": "application/octet-stream",
+                            "X-Media-Asset-File-Name": encoded(file.name || ""),
+                            "X-Media-Asset-Extension": encoded(value("extension"))
+                        };
+                        var optional = [
+                            ["parentId", "X-Media-Asset-Parent-ID"],
+                            ["title", "X-Media-Asset-Title"],
+                            ["altText", "X-Media-Asset-Alt-Text"]
+                        ];
+                        optional.forEach(function (item) {
+                            var current = value(item[0]);
+                            if (current) { headers[item[1]] = encoded(current); }
+                        });
+                        return headers;
+                    }
+                    function uploadResponse(response) {
+                        return response.text().then(function (html) {
+                            if (response.redirected) {
+                                window.location.assign(response.url);
+                                return;
+                            }
+                            document.open();
+                            document.write(html);
+                            document.close();
                         });
                     }
-                    async function populateSelectedFile() {
+                    function selectedFile() {
                         var file = fileInput.files && fileInput.files[0];
                         if (!file) {
                             throw new Error("Please choose a file.");
                         }
                         setHiddenFields(file);
-                        dataInput.value = await readFileBase64(file);
+                        return file;
                     }
                     var form = document.getElementById("mediaAssetAddForm");
                     var fileInput = document.getElementById("file");
-                    var dataInput = document.getElementById("data");
                     var extensionInput = document.getElementById("extension");
                     var fileNameInput = document.getElementById("fileName");
-                    if (!fileInput || !dataInput) { return; }
+                    if (!fileInput) { return; }
                     fileInput.addEventListener("change", function () {
                         var file = fileInput.files && fileInput.files[0];
                         if (!file) { return; }
@@ -157,12 +179,18 @@ struct AssetAddView: Component {
                     form.addEventListener("submit", async function (event) {
                         event.preventDefault();
                         try {
-                            await populateSelectedFile();
+                            var file = selectedFile();
+                            var response = await fetch(form.action, {
+                                method: "POST",
+                                body: file,
+                                credentials: "same-origin",
+                                headers: uploadHeaders(form, file)
+                            });
+                            await uploadResponse(response);
                         } catch (_) {
-                            alert("Unable to read selected file.");
+                            alert("Unable to upload selected file.");
                             return;
                         }
-                        form.submit();
                     });
                 })();
                 """
@@ -225,7 +253,6 @@ struct AssetAddView: Component {
                 .name("extension")
                 .id("extension")
                 .value(state.form.extension)
-            Input().type(.hidden).name("data").id("data").value(state.form.data)
             Div {
                 context.build(NewAdminSubmitButton("Add asset"))
             }
@@ -276,9 +303,6 @@ struct AssetAddView: Component {
                     )
                 )
             )
-            Input().type(.hidden).name("data").id("data")
-                .value(state.form.data)
-
             Section {
                 Div {
                     context.build(NewAdminControlButton("Add asset"))

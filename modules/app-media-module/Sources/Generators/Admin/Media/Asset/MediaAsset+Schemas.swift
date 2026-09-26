@@ -42,9 +42,7 @@ struct MediaAssetSearchItemKindField: StringSchemaRepresentable {
     var enumValues: [String]? = ["file", "folder"]
 }
 
-struct MediaAssetDataField: StringSchemaRepresentable {
-    var example: String? = "AQID"
-}
+struct MediaAssetHeaderValueField: StringSchemaRepresentable {}
 
 struct MediaAssetTimestampField: DoubleSchemaRepresentable {
     var example: Double? = 1_717_171_717
@@ -92,19 +90,6 @@ struct MediaAssetVariantTypeField: StringSchemaRepresentable {
 struct MediaAssetVariantItemsField: ArraySchemaRepresentable {
     var items: SchemaRepresentable? {
         MediaAssetVariantListItemSchema().reference()
-    }
-}
-
-struct MediaAssetCreateSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap {
-        [
-            "parentId": MediaFolderNullableIdField(),
-            "fileName": MediaAssetFileNameField(),
-            "extension": MediaAssetTypeField(),
-            "title": MediaAssetNullableTextField(required: false),
-            "altText": MediaAssetNullableTextField(required: false),
-            "data": MediaAssetDataField(),
-        ]
     }
 }
 

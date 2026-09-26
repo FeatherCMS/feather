@@ -4,6 +4,7 @@ import FeatherValidation
 import Foundation
 import HTML
 import Hummingbird
+import HTTPTypes
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
@@ -56,9 +57,35 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
-        let payload = try await request.decode(
-            as: AssetAddForm.self,
-            context: context
+        guard
+            let fileName = header(
+                "X-Media-Asset-File-Name",
+                from: request
+            )?.whitespaceTrimmed,
+            !fileName.isEmpty,
+            let fileExtension = header(
+                "X-Media-Asset-Extension",
+                from: request
+            )?.whitespaceTrimmed,
+            !fileExtension.isEmpty,
+            let rawLength = request.headers[.contentLength],
+            let contentLength = Int64(rawLength),
+            contentLength > 0
+        else {
+            throw HTTPError(.badRequest)
+        }
+        let payload = AssetAddUpload(
+            parentId: header("X-Media-Asset-Parent-ID", from: request) ?? "",
+            fileName: fileName,
+            extension: fileExtension,
+            title: header("X-Media-Asset-Title", from: request) ?? "",
+            altText: header("X-Media-Asset-Alt-Text", from: request) ?? "",
+            view: request.queryString("view") ?? "grid",
+            content: .init(
+                MediaHTTPBodySequence(body: request.body),
+                length: .known(contentLength),
+                iterationBehavior: .single
+            )
         )
         let picker = pickerState(request: request)
         let model = try await interactor.postAddMediaAsset(payload: payload)
@@ -126,6 +153,12 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
 }
 
 extension AdminAddMediaAssetDefaultController {
+    fileprivate func header(_ name: String, from request: Request) -> String? {
+        guard let fieldName = HTTPField.Name(name) else { return nil }
+        guard let value = request.headers[fieldName] else { return nil }
+        return value.removingPercentEncoding ?? value
+    }
+
     fileprivate struct PickerState {
         let isEnabled: Bool
         let field: String?

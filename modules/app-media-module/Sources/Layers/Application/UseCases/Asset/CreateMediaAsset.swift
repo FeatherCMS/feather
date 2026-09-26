@@ -2,6 +2,7 @@ public import FeatherApplication
 public import FeatherContracts
 public import FeatherStorage
 public import Foundation
+import NIOCore
 import MediaContracts
 import MediaDomain
 
@@ -33,7 +34,26 @@ public struct CreateMediaAsset: UseCase {
         public let `extension`: String
         public let title: String?
         public let altText: String?
-        public let data: Data
+        public let content: StorageSequence
+        public let contentLength: Int64
+
+        public init(
+            folderId: String? = nil,
+            fileName: String,
+            `extension`: String,
+            title: String? = nil,
+            altText: String? = nil,
+            content: StorageSequence,
+            contentLength: Int64
+        ) {
+            self.folderId = folderId
+            self.fileName = fileName
+            self.extension = `extension`
+            self.title = title
+            self.altText = altText
+            self.content = content
+            self.contentLength = contentLength
+        }
 
         public init(
             folderId: String? = nil,
@@ -43,12 +63,17 @@ public struct CreateMediaAsset: UseCase {
             altText: String? = nil,
             data: Data
         ) {
-            self.folderId = folderId
-            self.fileName = fileName
-            self.extension = `extension`
-            self.title = title
-            self.altText = altText
-            self.data = data
+            var buffer = ByteBufferAllocator().buffer(capacity: data.count)
+            buffer.writeBytes(data)
+            self.init(
+                folderId: folderId,
+                fileName: fileName,
+                extension: `extension`,
+                title: title,
+                altText: altText,
+                content: .init(buffer: buffer),
+                contentLength: Int64(data.count)
+            )
         }
     }
 
@@ -71,10 +96,9 @@ public struct CreateMediaAsset: UseCase {
             assetID: storageIdentity.nodeId,
             fileExtension: file.extension
         )
-        try await MediaStorageData.upload(
-            input.data,
-            to: storage,
-            key: storageKeyShard.physicalKey(for: objectKey)
+        try await storage.upload(
+            key: storageKeyShard.physicalKey(for: objectKey),
+            sequence: input.content
         )
 
         do {
@@ -99,7 +123,7 @@ public struct CreateMediaAsset: UseCase {
                         slugPath: slugPath,
                         extension: file.extension,
                         contentType: contentType(for: file.extension),
-                        sizeBytes: Int64(input.data.count),
+                        sizeBytes: input.contentLength,
                         title: input.title,
                         altText: input.altText
                     ),
@@ -109,7 +133,7 @@ public struct CreateMediaAsset: UseCase {
                 try await adjustFolderAggregates(
                     folders: scope.folders,
                     folderId: parent?.id,
-                    sizeDelta: Int64(input.data.count),
+                    sizeDelta: input.contentLength,
                     assetCountDelta: 1
                 )
                 return asset
