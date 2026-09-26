@@ -610,6 +610,12 @@ extension NewAdminFormFieldMediaPicker {
             return "bin";
           }
 
+          function defaultTitle(filename) {
+            var name = String(filename || "").split(/[\\\\/]/).pop() || "";
+            var dot = name.lastIndexOf(".");
+            return dot > 0 ? name.slice(0, dot) : name;
+          }
+
           function encoded(value) {
             return encodeURIComponent(String(value || ""));
           }
@@ -628,6 +634,10 @@ extension NewAdminFormFieldMediaPicker {
               var input = container.querySelector('[name="' + name + '"]');
               return input ? input.value : "";
             };
+            var titleInput = container.querySelector('[name="title"]');
+            if (titleInput && !String(titleInput.value || "").trim()) {
+              titleInput.value = defaultTitle(file.name);
+            }
             var headers = {
               "Content-Type": "application/octet-stream",
               "X-Media-Asset-File-Name": encoded(file.name || ""),

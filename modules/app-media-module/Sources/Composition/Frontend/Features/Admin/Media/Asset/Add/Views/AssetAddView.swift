@@ -114,10 +114,18 @@ struct AssetAddView: Component {
                         if (lowerMime.indexOf("/") >= 0) { return (lowerMime.split("/")[1] || "bin").toLowerCase(); }
                         return "bin";
                     }
+                    function defaultTitle(filename) {
+                        var name = String(filename || "").split(/[\\\\/]/).pop() || "";
+                        var dot = name.lastIndexOf(".");
+                        return dot > 0 ? name.slice(0, dot) : name;
+                    }
                     function setHiddenFields(file) {
                         if (!file) { return; }
                         if (extensionInput) { extensionInput.value = normalizeExtension(file.name, file.type); }
                         if (fileNameInput) { fileNameInput.value = file.name || ""; }
+                        if (titleInput && !String(titleInput.value || "").trim()) {
+                            titleInput.value = defaultTitle(file.name);
+                        }
                     }
                     function encoded(value) {
                         return encodeURIComponent(String(value || ""));
@@ -166,6 +174,7 @@ struct AssetAddView: Component {
                     var fileInput = document.getElementById("file");
                     var extensionInput = document.getElementById("extension");
                     var fileNameInput = document.getElementById("fileName");
+                    var titleInput = form && form.querySelector('[name="title"]');
                     if (!fileInput) { return; }
                     fileInput.addEventListener("change", function () {
                         var file = fileInput.files && fileInput.files[0];
