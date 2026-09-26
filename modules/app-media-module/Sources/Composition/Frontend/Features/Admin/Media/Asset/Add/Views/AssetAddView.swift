@@ -148,15 +148,73 @@ struct AssetAddView: Component {
                         .new-admin-media-upload > .new-admin-form__error {
                             margin: 0 0 12px;
                         }
+                        .new-admin-media-upload__summary {
+                            display: flex;
+                            flex-direction: column;
+                            gap: 8px;
+                            margin: 0 0 12px;
+                            padding: 10px 12px;
+                            border: 1px solid var(--material-color-tertiary-border);
+                            border-radius: 8px;
+                            background: var(--material-color-tertiary-tint);
+                        }
+                        .new-admin-media-upload__summary[hidden] {
+                            display: none;
+                        }
+                        .new-admin-media-upload__summary-header {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            gap: 12px;
+                        }
+                        .new-admin-media-upload__summary-total {
+                            display: inline-flex;
+                            align-items: center;
+                            gap: 6px;
+                        }
+                        .new-admin-media-upload__summary-label,
+                        .new-admin-media-upload__summary-size,
+                        .new-admin-media-upload__summary-count,
+                        .new-admin-media-upload__summary-progress {
+                            color: var(--material-color-tertiary-text);
+                            font-size: .86rem;
+                        }
+                        .new-admin-media-upload__summary-label {
+                            font-weight: 600;
+                        }
+                        .new-admin-media-upload__progress[hidden],
+                        .new-admin-media-upload__summary-progress[hidden] {
+                            display: none;
+                        }
+                        .new-admin-media-upload__progress {
+                            height: 6px;
+                            overflow: hidden;
+                            border-radius: 999px;
+                            background: var(--material-color-tertiary-border);
+                        }
+                        .new-admin-media-upload__progress-bar {
+                            width: 0;
+                            height: 100%;
+                            border-radius: inherit;
+                            background: var(--link-color-default);
+                            transition: width .15s ease;
+                        }
                         .new-admin-media-upload__item {
                             display: flex;
                             align-items: center;
                             justify-content: space-between;
                             gap: 16px;
+                            min-height: 58px;
                             padding: 9px 12px;
                             border: 1px solid var(--material-color-tertiary-border);
                             border-radius: 8px;
                             background: var(--material-color-tertiary-tint);
+                        }
+                        .new-admin-media-upload__details {
+                            display: flex;
+                            flex-direction: column;
+                            min-width: 0;
+                            gap: 3px;
                         }
                         .new-admin-media-upload__name {
                             min-width: 0;
@@ -164,15 +222,28 @@ struct AssetAddView: Component {
                             text-overflow: ellipsis;
                             white-space: nowrap;
                         }
+                        .new-admin-media-upload__size {
+                            color: var(--material-color-tertiary-text);
+                            font-size: .82rem;
+                        }
                         .new-admin-media-upload__actions {
                             display: inline-flex;
                             align-items: center;
+                            justify-content: flex-end;
                             flex: 0 0 auto;
                             gap: 8px;
+                            min-width: 88px;
+                            min-height: 32px;
                         }
                         .new-admin-media-upload__status {
+                            display: inline-flex;
+                            align-items: center;
+                            justify-content: flex-end;
+                            min-width: 88px;
+                            min-height: 32px;
                             color: var(--material-color-tertiary-text);
                             font-size: .86rem;
+                            text-align: right;
                         }
                         .new-admin-media-upload__item.is-uploading .new-admin-media-upload__status {
                             color: var(--link-color-default);
@@ -197,6 +268,12 @@ struct AssetAddView: Component {
                     var isUploading = false;
                     var uploadStarted = false;
                     var workerURL = null;
+                    var totalSizeElement = null;
+                    var totalCountElement = null;
+                    var totalProgressElement = null;
+                    var progressBarElement = null;
+                    var progressElement = null;
+                    var summaryElement = null;
                     function normalizeExtension(filename, mime) {
                         var lowerMime = String(mime || "").toLowerCase();
                         var lowerName = String(filename || "").toLowerCase();
@@ -248,8 +325,62 @@ struct AssetAddView: Component {
                     function fileKey(file) {
                         return [file.name, file.size, file.lastModified].join(":");
                     }
+                    function formatBytes(value) {
+                        var bytes = Number(value) || 0;
+                        if (bytes < 1024) { return bytes + " B"; }
+                        var units = ["KB", "MB", "GB", "TB"];
+                        var unitIndex = -1;
+                        do {
+                            bytes /= 1024;
+                            unitIndex += 1;
+                        } while (bytes >= 1024 && unitIndex < units.length - 1);
+                        var precision = bytes >= 10 ? 0 : 1;
+                        return bytes.toFixed(precision) + " " + units[unitIndex];
+                    }
+                    function itemProgress(item) {
+                        if (item.status === "success") { return 100; }
+                        var size = Number(item.file.size) || 0;
+                        if (!size) { return 0; }
+                        return Math.min(
+                            100,
+                            Math.floor((Number(item.uploadedBytes) || 0) / size * 100)
+                        );
+                    }
+                    function renderTotalProgress() {
+                        if (
+                            !totalSizeElement ||
+                            !totalCountElement ||
+                            !totalProgressElement ||
+                            !progressBarElement ||
+                            !progressElement ||
+                            !summaryElement
+                        ) {
+                            return;
+                        }
+                        var totalSize = queue.reduce(function (total, item) {
+                            return total + (Number(item.file.size) || 0);
+                        }, 0);
+                        var uploadedSize = queue.reduce(function (total, item) {
+                            return total + (Number(item.uploadedBytes) || 0);
+                        }, 0);
+                        var progress = totalSize
+                            ? Math.min(100, Math.floor(uploadedSize / totalSize * 100))
+                            : 0;
+                        totalCountElement.textContent = queue.length +
+                            (queue.length === 1 ? " file" : " files");
+                        totalSizeElement.textContent = formatBytes(totalSize);
+                        totalProgressElement.textContent =
+                            formatBytes(uploadedSize) + " of " +
+                            formatBytes(totalSize) + " uploaded (" + progress + "%)";
+                        progressBarElement.style.width = progress + "%";
+                        summaryElement.hidden = queue.length === 0;
+                        progressElement.hidden = !uploadStarted;
+                        totalProgressElement.hidden = !uploadStarted;
+                    }
                     function statusLabel(item) {
-                        if (item.status === "uploading") { return "Uploading…"; }
+                        if (item.status === "uploading") {
+                            return itemProgress(item) + "%";
+                        }
                         if (item.status === "success") { return "Uploaded"; }
                         if (item.status === "error") { return item.error || "Failed"; }
                         return uploadStarted ? "Waiting" : "";
@@ -260,10 +391,17 @@ struct AssetAddView: Component {
                         queue.forEach(function (item, index) {
                             var row = document.createElement("li");
                             row.className = "new-admin-media-upload__item is-" + item.status;
+                            var details = document.createElement("span");
+                            details.className = "new-admin-media-upload__details";
                             var name = document.createElement("span");
                             name.className = "new-admin-media-upload__name";
                             name.textContent = item.file.name;
-                            row.appendChild(name);
+                            details.appendChild(name);
+                            var size = document.createElement("span");
+                            size.className = "new-admin-media-upload__size";
+                            size.textContent = formatBytes(item.file.size);
+                            details.appendChild(size);
+                            row.appendChild(details);
                             var actions = document.createElement("span");
                             actions.className = "new-admin-media-upload__actions";
                             var label = statusLabel(item);
@@ -291,6 +429,7 @@ struct AssetAddView: Component {
                             row.appendChild(actions);
                             queueElement.appendChild(row);
                         });
+                        renderTotalProgress();
                     }
                     function addFiles(files) {
                         Array.from(files || []).forEach(function (file) {
@@ -299,7 +438,12 @@ struct AssetAddView: Component {
                             })) {
                                 return;
                             }
-                            queue.push({ file: file, status: "pending", error: "" });
+                            queue.push({
+                                file: file,
+                                status: "pending",
+                                error: "",
+                                uploadedBytes: 0
+                            });
                         });
                         if (queue.length) {
                             queueElement.hidden = false;
@@ -352,24 +496,59 @@ struct AssetAddView: Component {
                             }
                             self.onmessage = async function (event) {
                                 var data = event.data;
-                                try {
-                                    var response = await fetch(data.url, {
-                                        method: "POST",
-                                        body: data.file,
-                                        credentials: "same-origin",
-                                        headers: data.headers
-                                    });
-                                    if (!response.redirected && response.status !== 204) {
-                                        var body = await response.text();
-                                        throw new Error(
-                                            extractError(body) ||
-                                            "Upload failed with status " + response.status
-                                        );
+                                var xhr = new XMLHttpRequest();
+                                xhr.open("POST", data.url, true);
+                                xhr.withCredentials = true;
+                                Object.keys(data.headers || {}).forEach(function (name) {
+                                    xhr.setRequestHeader(name, data.headers[name]);
+                                });
+                                if (xhr.upload) {
+                                    xhr.upload.onprogress = function (event) {
+                                        if (!event.lengthComputable) { return; }
+                                        self.postMessage({
+                                            status: "progress",
+                                            loaded: event.loaded,
+                                            total: event.total
+                                        });
+                                    };
+                                }
+                                xhr.onload = function () {
+                                    var expectedURL = new URL(
+                                        data.url,
+                                        data.baseURL
+                                    ).href;
+                                    var redirected = xhr.responseURL &&
+                                        xhr.responseURL !== expectedURL;
+                                    var successful = xhr.status === 204 ||
+                                        xhr.status === 201 ||
+                                        (xhr.status >= 200 && xhr.status < 300 && redirected);
+                                    if (!successful) {
+                                        self.postMessage({
+                                            status: "error",
+                                            error: extractError(xhr.responseText || "") ||
+                                                "Upload failed with status " + xhr.status
+                                        });
+                                        return;
                                     }
                                     self.postMessage({
                                         status: "success",
-                                        url: response.url || ""
+                                        url: xhr.responseURL || ""
                                     });
+                                };
+                                xhr.onerror = function () {
+                                    self.postMessage({
+                                        status: "error",
+                                        error: "Upload failed"
+                                    });
+                                };
+                                xhr.ontimeout = function () {
+                                    self.postMessage({
+                                        status: "error",
+                                        error: "Upload timed out"
+                                    });
+                                };
+                                try {
+                                    xhr.send(data.file);
                                 } catch (error) {
                                     self.postMessage({
                                         status: "error",
@@ -382,6 +561,7 @@ struct AssetAddView: Component {
                     function uploadFile(item) {
                         item.status = "uploading";
                         item.error = "";
+                        item.uploadedBytes = 0;
                         renderQueue();
                         return new Promise(function (resolve) {
                             var worker;
@@ -395,8 +575,17 @@ struct AssetAddView: Component {
                             try {
                                 worker = new Worker(workerURL);
                                 worker.onmessage = function (event) {
+                                    if (event.data.status === "progress") {
+                                        item.uploadedBytes = Math.min(
+                                            Number(item.file.size) || 0,
+                                            Number(event.data.loaded) || 0
+                                        );
+                                        renderQueue();
+                                        return;
+                                    }
                                     if (event.data.status === "success") {
                                         item.status = "success";
+                                        item.uploadedBytes = item.file.size;
                                         renderQueue();
                                         finish({ url: event.data.url || "" });
                                     } else {
@@ -415,6 +604,7 @@ struct AssetAddView: Component {
                                 worker.postMessage({
                                     url: form.action,
                                     file: item.file,
+                                    baseURL: window.location.href,
                                     headers: uploadHeaders(form, item.file)
                                 });
                             } catch (_) {
@@ -486,6 +676,24 @@ struct AssetAddView: Component {
                     );
                     var queueElement = document.getElementById(
                         "mediaAssetUploadQueue"
+                    );
+                    totalSizeElement = document.getElementById(
+                        "mediaAssetUploadTotalSize"
+                    );
+                    totalCountElement = document.getElementById(
+                        "mediaAssetUploadTotalCount"
+                    );
+                    totalProgressElement = document.getElementById(
+                        "mediaAssetUploadTotalProgress"
+                    );
+                    progressBarElement = document.getElementById(
+                        "mediaAssetUploadProgressBar"
+                    );
+                    progressElement = document.getElementById(
+                        "mediaAssetUploadProgress"
+                    );
+                    summaryElement = document.getElementById(
+                        "mediaAssetUploadSummary"
                     );
                     if (!fileInput || (!isPicker && !form)) {
                         window.setTimeout(initialize, 0);
@@ -587,8 +795,9 @@ struct AssetAddView: Component {
                 .name("extension")
                 .id("extension")
                 .value(state.form.extension)
+            uploadSummary()
             Div {
-                context.build(NewAdminSubmitButton("Upload files"))
+                context.build(NewAdminSubmitButton("Upload"))
             }
             .class("new-admin-form__actions")
         }
@@ -625,6 +834,40 @@ struct AssetAddView: Component {
                 .hidden()
         }
         .class("new-admin-form-field new-admin-media-upload")
+    }
+
+    func uploadSummary() -> some FlowContent {
+        Div {
+            Div {
+                Span {}
+                    .id("mediaAssetUploadTotalCount")
+                    .class("new-admin-media-upload__summary-count")
+                Div {
+                    Span("Total")
+                        .class("new-admin-media-upload__summary-label")
+                    Span {}
+                        .id("mediaAssetUploadTotalSize")
+                        .class("new-admin-media-upload__summary-size")
+                }
+                .class("new-admin-media-upload__summary-total")
+            }
+            .class("new-admin-media-upload__summary-header")
+            Div {
+                Div {}
+                    .id("mediaAssetUploadProgressBar")
+                    .class("new-admin-media-upload__progress-bar")
+            }
+            .id("mediaAssetUploadProgress")
+            .class("new-admin-media-upload__progress")
+            .hidden()
+            Span {}
+                .id("mediaAssetUploadTotalProgress")
+                .class("new-admin-media-upload__summary-progress")
+                .hidden()
+        }
+        .id("mediaAssetUploadSummary")
+        .class("new-admin-media-upload__summary")
+        .hidden()
     }
 
     func pickerUploadContainer(
