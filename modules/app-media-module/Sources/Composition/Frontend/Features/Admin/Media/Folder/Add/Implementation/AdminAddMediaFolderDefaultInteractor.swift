@@ -33,12 +33,24 @@ struct AdminAddMediaFolderDefaultInteractor: AdminAddMediaFolderInteractor {
             )
         }
         catch let error as OpenAPIRepositoryError {
+            let message: String
+            switch error {
+            case .conflict:
+                message =
+                    "A folder with this name already exists in this location."
+            case .failure(let failure)
+                where failure.backendError?.trace?.containsDuplicatePath == true:
+                message =
+                    "A folder with this name already exists in this location."
+            default:
+                message =
+                    "Failed to create media folder: \(error.errorDescription)"
+            }
             return .init(
                 parentId: payload.normalizedParentId,
                 name: payload.name,
                 view: payload.view,
-                error:
-                    "Failed to create media folder: \(error.errorDescription)"
+                error: message
             )
         }
         return .init(
@@ -47,5 +59,17 @@ struct AdminAddMediaFolderDefaultInteractor: AdminAddMediaFolderInteractor {
             view: payload.view,
             error: nil
         )
+    }
+}
+
+private extension OpenAPIRepositoryError.BackendError.Trace {
+    var containsDuplicatePath: Bool {
+        if id == "MediaApplication.CreateMediaFolder.Error",
+           message == "duplicatePath"
+        {
+            return true
+        }
+
+        return reasons?.contains(where: { $0.containsDuplicatePath }) == true
     }
 }

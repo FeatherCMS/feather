@@ -19,20 +19,39 @@ public struct NewAdminDialog<Content: Component>: Component {
     public func rules() -> [any Rule] {
         Media {
             Custom("dialog.new-admin-dialog") {
+                Position(.fixed)
+                UnsafeRawProperty(name: "inset", value: "0")
+                Margin(.auto)
                 Width(92.percent)
                 MaxWidth(640.px)
+                MaxHeight(90.vh)
                 Padding(0.px)
                 Border(0)
+                BorderRadius(18.px)
+                Overflow(.hidden)
+                OverflowY(.auto)
                 Background(color: .transparent)
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
             }
             Custom("dialog.new-admin-dialog::backdrop") {
                 Background(
                     color: .color(
-                        CSSColor(stringLiteral: "rgba(0, 0, 0, 0.45)")
+                        CSSColor(stringLiteral: "rgba(128, 128, 128, 0.46)")
+                    )
+                )
+                BackdropFilter(.blur(12.px))
+            }
+        }
+        Media(.prefersColorScheme(.dark)) {
+            Custom("dialog.new-admin-dialog::backdrop") {
+                Background(
+                    color: .color(
+                        CSSColor(stringLiteral: "rgba(0, 0, 0, 0.68)")
                     )
                 )
             }
+        }
+        Media {
             Class("new-admin-dialog__panel") {
                 Display(.flex)
                 FlexDirection(.column)
@@ -44,7 +63,9 @@ public struct NewAdminDialog<Content: Component>: Component {
                     .variable(TokenKey.Colors.Materials.Secondary.border)
                 )
                 BorderRadius(18.px)
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+                Background(
+                    color: .color(CSSColor(stringLiteral: "#ffffff"))
+                )
                 BoxShadow(
                     0.px,
                     18.px,
@@ -52,6 +73,9 @@ public struct NewAdminDialog<Content: Component>: Component {
                     spread: 0.px,
                     color: CSSColor(stringLiteral: "rgba(0, 0, 0, 0.24)")
                 )
+            }
+            Custom("html.new-admin-dialog-open, html.new-admin-dialog-open body") {
+                Overflow(.hidden)
             }
             Class("new-admin-dialog__header") {
                 Display(.flex)
@@ -72,6 +96,11 @@ public struct NewAdminDialog<Content: Component>: Component {
             }
             Custom(".new-admin-dialog__panel .new-admin-form") {
                 MarginTop(0.px)
+            }
+        }
+        Media(.prefersColorScheme(.dark)) {
+            Custom(".new-admin-dialog__panel") {
+                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
             }
         }
     }

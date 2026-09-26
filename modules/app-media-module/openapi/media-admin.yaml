@@ -186,6 +186,8 @@ paths:
           description: Unauthorized
         403:
           description: Forbidden
+        409:
+          description: A media folder with this path already exists
       security:
       - bearerAuth: []
   /api/v1/admin/media/folders/list:

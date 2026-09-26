@@ -28,6 +28,8 @@ struct AdminAddMediaFolderOpenAPIRepository {
                 throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
                 throw OpenAPIRepositoryError.forbidden
+            case .conflict:
+                throw OpenAPIRepositoryError.conflict
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,

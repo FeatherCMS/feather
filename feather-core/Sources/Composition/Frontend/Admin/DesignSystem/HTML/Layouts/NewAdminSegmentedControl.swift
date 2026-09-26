@@ -35,9 +35,9 @@ public struct NewAdminSegmentedControl: Component {
                 Border(
                     1.px,
                     .solid,
-                    .variable(TokenKey.Colors.Materials.Secondary.border)
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
                 )
-                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
                 BorderRadius(10.px)
                 Padding(3.px)
                 MaxWidth(100.percent)

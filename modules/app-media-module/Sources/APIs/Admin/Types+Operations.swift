@@ -1426,6 +1426,41 @@ public enum Operations {
                     }
                 }
             }
+            public struct Conflict: Sendable, Hashable {
+                /// Creates a new `Conflict`.
+                public init() {}
+            }
+            /// A media folder with this path already exists
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/post(mediaFolderCreate)/responses/409`.
+            ///
+            /// HTTP response code: `409 conflict`.
+            case conflict(Operations.MediaFolderCreate.Output.Conflict)
+            /// A media folder with this path already exists
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/post(mediaFolderCreate)/responses/409`.
+            ///
+            /// HTTP response code: `409 conflict`.
+            public static var conflict: Self {
+                .conflict(.init())
+            }
+            /// The associated value of the enum case if `self` is `.conflict`.
+            ///
+            /// - Throws: An error if `self` is not `.conflict`.
+            /// - SeeAlso: `.conflict`.
+            public var conflict: Operations.MediaFolderCreate.Output.Conflict {
+                get throws {
+                    switch self {
+                    case let .conflict(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "conflict",
+                            response: self
+                        )
+                    }
+                }
+            }
             /// Undocumented response.
             ///
             /// A response with a code that is not documented in the OpenAPI document.

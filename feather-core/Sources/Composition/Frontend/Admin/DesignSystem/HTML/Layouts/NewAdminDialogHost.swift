@@ -68,8 +68,10 @@ public struct NewAdminDialogHost: Component {
                     var root = host();
                     if (!root) { return; }
                     root.replaceChildren(dialog);
+                    document.documentElement.classList.add("new-admin-dialog-open");
                     dialog.addEventListener("close", function () {
                         dialog.remove();
+                        document.documentElement.classList.remove("new-admin-dialog-open");
                     }, { once: true });
                     if (dialog.showModal) {
                         dialog.showModal();
@@ -132,11 +134,16 @@ public struct NewAdminDialogHost: Component {
                         close(closeButton.closest("dialog[data-admin-dialog]"));
                         return;
                     }
+                });
 
-                    var dialog = target.closest("dialog[data-admin-dialog]");
-                    if (dialog && target === dialog) {
-                        close(dialog);
-                    }
+                document.addEventListener("keydown", function (event) {
+                    if (event.key !== "Escape") { return; }
+                    var dialog = document.querySelector(
+                        "dialog[data-admin-dialog][open]"
+                    );
+                    if (!dialog) { return; }
+                    event.preventDefault();
+                    close(dialog);
                 });
 
                 document.addEventListener("submit", function (event) {
