@@ -527,8 +527,7 @@ extension NewAdminFormFieldMediaPicker {
 
           function fileName(asset) {
             var title = String(asset && asset.title || "").trim();
-            var base = String(asset && asset.name || "").trim();
-            return title || base || "No asset selected";
+            return title || "No asset selected";
           }
 
           function escapeHTML(value) {
@@ -594,7 +593,8 @@ extension NewAdminFormFieldMediaPicker {
               url: marker.getAttribute("data-media-picker-selected-url"),
               previewURL: marker.getAttribute("data-media-picker-selected-preview-url"),
               name: marker.getAttribute("data-media-picker-selected-name"),
-              extension: marker.getAttribute("data-media-picker-selected-extension")
+              extension: marker.getAttribute("data-media-picker-selected-extension"),
+              title: marker.getAttribute("data-media-picker-selected-title")
             });
             return true;
           }
@@ -608,12 +608,6 @@ extension NewAdminFormFieldMediaPicker {
             if (extension) { return extension; }
             if (type.indexOf("/") >= 0) { return type.split("/")[1] || "bin"; }
             return "bin";
-          }
-
-          function defaultTitle(filename) {
-            var name = String(filename || "").split(/[\\\\/]/).pop() || "";
-            var dot = name.lastIndexOf(".");
-            return dot > 0 ? name.slice(0, dot) : name;
           }
 
           function encoded(value) {
@@ -634,10 +628,6 @@ extension NewAdminFormFieldMediaPicker {
               var input = container.querySelector('[name="' + name + '"]');
               return input ? input.value : "";
             };
-            var titleInput = container.querySelector('[name="title"]');
-            if (titleInput && !String(titleInput.value || "").trim()) {
-              titleInput.value = defaultTitle(file.name);
-            }
             var headers = {
               "Content-Type": "application/octet-stream",
               "X-Media-Asset-File-Name": encoded(file.name || ""),
@@ -726,7 +716,8 @@ extension NewAdminFormFieldMediaPicker {
                 url: select.getAttribute("data-picker-url"),
                 previewURL: select.getAttribute("data-picker-preview-url"),
                 name: select.getAttribute("data-picker-name"),
-                extension: select.getAttribute("data-picker-extension")
+                extension: select.getAttribute("data-picker-extension"),
+                title: select.getAttribute("data-picker-title")
               });
               hide(modalFor(field));
               return;
@@ -756,7 +747,8 @@ extension NewAdminFormFieldMediaPicker {
                     url: marker.getAttribute("data-media-picker-selected-url"),
                     previewURL: marker.getAttribute("data-media-picker-selected-preview-url"),
                     name: marker.getAttribute("data-media-picker-selected-name"),
-                    extension: marker.getAttribute("data-media-picker-selected-extension")
+                    extension: marker.getAttribute("data-media-picker-selected-extension"),
+                    title: marker.getAttribute("data-media-picker-selected-title")
                   });
                   hide(modal);
                 }

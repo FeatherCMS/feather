@@ -45,13 +45,19 @@ public struct NewAdminDialogHost: Component {
                     });
                 }
 
-                function adoptScripts(source) {
-                    source.querySelectorAll("script:not([src])").forEach(function (script) {
+                function adoptScripts(dialog) {
+                    dialog.querySelectorAll("script:not([src])").forEach(function (script) {
                         var code = script.textContent || "";
                         if (!code) { return; }
-                        var copy = document.createElement("script");
-                        copy.textContent = code;
-                        document.body.appendChild(copy);
+                        window.setTimeout(function () {
+                            var copy = document.createElement("script");
+                            copy.textContent = code;
+                            try {
+                                document.body.appendChild(copy);
+                            } catch (_) {
+                                // Keep the dialog usable if one component script fails.
+                            }
+                        }, 0);
                     });
                 }
 
@@ -60,11 +66,12 @@ public struct NewAdminDialogHost: Component {
                     var dialog = source.querySelector("dialog[data-admin-dialog]");
                     if (!dialog) { throw new Error("Dialog content was not found"); }
                     adoptStyles(source);
-                    adoptScripts(source);
-                    return dialog;
+                    return { dialog: dialog, source: source };
                 }
 
-                function mount(dialog) {
+                function mount(parsed) {
+                    var dialog = parsed.dialog;
+                    adoptScripts(dialog);
                     var root = host();
                     if (!root) { return; }
                     root.replaceChildren(dialog);
@@ -103,7 +110,27 @@ public struct NewAdminDialogHost: Component {
                     .catch(function () { window.location.href = fallback || url; });
                 }
 
+                function mountHTML(html) {
+                    try {
+                        mount(parseDialog(html));
+                        return true;
+                    } catch (_) {
+                        return false;
+                    }
+                }
+
+                var submitHandlers = new WeakMap();
+
+                function registerFormSubmitHandler(form, handler) {
+                    if (!form || typeof handler !== "function") { return; }
+                    submitHandlers.set(form, handler);
+                }
+
                 function replaceFromResponse(dialog, response) {
+                    if (response.redirected) {
+                        window.location.assign(response.url);
+                        return;
+                    }
                     if (response.status === 204) {
                         close(dialog);
                         window.location.reload();
@@ -114,6 +141,17 @@ public struct NewAdminDialogHost: Component {
                         mount(parseDialog(html));
                     });
                 }
+
+                window.__newAdminDialog = {
+                    mountHTML: mountHTML,
+                    registerFormSubmitHandler: registerFormSubmitHandler,
+                    replaceResponse: function (response) {
+                        var dialog = document.querySelector(
+                            "dialog[data-admin-dialog][open]"
+                        );
+                        return replaceFromResponse(dialog, response);
+                    }
+                };
 
                 document.addEventListener("click", function (event) {
                     var target = event.target;
@@ -147,10 +185,33 @@ public struct NewAdminDialogHost: Component {
                 });
 
                 document.addEventListener("submit", function (event) {
+                    if (event.defaultPrevented) { return; }
                     var form = event.target;
                     if (!form || !form.closest) { return; }
                     var dialog = form.closest("dialog[data-admin-dialog]");
                     if (!dialog) { return; }
+
+                    var handler = submitHandlers.get(form);
+                    if (handler) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        try {
+                            var result = handler(event, form, dialog, {
+                                close: function () { close(dialog); },
+                                replaceResponse: function (response) {
+                                    return replaceFromResponse(dialog, response);
+                                }
+                            });
+                            if (result && typeof result.catch === "function") {
+                                result.catch(function () {
+                                    window.alert("Unable to submit dialog.");
+                                });
+                            }
+                        } catch (_) {
+                            window.alert("Unable to submit dialog.");
+                        }
+                        return;
+                    }
 
                     event.preventDefault();
                     var body = new URLSearchParams();
@@ -170,7 +231,7 @@ public struct NewAdminDialogHost: Component {
                         return replaceFromResponse(dialog, response);
                     })
                     .catch(function () {
-                        window.location.href = form.action;
+                        window.alert("Unable to submit dialog.");
                     });
                 });
             }());

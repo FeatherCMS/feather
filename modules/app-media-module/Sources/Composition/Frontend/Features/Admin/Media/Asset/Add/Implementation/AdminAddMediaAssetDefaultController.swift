@@ -29,6 +29,8 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
             .emptyToNil ?? ""
         let view = request.queryString("view") ?? "grid"
         let picker = pickerState(request: request)
+        let isDialog = request.queryString("presentation") == "dialog"
+            && request.headers[.accept]?.contains("type=admin-dialog") == true
         var model = try await interactor.getAddMediaAsset()
         model = .init(
             parentId: parentId,
@@ -42,7 +44,8 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
             action: actionPath(
                 parentId: parentId.emptyToNil,
                 view: view,
-                picker: picker
+                picker: picker,
+                isDialog: isDialog
             ),
             isPicker: picker.isEnabled,
             selectedAsset: nil
@@ -57,6 +60,8 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
+        let isDialog = request.queryString("presentation") == "dialog"
+            && request.headers[.accept]?.contains("type=admin-dialog") == true
         guard
             let fileName = header(
                 "X-Media-Asset-File-Name",
@@ -78,7 +83,9 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
             parentId: header("X-Media-Asset-Parent-ID", from: request) ?? "",
             fileName: fileName,
             extension: fileExtension,
-            title: header("X-Media-Asset-Title", from: request) ?? "",
+            title: header("X-Media-Asset-Title", from: request)?
+                .whitespaceTrimmed
+                .emptyToNil ?? defaultTitle(for: fileName),
             altText: header("X-Media-Asset-Alt-Text", from: request) ?? "",
             view: request.queryString("view") ?? "grid",
             content: .init(
@@ -103,7 +110,8 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
                     action: actionPath(
                         parentId: payload.parentId.emptyToNil,
                         view: model.view,
-                        picker: picker
+                        picker: picker,
+                        isDialog: isDialog
                     ),
                     isPicker: true,
                     selectedAsset: model.selectedAsset
@@ -113,6 +121,19 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
                         model: pickerModel
                     )
                     .response(from: request, context: context)
+            }
+
+            if isDialog {
+                return AdminNotificationFlash.redirect(
+                    to: redirectLocation(
+                        parentId: payload.parentId.emptyToNil,
+                        view: model.view
+                    ),
+                    notification: .init(
+                        title: "Added",
+                        message: "Media asset added successfully."
+                    )
+                )
             }
 
             return AdminNotificationFlash.redirect(
@@ -139,7 +160,8 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
             action: actionPath(
                 parentId: model.parentId.emptyToNil,
                 view: model.view,
-                picker: picker
+                picker: picker,
+                isDialog: isDialog
             ),
             isPicker: picker.isEnabled,
             selectedAsset: nil
@@ -153,6 +175,12 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
 }
 
 extension AdminAddMediaAssetDefaultController {
+    fileprivate func defaultTitle(for fileName: String) -> String {
+        URL(fileURLWithPath: fileName)
+            .deletingPathExtension()
+            .lastPathComponent
+    }
+
     fileprivate func header(_ name: String, from request: Request) -> String? {
         guard let fieldName = HTTPField.Name(name) else { return nil }
         guard let value = request.headers[fieldName] else { return nil }
@@ -187,7 +215,8 @@ extension AdminAddMediaAssetDefaultController {
     fileprivate func actionPath(
         parentId: String?,
         view: String,
-        picker: PickerState
+        picker: PickerState,
+        isDialog: Bool = false
     ) -> String {
         var queryItems: [String] = []
         if let parentId, !parentId.isEmpty {
@@ -211,6 +240,9 @@ extension AdminAddMediaAssetDefaultController {
             queryItems.append(
                 "default_folder_path=\(defaultFolderPath.queryEncoded())"
             )
+        }
+        if isDialog {
+            queryItems.append("presentation=dialog")
         }
         return queryItems.isEmpty
             ? "/admin/media/assets/add/"

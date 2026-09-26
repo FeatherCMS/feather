@@ -2,6 +2,7 @@ import FeatherAdmin
 import FeatherValidation
 import HTML
 import Hummingbird
+import HTTPTypes
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
@@ -17,6 +18,8 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
         model: AdminAddMediaAssetModel
     ) async throws -> HTMLResponse {
         var buildContext = BuilderContext()
+        let isDialog = request.queryString("presentation") == "dialog"
+            && request.headers[.accept]?.contains("type=admin-dialog") == true
         let content = AssetAddView(
             state: .init(
                 form: .init(
@@ -30,10 +33,19 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
                     view: model.view,
                     action: model.action,
                     isPicker: model.isPicker,
+                    isDialog: isDialog,
                     selectedAsset: model.selectedAsset
                 )
             )
         )
+        if isDialog {
+            return try await renderEngine.renderNewAdminDialog(
+                request: request,
+                context: context,
+                title: "Add media asset",
+                content: content
+            )
+        }
         if model.isPicker {
             return renderEngine.renderPublicPage(
                 request: request,

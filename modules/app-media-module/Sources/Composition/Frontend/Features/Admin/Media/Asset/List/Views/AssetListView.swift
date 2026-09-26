@@ -372,6 +372,12 @@ extension AssetListView {
             : "\(path)?\(suffix.joined(separator: "&"))"
     }
 
+    fileprivate func addAssetDialogPath() -> String {
+        let path = addAssetPath()
+        let separator = path.contains("?") ? "&" : "?"
+        return "\(path)\(separator)presentation=dialog"
+    }
+
     fileprivate func assetActionSuffix() -> String {
         var suffix: [String] = []
         if let parentId = state.parentId {
@@ -475,6 +481,13 @@ extension AssetListView {
         fileName(for: item)
     }
 
+    fileprivate func pickerTitle(
+        for item: Components.Schemas.MediaAssetListItemSchema
+    ) -> String {
+        let title = item.title?.whitespaceTrimmed
+        return title?.isEmpty == false ? title! : item.name
+    }
+
     fileprivate func fileName(
         for item: Components.Schemas.MediaAssetListItemSchema
     ) -> String {
@@ -503,6 +516,21 @@ extension AssetListView {
                 {
                     context.build(
                         NewAdminButton(
+                            "Add asset using dialog",
+                            href: addAssetPath(),
+                            style: .ghost(.primary)
+                        )
+                    )
+                    .data(
+                        "admin-dialog-url",
+                        addAssetDialogPath()
+                    )
+                }
+                if state.permissions.allows(MediaPermissions.Assets.create)
+                    && !state.picker.isEnabled
+                {
+                    context.build(
+                        NewAdminButton(
                             "Add folder",
                             href: addFolderPath(),
                             style: .secondary
@@ -514,7 +542,7 @@ extension AssetListView {
                 {
                     context.build(
                         NewAdminButton(
-                            "Add using dialog",
+                            "Add folder using dialog",
                             href: addFolderPath(),
                             style: .ghost(.primary)
                         )
@@ -928,7 +956,7 @@ extension AssetListView {
                 )
                 .data("picker-name", item.asset.name)
                 .data("picker-extension", item.asset._extension)
-                .data("picker-title", item.asset.title ?? "")
+                .data("picker-title", pickerTitle(for: item.asset))
                 .data("picker-alt-text", item.asset.altText ?? "")
                 .data("picker-status", item.asset.status)
             }
@@ -980,7 +1008,7 @@ extension AssetListView {
                     )
                     .data("picker-name", item.asset.name)
                     .data("picker-extension", item.asset._extension)
-                    .data("picker-title", item.asset.title ?? "")
+                    .data("picker-title", pickerTitle(for: item.asset))
                     .data("picker-alt-text", item.asset.altText ?? "")
                     .data("picker-status", item.asset.status)
                 }
@@ -1187,7 +1215,7 @@ extension AssetListView {
                     )
                     .data(
                         "picker-title",
-                        item.asset.title ?? ""
+                        pickerTitle(for: item.asset)
                     )
                     .data(
                         "picker-alt-text",

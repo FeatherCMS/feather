@@ -24,6 +24,7 @@ struct AssetAddView: Component {
         var view: String = "grid"
         var action: String = "/admin/media/assets/add/"
         var isPicker: Bool = false
+        var isDialog: Bool = false
         var selectedAsset: NewAdminMediaAsset? = nil
     }
 
@@ -31,7 +32,7 @@ struct AssetAddView: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            if !state.form.isPicker {
+            if !state.form.isPicker && !state.form.isDialog {
                 context.build(
                     NewAdminBreadcrumb(links: MediaAssetRoutes.breadcrumb)
                 )
@@ -94,7 +95,9 @@ struct AssetAddView: Component {
             Script(
                 """
                 (function () {
+                    function initialize() {
                     var isPicker = \(state.form.isPicker ? "true" : "false");
+                    var isDialog = \(state.form.isDialog ? "true" : "false");
                     function normalizeExtension(filename, mime) {
                         var lowerMime = String(mime || "").toLowerCase();
                         var lowerName = String(filename || "").toLowerCase();
@@ -114,18 +117,10 @@ struct AssetAddView: Component {
                         if (lowerMime.indexOf("/") >= 0) { return (lowerMime.split("/")[1] || "bin").toLowerCase(); }
                         return "bin";
                     }
-                    function defaultTitle(filename) {
-                        var name = String(filename || "").split(/[\\\\/]/).pop() || "";
-                        var dot = name.lastIndexOf(".");
-                        return dot > 0 ? name.slice(0, dot) : name;
-                    }
                     function setHiddenFields(file) {
                         if (!file) { return; }
                         if (extensionInput) { extensionInput.value = normalizeExtension(file.name, file.type); }
                         if (fileNameInput) { fileNameInput.value = file.name || ""; }
-                        if (titleInput && !String(titleInput.value || "").trim()) {
-                            titleInput.value = defaultTitle(file.name);
-                        }
                     }
                     function encoded(value) {
                         return encodeURIComponent(String(value || ""));
@@ -140,6 +135,9 @@ struct AssetAddView: Component {
                             "X-Media-Asset-File-Name": encoded(file.name || ""),
                             "X-Media-Asset-Extension": encoded(value("extension"))
                         };
+                        if (isDialog) {
+                            headers["Accept"] = "text/html; type=admin-dialog";
+                        }
                         var optional = [
                             ["parentId", "X-Media-Asset-Parent-ID"],
                             ["title", "X-Media-Asset-Title"],
@@ -152,15 +150,52 @@ struct AssetAddView: Component {
                         return headers;
                     }
                     function uploadResponse(response) {
+                        if (isDialog && response.status === 204) {
+                            var dialog = document.querySelector(
+                                "dialog[data-admin-dialog][open]"
+                            );
+                            if (dialog && dialog.close) {
+                                dialog.close();
+                            } else if (dialog) {
+                                dialog.remove();
+                            }
+                            window.location.reload();
+                            return Promise.resolve();
+                        }
                         return response.text().then(function (html) {
                             if (response.redirected) {
                                 window.location.assign(response.url);
                                 return;
                             }
+                            if (isDialog) {
+                                var dialog = window.__newAdminDialog;
+                                var mount = dialog && dialog.mountHTML;
+                                if (mount && mount(html)) {
+                                    return;
+                                }
+                            }
                             document.open();
                             document.write(html);
                             document.close();
                         });
+                    }
+                    async function submitUpload(targetForm, dialogAPI) {
+                        try {
+                            var file = selectedFile();
+                            var response = await fetch(targetForm.action, {
+                                method: "POST",
+                                body: file,
+                                credentials: "same-origin",
+                                headers: uploadHeaders(targetForm, file)
+                            });
+                            if (isDialog && dialogAPI) {
+                                await dialogAPI.replaceResponse(response);
+                            } else {
+                                await uploadResponse(response);
+                            }
+                        } catch (_) {
+                            alert("Unable to upload selected file.");
+                        }
                     }
                     function selectedFile() {
                         var file = fileInput.files && fileInput.files[0];
@@ -174,8 +209,16 @@ struct AssetAddView: Component {
                     var fileInput = document.getElementById("file");
                     var extensionInput = document.getElementById("extension");
                     var fileNameInput = document.getElementById("fileName");
-                    var titleInput = form && form.querySelector('[name="title"]');
-                    if (!fileInput) { return; }
+                    if (!fileInput || (!isPicker && !form)) {
+                        window.setTimeout(initialize, 0);
+                        return;
+                    }
+                    if (form && form.dataset.mediaAssetUploadBound === "1") {
+                        return;
+                    }
+                    if (form) {
+                        form.dataset.mediaAssetUploadBound = "1";
+                    }
                     fileInput.addEventListener("change", function () {
                         var file = fileInput.files && fileInput.files[0];
                         if (!file) { return; }
@@ -185,23 +228,22 @@ struct AssetAddView: Component {
                         return;
                     }
                     if (!form) { return; }
-                    form.addEventListener("submit", async function (event) {
+                    form.addEventListener("submit", function (event) {
+                        event.stopPropagation();
+                        event.stopImmediatePropagation();
                         event.preventDefault();
-                        try {
-                            var file = selectedFile();
-                            var response = await fetch(form.action, {
-                                method: "POST",
-                                body: file,
-                                credentials: "same-origin",
-                                headers: uploadHeaders(form, file)
-                            });
-                            await uploadResponse(response);
-                        } catch (_) {
-                            alert("Unable to upload selected file.");
-                            return;
-                        }
+                        submitUpload(
+                            form,
+                            isDialog ? window.__newAdminDialog : null
+                        );
                     });
-                })();
+                    }
+                    if (document.readyState === "loading") {
+                        document.addEventListener("DOMContentLoaded", initialize, { once: true });
+                    } else {
+                        initialize();
+                    }
+                }());
                 """
             )
         }
@@ -267,7 +309,8 @@ struct AssetAddView: Component {
             }
             .class("new-admin-form__actions")
         }
-        return context.build(form).id("mediaAssetAddForm")
+        return context.build(form)
+            .id("mediaAssetAddForm")
     }
 
     func pickerUploadContainer(
