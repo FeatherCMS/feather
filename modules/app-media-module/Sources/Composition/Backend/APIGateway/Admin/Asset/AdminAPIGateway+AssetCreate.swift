@@ -16,11 +16,7 @@ private struct MediaStorageSequence: Sendable, AsyncSequence {
         var iterator: HTTPBody.AsyncIterator
 
         mutating func next() async throws -> ByteBuffer? {
-            #if compiler(>=6.2)
             let bytes = try await iterator.next(isolation: nil)
-            #else
-            let bytes = try await iterator.next()
-            #endif
             guard let bytes else {
                 return nil
             }

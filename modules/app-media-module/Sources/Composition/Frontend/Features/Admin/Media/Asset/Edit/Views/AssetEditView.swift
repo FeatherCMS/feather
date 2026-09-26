@@ -57,46 +57,6 @@ struct AssetEditView: Component {
                     context.build(
                         NewAdminFormFieldInput(
                             state: .init(
-                                name: "url",
-                                label: "URL",
-                                value: state.model.url,
-                                isReadOnly: true
-                            )
-                        )
-                    )
-                    context.build(
-                        NewAdminFormFieldInput(
-                            state: .init(
-                                name: "extension",
-                                label: "Extension",
-                                value: state.model.extension,
-                                isReadOnly: true
-                            )
-                        )
-                    )
-                    context.build(
-                        NewAdminFormFieldInput(
-                            state: .init(
-                                name: "status",
-                                label: "Status",
-                                value: state.model.status,
-                                isReadOnly: true
-                            )
-                        )
-                    )
-                    context.build(
-                        NewAdminFormFieldInput(
-                            state: .init(
-                                name: "sizeBytes",
-                                label: "Size bytes",
-                                value: "\(state.model.sizeBytes)",
-                                isReadOnly: true
-                            )
-                        )
-                    )
-                    context.build(
-                        NewAdminFormFieldInput(
-                            state: .init(
                                 name: "title",
                                 label: "Title",
                                 value: state.model.title

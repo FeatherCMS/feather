@@ -15,11 +15,7 @@ struct MediaHTTPBodySequence: Sendable, AsyncSequence {
         var iterator: RequestBody.AsyncIterator
 
         mutating func next() async throws -> ArraySlice<UInt8>? {
-            #if compiler(>=6.2)
             let buffer = try await iterator.next(isolation: nil)
-            #else
-            let buffer = try await iterator.next()
-            #endif
             guard let buffer else { return nil }
             return ArraySlice(buffer.readableBytesView)
         }
