@@ -107,6 +107,12 @@ public struct MediaAssetNodeFileDatabaseRepository: MediaAssetNodeFileRepository
             .asDomain
     }
 
+    public func find(slugPath: String) async throws -> MediaAssetNodeFile? {
+        try await MediaAssetNodeFileTable(connection: context.connection)
+            .find(slugPath: slugPath)?
+            .asDomain
+    }
+
     public func list(folderIds: [String]) async throws -> [MediaAssetNodeFile] {
         try await MediaAssetNodeFileTable(connection: context.connection)
             .list(folderIds: folderIds)

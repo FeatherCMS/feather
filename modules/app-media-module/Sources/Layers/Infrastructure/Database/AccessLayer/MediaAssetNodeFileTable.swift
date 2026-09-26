@@ -107,6 +107,21 @@ struct MediaAssetNodeFileTable {
         }
     }
 
+    func find(slugPath: String) async throws -> Row? {
+        try await connection.run(
+            query: #"""
+                \#(unescaped: mediaAssetNodeFileSelectPrefix)
+                WHERE n.slug_path = \#(slugPath) AND n.deleted_at IS NULL
+                LIMIT 1;
+                """#
+        ) { sequence in
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
+            return try Row(from: row)
+        }
+    }
+
     func resolve(ids: [String]) async throws -> [Row] {
         guard !ids.isEmpty else { return [] }
         let values = mediaAssetNodeFileSQLValues(ids)

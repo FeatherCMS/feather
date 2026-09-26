@@ -48,23 +48,31 @@ extension AdminAPIGateway {
             length: UInt64(contentLength)
         )
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.createAssetAndEnqueue(
-            subject: subject,
-            input: .init(
-                folderId: input.headers.xMediaAssetParentID?.emptyToNil,
-                fileName: input.headers.xMediaAssetFileName,
-                extension: input.headers.xMediaAssetExtension,
-                title: input.headers.xMediaAssetTitle?.emptyToNil,
-                altText: input.headers.xMediaAssetAltText?.emptyToNil,
-                content: storageSequence,
-                contentLength: contentLength
+        do {
+            let result = try await useCases.createAssetAndEnqueue(
+                subject: subject,
+                input: .init(
+                    folderId: input.headers.xMediaAssetParentID?.emptyToNil,
+                    fileName: input.headers.xMediaAssetFileName,
+                    extension: input.headers.xMediaAssetExtension,
+                    title: input.headers.xMediaAssetTitle?.emptyToNil,
+                    altText: input.headers.xMediaAssetAltText?.emptyToNil,
+                    content: storageSequence,
+                    contentLength: contentLength
+                )
             )
-        )
 
-        return .created(
-            .init(
-                body: .json(map(result))
+            return .created(
+                .init(
+                    body: .json(map(result))
+                )
             )
-        )
+        }
+        catch let error as CreateMediaAsset.Error {
+            switch error {
+            case .duplicatePath:
+                return .conflict(.init())
+            }
+        }
     }
 }

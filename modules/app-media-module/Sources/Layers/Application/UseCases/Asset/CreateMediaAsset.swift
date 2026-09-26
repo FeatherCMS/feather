@@ -7,6 +7,10 @@ import MediaContracts
 import MediaDomain
 
 public struct CreateMediaAsset: UseCase {
+    public enum Error: Swift.Error, Sendable {
+        case duplicatePath
+    }
+
     struct Action: PermissionAction {
         let key = MediaPermissions.Assets.create
     }
@@ -92,6 +96,25 @@ public struct CreateMediaAsset: UseCase {
             scope.assets.prepareStorageIdentity()
         }
         let file = normalizedFile(input.fileName, extension: input.extension)
+        let slugPath = try await transaction.run { scope in
+            let parent: MediaAssetNodeFolder?
+            if let folderId = input.folderId {
+                parent = try await scope.folders.find(id: folderId)
+            }
+            else {
+                parent = nil
+            }
+            let slugPath =
+                parent.map { "\($0.slugPath)/\(file.slug)" } ?? file.slug
+            let folderExists =
+                try await scope.folders.find(slugPath: slugPath) != nil
+            let assetExists =
+                try await scope.assets.find(slugPath: slugPath) != nil
+            if folderExists || assetExists {
+                throw Error.duplicatePath
+            }
+            return slugPath
+        }
         let objectKey = MediaStorageObjectKey.original(
             assetID: storageIdentity.nodeId,
             fileExtension: file.extension
@@ -110,8 +133,6 @@ public struct CreateMediaAsset: UseCase {
                 else {
                     parent = nil
                 }
-                let slugPath =
-                    parent.map { "\($0.slugPath)/\(file.slug)" } ?? file.slug
                 let storageObject = try await scope.storageObjects.insert(
                     MediaAssetStorageObject.create(objectKey: objectKey)
                 )

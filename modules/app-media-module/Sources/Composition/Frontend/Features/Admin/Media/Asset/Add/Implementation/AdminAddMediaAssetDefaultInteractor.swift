@@ -47,6 +47,19 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
             )
         }
         catch let error as OpenAPIRepositoryError {
+            let message: String
+            switch error {
+            case .conflict:
+                message =
+                    "A media asset with this name already exists in this location."
+            case .failure(let failure)
+                where failure.backendError?.trace?.containsDuplicatePath == true:
+                message =
+                    "A media asset with this name already exists in this location."
+            default:
+                message =
+                    "Failed to create media asset: \(error.errorDescription)"
+            }
             return .init(
                 parentId: payload.parentId,
                 fileName: payload.fileName,
@@ -54,13 +67,24 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
                 title: payload.title,
                 altText: payload.altText,
                 data: "",
-                error:
-                    "Failed to create media asset: \(error.errorDescription)",
+                error: message,
                 view: payload.view,
                 action: "/admin/media/assets/add/",
                 isPicker: false,
                 selectedAsset: nil
             )
         }
+    }
+}
+
+private extension OpenAPIRepositoryError.BackendError.Trace {
+    var containsDuplicatePath: Bool {
+        if id == "MediaApplication.CreateMediaAsset.Error",
+           message == "duplicatePath"
+        {
+            return true
+        }
+
+        return reasons?.contains(where: { $0.containsDuplicatePath }) == true
     }
 }

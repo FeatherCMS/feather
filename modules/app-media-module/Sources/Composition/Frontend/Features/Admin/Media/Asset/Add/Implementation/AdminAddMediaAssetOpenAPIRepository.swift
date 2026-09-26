@@ -33,6 +33,8 @@ struct AdminAddMediaAssetOpenAPIRepository {
             switch response {
             case .created(let created):
                 return try created.body.json
+            case .conflict:
+                throw OpenAPIRepositoryError.conflict
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized
             case .forbidden:

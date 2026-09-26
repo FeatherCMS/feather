@@ -33,7 +33,10 @@ struct MediaAssetCreateOperation: MediaAssetOperation {
 
     var responseMap: ResponseMap {
         [
-            201: MediaAssetDetailResponse().reference()
+            201: MediaAssetDetailResponse().reference(),
+            409: CustomResponse(
+                description: "A media asset with this path already exists"
+            )
         ]
     }
 }

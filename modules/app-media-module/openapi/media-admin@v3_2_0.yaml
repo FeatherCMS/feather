@@ -24,6 +24,8 @@ paths:
       responses:
         201:
           $ref: '#/components/responses/MediaAssetDetailResponse'
+        409:
+          description: A media asset with this path already exists
         401:
           description: Unauthorized
         403:
