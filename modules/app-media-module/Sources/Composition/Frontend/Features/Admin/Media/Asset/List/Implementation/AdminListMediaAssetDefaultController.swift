@@ -11,6 +11,8 @@ import WebBuilders
 import WebComponents
 
 struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
+    private static let viewCookieName = "admin_media_assets_view"
+
     let buildRuntime:
         AuthenticatedRuntimeBuilder<
             any AdminListMediaAssetInteractor,
@@ -27,10 +29,12 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
         let parentId = request.queryString("parent_id")?
             .whitespaceTrimmed
             .emptyToNil
-        let view =
-            AdminListMediaAssetModel.ViewMode(
-                rawValue: request.queryString("view") ?? ""
-            ) ?? .grid
+        let requestedView = request.queryString("view")
+            .flatMap(AdminListMediaAssetModel.ViewMode.init(rawValue:))
+        let storedView = request.cookies[Self.viewCookieName].flatMap {
+            AdminListMediaAssetModel.ViewMode(rawValue: $0.value)
+        }
+        let view = requestedView ?? storedView ?? .grid
         let picker = AdminListMediaAssetModel.PickerState(
             isEnabled: request.queryString("picker") == "1",
             field: request.queryString("field")?.emptyToNil,
@@ -59,10 +63,27 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
                 view: view,
                 picker: picker
             )
-            return try await presenter.renderListPage(
+            let page = try await presenter.renderListPage(
                 model: model,
                 search: search,
                 permissions: permissions
+            )
+            guard let requestedView else {
+                return page
+            }
+            return HTMLResponse(
+                content: page.content,
+                status: page.status,
+                cookies: [
+                    Cookie(
+                        name: Self.viewCookieName,
+                        value: requestedView.rawValue,
+                        maxAge: 60 * 60 * 24 * 365,
+                        path: "/admin/media/assets",
+                        httpOnly: false,
+                        sameSite: .lax
+                    )
+                ]
             )
         }
         catch let caughtError {

@@ -35,13 +35,20 @@ struct AssetListView: Component {
             Display(.flex)
             FlexWrap(.wrap)
             AlignItems(.center)
+            JustifyContent(.spaceBetween)
             Gap(10.px)
             MarginBottom(24.px)
         }
-        Class("media-assets-search-row") {
+        Class("media-assets-toolbar-actions") {
             Display(.flex)
             FlexWrap(.wrap)
             AlignItems(.center)
+            Gap(10.px)
+        }
+        Class("media-assets-search-row") {
+            Display(.flex)
+            FlexDirection(.column)
+            AlignItems(.flexStart)
             Gap(4.px)
             MarginBottom(12.px)
         }
@@ -297,13 +304,14 @@ extension AssetListView {
         parentId: String?,
         view: AdminListMediaAssetModel.ViewMode,
         search: String?,
-        page: Int?
+        page: Int?,
+        includeView: Bool = false
     ) -> [NewAdminListPagination.QueryItem] {
         var items: [NewAdminListPagination.QueryItem] = []
         if let parentId {
             items.append(.init(name: "parent_id", value: parentId))
         }
-        if view != .grid {
+        if includeView || view != .grid {
             items.append(.init(name: "view", value: view.rawValue))
         }
         if state.picker.isEnabled {
@@ -425,14 +433,16 @@ extension AssetListView {
         parentId: String?,
         view: AdminListMediaAssetModel.ViewMode? = nil,
         search: String? = nil,
-        page: Int? = nil
+        page: Int? = nil,
+        includeView: Bool = false
     ) -> String {
         let view = view ?? state.view
         let query = queryItems(
             parentId: parentId,
             view: view,
             search: search,
-            page: page
+            page: page,
+            includeView: includeView
         )
         let encoded = query.map { "\($0.name)=\($0.value.queryEncoded())" }
         let path = MediaAssetRoutes.list.description
@@ -474,34 +484,30 @@ extension AssetListView {
     fileprivate func toolbar(context: inout BuilderContext) -> some FlowContent
     {
         Div {
-            if state.permissions.allows(MediaPermissions.Assets.create)
-                && !state.picker.isEnabled
-            {
-                context.build(
-                    NewAdminButton("Add asset", href: addAssetPath())
-                )
-            }
-            if state.permissions.allows(MediaPermissions.Assets.create)
-                && !state.picker.isEnabled
-            {
-                context.build(
-                    NewAdminButton(
-                        "Add folder",
-                        href: addFolderPath(),
-                        style: .secondary
+            Div {
+                if state.permissions.allows(MediaPermissions.Assets.create)
+                    && !state.picker.isEnabled
+                {
+                    context.build(
+                        NewAdminButton("Add asset", href: addAssetPath())
                     )
-                )
+                }
+                if state.permissions.allows(MediaPermissions.Assets.create)
+                    && !state.picker.isEnabled
+                {
+                    context.build(
+                        NewAdminButton(
+                            "Add folder",
+                            href: addFolderPath(),
+                            style: .secondary
+                        )
+                    )
+                }
             }
-        }
-        .class("button-row", "media-assets-toolbar-group")
-    }
+            .class("button-row", "media-assets-toolbar-actions")
 
-    fileprivate func searchControls(
-        context: inout BuilderContext
-    ) -> some FlowContent {
-        Div {
             context.build(
-                NewAdminTabBar(
+                NewAdminSegmentedControl(
                     links: [
                         .init(
                             label: "Grid",
@@ -510,7 +516,8 @@ extension AssetListView {
                                 view: .grid,
                                 search: state.search.isEmpty
                                     ? nil : state.search,
-                                page: state.pageState.page
+                                page: state.pageState.page,
+                                includeView: true
                             ),
                             isCurrent: state.view == .grid
                         ),
@@ -521,12 +528,24 @@ extension AssetListView {
                                 view: .list,
                                 search: state.search.isEmpty
                                     ? nil : state.search,
-                                page: state.pageState.page
+                                page: state.pageState.page,
+                                includeView: true
                             ),
                             isCurrent: state.view == .list
                         ),
                     ]
                 )
+            )
+        }
+        .class("button-row", "media-assets-toolbar-group")
+    }
+
+    fileprivate func searchControls(
+        context: inout BuilderContext
+    ) -> some FlowContent {
+        Div {
+            context.build(
+                NewAdminPathBreadcrumb(items: folderPathItems())
             )
             if state.picker.isEnabled {
                 pickerSearchControls(context: &context)
@@ -549,6 +568,34 @@ extension AssetListView {
             }
         }
         .class("media-assets-search-row")
+    }
+
+    fileprivate func folderPathItems() -> [NewAdminPathBreadcrumb.Item] {
+        var items: [NewAdminPathBreadcrumb.Item] = [
+            .init(
+                label: "My assets",
+                href: browsePath(parentId: nil),
+                isCurrent: state.currentFolder == nil
+            )
+        ]
+        for ancestor in state.ancestors {
+            items.append(
+                .init(
+                    label: ancestor.name,
+                    href: browsePath(parentId: ancestor.id),
+                    isCurrent: false
+                )
+            )
+        }
+        if let currentFolder = state.currentFolder {
+            items.append(
+                .init(
+                    label: currentFolder.name,
+                    isCurrent: true
+                )
+            )
+        }
+        return items
     }
 
     fileprivate func pickerSearchControls(
@@ -744,9 +791,9 @@ extension AssetListView {
             Div {
                 context.build(
                     NewAdminRowButton(
-                        "Open",
+                        "View",
                         href: browsePath(parentId: parentId),
-                        style: .ghost(.secondary)
+                        style: .ghost(.primary)
                     )
                 )
             }
@@ -979,9 +1026,9 @@ extension AssetListView {
             Td {
                 context.build(
                     NewAdminRowButton(
-                        "Open",
+                        "View",
                         href: browsePath(parentId: parentId),
-                        style: .ghost(.secondary)
+                        style: .ghost(.primary)
                     )
                 )
             }
