@@ -88,6 +88,29 @@ public struct DefaultRenderingEngine: RenderingEngine {
         )
     }
 
+    public func renderNewAdminDialog<T: Component>(
+        request: Request,
+        context: AuthenticatedRequestContext,
+        title: String,
+        content: T
+    ) async throws -> HTMLResponse {
+        var builderContext = BuilderContext()
+        return .init(
+            builderContext.build(
+                NewAdminHTML(
+                    title: title,
+                    body: .init(
+                        content: NewAdminDialog(
+                            title: title,
+                            content: content
+                        ),
+                        showsFooter: false
+                    )
+                )
+            )
+        )
+    }
+
     private func normalizedURL(
         base: String,
         path: String

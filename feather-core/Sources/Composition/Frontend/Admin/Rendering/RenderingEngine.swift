@@ -19,4 +19,11 @@ public protocol RenderingEngine: Sendable {
         title: String,
         content: T
     ) async throws -> HTMLResponse
+
+    func renderNewAdminDialog<T: Component>(
+        request: Request,
+        context: AuthenticatedRequestContext,
+        title: String,
+        content: T
+    ) async throws -> HTMLResponse
 }

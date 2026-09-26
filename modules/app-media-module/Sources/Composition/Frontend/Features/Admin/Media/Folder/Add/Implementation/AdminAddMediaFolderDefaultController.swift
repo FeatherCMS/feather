@@ -40,21 +40,33 @@ struct AdminAddMediaFolderDefaultController: AdminAddMediaFolderController {
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
+        let isDialog = request.queryString("presentation") == "dialog"
         let payload = try await request.decode(
             as: MediaFolderAddForm.self,
             context: context
         )
         let model = try await interactor.postAddMediaFolder(payload: payload)
         if model.error == nil {
+            let notification = NewAdminNotification.State(
+                title: "Added",
+                message: "Media folder added successfully."
+            )
+            if isDialog {
+                return Response(
+                    status: .noContent,
+                    headers: [
+                        .setCookie: AdminNotificationFlash
+                            .cookie(for: notification)
+                            .description
+                    ]
+                )
+            }
             return AdminNotificationFlash.redirect(
                 to: redirectLocation(
                     parentId: model.parentId,
                     view: model.view
                 ),
-                notification: .init(
-                    title: "Added",
-                    message: "Media folder added successfully."
-                )
+                notification: notification
             )
         }
         return

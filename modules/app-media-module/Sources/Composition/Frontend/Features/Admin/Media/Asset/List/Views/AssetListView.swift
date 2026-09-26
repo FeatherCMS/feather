@@ -429,6 +429,12 @@ extension AssetListView {
             : "\(path)?\(suffix.joined(separator: "&"))"
     }
 
+    fileprivate func addFolderDialogPath() -> String {
+        let path = addFolderPath()
+        let separator = path.contains("?") ? "&" : "?"
+        return "\(path)\(separator)presentation=dialog"
+    }
+
     fileprivate func browsePath(
         parentId: String?,
         view: AdminListMediaAssetModel.ViewMode? = nil,
@@ -501,6 +507,21 @@ extension AssetListView {
                             href: addFolderPath(),
                             style: .secondary
                         )
+                    )
+                }
+                if state.permissions.allows(MediaPermissions.Assets.create)
+                    && !state.picker.isEnabled
+                {
+                    context.build(
+                        NewAdminButton(
+                            "Add using dialog",
+                            href: addFolderPath(),
+                            style: .ghost(.primary)
+                        )
+                    )
+                    .data(
+                        "admin-dialog-url",
+                        addFolderDialogPath()
                     )
                 }
             }
