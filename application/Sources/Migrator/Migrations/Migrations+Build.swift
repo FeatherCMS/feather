@@ -41,6 +41,11 @@ public func buildMigrations(
             events: events,
             idGenerator: idGenerator
         ),
+        SystemInfrastructure.MailFromVariableMigration(
+            connection: connection,
+            idGenerator: idGenerator,
+            mailFromAddress: "info@binarybirds.com"
+        ),
         UserInfrastructure.TableSeedMigration(
             connection: connection,
             events: events,

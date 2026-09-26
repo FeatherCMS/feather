@@ -7,15 +7,27 @@ import SystemApplication
 import struct Foundation.Date
 
 public struct ResendInvitation: UseCase {
+    private struct MailContext: Sendable {
+        let invitation: Invitation
+        let publicBaseURL: String
+        let mailFromAddress: String
+    }
+
     struct Action: PermissionAction {
         let key = AccountPermissions.Invitations.create
     }
 
-    public struct Error: UseCaseError {
-        public let message: String
+    public enum Error: UseCaseError {
+        case invitationNotFound
+        case mailFromNotConfigured
 
-        public init(message: String) {
-            self.message = message
+        public var message: String {
+            switch self {
+            case .invitationNotFound:
+                "Invitation not found."
+            case .mailFromNotConfigured:
+                "System mail from address is not configured. Configure the system-settings-mail-from-address variable in System → Variables."
+            }
         }
     }
 
@@ -54,12 +66,16 @@ public struct ResendInvitation: UseCase {
             guard
                 var invitation = try await scope.invitation.findBy(id: input.id)
             else {
-                throw Error(message: "Invitation not found")
+                throw Error.invitationNotFound
             }
-            try invitation.renew(
-                token: generateToken(),
-                expiresAt: Date().addingTimeInterval(Invitation.lifetime)
-            )
+            guard
+                let mailFromAddress = try await scope.variable.get(
+                    "system-settings-mail-from-address"
+                )?.whitespaceTrimmed,
+                !mailFromAddress.isEmpty
+            else {
+                throw Error.mailFromNotConfigured
+            }
             let configuredPublicBaseURL =
                 try await scope.variable.get("web-settings-public-base-url")?
                 .whitespaceTrimmed
@@ -67,15 +83,20 @@ public struct ResendInvitation: UseCase {
                 configuredPublicBaseURL?.isEmpty == false
                 ? configuredPublicBaseURL!
                 : "http://localhost:3456"
-            return (
+            try invitation.renew(
+                token: generateToken(),
+                expiresAt: Date().addingTimeInterval(Invitation.lifetime)
+            )
+            return MailContext(
                 invitation: try await scope.invitation.update(invitation),
-                publicBaseURL: publicBaseURL
+                publicBaseURL: publicBaseURL,
+                mailFromAddress: mailFromAddress
             )
         }
 
         try await mailSender.send(
             .init(
-                from: .init("info@binarybirds.com"),
+                from: .init(result.mailFromAddress),
                 to: [.init(result.invitation.email)],
                 subject: "Application - Invitation",
                 body: """

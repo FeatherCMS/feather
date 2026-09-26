@@ -219,7 +219,10 @@ struct AccountApplicationTestSuite {
                 identity: MockIdentityRepository(identity: identity),
                 role: MockRoleRepository(),
                 credential: MockInvitationCredentialWriter(),
-                variable: MockVariableQueries(value: "https://example.test")
+                variable: MockVariableQueries(
+                    value: "https://example.test",
+                    mailFromAddress: "invitations@example.test"
+                )
             )
         )
         let mailSender = MockMailSender()
@@ -243,6 +246,10 @@ struct AccountApplicationTestSuite {
                     "https://example.test/account/invitation/accept/?token=\(token)"
                 ) == true
         )
+        #expect(
+            await mailSender.lastMessage?.from.email
+                == "invitations@example.test"
+        )
         #expect(await mailSender.lastMessage?.body.contains("\\(") == false)
     }
 
@@ -263,7 +270,10 @@ struct AccountApplicationTestSuite {
             context: WriteInvitationOnlyWithVariable(
                 invitation: repository,
                 role: MockRoleRepository(),
-                variable: MockVariableQueries(value: "https://example.test")
+                variable: MockVariableQueries(
+                    value: "https://example.test",
+                    mailFromAddress: "resend@example.test"
+                )
             )
         )
         let mailSender = MockMailSender()
@@ -284,6 +294,9 @@ struct AccountApplicationTestSuite {
         #expect(result.token != invitation.token)
         #expect(await repository.updateCallCount == 1)
         #expect(await mailSender.sendCallCount == 1)
+        #expect(
+            await mailSender.lastMessage?.from.email == "resend@example.test"
+        )
         #expect(
             await mailSender.lastMessage?.body
                 .contains(
