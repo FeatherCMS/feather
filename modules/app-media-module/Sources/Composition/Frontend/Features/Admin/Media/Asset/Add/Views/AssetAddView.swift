@@ -110,6 +110,7 @@ struct AssetAddView: Component {
                             background: var(--material-color-tertiary-tint);
                             color: var(--material-color-tertiary-text);
                             text-align: center;
+                            margin-bottom: 12px;
                             transition: border-color .15s ease, background .15s ease;
                         }
                         .new-admin-media-upload__dropzone.is-dragover {
@@ -117,16 +118,11 @@ struct AssetAddView: Component {
                             background: var(--material-color-secondary-tint);
                         }
                         .new-admin-media-upload__icon {
-                            display: inline-flex;
-                            align-items: center;
-                            justify-content: center;
+                            display: block;
+                            flex: 0 0 auto;
                             width: 32px;
                             height: 32px;
-                            border: 1px solid var(--link-color-default);
-                            border-radius: 50%;
                             color: var(--link-color-default);
-                            font-size: 24px;
-                            line-height: 0;
                         }
                         .new-admin-media-upload__help {
                             margin: 0;
@@ -145,9 +141,12 @@ struct AssetAddView: Component {
                             display: flex;
                             flex-direction: column;
                             gap: 6px;
-                            margin: 0;
+                            margin: 0 0 12px;
                             padding: 0;
                             list-style: none;
+                        }
+                        .new-admin-media-upload > .new-admin-form__error {
+                            margin: 0 0 12px;
                         }
                         .new-admin-media-upload__item {
                             display: flex;
@@ -602,7 +601,7 @@ struct AssetAddView: Component {
     ) -> some FlowContent {
         Section {
             Div {
-                Span("+")
+                FeatherIcons.get(named: "plusCircle")!
                     .class("new-admin-media-upload__icon")
                 Strong("Drop files here or choose files")
                 P("You can upload multiple files at once.")
