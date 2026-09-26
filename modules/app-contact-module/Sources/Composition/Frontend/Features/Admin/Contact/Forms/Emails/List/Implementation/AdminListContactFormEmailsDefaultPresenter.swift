@@ -31,9 +31,7 @@ struct AdminListContactFormEmailsDefaultPresenter:
                     permissions: .init(
                         Set(permissions.map(PermissionKey.init))
                     ),
-                    breadcrumb: ContactAdminRoutes.formEmailsBreadcrumb(
-                        RouterPath(item.key)
-                    ),
+                    breadcrumb: ContactAdminRoutes.formsBreadcrumb,
                     error: error
                 )
             )

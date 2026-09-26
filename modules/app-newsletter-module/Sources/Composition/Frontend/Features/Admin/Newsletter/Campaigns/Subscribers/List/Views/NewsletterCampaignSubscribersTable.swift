@@ -29,43 +29,10 @@ struct NewsletterCampaignSubscribersTable: Component {
                 )
             )
             context.build(
-                NewAdminPageHeader(
-                    state: .init(
-                        title: "Campaign subscribers",
-                        description: "Manage subscribers for this campaign."
-                    )
+                NewsletterCampaignHeader(
+                    campaignId: state.newsletterId,
+                    active: .subscribers
                 )
-            )
-            context.build(
-                NewAdminTabBar(links: [
-                    .init(
-                        label: "Details",
-                        href:
-                            NewsletterAdminRoutes.campaignDetails(
-                                RouterPath(state.newsletterId)
-                            )
-                            .description,
-                        isCurrent: false
-                    ),
-                    .init(
-                        label: "Subscribers",
-                        href:
-                            NewsletterAdminRoutes.campaignSubscribers(
-                                RouterPath(state.newsletterId)
-                            )
-                            .description,
-                        isCurrent: true
-                    ),
-                    .init(
-                        label: "Issues",
-                        href:
-                            NewsletterAdminRoutes.campaignIssues(
-                                RouterPath(state.newsletterId)
-                            )
-                            .description,
-                        isCurrent: false
-                    ),
-                ])
             )
             context.build(
                 NewsletterCampaignSubscribersTableContent(

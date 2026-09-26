@@ -16,19 +16,15 @@ struct SubmissionMailEdit: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(
-                AdminContactFormTabs(formId: formId, active: .emails)
-            )
             context.build(NewAdminBreadcrumb(links: breadcrumb))
             context.build(
-                NewAdminPageHeader(
-                    state: .init(
-                        title: "Edit contact form email",
-                        description:
-                            "Update the notification email for this contact form."
-                    )
+                AdminContactFormHeader(
+                    formId: formId,
+                    active: .emails
                 )
             )
+            H2("Edit email")
+                .style("margin-bottom:16px;")
             replacementVariables
             context.build(
                 SubmissionMailForm(

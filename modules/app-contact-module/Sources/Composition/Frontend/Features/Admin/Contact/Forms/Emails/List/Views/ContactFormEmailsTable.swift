@@ -20,17 +20,11 @@ struct ContactFormEmailsTable: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(
-                AdminContactFormTabs(formId: state.id, active: .emails)
-            )
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
-                    state: .init(
-                        title: "Contact form emails",
-                        description:
-                            "Configure delivery messages for this contact form."
-                    )
+                AdminContactFormHeader(
+                    formId: state.id,
+                    active: .emails
                 )
             )
             if let error = state.error {

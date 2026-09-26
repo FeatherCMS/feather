@@ -52,46 +52,12 @@ struct NewsletterCampaignSubscriberFormView: Component {
                 )
             )
             context.build(
-                NewAdminPageHeader(
-                    state: .init(
-                        title: state.isEdit
-                            ? "Edit campaign subscriber"
-                            : "Add campaign subscriber",
-                        description: "Manage this campaign subscription."
-                    )
+                NewsletterCampaignHeader(
+                    campaignId: state.newsletterId,
+                    active: .subscribers
                 )
             )
-            context.build(
-                NewAdminTabBar(links: [
-                    .init(
-                        label: "Details",
-                        href:
-                            NewsletterAdminRoutes.campaignDetails(
-                                RouterPath(state.newsletterId)
-                            )
-                            .description,
-                        isCurrent: false
-                    ),
-                    .init(
-                        label: "Subscribers",
-                        href:
-                            NewsletterAdminRoutes.campaignSubscribers(
-                                RouterPath(state.newsletterId)
-                            )
-                            .description,
-                        isCurrent: true
-                    ),
-                    .init(
-                        label: "Issues",
-                        href:
-                            NewsletterAdminRoutes.campaignIssues(
-                                RouterPath(state.newsletterId)
-                            )
-                            .description,
-                        isCurrent: false
-                    ),
-                ])
-            )
+            H2(state.isEdit ? "Edit subscriber" : "Add subscriber")
             let form = NewAdminForm(action: action) {
                 if let error = state.error {
                     P(error).class("new-admin-form__error")

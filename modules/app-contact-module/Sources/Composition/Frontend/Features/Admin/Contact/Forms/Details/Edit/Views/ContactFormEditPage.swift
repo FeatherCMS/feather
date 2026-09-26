@@ -17,21 +17,14 @@ struct ContactFormEditPage: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(
-                AdminContactFormTabs(formId: state.key, active: .details)
-            )
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
-                    state: .init(
-                        title: state.isReadOnly
-                            ? "Contact form" : "Edit contact form",
-                        description: state.isReadOnly
-                            ? "Review form settings and field order."
-                            : "Update form settings and field order."
-                    )
+                AdminContactFormHeader(
+                    formId: state.key,
+                    active: .details
                 )
             )
+            H2("Contact form details")
             context.build(
                 ContactFormForm(
                     state: state.form,

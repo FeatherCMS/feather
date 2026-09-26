@@ -21,19 +21,14 @@ struct ContactFormSubmissionDetailsView: Component {
             ContactPermissions.Submissions.update
         )
         return Section {
-            context.build(
-                AdminContactFormTabs(formId: state.formId, active: .submissions)
-            )
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
-                    state: .init(
-                        title: "Contact form submission",
-                        description:
-                            "Review the submitted values and processing status."
-                    )
+                AdminContactFormHeader(
+                    formId: state.formId,
+                    active: .submissions
                 )
             )
+            H2("Submission")
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
