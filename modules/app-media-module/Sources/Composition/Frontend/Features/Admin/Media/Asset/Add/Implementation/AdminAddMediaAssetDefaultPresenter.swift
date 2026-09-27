@@ -35,6 +35,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
                     action: model.action,
                     isPicker: model.isPicker,
                     pickerField: request.queryString("field")?.emptyToNil,
+                    allowedExtensions: pickerExtensions(),
                     isDialog: isDialog,
                     selectedAsset: model.selectedAsset
                 )
@@ -46,7 +47,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
                 context: context,
                 title: model.isPicker ? "Upload media assets" : "Add media asset",
                 content: content,
-                size: model.isPicker ? .large : .small
+                size: .small
             )
         }
         if model.isPicker {
@@ -65,6 +66,14 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
             context: context,
             title: "Add media asset",
             content: content
+        )
+    }
+
+    private func pickerExtensions() -> AllowedExtensions {
+        .custom(
+            request.queryString("extensions")?
+                .split(separator: ",")
+                .map(String.init) ?? []
         )
     }
 

@@ -71,9 +71,9 @@ struct BlogTagForm: Component {
                             )
                         },
                         browsePath:
-                            "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
+                            "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=\(AllowedExtensions.images.queryValue)",
                         defaultFolderPath: "blog/tags",
-                        allowedExtensions: ["png", "jpg", "jpeg", "webp"]
+                        allowedExtensions: .images
                     )
                 )
             )

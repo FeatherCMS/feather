@@ -314,11 +314,11 @@ extension AssetListView {
         if let field = state.picker.field {
             items.append(.init(name: "field", value: field))
         }
-        if !state.picker.allowedExtensions.isEmpty {
+        if !state.picker.allowedExtensions.isAnything {
             items.append(
                 .init(
                     name: "extensions",
-                    value: state.picker.allowedExtensions.joined(separator: ",")
+                    value: state.picker.allowedExtensions.queryValue
                 )
             )
         }
@@ -350,9 +350,9 @@ extension AssetListView {
         if let field = state.picker.field {
             suffix.append("field=\(field.queryEncoded())")
         }
-        if !state.picker.allowedExtensions.isEmpty {
+        if !state.picker.allowedExtensions.isAnything {
             suffix.append(
-                "extensions=\(state.picker.allowedExtensions.joined(separator: ",").queryEncoded())"
+                "extensions=\(state.picker.allowedExtensions.queryValue.queryEncoded())"
             )
         }
         if let defaultFolderPath = state.picker.defaultFolderPath {
@@ -386,9 +386,9 @@ extension AssetListView {
         if let field = state.picker.field {
             suffix.append("field=\(field.queryEncoded())")
         }
-        if !state.picker.allowedExtensions.isEmpty {
+        if !state.picker.allowedExtensions.isAnything {
             suffix.append(
-                "extensions=\(state.picker.allowedExtensions.joined(separator: ",").queryEncoded())"
+                "extensions=\(state.picker.allowedExtensions.queryValue.queryEncoded())"
             )
         }
         if let defaultFolderPath = state.picker.defaultFolderPath {
@@ -413,9 +413,9 @@ extension AssetListView {
         if let field = state.picker.field {
             suffix.append("field=\(field.queryEncoded())")
         }
-        if !state.picker.allowedExtensions.isEmpty {
+        if !state.picker.allowedExtensions.isAnything {
             suffix.append(
-                "extensions=\(state.picker.allowedExtensions.joined(separator: ",").queryEncoded())"
+                "extensions=\(state.picker.allowedExtensions.queryValue.queryEncoded())"
             )
         }
         if let defaultFolderPath = state.picker.defaultFolderPath {
@@ -502,17 +502,10 @@ extension AssetListView {
                     && !state.picker.isEnabled
                 {
                     context.build(
-                        NewAdminButton("Add asset", href: addAssetPath())
-                    )
-                }
-                if state.permissions.allows(MediaPermissions.Assets.create)
-                    && !state.picker.isEnabled
-                {
-                    context.build(
                         NewAdminButton(
-                            "Add asset using dialog",
+                            "Upload assets",
                             href: addAssetPath(),
-                            style: .ghost(.primary)
+                            style: .primary
                         )
                     )
                     .data(
@@ -526,17 +519,6 @@ extension AssetListView {
                     context.build(
                         NewAdminButton(
                             "Add folder",
-                            href: addFolderPath(),
-                            style: .secondary
-                        )
-                    )
-                }
-                if state.permissions.allows(MediaPermissions.Assets.create)
-                    && !state.picker.isEnabled
-                {
-                    context.build(
-                        NewAdminButton(
-                            "Add folder using dialog",
                             href: addFolderPath(),
                             style: .ghost(.primary)
                         )
@@ -1099,11 +1081,9 @@ extension AssetListView {
                 href: browsePath(parentId: parentId),
                 context: &context
             )
-            Td {
-                A("Up to parent").href(browsePath(parentId: parentId))
-            }
+            Td("Up to parent")
             .data("label", "Name")
-            Td("")
+            Td("Folder")
                 .data("label", "Type")
             Td("-")
                 .data("label", "Size")
@@ -1128,6 +1108,11 @@ extension AssetListView {
         context: inout BuilderContext
     ) -> some BasicTag {
         Tr {
+            let removePath = NewAdminLocation.remove(
+                path: MediaAssetRoutes.remove.description,
+                ids: [folder.id],
+                returnTo: returnTo
+            )
             let actions: [NewAdminListRowActions.Action] =
                 state.picker.isEnabled
                 ? [
@@ -1153,13 +1138,10 @@ extension AssetListView {
                     ),
                     .init(
                         "Remove",
-                        href: NewAdminLocation.remove(
-                            path: MediaAssetRoutes.remove.description,
-                            ids: [folder.id],
-                            returnTo: returnTo
-                        ),
+                        href: removePath,
                         style: .destructive,
-                        permission: MediaPermissions.Assets.delete
+                        permission: MediaPermissions.Assets.delete,
+                        dialogURL: removePath
                     ),
                 ]
             if canRemove {

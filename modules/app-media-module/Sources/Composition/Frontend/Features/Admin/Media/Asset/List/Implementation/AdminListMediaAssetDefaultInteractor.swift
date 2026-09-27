@@ -35,7 +35,7 @@ struct AdminListMediaAssetDefaultInteractor: AdminListMediaAssetInteractor {
             page: page,
             search: search,
             parentId: effectiveParentId,
-            allowedExtensions: picker.allowedExtensions
+            allowedExtensions: picker.allowedExtensions.values
         )
 
         let currentFolder: Components.Schemas.MediaFolderDetailSchema?

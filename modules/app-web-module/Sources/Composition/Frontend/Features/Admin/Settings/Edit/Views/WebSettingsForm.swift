@@ -274,7 +274,7 @@ struct WebSettingsForm: Component {
     ) -> Section {
 
         let browsePath =
-            "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=png,jpg,jpeg,webp"
+            "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=\(AllowedExtensions.images.queryValue)"
         return context.build(
             NewAdminFormFieldMediaPicker(
                 state: .init(
@@ -305,7 +305,7 @@ struct WebSettingsForm: Component {
                         },
                     browsePath: browsePath,
                     defaultFolderPath: "web/settings",
-                    allowedExtensions: ["png", "jpg", "jpeg", "webp"],
+                    allowedExtensions: .images,
                     outputMode: .originalURL
                 )
             )

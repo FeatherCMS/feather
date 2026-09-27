@@ -25,6 +25,7 @@ struct AssetAddView: Component {
         var action: String = "/admin/media/assets/add/"
         var isPicker: Bool = false
         var pickerField: String? = nil
+        var allowedExtensions: AllowedExtensions = .anything
         var isDialog: Bool = false
         var selectedAsset: NewAdminMediaAsset? = nil
     }
@@ -268,6 +269,7 @@ struct AssetAddView: Component {
                     var progressBarElement = null;
                     var progressElement = null;
                     var summaryElement = null;
+                    var allowedExtensions = [];
                     function normalizeExtension(filename, mime) {
                         var lowerMime = String(mime || "").toLowerCase();
                         var lowerName = String(filename || "").toLowerCase();
@@ -426,10 +428,19 @@ struct AssetAddView: Component {
                         renderTotalProgress();
                     }
                     function addFiles(files) {
+                        var rejected = [];
                         Array.from(files || []).forEach(function (file) {
                             if (!file || queue.some(function (item) {
                                 return fileKey(item.file) === fileKey(file);
                             })) {
+                                return;
+                            }
+                            var extension = normalizeExtension(file.name, file.type);
+                            if (
+                                allowedExtensions.length &&
+                                allowedExtensions.indexOf(extension) < 0
+                            ) {
+                                rejected.push(file.name || "Selected file");
                                 return;
                             }
                             queue.push({
@@ -439,6 +450,15 @@ struct AssetAddView: Component {
                                 uploadedBytes: 0
                             });
                         });
+                        if (rejected.length) {
+                            setUploadError(
+                                "Only " + allowedExtensions.join(", ") +
+                                " files are allowed. Rejected: " + rejected.join(", ")
+                            );
+                        }
+                        else if (queue.length) {
+                            setUploadError("");
+                        }
                         if (queue.length) {
                             queueElement.hidden = false;
                             renderQueue();
@@ -679,6 +699,15 @@ struct AssetAddView: Component {
                         window.location.assign(returnURL || window.location.href);
                     }
                     var form = document.getElementById("mediaAssetAddForm");
+                    if (form) {
+                        allowedExtensions = String(
+                            form.getAttribute("data-allowed-extensions") || ""
+                        ).split(",").map(function (extension) {
+                            return extension.trim().toLowerCase();
+                        }).filter(function (extension) {
+                            return extension.length > 0;
+                        });
+                    }
                     var fileInput = document.getElementById("file");
                     var dropzone = document.querySelector(
                         "[data-media-asset-dropzone]"
@@ -804,6 +833,10 @@ struct AssetAddView: Component {
         }
         return context.build(form)
             .id("mediaAssetAddForm")
+            .data(
+                "allowed-extensions",
+                state.form.allowedExtensions.queryValue
+            )
     }
 
     func uploadDropzone(
@@ -813,14 +846,30 @@ struct AssetAddView: Component {
             Div {
                 FeatherIcons.get(named: "plusCircle")!
                     .class("new-admin-media-upload__icon")
-                Strong("Drop files here or choose files")
-                P("You can upload multiple files at once.")
-                    .class("new-admin-media-upload__help")
+                Strong(
+                    state.form.isPicker
+                        ? "Drop a file here or choose a file"
+                        : "Drop files here or choose files"
+                )
+                if !state.form.isPicker {
+                    P("You can upload multiple files at once.")
+                        .class("new-admin-media-upload__help")
+                }
                 Input()
                     .type(.file)
                     .name("file")
                     .id("file")
-                    .setAttribute(name: "multiple", value: "multiple")
+                    .if(!state.form.isPicker) {
+                        $0.setAttribute(name: "multiple", value: "multiple")
+                    }
+                    .if(!state.form.allowedExtensions.isAnything) {
+                        $0.setAttribute(
+                            name: "accept",
+                            value: state.form.allowedExtensions.values
+                                .map { ".\($0)" }
+                                .joined(separator: ",")
+                        )
+                    }
                     .class("new-admin-media-upload__input")
             }
             .class("new-admin-media-upload__dropzone")

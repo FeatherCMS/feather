@@ -18,7 +18,7 @@ struct AdminListMediaAssetModel: Sendable {
     struct PickerState: Sendable {
         let isEnabled: Bool
         let field: String?
-        let allowedExtensions: [String]
+        let allowedExtensions: AllowedExtensions
         let defaultFolderPath: String?
     }
 

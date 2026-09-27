@@ -62,6 +62,7 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         let (interactor, presenter) = buildRuntime((request, context))
         let isDialog = request.queryString("presentation") == "dialog"
             && request.headers[.accept]?.contains("type=admin-dialog") == true
+        let picker = pickerState(request: request)
         guard
             let fileName = header(
                 "X-Media-Asset-File-Name",
@@ -79,6 +80,37 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         else {
             throw HTTPError(.badRequest)
         }
+        if picker.isEnabled,
+           !picker.allowedExtensions.isAnything,
+           !picker.allowedExtensions.values.contains(fileExtension.lowercased())
+        {
+            let parentId = header("X-Media-Asset-Parent-ID", from: request) ?? ""
+            let view = request.queryString("view") ?? "grid"
+            let errorModel = AdminAddMediaAssetModel(
+                parentId: parentId,
+                fileName: fileName,
+                extension: fileExtension,
+                title: defaultTitle(for: fileName),
+                altText: "",
+                data: "",
+                error:
+                    "Please choose a file with one of these extensions: "
+                    + picker.allowedExtensions.queryValue,
+                view: view,
+                action: actionPath(
+                    parentId: parentId.emptyToNil,
+                    view: view,
+                    picker: picker,
+                    isDialog: isDialog
+                ),
+                isPicker: true,
+                selectedAsset: nil
+            )
+            return try await presenter.renderPage(
+                model: errorModel
+            )
+            .response(from: request, context: context)
+        }
         let payload = AssetAddUpload(
             parentId: header("X-Media-Asset-Parent-ID", from: request) ?? "",
             fileName: fileName,
@@ -94,7 +126,6 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
                 iterationBehavior: .single
             )
         )
-        let picker = pickerState(request: request)
         let model = try await interactor.postAddMediaAsset(payload: payload)
         if model.error == nil {
             if picker.isEnabled, model.selectedAsset != nil {
@@ -190,7 +221,7 @@ extension AdminAddMediaAssetDefaultController {
     fileprivate struct PickerState {
         let isEnabled: Bool
         let field: String?
-        let allowedExtensions: [String]
+        let allowedExtensions: AllowedExtensions
         let defaultFolderPath: String?
     }
 
@@ -200,13 +231,11 @@ extension AdminAddMediaAssetDefaultController {
         .init(
             isEnabled: request.queryString("picker") == "1",
             field: request.queryString("field")?.emptyToNil,
-            allowedExtensions: request.queryString("extensions")?
-                .split(separator: ",")
-                .map {
-                    $0.whitespaceTrimmed
-                        .lowercased()
-                }
-                .filter { !$0.isEmpty } ?? [],
+            allowedExtensions: .custom(
+                request.queryString("extensions")?
+                    .split(separator: ",")
+                    .map(String.init) ?? []
+            ),
             defaultFolderPath: request.queryString("default_folder_path")?
                 .emptyToNil
         )
@@ -231,9 +260,9 @@ extension AdminAddMediaAssetDefaultController {
         if let field = picker.field {
             queryItems.append("field=\(field.queryEncoded())")
         }
-        if !picker.allowedExtensions.isEmpty {
+        if !picker.allowedExtensions.isAnything {
             queryItems.append(
-                "extensions=\(picker.allowedExtensions.joined(separator: ",").queryEncoded())"
+                "extensions=\(picker.allowedExtensions.queryValue.queryEncoded())"
             )
         }
         if let defaultFolderPath = picker.defaultFolderPath {

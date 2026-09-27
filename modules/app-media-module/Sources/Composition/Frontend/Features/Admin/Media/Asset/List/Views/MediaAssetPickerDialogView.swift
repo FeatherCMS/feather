@@ -25,6 +25,9 @@ struct MediaAssetPickerDialogView<Content: Component>: Component {
                     Display(.flex)
                     FlexDirection(.column)
                     Gap(16.px)
+                    Height(70.vh)
+                    OverflowY(.auto)
+                    BoxSizing(.borderBox)
                 }
             }
         ]

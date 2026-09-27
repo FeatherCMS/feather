@@ -40,7 +40,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
         public let selectedAsset: NewAdminMediaAsset?
         public let browsePath: String
         public let defaultFolderPath: String?
-        public let allowedExtensions: [String]
+        public let allowedExtensions: AllowedExtensions
         public let outputMode: OutputMode
         public let showsCurrentCard: Bool
 
@@ -49,7 +49,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
             selectedAsset: NewAdminMediaAsset?,
             browsePath: String,
             defaultFolderPath: String? = nil,
-            allowedExtensions: [String],
+            allowedExtensions: AllowedExtensions,
             outputMode: OutputMode = .assetId,
             showsCurrentCard: Bool = true
         ) {
@@ -415,9 +415,9 @@ extension NewAdminFormFieldMediaPicker {
 
     fileprivate func dialogPath(_ path: String) -> String {
         var query: [String] = []
-        if !state.allowedExtensions.isEmpty && !path.contains("extensions=") {
+        if !state.allowedExtensions.isAnything && !path.contains("extensions=") {
             query.append(
-                "extensions=\(state.allowedExtensions.joined(separator: ",").queryEncoded())"
+                "extensions=\(state.allowedExtensions.queryValue.queryEncoded())"
             )
         }
         if let defaultFolderPath = state.defaultFolderPath,

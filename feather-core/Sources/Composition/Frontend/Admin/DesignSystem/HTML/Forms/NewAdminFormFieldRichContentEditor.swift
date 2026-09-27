@@ -954,11 +954,9 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                         ),
                         selectedAsset: nil,
                         browsePath:
-                            "/admin/media/assets/?picker=1&field=markdown-image-url&extensions=png,jpg,jpeg,webp,gif",
+                            "/admin/media/assets/?picker=1&field=markdown-image-url&extensions=\(AllowedExtensions.images.queryValue)",
                         defaultFolderPath: state.mediaFolderPath,
-                        allowedExtensions: [
-                            "png", "jpg", "jpeg", "webp", "gif",
-                        ],
+                        allowedExtensions: .images,
                         outputMode: .relativeURL,
                         showsCurrentCard: false
                     )
@@ -975,9 +973,9 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                         ),
                         selectedAsset: nil,
                         browsePath:
-                            "/admin/media/assets/?picker=1&field=markdown-video-url&extensions=mp4,mov,webm",
+                            "/admin/media/assets/?picker=1&field=markdown-video-url&extensions=\(AllowedExtensions.videos.queryValue)",
                         defaultFolderPath: state.mediaFolderPath,
-                        allowedExtensions: ["mp4", "mov", "webm"],
+                        allowedExtensions: .videos,
                         outputMode: .relativeURL,
                         showsCurrentCard: false
                     )

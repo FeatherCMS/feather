@@ -38,13 +38,11 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
         let picker = AdminListMediaAssetModel.PickerState(
             isEnabled: request.queryString("picker") == "1",
             field: request.queryString("field")?.emptyToNil,
-            allowedExtensions: request.queryString("extensions")?
-                .split(separator: ",")
-                .map {
-                    $0.whitespaceTrimmed
-                        .lowercased()
-                }
-                .filter { !$0.isEmpty } ?? [],
+            allowedExtensions: .custom(
+                request.queryString("extensions")?
+                    .split(separator: ",")
+                    .map(String.init) ?? []
+            ),
             defaultFolderPath: request.queryString("default_folder_path")?
                 .emptyToNil
         )

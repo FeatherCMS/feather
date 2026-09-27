@@ -397,7 +397,7 @@ public struct AdminMetadataFields: Component {
         context: inout BuilderContext
     ) -> Section {
         let browsePath =
-            "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=png,jpg,jpeg,webp"
+            "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=\(AllowedExtensions.images.queryValue)"
         return context.build(
             NewAdminFormFieldMediaPicker(
                 state: .init(
@@ -424,7 +424,7 @@ public struct AdminMetadataFields: Component {
                     },
                     browsePath: browsePath,
                     defaultFolderPath: "web/metadata",
-                    allowedExtensions: ["png", "jpg", "jpeg", "webp"],
+                    allowedExtensions: .images,
                     outputMode: .originalURL
                 )
             )
