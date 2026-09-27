@@ -51,6 +51,13 @@ struct MediaAssetPickerView: Component {
                     MinWidth(0.px)
                     Overflow(.visible)
                 }
+                Custom(
+                    ".media-asset-picker__path .new-admin-path-breadcrumb"
+                ) {
+                    MarginBottom(0.px)
+                    MaxWidth(100.percent)
+                    UnsafeRawProperty(name: "width", value: "fit-content")
+                }
                 Class("media-asset-picker__view") {
                     FlexShrink(0)
                 }
@@ -277,7 +284,9 @@ private extension MediaAssetPickerView {
                 )
             )
         }
-        if let defaultFolderPath = state.picker.defaultFolderPath {
+        if parentId != nil,
+            let defaultFolderPath = state.picker.defaultFolderPath
+        {
             items.append(
                 .init(name: "default_folder_path", value: defaultFolderPath)
             )

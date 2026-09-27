@@ -245,7 +245,7 @@ extension NewAdminFormFieldMediaPicker {
         Div {
             context.build(
                 MediaPickerDialogButton(
-                    label: "Choose from assets",
+                    label: "Choose asset",
                     style: .ghost(.primary),
                     url: dialogBrowsePath(),
                     field: state.field.key
@@ -442,7 +442,10 @@ extension NewAdminFormFieldMediaPicker {
         let path = state.previewStyle == .wide
             ? asset.coverURL ?? asset.previewURL
             : asset.previewURL
-        return path.map(NewAdminMediaAsset.mediaURL(path:))
+        let fallbackPath = path ?? asset.url
+        return fallbackPath.isEmpty
+            ? nil
+            : NewAdminMediaAsset.mediaURL(path: fallbackPath)
     }
 
     fileprivate func previewVariant() -> String {

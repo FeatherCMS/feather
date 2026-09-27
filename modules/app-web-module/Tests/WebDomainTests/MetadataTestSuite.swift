@@ -88,4 +88,32 @@ struct MetadataTestSuite {
         #expect(metadata.slug == "about")
         #expect(metadata.status == .published)
     }
+
+    @Test
+    func updateClearsImageURLWhenEmptyValueIsProvided() throws {
+        var metadata = Metadata(
+            id: "metadata-1",
+            reference: .identified(.init(type: "page", id: "page-1")),
+            template: "default",
+            slug: "home",
+            publicationDate: .distantPast,
+            expirationDate: nil,
+            status: .draft,
+            title: nil,
+            excerpt: nil,
+            imageURL: "/media/assets/image.jpg",
+            canonicalURL: "",
+            noIndex: false,
+            primaryKeyword: "",
+            cssCodeInjection: "",
+            javascriptCodeInjection: "",
+            structuredDataCodeInjection: "",
+            createdAt: .distantPast,
+            updatedAt: Date()
+        )
+
+        try metadata.update(imageURL: "")
+
+        #expect(metadata.imageURL == nil)
+    }
 }
