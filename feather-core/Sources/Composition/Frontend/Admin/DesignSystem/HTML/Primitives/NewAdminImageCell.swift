@@ -10,6 +10,7 @@ public struct NewAdminImageCell: Component {
     public enum Size: Sendable {
         case square
         case cover
+        case circular
 
         fileprivate var className: String {
             switch self {
@@ -17,6 +18,8 @@ public struct NewAdminImageCell: Component {
                 "new-admin-image-cell--square"
             case .cover:
                 "new-admin-image-cell--cover"
+            case .circular:
+                "new-admin-image-cell--circular"
             }
         }
     }
@@ -61,6 +64,11 @@ public struct NewAdminImageCell: Component {
             Class("new-admin-image-cell--cover") {
                 Width(100.px)
                 Height(56.px)
+            },
+            Class("new-admin-image-cell--circular") {
+                Width(56.px)
+                Height(56.px)
+                BorderRadius(50.percent)
             },
             Custom(".new-admin-image-cell img") {
                 Display(.block)
