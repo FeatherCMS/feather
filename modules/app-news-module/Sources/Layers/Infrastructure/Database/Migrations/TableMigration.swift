@@ -26,7 +26,7 @@ public struct TableMigration: DatabaseMigration {
                 title TEXT NOT NULL,
                 excerpt TEXT NOT NULL DEFAULT '',
                 content TEXT NOT NULL,
-                image_asset_id TEXT,
+                image_asset_id TEXT REFERENCES media_asset_node_file(node_id) ON DELETE SET NULL,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
             );
@@ -36,12 +36,16 @@ public struct TableMigration: DatabaseMigration {
             ON news_article (title);
             """#,
             #"""
+            CREATE INDEX IF NOT EXISTS news_article_image_asset_id_idx
+            ON news_article (image_asset_id);
+            """#,
+            #"""
             CREATE TABLE IF NOT EXISTS news_category (
                 id TEXT PRIMARY KEY,
                 title TEXT NOT NULL,
                 excerpt TEXT NOT NULL DEFAULT '',
                 content TEXT NOT NULL,
-                image_asset_id TEXT,
+                image_asset_id TEXT REFERENCES media_asset_node_file(node_id) ON DELETE SET NULL,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
             );
@@ -49,6 +53,10 @@ public struct TableMigration: DatabaseMigration {
             #"""
             CREATE INDEX IF NOT EXISTS news_category_title_idx
             ON news_category (title);
+            """#,
+            #"""
+            CREATE INDEX IF NOT EXISTS news_category_image_asset_id_idx
+            ON news_category (image_asset_id);
             """#,
             #"""
             CREATE TABLE IF NOT EXISTS news_article_category (

@@ -27,10 +27,16 @@ public struct TableMigration: DatabaseMigration {
                     user_id TEXT NOT NULL UNIQUE REFERENCES user_identity(id) ON DELETE CASCADE,
                     first_name TEXT,
                     last_name TEXT,
-                    profile_image_asset_id TEXT,
+                    profile_image_asset_id TEXT REFERENCES media_asset_node_file(node_id) ON DELETE SET NULL,
                     created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                     updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
                 );
+                """#
+        ) { _ in }
+        try await connection.run(
+            query: #"""
+                CREATE INDEX IF NOT EXISTS account_profile_image_asset_id_idx
+                ON account_profile (profile_image_asset_id);
                 """#
         ) { _ in }
         try await connection.run(
