@@ -766,12 +766,6 @@ struct AssetAddView: Component {
             )
         }
         .class("cms-section")
-        .if(state.form.isPicker) {
-            $0.data(
-                "admin-media-picker-section",
-                "upload"
-            )
-        }
     }
 
     func uploadForm(
@@ -914,18 +908,117 @@ struct AssetAddView: Component {
             )
             Section {
                 Div {
-                    context.build(NewAdminControlButton("Add asset"))
-                        .data(
-                            "admin-media-picker-upload-submit",
-                            "1"
-                        )
+                    context.build(NewAdminSubmitButton("Add asset"))
                 }
                 .class("button-row")
             }
+            P("")
+                .class("new-admin-form__error")
+                .data("media-picker-upload-error", "")
+                .hidden()
+            Script(pickerUploadScript())
         }
         .id("mediaAssetAddForm")
         .class("new-admin-form")
         .data("admin-media-picker-upload", "1")
         .data("action", state.form.action)
+    }
+
+    func pickerUploadScript() -> String {
+        """
+            (function () {
+                function normalizeExtension(filename, mime) {
+                    var name = String(filename || "").toLowerCase();
+                    var dot = name.lastIndexOf(".");
+                    var extension = dot >= 0 ? name.slice(dot + 1) : "";
+                    if (extension === "jpg") { return "jpeg"; }
+                    if (extension) { return extension; }
+                    var type = String(mime || "").toLowerCase();
+                    return type.indexOf("/") >= 0 ? type.split("/")[1] : "bin";
+                }
+
+                function encoded(value) {
+                    return encodeURIComponent(String(value || ""));
+                }
+
+                function initialize() {
+                    var form = document.querySelector(
+                        "[data-admin-media-picker-upload]"
+                    );
+                    if (!form || !window.__newAdminDialog) {
+                        window.setTimeout(initialize, 0);
+                        return;
+                    }
+                    if (form.dataset.mediaPickerUploadBound === "1") { return; }
+                    form.dataset.mediaPickerUploadBound = "1";
+                    window.__newAdminDialog.registerFormSubmitHandler(
+                        form,
+                        function (_, form, dialog, controls) {
+                            var fileInput = form.querySelector(
+                                'input[type="file"][name="file"]'
+                            );
+                            var error = form.querySelector(
+                                "[data-media-picker-upload-error]"
+                            );
+                            var file = fileInput && fileInput.files && fileInput.files[0];
+                            if (!file) {
+                                if (error) {
+                                    error.textContent = "Please choose a file.";
+                                    error.hidden = false;
+                                }
+                                return;
+                            }
+                            if (error) { error.hidden = true; }
+                            var extension = normalizeExtension(file.name, file.type);
+                            var extensionInput = form.querySelector(
+                                'input[name="extension"]'
+                            );
+                            var fileNameInput = form.querySelector(
+                                'input[name="fileName"]'
+                            );
+                            if (extensionInput) { extensionInput.value = extension; }
+                            if (fileNameInput) { fileNameInput.value = file.name || ""; }
+                            function value(name) {
+                                var input = form.querySelector('[name="' + name + '"]');
+                                return input ? input.value : "";
+                            }
+                            var headers = {
+                                "Content-Type": "application/octet-stream",
+                                "Accept": "text/html; type=admin-dialog",
+                                "X-Media-Asset-File-Name": encoded(file.name),
+                                "X-Media-Asset-Extension": encoded(extension)
+                            };
+                            [
+                                ["parentId", "X-Media-Asset-Parent-ID"],
+                                ["title", "X-Media-Asset-Title"],
+                                ["altText", "X-Media-Asset-Alt-Text"]
+                            ].forEach(function (item) {
+                                var current = value(item[0]);
+                                if (current) { headers[item[1]] = encoded(current); }
+                            });
+                            return fetch(form.getAttribute("data-action") || form.action, {
+                                method: "POST",
+                                credentials: "same-origin",
+                                headers: headers,
+                                body: file
+                            })
+                            .then(function (response) {
+                                return controls.replaceResponse(response);
+                            })
+                            .catch(function (uploadError) {
+                                if (error) {
+                                    error.textContent = uploadError && uploadError.message
+                                        ? uploadError.message
+                                        : "Unable to upload selected file.";
+                                    error.hidden = false;
+                                }
+                            });
+                        }
+                    );
+                }
+
+                initialize();
+            }());
+        """
     }
 }

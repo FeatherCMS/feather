@@ -68,6 +68,39 @@ struct AdminListMediaAssetDefaultInteractor: AdminListMediaAssetInteractor {
         }
     }
 
+    func resolveRemoveItems(
+        ids: [String]
+    ) async throws -> [NewAdminRemoveItemContext] {
+        let assets = try await repository.resolveAssets(ids: ids)
+        let assetsByID = assets.reduce(
+            into: [String: Components.Schemas.MediaAssetResolveItemSchema]()
+        ) { result, asset in
+            result[asset.id] = asset
+        }
+        return ids.map { id in
+            guard let asset = assetsByID[id] else {
+                return .init(id: id, label: id)
+            }
+            return .init(id: id, label: removeItemLabel(for: asset, id: id))
+        }
+    }
+
+    private func removeItemLabel(
+        for asset: Components.Schemas.MediaAssetResolveItemSchema,
+        id: String
+    ) -> String {
+        if let title = asset.title?.whitespaceTrimmed, !title.isEmpty {
+            return title
+        }
+        let path = URL(string: asset.url)?.path ?? asset.url
+        if let filename = path.split(separator: "/").last,
+            !filename.isEmpty
+        {
+            return String(filename).removingPercentEncoding ?? String(filename)
+        }
+        return id
+    }
+
 }
 
 extension AdminListMediaAssetDefaultInteractor {

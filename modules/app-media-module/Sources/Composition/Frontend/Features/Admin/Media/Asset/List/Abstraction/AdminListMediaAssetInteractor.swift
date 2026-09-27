@@ -22,4 +22,8 @@ protocol AdminListMediaAssetInteractor: Sendable {
         ids: [String]
     ) async throws
 
+    func resolveRemoveItems(
+        ids: [String]
+    ) async throws -> [NewAdminRemoveItemContext]
+
 }

@@ -98,7 +98,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (_, presenter) = buildRuntime((request, context))
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: MediaPermissions.Assets.delete)
         else {
@@ -122,11 +122,12 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
                 ]
             )
         }
+        let items = try await interactor.resolveRemoveItems(ids: selectedIds)
         return
             try await presenter.renderRemovePage(
                 pageState: .init(page: page, pageSize: 20, total: 0),
                 search: search,
-                items: selectedIds.map { .init(id: $0, label: $0) },
+                items: items,
                 returnTo: request.queryString("returnTo")
             )
             .response(from: request, context: context)

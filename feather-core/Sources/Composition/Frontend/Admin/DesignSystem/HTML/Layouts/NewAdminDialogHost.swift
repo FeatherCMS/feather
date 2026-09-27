@@ -97,8 +97,17 @@ public struct NewAdminDialogHost: Component {
                     }
                 }
 
+                function dialogURL(url) {
+                    var resolved = new URL(url, window.location.href);
+                    if (resolved.origin === window.location.origin) {
+                        resolved.searchParams.set("presentation", "dialog");
+                    }
+                    return resolved.href;
+                }
+
                 function open(url, fallback) {
-                    fetch(url, {
+                    var requestURL = dialogURL(url);
+                    fetch(requestURL, {
                         credentials: "same-origin",
                         headers: { "Accept": "text/html; type=admin-dialog" }
                     })
@@ -167,6 +176,29 @@ public struct NewAdminDialogHost: Component {
                         return;
                     }
 
+                    var dialogLink = target.closest(
+                        "dialog[data-admin-dialog] a[href]"
+                    );
+                    if (
+                        dialogLink &&
+                        dialogLink.getAttribute("target") !== "_blank"
+                    ) {
+                        var href = dialogLink.getAttribute("href") || "";
+                        if (
+                            href &&
+                            !href.startsWith("#") &&
+                            !href.startsWith("mailto:") &&
+                            !href.startsWith("javascript:")
+                        ) {
+                            var resolved = new URL(href, window.location.href);
+                            if (resolved.origin === window.location.origin) {
+                                event.preventDefault();
+                                open(resolved.href, href);
+                                return;
+                            }
+                        }
+                    }
+
                     var closeButton = target.closest("[data-admin-dialog-close]");
                     if (closeButton) {
                         close(closeButton.closest("dialog[data-admin-dialog]"));
@@ -218,7 +250,7 @@ public struct NewAdminDialogHost: Component {
                     new FormData(form).forEach(function (value, key) {
                         body.append(key, typeof value === "string" ? value : "");
                     });
-                    fetch(form.action, {
+                    fetch(dialogURL(form.action), {
                         method: (form.method || "POST").toUpperCase(),
                         credentials: "same-origin",
                         headers: {

@@ -277,12 +277,6 @@ struct AssetListView: Component {
             }
         }
         .class("cms-section")
-        .if(state.picker.isEnabled) {
-            $0.data(
-                "admin-media-picker-section",
-                "gallery"
-            )
-        }
     }
 }
 
@@ -502,7 +496,7 @@ extension AssetListView {
 
     fileprivate func toolbar(context: inout BuilderContext) -> some FlowContent
     {
-        Div {
+        return Div {
             Div {
                 if state.permissions.allows(MediaPermissions.Assets.create)
                     && !state.picker.isEnabled
@@ -713,16 +707,21 @@ extension AssetListView {
     fileprivate func gridContent(context: inout BuilderContext)
         -> some FlowContent
     {
-        Div {
+        let returnTo = browsePath(
+            parentId: state.parentId,
+            search: state.search.isEmpty ? nil : state.search,
+            page: state.pageState.page
+        )
+        return Div {
             if let currentFolder = state.currentFolder {
                 upCard(parentId: currentFolder.parentId, context: &context)
             }
             for entry in state.entries {
                 switch entry {
                 case .folder(let folder):
-                    folderCard(folder, context: &context)
+                    folderCard(folder, returnTo: returnTo, context: &context)
                 case .asset(let item):
-                    assetCard(item, context: &context)
+                    assetCard(item, returnTo: returnTo, context: &context)
                 }
             }
         }
@@ -853,10 +852,9 @@ extension AssetListView {
 
     fileprivate func folderCard(
         _ folder: Components.Schemas.MediaFolderListItemSchema,
+        returnTo: String,
         context: inout BuilderContext
     ) -> some FlowContent {
-        let actionSuffix = assetActionSuffix()
-
         return Div {
             A {
                 Div {
@@ -899,8 +897,11 @@ extension AssetListView {
                     context.build(
                         NewAdminRowButton(
                             "Remove",
-                            href:
-                                "\(MediaAssetRoutes.remove(RouterPath(folder.id)).description)\(actionSuffix)",
+                            href: NewAdminLocation.remove(
+                                path: MediaAssetRoutes.remove.description,
+                                ids: [folder.id],
+                                returnTo: returnTo
+                            ),
                             style: .destructive
                         )
                     )
@@ -913,6 +914,7 @@ extension AssetListView {
 
     fileprivate func assetCard(
         _ item: AdminListMediaAssetModel.AssetItem,
+        returnTo: String,
         context: inout BuilderContext
     ) -> some FlowContent {
 
@@ -1039,8 +1041,11 @@ extension AssetListView {
                     context.build(
                         NewAdminRowButton(
                             "Remove",
-                            href:
-                                "\(MediaAssetRoutes.remove(RouterPath(item.asset.id)).description)\(actionSuffix)",
+                            href: NewAdminLocation.remove(
+                                path: MediaAssetRoutes.remove.description,
+                                ids: [item.asset.id],
+                                returnTo: returnTo
+                            ),
                             style: .destructive
                         )
                     )

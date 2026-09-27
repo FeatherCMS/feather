@@ -20,6 +20,8 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         search: String?,
         permissions: NewAdminListActions
     ) async throws -> HTMLResponse {
+        let isDialog = request.queryString("presentation") == "dialog"
+            && request.headers[.accept]?.contains("type=admin-dialog") == true
         let content = AssetListView(
             state: .init(
                 entries: model.entries,
@@ -33,6 +35,26 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 permissions: permissions
             )
         )
+        if model.picker.isEnabled && isDialog {
+            let navigation = MediaAssetPickerDialogNavigation(
+                parentId: model.parentId,
+                view: model.view.rawValue,
+                field: model.picker.field,
+                allowedExtensions: model.picker.allowedExtensions,
+                defaultFolderPath: model.picker.defaultFolderPath
+            )
+            return try await renderEngine.renderNewAdminDialog(
+                request: request,
+                context: context,
+                title: "Select media asset",
+                content: MediaAssetPickerDialogView(
+                    navigation: navigation,
+                    activeTab: .gallery,
+                    content: content
+                ),
+                size: .large
+            )
+        }
         if model.picker.isEnabled {
             return try await renderEngine.renderNewAdminPage(
                 request: request,
@@ -53,15 +75,31 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         message: String,
         picker: Bool
     ) async throws -> HTMLResponse {
+        let isDialog = request.queryString("presentation") == "dialog"
+            && request.headers[.accept]?.contains("type=admin-dialog") == true
         if picker {
+            let errorContent = MediaAssetErrorView(
+                info: "Unable to load media assets.",
+                message: message
+            )
+            if isDialog {
+                return try await renderEngine.renderNewAdminDialog(
+                    request: request,
+                    context: context,
+                    title: "Select media asset",
+                    content: MediaAssetPickerDialogView(
+                        navigation: pickerNavigation(),
+                        activeTab: .gallery,
+                        content: errorContent
+                    ),
+                    size: .large
+                )
+            }
             return try await renderEngine.renderNewAdminPage(
                 request: request,
                 context: context,
                 title: "Select media asset",
-                content: MediaAssetErrorView(
-                    info: "Unable to load media assets.",
-                    message: message
-                )
+                content: errorContent
             )
         }
         return try await renderEngine.renderNewAdminPage(
@@ -72,6 +110,19 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 info: "Unable to load media assets.",
                 message: message
             )
+        )
+    }
+
+    private func pickerNavigation() -> MediaAssetPickerDialogNavigation {
+        MediaAssetPickerDialogNavigation(
+            parentId: request.queryString("parent_id")?.emptyToNil,
+            view: request.queryString("view") ?? "grid",
+            field: request.queryString("field")?.emptyToNil,
+            allowedExtensions: request.queryString("extensions")?
+                .split(separator: ",")
+                .map { $0.whitespaceTrimmed.lowercased() }
+                .filter { !$0.isEmpty } ?? [],
+            defaultFolderPath: request.queryString("default_folder_path")?.emptyToNil
         )
     }
 

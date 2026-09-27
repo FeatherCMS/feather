@@ -92,7 +92,8 @@ public struct DefaultRenderingEngine: RenderingEngine {
         request: Request,
         context: AuthenticatedRequestContext,
         title: String,
-        content: T
+        content: T,
+        size: NewAdminDialogSize = .small
     ) async throws -> HTMLResponse {
         var builderContext = BuilderContext()
         return .init(
@@ -102,7 +103,8 @@ public struct DefaultRenderingEngine: RenderingEngine {
                     body: .init(
                         content: NewAdminDialog(
                             title: title,
-                            content: content
+                            content: content,
+                            size: size
                         ),
                         showsFooter: false
                     )

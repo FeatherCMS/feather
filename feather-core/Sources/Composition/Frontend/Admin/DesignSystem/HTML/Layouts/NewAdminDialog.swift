@@ -4,16 +4,24 @@ import SGML
 import WebBuilders
 public import WebComponents
 
+public enum NewAdminDialogSize: Sendable {
+    case small
+    case large
+}
+
 public struct NewAdminDialog<Content: Component>: Component {
     public let title: String
     public let content: Content
+    public let size: NewAdminDialogSize
 
     public init(
         title: String,
-        content: Content
+        content: Content,
+        size: NewAdminDialogSize = .small
     ) {
         self.title = title
         self.content = content
+        self.size = size
     }
 
     public func rules() -> [any Rule] {
@@ -40,6 +48,10 @@ public struct NewAdminDialog<Content: Component>: Component {
                     )
                 )
                 BackdropFilter(.blur(12.px))
+            }
+            Custom("dialog.new-admin-dialog.new-admin-dialog--large") {
+                Width(80.percent)
+                MaxWidth(1400.px)
             }
         }
         Media(.prefersColorScheme(.dark)) {
@@ -126,6 +138,7 @@ public struct NewAdminDialog<Content: Component>: Component {
             .class("new-admin-dialog__panel")
         }
         .class("new-admin-dialog")
+        .if(size == .large) { $0.class("new-admin-dialog--large") }
         .data("admin-dialog", "")
         .ariaLabel(title)
     }

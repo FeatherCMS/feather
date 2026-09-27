@@ -33,7 +33,8 @@ struct AdminAddMediaFolderDefaultPresenter: AdminAddMediaFolderPresenter {
                 request: request,
                 context: context,
                 title: "Add media folder",
-                content: content
+                content: content,
+                size: .small
             )
         }
         return try await renderEngine.renderNewAdminPage(

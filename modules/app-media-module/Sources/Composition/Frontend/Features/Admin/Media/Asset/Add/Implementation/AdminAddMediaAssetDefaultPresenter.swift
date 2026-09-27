@@ -1,4 +1,5 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -39,11 +40,32 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
             )
         )
         if isDialog {
+            if model.isPicker {
+                let navigation = MediaAssetPickerDialogNavigation(
+                    parentId: model.parentId.emptyToNil,
+                    view: model.view,
+                    field: request.queryString("field")?.emptyToNil,
+                    allowedExtensions: pickerExtensions(),
+                    defaultFolderPath: request.queryString("default_folder_path")?.emptyToNil
+                )
+                return try await renderEngine.renderNewAdminDialog(
+                    request: request,
+                    context: context,
+                    title: "Select media asset",
+                    content: MediaAssetPickerDialogView(
+                        navigation: navigation,
+                        activeTab: .upload,
+                        content: content
+                    ),
+                    size: .large
+                )
+            }
             return try await renderEngine.renderNewAdminDialog(
                 request: request,
                 context: context,
                 title: "Add media asset",
-                content: content
+                content: content,
+                size: .small
             )
         }
         if model.isPicker {
@@ -63,6 +85,13 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
             title: "Add media asset",
             content: content
         )
+    }
+
+    private func pickerExtensions() -> [String] {
+        request.queryString("extensions")?
+            .split(separator: ",")
+            .map { $0.whitespaceTrimmed.lowercased() }
+            .filter { !$0.isEmpty } ?? []
     }
 
 }

@@ -24,6 +24,7 @@ public protocol RenderingEngine: Sendable {
         request: Request,
         context: AuthenticatedRequestContext,
         title: String,
-        content: T
+        content: T,
+        size: NewAdminDialogSize
     ) async throws -> HTMLResponse
 }
