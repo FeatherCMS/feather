@@ -327,6 +327,11 @@ extension AssetListView {
                 .init(name: "default_folder_path", value: defaultFolderPath)
             )
         }
+        if let previewVariant = state.picker.previewVariant {
+            items.append(
+                .init(name: "preview_variant", value: previewVariant)
+            )
+        }
         if let search, !search.isEmpty {
             items.append(.init(name: "search", value: search))
         }
@@ -358,6 +363,11 @@ extension AssetListView {
         if let defaultFolderPath = state.picker.defaultFolderPath {
             suffix.append(
                 "default_folder_path=\(defaultFolderPath.queryEncoded())"
+            )
+        }
+        if let previewVariant = state.picker.previewVariant {
+            suffix.append(
+                "preview_variant=\(previewVariant.queryEncoded())"
             )
         }
         let path = MediaAssetRoutes.add.description
@@ -394,6 +404,11 @@ extension AssetListView {
         if let defaultFolderPath = state.picker.defaultFolderPath {
             suffix.append(
                 "default_folder_path=\(defaultFolderPath.queryEncoded())"
+            )
+        }
+        if let previewVariant = state.picker.previewVariant {
+            suffix.append(
+                "preview_variant=\(previewVariant.queryEncoded())"
             )
         }
         return suffix.isEmpty ? "" : "?\(suffix.joined(separator: "&"))"

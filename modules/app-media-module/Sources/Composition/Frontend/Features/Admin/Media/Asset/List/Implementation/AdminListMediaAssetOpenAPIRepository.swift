@@ -94,9 +94,10 @@ struct AdminListMediaAssetOpenAPIRepository {
     }
 
     func resolveAssets(
-        ids: [String]
+        ids: [String],
+        variants: [String]? = nil
     ) async throws -> [Components.Schemas.MediaAssetResolveItemSchema] {
-        try await api.resolveAssets(ids: ids)
+        try await api.resolveAssets(ids: ids, variants: variants)
     }
 
     func getFolder(

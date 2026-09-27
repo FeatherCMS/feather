@@ -86,11 +86,12 @@ public struct MediaAdminAPIClient: Sendable {
     }
 
     public func loadImageAsset(
-        assetId: String?
+        assetId: String?,
+        variants: [String] = ["preview"]
     ) async throws -> NewAdminMediaAsset? {
         guard let assetId, !assetId.isEmpty else { return nil }
         return try await AdminViewMediaAssetOpenAPIRepository(api: self)
-            .getAssetWithPreview(id: assetId)
+            .getAssetWithPreview(id: assetId, variants: variants)
     }
 }
 

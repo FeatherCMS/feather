@@ -37,6 +37,8 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
                     pickerField: request.queryString("field")?.emptyToNil,
                     allowedExtensions: pickerExtensions(),
                     isDialog: isDialog,
+                    previewVariant: request.queryString("preview_variant")?
+                        .emptyToNil,
                     selectedAsset: model.selectedAsset
                 )
             )

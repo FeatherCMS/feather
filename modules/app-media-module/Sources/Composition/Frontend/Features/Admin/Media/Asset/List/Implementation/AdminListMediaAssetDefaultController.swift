@@ -44,6 +44,8 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
                     .map(String.init) ?? []
             ),
             defaultFolderPath: request.queryString("default_folder_path")?
+                .emptyToNil,
+            previewVariant: request.queryString("preview_variant")?
                 .emptyToNil
         )
         let permissions = context.currentUserAdminListActions

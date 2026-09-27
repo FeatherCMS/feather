@@ -28,10 +28,14 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
     }
 
     func postAddMediaAsset(
-        payload: AssetAddUpload
+        payload: AssetAddUpload,
+        variants: [String]?
     ) async throws -> AdminAddMediaAssetModel {
         do {
-            let asset = try await repository.createAsset(payload: payload)
+            let asset = try await repository.createAsset(
+                payload: payload,
+                variants: variants
+            )
             return .init(
                 parentId: "",
                 fileName: "",
@@ -43,7 +47,7 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
                 view: payload.view,
                 action: "/admin/media/assets/add/",
                 isPicker: false,
-                selectedAsset: NewAdminMediaAsset(schema: asset)
+                selectedAsset: asset
             )
         }
         catch let error as OpenAPIRepositoryError {

@@ -48,7 +48,10 @@ struct AdminListMediaAssetDefaultInteractor: AdminListMediaAssetInteractor {
             currentFolder = nil
         }
         let ancestors = try await loadAncestors(for: currentFolder)
-        let entries = try await loadEntries(result.items)
+        let entries = try await loadEntries(
+            result.items,
+            previewVariant: picker.previewVariant
+        )
         return .init(
             entries: entries,
             pageState: result.pageState,
@@ -166,10 +169,17 @@ extension AdminListMediaAssetDefaultInteractor {
     }
 
     fileprivate func loadEntries(
-        _ items: [Components.Schemas.MediaAssetNodeSearchItemSchema]
+        _ items: [Components.Schemas.MediaAssetNodeSearchItemSchema],
+        previewVariant: String?
     ) async throws -> [AdminListMediaAssetModel.EntryItem] {
         let assetIDs = items.compactMap { $0.file?.id }
-        let assets = try await repository.resolveAssets(ids: assetIDs)
+        let variantKeys = previewVariant.map {
+            $0 == "preview" ? [$0] : [$0, "preview"]
+        }
+        let assets = try await repository.resolveAssets(
+            ids: assetIDs,
+            variants: variantKeys
+        )
         let assetsByID = assets.reduce(
             into: [String: Components.Schemas.MediaAssetResolveItemSchema]()
         ) { result, asset in
@@ -182,7 +192,10 @@ extension AdminListMediaAssetDefaultInteractor {
             if let asset = item.file {
                 let preview = assetsByID[asset.id]
                     .flatMap {
-                        preferredPreview(from: $0.variants)
+                        preferredPreview(
+                            from: $0.variants,
+                            key: previewVariant
+                        )
                     }
                 result.append(
                     .asset(
@@ -201,8 +214,13 @@ extension AdminListMediaAssetDefaultInteractor {
     }
 
     private func preferredPreview(
-        from variants: [Components.Schemas.MediaAssetResolveVariantSchema]
+        from variants: [Components.Schemas.MediaAssetResolveVariantSchema],
+        key: String?
     ) -> Components.Schemas.MediaAssetResolveVariantSchema? {
-        variants.first(where: { $0.key == "preview" })
+        if let key,
+           let preferred = variants.first(where: { $0.key == key }) {
+            return preferred
+        }
+        return variants.first(where: { $0.key == "preview" })
     }
 }

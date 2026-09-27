@@ -439,7 +439,14 @@ extension NewAdminFormFieldMediaPicker {
     }
 
     fileprivate func previewURL(for asset: NewAdminMediaAsset) -> String? {
-        asset.previewURL.map(NewAdminMediaAsset.mediaURL(path:))
+        let path = state.previewStyle == .wide
+            ? asset.coverURL ?? asset.previewURL
+            : asset.previewURL
+        return path.map(NewAdminMediaAsset.mediaURL(path:))
+    }
+
+    fileprivate func previewVariant() -> String {
+        state.previewStyle == .wide ? "cover" : "preview"
     }
 
     fileprivate func dialogBrowsePath() -> String {
@@ -469,6 +476,9 @@ extension NewAdminFormFieldMediaPicker {
         if let defaultFolderPath = state.defaultFolderPath,
            !defaultFolderPath.isEmpty {
             query.append("default_folder_path=\(defaultFolderPath.queryEncoded())")
+        }
+        if !path.contains("preview_variant=") {
+            query.append("preview_variant=\(previewVariant().queryEncoded())")
         }
         query.append("presentation=dialog")
         let separator = path.contains("?") ? "&" : "?"

@@ -93,6 +93,7 @@ public struct NewAdminFormFieldTextArea: Component {
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
                 FontSize(1.rem)
                 Resize(.none)
+                UnsafeRawProperty(name: "overflow-y", value: "hidden")
             },
             Custom(".new-admin-form-textarea--small textarea") {
                 UnsafeRawProperty(name: "min-height", value: "3lh")
@@ -153,10 +154,38 @@ public struct NewAdminFormFieldTextArea: Component {
             if let error = state.error {
                 Span(error).id(errorID).class("field-error")
             }
+            Script(Self.autoResizeScript)
         }
         .if(state.error != nil) { $0.class("has-error") }
         .class(
             "new-admin-form-textarea new-admin-form-textarea--(state.style.className)"
         )
     }
+
+    private static let autoResizeScript = #"""
+        (function() {
+          function resize(field) {
+            field.style.height = 'auto';
+            field.style.height = field.scrollHeight + 'px';
+          }
+
+          function resizeAll() {
+            document.querySelectorAll('.new-admin-form-textarea textarea')
+              .forEach(resize);
+          }
+
+          if (!window.__newAdminTextAreaAutosize) {
+            window.__newAdminTextAreaAutosize = true;
+            document.addEventListener('input', function(event) {
+              var field = event.target.closest && event.target.closest(
+                '.new-admin-form-textarea textarea'
+              );
+              if (field) { resize(field); }
+            });
+            window.addEventListener('resize', resizeAll);
+          }
+
+          requestAnimationFrame(resizeAll);
+        }());
+        """#
 }

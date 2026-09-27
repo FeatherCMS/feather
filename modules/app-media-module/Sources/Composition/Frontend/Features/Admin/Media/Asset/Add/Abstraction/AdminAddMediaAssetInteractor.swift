@@ -13,6 +13,7 @@ protocol AdminAddMediaAssetInteractor: Sendable {
     func getAddMediaAsset() async throws -> AdminAddMediaAssetModel
 
     func postAddMediaAsset(
-        payload: AssetAddUpload
+        payload: AssetAddUpload,
+        variants: [String]?
     ) async throws -> AdminAddMediaAssetModel
 }

@@ -27,6 +27,7 @@ struct AssetAddView: Component {
         var pickerField: String? = nil
         var allowedExtensions: AllowedExtensions = .anything
         var isDialog: Bool = false
+        var previewVariant: String? = nil
         var selectedAsset: NewAdminMediaAsset? = nil
     }
 
@@ -62,7 +63,7 @@ struct AssetAddView: Component {
                     )
                     .data(
                         "media-picker-selected-preview-url",
-                        selectedAsset.previewURL.map {
+                        selectedPreviewURL(for: selectedAsset).map {
                             NewAdminMediaAsset.mediaURL(path: $0)
                         } ?? ""
                     )
@@ -819,6 +820,14 @@ struct AssetAddView: Component {
         .if(state.form.isPicker) {
             $0.data("media-picker-field", state.form.pickerField ?? "")
         }
+    }
+
+    private func selectedPreviewURL(
+        for asset: NewAdminMediaAsset
+    ) -> String? {
+        state.form.previewVariant == "cover"
+            ? asset.coverURL ?? asset.previewURL
+            : asset.previewURL
     }
 
     func uploadForm(

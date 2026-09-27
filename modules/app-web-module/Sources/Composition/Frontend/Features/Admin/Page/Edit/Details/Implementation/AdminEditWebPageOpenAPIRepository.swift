@@ -25,7 +25,8 @@ struct AdminEditWebPageOpenAPIRepository: AdminEditWebPageRepository {
                     excerpt: page.excerpt,
                     content: page.content,
                     imageAsset: try await mediaAPI.loadImageAsset(
-                        assetId: page.imageAssetId
+                        assetId: page.imageAssetId,
+                        variants: ["cover", "preview"]
                     ),
                     metadata: AdminMetadataSchemaBuilder.formValue(
                         from: page.metadata,

@@ -20,6 +20,7 @@ struct AdminListMediaAssetModel: Sendable {
         let field: String?
         let allowedExtensions: AllowedExtensions
         let defaultFolderPath: String?
+        let previewVariant: String?
     }
 
     struct AssetItem: Sendable {

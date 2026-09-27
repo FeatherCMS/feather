@@ -126,7 +126,10 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
                 iterationBehavior: .single
             )
         )
-        let model = try await interactor.postAddMediaAsset(payload: payload)
+        let model = try await interactor.postAddMediaAsset(
+            payload: payload,
+            variants: picker.previewVariant.map { [$0, "preview"] }
+        )
         if model.error == nil {
             if picker.isEnabled, model.selectedAsset != nil {
                 let pickerModel = AdminAddMediaAssetModel(
@@ -223,6 +226,7 @@ extension AdminAddMediaAssetDefaultController {
         let field: String?
         let allowedExtensions: AllowedExtensions
         let defaultFolderPath: String?
+        let previewVariant: String?
     }
 
     fileprivate func pickerState(
@@ -237,6 +241,8 @@ extension AdminAddMediaAssetDefaultController {
                     .map(String.init) ?? []
             ),
             defaultFolderPath: request.queryString("default_folder_path")?
+                .emptyToNil,
+            previewVariant: request.queryString("preview_variant")?
                 .emptyToNil
         )
     }
@@ -268,6 +274,11 @@ extension AdminAddMediaAssetDefaultController {
         if let defaultFolderPath = picker.defaultFolderPath {
             queryItems.append(
                 "default_folder_path=\(defaultFolderPath.queryEncoded())"
+            )
+        }
+        if let previewVariant = picker.previewVariant {
+            queryItems.append(
+                "preview_variant=\(previewVariant.queryEncoded())"
             )
         }
         if isDialog {
