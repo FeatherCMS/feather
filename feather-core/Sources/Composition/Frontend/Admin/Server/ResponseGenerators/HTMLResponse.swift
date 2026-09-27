@@ -13,7 +13,11 @@ public struct HTMLResponse: ResponseGenerator {
         cookies: [Cookie] = []
     ) {
         let document = Document(type: .html, root: html)
+        #if DEBUG
         self.content = document.render(indent: 4)
+        #else
+        self.content = document.render(indent: 0)
+        #endif
         self.status = status
         self.cookies = cookies
     }
@@ -36,11 +40,11 @@ public struct HTMLResponse: ResponseGenerator {
         var headers: HTTPFields = [
             .contentType: "text/html; charset=utf-8"
         ]
+        var responseCookies = cookies
         if request.cookies[AdminNotificationFlash.cookieName] != nil {
-            headers[values: .setCookie]
-                .append(AdminNotificationFlash.clearCookie().description)
+            responseCookies.append(AdminNotificationFlash.clearCookie())
         }
-        for cookie in cookies {
+        for cookie in responseCookies {
             headers[values: .setCookie].append(cookie.description)
         }
         #if DEBUG

@@ -9,7 +9,6 @@ struct SettingsEdit: Component {
 
     struct State {
         let userID: String?
-        let isEdited: Bool
         let canEdit: Bool
         var form: SettingsForm.State
         let breadcrumb: [NewAdminBreadcrumb.Link]
@@ -61,10 +60,6 @@ struct SettingsEdit: Component {
                 P(
                     "You can view these settings, but update permission is required to save changes."
                 )
-            }
-
-            if state.isEdited {
-                P("Settings edited successfully.").class("success")
             }
 
             let action =
