@@ -894,17 +894,19 @@ extension AssetListView {
                 if state.permissions.allows(MediaPermissions.Assets.delete)
                     && !state.picker.isEnabled
                 {
+                    let removePath = NewAdminLocation.remove(
+                        path: MediaAssetRoutes.remove.description,
+                        ids: [folder.id],
+                        returnTo: returnTo
+                    )
                     context.build(
                         NewAdminRowButton(
                             "Remove",
-                            href: NewAdminLocation.remove(
-                                path: MediaAssetRoutes.remove.description,
-                                ids: [folder.id],
-                                returnTo: returnTo
-                            ),
+                            href: removePath,
                             style: .destructive
                         )
                     )
+                    .data("admin-dialog-url", removePath)
                 }
             }
             .class("media-assets-card-actions")
@@ -1038,17 +1040,19 @@ extension AssetListView {
                 if state.permissions.allows(MediaPermissions.Assets.delete)
                     && !state.picker.isEnabled
                 {
+                    let removePath = NewAdminLocation.remove(
+                        path: MediaAssetRoutes.remove.description,
+                        ids: [item.asset.id],
+                        returnTo: returnTo
+                    )
                     context.build(
                         NewAdminRowButton(
                             "Remove",
-                            href: NewAdminLocation.remove(
-                                path: MediaAssetRoutes.remove.description,
-                                ids: [item.asset.id],
-                                returnTo: returnTo
-                            ),
+                            href: removePath,
                             style: .destructive
                         )
                     )
+                    .data("admin-dialog-url", removePath)
                 }
             }
             .class("media-assets-card-actions")

@@ -139,29 +139,45 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
             path: MediaAssetRoutes.list.description,
             returnTo: returnTo
         )
+        let isDialog = request.queryString("presentation") == "dialog"
+            && request.headers[.accept]?.contains("type=admin-dialog") == true
+        let confirmation = NewAdminRemoveConfirmation(
+            breadcrumb: MediaAssetRoutes.breadcrumb,
+            pageHeader: .init(
+                title: "Remove selected assets",
+                description: "Confirm removal of the selected media assets."
+            ),
+            selectedItems: items.map(\.label),
+            action: MediaAssetRoutes.remove.description,
+            cancel: cancel,
+            submitLabel: "Remove selected",
+            nonceToken: nonceToken,
+            hiddenFields: items.map {
+                .init(name: "ids", value: $0.id)
+            } + [
+                .init(name: "page", value: String(pageState.page)),
+                .init(name: "search", value: search ?? ""),
+                .init(name: "returnTo", value: cancel),
+            ],
+            sectionDescription: isDialog
+                ? "Confirm removal of the selected media assets."
+                : nil,
+            isDialog: isDialog
+        )
+        if isDialog {
+            return try await renderEngine.renderNewAdminDialog(
+                request: request,
+                context: context,
+                title: "Remove selected assets",
+                content: confirmation,
+                size: .small
+            )
+        }
         return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove selected assets",
-            content: NewAdminRemoveConfirmation(
-                breadcrumb: MediaAssetRoutes.breadcrumb,
-                pageHeader: .init(
-                    title: "Remove selected assets",
-                    description: "Confirm removal of the selected media assets."
-                ),
-                selectedItems: items.map(\.label),
-                action: MediaAssetRoutes.remove.description,
-                cancel: cancel,
-                submitLabel: "Remove selected",
-                nonceToken: nonceToken,
-                hiddenFields: items.map {
-                    .init(name: "ids", value: $0.id)
-                } + [
-                    .init(name: "page", value: String(pageState.page)),
-                    .init(name: "search", value: search ?? ""),
-                    .init(name: "returnTo", value: cancel),
-                ]
-            )
+            content: confirmation
         )
     }
 

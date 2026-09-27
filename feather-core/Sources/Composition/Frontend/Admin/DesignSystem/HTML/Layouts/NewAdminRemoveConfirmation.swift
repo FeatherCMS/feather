@@ -29,6 +29,7 @@ public struct NewAdminRemoveConfirmation: Component {
     public let sectionDescription: String?
     public let sectionHeader: NewAdminPageHeader.State?
     public let contentClass: String?
+    public let isDialog: Bool
 
     public init(
         breadcrumb: [NewAdminBreadcrumb.Link],
@@ -44,7 +45,8 @@ public struct NewAdminRemoveConfirmation: Component {
         sectionTitle: String? = nil,
         sectionDescription: String? = nil,
         sectionHeader: NewAdminPageHeader.State? = nil,
-        contentClass: String? = nil
+        contentClass: String? = nil,
+        isDialog: Bool = false
     ) {
         self.breadcrumb = breadcrumb
         self.pageHeader = pageHeader
@@ -60,6 +62,7 @@ public struct NewAdminRemoveConfirmation: Component {
         self.sectionDescription = sectionDescription
         self.sectionHeader = sectionHeader
         self.contentClass = contentClass
+        self.isDialog = isDialog
     }
 
     @Builder<CSS.Rule>
@@ -89,8 +92,10 @@ public struct NewAdminRemoveConfirmation: Component {
 
     public func html(context: inout BuilderContext) -> Section {
         Section {
-            context.build(NewAdminBreadcrumb(links: breadcrumb))
-            context.build(NewAdminPageHeader(state: pageHeader))
+            if !isDialog {
+                context.build(NewAdminBreadcrumb(links: breadcrumb))
+                context.build(NewAdminPageHeader(state: pageHeader))
+            }
             if let tabBar {
                 context.build(tabBar)
             }
@@ -103,6 +108,9 @@ public struct NewAdminRemoveConfirmation: Component {
                     if let sectionDescription {
                         P(sectionDescription)
                     }
+                }
+                else if let sectionDescription {
+                    P(sectionDescription)
                 }
                 if !selectedItems.isEmpty {
                     Div {

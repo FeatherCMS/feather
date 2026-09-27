@@ -77,21 +77,32 @@ struct AdminListMediaAssetDefaultInteractor: AdminListMediaAssetInteractor {
         ) { result, asset in
             result[asset.id] = asset
         }
-        return ids.map { id in
-            guard let asset = assetsByID[id] else {
-                return .init(id: id, label: id)
+        var result: [NewAdminRemoveItemContext] = []
+        result.reserveCapacity(ids.count)
+        for id in ids {
+            if let asset = assetsByID[id] {
+                result.append(
+                    .init(
+                        id: id,
+                        label: assetFilename(for: asset, id: id)
+                    )
+                )
+                continue
             }
-            return .init(id: id, label: removeItemLabel(for: asset, id: id))
+            if let folderName = try await folderName(for: id) {
+                result.append(.init(id: id, label: folderName))
+            }
+            else {
+                result.append(.init(id: id, label: id))
+            }
         }
+        return result
     }
 
-    private func removeItemLabel(
+    private func assetFilename(
         for asset: Components.Schemas.MediaAssetResolveItemSchema,
         id: String
     ) -> String {
-        if let title = asset.title?.whitespaceTrimmed, !title.isEmpty {
-            return title
-        }
         let path = URL(string: asset.url)?.path ?? asset.url
         if let filename = path.split(separator: "/").last,
             !filename.isEmpty
@@ -99,6 +110,18 @@ struct AdminListMediaAssetDefaultInteractor: AdminListMediaAssetInteractor {
             return String(filename).removingPercentEncoding ?? String(filename)
         }
         return id
+    }
+
+    private func folderName(for id: String) async throws -> String? {
+        do {
+            return try await repository.getFolder(id: id).name
+        }
+        catch let error as OpenAPIRepositoryError {
+            if case .notFound = error {
+                return nil
+            }
+            throw error
+        }
     }
 
 }
