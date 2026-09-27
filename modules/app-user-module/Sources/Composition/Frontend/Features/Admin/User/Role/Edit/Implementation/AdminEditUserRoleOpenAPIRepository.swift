@@ -25,6 +25,7 @@ struct AdminEditUserRoleOpenAPIRepository: AdminEditUserRoleRepository {
                 let item = try ok.body.json
                 return .init(
                     id: item.id,
+                    key: item.key,
                     name: item.name ?? "",
                     notes: item.notes ?? ""
                 )

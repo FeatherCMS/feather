@@ -38,6 +38,7 @@ struct UserRoleDetails: Component {
                     description: "Inspect this user role."
                 ),
                 fields: [
+                    .init(label: "Key", value: role.key),
                     .init(label: "Name", value: role.name.emptyToNil ?? "—"),
                     .init(label: "Notes", value: role.notes.emptyToNil ?? "—"),
                 ],

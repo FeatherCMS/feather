@@ -11,6 +11,7 @@ public import struct Foundation.Date
 
 public struct RoleDetail: DTO {
     public let id: String
+    public let key: String
     public let name: String?
     public let notes: String?
     public let createdAt: Date
@@ -18,12 +19,14 @@ public struct RoleDetail: DTO {
 
     package init(
         id: String,
+        key: String,
         name: String?,
         notes: String?,
         createdAt: Date,
         updatedAt: Date
     ) {
         self.id = id
+        self.key = key
         self.name = name
         self.notes = notes
         self.createdAt = createdAt

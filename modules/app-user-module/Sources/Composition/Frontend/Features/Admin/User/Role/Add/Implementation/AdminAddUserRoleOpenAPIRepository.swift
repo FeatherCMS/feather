@@ -17,6 +17,7 @@ struct AdminAddUserRoleOpenAPIRepository: AdminAddUserRoleRepository {
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
+                            key: payload.key,
                             name: payload.name,
                             notes: payload.notes
                         )

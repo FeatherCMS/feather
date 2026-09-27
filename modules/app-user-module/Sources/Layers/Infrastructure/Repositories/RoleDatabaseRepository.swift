@@ -14,6 +14,7 @@ extension RoleTable.Row {
     var asDomain: Role {
         .init(
             id: id,
+            key: key,
             name: name,
             notes: notes,
             createdAt: createdAt,
@@ -46,13 +47,21 @@ public struct RoleDatabaseRepository: RoleRepository {
         return try await table.find(name: name)?.asDomain
     }
 
+    public func findBy(
+        key: String
+    ) async throws -> Role? {
+        let table = RoleTable(connection: context.connection)
+        return try await table.find(key: key)?.asDomain
+    }
+
     public func insert(
         _ model: Role.New
     ) async throws -> Role {
         let table = RoleTable(connection: context.connection)
         let saved = try await table.save(
             row: .init(
-                id: model.id ?? idGenerator.generate(),
+                id: idGenerator.generate(),
+                key: model.key,
                 name: model.name,
                 notes: model.notes,
                 createdAt: .init(timeIntervalSince1970: 0),
@@ -70,6 +79,7 @@ public struct RoleDatabaseRepository: RoleRepository {
             id: model.id,
             row: .init(
                 id: model.id,
+                key: model.key,
                 name: model.name,
                 notes: model.notes,
                 createdAt: model.createdAt,

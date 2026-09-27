@@ -504,6 +504,8 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/UserRoleCreateSchema`.
         public struct UserRoleCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserRoleCreateSchema/key`.
+            public var key: Components.Schemas.UserRoleKeyField
             /// - Remark: Generated from `#/components/schemas/UserRoleCreateSchema/name`.
             public var name: Components.Schemas.UserRoleNameField?
             /// - Remark: Generated from `#/components/schemas/UserRoleCreateSchema/notes`.
@@ -511,26 +513,34 @@ extension Components {
             /// Creates a new `UserRoleCreateSchema`.
             ///
             /// - Parameters:
+            ///   - key:
             ///   - name:
             ///   - notes:
             public init(
+                key: Components.Schemas.UserRoleKeyField,
                 name: Components.Schemas.UserRoleNameField? = nil,
                 notes: Components.Schemas.UserRoleNotesField? = nil
             ) {
+                self.key = key
                 self.name = name
                 self.notes = notes
             }
             public enum CodingKeys: String, CodingKey {
+                case key
                 case name
                 case notes
             }
         }
         /// - Remark: Generated from `#/components/schemas/UserRoleNotesField`.
         public typealias UserRoleNotesField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/UserRoleKeyField`.
+        public typealias UserRoleKeyField = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserRoleDetailSchema`.
         public struct UserRoleDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/UserRoleDetailSchema/id`.
             public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/UserRoleDetailSchema/key`.
+            public var key: Components.Schemas.UserRoleKeyField
             /// - Remark: Generated from `#/components/schemas/UserRoleDetailSchema/name`.
             public var name: Components.Schemas.UserRoleNameField?
             /// - Remark: Generated from `#/components/schemas/UserRoleDetailSchema/notes`.
@@ -539,19 +549,23 @@ extension Components {
             ///
             /// - Parameters:
             ///   - id:
+            ///   - key:
             ///   - name:
             ///   - notes:
             public init(
                 id: Swift.String,
+                key: Components.Schemas.UserRoleKeyField,
                 name: Components.Schemas.UserRoleNameField? = nil,
                 notes: Components.Schemas.UserRoleNotesField? = nil
             ) {
                 self.id = id
+                self.key = key
                 self.name = name
                 self.notes = notes
             }
             public enum CodingKeys: String, CodingKey {
                 case id
+                case key
                 case name
                 case notes
             }
@@ -563,22 +577,28 @@ extension Components {
         public struct UserRoleListItemSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/UserRoleListItemSchema/id`.
             public var id: Components.Schemas.UserRoleIdField
+            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSchema/key`.
+            public var key: Components.Schemas.UserRoleKeyField
             /// - Remark: Generated from `#/components/schemas/UserRoleListItemSchema/name`.
             public var name: Components.Schemas.UserRoleNameField?
             /// Creates a new `UserRoleListItemSchema`.
             ///
             /// - Parameters:
             ///   - id:
+            ///   - key:
             ///   - name:
             public init(
                 id: Components.Schemas.UserRoleIdField,
+                key: Components.Schemas.UserRoleKeyField,
                 name: Components.Schemas.UserRoleNameField? = nil
             ) {
                 self.id = id
+                self.key = key
                 self.name = name
             }
             public enum CodingKeys: String, CodingKey {
                 case id
+                case key
                 case name
             }
         }

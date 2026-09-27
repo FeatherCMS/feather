@@ -124,6 +124,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
 
+                .product(name: "UserApplication", package: "app-user-module"),
                 .product(name: "UserInfrastructure", package: "app-user-module"),
 
                 .target(name: "AuthApplication"),
