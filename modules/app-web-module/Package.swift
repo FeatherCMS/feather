@@ -82,7 +82,10 @@ let package = Package(
             url: "https://github.com/apple/swift-nio-ssl",
             from: "2.34.0"
         ),
-        .package(path: "../../../swift-mustache"),
+        .package(
+            url: "https://github.com/hummingbird-project/swift-mustache",
+            from: "2.1.1"
+        ),
         .package(
             url: "https://github.com/apple/swift-markdown",
             from: "0.8.0"

@@ -72,7 +72,10 @@ let package = Package(
             exact: "1.0.2",
             traits: [.defaults, "CommandLineArguments"]
         ),
-        .package(path: "../../swift-mustache"),
+        .package(
+            url: "https://github.com/hummingbird-project/swift-mustache",
+            from: "2.1.1"
+        ),
         .package(
             url: "https://github.com/apple/swift-log",
             from: "1.14.0"
