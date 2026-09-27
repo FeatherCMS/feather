@@ -57,7 +57,7 @@ public struct MailFromVariableMigration: DatabaseMigration {
                     value: mailFromAddress.email,
                     name: "System mail from address",
                     notes:
-                        "Sender address for system-generated emails. Configure this value in System → Variables."
+                        "Sender address for system-generated emails."
                 )
             )
         }
@@ -79,7 +79,7 @@ public struct MailFromVariableMigration: DatabaseMigration {
                     value: mailFromAddress.name ?? "",
                     name: "System mail from name",
                     notes:
-                        "Optional sender display name for system-generated emails. Configure this value in System → Variables."
+                        "Optional sender display name for system-generated emails."
                 )
             )
         }
