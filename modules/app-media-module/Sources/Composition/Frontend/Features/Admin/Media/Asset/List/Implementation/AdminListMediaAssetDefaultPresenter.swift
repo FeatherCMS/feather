@@ -22,6 +22,51 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
     ) async throws -> HTMLResponse {
         let isDialog = request.queryString("presentation") == "dialog"
             && request.headers[.accept]?.contains("type=admin-dialog") == true
+        if model.picker.isEnabled && isDialog {
+            let navigation = MediaAssetPickerDialogNavigation(
+                field: model.picker.field
+            )
+            return try await renderEngine.renderNewAdminDialog(
+                request: request,
+                context: context,
+                title: "Select media asset",
+                content: MediaAssetPickerDialogView(
+                    navigation: navigation,
+                    content: MediaAssetPickerView(
+                        state: .init(
+                            entries: model.entries,
+                            pageState: model.pageState,
+                            search: search ?? "",
+                            parentId: model.parentId,
+                            currentFolder: model.currentFolder,
+                            ancestors: model.ancestors,
+                            view: model.view,
+                            picker: model.picker
+                        )
+                    )
+                ),
+                size: .large
+            )
+        }
+        if model.picker.isEnabled {
+            return try await renderEngine.renderNewAdminPage(
+                request: request,
+                context: context,
+                title: "Select media asset",
+                content: MediaAssetPickerView(
+                    state: .init(
+                        entries: model.entries,
+                        pageState: model.pageState,
+                        search: search ?? "",
+                        parentId: model.parentId,
+                        currentFolder: model.currentFolder,
+                        ancestors: model.ancestors,
+                        view: model.view,
+                        picker: model.picker
+                    )
+                )
+            )
+        }
         let content = AssetListView(
             state: .init(
                 entries: model.entries,
@@ -35,29 +80,6 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 permissions: permissions
             )
         )
-        if model.picker.isEnabled && isDialog {
-            let navigation = MediaAssetPickerDialogNavigation(
-                field: model.picker.field
-            )
-            return try await renderEngine.renderNewAdminDialog(
-                request: request,
-                context: context,
-                title: "Select media asset",
-                content: MediaAssetPickerDialogView(
-                    navigation: navigation,
-                    content: content
-                ),
-                size: .large
-            )
-        }
-        if model.picker.isEnabled {
-            return try await renderEngine.renderNewAdminPage(
-                request: request,
-                context: context,
-                title: "Select media asset",
-                content: content
-            )
-        }
         return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,

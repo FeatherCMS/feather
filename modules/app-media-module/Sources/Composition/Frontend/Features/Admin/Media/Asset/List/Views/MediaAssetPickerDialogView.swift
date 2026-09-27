@@ -28,6 +28,7 @@ struct MediaAssetPickerDialogView<Content: Component>: Component {
                     Height(70.vh)
                     OverflowY(.auto)
                     BoxSizing(.borderBox)
+                    Padding(vertical: 2.px, horizontal: 3.px)
                 }
             }
         ]

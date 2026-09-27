@@ -425,7 +425,8 @@ public struct AdminMetadataFields: Component {
                     browsePath: browsePath,
                     defaultFolderPath: "web/metadata",
                     allowedExtensions: .images,
-                    outputMode: .originalURL
+                    outputMode: .originalURL,
+                    previewStyle: .wide
                 )
             )
         )

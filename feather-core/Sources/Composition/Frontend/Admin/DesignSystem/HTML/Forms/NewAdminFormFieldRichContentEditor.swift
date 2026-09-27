@@ -958,7 +958,8 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                         defaultFolderPath: state.mediaFolderPath,
                         allowedExtensions: .images,
                         outputMode: .relativeURL,
-                        showsCurrentCard: false
+                        showsCurrentCard: false,
+                        previewStyle: .wide
                     )
                 )
             )
@@ -977,7 +978,8 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                         defaultFolderPath: state.mediaFolderPath,
                         allowedExtensions: .videos,
                         outputMode: .relativeURL,
-                        showsCurrentCard: false
+                        showsCurrentCard: false,
+                        previewStyle: .wide
                     )
                 )
             )
