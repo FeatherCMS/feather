@@ -64,6 +64,26 @@ struct AccountDomainTestSuite {
     }
 
     @Test
+    func normalizesEmptyProfileImageAssetIdToNil() throws {
+        var profile = AccountProfile(
+            userId: "account-1",
+            firstName: nil,
+            lastName: nil,
+            profileImageAssetId: "asset-existing",
+            createdAt: .now,
+            updatedAt: .now
+        )
+
+        try profile.update(
+            firstName: nil,
+            lastName: nil,
+            profileImageAssetId: ""
+        )
+
+        #expect(profile.profileImageAssetId == nil)
+    }
+
+    @Test
     func preservesAccountProfileWhenUpdateIsInvalid() throws {
         var profile = AccountProfile(
             userId: "account-1",
