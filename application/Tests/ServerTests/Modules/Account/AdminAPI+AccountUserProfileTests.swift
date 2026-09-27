@@ -15,7 +15,7 @@ struct AdminAPIAccountUserProfileTests {
         try await runner.setupMigratedDatabase()
         try await runner.grantRootPermissions([
             "user:accounts:create",
-            "account:profile:manage",
+            "account:profile:update",
         ])
         let token = try await runner.authenticateTestAccount()
         let userID = try await runner.createTestIdentity(token: token)

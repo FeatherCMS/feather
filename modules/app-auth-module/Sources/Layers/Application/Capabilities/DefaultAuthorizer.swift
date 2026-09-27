@@ -23,50 +23,15 @@ public struct DefaultAuthorizer: Authorizer {
         perform action: any Action
     ) async throws -> Bool {
         try await query.run { scope in
-            // TODO: use set
+            // TODO: use set in call result already.
             let permissions = try await scope.identity.getPermissionsBy(
                 identityId: subject.id
             )
 
-            let effectivePermissions = Self.effectivePermissions(
-                from: Set(permissions)
-            )
-
             return try await action.authorize(
                 subject: subject,
-                permissions: Set(
-                    effectivePermissions.map { .init($0) }
-                )
+                permissions: Set(permissions.map { .init($0) })
             )
         }
-    }
-
-    private static func effectivePermissions(
-        from permissions: Set<String>
-    ) -> [String] {
-        var result = permissions
-
-        if result.contains("user:identities:me") {
-            result.insert("account:profile:read")
-            result.insert("account:profile:update")
-            result.insert("identity:settings:read")
-            result.insert("identity:settings:update")
-        }
-
-        if result.contains("account:profile:update") {
-            result.insert("account:profile:read")
-        }
-
-        if result.contains("identity:settings:update") {
-            result.insert("identity:settings:read")
-        }
-        if result.contains("web:settings:update") {
-            result.insert("web:settings:read")
-        }
-        if result.contains("blog:settings:update") {
-            result.insert("blog:settings:read")
-        }
-
-        return Array(result)
     }
 }

@@ -4,16 +4,14 @@ public import FeatherContracts
 
 public struct GetAccountProfile: UseCase {
     struct Action: PermissionAction {
-        let key: PermissionKey
+        let key = AccountPermissions.Profile.read
+        let userID: String
 
-        init(
-            subjectID: String,
-            userID: String
-        ) {
-            key =
-                subjectID == userID
-                ? AccountPermissions.Profile.read
-                : AccountPermissions.Profile.manage
+        func authorize(
+            subject: Subject,
+            permissions: Set<PermissionKey>
+        ) async throws -> Bool {
+            userID == subject.id || permissions.contains(key)
         }
     }
 
@@ -41,8 +39,9 @@ public struct GetAccountProfile: UseCase {
         input: Input
     ) async throws -> AccountProfileDetail {
         let userId = input.userId ?? subject.id
-        let action = Action(subjectID: subject.id, userID: userId)
-        guard try await authorizer.can(subject: subject, perform: action) else {
+        let action = Action(userID: userId)
+        guard try await authorizer.can(subject: subject, perform: action)
+        else {
             throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
         return try await query.run { scope in

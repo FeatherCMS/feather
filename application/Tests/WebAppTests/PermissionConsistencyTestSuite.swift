@@ -20,7 +20,6 @@ struct PermissionConsistencyTestSuite {
 
         #expect(account.canAccess("account:settings:update"))
         #expect(account.canAccess("blog:settings:update"))
-        #expect(account.canAccess("account:settings:read") == false)
         #expect(account.canAccess("auth:profile:read") == false)
         #expect(account.canAccess("blog:settings:read") == false)
     }

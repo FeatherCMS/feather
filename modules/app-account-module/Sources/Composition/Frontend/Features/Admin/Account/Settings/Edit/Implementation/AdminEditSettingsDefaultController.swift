@@ -18,17 +18,14 @@ struct AdminEditSettingsDefaultController:
         let targetUserID = context.parameters.get("userId", as: String.self)
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
-        let isTargetUser = targetUserID != nil
-        let canRead = context.isCurrentUserAllowed(
-            to: isTargetUser
-                ? AccountPermissions.Settings.manage
-                : AccountPermissions.Settings.read
-        )
-        let canEdit = context.isCurrentUserAllowed(
-            to: isTargetUser
-                ? AccountPermissions.Settings.manage
-                : AccountPermissions.Settings.update
-        )
+        let canRead = targetUserID == nil
+            || context.isCurrentUserAllowed(
+                to: AccountPermissions.Settings.read
+            )
+        let canEdit = targetUserID == nil
+            || context.isCurrentUserAllowed(
+                to: AccountPermissions.Settings.update
+            )
 
         guard canRead else {
             return try await presenter.renderDeniedPage(
@@ -80,12 +77,10 @@ struct AdminEditSettingsDefaultController:
         let targetUserID = context.parameters.get("userId", as: String.self)
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
-        let isTargetUser = targetUserID != nil
-        let canEdit = context.isCurrentUserAllowed(
-            to: isTargetUser
-                ? AccountPermissions.Settings.manage
-                : AccountPermissions.Settings.update
-        )
+        let canEdit = targetUserID == nil
+            || context.isCurrentUserAllowed(
+                to: AccountPermissions.Settings.update
+            )
 
         guard canEdit else {
             return
