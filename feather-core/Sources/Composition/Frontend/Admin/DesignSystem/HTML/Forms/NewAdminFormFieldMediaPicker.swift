@@ -10,6 +10,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
     public enum PreviewStyle: String, Sendable {
         case square
         case wide
+        case circular
     }
 
     public enum OutputMode: String, Sendable {
@@ -138,6 +139,9 @@ public struct NewAdminFormFieldMediaPicker: Component {
                 Custom("\(root)__preview--wide") {
                     Width(213.33.px)
                     Height(120.px)
+                }
+                Custom("\(root)__preview--circular") {
+                    BorderRadius(50.percent)
                 }
                 Custom("\(root)__preview img") {
                     Width(100.percent)

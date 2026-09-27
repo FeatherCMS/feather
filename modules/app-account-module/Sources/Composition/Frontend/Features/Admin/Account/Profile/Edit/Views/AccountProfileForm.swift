@@ -72,7 +72,7 @@ struct AccountProfileForm: Component {
                             "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=\(AllowedExtensions.images.queryValue)",
                         defaultFolderPath: "account/profiles",
                         allowedExtensions: .images,
-                        previewStyle: .square
+                        previewStyle: .circular
                     )
                 )
             )
