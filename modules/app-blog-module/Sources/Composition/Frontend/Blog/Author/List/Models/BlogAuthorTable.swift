@@ -113,7 +113,7 @@ private struct BlogAuthorTableContent: Component {
                                         layout: .init(
                                             name: "blog-authors",
                                             columns: [
-                                                .fixed(64), .fraction(2),
+                                                .fixed(84), .fraction(2),
                                                 .fraction(1), .fraction(1),
                                                 .fraction(1), .fixed(220),
                                             ]
@@ -146,34 +146,24 @@ private struct BlogAuthorTableContent: Component {
                                                             )
                                                         }
                                                         Td {
-                                                            if let image = item
-                                                                .profileImage
-                                                            {
-                                                                Img(
-                                                                    src:
-                                                                        image
+                                                            context.build(
+                                                                NewAdminImageCell(
+                                                                    imageURL:
+                                                                        item.profileImage?
                                                                         .originalURL,
-                                                                    alt: image
+                                                                    alt:
+                                                                        item.profileImage?
                                                                         .altText
-                                                                        ?? image
+                                                                        ?? item.profileImage?
                                                                         .title
-                                                                        ?? item
-                                                                        .name
+                                                                        ?? item.name,
+                                                                    size: .square
                                                                 )
-                                                                .class(
-                                                                    "blog-author-list-profile-image"
-                                                                )
-                                                            }
-                                                            else {
-                                                                Span("—")
-                                                            }
+                                                            )
                                                         }
                                                         .data(
                                                             "label",
                                                             "Profile"
-                                                        )
-                                                        .class(
-                                                            "blog-author-list-profile-cell"
                                                         )
                                                         Td {
                                                             A(item.name)

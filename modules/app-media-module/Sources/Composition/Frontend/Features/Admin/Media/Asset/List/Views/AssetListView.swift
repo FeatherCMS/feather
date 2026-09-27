@@ -138,9 +138,7 @@ struct AssetListView: Component {
         Class("media-assets-table-preview") {
             Width(72.px)
         }
-        Custom(
-            ".media-assets-table-preview > div, .media-assets-table-preview a > div"
-        ) {
+        Custom(".media-assets-table-preview .media-assets-folder-icon") {
             Display(.grid)
             UnsafeRawProperty(name: "place-items", value: "center")
             Width(56.px)
@@ -156,14 +154,6 @@ struct AssetListView: Component {
         Custom(".media-assets-table-preview a") {
             Display(.inlineBlock)
             TextDecoration(.none)
-        }
-        Custom(".media-assets-table-preview img") {
-            Width(56.px)
-            Height(56.px)
-            ObjectFit(.cover)
-            BorderRadius(10.px)
-            Display(.block)
-            Margin(0)
         }
         Custom(".media-assets-table-preview .media-assets-folder-icon svg") {
             Width(28.px)
@@ -1364,7 +1354,13 @@ extension AssetListView {
         Td {
             A {
                 if item.preview != nil {
-                    Img(src: previewURL, alt: displayTitle(for: item.asset))
+                    context.build(
+                        NewAdminImageCell(
+                            imageURL: previewURL,
+                            alt: displayTitle(for: item.asset),
+                            size: .square
+                        )
+                    )
                 }
                 else {
                     Div {

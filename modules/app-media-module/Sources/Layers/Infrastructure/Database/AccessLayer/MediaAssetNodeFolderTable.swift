@@ -98,7 +98,13 @@ struct MediaAssetNodeFolderTable {
         try await connection.run(
             query: #"""
                 SELECT n.id, n.parent_id, n.name, n.slug, n.slug_path,
-                       f.asset_count, f.total_size_bytes,
+                       (
+                           SELECT COUNT(*)::integer
+                           FROM media_asset_node child
+                           WHERE child.parent_id = n.id
+                             AND child.deleted_at IS NULL
+                       ) AS asset_count,
+                       f.total_size_bytes,
                        n.created_at, n.updated_at, n.deleted_at
                 FROM media_asset_node n
                 JOIN media_asset_node_folder f ON f.node_id = n.id
@@ -117,7 +123,13 @@ struct MediaAssetNodeFolderTable {
         try await connection.run(
             query: #"""
                 SELECT n.id, n.parent_id, n.name, n.slug, n.slug_path,
-                       f.asset_count, f.total_size_bytes,
+                       (
+                           SELECT COUNT(*)::integer
+                           FROM media_asset_node child
+                           WHERE child.parent_id = n.id
+                             AND child.deleted_at IS NULL
+                       ) AS asset_count,
+                       f.total_size_bytes,
                        n.created_at, n.updated_at, n.deleted_at
                 FROM media_asset_node n
                 JOIN media_asset_node_folder f ON f.node_id = n.id
@@ -136,7 +148,13 @@ struct MediaAssetNodeFolderTable {
         try await connection.run(
             query: #"""
                 SELECT n.id, n.parent_id, n.name, n.slug, n.slug_path,
-                       f.asset_count, f.total_size_bytes,
+                       (
+                           SELECT COUNT(*)::integer
+                           FROM media_asset_node child
+                           WHERE child.parent_id = n.id
+                             AND child.deleted_at IS NULL
+                       ) AS asset_count,
+                       f.total_size_bytes,
                        n.created_at, n.updated_at, n.deleted_at
                 FROM media_asset_node n
                 JOIN media_asset_node_folder f ON f.node_id = n.id
@@ -153,7 +171,13 @@ struct MediaAssetNodeFolderTable {
         try await connection.run(
             query: #"""
                 SELECT n.id, n.parent_id, n.name, n.slug, n.slug_path,
-                       f.asset_count, f.total_size_bytes,
+                       (
+                           SELECT COUNT(*)::integer
+                           FROM media_asset_node child
+                           WHERE child.parent_id = n.id
+                             AND child.deleted_at IS NULL
+                       ) AS asset_count,
+                       f.total_size_bytes,
                        n.created_at, n.updated_at, n.deleted_at
                 FROM media_asset_node n
                 JOIN media_asset_node_folder f ON f.node_id = n.id

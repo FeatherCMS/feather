@@ -199,7 +199,13 @@ struct MediaAssetNodeTable {
                     SELECT 'folder' AS kind, 0 AS kind_rank, n.id, n.parent_id, n.name, n.slug, n.slug_path,
                            NULL::text AS object_key, NULL::text AS extension, NULL::text AS content_type,
                            NULL::bigint AS size_bytes, NULL::text AS status, NULL::text AS title, NULL::text AS alt_text,
-                           f.asset_count, f.total_size_bytes, n.created_at, n.updated_at
+                           (
+                               SELECT COUNT(*)::integer
+                               FROM media_asset_node child
+                               WHERE child.parent_id = n.id
+                                 AND child.deleted_at IS NULL
+                           ) AS asset_count,
+                           f.total_size_bytes, n.created_at, n.updated_at
                     FROM media_asset_node n
                     JOIN media_asset_node_folder f ON f.node_id = n.id
                     WHERE n.deleted_at IS NULL

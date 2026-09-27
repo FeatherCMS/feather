@@ -130,7 +130,7 @@ struct MediaAssetPickerView: Component {
                 Class("media-asset-picker__table-preview") {
                     Width(72.px)
                 }
-                Custom(".media-asset-picker__table-preview > div") {
+                Custom(".media-asset-picker__folder-icon") {
                     Display(.grid)
                     UnsafeRawProperty(name: "place-items", value: "center")
                     Width(56.px)
@@ -146,14 +146,7 @@ struct MediaAssetPickerView: Component {
                     )
                     Overflow(.hidden)
                 }
-                Custom(".media-asset-picker__table-preview img") {
-                    Width(56.px)
-                    Height(56.px)
-                    ObjectFit(.cover)
-                    Display(.block)
-                    Margin(0)
-                }
-                Custom(".media-asset-picker__table-preview svg") {
+                Custom(".media-asset-picker__folder-icon svg") {
                     Width(28.px)
                     Height(28.px)
                     Color(.variable(TokenKey.Colors.Link.default))
@@ -575,7 +568,7 @@ private extension MediaAssetPickerView {
             Td {
                 A {
                     Div { FeatherIcons.cornerUpLeft() }
-                        .class("media-asset-picker__table-preview")
+                        .class("media-asset-picker__folder-icon")
                 }
                 .href(href)
                 .ariaLabel("Open parent folder")
@@ -602,7 +595,7 @@ private extension MediaAssetPickerView {
             Td {
                 A {
                     Div { FeatherIcons.folder() }
-                        .class("media-asset-picker__table-preview")
+                        .class("media-asset-picker__folder-icon")
                 }
                 .href(href)
                 .ariaLabel("Open \(folder.name)")
@@ -626,18 +619,23 @@ private extension MediaAssetPickerView {
     ) -> Tr {
         Tr {
             Td {
-                Div {
-                    if let preview = item.preview {
-                        Img(
-                            src: NewAdminMediaAsset.mediaURL(path: preview.url),
-                            alt: pickerTitle(for: item.asset)
+                if let preview = item.preview {
+                    context.build(
+                        NewAdminImageCell(
+                            imageURL: NewAdminMediaAsset.mediaURL(
+                                path: preview.url
+                            ),
+                            alt: pickerTitle(for: item.asset),
+                            size: .square
                         )
-                    }
-                    else {
+                    )
+                }
+                else {
+                    Div {
                         FeatherIcons.file()
                     }
+                    .class("media-asset-picker__folder-icon")
                 }
-                .class("media-asset-picker__table-preview")
             }
             .class("media-asset-picker__table-preview")
             .data("label", "Preview")
