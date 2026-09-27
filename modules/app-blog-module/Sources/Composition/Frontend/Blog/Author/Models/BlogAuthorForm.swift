@@ -74,6 +74,7 @@ struct BlogAuthorForm: Component {
                         },
                         browsePath:
                             "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
+                        defaultFolderPath: "blog/authors",
                         allowedExtensions: ["png", "jpg", "jpeg", "webp"]
                     )
                 )

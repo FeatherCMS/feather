@@ -70,6 +70,7 @@ struct AccountProfileForm: Component {
                         },
                         browsePath:
                             "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
+                        defaultFolderPath: "account/profiles",
                         allowedExtensions: ["png", "jpg", "jpeg", "webp"]
                     )
                 )

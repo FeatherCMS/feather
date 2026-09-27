@@ -423,6 +423,7 @@ public struct AdminMetadataFields: Component {
                         )
                     },
                     browsePath: browsePath,
+                    defaultFolderPath: "web/metadata",
                     allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                     outputMode: .originalURL
                 )

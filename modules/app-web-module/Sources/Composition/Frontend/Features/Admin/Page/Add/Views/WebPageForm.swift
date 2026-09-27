@@ -96,6 +96,7 @@ struct WebPageForm: Component {
                         },
                         browsePath:
                             "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
+                        defaultFolderPath: "web/pages",
                         allowedExtensions: ["png", "jpg", "jpeg", "webp"]
                     )
                 )
@@ -118,7 +119,8 @@ struct WebPageForm: Component {
                         key: state.content.key,
                         label: state.content.label,
                         value: state.content.value,
-                        error: state.content.error
+                        error: state.content.error,
+                        mediaFolderPath: "web/pages/content"
                     )
                 )
             )

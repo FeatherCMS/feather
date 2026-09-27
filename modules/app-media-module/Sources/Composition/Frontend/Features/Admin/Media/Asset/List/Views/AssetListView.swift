@@ -644,24 +644,50 @@ extension AssetListView {
     fileprivate func pickerSearchControls(
         context: inout BuilderContext
     ) -> some FlowContent {
-        context.build(
-            NewAdminListSearch(
-                state: .init(
-                    action: browsePath(parentId: state.parentId),
-                    placeholder: "Quick search assets",
-                    search: state.search,
-                    resetPath: browsePath(parentId: state.parentId),
-                    queryItems: queryItems()
-                        .map {
-                            .init(name: $0.name, value: $0.value)
-                        }
+        Div {
+            context.build(
+                NewAdminListSearch(
+                    state: .init(
+                        action: browsePath(parentId: state.parentId),
+                        placeholder: "Quick search assets",
+                        search: state.search,
+                        resetPath: browsePath(parentId: state.parentId),
+                        queryItems: queryItems()
+                            .map {
+                                .init(name: $0.name, value: $0.value)
+                            }
+                    )
                 )
             )
-        )
-        .data(
-            "admin-media-picker-search-path",
-            browsePath(parentId: state.parentId)
-        )
+            .data("admin-media-picker-search", "true")
+            Script(
+                """
+                (function() {
+                  var forms = document.querySelectorAll(
+                    'form[data-admin-media-picker-search]'
+                  );
+                  forms.forEach(function(form) {
+                    if (form.dataset.dialogSearchReady === "true") { return; }
+                    form.dataset.dialogSearchReady = "true";
+                    form.addEventListener("submit", function(event) {
+                      if (!form.closest("dialog[data-admin-dialog]")) { return; }
+                      if (!window.__newAdminDialog ||
+                          !window.__newAdminDialog.openURL) { return; }
+                      event.preventDefault();
+                      event.stopImmediatePropagation();
+                      var url = new URL(form.action, window.location.href);
+                      new FormData(form).forEach(function(value, key) {
+                        if (typeof value === "string") {
+                          url.searchParams.set(key, value);
+                        }
+                      });
+                      window.__newAdminDialog.openURL(url.href, form.action);
+                    }, true);
+                  });
+                }());
+                """
+            )
+        }
     }
 
     fileprivate func emptyState(

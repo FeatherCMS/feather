@@ -24,6 +24,7 @@ struct AssetAddView: Component {
         var view: String = "grid"
         var action: String = "/admin/media/assets/add/"
         var isPicker: Bool = false
+        var pickerField: String? = nil
         var isDialog: Bool = false
         var selectedAsset: NewAdminMediaAsset? = nil
     }
@@ -86,14 +87,8 @@ struct AssetAddView: Component {
                     )
                     .hidden()
             }
-            if state.form.isPicker {
-                pickerUploadContainer(context: &context)
-            }
-            else {
-                uploadForm(context: &context)
-            }
-            if !state.form.isPicker {
-                Style(
+            uploadForm(context: &context)
+            Style(
                     """
                         .new-admin-media-upload__dropzone {
                             position: relative;
@@ -255,8 +250,7 @@ struct AssetAddView: Component {
                             color: var(--color-red-foreground);
                         }
                     """
-                )
-            }
+            )
             Script(
                 """
                 (function () {
@@ -521,7 +515,8 @@ struct AssetAddView: Component {
                                         xhr.responseURL !== expectedURL;
                                     var successful = xhr.status === 204 ||
                                         xhr.status === 201 ||
-                                        (xhr.status >= 200 && xhr.status < 300 && redirected);
+                                        (xhr.status >= 200 && xhr.status < 300 &&
+                                            (redirected || data.isPicker));
                                     if (!successful) {
                                         self.postMessage({
                                             status: "error",
@@ -532,7 +527,8 @@ struct AssetAddView: Component {
                                     }
                                     self.postMessage({
                                         status: "success",
-                                        url: xhr.responseURL || ""
+                                        url: xhr.responseURL || "",
+                                        html: data.isPicker ? (xhr.responseText || "") : ""
                                     });
                                 };
                                 xhr.onerror = function () {
@@ -587,7 +583,10 @@ struct AssetAddView: Component {
                                         item.status = "success";
                                         item.uploadedBytes = item.file.size;
                                         renderQueue();
-                                        finish({ url: event.data.url || "" });
+                                        finish({
+                                            url: event.data.url || "",
+                                            html: event.data.html || ""
+                                        });
                                     } else {
                                         item.status = "error";
                                         item.error = event.data.error || "Upload failed";
@@ -605,6 +604,7 @@ struct AssetAddView: Component {
                                     url: form.action,
                                     file: item.file,
                                     baseURL: window.location.href,
+                                    isPicker: isPicker,
                                     headers: uploadHeaders(form, item.file)
                                 });
                             } catch (_) {
@@ -639,11 +639,13 @@ struct AssetAddView: Component {
                         updateUnloadGuard();
                         var nextIndex = 0;
                         var returnURL = "";
+                        var dialogHTML = "";
                         async function workerLoop() {
                             while (nextIndex < pending.length) {
                                 var item = pending[nextIndex++];
                                 var result = await uploadFile(item);
                                 if (!returnURL && result.url) { returnURL = result.url; }
+                                if (!dialogHTML && result.html) { dialogHTML = result.html; }
                             }
                         }
                         var loops = [];
@@ -665,6 +667,13 @@ struct AssetAddView: Component {
                             setUploadError(
                                 "Some files could not be uploaded. Review the errors and try again."
                             );
+                            return;
+                        }
+                        if (isPicker && isDialog && dialogHTML) {
+                            if (!window.__newAdminDialog ||
+                                !window.__newAdminDialog.mountHTML(dialogHTML)) {
+                                setUploadError("Unable to select uploaded asset.");
+                            }
                             return;
                         }
                         window.location.assign(returnURL || window.location.href);
@@ -695,7 +704,7 @@ struct AssetAddView: Component {
                     summaryElement = document.getElementById(
                         "mediaAssetUploadSummary"
                     );
-                    if (!fileInput || (!isPicker && !form)) {
+                    if (!fileInput || !form) {
                         window.setTimeout(initialize, 0);
                         return;
                     }
@@ -706,14 +715,9 @@ struct AssetAddView: Component {
                         form.dataset.mediaAssetUploadBound = "1";
                     }
                     fileInput.addEventListener("change", function () {
-                        if (isPicker) { return; }
                         addFiles(fileInput.files);
                         fileInput.value = "";
                     });
-                    if (isPicker) {
-                        return;
-                    }
-                    if (!form) { return; }
                     if (!dropzone || !queueElement) { return; }
                     queueElement.addEventListener("click", function (event) {
                         var button = event.target.closest(
@@ -766,6 +770,9 @@ struct AssetAddView: Component {
             )
         }
         .class("cms-section")
+        .if(state.form.isPicker) {
+            $0.data("media-picker-field", state.form.pickerField ?? "")
+        }
     }
 
     func uploadForm(
@@ -864,161 +871,4 @@ struct AssetAddView: Component {
         .hidden()
     }
 
-    func pickerUploadContainer(
-        context: inout BuilderContext
-    ) -> some FlowContent {
-        Div {
-            Input().type(.hidden).name("parentId")
-                .value(state.form.parentId).id("parentId")
-            Input().type(.hidden).name("fileName")
-                .value(state.form.fileName).id("fileName")
-            Input().type(.hidden).name("extension").value(state.form.extension)
-                .id("extension")
-            Input().type(.hidden).name("view").value(state.form.view)
-                .id("view")
-            context.build(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: "title",
-                        label: "Title",
-                        value: state.form.title
-                    )
-                )
-            )
-
-            context.build(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: "altText",
-                        label: "Alt text",
-                        value: state.form.altText
-                    )
-                )
-            )
-
-            context.build(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: "file",
-                        label: "File",
-                        type: .file,
-                        isRequired: true
-                    )
-                )
-            )
-            Section {
-                Div {
-                    context.build(NewAdminSubmitButton("Add asset"))
-                }
-                .class("button-row")
-            }
-            P("")
-                .class("new-admin-form__error")
-                .data("media-picker-upload-error", "")
-                .hidden()
-            Script(pickerUploadScript())
-        }
-        .id("mediaAssetAddForm")
-        .class("new-admin-form")
-        .data("admin-media-picker-upload", "1")
-        .data("action", state.form.action)
-    }
-
-    func pickerUploadScript() -> String {
-        """
-            (function () {
-                function normalizeExtension(filename, mime) {
-                    var name = String(filename || "").toLowerCase();
-                    var dot = name.lastIndexOf(".");
-                    var extension = dot >= 0 ? name.slice(dot + 1) : "";
-                    if (extension === "jpg") { return "jpeg"; }
-                    if (extension) { return extension; }
-                    var type = String(mime || "").toLowerCase();
-                    return type.indexOf("/") >= 0 ? type.split("/")[1] : "bin";
-                }
-
-                function encoded(value) {
-                    return encodeURIComponent(String(value || ""));
-                }
-
-                function initialize() {
-                    var form = document.querySelector(
-                        "[data-admin-media-picker-upload]"
-                    );
-                    if (!form || !window.__newAdminDialog) {
-                        window.setTimeout(initialize, 0);
-                        return;
-                    }
-                    if (form.dataset.mediaPickerUploadBound === "1") { return; }
-                    form.dataset.mediaPickerUploadBound = "1";
-                    window.__newAdminDialog.registerFormSubmitHandler(
-                        form,
-                        function (_, form, dialog, controls) {
-                            var fileInput = form.querySelector(
-                                'input[type="file"][name="file"]'
-                            );
-                            var error = form.querySelector(
-                                "[data-media-picker-upload-error]"
-                            );
-                            var file = fileInput && fileInput.files && fileInput.files[0];
-                            if (!file) {
-                                if (error) {
-                                    error.textContent = "Please choose a file.";
-                                    error.hidden = false;
-                                }
-                                return;
-                            }
-                            if (error) { error.hidden = true; }
-                            var extension = normalizeExtension(file.name, file.type);
-                            var extensionInput = form.querySelector(
-                                'input[name="extension"]'
-                            );
-                            var fileNameInput = form.querySelector(
-                                'input[name="fileName"]'
-                            );
-                            if (extensionInput) { extensionInput.value = extension; }
-                            if (fileNameInput) { fileNameInput.value = file.name || ""; }
-                            function value(name) {
-                                var input = form.querySelector('[name="' + name + '"]');
-                                return input ? input.value : "";
-                            }
-                            var headers = {
-                                "Content-Type": "application/octet-stream",
-                                "Accept": "text/html; type=admin-dialog",
-                                "X-Media-Asset-File-Name": encoded(file.name),
-                                "X-Media-Asset-Extension": encoded(extension)
-                            };
-                            [
-                                ["parentId", "X-Media-Asset-Parent-ID"],
-                                ["title", "X-Media-Asset-Title"],
-                                ["altText", "X-Media-Asset-Alt-Text"]
-                            ].forEach(function (item) {
-                                var current = value(item[0]);
-                                if (current) { headers[item[1]] = encoded(current); }
-                            });
-                            return fetch(form.getAttribute("data-action") || form.action, {
-                                method: "POST",
-                                credentials: "same-origin",
-                                headers: headers,
-                                body: file
-                            })
-                            .then(function (response) {
-                                return controls.replaceResponse(response);
-                            })
-                            .catch(function (uploadError) {
-                                if (error) {
-                                    error.textContent = uploadError && uploadError.message
-                                        ? uploadError.message
-                                        : "Unable to upload selected file.";
-                                    error.hidden = false;
-                                }
-                            });
-                        }
-                    );
-                }
-
-                initialize();
-            }());
-        """
-    }
 }

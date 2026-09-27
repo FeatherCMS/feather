@@ -1,4 +1,5 @@
 public import CSS
+import Foundation
 import FeatherContracts
 public import HTML
 import SGML
@@ -38,6 +39,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
         public let field: FieldState
         public let selectedAsset: NewAdminMediaAsset?
         public let browsePath: String
+        public let defaultFolderPath: String?
         public let allowedExtensions: [String]
         public let outputMode: OutputMode
         public let showsCurrentCard: Bool
@@ -46,6 +48,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
             field: FieldState,
             selectedAsset: NewAdminMediaAsset?,
             browsePath: String,
+            defaultFolderPath: String? = nil,
             allowedExtensions: [String],
             outputMode: OutputMode = .assetId,
             showsCurrentCard: Bool = true
@@ -53,6 +56,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
             self.field = field
             self.selectedAsset = selectedAsset
             self.browsePath = browsePath
+            self.defaultFolderPath = defaultFolderPath
             self.allowedExtensions = allowedExtensions
             self.outputMode = outputMode
             self.showsCurrentCard = showsCurrentCard
@@ -173,7 +177,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
                 currentCard(context: &context)
             }
             else {
-                context.build(chooseButton()).hidden()
+                pickerActions(context: &context)
             }
             if let error = state.field.error {
                 Span(error).class("field-error")
@@ -201,8 +205,7 @@ extension NewAdminFormFieldMediaPicker {
                     .data("media-picker-title", state.field.key)
                     .data("empty-title", "No asset selected")
                 Div {
-                    context.build(chooseButton(style: .ghost(.primary)))
-                        .class("new-admin-media-picker__choose", "row-button")
+                    pickerActions(context: &context)
                     context.build(
                         NewAdminControlButton(
                             "Clear",
@@ -218,13 +221,28 @@ extension NewAdminFormFieldMediaPicker {
         .class("new-admin-media-picker__current")
     }
 
-    fileprivate func chooseButton(
-        style: NewAdminButtonStyle = .primary
-    ) -> MediaPickerChooseButton {
-        MediaPickerChooseButton(
-            style: style,
-            url: dialogBrowsePath()
-        )
+    fileprivate func pickerActions(context: inout BuilderContext) -> some FlowContent {
+        Div {
+            context.build(
+                MediaPickerDialogButton(
+                    label: "Choose from assets",
+                    style: .ghost(.primary),
+                    url: dialogBrowsePath(),
+                    field: state.field.key
+                )
+            )
+            .class("new-admin-media-picker__choose", "row-button")
+            context.build(
+                MediaPickerDialogButton(
+                    label: "Upload",
+                    style: .ghost(.secondary),
+                    url: dialogUploadPath(),
+                    field: state.field.key
+                )
+            )
+            .class("new-admin-media-picker__upload", "row-button")
+        }
+        .class("new-admin-media-picker__actions")
     }
 
     fileprivate func previewBlock() -> some FlowContent {
@@ -379,20 +397,51 @@ extension NewAdminFormFieldMediaPicker {
     }
 
     fileprivate func dialogBrowsePath() -> String {
-        let separator = state.browsePath.contains("?") ? "&" : "?"
-        return "\(state.browsePath)\(separator)presentation=dialog"
+        dialogPath(state.browsePath)
+    }
+
+    fileprivate func dialogUploadPath() -> String {
+        let marker = "/admin/media/assets/"
+        let addMarker = "/admin/media/assets/add/"
+        let path: String
+        if let range = state.browsePath.range(of: marker) {
+            path = state.browsePath.replacingCharacters(in: range, with: addMarker)
+        }
+        else {
+            path = state.browsePath
+        }
+        return dialogPath(path)
+    }
+
+    fileprivate func dialogPath(_ path: String) -> String {
+        var query: [String] = []
+        if !state.allowedExtensions.isEmpty && !path.contains("extensions=") {
+            query.append(
+                "extensions=\(state.allowedExtensions.joined(separator: ",").queryEncoded())"
+            )
+        }
+        if let defaultFolderPath = state.defaultFolderPath,
+           !defaultFolderPath.isEmpty {
+            query.append("default_folder_path=\(defaultFolderPath.queryEncoded())")
+        }
+        query.append("presentation=dialog")
+        let separator = path.contains("?") ? "&" : "?"
+        return "\(path)\(separator)\(query.joined(separator: "&"))"
     }
 }
 
-private struct MediaPickerChooseButton: Component {
+private struct MediaPickerDialogButton: Component {
+    let label: String
     let style: NewAdminButtonStyle
     let url: String
+    let field: String
 
     func html(context: inout BuilderContext) -> Button {
         var button = context.build(
-            NewAdminControlButton("Choose asset", style: style)
+            NewAdminControlButton(label, style: style)
         )
         button = button.data("admin-dialog-url", url)
+        button = button.data("media-picker-open", field)
         return button
     }
 }

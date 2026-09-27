@@ -11,17 +11,20 @@ public struct NewAdminFormFieldRichContentEditor: Component {
         public let label: String
         public let value: String?
         public let error: String?
+        public let mediaFolderPath: String?
 
         public init(
             key: String,
             label: String,
             value: String?,
-            error: String?
+            error: String?,
+            mediaFolderPath: String? = nil
         ) {
             self.key = key
             self.label = label
             self.value = value
             self.error = error
+            self.mediaFolderPath = mediaFolderPath
         }
     }
 
@@ -241,6 +244,11 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             },
             Custom(
                 "\(root) > .new-admin-media-picker > [data-media-picker-open]"
+            ) {
+                Display(.none)
+            },
+            Custom(
+                "\(root) > .new-admin-media-picker .new-admin-media-picker__actions"
             ) {
                 Display(.none)
             },
@@ -947,6 +955,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                         selectedAsset: nil,
                         browsePath:
                             "/admin/media/assets/?picker=1&field=markdown-image-url&extensions=png,jpg,jpeg,webp,gif",
+                        defaultFolderPath: state.mediaFolderPath,
                         allowedExtensions: [
                             "png", "jpg", "jpeg", "webp", "gif",
                         ],
@@ -967,6 +976,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                         selectedAsset: nil,
                         browsePath:
                             "/admin/media/assets/?picker=1&field=markdown-video-url&extensions=mp4,mov,webm",
+                        defaultFolderPath: state.mediaFolderPath,
                         allowedExtensions: ["mp4", "mov", "webm"],
                         outputMode: .relativeURL,
                         showsCurrentCard: false

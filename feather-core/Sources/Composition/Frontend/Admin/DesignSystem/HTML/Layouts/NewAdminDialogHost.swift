@@ -153,6 +153,9 @@ public struct NewAdminDialogHost: Component {
 
                 window.__newAdminDialog = {
                     mountHTML: mountHTML,
+                    openURL: function (url, fallback) {
+                        open(url, fallback);
+                    },
                     registerFormSubmitHandler: registerFormSubmitHandler,
                     replaceResponse: function (response) {
                         var dialog = document.querySelector(

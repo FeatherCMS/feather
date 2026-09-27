@@ -37,11 +37,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         )
         if model.picker.isEnabled && isDialog {
             let navigation = MediaAssetPickerDialogNavigation(
-                parentId: model.parentId,
-                view: model.view.rawValue,
-                field: model.picker.field,
-                allowedExtensions: model.picker.allowedExtensions,
-                defaultFolderPath: model.picker.defaultFolderPath
+                field: model.picker.field
             )
             return try await renderEngine.renderNewAdminDialog(
                 request: request,
@@ -49,7 +45,6 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 title: "Select media asset",
                 content: MediaAssetPickerDialogView(
                     navigation: navigation,
-                    activeTab: .gallery,
                     content: content
                 ),
                 size: .large
@@ -89,7 +84,6 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                     title: "Select media asset",
                     content: MediaAssetPickerDialogView(
                         navigation: pickerNavigation(),
-                        activeTab: .gallery,
                         content: errorContent
                     ),
                     size: .large
@@ -115,14 +109,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
 
     private func pickerNavigation() -> MediaAssetPickerDialogNavigation {
         MediaAssetPickerDialogNavigation(
-            parentId: request.queryString("parent_id")?.emptyToNil,
-            view: request.queryString("view") ?? "grid",
-            field: request.queryString("field")?.emptyToNil,
-            allowedExtensions: request.queryString("extensions")?
-                .split(separator: ",")
-                .map { $0.whitespaceTrimmed.lowercased() }
-                .filter { !$0.isEmpty } ?? [],
-            defaultFolderPath: request.queryString("default_folder_path")?.emptyToNil
+            field: request.queryString("field")?.emptyToNil
         )
     }
 

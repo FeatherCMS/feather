@@ -304,6 +304,7 @@ struct WebSettingsForm: Component {
                             )
                         },
                     browsePath: browsePath,
+                    defaultFolderPath: "web/settings",
                     allowedExtensions: ["png", "jpg", "jpeg", "webp"],
                     outputMode: .originalURL
                 )
