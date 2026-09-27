@@ -74,15 +74,43 @@ public struct EditCredential: UseCase {
                 )
             }
 
+            let currentAuthEmail = try await scope.authEmail.findBy(
+                id: model.authEmailId
+            )
+            let userId = input.userId ?? currentAuthEmail?.identityId
+            let email = input.email ?? currentAuthEmail?.email
+            guard let userId, let email else {
+                throw UseCaseError(
+                    reason: .validation,
+                    logMessage: "Auth email not found for credential: \(input.id)",
+                    userFriendlyMessage: "Auth email not found"
+                )
+            }
+            guard let authEmail = try await scope.authEmail.findBy(
+                email: email
+            ), authEmail.identityId == userId else {
+                throw UseCaseError(
+                    reason: .validation,
+                    logMessage: "Auth email not found for identity: \(userId)",
+                    userFriendlyMessage: "Auth email not found"
+                )
+            }
+
             try model.update(
-                userId: input.userId,
-                email: input.email,
+                authEmailId: authEmail.id,
                 passwordHash: passwordHash
             )
 
-            return try await scope.credential.update(model)
+            let updated = try await scope.credential.update(model)
+            return (model: updated, authEmail: authEmail)
         }
 
-        return model.asDetail
+        return .init(
+            id: model.model.id,
+            userId: model.authEmail.identityId,
+            email: model.authEmail.email,
+            createdAt: model.model.createdAt,
+            updatedAt: model.model.updatedAt
+        )
     }
 }

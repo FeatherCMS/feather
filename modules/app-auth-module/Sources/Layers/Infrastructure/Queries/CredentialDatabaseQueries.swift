@@ -2,26 +2,26 @@ public import AuthApplication
 import FeatherApplication
 public import FeatherInfrastructure
 
-extension CredentialTable.Row {
+extension CredentialTable.QueryRow {
 
     var asQueryListItem: CredentialList.Item {
         .init(
-            id: id,
+            id: credential.id,
             userId: userId,
             identityName: identityName ?? userId,
             email: email,
-            createdAt: createdAt,
-            updatedAt: updatedAt
+            createdAt: credential.createdAt,
+            updatedAt: credential.updatedAt
         )
     }
 
     var asDetail: CredentialDetail {
         .init(
-            id: id,
+            id: credential.id,
             userId: userId,
             email: email,
-            createdAt: createdAt,
-            updatedAt: updatedAt
+            createdAt: credential.createdAt,
+            updatedAt: credential.updatedAt
         )
     }
 }
@@ -143,7 +143,7 @@ public struct CredentialDatabaseQueries: CredentialQueries {
         id: String
     ) async throws -> CredentialDetail {
         let table = CredentialTable(connection: context.connection)
-        guard let row = try await table.find(id: id) else {
+        guard let row = try await table.findDetail(id: id) else {
             throw RepositoryError.notFound
         }
         return row.asDetail
@@ -153,7 +153,7 @@ public struct CredentialDatabaseQueries: CredentialQueries {
         userId: String
     ) async throws -> CredentialDetail? {
         let table = CredentialTable(connection: context.connection)
-        return try await table.findBy(userId: userId)
+        return try await table.findDetailBy(userId: userId)
             .map { row in
                 row.asDetail
             }
@@ -163,7 +163,7 @@ public struct CredentialDatabaseQueries: CredentialQueries {
         email: String
     ) async throws -> CredentialDetail? {
         let table = CredentialTable(connection: context.connection)
-        return try await table.findBy(email: email)
+        return try await table.findDetailBy(email: email)
             .map { row in
                 row.asDetail
             }

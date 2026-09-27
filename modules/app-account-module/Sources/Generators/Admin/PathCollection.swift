@@ -5,6 +5,7 @@ import OpenAPIKit30
 struct PathCollection: PathCollectionRepresentable {
     var pathMap: PathMap {
         [
+            "api/v1/admin/account/users": AccountCreatePathItems(),
             "api/v1/admin/account/settings": AccountSettingsPathItems(),
             "api/v1/admin/account/users/{userId}/profile":
                 AdminAccountProfilePathItems(),

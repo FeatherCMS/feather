@@ -3,11 +3,12 @@ public import FeatherContracts
 public enum AccountPermissions: PermissionProvider {
 
     public enum Profile: PermissionProvider {
+        public static let create = PermissionKey("account:profile:create")
         public static let read = PermissionKey("account:profile:read")
         public static let update = PermissionKey("account:profile:update")
 
         public static func allPermissions() -> Set<PermissionKey> {
-            [read, update]
+            [create, read, update]
         }
     }
 

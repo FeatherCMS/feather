@@ -17,41 +17,29 @@ struct AuthDomainTestSuite {
     @Test
     func credentialCreateSucceedsWithValidValues() throws {
         let credentials = try Credential.create(
-            userId: "user-1",
-            email: "user@example.com",
+            authEmailId: "auth-email-1",
             passwordHash: "valid-password-hash"
         )
 
-        #expect(credentials.userId == "user-1")
-        #expect(credentials.email == "user@example.com")
+        #expect(credentials.authEmailId == "auth-email-1")
         #expect(credentials.passwordHash == "valid-password-hash")
     }
 
     @Test
-    func credentialCreateValidatesIdentityID() {
-        #expect(throws: Credential.Error.invalidUserId) {
+    func credentialCreateValidatesAuthEmailID() {
+        #expect(throws: Credential.Error.authEmailIdTooShort) {
             _ = try Credential.create(
-                userId: "",
-                email: "user@example.com",
+                authEmailId: "a1",
                 passwordHash: "valid-password-hash"
             )
         }
     }
 
     @Test
-    func credentialCreateValidatesEmailBoundaries() {
-        #expect(throws: Credential.Error.emailTooShort) {
+    func credentialCreateValidatesAuthEmailIDLength() {
+        #expect(throws: Credential.Error.authEmailIdTooLong) {
             _ = try Credential.create(
-                userId: "user-1",
-                email: "abc",
-                passwordHash: "valid-password-hash"
-            )
-        }
-
-        #expect(throws: Credential.Error.emailTooLong) {
-            _ = try Credential.create(
-                userId: "user-1",
-                email: String(repeating: "a", count: 255),
+                authEmailId: String(repeating: "a", count: 255),
                 passwordHash: "valid-password-hash"
             )
         }
@@ -61,16 +49,14 @@ struct AuthDomainTestSuite {
     func credentialCreateValidatesPasswordHashBoundaries() {
         #expect(throws: Credential.Error.passwordHashTooShort) {
             _ = try Credential.create(
-                userId: "user-1",
-                email: "user@example.com",
+                authEmailId: "auth-email-1",
                 passwordHash: "12345678"
             )
         }
 
         #expect(throws: Credential.Error.passwordHashTooLong) {
             _ = try Credential.create(
-                userId: "user-1",
-                email: "user@example.com",
+                authEmailId: "auth-email-1",
                 passwordHash: String(repeating: "a", count: 255)
             )
         }
@@ -80,12 +66,8 @@ struct AuthDomainTestSuite {
     func credentialUpdateValidatesAndChangesValues() throws {
         var credentials = makeCredential()
 
-        try credentials.update(
-            email: "updated@example.com",
-            passwordHash: "updated-password-hash"
-        )
+        try credentials.update(passwordHash: "updated-password-hash")
 
-        #expect(credentials.email == "updated@example.com")
         #expect(credentials.passwordHash == "updated-password-hash")
     }
 
@@ -93,8 +75,8 @@ struct AuthDomainTestSuite {
     func credentialUpdateValidatesNewValues() throws {
         var credentials = makeCredential()
 
-        #expect(throws: Credential.Error.emailTooShort) {
-            try credentials.update(email: "abc")
+        #expect(throws: Credential.Error.authEmailIdTooShort) {
+            try credentials.update(authEmailId: "a1")
         }
         #expect(throws: Credential.Error.passwordHashTooShort) {
             try credentials.update(passwordHash: "12345678")
@@ -207,8 +189,7 @@ private func makeMagicLink(
 private func makeCredential() -> Credential {
     .init(
         id: "credential-1",
-        userId: "user-1",
-        email: "user@example.com",
+        authEmailId: "auth-email-1",
         passwordHash: "valid-password-hash",
         createdAt: Date(),
         updatedAt: Date()

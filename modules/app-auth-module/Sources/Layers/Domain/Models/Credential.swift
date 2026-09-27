@@ -5,40 +5,32 @@ public import struct Foundation.Date
 public struct Credential: Model {
 
     public enum Error: DomainError {
-        case invalidUserId
-        case emailTooShort
-        case emailTooLong
+        case authEmailIdTooShort
+        case authEmailIdTooLong
         case passwordHashTooShort
         case passwordHashTooLong
     }
 
     public struct New: Sendable {
-        public let userId: String
-        public let email: String
+        public let authEmailId: String
         public let passwordHash: String
     }
 
     public let id: String
-    public let authEmailId: String
-    public var userId: String
-    public var email: String
+    public var authEmailId: String
     public var passwordHash: String
     public let createdAt: Date
     public var updatedAt: Date
 
     package init(
         id: String,
-        authEmailId: String = "",
-        userId: String,
-        email: String,
+        authEmailId: String,
         passwordHash: String,
         createdAt: Date,
         updatedAt: Date
     ) {
         self.id = id
         self.authEmailId = authEmailId
-        self.userId = userId
-        self.email = email
         self.passwordHash = passwordHash
         self.createdAt = createdAt
         self.updatedAt = updatedAt
@@ -48,21 +40,13 @@ public struct Credential: Model {
 extension Credential {
 
     private static func validate(
-        userId: String
+        authEmailId: String
     ) throws(Self.Error) {
-        guard !userId.isEmpty else {
-            throw .invalidUserId
+        guard authEmailId.count > 3 else {
+            throw .authEmailIdTooShort
         }
-    }
-
-    private static func validate(
-        email: String
-    ) throws(Self.Error) {
-        guard email.count > 3 else {
-            throw .emailTooShort
-        }
-        guard email.count < 255 else {
-            throw .emailTooLong
+        guard authEmailId.count < 255 else {
+            throw .authEmailIdTooLong
         }
     }
 
@@ -78,37 +62,30 @@ extension Credential {
     }
 
     public static func create(
-        userId: String,
-        email: String,
+        authEmailId: String,
         passwordHash: String,
     ) throws(Self.Error) -> Self.New {
-        try validate(userId: userId)
-        try validate(email: email)
+        try validate(authEmailId: authEmailId)
         try validate(passwordHash: passwordHash)
 
         return .init(
-            userId: userId,
-            email: email,
+            authEmailId: authEmailId,
             passwordHash: passwordHash,
         )
     }
 
     public mutating func update(
-        userId: String? = nil,
-        email: String? = nil,
+        authEmailId: String? = nil,
         passwordHash: String? = nil,
     ) throws(Self.Error) {
-        let newEmail = email ?? self.email
         let newPasswordHash = passwordHash ?? self.passwordHash
 
-        if let userId {
-            try Self.validate(userId: userId)
-            self.userId = userId
+        if let authEmailId {
+            try Self.validate(authEmailId: authEmailId)
+            self.authEmailId = authEmailId
         }
-        try Self.validate(email: newEmail)
         try Self.validate(passwordHash: newPasswordHash)
 
-        self.email = newEmail
         self.passwordHash = newPasswordHash
         self.updatedAt = .init()
     }

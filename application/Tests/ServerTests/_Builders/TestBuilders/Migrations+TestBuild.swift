@@ -77,6 +77,11 @@ public func buildTestMigrations(
             idGenerator: idGenerator,
             events: events
         ),
+        AccountInfrastructure.TableSeedMigration(
+            connection: connection,
+            events: events,
+            idGenerator: idGenerator
+        ),
         MediaInfrastructure.TableSeedMigration(connection: connection),
         ContactInfrastructure.TableSeedMigration(
             connection: connection,
