@@ -25,15 +25,22 @@ public struct RedirectRuleMiddleware: RouterMiddleware {
             @concurrent (Request, DefaultRequestContext) async throws ->
             Response
     ) async throws -> Response {
+        // Let the application resolve the URL first. A matching metadata page
+        // must win over a redirect with the same source path.
+        let response = try await next(request, context)
+        guard response.status.code == 404 else {
+            return response
+        }
         let path = request.uri.path
         guard shouldLookupRedirect(for: path) else {
-            return try await next(request, context)
+            return response
         }
 
         let api = RedirectAppAPIClient(apiBaseURL: apiBaseURL)
-        guard let rule = try await matchedRedirectRule(api: api, path: path)
+        guard 
+            let rule = try await matchedRedirectRule(api: api, path: path)
         else {
-            return try await next(request, context)
+            return response
         }
 
         return Response(
