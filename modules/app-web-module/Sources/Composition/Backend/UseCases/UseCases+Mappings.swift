@@ -111,7 +111,7 @@ extension UseCases {
             template: "default",
             publicationDate: nil,
             expirationDate: nil,
-            status: .published,
+            status: .draft,
             title: title,
             excerpt: excerpt,
             imageURL: nil,

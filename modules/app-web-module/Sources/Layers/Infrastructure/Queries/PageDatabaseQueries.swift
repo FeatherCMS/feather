@@ -86,7 +86,13 @@ public struct PageDatabaseQueries: PageQueries {
             }
             return "\(column) \(sortDirectionSQL(page.direction))"
         }
-        return (sortParts + ["id ASC"]).joined(separator: ", ")
+        let defaultPublicationOrder =
+            "(SELECT publication_date FROM web_metadata "
+            + "WHERE reference_type = 'web.page' "
+            + "AND reference_id = web_page.id) "
+            + "DESC NULLS LAST"
+        return (sortParts + [defaultPublicationOrder, "id ASC"])
+            .joined(separator: ", ")
     }
 
     public func find(

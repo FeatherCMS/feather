@@ -36,8 +36,7 @@ struct BlogTagAdd: Component {
                     BlogTagForm(
                         state: state.form,
                         action: "/admin/blog/tags/add/",
-                        submitLabel: "Add tag",
-                        publishLabel: "Publish tag"
+                        submitLabel: "Add tag"
                     )
                 )
             }

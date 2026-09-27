@@ -39,7 +39,6 @@ struct WebPageForm: Component {
     var metadataHref: String? = nil
     var action: String
     var submitLabel: String
-    var publishLabel: String? = nil
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
@@ -127,13 +126,6 @@ struct WebPageForm: Component {
             )
             Div {
                 context.build(NewAdminSubmitButton(submitLabel))
-                if let publishLabel {
-                    Button(publishLabel)
-                        .type(.submit)
-                        .name("submitAction")
-                        .value("publish")
-                        .class("button", "secondary")
-                }
                 if let removeHref {
                     context.build(
                         NewAdminButton(

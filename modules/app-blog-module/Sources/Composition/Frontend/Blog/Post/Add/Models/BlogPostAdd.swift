@@ -35,8 +35,7 @@ struct BlogPostAdd: Component {
                 BlogPostForm(
                     state: state.form,
                     action: "/admin/blog/posts/add/",
-                    submitLabel: "Add post",
-                    publishLabel: "Publish post"
+                    submitLabel: "Add post"
                 )
             )
         }

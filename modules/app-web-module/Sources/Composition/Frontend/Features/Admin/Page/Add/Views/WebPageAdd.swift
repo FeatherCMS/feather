@@ -33,8 +33,7 @@ struct WebPageAdd: Component {
                 WebPageForm(
                     state: state.form,
                     action: WebPageRoutes.add.description,
-                    submitLabel: "Add page",
-                    publishLabel: "Publish page"
+                    submitLabel: "Add page"
                 )
             )
         }

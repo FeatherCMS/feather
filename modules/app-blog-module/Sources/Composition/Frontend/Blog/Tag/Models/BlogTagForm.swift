@@ -36,7 +36,6 @@ struct BlogTagForm: Component {
     var metadataHref: String?
     var action: String
     var submitLabel: String
-    var publishLabel: String?
     var removeHref: String?
     var removeLabel: String = "Remove"
 
@@ -117,10 +116,6 @@ struct BlogTagForm: Component {
                 context.build(
                     NewAdminSubmitButton(submitLabel, style: .primary)
                 )
-                if let publishLabel {
-                    Button(publishLabel).type(.submit).name("submitAction")
-                        .value("publish").class("button", "secondary")
-                }
                 if let removeHref {
                     context.build(
                         NewAdminButton(

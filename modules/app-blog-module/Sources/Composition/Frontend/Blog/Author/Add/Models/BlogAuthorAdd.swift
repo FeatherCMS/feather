@@ -35,8 +35,7 @@ struct BlogAuthorAdd: Component {
                 BlogAuthorForm(
                     state: state.form,
                     action: "/admin/blog/authors/add/",
-                    submitLabel: "Add author",
-                    publishLabel: "Publish author"
+                    submitLabel: "Add author"
                 )
             )
         }
