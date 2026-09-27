@@ -450,7 +450,7 @@ private extension MediaAssetPickerView {
             .href(href)
             .ariaLabel("Open parent folder")
             Div {
-                H3("Up to parent")
+                H3("..")
                 P("Parent folder")
             }
             .class("media-asset-picker__card-body")
@@ -582,7 +582,7 @@ private extension MediaAssetPickerView {
             }
             .class("media-asset-picker__table-preview")
             .data("label", "Preview")
-            Td("Up to parent").data("label", "Name")
+            Td("..").data("label", "Name")
             Td {
                 context.build(
                     NewAdminRowButton("View", href: href, style: .ghost(.primary))

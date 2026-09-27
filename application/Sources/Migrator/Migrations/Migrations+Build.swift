@@ -35,6 +35,20 @@ public func buildMigrations(
         ContactInfrastructure.TableMigration(connection: connection),
         NewsletterInfrastructure.TableMigration(connection: connection),
 
+        // Media folder structure
+        WebInfrastructure.MediaFolderMigration(
+            connection: connection,
+            idGenerator: idGenerator
+        ),
+        BlogInfrastructure.MediaFolderMigration(
+            connection: connection,
+            idGenerator: idGenerator
+        ),
+        NewsInfrastructure.MediaFolderMigration(
+            connection: connection,
+            idGenerator: idGenerator
+        ),
+
         // Seed data
         SystemInfrastructure.TableSeedMigration(
             connection: connection,

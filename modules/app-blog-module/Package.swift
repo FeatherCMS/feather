@@ -128,6 +128,8 @@ let package = Package(
             name: "BlogInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "MediaDomain", package: "app-media-module"),
+                .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
 

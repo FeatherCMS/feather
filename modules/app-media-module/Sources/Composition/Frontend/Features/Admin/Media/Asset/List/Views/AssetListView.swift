@@ -855,7 +855,7 @@ extension AssetListView {
             .href(browsePath(parentId: parentId))
 
             Div {
-                H3("Up to parent")
+                H3("..")
                 P("Parent folder")
             }
             .class("media-assets-card-body")
@@ -1097,7 +1097,7 @@ extension AssetListView {
                 href: browsePath(parentId: parentId),
                 context: &context
             )
-            Td("Up to parent")
+            Td("..")
             .data("label", "Name")
             Td("Folder")
                 .data("label", "Type")

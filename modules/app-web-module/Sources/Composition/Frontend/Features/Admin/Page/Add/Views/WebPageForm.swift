@@ -121,7 +121,7 @@ struct WebPageForm: Component {
                         label: state.content.label,
                         value: state.content.value,
                         error: state.content.error,
-                        mediaFolderPath: "web/pages/content"
+                        mediaFolderPath: "web/pages"
                     )
                 )
             )

@@ -126,6 +126,8 @@ let package = Package(
         .target(
             name: "WebInfrastructure",
             dependencies: [
+                .product(name: "MediaDomain", package: "app-media-module"),
+                .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
 
                 .target(name: "WebApplication"),
