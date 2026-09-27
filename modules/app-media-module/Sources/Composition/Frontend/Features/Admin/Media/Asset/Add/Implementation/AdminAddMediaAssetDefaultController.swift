@@ -23,12 +23,23 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
-        let parentId =
+        let requestedParentId =
             request.queryString("parent_id")?
             .whitespaceTrimmed
-            .emptyToNil ?? ""
+            .emptyToNil
         let view = request.queryString("view") ?? "grid"
         let picker = pickerState(request: request)
+        let parentId: String
+        if let requestedParentId {
+            parentId = requestedParentId
+        }
+        else if let defaultFolderPath = picker.defaultFolderPath {
+            parentId = try await interactor.folderID(forPath: defaultFolderPath)
+                ?? ""
+        }
+        else {
+            parentId = ""
+        }
         let isDialog = request.queryString("presentation") == "dialog"
             && request.headers[.accept]?.contains("type=admin-dialog") == true
         var model = try await interactor.getAddMediaAsset()
@@ -80,11 +91,26 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         else {
             throw HTTPError(.badRequest)
         }
+        let requestedParentId = header(
+            "X-Media-Asset-Parent-ID",
+            from: request
+        )?.whitespaceTrimmed.emptyToNil
+        let parentId: String
+        if let requestedParentId {
+            parentId = requestedParentId
+        }
+        else if let defaultFolderPath = picker.defaultFolderPath {
+            parentId = try await interactor.folderID(forPath: defaultFolderPath)
+                ?? ""
+        }
+        else {
+            parentId = ""
+        }
+
         if picker.isEnabled,
            !picker.allowedExtensions.isAnything,
            !picker.allowedExtensions.values.contains(fileExtension.lowercased())
         {
-            let parentId = header("X-Media-Asset-Parent-ID", from: request) ?? ""
             let view = request.queryString("view") ?? "grid"
             let errorModel = AdminAddMediaAssetModel(
                 parentId: parentId,
@@ -112,7 +138,7 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
             .response(from: request, context: context)
         }
         let payload = AssetAddUpload(
-            parentId: header("X-Media-Asset-Parent-ID", from: request) ?? "",
+            parentId: parentId,
             fileName: fileName,
             extension: fileExtension,
             title: header("X-Media-Asset-Title", from: request)?

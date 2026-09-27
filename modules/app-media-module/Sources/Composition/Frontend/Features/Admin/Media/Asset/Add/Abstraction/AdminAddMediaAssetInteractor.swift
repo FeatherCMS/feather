@@ -10,6 +10,8 @@ import WebComponents
 
 protocol AdminAddMediaAssetInteractor: Sendable {
 
+    func folderID(forPath path: String) async throws -> String?
+
     func getAddMediaAsset() async throws -> AdminAddMediaAssetModel
 
     func postAddMediaAsset(

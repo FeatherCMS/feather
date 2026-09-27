@@ -12,6 +12,35 @@ import WebComponents
 struct AdminAddMediaAssetOpenAPIRepository {
     let api: MediaAdminAPIClient
 
+    func listFolders(
+        parentId: String?
+    ) async throws -> [Components.Schemas.MediaFolderListItemSchema] {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response = try await client.mediaFolderList(
+                body: .json(
+                    .init(
+                        page: .init(size: 100, number: 1),
+                        sort: [.init(field: .name, direction: .asc)],
+                        filters: .init(parentId: parentId)
+                    )
+                )
+            )
+            switch response {
+            case .ok(let ok):
+                return try ok.body.json.data.items
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+
     func createAsset(
         payload: AssetAddUpload,
         variants: [String]? = nil

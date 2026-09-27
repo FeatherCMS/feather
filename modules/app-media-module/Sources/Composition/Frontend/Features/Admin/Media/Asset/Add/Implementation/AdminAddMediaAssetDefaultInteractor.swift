@@ -1,5 +1,7 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
+import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -10,6 +12,26 @@ import WebComponents
 
 struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
     let repository: AdminAddMediaAssetOpenAPIRepository
+
+    func folderID(forPath path: String) async throws -> String? {
+        let components = path
+            .split(separator: "/")
+            .map { $0.whitespaceTrimmed }
+            .filter { !$0.isEmpty }
+        guard !components.isEmpty else { return nil }
+
+        var parentID: String?
+        for name in components {
+            let folders = try await repository.listFolders(parentId: parentID)
+            guard let folder = folders.first(where: {
+                $0.name.caseInsensitiveCompare(name) == .orderedSame
+            }) else {
+                return nil
+            }
+            parentID = folder.id
+        }
+        return parentID
+    }
 
     func getAddMediaAsset() async throws -> AdminAddMediaAssetModel {
         .init(
