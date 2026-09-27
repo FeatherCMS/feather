@@ -11,6 +11,7 @@ import MediaInfrastructure
 import NewsletterInfrastructure
 import NewsInfrastructure
 import RedirectInfrastructure
+import SystemApplication
 import SystemInfrastructure
 import UserInfrastructure
 import WebInfrastructure
@@ -43,8 +44,8 @@ public func buildMigrations(
         ),
         SystemInfrastructure.MailFromVariableMigration(
             connection: connection,
-            idGenerator: idGenerator,
-            mailFromAddress: "info@binarybirds.com"
+            events: events,
+            idGenerator: idGenerator
         ),
         UserInfrastructure.TableSeedMigration(
             connection: connection,
@@ -85,6 +86,7 @@ public func buildMigrations(
 public func buildMigrationEventPublisher() -> any EventPublisher {
     var events = EventRegistry()
     SystemInfrastructure.EventHandlers.register(in: &events)
+    FeatherMailFromAddressEventHandlers.register(in: &events)
     AuthInfrastructure.EventHandlers.register(in: &events)
     UserInfrastructure.EventHandlers.register(in: &events)
     AccountInfrastructure.EventHandlers.register(in: &events)

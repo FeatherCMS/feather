@@ -11,6 +11,7 @@ public struct ResendInvitation: UseCase {
         let invitation: Invitation
         let publicBaseURL: String
         let mailFromAddress: String
+        let mailFromName: String?
     }
 
     struct Action: PermissionAction {
@@ -76,6 +77,9 @@ public struct ResendInvitation: UseCase {
             else {
                 throw Error.mailFromNotConfigured
             }
+            let mailFromName = try await scope.variable.get(
+                "system-settings-mail-from-name"
+            )?.whitespaceTrimmed.emptyToNil
             let configuredPublicBaseURL =
                 try await scope.variable.get("web-settings-public-base-url")?
                 .whitespaceTrimmed
@@ -90,13 +94,14 @@ public struct ResendInvitation: UseCase {
             return MailContext(
                 invitation: try await scope.invitation.update(invitation),
                 publicBaseURL: publicBaseURL,
-                mailFromAddress: mailFromAddress
+                mailFromAddress: mailFromAddress,
+                mailFromName: mailFromName
             )
         }
 
         try await mailSender.send(
             .init(
-                from: .init(result.mailFromAddress),
+                from: .init(result.mailFromAddress, name: result.mailFromName),
                 to: [.init(result.invitation.email)],
                 subject: "Application - Invitation",
                 body: """

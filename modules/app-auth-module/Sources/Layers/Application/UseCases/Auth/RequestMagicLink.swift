@@ -11,7 +11,7 @@ import Foundation
 import SystemApplication
 
 public struct RequestMagicLink: UseCase {
-    public enum Error: UseCaseError {
+    public enum Error: FeatherApplication.UseCaseError {
         case mailFromNotConfigured
 
         public var message: String {
@@ -27,6 +27,7 @@ public struct RequestMagicLink: UseCase {
         let publicBaseURL: String
         let template: String?
         let mailFromAddress: String
+        let mailFromName: String?
     }
 
     let transaction: any TransactionExecutor<WriteRequestMagicLink>
@@ -66,6 +67,9 @@ public struct RequestMagicLink: UseCase {
                 else {
                     throw Error.mailFromNotConfigured
                 }
+                let mailFromName = try await scope.variable.get(
+                    "system-settings-mail-from-name"
+                )?.whitespaceTrimmed.emptyToNil
 
                 guard
                     let authEmail = try await scope.authEmail.findBy(
@@ -102,7 +106,8 @@ public struct RequestMagicLink: UseCase {
                     template: try await scope.variable.get(
                         "auth.magic_link.email.template"
                     ),
-                    mailFromAddress: mailFromAddress
+                    mailFromAddress: mailFromAddress,
+                    mailFromName: mailFromName
                 )
             }
 
@@ -134,7 +139,7 @@ public struct RequestMagicLink: UseCase {
 
         try await mailSender.send(
             .init(
-                from: .init(result.mailFromAddress, name: "Binary Birds"),
+                from: .init(result.mailFromAddress, name: result.mailFromName),
                 to: [.init(input.email)],
                 subject: "Application - Sign In Link",
                 body: body

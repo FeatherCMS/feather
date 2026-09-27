@@ -221,7 +221,8 @@ struct AccountApplicationTestSuite {
                 credential: MockInvitationCredentialWriter(),
                 variable: MockVariableQueries(
                     value: "https://example.test",
-                    mailFromAddress: "invitations@example.test"
+                    mailFromAddress: "invitations@example.test",
+                    mailFromName: "Binary Birds"
                 )
             )
         )
@@ -250,6 +251,7 @@ struct AccountApplicationTestSuite {
             await mailSender.lastMessage?.from.email
                 == "invitations@example.test"
         )
+        #expect(await mailSender.lastMessage?.from.name == "Binary Birds")
         #expect(await mailSender.lastMessage?.body.contains("\\(") == false)
     }
 
@@ -272,7 +274,8 @@ struct AccountApplicationTestSuite {
                 role: MockRoleRepository(),
                 variable: MockVariableQueries(
                     value: "https://example.test",
-                    mailFromAddress: "resend@example.test"
+                    mailFromAddress: "resend@example.test",
+                    mailFromName: "Binary Birds"
                 )
             )
         )
@@ -297,6 +300,7 @@ struct AccountApplicationTestSuite {
         #expect(
             await mailSender.lastMessage?.from.email == "resend@example.test"
         )
+        #expect(await mailSender.lastMessage?.from.name == "Binary Birds")
         #expect(
             await mailSender.lastMessage?.body
                 .contains(

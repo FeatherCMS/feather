@@ -162,6 +162,7 @@ let package = Package(
                 .product(name: "FeatherContracts", package: "feather-core"),
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
+                .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "AnalyticsInfrastructure", package: "app-analytics-module"),
                 .product(name: "RedirectInfrastructure", package: "app-redirect-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),

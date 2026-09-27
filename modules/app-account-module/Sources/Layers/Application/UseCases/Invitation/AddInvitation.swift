@@ -31,6 +31,7 @@ public struct AddInvitation: UseCase {
         let invitation: Invitation
         let publicBaseURL: String
         let mailFromAddress: String
+        let mailFromName: String?
     }
 
     struct Action: PermissionAction {
@@ -86,6 +87,9 @@ public struct AddInvitation: UseCase {
             else {
                 throw Error.mailFromNotConfigured
             }
+            let mailFromName = try await scope.variable.get(
+                "system-settings-mail-from-name"
+            )?.whitespaceTrimmed.emptyToNil
             let identityRepository = scope.identity
             let roleRepository = scope.role
             let token = generateToken()
@@ -123,13 +127,14 @@ public struct AddInvitation: UseCase {
             return MailContext(
                 invitation: invitation,
                 publicBaseURL: publicBaseURL,
-                mailFromAddress: mailFromAddress
+                mailFromAddress: mailFromAddress,
+                mailFromName: mailFromName
             )
         }
 
         try await mailSender.send(
             .init(
-                from: .init(model.mailFromAddress),
+                from: .init(model.mailFromAddress, name: model.mailFromName),
                 to: [.init(model.invitation.email)],
                 subject: "Application - Invitation",
                 body: #"""

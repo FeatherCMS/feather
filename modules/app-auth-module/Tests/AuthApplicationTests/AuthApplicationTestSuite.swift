@@ -85,7 +85,8 @@ struct AuthApplicationTestSuite {
                 magicLink: magicLinkRepository,
                 variable: MockVariableQueries(
                     value: "https://example.test",
-                    mailFromAddress: "magic-links@example.test"
+                    mailFromAddress: "magic-links@example.test",
+                    mailFromName: "Binary Birds"
                 )
             )
         )
@@ -106,6 +107,7 @@ struct AuthApplicationTestSuite {
             await mailSender.lastMessage?.from.email
                 == "magic-links@example.test"
         )
+        #expect(await mailSender.lastMessage?.from.name == "Binary Birds")
         #expect(
             await mailSender.lastMessage?.body.contains("user@example.com")
                 == true
