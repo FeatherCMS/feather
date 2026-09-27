@@ -28,7 +28,7 @@ public struct NewAdminRowButton: Component {
             link = link.href(href)
         }
         if let dialogURL {
-            _ = link.data("admin-dialog-url", dialogURL)
+            link = link.data("admin-dialog-url", dialogURL)
         }
         return link.class("button", style.className, "row-button")
     }

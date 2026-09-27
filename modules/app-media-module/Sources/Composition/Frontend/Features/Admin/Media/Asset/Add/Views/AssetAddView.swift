@@ -86,6 +86,10 @@ struct AssetAddView: Component {
                         "media-picker-selected-status",
                         selectedAsset.status
                     )
+                    .data(
+                        "media-picker-selected-field",
+                        state.form.pickerField ?? ""
+                    )
                     .hidden()
             }
             uploadForm(context: &context)
@@ -690,8 +694,21 @@ struct AssetAddView: Component {
                             return;
                         }
                         if (isPicker && isDialog && dialogHTML) {
-                            if (!window.__newAdminDialog ||
-                                !window.__newAdminDialog.mountHTML(dialogHTML)) {
+                            var mounted = window.__newAdminDialog &&
+                                window.__newAdminDialog.mountHTML(dialogHTML);
+                            if (
+                                mounted &&
+                                window.__newAdminMediaPickerController &&
+                                typeof window.__newAdminMediaPickerController.applyMarker ===
+                                    "function"
+                            ) {
+                                window.__newAdminMediaPickerController.applyMarker(
+                                    document.querySelector(
+                                        "dialog[data-admin-dialog]"
+                                    )
+                                );
+                            }
+                            if (!mounted) {
                                 setUploadError("Unable to select uploaded asset.");
                             }
                             return;

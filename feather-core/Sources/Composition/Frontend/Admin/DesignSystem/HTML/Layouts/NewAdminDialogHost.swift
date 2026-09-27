@@ -224,6 +224,19 @@ public struct NewAdminDialogHost: Component {
                     var form = event.target;
                     if (!form || !form.closest) { return; }
                     var dialog = form.closest("dialog[data-admin-dialog]");
+                    if (!dialog && form.matches("form[data-admin-dialog-form]")) {
+                        event.preventDefault();
+                        event.stopImmediatePropagation();
+                        var url = new URL(form.action, window.location.href);
+                        new FormData(form).forEach(function (value, key) {
+                            url.searchParams.append(
+                                key,
+                                typeof value === "string" ? value : ""
+                            );
+                        });
+                        open(url.href, form.action);
+                        return;
+                    }
                     if (!dialog) { return; }
 
                     var handler = submitHandlers.get(form);

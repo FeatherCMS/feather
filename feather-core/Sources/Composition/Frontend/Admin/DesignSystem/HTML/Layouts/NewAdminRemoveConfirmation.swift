@@ -136,13 +136,24 @@ public struct NewAdminRemoveConfirmation: Component {
                     context.build(
                         NewAdminSubmitButton(submitLabel, style: .destructive)
                     )
-                    context.build(
-                        NewAdminButton(
-                            cancelLabel,
-                            href: cancel,
-                            style: .ghost(.primary)
+                    if isDialog {
+                        context.build(
+                            NewAdminControlButton(
+                                cancelLabel,
+                                style: .ghost(.primary)
+                            )
                         )
-                    )
+                        .data("admin-dialog-close", "")
+                    }
+                    else {
+                        context.build(
+                            NewAdminButton(
+                                cancelLabel,
+                                href: cancel,
+                                style: .ghost(.primary)
+                            )
+                        )
+                    }
                 }
                 .method(.post)
                 .action(action)

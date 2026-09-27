@@ -61,7 +61,7 @@ struct AdminEditWebPageOpenAPIRepository: AdminEditWebPageRepository {
                         title: input.normalizedTitle,
                         excerpt: input.normalizedExcerpt,
                         content: input.normalizedContent,
-                        imageAssetId: input.normalizedImageAssetId,
+                        imageAssetId: input.normalizedImageAssetIdForUpdate,
                     )
                 )
             )

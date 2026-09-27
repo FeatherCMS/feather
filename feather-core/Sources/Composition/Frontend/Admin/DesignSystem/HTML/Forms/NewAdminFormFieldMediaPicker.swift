@@ -7,6 +7,11 @@ import WebBuilders
 public import WebComponents
 
 public struct NewAdminFormFieldMediaPicker: Component {
+    public enum PreviewStyle: String, Sendable {
+        case square
+        case wide
+    }
+
     public enum OutputMode: String, Sendable {
         case assetId
         case originalURL = "original_url"
@@ -43,6 +48,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
         public let allowedExtensions: AllowedExtensions
         public let outputMode: OutputMode
         public let showsCurrentCard: Bool
+        public let previewStyle: PreviewStyle
 
         public init(
             field: FieldState,
@@ -51,7 +57,8 @@ public struct NewAdminFormFieldMediaPicker: Component {
             defaultFolderPath: String? = nil,
             allowedExtensions: AllowedExtensions,
             outputMode: OutputMode = .assetId,
-            showsCurrentCard: Bool = true
+            showsCurrentCard: Bool = true,
+            previewStyle: PreviewStyle = .square
         ) {
             self.field = field
             self.selectedAsset = selectedAsset
@@ -60,6 +67,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
             self.allowedExtensions = allowedExtensions
             self.outputMode = outputMode
             self.showsCurrentCard = showsCurrentCard
+            self.previewStyle = previewStyle
         }
     }
 
@@ -110,6 +118,11 @@ public struct NewAdminFormFieldMediaPicker: Component {
                         .variable(TokenKey.Colors.Materials.Primary.tint)
                     )
                 }
+                Custom("\(root)__current--wide") {
+                    GridTemplateColumns(
+                        .tracks([.length(213.33.px), .fraction(1.fr)])
+                    )
+                }
                 Custom("\(root)__preview") {
                     Width(120.px)
                     Height(120.px)
@@ -121,6 +134,10 @@ public struct NewAdminFormFieldMediaPicker: Component {
                         .variable(TokenKey.Colors.Materials.Secondary.tint)
                     )
                     Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+                }
+                Custom("\(root)__preview--wide") {
+                    Width(213.33.px)
+                    Height(120.px)
                 }
                 Custom("\(root)__preview img") {
                     Width(100.percent)
@@ -218,7 +235,10 @@ extension NewAdminFormFieldMediaPicker {
                 .class("new-admin-media-picker__actions")
             }
         }
-        .class("new-admin-media-picker__current")
+        .class(
+            "new-admin-media-picker__current",
+            "new-admin-media-picker__current--\(state.previewStyle.rawValue)"
+        )
     }
 
     fileprivate func pickerActions(context: inout BuilderContext) -> some FlowContent {
@@ -260,6 +280,7 @@ extension NewAdminFormFieldMediaPicker {
             }
         }
         .class("new-admin-media-picker__preview")
+        .class("new-admin-media-picker__preview--\(state.previewStyle.rawValue)")
         .data("media-picker-preview", state.field.key)
     }
 
@@ -346,6 +367,13 @@ extension NewAdminFormFieldMediaPicker {
             if (!dialog || !dialog.matches("dialog[data-admin-dialog]")) { return; }
             var marker = dialog.querySelector("[data-media-picker-selected-id]");
             var field = dialog.getAttribute("data-media-picker-field");
+            if (!field) {
+              var fieldNode = dialog.querySelector("[data-media-picker-field]");
+              field = fieldNode && fieldNode.getAttribute("data-media-picker-field");
+            }
+            if (!field) {
+              field = marker && marker.getAttribute("data-media-picker-selected-field");
+            }
             if (!marker || !field) { return; }
             update(field, {
               id: marker.getAttribute("data-media-picker-selected-id"),
@@ -359,7 +387,9 @@ extension NewAdminFormFieldMediaPicker {
           }
 
           if (!window.__newAdminMediaPickerController) {
-            window.__newAdminMediaPickerController = true;
+            window.__newAdminMediaPickerController = {
+              applyMarker: applyMarker
+            };
             document.addEventListener("click", function(event) {
               var select = event.target.closest && event.target.closest("[data-picker-select]");
               if (select) {
@@ -376,11 +406,27 @@ extension NewAdminFormFieldMediaPicker {
                 update(clear.getAttribute("data-media-picker-clear"), null);
               }
             });
-            var host = document.getElementById("new-admin-dialog-host");
-            if (host && window.MutationObserver) {
+
+            function observeDialogHost() {
+              var host = document.getElementById("new-admin-dialog-host");
+              if (
+                !host ||
+                !window.MutationObserver ||
+                host.getAttribute("data-media-picker-observer") === "1"
+              ) {
+                return;
+              }
+              host.setAttribute("data-media-picker-observer", "1");
               new MutationObserver(function() {
                 host.querySelectorAll("dialog[data-admin-dialog]").forEach(applyMarker);
               }).observe(host, { childList: true, subtree: true });
+            }
+
+            observeDialogHost();
+            if (document.readyState === "loading") {
+              document.addEventListener("DOMContentLoaded", observeDialogHost, {
+                once: true
+              });
             }
           }
         }());

@@ -758,7 +758,8 @@ extension AssetListView {
                     pageState: state.pageState,
                     search: state.search,
                     button: .init("Remove selected", style: .destructive),
-                    isEnabled: canRemove
+                    isEnabled: canRemove,
+                    usesDialog: canRemove
                 ),
                 table: context.build(
                     NewAdminListShell(
@@ -1180,6 +1181,11 @@ extension AssetListView {
             for: item.preview?.url ?? item.asset.url
         )
         let originalURL = assetOriginalLink(for: item.asset)
+        let removePath = NewAdminLocation.remove(
+            path: MediaAssetRoutes.remove.description,
+            ids: [item.asset.id],
+            returnTo: returnTo
+        )
         return Tr {
             if canRemove {
                 context.build(
@@ -1267,13 +1273,10 @@ extension AssetListView {
                             ),
                             .init(
                                 "Remove",
-                                href: NewAdminLocation.remove(
-                                    path: MediaAssetRoutes.remove.description,
-                                    ids: [item.asset.id],
-                                    returnTo: returnTo
-                                ),
+                                href: removePath,
                                 style: .destructive,
-                                permission: MediaPermissions.Assets.delete
+                                permission: MediaPermissions.Assets.delete,
+                                dialogURL: removePath
                             ),
                         ],
                         permissions: state.permissions
