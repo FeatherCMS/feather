@@ -35,18 +35,28 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
             AdminListMediaAssetModel.ViewMode(rawValue: $0.value)
         }
         let view = requestedView ?? storedView ?? .grid
+        let isPicker = request.queryString("picker") == "1"
         let picker = AdminListMediaAssetModel.PickerState(
-            isEnabled: request.queryString("picker") == "1",
-            field: request.queryString("field")?.emptyToNil,
-            allowedExtensions: .custom(
-                request.queryString("extensions")?
-                    .split(separator: ",")
-                    .map(String.init) ?? []
-            ),
-            defaultFolderPath: request.queryString("default_folder_path")?
-                .emptyToNil,
-            previewVariant: request.queryString("preview_variant")?
-                .emptyToNil
+            isEnabled: isPicker,
+            configuration: isPicker
+                ? .init(
+                    field: request.queryString("field")?.emptyToNil ?? "",
+                    selectionMode: request.queryString("selection") == "multiple"
+                        ? .multiple
+                        : .single,
+                    allowedExtensions: .custom(
+                        request.queryString("extensions")?
+                            .split(separator: ",")
+                            .map(String.init) ?? []
+                    ),
+                    defaultFolderPath: request.queryString(
+                        "default_folder_path"
+                    )?.emptyToNil,
+                    previewVariant: request.queryString("preview_variant")?
+                        .emptyToNil
+                )
+                : nil,
+            resetSelection: request.queryString("selection_reset") == "1"
         )
         let permissions = context.currentUserAdminListActions
         guard permissions.allows(MediaPermissions.Assets.list) else {

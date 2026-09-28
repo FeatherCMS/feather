@@ -17,10 +17,31 @@ struct AdminListMediaAssetModel: Sendable {
 
     struct PickerState: Sendable {
         let isEnabled: Bool
-        let field: String?
-        let allowedExtensions: AllowedExtensions
-        let defaultFolderPath: String?
-        let previewVariant: String?
+        let configuration: MediaAssetPopupConfiguration?
+        let resetSelection: Bool
+
+        var field: String? {
+            guard let field = configuration?.field, !field.isEmpty else {
+                return nil
+            }
+            return field
+        }
+
+        var allowedExtensions: AllowedExtensions {
+            configuration?.allowedExtensions ?? .anything
+        }
+
+        var defaultFolderPath: String? {
+            configuration?.defaultFolderPath
+        }
+
+        var previewVariant: String? {
+            configuration?.previewVariant
+        }
+
+        var selectionMode: MediaAssetSelectionMode {
+            configuration?.selectionMode ?? .single
+        }
     }
 
     struct AssetItem: Sendable {

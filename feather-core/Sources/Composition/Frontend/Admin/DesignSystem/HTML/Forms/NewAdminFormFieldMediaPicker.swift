@@ -410,6 +410,21 @@ extension NewAdminFormFieldMediaPicker {
                 update(clear.getAttribute("data-media-picker-clear"), null);
               }
             });
+            document.addEventListener(
+              "new-admin-media-picker-selection",
+              function(event) {
+                var detail = event.detail || {};
+                var assets = Array.isArray(detail.assets) ? detail.assets : [];
+                var field = String(detail.field || "");
+                if (!field || !assets.length) { return; }
+                update(field, assets[0]);
+                close(
+                  document.querySelector(
+                    "dialog[data-admin-dialog][open]"
+                  )
+                );
+              }
+            );
 
             function observeDialogHost() {
               var host = document.getElementById("new-admin-dialog-host");
@@ -486,6 +501,9 @@ extension NewAdminFormFieldMediaPicker {
         }
         if !path.contains("preview_variant=") {
             query.append("preview_variant=\(previewVariant().queryEncoded())")
+        }
+        if !path.contains("selection=") {
+            query.append("selection=single")
         }
         query.append("presentation=dialog")
         let separator = path.contains("?") ? "&" : "?"

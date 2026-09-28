@@ -23,7 +23,24 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
         var parentID: String?
         for name in components {
             let folders = try await repository.listFolders(parentId: parentID)
-            guard let folder = folders.first(where: {
+            if let folder = folders.first(where: {
+                $0.name.caseInsensitiveCompare(name) == .orderedSame
+            }) {
+                parentID = folder.id
+                continue
+            }
+
+            do {
+                try await repository.createFolder(name: name, parentId: parentID)
+            }
+            catch let error as OpenAPIRepositoryError {
+                guard case .conflict = error else { throw error }
+            }
+
+            let resolvedFolders = try await repository.listFolders(
+                parentId: parentID
+            )
+            guard let folder = resolvedFolders.first(where: {
                 $0.name.caseInsensitiveCompare(name) == .orderedSame
             }) else {
                 return nil

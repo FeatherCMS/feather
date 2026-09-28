@@ -176,6 +176,11 @@ struct MediaAssetPickerView: Component {
                 Custom(".media-asset-picker .table-pagination") {
                     MarginTop(0.px)
                 }
+                Class("media-asset-picker__selection-actions") {
+                    Display(.flex)
+                    JustifyContent(.flexEnd)
+                    PaddingTop(4.px)
+                }
             },
             Media(.maxWidth(768.px)) {
                 Custom(".media-asset-picker__navigation") {
@@ -249,8 +254,34 @@ struct MediaAssetPickerView: Component {
                     )
                 )
             )
+
+            if state.picker.selectionMode == .multiple,
+               state.picker.field != nil {
+                Div {
+                    Button("Use assets")
+                        .type(.button)
+                        .class("button", "primary")
+                        .data("picker-apply", "true")
+                        .disabled()
+                }
+                .class("media-asset-picker__selection-actions")
+                Div {}
+                    .data("media-picker-selection-markers", "true")
+                    .hidden()
+                Script(multiSelectionScript())
+            }
+            else if state.picker.selectionMode == .single,
+                    state.picker.field != nil {
+                Script(singleSelectionScript())
+            }
         }
         .class("media-asset-picker")
+        .data("media-picker-field", state.picker.field ?? "")
+        .data("media-picker-selection", state.picker.selectionMode.rawValue)
+        .data(
+            "media-picker-reset-selection",
+            state.picker.resetSelection ? "true" : "false"
+        )
     }
 }
 
@@ -296,6 +327,12 @@ private extension MediaAssetPickerView {
                 .init(name: "preview_variant", value: previewVariant)
             )
         }
+        items.append(
+            .init(
+                name: "selection",
+                value: state.picker.selectionMode.rawValue
+            )
+        )
         if let search, !search.isEmpty {
             items.append(.init(name: "search", value: search))
         }
@@ -417,6 +454,155 @@ private extension MediaAssetPickerView {
               });
               window.__newAdminDialog.openURL(url.href, form.action);
             }, true);
+          });
+        }());
+        """#
+    }
+
+    func multiSelectionScript() -> String {
+        #"""
+        (function() {
+          var root = document.querySelector(
+            '.media-asset-picker[data-media-picker-selection="multiple"]'
+          );
+          if (!root || root.dataset.multiSelectionReady === "true") { return; }
+          root.dataset.multiSelectionReady = "true";
+          var selected = new Map();
+          var field = root.getAttribute('data-media-picker-field') || '';
+          var storageKey = 'new-admin-media-picker:' + field;
+          var apply = root.querySelector('[data-picker-apply]');
+          var markers = root.querySelector('[data-media-picker-selection-markers]');
+
+          if (root.getAttribute('data-media-picker-reset-selection') === 'true') {
+            try { sessionStorage.removeItem(storageKey); } catch (_) {}
+          }
+          try {
+            var stored = JSON.parse(sessionStorage.getItem(storageKey) || '[]');
+            (Array.isArray(stored) ? stored : []).forEach(function(asset) {
+              if (asset && asset.id) { selected.set(asset.id, asset); }
+            });
+          } catch (_) {}
+
+          function assetFromNode(node) {
+            return {
+              id: node.getAttribute('data-picker-select'),
+              url: node.getAttribute('data-picker-url') || '',
+              previewURL: node.getAttribute('data-picker-preview-url') || '',
+              name: node.getAttribute('data-picker-name') || '',
+              extension: node.getAttribute('data-picker-extension') || '',
+              title: node.getAttribute('data-picker-title') || '',
+              altText: node.getAttribute('data-picker-alt-text') || '',
+              status: node.getAttribute('data-picker-status') || ''
+            };
+          }
+
+          function render() {
+            root.querySelectorAll('[data-picker-select]').forEach(function(button) {
+              var isSelected = selected.has(button.getAttribute('data-picker-select'));
+              button.classList.toggle('is-selected', isSelected);
+              button.textContent = isSelected ? 'Selected' : 'Select';
+              button.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+            });
+            if (apply) { apply.disabled = selected.size === 0; }
+            try {
+              sessionStorage.setItem(
+                storageKey,
+                JSON.stringify(Array.from(selected.values()))
+              );
+            } catch (_) {}
+            if (!markers) { return; }
+            markers.replaceChildren();
+            selected.forEach(function(asset) {
+              var marker = document.createElement('div');
+              marker.hidden = true;
+              marker.setAttribute('data-media-picker-selected-id', asset.id);
+              marker.setAttribute('data-media-picker-selected-url', asset.url);
+              marker.setAttribute('data-media-picker-selected-preview-url', asset.previewURL);
+              marker.setAttribute('data-media-picker-selected-name', asset.name);
+              marker.setAttribute('data-media-picker-selected-extension', asset.extension);
+              marker.setAttribute('data-media-picker-selected-title', asset.title);
+              marker.setAttribute('data-media-picker-selected-alt-text', asset.altText);
+              marker.setAttribute('data-media-picker-selected-status', asset.status);
+              markers.appendChild(marker);
+            });
+          }
+
+          root.addEventListener('click', function(event) {
+            var button = event.target.closest && event.target.closest('[data-picker-select]');
+            if (button) {
+              event.preventDefault();
+              event.stopPropagation();
+              var id = button.getAttribute('data-picker-select');
+              if (selected.has(id)) { selected.delete(id); }
+              else { selected.set(id, assetFromNode(button)); }
+              render();
+              return;
+            }
+            var applyButton = event.target.closest && event.target.closest('[data-picker-apply]');
+            if (applyButton && !applyButton.disabled) {
+              document.dispatchEvent(
+                new CustomEvent('new-admin-media-picker-selection', {
+                  detail: {
+                    field: field,
+                    assets: Array.from(selected.values())
+                  }
+                })
+              );
+              try { sessionStorage.removeItem(storageKey); } catch (_) {}
+              var dialog = root.closest('dialog[data-admin-dialog]');
+              if (dialog) {
+                if (dialog.close) { dialog.close(); }
+                else { dialog.remove(); }
+              }
+            }
+          });
+          render();
+        }());
+        """#
+    }
+
+    func singleSelectionScript() -> String {
+        #"""
+        (function() {
+          var root = document.querySelector(
+            '.media-asset-picker[data-media-picker-selection="single"]'
+          );
+          if (!root || root.dataset.singleSelectionReady === "true") { return; }
+          root.dataset.singleSelectionReady = "true";
+          var field = root.getAttribute('data-media-picker-field') || '';
+
+          function assetFromNode(node) {
+            return {
+              id: node.getAttribute('data-picker-select'),
+              url: node.getAttribute('data-picker-url') || '',
+              previewURL: node.getAttribute('data-picker-preview-url') || '',
+              name: node.getAttribute('data-picker-name') || '',
+              extension: node.getAttribute('data-picker-extension') || '',
+              title: node.getAttribute('data-picker-title') || '',
+              altText: node.getAttribute('data-picker-alt-text') || '',
+              status: node.getAttribute('data-picker-status') || ''
+            };
+          }
+
+          root.addEventListener('click', function(event) {
+            var button = event.target.closest && event.target.closest(
+              '[data-picker-select]'
+            );
+            if (!button) { return; }
+            event.preventDefault();
+            document.dispatchEvent(
+              new CustomEvent('new-admin-media-picker-selection', {
+                detail: {
+                  field: field,
+                  assets: [assetFromNode(button)]
+                }
+              })
+            );
+            var dialog = root.closest('dialog[data-admin-dialog]');
+            if (dialog) {
+              if (dialog.close) { dialog.close(); }
+              else { dialog.remove(); }
+            }
           });
         }());
         """#

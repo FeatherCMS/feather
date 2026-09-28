@@ -8,7 +8,7 @@ import SGML
 import WebBuilders
 import WebComponents
 
-struct AssetAddView: Component {
+struct MediaAssetUploadView: Component {
     struct State {
         let form: FormState
     }
@@ -29,6 +29,7 @@ struct AssetAddView: Component {
         var isDialog: Bool = false
         var previewVariant: String? = nil
         var selectedAsset: NewAdminMediaAsset? = nil
+        var selectionMode: MediaAssetSelectionMode = .single
     }
 
     let state: State
@@ -262,6 +263,7 @@ struct AssetAddView: Component {
                 (function () {
                     function initialize() {
                     var isPicker = \(state.form.isPicker ? "true" : "false");
+                    var isMultiplePicker = \(state.form.selectionMode == .multiple ? "true" : "false");
                     var isDialog = \(state.form.isDialog ? "true" : "false");
                     var maxWorkers = 4;
                     var queue = [];
@@ -665,12 +667,30 @@ struct AssetAddView: Component {
                         var nextIndex = 0;
                         var returnURL = "";
                         var dialogHTML = "";
+                        var dialogHTMLs = [];
+                        function combinedDialogHTML(htmls) {
+                            if (!htmls.length) { return ""; }
+                            if (htmls.length === 1) { return htmls[0]; }
+                            var parser = new DOMParser();
+                            var base = parser.parseFromString(htmls[0], "text/html");
+                            var dialog = base.querySelector("dialog[data-admin-dialog]");
+                            if (!dialog) { return htmls[0]; }
+                            htmls.slice(1).forEach(function(html) {
+                                var parsed = parser.parseFromString(html, "text/html");
+                                var marker = parsed.querySelector("[data-media-picker-selected-id]");
+                                if (marker) { dialog.appendChild(marker.cloneNode(true)); }
+                            });
+                            return dialog.outerHTML;
+                        }
                         async function workerLoop() {
                             while (nextIndex < pending.length) {
                                 var item = pending[nextIndex++];
                                 var result = await uploadFile(item);
                                 if (!returnURL && result.url) { returnURL = result.url; }
-                                if (!dialogHTML && result.html) { dialogHTML = result.html; }
+                                if (result.html) {
+                                    dialogHTMLs.push(result.html);
+                                    if (!dialogHTML) { dialogHTML = result.html; }
+                                }
                             }
                         }
                         var loops = [];
@@ -694,20 +714,78 @@ struct AssetAddView: Component {
                             );
                             return;
                         }
+                        if (isMultiplePicker) {
+                            dialogHTML = combinedDialogHTML(dialogHTMLs);
+                        }
                         if (isPicker && isDialog && dialogHTML) {
                             var mounted = window.__newAdminDialog &&
                                 window.__newAdminDialog.mountHTML(dialogHTML);
-                            if (
-                                mounted &&
-                                window.__newAdminMediaPickerController &&
-                                typeof window.__newAdminMediaPickerController.applyMarker ===
-                                    "function"
-                            ) {
-                                window.__newAdminMediaPickerController.applyMarker(
-                                    document.querySelector(
-                                        "dialog[data-admin-dialog]"
+                            if (mounted) {
+                                var dialog = document.querySelector(
+                                    "dialog[data-admin-dialog]"
+                                );
+                                var markers = Array.from(
+                                    dialog.querySelectorAll(
+                                        "[data-media-picker-selected-id]"
                                     )
                                 );
+                                var field = dialog.getAttribute(
+                                    "data-media-picker-field"
+                                );
+                                if (!field && markers.length) {
+                                    field = markers[0].getAttribute(
+                                        "data-media-picker-selected-field"
+                                    );
+                                }
+                                if (field && markers.length) {
+                                    document.dispatchEvent(
+                                        new CustomEvent(
+                                            "new-admin-media-picker-selection",
+                                            {
+                                                detail: {
+                                                    field: field,
+                                                    assets: markers.map(
+                                                        function(marker) {
+                                                            return {
+                                                                id: marker.getAttribute(
+                                                                    "data-media-picker-selected-id"
+                                                                ),
+                                                                url: marker.getAttribute(
+                                                                    "data-media-picker-selected-url"
+                                                                ),
+                                                                previewURL: marker.getAttribute(
+                                                                    "data-media-picker-selected-preview-url"
+                                                                ),
+                                                                name: marker.getAttribute(
+                                                                    "data-media-picker-selected-name"
+                                                                ),
+                                                                extension: marker.getAttribute(
+                                                                    "data-media-picker-selected-extension"
+                                                                ),
+                                                                title: marker.getAttribute(
+                                                                    "data-media-picker-selected-title"
+                                                                ),
+                                                                altText: marker.getAttribute(
+                                                                    "data-media-picker-selected-alt-text"
+                                                                ),
+                                                                status: marker.getAttribute(
+                                                                    "data-media-picker-selected-status"
+                                                                )
+                                                            };
+                                                        }
+                                                    )
+                                                }
+                                            }
+                                        )
+                                    );
+                                    try {
+                                        if (dialog.close) { dialog.close(); }
+                                        else { dialog.remove(); }
+                                    } catch (_) {}
+                                }
+                                else {
+                                    setUploadError("Uploaded asset was not returned.");
+                                }
                             }
                             if (!mounted) {
                                 setUploadError("Unable to select uploaded asset.");
@@ -873,11 +951,11 @@ struct AssetAddView: Component {
                 FeatherIcons.get(named: "plusCircle")!
                     .class("new-admin-media-upload__icon")
                 Strong(
-                    state.form.isPicker
+                        state.form.isPicker && state.form.selectionMode != .multiple
                         ? "Drop a file here or choose a file"
                         : "Drop files here or choose files"
-                )
-                if !state.form.isPicker {
+                    )
+                if !state.form.isPicker || state.form.selectionMode == .multiple {
                     P("You can upload multiple files at once.")
                         .class("new-admin-media-upload__help")
                 }
@@ -885,7 +963,7 @@ struct AssetAddView: Component {
                     .type(.file)
                     .name("file")
                     .id("file")
-                    .if(!state.form.isPicker) {
+                    .if(!state.form.isPicker || state.form.selectionMode == .multiple) {
                         $0.setAttribute(name: "multiple", value: "multiple")
                     }
                     .if(!state.form.allowedExtensions.isAnything) {

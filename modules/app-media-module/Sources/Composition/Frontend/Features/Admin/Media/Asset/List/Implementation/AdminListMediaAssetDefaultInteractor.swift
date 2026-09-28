@@ -150,7 +150,23 @@ extension AdminListMediaAssetDefaultInteractor {
                 parentId = existing.id
                 continue
             }
-            return nil
+
+            do {
+                try await repository.createFolder(name: name, parentId: parentId)
+            }
+            catch let error as OpenAPIRepositoryError {
+                guard case .conflict = error else { throw error }
+            }
+
+            let resolvedFolders = try await repository.listFolders(
+                parentId: parentId
+            )
+            guard let created = resolvedFolders.first(where: {
+                $0.name.caseInsensitiveCompare(name) == .orderedSame
+            }) else {
+                return nil
+            }
+            parentId = created.id
         }
         return parentId
     }

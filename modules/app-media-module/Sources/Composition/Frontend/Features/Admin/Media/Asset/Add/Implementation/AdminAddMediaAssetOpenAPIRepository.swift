@@ -41,6 +41,32 @@ struct AdminAddMediaAssetOpenAPIRepository {
         }
     }
 
+    func createFolder(
+        name: String,
+        parentId: String?
+    ) async throws {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response = try await client.mediaFolderCreate(
+                body: .json(.init(parentId: parentId, name: name))
+            )
+            switch response {
+            case .created:
+                return
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .conflict:
+                throw OpenAPIRepositoryError.conflict
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+
     func createAsset(
         payload: AssetAddUpload,
         variants: [String]? = nil

@@ -8,9 +8,14 @@ import WebComponents
 
 struct MediaAssetPickerDialogNavigation: Sendable {
     let field: String?
+    let selectionMode: MediaAssetSelectionMode
 
-    init(field: String?) {
+    init(
+        field: String?,
+        selectionMode: MediaAssetSelectionMode = .single
+    ) {
         self.field = field
+        self.selectionMode = selectionMode
     }
 }
 
@@ -40,5 +45,6 @@ struct MediaAssetPickerDialogView<Content: Component>: Component {
         }
         .class("media-asset-picker-dialog")
         .data("media-picker-field", navigation.field ?? "")
+        .data("media-picker-selection", navigation.selectionMode.rawValue)
     }
 }

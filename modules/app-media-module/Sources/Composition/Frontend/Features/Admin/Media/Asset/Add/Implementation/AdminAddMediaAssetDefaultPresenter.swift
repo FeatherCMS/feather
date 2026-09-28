@@ -21,7 +21,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
         var buildContext = BuilderContext()
         let isDialog = request.queryString("presentation") == "dialog"
             && request.headers[.accept]?.contains("type=admin-dialog") == true
-        let content = AssetAddView(
+        let content = MediaAssetUploadView(
             state: .init(
                 form: .init(
                     parentId: model.parentId,
@@ -39,7 +39,10 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
                     isDialog: isDialog,
                     previewVariant: request.queryString("preview_variant")?
                         .emptyToNil,
-                    selectedAsset: model.selectedAsset
+                    selectedAsset: model.selectedAsset,
+                    selectionMode: request.queryString("selection") == "multiple"
+                        ? .multiple
+                        : .single
                 )
             )
         )

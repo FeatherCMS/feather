@@ -24,12 +24,15 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
             && request.headers[.accept]?.contains("type=admin-dialog") == true
         if model.picker.isEnabled && isDialog {
             let navigation = MediaAssetPickerDialogNavigation(
-                field: model.picker.field
+                field: model.picker.field,
+                selectionMode: model.picker.selectionMode
             )
             return try await renderEngine.renderNewAdminDialog(
                 request: request,
                 context: context,
-                title: "Select media asset",
+                title: model.picker.selectionMode == .multiple
+                    ? "Select media assets"
+                    : "Select media asset",
                 content: MediaAssetPickerDialogView(
                     navigation: navigation,
                     content: MediaAssetPickerView(
@@ -52,7 +55,9 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
             return try await renderEngine.renderNewAdminPage(
                 request: request,
                 context: context,
-                title: "Select media asset",
+                title: model.picker.selectionMode == .multiple
+                    ? "Select media assets"
+                    : "Select media asset",
                 content: MediaAssetPickerView(
                     state: .init(
                         entries: model.entries,
@@ -131,7 +136,10 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
 
     private func pickerNavigation() -> MediaAssetPickerDialogNavigation {
         MediaAssetPickerDialogNavigation(
-            field: request.queryString("field")?.emptyToNil
+            field: request.queryString("field")?.emptyToNil,
+            selectionMode: request.queryString("selection") == "multiple"
+                ? .multiple
+                : .single
         )
     }
 

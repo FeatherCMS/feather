@@ -249,27 +249,56 @@ extension AdminAddMediaAssetDefaultController {
 
     fileprivate struct PickerState {
         let isEnabled: Bool
-        let field: String?
-        let allowedExtensions: AllowedExtensions
-        let defaultFolderPath: String?
-        let previewVariant: String?
+        let configuration: MediaAssetPopupConfiguration?
+
+        var field: String? {
+            guard let field = configuration?.field, !field.isEmpty else {
+                return nil
+            }
+            return field
+        }
+
+        var allowedExtensions: AllowedExtensions {
+            configuration?.allowedExtensions ?? .anything
+        }
+
+        var defaultFolderPath: String? {
+            configuration?.defaultFolderPath
+        }
+
+        var previewVariant: String? {
+            configuration?.previewVariant
+        }
+
+        var selectionMode: MediaAssetSelectionMode {
+            configuration?.selectionMode ?? .single
+        }
     }
 
     fileprivate func pickerState(
         request: Request
     ) -> PickerState {
-        .init(
-            isEnabled: request.queryString("picker") == "1",
-            field: request.queryString("field")?.emptyToNil,
-            allowedExtensions: .custom(
-                request.queryString("extensions")?
-                    .split(separator: ",")
-                    .map(String.init) ?? []
-            ),
-            defaultFolderPath: request.queryString("default_folder_path")?
-                .emptyToNil,
-            previewVariant: request.queryString("preview_variant")?
-                .emptyToNil
+        let isPicker = request.queryString("picker") == "1"
+        return .init(
+            isEnabled: isPicker,
+            configuration: isPicker
+                ? .init(
+                    field: request.queryString("field")?.emptyToNil ?? "",
+                    selectionMode: request.queryString("selection") == "multiple"
+                        ? .multiple
+                        : .single,
+                    allowedExtensions: .custom(
+                        request.queryString("extensions")?
+                            .split(separator: ",")
+                            .map(String.init) ?? []
+                    ),
+                    defaultFolderPath: request.queryString(
+                        "default_folder_path"
+                    )?.emptyToNil,
+                    previewVariant: request.queryString("preview_variant")?
+                        .emptyToNil
+                )
+                : nil
         )
     }
 
@@ -306,6 +335,9 @@ extension AdminAddMediaAssetDefaultController {
             queryItems.append(
                 "preview_variant=\(previewVariant.queryEncoded())"
             )
+        }
+        if picker.isEnabled {
+            queryItems.append("selection=\(picker.selectionMode.rawValue)")
         }
         if isDialog {
             queryItems.append("presentation=dialog")
