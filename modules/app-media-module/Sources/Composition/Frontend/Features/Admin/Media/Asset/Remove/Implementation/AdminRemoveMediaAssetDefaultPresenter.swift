@@ -22,7 +22,7 @@ struct AdminRemoveMediaAssetDefaultPresenter: AdminRemoveMediaAssetPresenter {
         return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove media item",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: AssetRemoveView(
                 item: model.item,
                 nonceToken: nonceToken

@@ -163,7 +163,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
             && request.headers[.accept]?.contains("type=admin-dialog") == true
         let confirmation = NewAdminRemoveConfirmation(
             pageHeader: .init(
-                title: "Remove selected assets",
+                title: NewAdminRemoveConfirmation.dialogTitle,
                 description: "Confirm removal of the selected media assets."
             ),
             selectedItems: items.map(\.label),
