@@ -10,7 +10,8 @@ extension UseCases {
             idGenerator: idGenerator,
             scope: { context in
                 WriteCredentialLink(
-                    credential: CredentialDatabaseRepository(context: context)
+                    credential: CredentialDatabaseRepository(context: context),
+                    authEmail: AuthEmailDatabaseRepository(context: context)
                 )
             }
         )

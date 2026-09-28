@@ -30,10 +30,10 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Manage user magic links",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: AuthMagicLinkConfirmation(
                 state: .init(
                     item: item,
@@ -41,7 +41,8 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
                     breadcrumb: AuthMagicLinkRoutes.breadcrumb,
                     nonceToken: nonceToken
                 )
-            )
+            ),
+            size: .small
         )
     }
 

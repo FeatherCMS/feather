@@ -32,10 +32,10 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove credential",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: AuthCredentialConfirmation(
                 state: .init(
                     item: item,
@@ -45,7 +45,8 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
                     ),
                     nonceToken: nonceToken
                 )
-            )
+            ),
+            size: .small
         )
     }
 

@@ -5,6 +5,10 @@ struct UserRoleIdField: StringSchemaRepresentable {
     var example: String? = "role_manager"
 }
 
+struct UserRoleKeyField: StringSchemaRepresentable {
+    var example: String? = "editor"
+}
+
 struct UserRoleNameField: StringSchemaRepresentable {
     var example: String? = "manager"
 }
@@ -16,6 +20,7 @@ struct UserRoleNotesField: StringSchemaRepresentable {
 struct UserRoleCreateSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
+            "key": UserRoleKeyField().reference(),
             "name": UserRoleNameField().reference(required: false),
             "notes": UserRoleNotesField().reference(required: false),
         ]
@@ -35,6 +40,7 @@ struct UserRoleDetailSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "id": UserRoleIdField(),
+            "key": UserRoleKeyField(),
             "name": UserRoleNameField().reference(required: false),
             "notes": UserRoleNotesField().reference(required: false),
         ]
@@ -45,6 +51,7 @@ struct UserRoleListItemSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "id": UserRoleIdField().reference(),
+            "key": UserRoleKeyField().reference(),
             "name": UserRoleNameField().reference(required: false),
         ]
     }

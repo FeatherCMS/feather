@@ -30,10 +30,10 @@ struct AdminRemoveAuthEmailDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Manage user emails",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: AuthEmailConfirmation(
                 state: .init(
                     item: item,
@@ -41,7 +41,8 @@ struct AdminRemoveAuthEmailDefaultPresenter:
                     breadcrumb: AuthEmailRoutes.breadcrumb,
                     nonceToken: nonceToken
                 )
-            )
+            ),
+            size: .small
         )
     }
 

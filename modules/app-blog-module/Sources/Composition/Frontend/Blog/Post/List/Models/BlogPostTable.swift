@@ -43,7 +43,7 @@ struct BlogPostTable: Component {
             else {
                 context.build(
                     NewAdminPageHeader(
-                        state: .init(
+                        state: .primary(
                             title: "Blog posts",
                             description:
                                 "Manage published content and publication status."

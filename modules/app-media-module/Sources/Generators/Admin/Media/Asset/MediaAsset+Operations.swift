@@ -17,13 +17,26 @@ extension MediaAssetIDOperation {
 }
 
 struct MediaAssetCreateOperation: MediaAssetOperation {
+    var parameters: [ParameterRepresentable] {
+        [
+            MediaAssetParentIDHeader().reference(),
+            MediaAssetFileNameHeader().reference(),
+            MediaAssetExtensionHeader().reference(),
+            MediaAssetTitleHeader().reference(),
+            MediaAssetAltTextHeader().reference(),
+        ]
+    }
+
     var requestBody: RequestBodyRepresentable? {
         MediaAssetCreateRequestBody().reference()
     }
 
     var responseMap: ResponseMap {
         [
-            201: MediaAssetDetailResponse().reference()
+            201: MediaAssetDetailResponse().reference(),
+            409: CustomResponse(
+                description: "A media asset with this path already exists"
+            ),
         ]
     }
 }

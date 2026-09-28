@@ -14,14 +14,12 @@ struct UserIdentityConfirmation: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
             NewAdminRemoveConfirmation(
-                breadcrumb: UserIdentityRoutes.breadcrumb,
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove user identity",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: [name.emptyToNil ?? id],
                 action: UserIdentityRoutes.remove(RouterPath(id)).description,
-                cancel: UserIdentityRoutes.details(RouterPath(id)).description,
                 hiddenFields: nonceToken.map {
                     [
                         .init(name: "ids", value: id),

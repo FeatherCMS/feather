@@ -22,7 +22,7 @@ struct SubmissionMailAdd: Component {
             context.build(NewAdminBreadcrumb(links: breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add contact form email",
                         description:
                             "Define the notification email sent by this contact form."

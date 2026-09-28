@@ -1,6 +1,8 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
+import HTTPTypes
 import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
@@ -17,7 +19,10 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
         model: AdminAddMediaAssetModel
     ) async throws -> HTMLResponse {
         var buildContext = BuilderContext()
-        let content = AssetAddView(
+        let isDialog =
+            request.queryString("presentation") == "dialog"
+            && request.headers[.accept]?.contains("type=admin-dialog") == true
+        let content = MediaAssetUploadView(
             state: .init(
                 form: .init(
                     parentId: model.parentId,
@@ -30,10 +35,29 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
                     view: model.view,
                     action: model.action,
                     isPicker: model.isPicker,
-                    selectedAsset: model.selectedAsset
+                    pickerField: request.queryString("field")?.emptyToNil,
+                    allowedExtensions: pickerExtensions(),
+                    isDialog: isDialog,
+                    previewVariant: request.queryString("preview_variant")?
+                        .emptyToNil,
+                    selectedAsset: model.selectedAsset,
+                    selectionMode: request.queryString("selection")
+                        == "multiple"
+                        ? .multiple
+                        : .single
                 )
             )
         )
+        if isDialog {
+            return try await renderEngine.renderNewAdminDialog(
+                request: request,
+                context: context,
+                title: model.isPicker
+                    ? "Upload media assets" : "Add media asset",
+                content: content,
+                size: .small
+            )
+        }
         if model.isPicker {
             return renderEngine.renderPublicPage(
                 request: request,
@@ -50,6 +74,14 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
             context: context,
             title: "Add media asset",
             content: content
+        )
+    }
+
+    private func pickerExtensions() -> AllowedExtensions {
+        .custom(
+            request.queryString("extensions")?
+                .split(separator: ",")
+                .map(String.init) ?? []
         )
     }
 

@@ -31,7 +31,7 @@ struct UserDomainTestSuite {
     func roleCreateValidatesName() async throws {
         #expect(throws: Role.Error.nameTooShort) {
             _ = try Role.create(
-                id: "r1",
+                key: "role-1",
                 name: "abc",
                 notes: "valid"
             )
@@ -62,6 +62,7 @@ private func makeIdentity() -> Identity {
 private func makeRole() -> Role {
     .init(
         id: "r1",
+        key: "role-1",
         name: "Manager",
         notes: "valid",
         createdAt: Date(),

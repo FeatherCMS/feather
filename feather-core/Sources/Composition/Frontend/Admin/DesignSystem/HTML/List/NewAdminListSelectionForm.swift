@@ -11,19 +11,22 @@ public struct NewAdminListSelectionForm<Table: FlowContent>: Component {
         public let search: String
         public let button: NewAdminSubmitButton
         public let isEnabled: Bool
+        public let usesDialog: Bool
 
         public init(
             action: String,
             pageState: NewAdminListPageState,
             search: String,
             button: NewAdminSubmitButton,
-            isEnabled: Bool = true
+            isEnabled: Bool = true,
+            usesDialog: Bool = false
         ) {
             self.action = action
             self.pageState = pageState
             self.search = search
             self.button = button
             self.isEnabled = isEnabled
+            self.usesDialog = usesDialog
         }
     }
 
@@ -65,6 +68,9 @@ public struct NewAdminListSelectionForm<Table: FlowContent>: Component {
                 .method(.get)
                 .action(state.action)
                 .class("table-remove-form")
+                .if(state.usesDialog) {
+                    $0.data("admin-dialog-form", "true")
+                }
             }
             else {
                 table

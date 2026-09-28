@@ -24,7 +24,7 @@ struct BlogTagDetails: Component {
             context.build(
                 NewAdminDetailView(
                     breadcrumb: state.breadcrumb,
-                    pageHeader: .init(
+                    pageHeader: .primary(
                         title: "Blog tag details",
                         description: "Review the blog tag configuration."
                     ),

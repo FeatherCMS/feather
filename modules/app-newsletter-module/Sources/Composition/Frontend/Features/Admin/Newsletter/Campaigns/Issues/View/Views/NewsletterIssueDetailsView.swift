@@ -56,7 +56,7 @@ struct NewsletterIssueDetailsView: Component {
                             .description
                     )
                 ],
-                pageHeader: .init(
+                pageHeader: .primary(
                     title: "Campaign issue details",
                     description:
                         "Review the issue content and delivery schedule."

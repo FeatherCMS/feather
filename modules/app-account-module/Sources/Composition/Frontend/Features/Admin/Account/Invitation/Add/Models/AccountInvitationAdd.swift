@@ -18,7 +18,7 @@ struct AccountInvitationAdd: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add user invitation",
                         description:
                             "Invite a user and assign their initial roles."

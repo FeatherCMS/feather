@@ -15,11 +15,18 @@ import WebComponents
 public struct MediaAdminAPIClient: Sendable {
     public let client: MediaAdminAPI.Client
 
-    public init(apiBaseURL: URL, sessionToken: String? = nil) {
+    public init(
+        apiBaseURL: URL,
+        sessionToken: String? = nil,
+        timeoutSeconds: Int = 3
+    ) {
         self.client = .init(
             serverURL: apiBaseURL,
             transport: AsyncHTTPClientTransport(
-                configuration: .init(client: .shared, timeout: .seconds(3))
+                configuration: .init(
+                    client: .shared,
+                    timeout: .seconds(Int64(max(1, timeoutSeconds)))
+                )
             ),
             middlewares: [ClientAPIAuthMiddleware(sessionToken: sessionToken)]
         )
@@ -79,24 +86,40 @@ public struct MediaAdminAPIClient: Sendable {
     }
 
     public func loadImageAsset(
-        assetId: String?
+        assetId: String?,
+        variants: [String] = ["preview"]
     ) async throws -> NewAdminMediaAsset? {
         guard let assetId, !assetId.isEmpty else { return nil }
         return try await AdminViewMediaAssetOpenAPIRepository(api: self)
-            .getAssetWithPreview(id: assetId)
+            .getAssetWithPreview(id: assetId, variants: variants)
     }
 }
 
 public struct MediaAPIBuilder: Sendable {
     private let apiBaseURL: URL
+    private let uploadTimeoutSeconds: Int
 
-    public init(apiBaseURL: URL) {
+    public init(
+        apiBaseURL: URL,
+        uploadTimeoutSeconds: Int = 60 * 60
+    ) {
         self.apiBaseURL = apiBaseURL
+        self.uploadTimeoutSeconds = max(1, uploadTimeoutSeconds)
     }
 
     public func makeMediaAdmin(
         _ context: AuthenticatedRequestContext
     ) -> MediaAdminAPIClient {
         .init(apiBaseURL: apiBaseURL, sessionToken: context.sessionToken)
+    }
+
+    public func makeMediaUploadAdmin(
+        _ context: AuthenticatedRequestContext
+    ) -> MediaAdminAPIClient {
+        .init(
+            apiBaseURL: apiBaseURL,
+            sessionToken: context.sessionToken,
+            timeoutSeconds: uploadTimeoutSeconds
+        )
     }
 }

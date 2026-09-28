@@ -23,7 +23,7 @@ struct ContactFormEditPage: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: state.isReadOnly
                             ? "Contact form" : "Edit contact form",
                         description: state.isReadOnly

@@ -98,7 +98,7 @@ struct AdminEditWebMetadataOpenAPIRepository: AdminEditWebMetadataRepository {
                         status: input.normalizedStatus,
                         title: input.normalizedTitle.emptyToNil,
                         excerpt: input.normalizedExcerpt.emptyToNil,
-                        imageUrl: input.normalizedImageUrl.emptyToNil,
+                        imageUrl: input.normalizedImageUrl,
                         canonicalUrl: input.normalizedCanonicalUrl.emptyToNil,
                         noIndex: input.noIndex.value,
                         primaryKeyword:

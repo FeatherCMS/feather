@@ -14,7 +14,7 @@ struct SystemVariableEditPage: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit system variable",
                         description:
                             "Update this configuration value used by the application."

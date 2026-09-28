@@ -33,7 +33,7 @@ struct AuthEmailEdit: Component {
 
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit user email",
                         description: "Update a user email address."
                     )

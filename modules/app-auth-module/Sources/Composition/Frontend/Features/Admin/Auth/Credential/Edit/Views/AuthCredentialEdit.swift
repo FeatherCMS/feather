@@ -30,7 +30,7 @@ struct AuthCredentialEdit: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit user credential",
                         description: "Update a user credential."
                     )

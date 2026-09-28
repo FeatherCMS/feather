@@ -11,6 +11,8 @@ public import struct Foundation.Date
 public struct Role: Model {
 
     public enum Error: DomainError {
+        case keyTooShort
+        case keyTooLong
         case nameTooShort
         case nameTooLong
 
@@ -18,12 +20,13 @@ public struct Role: Model {
     }
 
     public struct New: Sendable {
-        public let id: String?
+        public let key: String
         public let name: String?
         public let notes: String?
     }
 
     public let id: String
+    public let key: String
     public var name: String?
     public var notes: String?
     public let createdAt: Date
@@ -31,12 +34,14 @@ public struct Role: Model {
 
     package init(
         id: String,
+        key: String,
         name: String?,
         notes: String?,
         createdAt: Date,
         updatedAt: Date,
     ) {
         self.id = id
+        self.key = key
         self.name = name
         self.notes = notes
         self.createdAt = createdAt
@@ -45,6 +50,17 @@ public struct Role: Model {
 }
 
 extension Role {
+
+    private static func validate(
+        key: String
+    ) throws(Self.Error) {
+        guard !key.isEmpty else {
+            throw .keyTooShort
+        }
+        guard key.count < 255 else {
+            throw .keyTooLong
+        }
+    }
 
     private static func validate(
         name: String?
@@ -68,29 +84,16 @@ extension Role {
     }
 
     public static func create(
-        id: String,
+        key: String,
         name: String?,
         notes: String?
     ) throws(Self.Error) -> Self.New {
+        try validate(key: key)
         try validate(name: name)
         try validate(notes: notes)
 
         return .init(
-            id: id,
-            name: name,
-            notes: notes
-        )
-    }
-
-    public static func create(
-        name: String?,
-        notes: String?
-    ) throws(Self.Error) -> Self.New {
-        try validate(name: name)
-        try validate(notes: notes)
-
-        return .init(
-            id: nil,
+            key: key,
             name: name,
             notes: notes
         )

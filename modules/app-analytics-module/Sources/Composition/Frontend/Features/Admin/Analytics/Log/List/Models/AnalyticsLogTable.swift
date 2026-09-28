@@ -223,7 +223,7 @@ struct AnalyticsLogTable: Component {
                     )
                     context.build(
                         NewAdminPageHeader(
-                            state: .init(
+                            state: .primary(
                                 title: "Analytics logs",
                                 description:
                                     "Browse tracked request log records."

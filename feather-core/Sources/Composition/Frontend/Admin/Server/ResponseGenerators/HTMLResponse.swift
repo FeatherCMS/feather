@@ -5,22 +5,31 @@ import SGML
 public struct HTMLResponse: ResponseGenerator {
     public let content: String
     public let status: HTTPResponse.Status
+    public let cookies: [Cookie]
 
     public init(
         _ html: Html,
-        status: HTTPResponse.Status = .ok
+        status: HTTPResponse.Status = .ok,
+        cookies: [Cookie] = []
     ) {
         let document = Document(type: .html, root: html)
+        #if DEBUG
         self.content = document.render(indent: 4)
+        #else
+        self.content = document.render(indent: 0)
+        #endif
         self.status = status
+        self.cookies = cookies
     }
 
     public init(
         content: String,
-        status: HTTPResponse.Status = .ok
+        status: HTTPResponse.Status = .ok,
+        cookies: [Cookie] = []
     ) {
         self.content = content
         self.status = status
+        self.cookies = cookies
     }
 
     public func response(
@@ -31,9 +40,12 @@ public struct HTMLResponse: ResponseGenerator {
         var headers: HTTPFields = [
             .contentType: "text/html; charset=utf-8"
         ]
+        var responseCookies = cookies
         if request.cookies[AdminNotificationFlash.cookieName] != nil {
-            headers[values: .setCookie]
-                .append(AdminNotificationFlash.clearCookie().description)
+            responseCookies.append(AdminNotificationFlash.clearCookie())
+        }
+        for cookie in responseCookies {
+            headers[values: .setCookie].append(cookie.description)
         }
         #if DEBUG
         headers[.cacheControl] = "no-cache"

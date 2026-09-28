@@ -3,24 +3,21 @@ public import FeatherContracts
 public enum AccountPermissions: PermissionProvider {
 
     public enum Profile: PermissionProvider {
+        public static let create = PermissionKey("account:profile:create")
         public static let read = PermissionKey("account:profile:read")
         public static let update = PermissionKey("account:profile:update")
-        /// Allows reading and updating profiles belonging to other users.
-        public static let manage = PermissionKey("account:profile:manage")
 
         public static func allPermissions() -> Set<PermissionKey> {
-            [read, update, manage]
+            [create, read, update]
         }
     }
 
     public enum Settings: PermissionProvider {
         public static let read = PermissionKey("account:settings:read")
         public static let update = PermissionKey("account:settings:update")
-        /// Allows reading and updating settings belonging to other users.
-        public static let manage = PermissionKey("account:settings:manage")
 
         public static func allPermissions() -> Set<PermissionKey> {
-            [read, update, manage]
+            [read, update]
         }
     }
 

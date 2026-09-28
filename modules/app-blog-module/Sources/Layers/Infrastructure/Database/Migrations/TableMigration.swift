@@ -26,7 +26,7 @@ public struct TableMigration: DatabaseMigration {
                 title TEXT NOT NULL,
                 excerpt TEXT NOT NULL DEFAULT '',
                 content TEXT NOT NULL,
-                image_asset_id TEXT,
+                image_asset_id TEXT REFERENCES media_asset_node_file(node_id) ON DELETE SET NULL,
                 author_ids TEXT NOT NULL DEFAULT '[]',
                 tag_ids TEXT NOT NULL DEFAULT '[]',
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
@@ -38,12 +38,16 @@ public struct TableMigration: DatabaseMigration {
             ON blog_post (title);
             """#,
             #"""
+            CREATE INDEX IF NOT EXISTS blog_post_image_asset_id_idx
+            ON blog_post (image_asset_id);
+            """#,
+            #"""
             CREATE TABLE IF NOT EXISTS blog_tag (
                 id TEXT PRIMARY KEY,
                 title TEXT NOT NULL,
                 excerpt TEXT NOT NULL DEFAULT '',
                 content TEXT NOT NULL,
-                image_asset_id TEXT,
+                image_asset_id TEXT REFERENCES media_asset_node_file(node_id) ON DELETE SET NULL,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
             );
@@ -53,13 +57,17 @@ public struct TableMigration: DatabaseMigration {
             ON blog_tag (title);
             """#,
             #"""
+            CREATE INDEX IF NOT EXISTS blog_tag_image_asset_id_idx
+            ON blog_tag (image_asset_id);
+            """#,
+            #"""
             CREATE TABLE IF NOT EXISTS blog_author (
                 id TEXT PRIMARY KEY,
                 key TEXT NOT NULL UNIQUE,
                 name TEXT NOT NULL,
                 notes TEXT NOT NULL,
                 excerpt TEXT NOT NULL DEFAULT '',
-                profile_image_asset_id TEXT,
+                profile_image_asset_id TEXT REFERENCES media_asset_node_file(node_id) ON DELETE SET NULL,
                 content TEXT NOT NULL DEFAULT '',
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
@@ -68,6 +76,10 @@ public struct TableMigration: DatabaseMigration {
             #"""
             CREATE INDEX IF NOT EXISTS blog_author_key_idx
             ON blog_author (key);
+            """#,
+            #"""
+            CREATE INDEX IF NOT EXISTS blog_author_profile_image_asset_id_idx
+            ON blog_author (profile_image_asset_id);
             """#,
             #"""
             CREATE TABLE IF NOT EXISTS blog_author_link (

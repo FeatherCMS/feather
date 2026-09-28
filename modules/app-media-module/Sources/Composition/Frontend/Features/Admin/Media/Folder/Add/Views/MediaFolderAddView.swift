@@ -11,6 +11,7 @@ import WebComponents
 struct MediaFolderAddView: Component {
     struct State {
         let form: FormState
+        let isDialog: Bool
     }
 
     struct FormState {
@@ -24,23 +25,25 @@ struct MediaFolderAddView: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(
-                NewAdminBreadcrumb(links: MediaFolderRoutes.breadcrumb)
-            )
-            context.build(
-                NewAdminPageHeader(
-                    state: .init(
-                        title: "Add media folder",
-                        description:
-                            "Create a folder for organizing media assets."
+            if !state.isDialog {
+                context.build(
+                    NewAdminBreadcrumb(links: MediaFolderRoutes.breadcrumb)
+                )
+                context.build(
+                    NewAdminPageHeader(
+                        state: .primary(
+                            title: "Add media folder",
+                            description:
+                                "Create a folder for organizing media assets."
+                        )
                     )
                 )
-            )
+            }
             if let error = state.form.error {
                 P(error).class("new-admin-form__error")
             }
             let form = NewAdminForm(
-                action: MediaFolderRoutes.add.description,
+                action: formAction(),
                 hiddenFields: [
                     .init(name: "parentId", value: state.form.parentId),
                     .init(name: "view", value: state.form.view),
@@ -64,5 +67,12 @@ struct MediaFolderAddView: Component {
             context.build(form)
         }
         .class("cms-section")
+    }
+
+    private func formAction() -> String {
+        guard state.isDialog else {
+            return MediaFolderRoutes.add.description
+        }
+        return "\(MediaFolderRoutes.add.description)?presentation=dialog"
     }
 }

@@ -17,7 +17,7 @@ struct AccountInvitationDetails: Component {
             context.build(
                 NewAdminDetailView(
                     breadcrumb: state.breadcrumb,
-                    pageHeader: .init(
+                    pageHeader: .primary(
                         title: "User invitation details",
                         description:
                             "Review invitation status and assigned roles."

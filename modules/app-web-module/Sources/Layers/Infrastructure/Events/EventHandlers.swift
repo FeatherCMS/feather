@@ -43,6 +43,14 @@ public enum EventHandlers {
         }
 
         registry.register(
+            event: AccessControlProvider.self,
+            context: AccessControlContext.self
+        ) { event, _ in
+            guard event.roleKey == "editor" else { return [] }
+            return WebPermissions.allPermissions().map { $0 }
+        }
+
+        registry.register(
             event: WebPageProvider.self,
             context: WebEventContext.self
         ) { _, _ in

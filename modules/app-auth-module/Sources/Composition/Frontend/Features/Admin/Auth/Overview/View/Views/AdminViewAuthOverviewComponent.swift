@@ -86,7 +86,7 @@ struct AdminViewAuthOverviewComponent: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Auth",
                         description:
                             "Manage authentication, credentials, and access control."

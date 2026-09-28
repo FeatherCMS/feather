@@ -26,7 +26,7 @@ struct AuthCredentialTable: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "User credentials",
                         description: "Manage user credentials."
                     )

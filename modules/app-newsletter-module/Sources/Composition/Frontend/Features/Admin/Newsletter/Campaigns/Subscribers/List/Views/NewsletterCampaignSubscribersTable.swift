@@ -30,7 +30,7 @@ struct NewsletterCampaignSubscribersTable: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Campaign subscribers",
                         description: "Manage subscribers for this campaign."
                     )

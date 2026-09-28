@@ -18,17 +18,16 @@ struct AdminEditSettingsDefaultController:
         let targetUserID = context.parameters.get("userId", as: String.self)
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
-        let isTargetUser = targetUserID != nil
-        let canRead = context.isCurrentUserAllowed(
-            to: isTargetUser
-                ? AccountPermissions.Settings.manage
-                : AccountPermissions.Settings.read
-        )
-        let canEdit = context.isCurrentUserAllowed(
-            to: isTargetUser
-                ? AccountPermissions.Settings.manage
-                : AccountPermissions.Settings.update
-        )
+        let canRead =
+            targetUserID == nil
+            || context.isCurrentUserAllowed(
+                to: AccountPermissions.Settings.read
+            )
+        let canEdit =
+            targetUserID == nil
+            || context.isCurrentUserAllowed(
+                to: AccountPermissions.Settings.update
+            )
 
         guard canRead else {
             return try await presenter.renderDeniedPage(
@@ -42,7 +41,6 @@ struct AdminEditSettingsDefaultController:
         return try await presenter.renderPage(
             state: .init(
                 userID: targetUserID,
-                isEdited: request.hasQueryFlag("edited"),
                 canEdit: canEdit,
                 form: .init(
                     language: .init(
@@ -80,12 +78,11 @@ struct AdminEditSettingsDefaultController:
         let targetUserID = context.parameters.get("userId", as: String.self)
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
-        let isTargetUser = targetUserID != nil
-        let canEdit = context.isCurrentUserAllowed(
-            to: isTargetUser
-                ? AccountPermissions.Settings.manage
-                : AccountPermissions.Settings.update
-        )
+        let canEdit =
+            targetUserID == nil
+            || context.isCurrentUserAllowed(
+                to: AccountPermissions.Settings.update
+            )
 
         guard canEdit else {
             return
@@ -107,28 +104,21 @@ struct AdminEditSettingsDefaultController:
                 sessionToken: context.sessionToken
             )
         else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminNotificationRedirect.location(
-                        defaultPath: request.uri.path,
-                        title: "Expired",
-                        message:
-                            "This form has expired. Please reload the page."
-                    )
-                ]
+            return AdminNotificationFlash.redirect(
+                to: request.uri.path,
+                notification: .init(
+                    title: "Expired",
+                    message: "This form has expired. Please reload the page."
+                )
             )
         }
         try await interactor.saveSettings(input: nonceRequest.input)
-        return Response(
-            status: .seeOther,
-            headers: [
-                .location: AdminNotificationRedirect.location(
-                    defaultPath: request.uri.path,
-                    title: "Saved",
-                    message: "Settings edited successfully."
-                )
-            ]
+        return AdminNotificationFlash.redirect(
+            to: request.uri.path,
+            notification: .init(
+                title: "Saved",
+                message: "Settings edited successfully."
+            )
         )
     }
 

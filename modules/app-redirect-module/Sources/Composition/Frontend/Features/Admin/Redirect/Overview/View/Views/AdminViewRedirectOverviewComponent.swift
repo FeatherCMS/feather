@@ -72,7 +72,7 @@ struct AdminViewRedirectOverviewComponent: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Redirect",
                         description:
                             "Manage redirect rules for the application."

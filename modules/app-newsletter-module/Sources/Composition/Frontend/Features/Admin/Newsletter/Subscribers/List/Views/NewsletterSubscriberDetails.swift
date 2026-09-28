@@ -55,7 +55,7 @@ struct NewsletterSubscriberDetails: Component {
                         link: NewsletterAdminRoutes.subscribers.description
                     )
                 ],
-                pageHeader: .init(
+                pageHeader: .primary(
                     title: "Subscriber details",
                     description:
                         "Review campaign subscriptions for this email address."

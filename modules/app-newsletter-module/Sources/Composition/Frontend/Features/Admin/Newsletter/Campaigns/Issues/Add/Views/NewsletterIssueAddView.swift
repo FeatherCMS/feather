@@ -48,7 +48,7 @@ struct NewsletterIssueAddView: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: state.issueId == nil
                             ? "Add campaign issue" : "Edit campaign issue",
                         description:

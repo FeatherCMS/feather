@@ -18,6 +18,7 @@ extension AdminAPIGateway {
         let result = try await useCase.execute(
             subject: subject,
             input: .init(
+                key: body.key,
                 name: body.name,
                 notes: body.notes
             )

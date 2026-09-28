@@ -65,6 +65,12 @@ public struct WebPageFormInput: Codable, Sendable, Equatable, Hashable {
             .emptyToNil
     }
 
+    /// Keeps an explicitly empty value so an edit can clear the current asset.
+    /// A missing value remains `nil` and keeps the existing asset for partial updates.
+    var normalizedImageAssetIdForUpdate: String? {
+        imageAssetId?.whitespaceTrimmed
+    }
+
     func withStatus(
         _ status: String
     ) -> Self {

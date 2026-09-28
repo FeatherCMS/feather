@@ -64,24 +64,23 @@ struct AdminListBlogTagDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove blog tags",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                breadcrumb: BlogAdminRoutes.tagsBreadcrumb,
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove blog tags",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: items.map(\.label),
                 action: BlogAdminRoutes.tagRemove().description,
-                cancel: BlogAdminRoutes.tags.description,
                 nonceToken: nonceToken,
                 hiddenFields: items.map {
                     .init(name: "ids", value: $0.id)
                 }
-            )
+            ),
+            size: .small
         )
     }
 

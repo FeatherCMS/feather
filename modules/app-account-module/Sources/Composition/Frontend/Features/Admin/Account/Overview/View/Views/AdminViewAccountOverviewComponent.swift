@@ -80,7 +80,7 @@ struct AdminViewAccountOverviewComponent: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Account",
                         description:
                             "Manage your profile, settings, and invitations."

@@ -16,20 +16,32 @@ struct AdminAddMediaFolderDefaultPresenter: AdminAddMediaFolderPresenter {
     func renderPage(
         model: AdminAddMediaFolderModel
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        let isDialog = request.queryString("presentation") == "dialog"
+        let content = MediaFolderAddView(
+            state: .init(
+                form: .init(
+                    parentId: model.parentId ?? "",
+                    name: model.name,
+                    view: model.view,
+                    error: model.error
+                ),
+                isDialog: isDialog
+            )
+        )
+        if isDialog {
+            return try await renderEngine.renderNewAdminDialog(
+                request: request,
+                context: context,
+                title: "Add media folder",
+                content: content,
+                size: .small
+            )
+        }
+        return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Add media folder",
-            content: MediaFolderAddView(
-                state: .init(
-                    form: .init(
-                        parentId: model.parentId ?? "",
-                        name: model.name,
-                        view: model.view,
-                        error: model.error
-                    )
-                )
-            )
+            content: content
         )
     }
 

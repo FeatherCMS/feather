@@ -22,7 +22,7 @@ struct AdminAddNewsletterSubscriberView: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add subscriber",
                         description: "Create a newsletter subscriber."
                     )

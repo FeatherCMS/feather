@@ -56,17 +56,42 @@ public struct Client: APIProtocol {
                     method: .post
                 )
                 suppressMutabilityWarning(&request)
+                try converter.setHeaderFieldAsURI(
+                    in: &request.headerFields,
+                    name: "X-Media-Asset-Parent-ID",
+                    value: input.headers.xMediaAssetParentID
+                )
+                try converter.setHeaderFieldAsURI(
+                    in: &request.headerFields,
+                    name: "X-Media-Asset-File-Name",
+                    value: input.headers.xMediaAssetFileName
+                )
+                try converter.setHeaderFieldAsURI(
+                    in: &request.headerFields,
+                    name: "X-Media-Asset-Extension",
+                    value: input.headers.xMediaAssetExtension
+                )
+                try converter.setHeaderFieldAsURI(
+                    in: &request.headerFields,
+                    name: "X-Media-Asset-Title",
+                    value: input.headers.xMediaAssetTitle
+                )
+                try converter.setHeaderFieldAsURI(
+                    in: &request.headerFields,
+                    name: "X-Media-Asset-Alt-Text",
+                    value: input.headers.xMediaAssetAltText
+                )
                 converter.setAcceptHeader(
                     in: &request.headerFields,
                     contentTypes: input.headers.accept
                 )
                 let body: OpenAPIRuntime.HTTPBody?
                 switch input.body {
-                case .json(let value):
-                    body = try converter.setRequiredRequestBodyAsJSON(
+                case .binary(let value):
+                    body = try converter.setRequiredRequestBodyAsBinary(
                         value,
                         headerFields: &request.headerFields,
-                        contentType: "application/json; charset=utf-8"
+                        contentType: "application/octet-stream"
                     )
                 }
                 return (request, body)
@@ -103,6 +128,8 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init())
                 case 403:
                     return .forbidden(.init())
+                case 409:
+                    return .conflict(.init())
                 default:
                     return .undocumented(
                         statusCode: response.status.code,
@@ -643,6 +670,8 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init())
                 case 403:
                     return .forbidden(.init())
+                case 409:
+                    return .conflict(.init())
                 default:
                     return .undocumented(
                         statusCode: response.status.code,

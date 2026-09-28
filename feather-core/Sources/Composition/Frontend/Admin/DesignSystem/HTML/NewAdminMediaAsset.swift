@@ -62,4 +62,8 @@ public struct NewAdminMediaAsset: Sendable, Equatable, Codable, Hashable {
     public var previewURL: String? {
         variants.first { $0.key == "preview" }?.url
     }
+
+    public var coverURL: String? {
+        variants.first { $0.key == "cover" }?.url
+    }
 }

@@ -27,7 +27,7 @@ struct ContactFormSubmissionDetailsView: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Contact form submission",
                         description:
                             "Review the submitted values and processing status."

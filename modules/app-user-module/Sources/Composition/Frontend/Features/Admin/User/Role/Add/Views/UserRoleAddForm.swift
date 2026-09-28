@@ -5,17 +5,20 @@ import WebComponents
 
 struct UserRoleAddForm: Component {
     struct State: Sendable {
+        var key: NewAdminFormFieldInput.State
         var name: NewAdminFormFieldInput.State
         var notes: NewAdminFormFieldTextArea.State
         var error: String?
 
         mutating func apply(errors: [String: String]) {
+            key.error = errors[key.name]
             name.error = errors[name.name]
             notes.error = errors[notes.name]
         }
 
         static func addEmpty() -> Self {
             .init(
+                key: .init(name: "key", label: "Key", isRequired: true),
                 name: .init(name: "name", label: "Name", isRequired: true),
                 notes: .init(name: "notes", label: "Notes", style: .small),
                 error: nil
@@ -24,6 +27,12 @@ struct UserRoleAddForm: Component {
 
         static func from(input: AdminAddUserRoleFormInput) -> Self {
             .init(
+                key: .init(
+                    name: "key",
+                    label: "Key",
+                    value: input.normalizedKey,
+                    isRequired: true
+                ),
                 name: .init(
                     name: "name",
                     label: "Name",
@@ -54,6 +63,7 @@ struct UserRoleAddForm: Component {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
+            context.build(NewAdminFormFieldInput(state: state.key))
             context.build(NewAdminFormFieldInput(state: state.name))
             context.build(NewAdminFormFieldTextArea(state: state.notes))
             Div {

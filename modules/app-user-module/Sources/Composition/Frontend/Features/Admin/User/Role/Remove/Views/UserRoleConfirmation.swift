@@ -12,14 +12,12 @@ struct UserRoleConfirmation: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
             NewAdminRemoveConfirmation(
-                breadcrumb: UserRoleRoutes.breadcrumb,
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove user role",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: [name.emptyToNil ?? id],
                 action: UserRoleRoutes.remove(RouterPath(id)).description,
-                cancel: UserRoleRoutes.details(RouterPath(id)).description,
                 hiddenFields: nonceToken.map {
                     [
                         .init(name: "ids", value: id),

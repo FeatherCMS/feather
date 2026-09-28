@@ -20,7 +20,7 @@ struct AdminAddMediaAsset {
                 (
                     interactor: AdminAddMediaAssetDefaultInteractor(
                         repository: AdminAddMediaAssetOpenAPIRepository(
-                            api: apiBuilder.makeMediaAdmin(context)
+                            api: apiBuilder.makeMediaUploadAdmin(context)
                         )
                     ),
                     presenter: AdminAddMediaAssetDefaultPresenter(

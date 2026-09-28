@@ -17,25 +17,24 @@ struct AdminRemoveMediaVariantDefaultPresenter: AdminRemoveMediaVariantPresenter
             path: MediaVariantRoutes.list.description,
             returnTo: returnTo
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove media variants",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                breadcrumb: MediaVariantRoutes.breadcrumb,
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove selected variants",
                     description:
                         "You’re about to permanently remove the selected media variants. This action cannot be undone."
                 ),
                 selectedItems: items.map(\.label),
                 action: MediaVariantRoutes.remove.description,
-                cancel: cancel,
                 hiddenFields: items.map { .init(name: "ids", value: $0.id) } + [
                     .init(name: "_nonce", value: nonce),
                     .init(name: "returnTo", value: cancel),
                 ]
-            )
+            ),
+            size: .small
         )
     }
 

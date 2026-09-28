@@ -84,7 +84,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/hummingbird-project/swift-mustache",
-            from: "2.0.0"
+            from: "2.1.1"
         ),
         .package(
             url: "https://github.com/apple/swift-markdown",
@@ -129,6 +129,8 @@ let package = Package(
         .target(
             name: "WebInfrastructure",
             dependencies: [
+                .product(name: "MediaDomain", package: "app-media-module"),
+                .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
 
                 .target(name: "WebApplication"),

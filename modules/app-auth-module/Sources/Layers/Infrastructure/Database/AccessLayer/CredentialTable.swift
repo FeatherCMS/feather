@@ -3,51 +3,12 @@ import FeatherInfrastructure
 
 public import struct Foundation.Date
 
-extension CredentialTable.Row {
-
-    fileprivate init(
-        from row: any DatabaseRow,
-        includesIdentityName: Bool = false
-    ) throws {
-        self.init(
-            id: try row.decode(column: "id", as: String.self),
-            authEmailId: try row.decode(
-                column: "auth_email_id",
-                as: String.self
-            ),
-            userId: try row.decode(
-                column: "user_id",
-                as: String.self
-            ),
-            email: try row.decode(column: "email", as: String.self),
-            identityName: includesIdentityName
-                ? try row.decode(column: "identity_name", as: String?.self)
-                : nil,
-            passwordHash: try row.decode(
-                column: "password_hash",
-                as: String.self
-            ),
-            createdAt: try row.decode(
-                column: "created_at",
-                as: Date.self
-            ),
-            updatedAt: try row.decode(
-                column: "updated_at",
-                as: Date.self
-            )
-        )
-    }
-}
-
 public struct CredentialTable {
 
     public struct Row: Sendable {
 
         public let id: String
         public let authEmailId: String
-        public let userId: String
-        public let identityName: String?
-        public let email: String
         public let passwordHash: String
         public let createdAt: Date
         public let updatedAt: Date
@@ -55,25 +16,42 @@ public struct CredentialTable {
         public init(
             id: String,
             authEmailId: String,
-            userId: String,
-            email: String,
-            identityName: String? = nil,
             passwordHash: String,
             createdAt: Date,
             updatedAt: Date
         ) {
             self.id = id
             self.authEmailId = authEmailId
-            self.userId = userId
-            self.email = email
-            self.identityName = identityName
             self.passwordHash = passwordHash
             self.createdAt = createdAt
             self.updatedAt = updatedAt
         }
     }
 
-    public let connection: any DatabaseConnection
+    public struct QueryRow: Sendable {
+
+        public let credential: Row
+        public let userId: String
+        public let identityName: String?
+        public let email: String
+
+        fileprivate init(
+            from row: any DatabaseRow
+        ) throws {
+            self.credential = try Row(from: row)
+            self.userId = try row.decode(
+                column: "user_id",
+                as: String.self
+            )
+            self.identityName = try row.decode(
+                column: "identity_name",
+                as: String?.self
+            )
+            self.email = try row.decode(column: "email", as: String.self)
+        }
+    }
+
+    fileprivate let connection: any DatabaseConnection
 
     public init(
         connection: any DatabaseConnection
@@ -87,10 +65,11 @@ public struct CredentialTable {
         orderBy: String,
         limit: Int,
         offset: Int
-    ) async throws -> [Row] {
+    ) async throws -> [QueryRow] {
         try await connection.run(
             query: #"""
-                SELECT auth_email_credential.*, auth_email.identity_id AS user_id,
+                SELECT auth_email_credential.*,
+                    auth_email.identity_id AS user_id,
                     auth_email.email AS email,
                     user_identity.name AS identity_name
                 FROM auth_email_credential
@@ -114,10 +93,7 @@ public struct CredentialTable {
                 OFFSET \#(offset);
                 """#
         ) { sequence in
-            try await sequence.collect()
-                .map {
-                    try Row(from: $0, includesIdentityName: true)
-                }
+            try await sequence.collect().map(QueryRow.init(from:))
         }
     }
 
@@ -158,12 +134,9 @@ public struct CredentialTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT auth_email_credential.*, auth_email.identity_id AS user_id,
-                    auth_email.email AS email
+                SELECT *
                 FROM auth_email_credential
-                INNER JOIN auth_email
-                    ON auth_email.id = auth_email_credential.auth_email_id
-                WHERE auth_email_credential.id=\#(id)
+                WHERE id=\#(id)
                 LIMIT 1;
                 """#
         ) { sequence in
@@ -179,8 +152,7 @@ public struct CredentialTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT auth_email_credential.*, auth_email.identity_id AS user_id,
-                    auth_email.email AS email
+                SELECT auth_email_credential.*
                 FROM auth_email_credential
                 INNER JOIN auth_email
                     ON auth_email.id = auth_email_credential.auth_email_id
@@ -200,8 +172,7 @@ public struct CredentialTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT auth_email_credential.*, auth_email.identity_id AS user_id,
-                    auth_email.email AS email
+                SELECT auth_email_credential.*
                 FROM auth_email_credential
                 INNER JOIN auth_email
                     ON auth_email.id = auth_email_credential.auth_email_id
@@ -216,33 +187,101 @@ public struct CredentialTable {
         }
     }
 
+    public func findDetail(
+        id: String
+    ) async throws -> QueryRow? {
+        try await connection.run(
+            query: #"""
+                SELECT auth_email_credential.*,
+                    auth_email.identity_id AS user_id,
+                    auth_email.email AS email,
+                    user_identity.name AS identity_name
+                FROM auth_email_credential
+                INNER JOIN auth_email
+                    ON auth_email.id = auth_email_credential.auth_email_id
+                INNER JOIN user_identity
+                    ON user_identity.id = auth_email.identity_id
+                WHERE auth_email_credential.id=\#(id)
+                LIMIT 1;
+                """#
+        ) { sequence in
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
+            return try QueryRow(from: row)
+        }
+    }
+
+    public func findDetailBy(
+        userId: String
+    ) async throws -> QueryRow? {
+        try await connection.run(
+            query: #"""
+                SELECT auth_email_credential.*,
+                    auth_email.identity_id AS user_id,
+                    auth_email.email AS email,
+                    user_identity.name AS identity_name
+                FROM auth_email_credential
+                INNER JOIN auth_email
+                    ON auth_email.id = auth_email_credential.auth_email_id
+                INNER JOIN user_identity
+                    ON user_identity.id = auth_email.identity_id
+                WHERE auth_email.identity_id=\#(userId)
+                LIMIT 1;
+                """#
+        ) { sequence in
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
+            return try QueryRow(from: row)
+        }
+    }
+
+    public func findDetailBy(
+        email: String
+    ) async throws -> QueryRow? {
+        try await connection.run(
+            query: #"""
+                SELECT auth_email_credential.*,
+                    auth_email.identity_id AS user_id,
+                    auth_email.email AS email,
+                    user_identity.name AS identity_name
+                FROM auth_email_credential
+                INNER JOIN auth_email
+                    ON auth_email.id = auth_email_credential.auth_email_id
+                INNER JOIN user_identity
+                    ON user_identity.id = auth_email.identity_id
+                WHERE auth_email.email=\#(email)
+                LIMIT 1;
+                """#
+        ) { sequence in
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
+            return try QueryRow(from: row)
+        }
+    }
+
     public func save(
         row: Row
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                WITH inserted AS (
-                    INSERT INTO auth_email_credential (
+                INSERT INTO auth_email_credential (
                     id,
                     auth_email_id,
                     password_hash,
                     created_at,
                     updated_at
                 )
-                    VALUES (
-                        \#(row.id),
-                        \#(row.authEmailId),
-                        \#(row.passwordHash),
-                        NOW(),
-                        NOW()
-                    )
-                    RETURNING *
+                VALUES (
+                    \#(row.id),
+                    \#(row.authEmailId),
+                    \#(row.passwordHash),
+                    NOW(),
+                    NOW()
                 )
-                SELECT inserted.*, auth_email.identity_id AS user_id,
-                    auth_email.email AS email
-                FROM inserted
-                INNER JOIN auth_email
-                    ON auth_email.id = inserted.auth_email_id;
+                RETURNING *;
                 """#
         ) { sequence in
             guard let row = try await sequence.collect().first else {
@@ -258,21 +297,14 @@ public struct CredentialTable {
     ) async throws -> Row? {
         try await connection.run(
             query: #"""
-                WITH updated AS (
-                    UPDATE auth_email_credential
-                    SET
-                        id=\#(row.id),
-                        auth_email_id=\#(row.authEmailId),
-                        password_hash=\#(row.passwordHash),
-                        updated_at=NOW()
-                    WHERE id=\#(id)
-                    RETURNING *
-                )
-                SELECT updated.*, auth_email.identity_id AS user_id,
-                    auth_email.email AS email
-                FROM updated
-                INNER JOIN auth_email
-                    ON auth_email.id = updated.auth_email_id;
+                UPDATE auth_email_credential
+                SET
+                    id=\#(row.id),
+                    auth_email_id=\#(row.authEmailId),
+                    password_hash=\#(row.passwordHash),
+                    updated_at=NOW()
+                WHERE id=\#(id)
+                RETURNING *;
                 """#
         ) { sequence in
             guard let row = try await sequence.collect().first else {
@@ -303,5 +335,32 @@ public struct CredentialTable {
                     try $0.decode(column: "id", as: String.self)
                 }
         }
+    }
+}
+
+extension CredentialTable.Row {
+
+    fileprivate init(
+        from row: any DatabaseRow
+    ) throws {
+        self.init(
+            id: try row.decode(column: "id", as: String.self),
+            authEmailId: try row.decode(
+                column: "auth_email_id",
+                as: String.self
+            ),
+            passwordHash: try row.decode(
+                column: "password_hash",
+                as: String.self
+            ),
+            createdAt: try row.decode(
+                column: "created_at",
+                as: Date.self
+            ),
+            updatedAt: try row.decode(
+                column: "updated_at",
+                as: Date.self
+            )
+        )
     }
 }

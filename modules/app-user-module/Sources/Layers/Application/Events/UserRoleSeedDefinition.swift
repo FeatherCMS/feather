@@ -1,14 +1,14 @@
 public struct UserRoleSeedDefinition: Sendable, Hashable, Codable {
-    public let id: String
+    public let key: String
     public let name: String?
     public let notes: String?
 
     public init(
-        id: String,
+        key: String,
         name: String? = nil,
         notes: String? = nil
     ) {
-        self.id = id
+        self.key = key
         self.name = name
         self.notes = notes
     }

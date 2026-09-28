@@ -36,8 +36,10 @@ This file documents the backend permission keys and what they allow a user to do
 
 ## Account
 
-- `account:settings:read`: View the current account settings.
-- `account:settings:update`: Edit the current account settings.
+- `account:profile:read`: View another user's profile. Viewing your own profile does not require this permission.
+- `account:profile:update`: Edit another user's profile. Editing your own profile does not require this permission.
+- `account:settings:read`: View another user's settings. Viewing your own settings does not require this permission.
+- `account:settings:update`: Edit another user's settings. Editing your own settings does not require this permission.
 
 ## User
 
@@ -160,22 +162,10 @@ This file documents the backend permission keys and what they allow a user to do
 - `media:variant-processors:list`: List processor rules inside a variant.
 - `media:variant-processors:delete`: Delete processor rules inside a variant.
 
-## Effective Permission Rules
-
-- `user:accounts:me` grants effective access to:
-  - `auth:profile:read`
-  - `auth:profile:update`
-  - `account:settings:read`
-  - `account:settings:update`
-
-- `auth:profile:update` also grants effective `auth:profile:read`.
-- `account:settings:update` also grants effective `account:settings:read`.
-- `blog:settings:update` also grants effective `blog:settings:read`.
-- `web:settings:update` also grants effective `web:settings:read`.
-
 ## Review Notes
 
 - `auth:admin:access` is the explicit gate for entering the admin dashboard and admin application shell.
 - `root` is still treated as a backend superuser and bypasses granular permission checks in the authorizer.
-- `user:accounts:me` is not a dead permission. The backend authorizer uses it to derive effective self-service profile and settings access.
+- Self-service profile and settings use cases compare the requested user ID with the authenticated subject and intentionally bypass the corresponding account permission for the current user.
+- Permissions are evaluated as assigned; the authorizer does not derive additional permission keys.
 - `auth:sessions:create` and `auth:sessions:update` are potential cleanup candidates. They are declared today, but the current server surface does not appear to expose admin routes that use them directly.

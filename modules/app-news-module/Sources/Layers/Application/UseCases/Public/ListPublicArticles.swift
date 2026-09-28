@@ -39,10 +39,12 @@ public struct ListPublicArticles {
                 let trimmedSearch = search.trimmingCharacters(
                     in: .whitespacesAndNewlines
                 )
-                normalizedSearch = trimmedSearch.isEmpty
+                normalizedSearch =
+                    trimmedSearch.isEmpty
                     ? nil
                     : trimmedSearch
-            } else {
+            }
+            else {
                 normalizedSearch = nil
             }
             let baseQuery = ArticleList.Query(

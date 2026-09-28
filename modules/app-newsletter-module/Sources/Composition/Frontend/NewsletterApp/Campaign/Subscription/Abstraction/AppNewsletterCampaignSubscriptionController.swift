@@ -19,7 +19,7 @@ extension AppNewsletterCampaignSubscriptionController {
         on router: Router<DefaultRequestContext>
     ) {
         router.post(
-            "/newsletter/campaigns/:campaignId/subscribe",
+            "/api/v1/newsletter/campaigns/:campaignId/subscribe",
             use: subscribe
         )
     }

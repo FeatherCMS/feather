@@ -1,16 +1,13 @@
 public import Mustache
 
-public struct TemplateMetadata: Sendable, Equatable {
+public struct TemplateMetadata: Sendable {
 
-    public let stylesheets: [String]
-    public let scripts: [String]
+    public let context: [String: any Sendable]
 
     public init(
-        stylesheets: [String] = [],
-        scripts: [String] = []
+        context: [String: any Sendable] = [:]
     ) {
-        self.stylesheets = stylesheets
-        self.scripts = scripts
+        self.context = context
     }
 }
 
@@ -19,9 +16,9 @@ public protocol TemplateLoader: Sendable {
     func loadMetadata() throws -> [String: TemplateMetadata]
 }
 
-public extension TemplateLoader {
+extension TemplateLoader {
 
-    func loadMetadata() throws -> [String: TemplateMetadata] {
+    public func loadMetadata() throws -> [String: TemplateMetadata] {
         [:]
     }
 }

@@ -13,15 +13,24 @@ extension AdminAPIGateway {
         }
 
         let subject = try await CurrentSubject.require()
-        let result = try await self.useCases.makeCreateFolder()
-            .execute(
-                subject: subject,
-                input: .init(
-                    parentId: (body.parentId ?? "").emptyToNil,
-                    name: body.name
+        do {
+            let result = try await self.useCases.makeCreateFolder()
+                .execute(
+                    subject: subject,
+                    input: .init(
+                        parentId: (body.parentId ?? "").emptyToNil,
+                        name: body.name
+                    )
                 )
-            )
-
-        return .created(.init(body: .json(map(result))))
+            return .created(.init(body: .json(map(result))))
+        }
+        catch let error as CreateMediaFolder.Error {
+            switch error {
+            case .duplicatePath:
+                return .conflict(.init())
+            case .invalidName, .parentNotFound:
+                throw error
+            }
+        }
     }
 }

@@ -9,6 +9,7 @@ struct AdminAddUserRoleDefaultInteractor: AdminAddUserRoleInteractor {
         do {
             try await repository.create(
                 payload: .init(
+                    key: input.normalizedKey,
                     name: input.normalizedName,
                     notes: input.normalizedNotes
                 )

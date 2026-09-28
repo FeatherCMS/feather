@@ -1,4 +1,5 @@
 public import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -18,6 +19,7 @@ extension NewAdminMediaAsset {
         schema: MediaAdminAPI.Components.Schemas.MediaAssetDetailSchema,
         variants: [NewAdminMediaAssetVariant]
     ) {
+        let title = schema.title?.whitespaceTrimmed
         self.init(
             id: schema.id,
             name: schema.name,
@@ -27,7 +29,7 @@ extension NewAdminMediaAsset {
             contentType: schema.contentType,
             sizeBytes: schema.sizeBytes,
             variants: variants,
-            title: schema.title,
+            title: title?.isEmpty == false ? title : schema.name,
             altText: schema.altText,
             status: schema.status
         )

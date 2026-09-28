@@ -39,7 +39,6 @@ struct WebPageForm: Component {
     var metadataHref: String? = nil
     var action: String
     var submitLabel: String
-    var publishLabel: String? = nil
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
@@ -95,8 +94,10 @@ struct WebPageForm: Component {
                             )
                         },
                         browsePath:
-                            "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
-                        allowedExtensions: ["png", "jpg", "jpeg", "webp"]
+                            "/admin/media/assets/?picker=1&field=\(state.imageAssetId.key.queryEncoded())&extensions=\(AllowedExtensions.images.queryValue)",
+                        defaultFolderPath: "web/pages",
+                        allowedExtensions: .images,
+                        previewStyle: .wide
                     )
                 )
             )
@@ -118,19 +119,13 @@ struct WebPageForm: Component {
                         key: state.content.key,
                         label: state.content.label,
                         value: state.content.value,
-                        error: state.content.error
+                        error: state.content.error,
+                        mediaFolderPath: "web/pages"
                     )
                 )
             )
             Div {
                 context.build(NewAdminSubmitButton(submitLabel))
-                if let publishLabel {
-                    Button(publishLabel)
-                        .type(.submit)
-                        .name("submitAction")
-                        .value("publish")
-                        .class("button", "secondary")
-                }
                 if let removeHref {
                     context.build(
                         NewAdminButton(

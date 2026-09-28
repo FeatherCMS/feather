@@ -25,12 +25,11 @@ struct WebPageEdit: Component {
 
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit page",
                         description:
                             "Update the page content and publication settings.",
-                        previewHref: previewPath
-                    )
+                        preview: .init(label: "Preview", href: previewPath))
                 )
             )
             context.build(

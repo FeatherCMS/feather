@@ -159,7 +159,7 @@ struct AnalyticsInsightsView: Component {
                 context.build(NewAdminBreadcrumb(links: breadcrumb))
                 context.build(
                     NewAdminPageHeader(
-                        state: .init(
+                        state: .primary(
                             title: page.source.pageTitle,
                             description: page.source.summary
                         )

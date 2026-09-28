@@ -61,23 +61,17 @@ struct AdminListAuthMagicLinkDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove selected magic links",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                breadcrumb: AuthMagicLinkRoutes.listBreadcrumb,
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove selected magic links",
                     description: "Review the selected links before removal."
                 ),
                 selectedItems: items.map(\.label),
                 action: "/admin/auth/magic-links/remove/",
-                cancel: listLocation(
-                    page: page,
-                    search: search,
-                    userID: userID
-                ),
                 nonceToken: nonceToken,
                 hiddenFields: [
                     .init(name: "page", value: "\(page)"),
@@ -87,7 +81,8 @@ struct AdminListAuthMagicLinkDefaultPresenter:
                     + items.map {
                         .init(name: "ids", value: $0.id)
                     }
-            )
+            ),
+            size: .small
         )
     }
 

@@ -26,7 +26,7 @@ struct ContactFormEmailsTable: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Contact form emails",
                         description:
                             "Configure delivery messages for this contact form."

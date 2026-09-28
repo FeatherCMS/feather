@@ -152,7 +152,11 @@ public struct GenerateMediaAssetVariants: UseCase {
                 let variants = try generatedOutputs.map { output in
                     guard
                         let storageObjectID = storageObjectIDs[output.objectKey]
-                    else { throw Error.assetNotFound }
+                    else {
+                        throw Error.outputMissing(
+                            processorName: output.plan.processor.name
+                        )
+                    }
                     return MediaAssetNodeFileVariant.create(
                         nodeId: prepared.asset.id,
                         variantId: output.plan.variant.id,

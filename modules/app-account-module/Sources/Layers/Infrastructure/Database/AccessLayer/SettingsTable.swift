@@ -57,7 +57,7 @@ struct SettingsTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                INSERT INTO settings (
+                INSERT INTO account_settings (
                     id,
                     user_id,
                     language,
@@ -91,7 +91,7 @@ struct SettingsTable {
         try await connection.run(
             query: #"""
                 SELECT *
-                FROM settings
+                FROM account_settings
                 WHERE user_id = \#(userId)
                 LIMIT 1;
                 """#
@@ -109,7 +109,7 @@ struct SettingsTable {
     ) async throws -> Row {
         try await connection.run(
             query: #"""
-                UPDATE settings
+                UPDATE account_settings
                 SET
                     user_id = \#(row.userId),
                     language = \#(row.language),
@@ -132,7 +132,7 @@ struct SettingsTable {
     ) async throws {
         _ = try await connection.run(
             query: #"""
-                DELETE FROM settings
+                DELETE FROM account_settings
                 WHERE user_id = \#(userId);
                 """#
         ) { sequence in

@@ -23,7 +23,7 @@ struct SystemJobTable: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Worker jobs",
                         description: "Inspect jobs processed by the workers."
                     )

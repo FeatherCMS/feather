@@ -28,7 +28,7 @@ struct ContactFormSubmissionsTable: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Contact form submissions",
                         description: "Review submissions for this contact form."
                     )

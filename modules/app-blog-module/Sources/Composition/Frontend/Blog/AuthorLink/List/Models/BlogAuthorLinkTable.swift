@@ -41,7 +41,7 @@ struct BlogAuthorLinkTable: Component {
             else {
                 context.build(
                     NewAdminPageHeader(
-                        state: .init(
+                        state: .primary(
                             title: "Blog author links",
                             description: "Manage links shown for this author."
                         )

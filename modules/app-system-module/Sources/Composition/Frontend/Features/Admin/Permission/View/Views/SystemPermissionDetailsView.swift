@@ -19,7 +19,7 @@ struct SystemPermissionDetailsView: Component {
         context.build(
             NewAdminDetailView(
                 breadcrumb: SystemPermissionRoutes.breadcrumb,
-                pageHeader: .init(
+                pageHeader: .primary(
                     title: "Permission details",
                     description: "System permission details."
                 ),

@@ -112,9 +112,12 @@ let package = Package(
             name: "AccountApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherDomain", package: "feather-core"),
 
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "AuthDomain", package: "app-auth-module"),
                 .product(name: "UserApplication", package: "app-user-module"),
+                .product(name: "UserDomain", package: "app-user-module"),
 
                 .target(name: "AccountDomain"),
             ],
@@ -125,6 +128,10 @@ let package = Package(
             name: "AccountInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
+
+                .product(name: "AuthInfrastructure", package: "app-auth-module"),
+                .product(name: "UserInfrastructure", package: "app-user-module"),
+                .product(name: "SystemApplication", package: "app-system-module"),
 
                 .target(name: "AccountApplication"),
             ],

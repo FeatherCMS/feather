@@ -19,6 +19,26 @@ public enum Operations {
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/POST/header`.
             public struct Headers: Sendable, Hashable {
+                /// Optional parent folder id
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/POST/header/X-Media-Asset-Parent-ID`.
+                public var xMediaAssetParentID: Swift.String?
+                /// Original file name
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/POST/header/X-Media-Asset-File-Name`.
+                public var xMediaAssetFileName: Swift.String
+                /// Canonical file extension
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/POST/header/X-Media-Asset-Extension`.
+                public var xMediaAssetExtension: Swift.String
+                /// Optional asset title
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/POST/header/X-Media-Asset-Title`.
+                public var xMediaAssetTitle: Swift.String?
+                /// Optional alternative text
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/POST/header/X-Media-Asset-Alt-Text`.
+                public var xMediaAssetAltText: Swift.String?
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
                         Operations.MediaAssetCreate.AcceptableContentType
@@ -26,26 +46,45 @@ public enum Operations {
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
+                ///   - xMediaAssetParentID: Optional parent folder id
+                ///   - xMediaAssetFileName: Original file name
+                ///   - xMediaAssetExtension: Canonical file extension
+                ///   - xMediaAssetTitle: Optional asset title
+                ///   - xMediaAssetAltText: Optional alternative text
                 ///   - accept:
                 public init(
+                    xMediaAssetParentID: Swift.String? = nil,
+                    xMediaAssetFileName: Swift.String,
+                    xMediaAssetExtension: Swift.String,
+                    xMediaAssetTitle: Swift.String? = nil,
+                    xMediaAssetAltText: Swift.String? = nil,
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
                         Operations.MediaAssetCreate.AcceptableContentType
                     >] = .defaultValues()
                 ) {
+                    self.xMediaAssetParentID = xMediaAssetParentID
+                    self.xMediaAssetFileName = xMediaAssetFileName
+                    self.xMediaAssetExtension = xMediaAssetExtension
+                    self.xMediaAssetTitle = xMediaAssetTitle
+                    self.xMediaAssetAltText = xMediaAssetAltText
                     self.accept = accept
                 }
             }
             public var headers: Operations.MediaAssetCreate.Input.Headers
-            public var body:
-                Components.RequestBodies.MediaAssetCreateRequestBody
+            /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/POST/requestBody`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/media/assets/POST/requestBody/content/application\/octet-stream`.
+                case binary(OpenAPIRuntime.HTTPBody)
+            }
+            public var body: Operations.MediaAssetCreate.Input.Body
             /// Creates a new `Input`.
             ///
             /// - Parameters:
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.MediaAssetCreate.Input.Headers = .init(),
-                body: Components.RequestBodies.MediaAssetCreateRequestBody
+                headers: Operations.MediaAssetCreate.Input.Headers,
+                body: Operations.MediaAssetCreate.Input.Body
             ) {
                 self.headers = headers
                 self.body = body
@@ -70,6 +109,41 @@ public enum Operations {
                     default:
                         try throwUnexpectedResponseStatus(
                             expectedStatus: "created",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Conflict: Sendable, Hashable {
+                /// Creates a new `Conflict`.
+                public init() {}
+            }
+            /// A media asset with this path already exists
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/post(mediaAssetCreate)/responses/409`.
+            ///
+            /// HTTP response code: `409 conflict`.
+            case conflict(Operations.MediaAssetCreate.Output.Conflict)
+            /// A media asset with this path already exists
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/post(mediaAssetCreate)/responses/409`.
+            ///
+            /// HTTP response code: `409 conflict`.
+            public static var conflict: Self {
+                .conflict(.init())
+            }
+            /// The associated value of the enum case if `self` is `.conflict`.
+            ///
+            /// - Throws: An error if `self` is not `.conflict`.
+            /// - SeeAlso: `.conflict`.
+            public var conflict: Operations.MediaAssetCreate.Output.Conflict {
+                get throws {
+                    switch self {
+                    case .conflict(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "conflict",
                             response: self
                         )
                     }
@@ -1507,6 +1581,41 @@ public enum Operations {
                     default:
                         try throwUnexpectedResponseStatus(
                             expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Conflict: Sendable, Hashable {
+                /// Creates a new `Conflict`.
+                public init() {}
+            }
+            /// A media folder with this path already exists
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/post(mediaFolderCreate)/responses/409`.
+            ///
+            /// HTTP response code: `409 conflict`.
+            case conflict(Operations.MediaFolderCreate.Output.Conflict)
+            /// A media folder with this path already exists
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/media/folders/post(mediaFolderCreate)/responses/409`.
+            ///
+            /// HTTP response code: `409 conflict`.
+            public static var conflict: Self {
+                .conflict(.init())
+            }
+            /// The associated value of the enum case if `self` is `.conflict`.
+            ///
+            /// - Throws: An error if `self` is not `.conflict`.
+            /// - SeeAlso: `.conflict`.
+            public var conflict: Operations.MediaFolderCreate.Output.Conflict {
+                get throws {
+                    switch self {
+                    case .conflict(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "conflict",
                             response: self
                         )
                     }

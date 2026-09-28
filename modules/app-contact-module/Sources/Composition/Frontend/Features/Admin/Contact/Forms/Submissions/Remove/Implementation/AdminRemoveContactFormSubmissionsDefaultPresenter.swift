@@ -18,13 +18,12 @@ struct AdminRemoveContactFormSubmissionsDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove contact form submission",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                breadcrumb: ContactAdminRoutes.breadcrumb,
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove contact form submission",
                     description: "This action cannot be undone."
                 ),
@@ -35,11 +34,10 @@ struct AdminRemoveContactFormSubmissionsDefaultPresenter:
                         submissionID: RouterPath(item.id)
                     )
                     .description,
-                cancel: ContactAdminRoutes.formSubmissions(RouterPath(formId))
-                    .description,
-                submitLabel: "Remove submission",
+                submit: .init(label: "Remove submission", style: .destructive),
                 nonceToken: nonceToken
-            )
+            ),
+            size: .small
         )
     }
 
@@ -50,13 +48,12 @@ struct AdminRemoveContactFormSubmissionsDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove contact form submissions",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                breadcrumb: ContactAdminRoutes.breadcrumb,
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove contact form submissions",
                     description: "This action cannot be undone."
                 ),
@@ -64,13 +61,12 @@ struct AdminRemoveContactFormSubmissionsDefaultPresenter:
                 action:
                     ContactAdminRoutes.formSubmissionRemove(RouterPath(formId))
                     .description,
-                cancel: ContactAdminRoutes.formSubmissions(RouterPath(formId))
-                    .description,
                 nonceToken: nonceToken,
                 hiddenFields: items.map {
                     .init(name: "ids", value: $0.id)
                 }
-            )
+            ),
+            size: .small
         )
     }
 

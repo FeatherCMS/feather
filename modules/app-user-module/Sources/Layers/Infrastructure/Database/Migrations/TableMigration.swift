@@ -36,6 +36,7 @@ public struct TableMigration: DatabaseMigration {
             #"""
             CREATE TABLE IF NOT EXISTS user_role (
                 id TEXT PRIMARY KEY,
+                key TEXT NOT NULL UNIQUE,
                 name TEXT,
                 notes TEXT,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),

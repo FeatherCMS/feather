@@ -20,6 +20,7 @@ struct AdminViewUserRoleOpenAPIRepository: AdminViewUserRoleRepository {
                 let role = try ok.body.json
                 return .init(
                     id: role.id,
+                    key: role.key,
                     name: role.name ?? "",
                     notes: role.notes ?? ""
                 )

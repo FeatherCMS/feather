@@ -35,7 +35,7 @@ struct AdminListMediaAssetDefaultInteractor: AdminListMediaAssetInteractor {
             page: page,
             search: search,
             parentId: effectiveParentId,
-            allowedExtensions: picker.allowedExtensions
+            allowedExtensions: picker.allowedExtensions.values
         )
 
         let currentFolder: Components.Schemas.MediaFolderDetailSchema?
@@ -48,7 +48,10 @@ struct AdminListMediaAssetDefaultInteractor: AdminListMediaAssetInteractor {
             currentFolder = nil
         }
         let ancestors = try await loadAncestors(for: currentFolder)
-        let entries = try await loadEntries(result.items)
+        let entries = try await loadEntries(
+            result.items,
+            previewVariant: picker.previewVariant
+        )
         return .init(
             entries: entries,
             pageState: result.pageState,
@@ -65,6 +68,62 @@ struct AdminListMediaAssetDefaultInteractor: AdminListMediaAssetInteractor {
     ) async throws {
         for id in ids {
             try await repository.delete(id: id)
+        }
+    }
+
+    func resolveRemoveItems(
+        ids: [String]
+    ) async throws -> [NewAdminRemoveItemContext] {
+        let assets = try await repository.resolveAssets(ids: ids)
+        let assetsByID = assets.reduce(
+            into: [String: Components.Schemas.MediaAssetResolveItemSchema]()
+        ) { result, asset in
+            result[asset.id] = asset
+        }
+        var result: [NewAdminRemoveItemContext] = []
+        result.reserveCapacity(ids.count)
+        for id in ids {
+            if let asset = assetsByID[id] {
+                result.append(
+                    .init(
+                        id: id,
+                        label: assetFilename(for: asset, id: id)
+                    )
+                )
+                continue
+            }
+            if let folderName = try await folderName(for: id) {
+                result.append(.init(id: id, label: folderName))
+            }
+            else {
+                result.append(.init(id: id, label: id))
+            }
+        }
+        return result
+    }
+
+    private func assetFilename(
+        for asset: Components.Schemas.MediaAssetResolveItemSchema,
+        id: String
+    ) -> String {
+        let path = URL(string: asset.url)?.path ?? asset.url
+        if let filename = path.split(separator: "/").last,
+            !filename.isEmpty
+        {
+            return String(filename).removingPercentEncoding ?? String(filename)
+        }
+        return id
+    }
+
+    private func folderName(for id: String) async throws -> String? {
+        do {
+            return try await repository.getFolder(id: id).name
+        }
+        catch let error as OpenAPIRepositoryError {
+            if case .notFound = error {
+                return nil
+            }
+            throw error
         }
     }
 
@@ -91,7 +150,28 @@ extension AdminListMediaAssetDefaultInteractor {
                 parentId = existing.id
                 continue
             }
-            return nil
+
+            do {
+                try await repository.createFolder(
+                    name: name,
+                    parentId: parentId
+                )
+            }
+            catch let error as OpenAPIRepositoryError {
+                guard case .conflict = error else { throw error }
+            }
+
+            let resolvedFolders = try await repository.listFolders(
+                parentId: parentId
+            )
+            guard
+                let created = resolvedFolders.first(where: {
+                    $0.name.caseInsensitiveCompare(name) == .orderedSame
+                })
+            else {
+                return nil
+            }
+            parentId = created.id
         }
         return parentId
     }
@@ -110,10 +190,17 @@ extension AdminListMediaAssetDefaultInteractor {
     }
 
     fileprivate func loadEntries(
-        _ items: [Components.Schemas.MediaAssetNodeSearchItemSchema]
+        _ items: [Components.Schemas.MediaAssetNodeSearchItemSchema],
+        previewVariant: String?
     ) async throws -> [AdminListMediaAssetModel.EntryItem] {
         let assetIDs = items.compactMap { $0.file?.id }
-        let assets = try await repository.resolveAssets(ids: assetIDs)
+        let variantKeys = previewVariant.map {
+            $0 == "preview" ? [$0] : [$0, "preview"]
+        }
+        let assets = try await repository.resolveAssets(
+            ids: assetIDs,
+            variants: variantKeys
+        )
         let assetsByID = assets.reduce(
             into: [String: Components.Schemas.MediaAssetResolveItemSchema]()
         ) { result, asset in
@@ -126,7 +213,10 @@ extension AdminListMediaAssetDefaultInteractor {
             if let asset = item.file {
                 let preview = assetsByID[asset.id]
                     .flatMap {
-                        preferredPreview(from: $0.variants)
+                        preferredPreview(
+                            from: $0.variants,
+                            key: previewVariant
+                        )
                     }
                 result.append(
                     .asset(
@@ -145,8 +235,14 @@ extension AdminListMediaAssetDefaultInteractor {
     }
 
     private func preferredPreview(
-        from variants: [Components.Schemas.MediaAssetResolveVariantSchema]
+        from variants: [Components.Schemas.MediaAssetResolveVariantSchema],
+        key: String?
     ) -> Components.Schemas.MediaAssetResolveVariantSchema? {
-        variants.first(where: { $0.key == "preview" })
+        if let key,
+            let preferred = variants.first(where: { $0.key == key })
+        {
+            return preferred
+        }
+        return variants.first(where: { $0.key == "preview" })
     }
 }

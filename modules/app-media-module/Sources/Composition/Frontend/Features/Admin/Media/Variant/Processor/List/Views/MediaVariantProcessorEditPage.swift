@@ -19,7 +19,7 @@ struct MediaVariantProcessorEditPage: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit \(processor.name)",
                         description:
                             "Update the processor used by this media variant."

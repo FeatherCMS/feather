@@ -6,47 +6,20 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct RenderingEngineAssetConfiguration: Sendable {
-    public let publicStylesheetPaths: [String]
-    public let adminStylesheetPaths: [String]
-    public let rootStylesheetPath: String?
-
-    public init(
-        publicStylesheetPaths: [String] = [
-            "/admin/base.css",
-            "/admin/style.css",
-            "/admin/toast.css",
-        ],
-        adminStylesheetPaths: [String] = [
-            "/admin/base.css",
-            "/admin/style.css",
-            "/admin/toast.css",
-        ],
-        rootStylesheetPath: String? = nil
-    ) {
-        self.publicStylesheetPaths = publicStylesheetPaths
-        self.adminStylesheetPaths = adminStylesheetPaths
-        self.rootStylesheetPath = rootStylesheetPath
-    }
-}
-
 public struct DefaultRenderingEngine: RenderingEngine {
     public let publicOrigins: AppPublicOriginConfiguration
     public let adminEvents: any EventPublisher
     public let adminPageRenderContextProvider:
         any AdminPageRenderContextProvider
-    public let assets: RenderingEngineAssetConfiguration
 
     public init(
         publicOrigins: AppPublicOriginConfiguration,
         adminEvents: any EventPublisher,
-        adminPageRenderContextProvider: any AdminPageRenderContextProvider,
-        assets: RenderingEngineAssetConfiguration = .init()
+        adminPageRenderContextProvider: any AdminPageRenderContextProvider
     ) {
         self.publicOrigins = publicOrigins
         self.adminEvents = adminEvents
         self.adminPageRenderContextProvider = adminPageRenderContextProvider
-        self.assets = assets
     }
 
     public func renderPublicPage<T: FlowContent>(
@@ -76,14 +49,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
                 noIndex: false
             )
         )
-        var headElements =
-            metadata.children
-            + assets.publicStylesheetPaths.map {
-                Link(rel: .stylesheet).href(stylesheetURL(path: $0))
-            }
-        if let path = assets.rootStylesheetPath {
-            headElements.append(Link(rel: .stylesheet).href(path))
-        }
+        let headElements = metadata.children
         let head = Head(
             elements: headElements.compactMap { $0 as? any MetadataContent }
         )
@@ -122,6 +88,31 @@ public struct DefaultRenderingEngine: RenderingEngine {
         )
     }
 
+    public func renderNewAdminDialog<T: Component>(
+        request: Request,
+        context: AuthenticatedRequestContext,
+        title: String,
+        content: T,
+        size: NewAdminDialogSize = .small
+    ) async throws -> HTMLResponse {
+        var builderContext = BuilderContext()
+        return .init(
+            builderContext.build(
+                NewAdminHTML(
+                    title: title,
+                    body: .init(
+                        content: NewAdminDialog(
+                            title: title,
+                            content: content,
+                            size: size
+                        ),
+                        showsFooter: false
+                    )
+                )
+            )
+        )
+    }
+
     private func normalizedURL(
         base: String,
         path: String
@@ -135,10 +126,6 @@ public struct DefaultRenderingEngine: RenderingEngine {
         if normalizedPath.contains(".") { return url }
         if !url.hasSuffix("/") { url += "/" }
         return url
-    }
-
-    private func stylesheetURL(path: String) -> String {
-        normalizedURL(base: publicOrigins.staticBaseURL, path: path)
     }
 
 }

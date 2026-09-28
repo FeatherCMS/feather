@@ -20,16 +20,6 @@ struct AdminEditAccountProfileDefaultController:
         let account = context.account
 
         let permissions = account.permissionSet
-        guard
-            context.isCurrentUserAllowed(
-                to: AccountPermissions.Profile.update
-            )
-        else {
-            return try await presenter.renderDeniedPage(
-                permissions: permissions
-            )
-        }
-
         let profile = try await interactor.loadProfile(account: account)
         return try await presenter.renderPage(
             state: .init(
@@ -55,16 +45,6 @@ struct AdminEditAccountProfileDefaultController:
         let account = context.account
 
         let permissions = account.permissionSet
-        guard
-            context.isCurrentUserAllowed(
-                to: AccountPermissions.Profile.update
-            )
-        else {
-            return
-                try await presenter.renderDeniedPage(permissions: permissions)
-                .response(from: request, context: context)
-        }
-
         let profile = try await interactor.loadProfile(account: account)
         let nonceRequest = try await request.decode(
             as: NonceRequest<AdminEditAccountProfileFormInput>.self,

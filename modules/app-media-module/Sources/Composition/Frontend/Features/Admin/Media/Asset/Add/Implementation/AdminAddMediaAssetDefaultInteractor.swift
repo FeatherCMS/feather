@@ -1,5 +1,7 @@
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
+import Foundation
 import HTML
 import Hummingbird
 import MediaAdminAPI
@@ -10,6 +12,49 @@ import WebComponents
 
 struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
     let repository: AdminAddMediaAssetOpenAPIRepository
+
+    func folderID(forPath path: String) async throws -> String? {
+        let components =
+            path
+            .split(separator: "/")
+            .map { $0.whitespaceTrimmed }
+            .filter { !$0.isEmpty }
+        guard !components.isEmpty else { return nil }
+
+        var parentID: String?
+        for name in components {
+            let folders = try await repository.listFolders(parentId: parentID)
+            if let folder = folders.first(where: {
+                $0.name.caseInsensitiveCompare(name) == .orderedSame
+            }) {
+                parentID = folder.id
+                continue
+            }
+
+            do {
+                try await repository.createFolder(
+                    name: name,
+                    parentId: parentID
+                )
+            }
+            catch let error as OpenAPIRepositoryError {
+                guard case .conflict = error else { throw error }
+            }
+
+            let resolvedFolders = try await repository.listFolders(
+                parentId: parentID
+            )
+            guard
+                let folder = resolvedFolders.first(where: {
+                    $0.name.caseInsensitiveCompare(name) == .orderedSame
+                })
+            else {
+                return nil
+            }
+            parentID = folder.id
+        }
+        return parentID
+    }
 
     func getAddMediaAsset() async throws -> AdminAddMediaAssetModel {
         .init(
@@ -28,10 +73,14 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
     }
 
     func postAddMediaAsset(
-        payload: AssetAddForm
+        payload: AssetAddUpload,
+        variants: [String]?
     ) async throws -> AdminAddMediaAssetModel {
         do {
-            let asset = try await repository.createAsset(payload: payload)
+            let asset = try await repository.createAsset(
+                payload: payload,
+                variants: variants
+            )
             return .init(
                 parentId: "",
                 fileName: "",
@@ -43,24 +92,48 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
                 view: payload.view,
                 action: "/admin/media/assets/add/",
                 isPicker: false,
-                selectedAsset: NewAdminMediaAsset(schema: asset)
+                selectedAsset: asset
             )
         }
         catch let error as OpenAPIRepositoryError {
+            let message: String
+            switch error {
+            case .conflict:
+                message =
+                    "A media asset with this name already exists in this location."
+            case .failure(let failure)
+            where failure.backendError?.trace?.containsDuplicatePath == true:
+                message =
+                    "A media asset with this name already exists in this location."
+            default:
+                message =
+                    "Failed to create media asset: \(error.errorDescription)"
+            }
             return .init(
                 parentId: payload.parentId,
                 fileName: payload.fileName,
                 extension: payload.extension,
                 title: payload.title,
                 altText: payload.altText,
-                data: payload.data,
-                error:
-                    "Failed to create media asset: \(error.errorDescription)",
+                data: "",
+                error: message,
                 view: payload.view,
                 action: "/admin/media/assets/add/",
                 isPicker: false,
                 selectedAsset: nil
             )
         }
+    }
+}
+
+extension OpenAPIRepositoryError.BackendError.Trace {
+    fileprivate var containsDuplicatePath: Bool {
+        if id == "MediaApplication.CreateMediaAsset.Error",
+            message == "duplicatePath"
+        {
+            return true
+        }
+
+        return reasons?.contains(where: { $0.containsDuplicatePath }) == true
     }
 }

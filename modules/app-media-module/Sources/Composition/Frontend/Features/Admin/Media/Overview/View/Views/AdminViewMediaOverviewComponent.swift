@@ -73,7 +73,7 @@ struct AdminViewMediaOverviewComponent: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Media",
                         description:
                             "Manage media assets, folders, and variants."

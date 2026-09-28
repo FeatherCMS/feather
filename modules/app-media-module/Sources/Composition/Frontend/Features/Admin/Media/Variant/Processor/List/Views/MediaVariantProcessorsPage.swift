@@ -22,7 +22,7 @@ struct MediaVariantProcessorsPage: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Processors",
                         description:
                             "Manage the processors used by this media variant."

@@ -35,13 +35,20 @@ struct AssetListView: Component {
             Display(.flex)
             FlexWrap(.wrap)
             AlignItems(.center)
+            JustifyContent(.spaceBetween)
             Gap(10.px)
             MarginBottom(24.px)
         }
-        Class("media-assets-search-row") {
+        Class("media-assets-toolbar-actions") {
             Display(.flex)
             FlexWrap(.wrap)
             AlignItems(.center)
+            Gap(10.px)
+        }
+        Class("media-assets-search-row") {
+            Display(.flex)
+            FlexDirection(.column)
+            AlignItems(.flexStart)
             Gap(4.px)
             MarginBottom(12.px)
         }
@@ -131,9 +138,7 @@ struct AssetListView: Component {
         Class("media-assets-table-preview") {
             Width(72.px)
         }
-        Custom(
-            ".media-assets-table-preview > div, .media-assets-table-preview a > div"
-        ) {
+        Custom(".media-assets-table-preview .media-assets-folder-icon") {
             Display(.grid)
             UnsafeRawProperty(name: "place-items", value: "center")
             Width(56.px)
@@ -149,14 +154,6 @@ struct AssetListView: Component {
         Custom(".media-assets-table-preview a") {
             Display(.inlineBlock)
             TextDecoration(.none)
-        }
-        Custom(".media-assets-table-preview img") {
-            Width(56.px)
-            Height(56.px)
-            ObjectFit(.cover)
-            BorderRadius(10.px)
-            Display(.block)
-            Margin(0)
         }
         Custom(".media-assets-table-preview .media-assets-folder-icon svg") {
             Width(28.px)
@@ -215,7 +212,7 @@ struct AssetListView: Component {
                     )
                     context.build(
                         NewAdminPageHeader(
-                            state: .init(
+                            state: .primary(
                                 title: "Media assets",
                                 description:
                                     "Browse, organize, and manage media assets."
@@ -270,12 +267,6 @@ struct AssetListView: Component {
             }
         }
         .class("cms-section")
-        .if(state.picker.isEnabled) {
-            $0.data(
-                "admin-media-picker-section",
-                "gallery"
-            )
-        }
     }
 }
 
@@ -297,13 +288,14 @@ extension AssetListView {
         parentId: String?,
         view: AdminListMediaAssetModel.ViewMode,
         search: String?,
-        page: Int?
+        page: Int?,
+        includeView: Bool = false
     ) -> [NewAdminListPagination.QueryItem] {
         var items: [NewAdminListPagination.QueryItem] = []
         if let parentId {
             items.append(.init(name: "parent_id", value: parentId))
         }
-        if view != .grid {
+        if includeView || view != .grid {
             items.append(.init(name: "view", value: view.rawValue))
         }
         if state.picker.isEnabled {
@@ -312,17 +304,22 @@ extension AssetListView {
         if let field = state.picker.field {
             items.append(.init(name: "field", value: field))
         }
-        if !state.picker.allowedExtensions.isEmpty {
+        if !state.picker.allowedExtensions.isAnything {
             items.append(
                 .init(
                     name: "extensions",
-                    value: state.picker.allowedExtensions.joined(separator: ",")
+                    value: state.picker.allowedExtensions.queryValue
                 )
             )
         }
         if let defaultFolderPath = state.picker.defaultFolderPath {
             items.append(
                 .init(name: "default_folder_path", value: defaultFolderPath)
+            )
+        }
+        if let previewVariant = state.picker.previewVariant {
+            items.append(
+                .init(name: "preview_variant", value: previewVariant)
             )
         }
         if let search, !search.isEmpty {
@@ -348,9 +345,9 @@ extension AssetListView {
         if let field = state.picker.field {
             suffix.append("field=\(field.queryEncoded())")
         }
-        if !state.picker.allowedExtensions.isEmpty {
+        if !state.picker.allowedExtensions.isAnything {
             suffix.append(
-                "extensions=\(state.picker.allowedExtensions.joined(separator: ",").queryEncoded())"
+                "extensions=\(state.picker.allowedExtensions.queryValue.queryEncoded())"
             )
         }
         if let defaultFolderPath = state.picker.defaultFolderPath {
@@ -358,10 +355,21 @@ extension AssetListView {
                 "default_folder_path=\(defaultFolderPath.queryEncoded())"
             )
         }
+        if let previewVariant = state.picker.previewVariant {
+            suffix.append(
+                "preview_variant=\(previewVariant.queryEncoded())"
+            )
+        }
         let path = MediaAssetRoutes.add.description
         return suffix.isEmpty
             ? path
             : "\(path)?\(suffix.joined(separator: "&"))"
+    }
+
+    fileprivate func addAssetDialogPath() -> String {
+        let path = addAssetPath()
+        let separator = path.contains("?") ? "&" : "?"
+        return "\(path)\(separator)presentation=dialog"
     }
 
     fileprivate func assetActionSuffix() -> String {
@@ -378,14 +386,19 @@ extension AssetListView {
         if let field = state.picker.field {
             suffix.append("field=\(field.queryEncoded())")
         }
-        if !state.picker.allowedExtensions.isEmpty {
+        if !state.picker.allowedExtensions.isAnything {
             suffix.append(
-                "extensions=\(state.picker.allowedExtensions.joined(separator: ",").queryEncoded())"
+                "extensions=\(state.picker.allowedExtensions.queryValue.queryEncoded())"
             )
         }
         if let defaultFolderPath = state.picker.defaultFolderPath {
             suffix.append(
                 "default_folder_path=\(defaultFolderPath.queryEncoded())"
+            )
+        }
+        if let previewVariant = state.picker.previewVariant {
+            suffix.append(
+                "preview_variant=\(previewVariant.queryEncoded())"
             )
         }
         return suffix.isEmpty ? "" : "?\(suffix.joined(separator: "&"))"
@@ -405,9 +418,9 @@ extension AssetListView {
         if let field = state.picker.field {
             suffix.append("field=\(field.queryEncoded())")
         }
-        if !state.picker.allowedExtensions.isEmpty {
+        if !state.picker.allowedExtensions.isAnything {
             suffix.append(
-                "extensions=\(state.picker.allowedExtensions.joined(separator: ",").queryEncoded())"
+                "extensions=\(state.picker.allowedExtensions.queryValue.queryEncoded())"
             )
         }
         if let defaultFolderPath = state.picker.defaultFolderPath {
@@ -421,18 +434,26 @@ extension AssetListView {
             : "\(path)?\(suffix.joined(separator: "&"))"
     }
 
+    fileprivate func addFolderDialogPath() -> String {
+        let path = addFolderPath()
+        let separator = path.contains("?") ? "&" : "?"
+        return "\(path)\(separator)presentation=dialog"
+    }
+
     fileprivate func browsePath(
         parentId: String?,
         view: AdminListMediaAssetModel.ViewMode? = nil,
         search: String? = nil,
-        page: Int? = nil
+        page: Int? = nil,
+        includeView: Bool = false
     ) -> String {
         let view = view ?? state.view
         let query = queryItems(
             parentId: parentId,
             view: view,
             search: search,
-            page: page
+            page: page,
+            includeView: includeView
         )
         let encoded = query.map { "\($0.name)=\($0.value.queryEncoded())" }
         let path = MediaAssetRoutes.list.description
@@ -459,6 +480,13 @@ extension AssetListView {
         fileName(for: item)
     }
 
+    fileprivate func pickerTitle(
+        for item: Components.Schemas.MediaAssetListItemSchema
+    ) -> String {
+        let title = item.title?.whitespaceTrimmed
+        return title?.isEmpty == false ? title! : item.name
+    }
+
     fileprivate func fileName(
         for item: Components.Schemas.MediaAssetListItemSchema
     ) -> String {
@@ -474,34 +502,42 @@ extension AssetListView {
     fileprivate func toolbar(context: inout BuilderContext) -> some FlowContent
     {
         Div {
-            if state.permissions.allows(MediaPermissions.Assets.create)
-                && !state.picker.isEnabled
-            {
-                context.build(
-                    NewAdminButton("Add asset", href: addAssetPath())
-                )
-            }
-            if state.permissions.allows(MediaPermissions.Assets.create)
-                && !state.picker.isEnabled
-            {
-                context.build(
-                    NewAdminButton(
-                        "Add folder",
-                        href: addFolderPath(),
-                        style: .secondary
+            Div {
+                if state.permissions.allows(MediaPermissions.Assets.create)
+                    && !state.picker.isEnabled
+                {
+                    context.build(
+                        NewAdminButton(
+                            "Upload assets",
+                            href: addAssetPath(),
+                            style: .primary
+                        )
                     )
-                )
+                    .data(
+                        "admin-dialog-url",
+                        addAssetDialogPath()
+                    )
+                }
+                if state.permissions.allows(MediaPermissions.Assets.create)
+                    && !state.picker.isEnabled
+                {
+                    context.build(
+                        NewAdminButton(
+                            "Add folder",
+                            href: addFolderPath(),
+                            style: .ghost(.primary)
+                        )
+                    )
+                    .data(
+                        "admin-dialog-url",
+                        addFolderDialogPath()
+                    )
+                }
             }
-        }
-        .class("button-row", "media-assets-toolbar-group")
-    }
+            .class("button-row", "media-assets-toolbar-actions")
 
-    fileprivate func searchControls(
-        context: inout BuilderContext
-    ) -> some FlowContent {
-        Div {
             context.build(
-                NewAdminTabBar(
+                NewAdminSegmentedControl(
                     links: [
                         .init(
                             label: "Grid",
@@ -510,7 +546,8 @@ extension AssetListView {
                                 view: .grid,
                                 search: state.search.isEmpty
                                     ? nil : state.search,
-                                page: state.pageState.page
+                                page: state.pageState.page,
+                                includeView: true
                             ),
                             isCurrent: state.view == .grid
                         ),
@@ -521,12 +558,24 @@ extension AssetListView {
                                 view: .list,
                                 search: state.search.isEmpty
                                     ? nil : state.search,
-                                page: state.pageState.page
+                                page: state.pageState.page,
+                                includeView: true
                             ),
                             isCurrent: state.view == .list
                         ),
                     ]
                 )
+            )
+        }
+        .class("button-row", "media-assets-toolbar-group")
+    }
+
+    fileprivate func searchControls(
+        context: inout BuilderContext
+    ) -> some FlowContent {
+        Div {
+            context.build(
+                NewAdminPathBreadcrumb(items: folderPathItems())
             )
             if state.picker.isEnabled {
                 pickerSearchControls(context: &context)
@@ -551,27 +600,81 @@ extension AssetListView {
         .class("media-assets-search-row")
     }
 
+    fileprivate func folderPathItems() -> [NewAdminPathBreadcrumb.Item] {
+        var items: [NewAdminPathBreadcrumb.Item] = [
+            .init(
+                label: "My assets",
+                href: browsePath(parentId: nil),
+                isCurrent: state.currentFolder == nil
+            )
+        ]
+        for ancestor in state.ancestors {
+            items.append(
+                .init(
+                    label: ancestor.name,
+                    href: browsePath(parentId: ancestor.id),
+                    isCurrent: false
+                )
+            )
+        }
+        if let currentFolder = state.currentFolder {
+            items.append(
+                .init(
+                    label: currentFolder.name,
+                    isCurrent: true
+                )
+            )
+        }
+        return items
+    }
+
     fileprivate func pickerSearchControls(
         context: inout BuilderContext
     ) -> some FlowContent {
-        context.build(
-            NewAdminListSearch(
-                state: .init(
-                    action: browsePath(parentId: state.parentId),
-                    placeholder: "Quick search assets",
-                    search: state.search,
-                    resetPath: browsePath(parentId: state.parentId),
-                    queryItems: queryItems()
-                        .map {
-                            .init(name: $0.name, value: $0.value)
-                        }
+        Div {
+            context.build(
+                NewAdminListSearch(
+                    state: .init(
+                        action: browsePath(parentId: state.parentId),
+                        placeholder: "Quick search assets",
+                        search: state.search,
+                        resetPath: browsePath(parentId: state.parentId),
+                        queryItems: queryItems()
+                            .map {
+                                .init(name: $0.name, value: $0.value)
+                            }
+                    )
                 )
             )
-        )
-        .data(
-            "admin-media-picker-search-path",
-            browsePath(parentId: state.parentId)
-        )
+            .data("admin-media-picker-search", "true")
+            Script(
+                """
+                (function() {
+                  var forms = document.querySelectorAll(
+                    'form[data-admin-media-picker-search]'
+                  );
+                  forms.forEach(function(form) {
+                    if (form.dataset.dialogSearchReady === "true") { return; }
+                    form.dataset.dialogSearchReady = "true";
+                    form.addEventListener("submit", function(event) {
+                      if (!form.closest("dialog[data-admin-dialog]")) { return; }
+                      if (!window.__newAdminDialog ||
+                          !window.__newAdminDialog.openURL) { return; }
+                      event.preventDefault();
+                      event.stopImmediatePropagation();
+                      var url = new URL(form.action, window.location.href);
+                      new FormData(form).forEach(function(value, key) {
+                        if (typeof value === "string") {
+                          url.searchParams.set(key, value);
+                        }
+                      });
+                      window.__newAdminDialog.openURL(url.href, form.action);
+                    }, true);
+                  });
+                }());
+                """
+            )
+        }
     }
 
     fileprivate func emptyState(
@@ -617,16 +720,21 @@ extension AssetListView {
     fileprivate func gridContent(context: inout BuilderContext)
         -> some FlowContent
     {
-        Div {
+        let returnTo = browsePath(
+            parentId: state.parentId,
+            search: state.search.isEmpty ? nil : state.search,
+            page: state.pageState.page
+        )
+        return Div {
             if let currentFolder = state.currentFolder {
                 upCard(parentId: currentFolder.parentId, context: &context)
             }
             for entry in state.entries {
                 switch entry {
                 case .folder(let folder):
-                    folderCard(folder, context: &context)
+                    folderCard(folder, returnTo: returnTo, context: &context)
                 case .asset(let item):
-                    assetCard(item, context: &context)
+                    assetCard(item, returnTo: returnTo, context: &context)
                 }
             }
         }
@@ -655,7 +763,8 @@ extension AssetListView {
                     pageState: state.pageState,
                     search: state.search,
                     button: .init("Remove selected", style: .destructive),
-                    isEnabled: canRemove
+                    isEnabled: canRemove,
+                    usesDialog: canRemove
                 ),
                 table: context.build(
                     NewAdminListShell(
@@ -736,7 +845,7 @@ extension AssetListView {
             .href(browsePath(parentId: parentId))
 
             Div {
-                H3("Up to parent")
+                H3("..")
                 P("Parent folder")
             }
             .class("media-assets-card-body")
@@ -744,9 +853,9 @@ extension AssetListView {
             Div {
                 context.build(
                     NewAdminRowButton(
-                        "Open",
+                        "View",
                         href: browsePath(parentId: parentId),
-                        style: .ghost(.secondary)
+                        style: .ghost(.primary)
                     )
                 )
             }
@@ -757,11 +866,10 @@ extension AssetListView {
 
     fileprivate func folderCard(
         _ folder: Components.Schemas.MediaFolderListItemSchema,
+        returnTo: String,
         context: inout BuilderContext
     ) -> some FlowContent {
-        let actionSuffix = assetActionSuffix()
-
-        return Div {
+        Div {
             A {
                 Div {
                     FeatherIcons.folder()
@@ -800,14 +908,19 @@ extension AssetListView {
                 if state.permissions.allows(MediaPermissions.Assets.delete)
                     && !state.picker.isEnabled
                 {
+                    let removePath = NewAdminLocation.remove(
+                        path: MediaAssetRoutes.remove.description,
+                        ids: [folder.id],
+                        returnTo: returnTo
+                    )
                     context.build(
                         NewAdminRowButton(
                             "Remove",
-                            href:
-                                "\(MediaAssetRoutes.remove(RouterPath(folder.id)).description)\(actionSuffix)",
+                            href: removePath,
                             style: .destructive
                         )
                     )
+                    .data("admin-dialog-url", removePath)
                 }
             }
             .class("media-assets-card-actions")
@@ -817,6 +930,7 @@ extension AssetListView {
 
     fileprivate func assetCard(
         _ item: AdminListMediaAssetModel.AssetItem,
+        returnTo: String,
         context: inout BuilderContext
     ) -> some FlowContent {
 
@@ -860,7 +974,7 @@ extension AssetListView {
                 )
                 .data("picker-name", item.asset.name)
                 .data("picker-extension", item.asset._extension)
-                .data("picker-title", item.asset.title ?? "")
+                .data("picker-title", pickerTitle(for: item.asset))
                 .data("picker-alt-text", item.asset.altText ?? "")
                 .data("picker-status", item.asset.status)
             }
@@ -912,7 +1026,7 @@ extension AssetListView {
                     )
                     .data("picker-name", item.asset.name)
                     .data("picker-extension", item.asset._extension)
-                    .data("picker-title", item.asset.title ?? "")
+                    .data("picker-title", pickerTitle(for: item.asset))
                     .data("picker-alt-text", item.asset.altText ?? "")
                     .data("picker-status", item.asset.status)
                 }
@@ -940,14 +1054,19 @@ extension AssetListView {
                 if state.permissions.allows(MediaPermissions.Assets.delete)
                     && !state.picker.isEnabled
                 {
+                    let removePath = NewAdminLocation.remove(
+                        path: MediaAssetRoutes.remove.description,
+                        ids: [item.asset.id],
+                        returnTo: returnTo
+                    )
                     context.build(
                         NewAdminRowButton(
                             "Remove",
-                            href:
-                                "\(MediaAssetRoutes.remove(RouterPath(item.asset.id)).description)\(actionSuffix)",
+                            href: removePath,
                             style: .destructive
                         )
                     )
+                    .data("admin-dialog-url", removePath)
                 }
             }
             .class("media-assets-card-actions")
@@ -968,20 +1087,18 @@ extension AssetListView {
                 href: browsePath(parentId: parentId),
                 context: &context
             )
-            Td {
-                A("Up to parent").href(browsePath(parentId: parentId))
-            }
-            .data("label", "Name")
-            Td("")
+            Td("..")
+                .data("label", "Name")
+            Td("Folder")
                 .data("label", "Type")
             Td("-")
                 .data("label", "Size")
             Td {
                 context.build(
                     NewAdminRowButton(
-                        "Open",
+                        "View",
                         href: browsePath(parentId: parentId),
-                        style: .ghost(.secondary)
+                        style: .ghost(.primary)
                     )
                 )
             }
@@ -997,6 +1114,11 @@ extension AssetListView {
         context: inout BuilderContext
     ) -> some BasicTag {
         Tr {
+            let removePath = NewAdminLocation.remove(
+                path: MediaAssetRoutes.remove.description,
+                ids: [folder.id],
+                returnTo: returnTo
+            )
             let actions: [NewAdminListRowActions.Action] =
                 state.picker.isEnabled
                 ? [
@@ -1022,13 +1144,10 @@ extension AssetListView {
                     ),
                     .init(
                         "Remove",
-                        href: NewAdminLocation.remove(
-                            path: MediaAssetRoutes.remove.description,
-                            ids: [folder.id],
-                            returnTo: returnTo
-                        ),
+                        href: removePath,
                         style: .destructive,
-                        permission: MediaPermissions.Assets.delete
+                        permission: MediaPermissions.Assets.delete,
+                        dialogURL: removePath
                     ),
                 ]
             if canRemove {
@@ -1067,6 +1186,11 @@ extension AssetListView {
             for: item.preview?.url ?? item.asset.url
         )
         let originalURL = assetOriginalLink(for: item.asset)
+        let removePath = NewAdminLocation.remove(
+            path: MediaAssetRoutes.remove.description,
+            ids: [item.asset.id],
+            returnTo: returnTo
+        )
         return Tr {
             if canRemove {
                 context.build(
@@ -1119,7 +1243,7 @@ extension AssetListView {
                     )
                     .data(
                         "picker-title",
-                        item.asset.title ?? ""
+                        pickerTitle(for: item.asset)
                     )
                     .data(
                         "picker-alt-text",
@@ -1154,13 +1278,10 @@ extension AssetListView {
                             ),
                             .init(
                                 "Remove",
-                                href: NewAdminLocation.remove(
-                                    path: MediaAssetRoutes.remove.description,
-                                    ids: [item.asset.id],
-                                    returnTo: returnTo
-                                ),
+                                href: removePath,
                                 style: .destructive,
-                                permission: MediaPermissions.Assets.delete
+                                permission: MediaPermissions.Assets.delete,
+                                dialogURL: removePath
                             ),
                         ],
                         permissions: state.permissions
@@ -1233,7 +1354,13 @@ extension AssetListView {
         Td {
             A {
                 if item.preview != nil {
-                    Img(src: previewURL, alt: displayTitle(for: item.asset))
+                    context.build(
+                        NewAdminImageCell(
+                            imageURL: previewURL,
+                            alt: displayTitle(for: item.asset),
+                            size: .square
+                        )
+                    )
                 }
                 else {
                     Div {

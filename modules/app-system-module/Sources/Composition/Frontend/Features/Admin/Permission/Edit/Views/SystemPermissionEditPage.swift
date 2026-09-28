@@ -22,7 +22,7 @@ struct SystemPermissionEditPage: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit system permission",
                         description: "Update this system permission."
                     )
