@@ -21,7 +21,7 @@ extension AppContactFormSubmissionController {
         on router: Router<DefaultRequestContext>
     ) {
         router.post(
-            "/contact/forms/:formKey/submissions",
+            "/api/v1/contact/forms/:formKey/submissions",
             use: submit
         )
     }

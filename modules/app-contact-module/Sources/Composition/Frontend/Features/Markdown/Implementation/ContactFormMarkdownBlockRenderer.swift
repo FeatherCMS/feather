@@ -35,7 +35,7 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
         let fields = form.items.sorted { $0.position < $1.position }
             .map(renderField).joined()
         return
-            "<form method=\"post\" action=\"/contact/forms/\(escape(form.key))/submissions\" class=\"contact-form\">\(fields)<button type=\"submit\">Submit</button></form>"
+            "<form method=\"post\" action=\"/api/v1/contact/forms/\(escape(form.key))/submissions\" class=\"contact-form\">\(fields)<button type=\"submit\">Submit</button></form>"
     }
 
     private func renderField(
