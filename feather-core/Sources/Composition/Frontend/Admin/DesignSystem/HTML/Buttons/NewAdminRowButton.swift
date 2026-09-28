@@ -27,7 +27,9 @@ public struct NewAdminRowButton: Component {
         if let href, style != .disabled {
             link = link.href(href)
         }
-        if let dialogURL {
+        if let dialogURL = dialogURL
+            ?? (style == .destructive ? href : nil)
+        {
             link = link.data("admin-dialog-url", dialogURL)
         }
         return link.class("button", style.className, "row-button")

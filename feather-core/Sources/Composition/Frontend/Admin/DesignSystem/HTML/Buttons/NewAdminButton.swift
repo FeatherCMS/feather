@@ -44,6 +44,9 @@ public struct NewAdminButton: Component {
         if let href, style != .disabled {
             link = link.href(href)
         }
+        if style == .destructive, let href {
+            link = link.data("admin-dialog-url", href)
+        }
         return link.class("button", style.className)
     }
 }
