@@ -19,7 +19,7 @@ struct AuthEmailDetails: Component {
         context.build(
             NewAdminDetailView(
                 breadcrumb: state.breadcrumb,
-                pageHeader: .init(
+                pageHeader: .primary(
                     title: "User email details",
                     description: "Inspect this user email."
                 ),

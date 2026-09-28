@@ -22,7 +22,7 @@ struct WebPageDetails: Component {
             context.build(
                 NewAdminDetailView(
                     breadcrumb: state.breadcrumb,
-                    pageHeader: .init(
+                    pageHeader: .primary(
                         title: "Web page details",
                         description: "Review the web page content."
                     ),

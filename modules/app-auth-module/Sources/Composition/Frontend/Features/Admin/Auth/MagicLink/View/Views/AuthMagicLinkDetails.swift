@@ -19,7 +19,7 @@ struct AuthMagicLinkDetails: Component {
         context.build(
             NewAdminDetailView(
                 breadcrumb: state.breadcrumb,
-                pageHeader: .init(
+                pageHeader: .primary(
                     title: "User magic link details",
                     description: "Inspect this sign-in magic link."
                 ),

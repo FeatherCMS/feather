@@ -24,7 +24,7 @@ struct ContactFormTable: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: state.isPicker
                             ? "Select contact form" : "Contact forms",
                         description: "Create and manage reusable contact forms."

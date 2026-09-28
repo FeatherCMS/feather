@@ -30,7 +30,7 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultPresenter:
             context: context,
             title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove campaign subscriber",
                     description: "This action cannot be undone."
                 ),

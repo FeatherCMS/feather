@@ -29,7 +29,7 @@ struct AuthCredentialAdd: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add user credential",
                         description: "Create a credential for a user."
                     )

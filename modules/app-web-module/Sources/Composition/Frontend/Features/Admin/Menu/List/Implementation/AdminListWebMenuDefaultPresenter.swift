@@ -91,7 +91,7 @@ struct AdminListWebMenuDefaultPresenter:
             context: context,
             title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove selected menus",
                     description: "This action cannot be undone."
                 ),

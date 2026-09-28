@@ -21,7 +21,7 @@ struct ContactFormDetailsView: Component {
             context.build(
                 NewAdminDetailView(
                     breadcrumb: breadcrumb,
-                    pageHeader: .init(
+                    pageHeader: .primary(
                         title: "Contact form details",
                         description: "Review the contact form configuration."
                     ),

@@ -31,7 +31,7 @@ struct AuthEmailTable: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "User emails",
                         description: "Manage user email addresses."
                     )

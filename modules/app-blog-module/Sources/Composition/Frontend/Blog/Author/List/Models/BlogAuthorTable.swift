@@ -44,7 +44,7 @@ struct BlogAuthorTable: Component {
             else {
                 context.build(
                     NewAdminPageHeader(
-                        state: .init(
+                        state: .primary(
                             title: "Blog authors",
                             description:
                                 "Manage authors and their publication status."

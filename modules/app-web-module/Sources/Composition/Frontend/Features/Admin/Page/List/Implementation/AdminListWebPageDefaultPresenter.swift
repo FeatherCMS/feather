@@ -90,7 +90,7 @@ struct AdminListWebPageDefaultPresenter:
             context: context,
             title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove selected pages",
                     description: "This action cannot be undone."
                 ),

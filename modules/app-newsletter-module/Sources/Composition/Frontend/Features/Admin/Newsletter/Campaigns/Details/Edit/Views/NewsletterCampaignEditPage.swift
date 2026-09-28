@@ -31,7 +31,7 @@ struct NewsletterCampaignEditPage: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: state.isDetails
                             ? "Campaign details" : "Edit campaign",
                         description: state.isDetails

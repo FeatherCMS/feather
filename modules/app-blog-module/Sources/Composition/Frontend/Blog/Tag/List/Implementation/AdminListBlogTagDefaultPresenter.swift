@@ -69,7 +69,7 @@ struct AdminListBlogTagDefaultPresenter:
             context: context,
             title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove blog tags",
                     description: "This action cannot be undone."
                 ),

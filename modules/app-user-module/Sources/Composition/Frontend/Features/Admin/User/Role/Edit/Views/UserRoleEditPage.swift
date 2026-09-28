@@ -16,7 +16,7 @@ struct UserRoleEditPage: Component {
             context.build(NewAdminBreadcrumb(links: UserRoleRoutes.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit user role",
                         description: "Update this user role."
                     )

@@ -33,7 +33,7 @@ struct NewsletterCampaignAddView: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add campaign",
                         description: "Create a newsletter campaign."
                     )

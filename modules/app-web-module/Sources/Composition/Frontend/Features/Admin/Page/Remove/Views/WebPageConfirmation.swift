@@ -22,7 +22,7 @@ struct WebPageConfirmation: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
             NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove page",
                     description: "This action cannot be undone."
                 ),

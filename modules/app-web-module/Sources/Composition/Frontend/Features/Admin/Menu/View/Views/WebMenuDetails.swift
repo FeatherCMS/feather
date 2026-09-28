@@ -21,7 +21,7 @@ struct WebMenuDetails: Component {
             context.build(
                 NewAdminDetailView(
                     breadcrumb: state.breadcrumb,
-                    pageHeader: .init(
+                    pageHeader: .primary(
                         title: "Menu details",
                         description: "Review the navigation menu configuration."
                     ),

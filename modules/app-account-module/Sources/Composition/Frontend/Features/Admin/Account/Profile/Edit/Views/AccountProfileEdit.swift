@@ -21,7 +21,7 @@ struct AccountProfileEdit: Component {
 
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit profile",
                         description: "Update the current administrator profile."
                     )

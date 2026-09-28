@@ -25,7 +25,7 @@ struct BlogAuthorConfirmation: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
             NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove author",
                     description: "This action cannot be undone."
                 ),

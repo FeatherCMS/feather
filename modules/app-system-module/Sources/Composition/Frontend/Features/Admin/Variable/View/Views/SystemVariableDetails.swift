@@ -18,7 +18,7 @@ struct SystemVariableDetails: Component {
         context.build(
             NewAdminDetailView(
                 breadcrumb: SystemVariableRoutes.breadcrumb,
-                pageHeader: .init(
+                pageHeader: .primary(
                     title: "Variable details",
                     description: "System variable details."
                 ),

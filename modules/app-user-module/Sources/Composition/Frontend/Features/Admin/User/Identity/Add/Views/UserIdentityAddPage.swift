@@ -15,7 +15,7 @@ struct UserIdentityAddPage: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add user identity",
                         description: "Create a user identity."
                     )

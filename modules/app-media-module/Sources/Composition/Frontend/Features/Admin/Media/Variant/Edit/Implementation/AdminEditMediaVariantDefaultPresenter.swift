@@ -100,7 +100,7 @@ struct AdminEditMediaVariantDefaultPresenter: AdminEditMediaVariantPresenter {
             context: context,
             title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove selected processors",
                     description:
                         "You’re about to permanently remove the selected processors. This action cannot be undone."

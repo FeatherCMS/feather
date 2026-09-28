@@ -171,7 +171,7 @@ struct AdminViewDashboardComponent: Component {
                 )
                 context.build(
                     NewAdminPageHeader(
-                        state: .init(
+                        state: .primary(
                             title: "Dashboard",
                             description: model.summary
                         )

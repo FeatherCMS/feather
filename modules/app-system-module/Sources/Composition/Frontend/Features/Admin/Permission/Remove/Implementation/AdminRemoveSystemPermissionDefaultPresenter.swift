@@ -26,7 +26,7 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
             context: context,
             title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove selected permissions",
                     description:
                         "You’re about to permanently remove the selected system permissions. This action cannot be undone."

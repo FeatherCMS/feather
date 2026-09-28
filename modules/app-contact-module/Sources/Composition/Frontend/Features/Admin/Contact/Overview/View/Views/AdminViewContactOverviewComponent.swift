@@ -83,7 +83,7 @@ struct AdminViewContactOverviewComponent: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Contact",
                         description:
                             "Manage contact forms, fields, and submissions."

@@ -24,7 +24,7 @@ struct RedirectRuleTable: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Redirect rules",
                         description:
                             "Manage paths that redirect to other destinations."

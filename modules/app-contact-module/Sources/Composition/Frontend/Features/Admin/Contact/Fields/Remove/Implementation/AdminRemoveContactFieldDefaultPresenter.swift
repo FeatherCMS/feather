@@ -28,7 +28,7 @@ struct AdminRemoveContactFieldDefaultPresenter:
             context: context,
             title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove contact form field",
                     description: "This action cannot be undone."
                 ),
@@ -54,7 +54,7 @@ struct AdminRemoveContactFieldDefaultPresenter:
             context: context,
             title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove contact fields",
                     description: "This action cannot be undone."
                 ),

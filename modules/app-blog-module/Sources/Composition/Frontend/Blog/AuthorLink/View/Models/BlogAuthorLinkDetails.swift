@@ -21,7 +21,7 @@ struct BlogAuthorLinkDetails: Component {
             context.build(
                 NewAdminDetailView(
                     breadcrumb: state.breadcrumb,
-                    pageHeader: .init(
+                    pageHeader: .primary(
                         title: "Blog author link details",
                         description: "Review this author link."
                     ),

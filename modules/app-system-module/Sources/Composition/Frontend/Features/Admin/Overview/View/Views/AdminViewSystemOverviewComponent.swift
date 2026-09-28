@@ -89,7 +89,7 @@ struct AdminViewSystemOverviewComponent: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "System",
                         description:
                             "Manage core system configuration and administration tools."

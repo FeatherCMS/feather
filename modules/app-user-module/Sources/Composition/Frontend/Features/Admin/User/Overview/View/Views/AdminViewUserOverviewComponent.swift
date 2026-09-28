@@ -72,7 +72,7 @@ struct AdminViewUserOverviewComponent: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "User",
                         description:
                             "Manage user identities, roles, and access."

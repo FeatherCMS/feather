@@ -33,7 +33,7 @@ struct UserRoleDetails: Component {
         return context.build(
             NewAdminDetailView(
                 breadcrumb: UserRoleRoutes.breadcrumb,
-                pageHeader: .init(
+                pageHeader: .primary(
                     title: "User role details",
                     description: "Inspect this user role."
                 ),

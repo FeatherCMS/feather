@@ -66,7 +66,7 @@ struct AdminListAuthEmailDefaultPresenter:
             context: context,
             title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove selected emails",
                     description:
                         "Review the selected email addresses before removal."

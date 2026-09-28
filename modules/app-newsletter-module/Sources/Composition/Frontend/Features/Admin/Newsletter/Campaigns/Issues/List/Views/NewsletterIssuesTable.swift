@@ -30,7 +30,7 @@ struct NewsletterIssuesTable: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Campaign issues",
                         description:
                             "Manage issues for this newsletter campaign."

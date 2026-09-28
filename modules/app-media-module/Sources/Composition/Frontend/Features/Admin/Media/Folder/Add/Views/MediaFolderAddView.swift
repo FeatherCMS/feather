@@ -31,7 +31,7 @@ struct MediaFolderAddView: Component {
                 )
                 context.build(
                     NewAdminPageHeader(
-                        state: .init(
+                        state: .primary(
                             title: "Add media folder",
                             description:
                                 "Create a folder for organizing media assets."

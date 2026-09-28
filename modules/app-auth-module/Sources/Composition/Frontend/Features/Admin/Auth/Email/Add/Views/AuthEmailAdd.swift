@@ -31,7 +31,7 @@ struct AuthEmailAdd: Component {
 
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add user email",
                         description:
                             "Create an email address for a user identity."

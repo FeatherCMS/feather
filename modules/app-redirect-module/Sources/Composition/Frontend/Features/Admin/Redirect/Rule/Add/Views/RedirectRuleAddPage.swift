@@ -15,7 +15,7 @@ struct RedirectRuleAddPage: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add redirect rule",
                         description:
                             "Create a redirect from one path to another."

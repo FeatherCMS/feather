@@ -24,7 +24,7 @@ struct WebMenuItemConfirmation: Component {
     func html(context: inout BuilderContext) -> Section {
         context.build(
             NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove menu item",
                     description: "This action cannot be undone."
                 ),

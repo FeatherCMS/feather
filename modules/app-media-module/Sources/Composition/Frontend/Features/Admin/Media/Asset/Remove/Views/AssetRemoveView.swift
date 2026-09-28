@@ -15,7 +15,7 @@ struct AssetRemoveView: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
             NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove media item",
                     description: "Confirm removal of this media item."
                 ),

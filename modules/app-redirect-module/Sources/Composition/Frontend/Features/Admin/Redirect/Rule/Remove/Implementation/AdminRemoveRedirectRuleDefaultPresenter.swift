@@ -43,7 +43,7 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
             context: context,
             title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove selected redirect rules",
                     description:
                         "You’re about to permanently remove the selected redirect rules. This action cannot be undone."

@@ -16,7 +16,7 @@ struct AccountInvitationConfirmation: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
             NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove user invitation",
                     description: "This action cannot be undone."
                 ),

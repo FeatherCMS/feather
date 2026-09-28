@@ -5,39 +5,38 @@ import WebBuilders
 public import WebComponents
 
 public struct NewAdminRemoveConfirmation: Component {
-    public typealias ButtonState = NewAdminButton.State
     public static let dialogTitle = "Are you sure?"
 
-    public let pageHeader: NewAdminPageHeader.State
     public let selectedItems: [String]
     public let action: String
-    public let submit: ButtonState
-    public let cancel: ButtonState
+    public let submit: NewAdminButton.State
+    public let cancel: NewAdminButton.State
     public let nonceToken: String?
     public let hiddenFields: [NewAdminFormFieldHiddenValue]
-    public let relationshipGroupHeader: NewAdminPageHeader.State?
+    public let header: NewAdminPageHeader.State
 
     public init(
-        pageHeader: NewAdminPageHeader.State,
+        header: NewAdminPageHeader.State,
         selectedItems: [String] = [],
         action: String,
-        submit: ButtonState = .init(label: "Remove", style: .destructive),
-        cancel: ButtonState = .init(
+        submit: NewAdminButton.State = .init(
+            label: "Remove",
+            style: .destructive
+        ),
+        cancel: NewAdminButton.State = .init(
             label: "Cancel",
             style: .ghost(.primary)
         ),
         nonceToken: String? = nil,
-        hiddenFields: [NewAdminFormFieldHiddenValue] = [],
-        relationshipGroupHeader: NewAdminPageHeader.State? = nil
+        hiddenFields: [NewAdminFormFieldHiddenValue] = []
     ) {
-        self.pageHeader = pageHeader
         self.selectedItems = selectedItems
         self.action = action
         self.submit = submit
         self.cancel = cancel
         self.nonceToken = nonceToken
         self.hiddenFields = hiddenFields
-        self.relationshipGroupHeader = relationshipGroupHeader
+        self.header = header
     }
 
     @Builder<CSS.Rule>
@@ -110,19 +109,13 @@ public struct NewAdminRemoveConfirmation: Component {
         }
 
         return Section {
-            context.build(NewAdminPageHeader(state: pageHeader))
-            if let relationshipGroupHeader {
-                context.build(
-                    NewAdminRelationshipGroup(
-                        pageHeader: relationshipGroupHeader
-                    ) {
-                        content
-                    }
-                )
-            }
-            else {
-                content
-            }
+            context.build(
+                NewAdminRelationshipGroup(
+                    pageHeader: header
+                ) {
+                    content
+                }
+            )
         }
         .class("cms-section")
     }

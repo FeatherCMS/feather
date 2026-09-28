@@ -20,7 +20,7 @@ struct ContactFieldEditPage: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit contact form field",
                         description: "Update this reusable contact form field."
                     )

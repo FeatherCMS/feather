@@ -20,7 +20,7 @@ struct SystemJobDetailsView: Component {
         return context.build(
             NewAdminDetailView(
                 breadcrumb: SystemJobRoutes.breadcrumb,
-                pageHeader: .init(
+                pageHeader: .primary(
                     title: "Worker job details",
                     description: "Inspect the selected worker job."
                 ),

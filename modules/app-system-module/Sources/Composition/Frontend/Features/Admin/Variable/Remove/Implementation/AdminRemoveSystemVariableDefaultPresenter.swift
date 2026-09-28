@@ -124,7 +124,7 @@ struct AdminRemoveSystemVariableDefaultPresenter:
             context: context,
             title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove selected variables",
                     description:
                         "You’re about to permanently remove the selected system variables. This action cannot be undone."

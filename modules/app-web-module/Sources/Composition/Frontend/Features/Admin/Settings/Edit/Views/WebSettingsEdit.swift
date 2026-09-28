@@ -20,7 +20,7 @@ struct WebSettingsEdit: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Settings",
                         description:
                             "Configure website branding, metadata, and code injection."

@@ -89,7 +89,7 @@ struct AdminListAccountInvitationDefaultPresenter:
             context: context,
             title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove selected invitations",
                     description: "This action cannot be undone."
                 ),

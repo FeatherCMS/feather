@@ -23,7 +23,7 @@ struct WebMenuItemAdd: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit menu",
                         description: "Update the navigation menu configuration."
                     )
@@ -34,11 +34,9 @@ struct WebMenuItemAdd: Component {
             )
             context.build(
                 NewAdminRelationshipGroup(
-                    pageHeader: .init(
+                    pageHeader: .secondary(
                         title: "Add item",
-                        description: "Add a link to the navigation menu.",
-                        level: 2,
-                        showSeparator: true
+                        description: "Add a link to the navigation menu."
                     )
                 ) {
                     context.build(

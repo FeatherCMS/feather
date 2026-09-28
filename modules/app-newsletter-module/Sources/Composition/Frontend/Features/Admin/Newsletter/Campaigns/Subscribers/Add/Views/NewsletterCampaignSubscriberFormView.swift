@@ -53,7 +53,7 @@ struct NewsletterCampaignSubscriberFormView: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: state.isEdit
                             ? "Edit campaign subscriber"
                             : "Add campaign subscriber",

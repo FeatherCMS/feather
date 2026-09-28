@@ -86,7 +86,7 @@ struct AdminViewBlogOverviewComponent: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Blog",
                         description:
                             "Manage blog posts, authors, tags, and settings."

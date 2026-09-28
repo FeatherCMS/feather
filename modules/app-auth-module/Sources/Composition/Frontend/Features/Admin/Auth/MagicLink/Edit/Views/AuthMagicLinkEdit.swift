@@ -33,7 +33,7 @@ struct AuthMagicLinkEdit: Component {
 
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit user magic link",
                         description: "Update a sign-in magic link."
                     )

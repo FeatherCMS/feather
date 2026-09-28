@@ -18,7 +18,7 @@ struct UserIdentityEditPage: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit user identity",
                         description: "Update this user identity."
                     )

@@ -33,7 +33,7 @@ struct AuthMagicLinkTable: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "User magic links",
                         description: "Manage sign-in magic links."
                     )

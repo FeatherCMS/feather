@@ -18,7 +18,7 @@ struct RedirectRuleEditPage: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit redirect rule",
                         description: "Update the redirect rule configuration."
                     )

@@ -31,7 +31,7 @@ struct AuthMagicLinkAdd: Component {
 
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add user magic link",
                         description: "Create a sign-in magic link."
                     )

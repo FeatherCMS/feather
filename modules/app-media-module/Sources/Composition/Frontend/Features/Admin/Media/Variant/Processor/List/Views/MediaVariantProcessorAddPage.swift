@@ -16,7 +16,7 @@ struct MediaVariantProcessorAddPage: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add processor",
                         description:
                             "Configure a processor for this media variant."

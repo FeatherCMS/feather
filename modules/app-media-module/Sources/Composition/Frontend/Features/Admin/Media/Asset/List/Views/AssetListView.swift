@@ -212,7 +212,7 @@ struct AssetListView: Component {
                     )
                     context.build(
                         NewAdminPageHeader(
-                            state: .init(
+                            state: .primary(
                                 title: "Media assets",
                                 description:
                                     "Browse, organize, and manage media assets."

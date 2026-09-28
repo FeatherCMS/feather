@@ -18,7 +18,7 @@ struct AuthSessionRemoveConfirmation: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
             NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove session",
                     description: "The session will be signed out immediately."
                 ),

@@ -18,7 +18,7 @@ struct AuthMagicLinkConfirmation: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
             NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove user magic link",
                     description: "This action cannot be undone."
                 ),

@@ -38,7 +38,7 @@ struct AssetEditView: Component {
                 )
                 context.build(
                     NewAdminPageHeader(
-                        state: .init(
+                        state: .primary(
                             title: "Edit media asset",
                             description: "Update the metadata for this asset."
                         )

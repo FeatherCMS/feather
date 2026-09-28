@@ -23,7 +23,7 @@ struct NewsletterSubscribersTable: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Subscribers",
                         description: "Manage newsletter subscribers."
                     )

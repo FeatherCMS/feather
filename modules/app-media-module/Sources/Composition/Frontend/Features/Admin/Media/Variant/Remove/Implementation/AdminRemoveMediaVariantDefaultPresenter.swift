@@ -22,7 +22,7 @@ struct AdminRemoveMediaVariantDefaultPresenter: AdminRemoveMediaVariantPresenter
             context: context,
             title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove selected variants",
                     description:
                         "You’re about to permanently remove the selected media variants. This action cannot be undone."

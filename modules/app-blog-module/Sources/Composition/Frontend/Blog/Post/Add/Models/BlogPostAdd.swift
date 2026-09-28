@@ -25,7 +25,7 @@ struct BlogPostAdd: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add post",
                         description: "Create a new blog post."
                     )

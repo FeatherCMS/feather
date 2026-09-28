@@ -42,7 +42,7 @@ struct MediaAssetUploadView: Component {
                 )
                 context.build(
                     NewAdminPageHeader(
-                        state: .init(
+                        state: .primary(
                             title: "Add media asset",
                             description: "Upload a media asset to the library."
                         )

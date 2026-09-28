@@ -73,7 +73,7 @@ struct AdminListBlogAuthorDefaultPresenter:
             context: context,
             title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove blog authors",
                     description: "This action cannot be undone."
                 ),

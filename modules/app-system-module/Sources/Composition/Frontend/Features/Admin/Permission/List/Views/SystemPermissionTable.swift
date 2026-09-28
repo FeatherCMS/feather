@@ -24,7 +24,7 @@ struct SystemPermissionTable: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Permissions",
                         description: "Manage system permissions."
                     )

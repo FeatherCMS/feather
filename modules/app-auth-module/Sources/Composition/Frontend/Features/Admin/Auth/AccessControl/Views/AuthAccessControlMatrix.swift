@@ -57,7 +57,7 @@ struct AuthAccessControlMatrix: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Access control",
                         description: "Rows are permissions, columns are roles."
                     )
