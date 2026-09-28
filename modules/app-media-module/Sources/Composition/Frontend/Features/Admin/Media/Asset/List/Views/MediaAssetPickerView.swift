@@ -38,6 +38,13 @@ struct MediaAssetPickerView: Component {
                     FlexDirection(.column)
                     Gap(12.px)
                     Overflow(.visible)
+                    MinHeight(0.px)
+                }
+                Class("media-asset-picker__body") {
+                    Display(.flex)
+                    FlexDirection(.column)
+                    FlexGrow(1)
+                    MinHeight(0.px)
                 }
                 Class("media-asset-picker__navigation") {
                     Display(.flex)
@@ -178,8 +185,15 @@ struct MediaAssetPickerView: Component {
                 }
                 Class("media-asset-picker__selection-actions") {
                     Display(.flex)
-                    JustifyContent(.flexEnd)
-                    PaddingTop(4.px)
+                    JustifyContent(.flexStart)
+                    FlexShrink(0)
+                    PaddingTop(12.px)
+                    PaddingBottom(2.px)
+                    BorderTop(
+                        1.px,
+                        .solid,
+                        .variable(TokenKey.Colors.Materials.Tertiary.border)
+                    )
                 }
             },
             Media(.maxWidth(768.px)) {
@@ -197,14 +211,15 @@ struct MediaAssetPickerView: Component {
         Section {
             Div {
                 Div {
-                    context.build(
-                        NewAdminPathBreadcrumb(items: folderPathItems())
-                    )
+                    Div {
+                        context.build(
+                            NewAdminPathBreadcrumb(items: folderPathItems())
+                        )
+                    }
+                    .class("media-asset-picker__path")
+                    context.build(viewSelector())
+                        .class("media-asset-picker__view")
                 }
-                .class("media-asset-picker__path")
-                context.build(viewSelector())
-                    .class("media-asset-picker__view")
-            }
             .class("media-asset-picker__navigation")
 
             Div {
@@ -254,26 +269,28 @@ struct MediaAssetPickerView: Component {
                     )
                 )
             )
+        }
+        .class("media-asset-picker__body")
 
-            if state.picker.selectionMode == .multiple,
-               state.picker.field != nil {
-                Div {
-                    Button("Use assets")
-                        .type(.button)
-                        .class("button", "primary")
-                        .data("picker-apply", "true")
-                        .disabled()
-                }
-                .class("media-asset-picker__selection-actions")
-                Div {}
-                    .data("media-picker-selection-markers", "true")
-                    .hidden()
-                Script(multiSelectionScript())
+        if state.picker.selectionMode == .multiple,
+           state.picker.field != nil {
+            Div {
+                Button("Use assets")
+                    .type(.button)
+                    .class("button", "primary")
+                    .data("picker-apply", "true")
+                    .disabled()
             }
-            else if state.picker.selectionMode == .single,
-                    state.picker.field != nil {
-                Script(singleSelectionScript())
-            }
+            .class("media-asset-picker__selection-actions")
+            Div {}
+                .data("media-picker-selection-markers", "true")
+                .hidden()
+            Script(multiSelectionScript())
+        }
+        else if state.picker.selectionMode == .single,
+                state.picker.field != nil {
+            Script(singleSelectionScript())
+        }
         }
         .class("media-asset-picker")
         .data("media-picker-field", state.picker.field ?? "")

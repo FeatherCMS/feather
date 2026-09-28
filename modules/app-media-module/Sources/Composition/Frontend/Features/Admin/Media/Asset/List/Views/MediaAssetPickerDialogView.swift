@@ -31,9 +31,17 @@ struct MediaAssetPickerDialogView<Content: Component>: Component {
                     FlexDirection(.column)
                     Gap(16.px)
                     Height(70.vh)
-                    OverflowY(.auto)
+                    Overflow(.hidden)
                     BoxSizing(.borderBox)
                     Padding(vertical: 2.px, horizontal: 3.px)
+                }
+                Custom(".media-asset-picker-dialog > .media-asset-picker") {
+                    Height(100.percent)
+                    MinHeight(0.px)
+                }
+                Custom(".media-asset-picker-dialog .media-asset-picker__body") {
+                    OverflowY(.auto)
+                    OverflowX(.hidden)
                 }
             }
         ]
