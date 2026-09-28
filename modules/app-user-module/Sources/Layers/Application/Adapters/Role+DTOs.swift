@@ -13,6 +13,7 @@ extension Role {
     var asDetail: RoleDetail {
         .init(
             id: id,
+            key: key,
             name: name,
             notes: notes,
             createdAt: createdAt,

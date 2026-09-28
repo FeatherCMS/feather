@@ -20,10 +20,10 @@ struct AdminRemoveWebMenuDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove menu",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: WebMenuConfirmation(
                 state: .init(
                     id: item.id,
@@ -31,7 +31,8 @@ struct AdminRemoveWebMenuDefaultPresenter:
                     breadcrumb: WebMenuRoutes.breadcrumb,
                     nonceToken: nonceToken
                 )
-            )
+            ),
+            size: .small
         )
     }
 

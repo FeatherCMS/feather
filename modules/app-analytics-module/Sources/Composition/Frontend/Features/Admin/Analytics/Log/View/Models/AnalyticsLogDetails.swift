@@ -14,7 +14,7 @@ struct AnalyticsLogDetails: Component {
             context.build(
                 NewAdminDetailView(
                     breadcrumb: breadcrumb,
-                    pageHeader: .init(
+                    pageHeader: .primary(
                         title: "Analytics log details",
                         description: "Inspect the recorded request metadata."
                     ),

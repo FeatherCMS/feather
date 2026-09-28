@@ -25,7 +25,7 @@ struct BlogAuthorAdd: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add author",
                         description: "Create a new blog author."
                     )
@@ -35,8 +35,7 @@ struct BlogAuthorAdd: Component {
                 BlogAuthorForm(
                     state: state.form,
                     action: "/admin/blog/authors/add/",
-                    submitLabel: "Add author",
-                    publishLabel: "Publish author"
+                    submitLabel: "Add author"
                 )
             )
         }

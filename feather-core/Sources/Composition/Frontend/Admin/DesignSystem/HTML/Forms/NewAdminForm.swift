@@ -5,23 +5,13 @@ import WebBuilders
 public import WebComponents
 
 public struct NewAdminForm: Component {
-    public struct HiddenField: Sendable {
-        public let name: String
-        public let value: String
-
-        public init(name: String, value: String) {
-            self.name = name
-            self.value = value
-        }
-    }
-
     private let form: Form
 
     public init(
         action: String,
         method: MethodAttributeValue = .post,
         nonceToken: String? = nil,
-        hiddenFields: [HiddenField] = [],
+        hiddenFields: [NewAdminFormFieldHiddenValue] = [],
         @Builder<FlowContent> content: () -> [any FlowContent]
     ) {
         self.form = Form {

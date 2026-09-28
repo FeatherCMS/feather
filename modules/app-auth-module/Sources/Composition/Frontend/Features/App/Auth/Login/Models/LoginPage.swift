@@ -89,7 +89,7 @@ struct LoginPage: Component {
             Div {
                 context.build(
                     NewAdminPageHeader(
-                        state: .init(
+                        state: .primary(
                             title: "Sign in",
                             description: "Use your user account to continue."
                         )

@@ -89,7 +89,7 @@ func buildRouter(
                 let cookies = request.headers[.cookie]
                     .map { Cookies(from: [$0]) }
                 let token =
-                    cookies?["session"]?.value
+                    cookies?["session_token"]?.value
                     ?? request.headers[.authorization]
                     .flatMap { value in
                         let prefix = "Bearer "

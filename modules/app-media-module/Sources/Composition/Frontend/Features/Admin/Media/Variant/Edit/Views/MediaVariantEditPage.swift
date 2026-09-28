@@ -19,7 +19,7 @@ struct MediaVariantEditPage: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit \(detail.name)",
                         description: "Update the media variant details."
                     )

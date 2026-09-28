@@ -26,7 +26,7 @@ struct BlogAuthorEdit: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit author",
                         description: "Update this blog author."
                     )

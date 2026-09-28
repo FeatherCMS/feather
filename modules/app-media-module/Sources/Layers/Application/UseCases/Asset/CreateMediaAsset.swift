@@ -4,8 +4,13 @@ public import FeatherStorage
 public import Foundation
 import MediaContracts
 import MediaDomain
+import NIOCore
 
 public struct CreateMediaAsset: UseCase {
+    public enum Error: Swift.Error, Sendable {
+        case duplicatePath
+    }
+
     struct Action: PermissionAction {
         let key = MediaPermissions.Assets.create
     }
@@ -33,7 +38,26 @@ public struct CreateMediaAsset: UseCase {
         public let `extension`: String
         public let title: String?
         public let altText: String?
-        public let data: Data
+        public let content: StorageSequence
+        public let contentLength: Int64
+
+        public init(
+            folderId: String? = nil,
+            fileName: String,
+            `extension`: String,
+            title: String? = nil,
+            altText: String? = nil,
+            content: StorageSequence,
+            contentLength: Int64
+        ) {
+            self.folderId = folderId
+            self.fileName = fileName
+            self.extension = `extension`
+            self.title = title
+            self.altText = altText
+            self.content = content
+            self.contentLength = contentLength
+        }
 
         public init(
             folderId: String? = nil,
@@ -43,12 +67,17 @@ public struct CreateMediaAsset: UseCase {
             altText: String? = nil,
             data: Data
         ) {
-            self.folderId = folderId
-            self.fileName = fileName
-            self.extension = `extension`
-            self.title = title
-            self.altText = altText
-            self.data = data
+            var buffer = ByteBufferAllocator().buffer(capacity: data.count)
+            buffer.writeBytes(data)
+            self.init(
+                folderId: folderId,
+                fileName: fileName,
+                extension: `extension`,
+                title: title,
+                altText: altText,
+                content: .init(buffer: buffer),
+                contentLength: Int64(data.count)
+            )
         }
     }
 
@@ -67,14 +96,32 @@ public struct CreateMediaAsset: UseCase {
             scope.assets.prepareStorageIdentity()
         }
         let file = normalizedFile(input.fileName, extension: input.extension)
+        let slugPath = try await transaction.run { scope in
+            let parent: MediaAssetNodeFolder?
+            if let folderId = input.folderId {
+                parent = try await scope.folders.find(id: folderId)
+            }
+            else {
+                parent = nil
+            }
+            let slugPath =
+                parent.map { "\($0.slugPath)/\(file.slug)" } ?? file.slug
+            let folderExists =
+                try await scope.folders.find(slugPath: slugPath) != nil
+            let assetExists =
+                try await scope.assets.find(slugPath: slugPath) != nil
+            if folderExists || assetExists {
+                throw Error.duplicatePath
+            }
+            return slugPath
+        }
         let objectKey = MediaStorageObjectKey.original(
             assetID: storageIdentity.nodeId,
             fileExtension: file.extension
         )
-        try await MediaStorageData.upload(
-            input.data,
-            to: storage,
-            key: storageKeyShard.physicalKey(for: objectKey)
+        try await storage.upload(
+            key: storageKeyShard.physicalKey(for: objectKey),
+            sequence: input.content
         )
 
         do {
@@ -86,8 +133,6 @@ public struct CreateMediaAsset: UseCase {
                 else {
                     parent = nil
                 }
-                let slugPath =
-                    parent.map { "\($0.slugPath)/\(file.slug)" } ?? file.slug
                 let storageObject = try await scope.storageObjects.insert(
                     MediaAssetStorageObject.create(objectKey: objectKey)
                 )
@@ -99,7 +144,7 @@ public struct CreateMediaAsset: UseCase {
                         slugPath: slugPath,
                         extension: file.extension,
                         contentType: contentType(for: file.extension),
-                        sizeBytes: Int64(input.data.count),
+                        sizeBytes: input.contentLength,
                         title: input.title,
                         altText: input.altText
                     ),
@@ -109,7 +154,7 @@ public struct CreateMediaAsset: UseCase {
                 try await adjustFolderAggregates(
                     folders: scope.folders,
                     folderId: parent?.id,
-                    sizeDelta: Int64(input.data.count),
+                    sizeDelta: input.contentLength,
                     assetCountDelta: 1
                 )
                 return asset

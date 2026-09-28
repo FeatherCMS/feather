@@ -23,12 +23,20 @@ struct ContactFormSubmissionDetailsView: Component {
         return Section {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                AdminContactFormHeader(
+                NewAdminPageHeader(
+                    state: .primary(
+                        title: "Contact form submission",
+                        description:
+                            "Review the submitted values and processing status."
+                    )
+                )
+            )
+            context.build(
+                AdminContactFormTabs(
                     formId: state.formId,
                     active: .submissions
                 )
             )
-            H2("Submission")
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }

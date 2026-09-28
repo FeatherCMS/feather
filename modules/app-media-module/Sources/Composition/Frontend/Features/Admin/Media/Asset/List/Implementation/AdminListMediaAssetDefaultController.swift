@@ -11,6 +11,8 @@ import WebBuilders
 import WebComponents
 
 struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
+    private static let viewCookieName = "admin_media_assets_view"
+
     let buildRuntime:
         AuthenticatedRuntimeBuilder<
             any AdminListMediaAssetInteractor,
@@ -27,22 +29,37 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
         let parentId = request.queryString("parent_id")?
             .whitespaceTrimmed
             .emptyToNil
-        let view =
-            AdminListMediaAssetModel.ViewMode(
-                rawValue: request.queryString("view") ?? ""
-            ) ?? .grid
+        let requestedView = request.queryString("view")
+            .flatMap(AdminListMediaAssetModel.ViewMode.init(rawValue:))
+        let storedView = request.cookies[Self.viewCookieName]
+            .flatMap {
+                AdminListMediaAssetModel.ViewMode(rawValue: $0.value)
+            }
+        let view = requestedView ?? storedView ?? .grid
+        let isPicker = request.queryString("picker") == "1"
         let picker = AdminListMediaAssetModel.PickerState(
-            isEnabled: request.queryString("picker") == "1",
-            field: request.queryString("field")?.emptyToNil,
-            allowedExtensions: request.queryString("extensions")?
-                .split(separator: ",")
-                .map {
-                    $0.whitespaceTrimmed
-                        .lowercased()
-                }
-                .filter { !$0.isEmpty } ?? [],
-            defaultFolderPath: request.queryString("default_folder_path")?
-                .emptyToNil
+            isEnabled: isPicker,
+            configuration: isPicker
+                ? .init(
+                    field: request.queryString("field")?.emptyToNil ?? "",
+                    selectionMode: request.queryString("selection")
+                        == "multiple"
+                        ? .multiple
+                        : .single,
+                    allowedExtensions: .custom(
+                        request.queryString("extensions")?
+                            .split(separator: ",")
+                            .map(String.init) ?? []
+                    ),
+                    defaultFolderPath: request.queryString(
+                        "default_folder_path"
+                    )?
+                    .emptyToNil,
+                    previewVariant: request.queryString("preview_variant")?
+                        .emptyToNil
+                )
+                : nil,
+            resetSelection: request.queryString("selection_reset") == "1"
         )
         let permissions = context.currentUserAdminListActions
         guard permissions.allows(MediaPermissions.Assets.list) else {
@@ -59,10 +76,27 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
                 view: view,
                 picker: picker
             )
-            return try await presenter.renderListPage(
+            let page = try await presenter.renderListPage(
                 model: model,
                 search: search,
                 permissions: permissions
+            )
+            guard let requestedView else {
+                return page
+            }
+            return HTMLResponse(
+                content: page.content,
+                status: page.status,
+                cookies: [
+                    Cookie(
+                        name: Self.viewCookieName,
+                        value: requestedView.rawValue,
+                        maxAge: 60 * 60 * 24 * 365,
+                        path: "/admin/media/assets",
+                        httpOnly: false,
+                        sameSite: .lax
+                    )
+                ]
             )
         }
         catch let caughtError {
@@ -77,7 +111,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (_, presenter) = buildRuntime((request, context))
+        let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(to: MediaPermissions.Assets.delete)
         else {
@@ -101,11 +135,12 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
                 ]
             )
         }
+        let items = try await interactor.resolveRemoveItems(ids: selectedIds)
         return
             try await presenter.renderRemovePage(
                 pageState: .init(page: page, pageSize: 20, total: 0),
                 search: search,
-                items: selectedIds.map { .init(id: $0, label: $0) },
+                items: items,
                 returnTo: request.queryString("returnTo")
             )
             .response(from: request, context: context)

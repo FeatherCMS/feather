@@ -19,15 +19,16 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove user role",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: UserRoleConfirmation(
                 id: items[0].id,
                 name: items[0].label,
                 nonceToken: nonceToken
-            )
+            ),
+            size: .small
         )
     }
 
@@ -42,24 +43,23 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
             path: UserRoleRoutes.list.description,
             returnTo: returnTo
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Manage user roles",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                breadcrumb: UserRoleRoutes.breadcrumb,
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove selected user roles",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: items.map(\.label),
                 action: UserRoleRoutes.remove.description,
-                cancel: cancel,
                 hiddenFields: items.map { .init(name: "ids", value: $0.id) } + [
                     .init(name: "_nonce", value: nonceToken),
                     .init(name: "returnTo", value: cancel),
                 ]
-            )
+            ),
+            size: .small
         )
     }
 

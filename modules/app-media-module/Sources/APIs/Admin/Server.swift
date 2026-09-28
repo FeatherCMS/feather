@@ -325,6 +325,35 @@ extension UniversalServer where APIHandler: APIProtocol {
             },
             deserializer: { request, requestBody, metadata in
                 let headers: Operations.MediaAssetCreate.Input.Headers = .init(
+                    xMediaAssetParentID:
+                        try converter.getOptionalHeaderFieldAsURI(
+                            in: request.headerFields,
+                            name: "X-Media-Asset-Parent-ID",
+                            as: Swift.String.self
+                        ),
+                    xMediaAssetFileName:
+                        try converter.getRequiredHeaderFieldAsURI(
+                            in: request.headerFields,
+                            name: "X-Media-Asset-File-Name",
+                            as: Swift.String.self
+                        ),
+                    xMediaAssetExtension:
+                        try converter.getRequiredHeaderFieldAsURI(
+                            in: request.headerFields,
+                            name: "X-Media-Asset-Extension",
+                            as: Swift.String.self
+                        ),
+                    xMediaAssetTitle: try converter.getOptionalHeaderFieldAsURI(
+                        in: request.headerFields,
+                        name: "X-Media-Asset-Title",
+                        as: Swift.String.self
+                    ),
+                    xMediaAssetAltText:
+                        try converter.getOptionalHeaderFieldAsURI(
+                            in: request.headerFields,
+                            name: "X-Media-Asset-Alt-Text",
+                            as: Swift.String.self
+                        ),
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
@@ -332,20 +361,20 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Components.RequestBodies.MediaAssetCreateRequestBody
+                let body: Operations.MediaAssetCreate.Input.Body
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
-                        "application/json"
+                        "application/octet-stream"
                     ]
                 )
                 switch chosenContentType {
-                case "application/json":
-                    body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.MediaAssetCreateSchema.self,
+                case "application/octet-stream":
+                    body = try converter.getRequiredRequestBodyAsBinary(
+                        OpenAPIRuntime.HTTPBody.self,
                         from: requestBody,
                         transforming: { value in
-                            .json(value)
+                            .binary(value)
                         }
                     )
                 default:
@@ -386,6 +415,11 @@ extension UniversalServer where APIHandler: APIProtocol {
                 case .forbidden(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .conflict(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 409)
                     suppressMutabilityWarning(&response)
                     return (response, nil)
                 case .undocumented(let statusCode, _):
@@ -980,6 +1014,11 @@ extension UniversalServer where APIHandler: APIProtocol {
                 case .forbidden(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .conflict(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 409)
                     suppressMutabilityWarning(&response)
                     return (response, nil)
                 case .undocumented(let statusCode, _):

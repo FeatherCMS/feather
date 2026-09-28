@@ -15,6 +15,7 @@ extension RoleTable.Row {
         from row: any DatabaseRow
     ) throws {
         self.id = try row.decode(column: "id", as: String.self)
+        self.key = try row.decode(column: "key", as: String.self)
         self.name = try row.decode(column: "name", as: String?.self)
         self.notes = try row.decode(column: "notes", as: String?.self)
         self.createdAt = try row.decode(
@@ -32,6 +33,7 @@ struct RoleTable {
 
     struct Row {
         let id: String
+        let key: String
         let name: String?
         let notes: String?
         let createdAt: Date
@@ -47,6 +49,7 @@ struct RoleTable {
             query: #"""
                 INSERT INTO user_role (
                     id,
+                    key,
                     name,
                     notes,
                     created_at,
@@ -54,6 +57,7 @@ struct RoleTable {
                 )
                 VALUES (
                     \#(row.id),
+                    \#(row.key),
                     \#(row.name),
                     \#(row.notes),
                     NOW(),
@@ -82,6 +86,7 @@ struct RoleTable {
                 WHERE (
                     \#(search == nil)
                     OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(key) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(name) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(notes) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                 )
@@ -104,6 +109,7 @@ struct RoleTable {
                 WHERE (
                     \#(search == nil)
                     OR LOWER(id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(key) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(name) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(notes) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                 );
@@ -152,6 +158,24 @@ struct RoleTable {
         }
     }
 
+    func find(
+        key: String
+    ) async throws -> Row? {
+        try await connection.run(
+            query: #"""
+                SELECT *
+                FROM user_role
+                WHERE key=\#(key)
+                LIMIT 1;
+                """#
+        ) { sequence in
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
+            return try Row(from: row)
+        }
+    }
+
     func update(
         id: String,
         row: Row
@@ -161,6 +185,7 @@ struct RoleTable {
                 UPDATE user_role
                 SET
                     id=\#(row.id),
+                    key=\#(row.key),
                     name=\#(row.name),
                     notes=\#(row.notes),
                     updated_at=NOW()

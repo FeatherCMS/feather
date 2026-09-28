@@ -9,6 +9,10 @@ extension Role.Error: HTTPErrorRepresentable {
     var content: ServerError.Details? {
         let message: String
         switch self {
+        case .keyTooShort:
+            message = "Role key is required."
+        case .keyTooLong:
+            message = "Role key must be shorter than 255 characters."
         case .nameTooShort:
             message = "Role name must be at least 4 characters."
         case .nameTooLong:

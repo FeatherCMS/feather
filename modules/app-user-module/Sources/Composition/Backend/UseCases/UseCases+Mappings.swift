@@ -83,13 +83,18 @@ extension AdminAPIGateway {
     func map(
         _ detail: RoleDetail
     ) -> Components.Schemas.UserRoleDetailSchema {
-        .init(id: detail.id, name: detail.name, notes: detail.notes)
+        .init(
+            id: detail.id,
+            key: detail.key,
+            name: detail.name,
+            notes: detail.notes
+        )
     }
 
     func map(
         _ item: RoleList.Item
     ) -> Components.Schemas.UserRoleListItemSchema {
-        .init(id: item.id, name: item.name)
+        .init(id: item.id, key: item.key, name: item.name)
     }
 
 }

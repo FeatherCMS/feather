@@ -38,6 +38,83 @@ public struct Client: APIProtocol {
     private var converter: Converter {
         client.converter
     }
+    /// - Remark: HTTP `POST /api/v1/admin/account/users`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)`.
+    public func accountCreate(_ input: Operations.AccountCreate.Input)
+        async throws -> Operations.AccountCreate.Output
+    {
+        try await client.send(
+            input: input,
+            forOperation: Operations.AccountCreate.id,
+            serializer: { input in
+                let path = try converter.renderedPath(
+                    template: "/api/v1/admin/account/users",
+                    parameters: []
+                )
+                var request: HTTPTypes.HTTPRequest = .init(
+                    soar_path: path,
+                    method: .post
+                )
+                suppressMutabilityWarning(&request)
+                converter.setAcceptHeader(
+                    in: &request.headerFields,
+                    contentTypes: input.headers.accept
+                )
+                let body: OpenAPIRuntime.HTTPBody?
+                switch input.body {
+                case .json(let value):
+                    body = try converter.setRequiredRequestBodyAsJSON(
+                        value,
+                        headerFields: &request.headerFields,
+                        contentType: "application/json; charset=utf-8"
+                    )
+                }
+                return (request, body)
+            },
+            deserializer: { response, responseBody in
+                switch response.status.code {
+                case 201:
+                    let contentType = converter.extractContentTypeIfPresent(
+                        in: response.headerFields
+                    )
+                    let body: Components.Responses.AccountCreateResponse.Body
+                    let chosenContentType = try converter.bestContentType(
+                        received: contentType,
+                        options: [
+                            "application/json"
+                        ]
+                    )
+                    switch chosenContentType {
+                    case "application/json":
+                        body = try await converter.getResponseBodyAsJSON(
+                            Components.Schemas.AccountCreateResponseSchema.self,
+                            from: responseBody,
+                            transforming: { value in
+                                .json(value)
+                            }
+                        )
+                    default:
+                        preconditionFailure(
+                            "bestContentType chose an invalid content type."
+                        )
+                    }
+                    return .created(.init(body: body))
+                case 401:
+                    return .unauthorized(.init())
+                case 403:
+                    return .forbidden(.init())
+                default:
+                    return .undocumented(
+                        statusCode: response.status.code,
+                        .init(
+                            headerFields: response.headerFields,
+                            body: responseBody
+                        )
+                    )
+                }
+            }
+        )
+    }
     /// - Remark: HTTP `GET /api/v1/admin/account/settings`.
     /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)`.
     public func accountSettingsGet(_ input: Operations.AccountSettingsGet.Input)

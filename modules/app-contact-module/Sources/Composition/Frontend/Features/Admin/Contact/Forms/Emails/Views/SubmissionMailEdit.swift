@@ -18,13 +18,17 @@ struct SubmissionMailEdit: Component {
         Section {
             context.build(NewAdminBreadcrumb(links: breadcrumb))
             context.build(
-                AdminContactFormHeader(
-                    formId: formId,
-                    active: .emails
+                NewAdminPageHeader(
+                    state: .primary(
+                        title: "Edit contact form email",
+                        description:
+                            "Update the notification email for this contact form."
+                    )
                 )
             )
-            H2("Edit email")
-                .style("margin-bottom:16px;")
+            context.build(
+                AdminContactFormTabs(formId: formId, active: .emails)
+            )
             replacementVariables
             context.build(
                 SubmissionMailForm(

@@ -18,7 +18,7 @@ struct UserRoleTable: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "User roles",
                         description: "Manage roles assigned to user identities."
                     )

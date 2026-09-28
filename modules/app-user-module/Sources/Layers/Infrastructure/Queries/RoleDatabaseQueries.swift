@@ -13,6 +13,7 @@ extension RoleTable.Row {
     var asQueryListItem: RoleList.Item {
         .init(
             id: id,
+            key: key,
             name: name,
             notes: notes,
             createdAt: createdAt,
@@ -23,6 +24,7 @@ extension RoleTable.Row {
     var asDetail: RoleDetail {
         .init(
             id: id,
+            key: key,
             name: name,
             notes: notes,
             createdAt: createdAt,

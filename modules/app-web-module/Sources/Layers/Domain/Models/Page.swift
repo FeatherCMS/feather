@@ -133,6 +133,8 @@ extension Page {
         self.title = newTitle
         self.excerpt = newExcerpt
         self.content = newContent
-        self.imageAssetId = imageAssetId ?? self.imageAssetId
+        if let imageAssetId {
+            self.imageAssetId = imageAssetId.emptyToNil
+        }
     }
 }

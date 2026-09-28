@@ -29,7 +29,7 @@ struct AssetDetailsView: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Media asset details",
                         description:
                             "Review asset metadata and generated variants."

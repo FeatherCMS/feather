@@ -89,7 +89,7 @@ struct UserApplicationTestSuite {
         let result = try await useCase.execute(
             subject: Subject(id: "subject-4"),
             input: .init(
-                id: "manager",
+                key: "manager",
                 name: "Manager",
                 notes: "can manage things"
             )
@@ -173,6 +173,7 @@ private func makeRole(
 ) -> Role {
     .init(
         id: id,
+        key: "role-\(id)",
         name: "Role \(id)",
         notes: "Notes \(id)",
         createdAt: Date(),
@@ -197,6 +198,7 @@ private func makeRoleDetail(
 ) -> RoleDetail {
     .init(
         id: id,
+        key: "role-\(id)",
         name: "Detail \(id)",
         notes: "Detail notes",
         createdAt: Date(),

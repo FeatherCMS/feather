@@ -26,7 +26,7 @@ struct BlogPostDetails: Component {
             context.build(
                 NewAdminDetailView(
                     breadcrumb: state.breadcrumb,
-                    pageHeader: .init(
+                    pageHeader: .primary(
                         title: "Blog post details",
                         description: "Review the blog post configuration."
                     ),

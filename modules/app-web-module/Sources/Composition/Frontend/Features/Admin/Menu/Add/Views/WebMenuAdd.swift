@@ -22,7 +22,7 @@ struct WebMenuAdd: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add menu",
                         description:
                             "Create a navigation menu for the public website."

@@ -73,7 +73,7 @@ struct AdminListAccountInvitationDefaultPresenter:
     ) async throws -> HTMLResponse {
         let hiddenFields =
             items.map {
-                NewAdminRemoveConfirmation.HiddenField(
+                NewAdminFormFieldHiddenValue(
                     name: "ids",
                     value: $0.id
                 )
@@ -84,33 +84,22 @@ struct AdminListAccountInvitationDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove selected invitations",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                breadcrumb: AccountAdminRoutes.invitationBreadcrumb + [
-                    .init(
-                        label: "Remove",
-                        link: AccountAdminRoutes.invitationRemoveBulk
-                            .description
-                    )
-                ],
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove selected invitations",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: items.map(\.label),
                 action: AccountAdminRoutes.invitationRemoveBulk.description,
-                cancel: NewAdminLocation.url(
-                    path: AccountAdminRoutes.invitations.description,
-                    page: page,
-                    search: search
-                ),
-                submitLabel: "Remove invitations",
+                submit: .init(label: "Remove invitations", style: .destructive),
                 nonceToken: nonceToken,
                 hiddenFields: hiddenFields
-            )
+            ),
+            size: .small
         )
     }
 

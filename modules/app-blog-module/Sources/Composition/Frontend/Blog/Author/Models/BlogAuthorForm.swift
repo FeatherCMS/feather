@@ -38,7 +38,6 @@ struct BlogAuthorForm: Component {
     var metadataHref: String?
     var action: String
     var submitLabel: String
-    var publishLabel: String?
     var removeHref: String?
     var removeLabel: String = "Remove"
 
@@ -73,8 +72,10 @@ struct BlogAuthorForm: Component {
                             )
                         },
                         browsePath:
-                            "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=png,jpg,jpeg,webp",
-                        allowedExtensions: ["png", "jpg", "jpeg", "webp"]
+                            "/admin/media/assets/?picker=1&field=\(state.profileImageAssetId.key.queryEncoded())&extensions=\(AllowedExtensions.images.queryValue)",
+                        defaultFolderPath: "blog/authors",
+                        allowedExtensions: .images,
+                        previewStyle: .square
                     )
                 )
             )
@@ -117,10 +118,6 @@ struct BlogAuthorForm: Component {
                 context.build(
                     NewAdminSubmitButton(submitLabel, style: .primary)
                 )
-                if let publishLabel {
-                    Button(publishLabel).type(.submit).name("submitAction")
-                        .value("publish").class("button", "secondary")
-                }
                 if let removeHref {
                     context.build(
                         NewAdminButton(

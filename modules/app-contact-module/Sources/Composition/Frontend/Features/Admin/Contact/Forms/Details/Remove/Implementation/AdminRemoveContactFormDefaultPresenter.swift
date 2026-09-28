@@ -22,23 +22,22 @@ struct AdminRemoveContactFormDefaultPresenter: AdminRemoveContactFormPresenter {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove contact form",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                breadcrumb: ContactAdminRoutes.breadcrumb,
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove contact form",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: [item.label],
                 action: ContactAdminRoutes.formRemove.description,
-                cancel: ContactAdminRoutes.forms.description,
-                submitLabel: "Remove form",
+                submit: .init(label: "Remove form", style: .destructive),
                 nonceToken: nonceToken,
                 hiddenFields: [.init(name: "ids", value: item.id)]
-            )
+            ),
+            size: .small
         )
     }
 
@@ -48,24 +47,23 @@ struct AdminRemoveContactFormDefaultPresenter: AdminRemoveContactFormPresenter {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove contact forms",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                breadcrumb: ContactAdminRoutes.breadcrumb,
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove contact forms",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: items.map(\.label),
                 action: ContactAdminRoutes.formRemove.description,
-                cancel: ContactAdminRoutes.forms.description,
                 nonceToken: nonceToken,
                 hiddenFields: items.map {
                     .init(name: "ids", value: $0.id)
                 }
-            )
+            ),
+            size: .small
         )
     }
 

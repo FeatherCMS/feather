@@ -39,7 +39,7 @@
 //    private func extractSessionToken(from setCookie: String) -> String? {
 //        let decoded = setCookie.removingPercentEncoding ?? setCookie
 //
-//        for key in ["session_token=", "session="] {
+//        for key in ["session_token="] {
 //            guard let range = decoded.range(of: key) else {
 //                continue
 //            }

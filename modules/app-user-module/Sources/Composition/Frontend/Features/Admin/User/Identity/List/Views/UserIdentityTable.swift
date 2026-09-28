@@ -22,7 +22,7 @@ struct UserIdentityTable: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "User identities",
                         description:
                             "Manage identities and their assigned roles."

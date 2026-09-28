@@ -19,12 +19,19 @@ struct ContactFormEditPage: Component {
         Section {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                AdminContactFormHeader(
-                    formId: state.key,
-                    active: .details
+                NewAdminPageHeader(
+                    state: .primary(
+                        title: state.isReadOnly
+                            ? "Contact form" : "Edit contact form",
+                        description: state.isReadOnly
+                            ? "Review form settings and field order."
+                            : "Update form settings and field order."
+                    )
                 )
             )
-            H2("Contact form details")
+            context.build(
+                AdminContactFormTabs(formId: state.key, active: .details)
+            )
             context.build(
                 ContactFormForm(
                     state: state.form,

@@ -20,6 +20,59 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         search: String?,
         permissions: NewAdminListActions
     ) async throws -> HTMLResponse {
+        let isDialog =
+            request.queryString("presentation") == "dialog"
+            && request.headers[.accept]?.contains("type=admin-dialog") == true
+        if model.picker.isEnabled && isDialog {
+            let navigation = MediaAssetPickerDialogNavigation(
+                field: model.picker.field,
+                selectionMode: model.picker.selectionMode
+            )
+            return try await renderEngine.renderNewAdminDialog(
+                request: request,
+                context: context,
+                title: model.picker.selectionMode == .multiple
+                    ? "Select media assets"
+                    : "Select media asset",
+                content: MediaAssetPickerDialogView(
+                    navigation: navigation,
+                    content: MediaAssetPickerView(
+                        state: .init(
+                            entries: model.entries,
+                            pageState: model.pageState,
+                            search: search ?? "",
+                            parentId: model.parentId,
+                            currentFolder: model.currentFolder,
+                            ancestors: model.ancestors,
+                            view: model.view,
+                            picker: model.picker
+                        )
+                    )
+                ),
+                size: .large
+            )
+        }
+        if model.picker.isEnabled {
+            return try await renderEngine.renderNewAdminPage(
+                request: request,
+                context: context,
+                title: model.picker.selectionMode == .multiple
+                    ? "Select media assets"
+                    : "Select media asset",
+                content: MediaAssetPickerView(
+                    state: .init(
+                        entries: model.entries,
+                        pageState: model.pageState,
+                        search: search ?? "",
+                        parentId: model.parentId,
+                        currentFolder: model.currentFolder,
+                        ancestors: model.ancestors,
+                        view: model.view,
+                        picker: model.picker
+                    )
+                )
+            )
+        }
         let content = AssetListView(
             state: .init(
                 entries: model.entries,
@@ -33,14 +86,6 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 permissions: permissions
             )
         )
-        if model.picker.isEnabled {
-            return try await renderEngine.renderNewAdminPage(
-                request: request,
-                context: context,
-                title: "Select media asset",
-                content: content
-            )
-        }
         return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
@@ -53,15 +98,31 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         message: String,
         picker: Bool
     ) async throws -> HTMLResponse {
+        let isDialog =
+            request.queryString("presentation") == "dialog"
+            && request.headers[.accept]?.contains("type=admin-dialog") == true
         if picker {
+            let errorContent = MediaAssetErrorView(
+                info: "Unable to load media assets.",
+                message: message
+            )
+            if isDialog {
+                return try await renderEngine.renderNewAdminDialog(
+                    request: request,
+                    context: context,
+                    title: "Select media asset",
+                    content: MediaAssetPickerDialogView(
+                        navigation: pickerNavigation(),
+                        content: errorContent
+                    ),
+                    size: .large
+                )
+            }
             return try await renderEngine.renderNewAdminPage(
                 request: request,
                 context: context,
                 title: "Select media asset",
-                content: MediaAssetErrorView(
-                    info: "Unable to load media assets.",
-                    message: message
-                )
+                content: errorContent
             )
         }
         return try await renderEngine.renderNewAdminPage(
@@ -72,6 +133,15 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 info: "Unable to load media assets.",
                 message: message
             )
+        )
+    }
+
+    private func pickerNavigation() -> MediaAssetPickerDialogNavigation {
+        MediaAssetPickerDialogNavigation(
+            field: request.queryString("field")?.emptyToNil,
+            selectionMode: request.queryString("selection") == "multiple"
+                ? .multiple
+                : .single
         )
     }
 
@@ -88,29 +158,40 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
             path: MediaAssetRoutes.list.description,
             returnTo: returnTo
         )
+        let isDialog =
+            request.queryString("presentation") == "dialog"
+            && request.headers[.accept]?.contains("type=admin-dialog") == true
+        let confirmation = NewAdminRemoveConfirmation(
+            header: .primary(
+                title: NewAdminRemoveConfirmation.dialogTitle,
+                description: "Confirm removal of the selected media assets."
+            ),
+            selectedItems: items.map(\.label),
+            action: MediaAssetRoutes.remove.description,
+            submit: .init(label: "Remove selected", style: .destructive),
+            nonceToken: nonceToken,
+            hiddenFields: items.map {
+                .init(name: "ids", value: $0.id)
+            } + [
+                .init(name: "page", value: String(pageState.page)),
+                .init(name: "search", value: search ?? ""),
+                .init(name: "returnTo", value: cancel),
+            ],
+        )
+        if isDialog {
+            return try await renderEngine.renderNewAdminDialog(
+                request: request,
+                context: context,
+                title: "Remove selected assets",
+                content: confirmation,
+                size: .small
+            )
+        }
         return try await renderEngine.renderNewAdminPage(
             request: request,
             context: context,
             title: "Remove selected assets",
-            content: NewAdminRemoveConfirmation(
-                breadcrumb: MediaAssetRoutes.breadcrumb,
-                pageHeader: .init(
-                    title: "Remove selected assets",
-                    description: "Confirm removal of the selected media assets."
-                ),
-                selectedItems: items.map(\.label),
-                action: MediaAssetRoutes.remove.description,
-                cancel: cancel,
-                submitLabel: "Remove selected",
-                nonceToken: nonceToken,
-                hiddenFields: items.map {
-                    .init(name: "ids", value: $0.id)
-                } + [
-                    .init(name: "page", value: String(pageState.page)),
-                    .init(name: "search", value: search ?? ""),
-                    .init(name: "returnTo", value: cancel),
-                ]
-            )
+            content: confirmation
         )
     }
 

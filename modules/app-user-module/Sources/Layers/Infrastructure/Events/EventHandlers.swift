@@ -22,10 +22,10 @@ public enum EventHandlers {
         registry.register(
             event: UserRoleSeedProvider.self,
             context: UserEventContext.self
-        ) { _, context in
+        ) { _, _ in
             [
                 .init(
-                    id: context.idGenerator.generate(),
+                    key: "editor",
                     name: "Editor"
                 )
             ]

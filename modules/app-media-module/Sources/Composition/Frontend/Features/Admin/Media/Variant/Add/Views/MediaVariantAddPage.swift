@@ -14,7 +14,7 @@ struct MediaVariantAddPage: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add media variant",
                         description: "Create a reusable media output variant."
                     )

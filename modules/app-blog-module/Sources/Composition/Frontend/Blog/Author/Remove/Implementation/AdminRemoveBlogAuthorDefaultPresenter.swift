@@ -24,10 +24,10 @@ struct AdminRemoveBlogAuthorDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove author",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: BlogAuthorConfirmation(
                 state: .init(
                     id: item.id,
@@ -35,7 +35,8 @@ struct AdminRemoveBlogAuthorDefaultPresenter:
                     breadcrumb: BlogAdminRoutes.authorsBreadcrumb,
                     nonceToken: nonceToken
                 )
-            )
+            ),
+            size: .small
         )
     }
 

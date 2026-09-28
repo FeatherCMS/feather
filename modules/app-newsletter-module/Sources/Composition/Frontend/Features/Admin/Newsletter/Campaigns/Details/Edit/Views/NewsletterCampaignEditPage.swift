@@ -32,11 +32,14 @@ struct NewsletterCampaignEditPage: Component {
             context.build(
                 NewsletterCampaignHeader(
                     campaignId: state.id,
-                    active: .details
+                    active: .details,
+                    title: state.isDetails ? "Campaign details" : "Edit campaign",
+                    description: state.isDetails
+                        ? "View this newsletter campaign."
+                        : "Update this newsletter campaign."
                 )
             )
             if state.isDetails {
-                H2("Campaign details")
                 Div {
                     context.build(
                         NewAdminDetailField(label: "Key", value: state.form.key)
@@ -89,7 +92,6 @@ struct NewsletterCampaignEditPage: Component {
                 .style("display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;")
             }
             else {
-                H2("Edit campaign")
                 context.build(
                     NewsletterCampaignForm(
                         state: state.form,

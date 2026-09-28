@@ -54,10 +54,13 @@ struct NewsletterCampaignSubscriberFormView: Component {
             context.build(
                 NewsletterCampaignHeader(
                     campaignId: state.newsletterId,
-                    active: .subscribers
+                    active: .subscribers,
+                    title: state.isEdit
+                        ? "Edit campaign subscriber"
+                        : "Add campaign subscriber",
+                    description: "Manage this campaign subscription."
                 )
             )
-            H2(state.isEdit ? "Edit subscriber" : "Add subscriber")
             let form = NewAdminForm(action: action) {
                 if let error = state.error {
                     P(error).class("new-admin-form__error")

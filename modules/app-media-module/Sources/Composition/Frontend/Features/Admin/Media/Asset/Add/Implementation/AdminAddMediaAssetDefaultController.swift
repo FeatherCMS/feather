@@ -3,6 +3,7 @@ import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
+import HTTPTypes
 import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
@@ -22,12 +23,27 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
-        let parentId =
+        let requestedParentId =
             request.queryString("parent_id")?
             .whitespaceTrimmed
-            .emptyToNil ?? ""
+            .emptyToNil
         let view = request.queryString("view") ?? "grid"
         let picker = pickerState(request: request)
+        let parentId: String
+        if let requestedParentId {
+            parentId = requestedParentId
+        }
+        else if let defaultFolderPath = picker.defaultFolderPath {
+            parentId =
+                try await interactor.folderID(forPath: defaultFolderPath)
+                ?? ""
+        }
+        else {
+            parentId = ""
+        }
+        let isDialog =
+            request.queryString("presentation") == "dialog"
+            && request.headers[.accept]?.contains("type=admin-dialog") == true
         var model = try await interactor.getAddMediaAsset()
         model = .init(
             parentId: parentId,
@@ -41,7 +57,8 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
             action: actionPath(
                 parentId: parentId.emptyToNil,
                 view: view,
-                picker: picker
+                picker: picker,
+                isDialog: isDialog
             ),
             isPicker: picker.isEnabled,
             selectedAsset: nil
@@ -56,12 +73,99 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
-        let payload = try await request.decode(
-            as: AssetAddForm.self,
-            context: context
-        )
+        let isDialog =
+            request.queryString("presentation") == "dialog"
+            && request.headers[.accept]?.contains("type=admin-dialog") == true
         let picker = pickerState(request: request)
-        let model = try await interactor.postAddMediaAsset(payload: payload)
+        guard
+            let fileName = header(
+                "X-Media-Asset-File-Name",
+                from: request
+            )?
+            .whitespaceTrimmed,
+            !fileName.isEmpty,
+            let fileExtension = header(
+                "X-Media-Asset-Extension",
+                from: request
+            )?
+            .whitespaceTrimmed,
+            !fileExtension.isEmpty,
+            let rawLength = request.headers[.contentLength],
+            let contentLength = Int64(rawLength),
+            contentLength > 0
+        else {
+            throw HTTPError(.badRequest)
+        }
+        let requestedParentId = header(
+            "X-Media-Asset-Parent-ID",
+            from: request
+        )?
+        .whitespaceTrimmed.emptyToNil
+        let parentId: String
+        if let requestedParentId {
+            parentId = requestedParentId
+        }
+        else if let defaultFolderPath = picker.defaultFolderPath {
+            parentId =
+                try await interactor.folderID(forPath: defaultFolderPath)
+                ?? ""
+        }
+        else {
+            parentId = ""
+        }
+
+        if picker.isEnabled,
+            !picker.allowedExtensions.isAnything,
+            !picker.allowedExtensions.values.contains(
+                fileExtension.lowercased()
+            )
+        {
+            let view = request.queryString("view") ?? "grid"
+            let errorModel = AdminAddMediaAssetModel(
+                parentId: parentId,
+                fileName: fileName,
+                extension: fileExtension,
+                title: defaultTitle(for: fileName),
+                altText: "",
+                data: "",
+                error:
+                    "Please choose a file with one of these extensions: "
+                    + picker.allowedExtensions.queryValue,
+                view: view,
+                action: actionPath(
+                    parentId: parentId.emptyToNil,
+                    view: view,
+                    picker: picker,
+                    isDialog: isDialog
+                ),
+                isPicker: true,
+                selectedAsset: nil
+            )
+            return
+                try await presenter.renderPage(
+                    model: errorModel
+                )
+                .response(from: request, context: context)
+        }
+        let payload = AssetAddUpload(
+            parentId: parentId,
+            fileName: fileName,
+            extension: fileExtension,
+            title: header("X-Media-Asset-Title", from: request)?
+                .whitespaceTrimmed
+                .emptyToNil ?? defaultTitle(for: fileName),
+            altText: header("X-Media-Asset-Alt-Text", from: request) ?? "",
+            view: request.queryString("view") ?? "grid",
+            content: .init(
+                MediaHTTPBodySequence(body: request.body),
+                length: .known(contentLength),
+                iterationBehavior: .single
+            )
+        )
+        let model = try await interactor.postAddMediaAsset(
+            payload: payload,
+            variants: picker.previewVariant.map { [$0, "preview"] }
+        )
         if model.error == nil {
             if picker.isEnabled, model.selectedAsset != nil {
                 let pickerModel = AdminAddMediaAssetModel(
@@ -76,7 +180,8 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
                     action: actionPath(
                         parentId: payload.parentId.emptyToNil,
                         view: model.view,
-                        picker: picker
+                        picker: picker,
+                        isDialog: isDialog
                     ),
                     isPicker: true,
                     selectedAsset: model.selectedAsset
@@ -86,6 +191,19 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
                         model: pickerModel
                     )
                     .response(from: request, context: context)
+            }
+
+            if isDialog {
+                return AdminNotificationFlash.redirect(
+                    to: redirectLocation(
+                        parentId: payload.parentId.emptyToNil,
+                        view: model.view
+                    ),
+                    notification: .init(
+                        title: "Added",
+                        message: "Media asset added successfully."
+                    )
+                )
             }
 
             return AdminNotificationFlash.redirect(
@@ -112,7 +230,8 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
             action: actionPath(
                 parentId: model.parentId.emptyToNil,
                 view: model.view,
-                picker: picker
+                picker: picker,
+                isDialog: isDialog
             ),
             isPicker: picker.isEnabled,
             selectedAsset: nil
@@ -126,35 +245,80 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
 }
 
 extension AdminAddMediaAssetDefaultController {
+    fileprivate func defaultTitle(for fileName: String) -> String {
+        URL(fileURLWithPath: fileName)
+            .deletingPathExtension()
+            .lastPathComponent
+    }
+
+    fileprivate func header(_ name: String, from request: Request) -> String? {
+        guard let fieldName = HTTPField.Name(name) else { return nil }
+        guard let value = request.headers[fieldName] else { return nil }
+        return value.removingPercentEncoding ?? value
+    }
+
     fileprivate struct PickerState {
         let isEnabled: Bool
-        let field: String?
-        let allowedExtensions: [String]
-        let defaultFolderPath: String?
+        let configuration: MediaAssetPopupConfiguration?
+
+        var field: String? {
+            guard let field = configuration?.field, !field.isEmpty else {
+                return nil
+            }
+            return field
+        }
+
+        var allowedExtensions: AllowedExtensions {
+            configuration?.allowedExtensions ?? .anything
+        }
+
+        var defaultFolderPath: String? {
+            configuration?.defaultFolderPath
+        }
+
+        var previewVariant: String? {
+            configuration?.previewVariant
+        }
+
+        var selectionMode: MediaAssetSelectionMode {
+            configuration?.selectionMode ?? .single
+        }
     }
 
     fileprivate func pickerState(
         request: Request
     ) -> PickerState {
-        .init(
-            isEnabled: request.queryString("picker") == "1",
-            field: request.queryString("field")?.emptyToNil,
-            allowedExtensions: request.queryString("extensions")?
-                .split(separator: ",")
-                .map {
-                    $0.whitespaceTrimmed
-                        .lowercased()
-                }
-                .filter { !$0.isEmpty } ?? [],
-            defaultFolderPath: request.queryString("default_folder_path")?
-                .emptyToNil
+        let isPicker = request.queryString("picker") == "1"
+        return .init(
+            isEnabled: isPicker,
+            configuration: isPicker
+                ? .init(
+                    field: request.queryString("field")?.emptyToNil ?? "",
+                    selectionMode: request.queryString("selection")
+                        == "multiple"
+                        ? .multiple
+                        : .single,
+                    allowedExtensions: .custom(
+                        request.queryString("extensions")?
+                            .split(separator: ",")
+                            .map(String.init) ?? []
+                    ),
+                    defaultFolderPath: request.queryString(
+                        "default_folder_path"
+                    )?
+                    .emptyToNil,
+                    previewVariant: request.queryString("preview_variant")?
+                        .emptyToNil
+                )
+                : nil
         )
     }
 
     fileprivate func actionPath(
         parentId: String?,
         view: String,
-        picker: PickerState
+        picker: PickerState,
+        isDialog: Bool = false
     ) -> String {
         var queryItems: [String] = []
         if let parentId, !parentId.isEmpty {
@@ -169,15 +333,26 @@ extension AdminAddMediaAssetDefaultController {
         if let field = picker.field {
             queryItems.append("field=\(field.queryEncoded())")
         }
-        if !picker.allowedExtensions.isEmpty {
+        if !picker.allowedExtensions.isAnything {
             queryItems.append(
-                "extensions=\(picker.allowedExtensions.joined(separator: ",").queryEncoded())"
+                "extensions=\(picker.allowedExtensions.queryValue.queryEncoded())"
             )
         }
         if let defaultFolderPath = picker.defaultFolderPath {
             queryItems.append(
                 "default_folder_path=\(defaultFolderPath.queryEncoded())"
             )
+        }
+        if let previewVariant = picker.previewVariant {
+            queryItems.append(
+                "preview_variant=\(previewVariant.queryEncoded())"
+            )
+        }
+        if picker.isEnabled {
+            queryItems.append("selection=\(picker.selectionMode.rawValue)")
+        }
+        if isDialog {
+            queryItems.append("presentation=dialog")
         }
         return queryItems.isEmpty
             ? "/admin/media/assets/add/"

@@ -42,7 +42,7 @@ struct BlogTagTable: Component {
             else {
                 context.build(
                     NewAdminPageHeader(
-                        state: .init(
+                        state: .primary(
                             title: "Blog tags",
                             description:
                                 "Manage tags and their publication status."

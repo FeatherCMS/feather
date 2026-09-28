@@ -25,6 +25,9 @@ public protocol MediaAssetNodeFileRepository: Repository {
     func find(
         id: String
     ) async throws -> MediaAssetNodeFile?
+    func find(
+        slugPath: String
+    ) async throws -> MediaAssetNodeFile?
     func list(
         folderIds: [String]
     ) async throws -> [MediaAssetNodeFile]

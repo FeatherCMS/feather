@@ -21,7 +21,7 @@ struct WebMenuTable: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Menus",
                         description:
                             "Manage navigation menus for the public website."

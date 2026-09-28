@@ -32,12 +32,11 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
                     breadcrumb: breadcrumb(for: configuration),
                     action: request.uri.path,
                     navigationTabs: navigationTabs,
-                    pageHeader: .init(
+                    pageHeader: .primary(
                         title: title,
                         description: configuration?.description
                             ?? "Edit the metadata used when this page is rendered and shared.",
-                        previewHref: previewPath(for: state)
-                    )
+                        preview: .init(label: "Preview", href: previewPath(for: state)))
                 )
             )
         )

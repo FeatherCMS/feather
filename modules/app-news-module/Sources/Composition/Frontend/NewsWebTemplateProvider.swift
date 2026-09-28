@@ -6,17 +6,17 @@ public struct NewsWebTemplateProvider: WebTemplateProvider {
         .init(
             id: "news.article",
             title: "News article",
-            path: "news/article/default"
+            path: "news/article"
         ),
         .init(
             id: "news.category",
             title: "News category",
-            path: "news/category/default"
+            path: "news/category"
         ),
         .init(
             id: "news.articles",
             title: "News articles",
-            path: "news/news"
+            path: "news/articles"
         ),
         .init(
             id: "news.categories",

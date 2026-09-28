@@ -14,7 +14,7 @@ struct RedirectRuleDetails: Component {
             context.build(
                 NewAdminDetailView(
                     breadcrumb: RedirectRuleRoutes.breadcrumb,
-                    pageHeader: .init(
+                    pageHeader: .primary(
                         title: "Redirect rule details",
                         description: "Review the redirect rule configuration."
                     ),

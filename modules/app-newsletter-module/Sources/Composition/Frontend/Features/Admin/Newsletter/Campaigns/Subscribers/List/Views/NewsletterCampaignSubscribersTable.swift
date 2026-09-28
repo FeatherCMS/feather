@@ -31,7 +31,9 @@ struct NewsletterCampaignSubscribersTable: Component {
             context.build(
                 NewsletterCampaignHeader(
                     campaignId: state.newsletterId,
-                    active: .subscribers
+                    active: .subscribers,
+                    title: "Campaign subscribers",
+                    description: "Manage subscribers for this campaign."
                 )
             )
             context.build(

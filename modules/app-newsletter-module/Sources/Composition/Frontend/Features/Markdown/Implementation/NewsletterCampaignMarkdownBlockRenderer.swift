@@ -10,7 +10,7 @@ struct NewsletterCampaignMarkdownBlockRenderer: WebMarkdownBlockRenderer {
         guard let identifier = request.arguments["key"] else { return nil }
         guard !identifier.isEmpty else { return nil }
         return
-            "<form method=\"post\" action=\"/newsletter/campaigns/\(escape(identifier))/subscribe\" class=\"newsletter-subscription-form\"><label for=\"newsletter-campaign-\(escape(identifier))\">Email</label><input type=\"email\" id=\"newsletter-campaign-\(escape(identifier))\" name=\"email\" required><button type=\"submit\">Subscribe</button></form>"
+            "<form method=\"post\" action=\"/api/v1/newsletter/campaigns/\(escape(identifier))/subscribe\" class=\"newsletter-subscription-form\"><label for=\"newsletter-campaign-\(escape(identifier))\">Email</label><input type=\"email\" id=\"newsletter-campaign-\(escape(identifier))\" name=\"email\" required><button type=\"submit\">Subscribe</button></form>"
     }
 
     private func escape(_ value: String) -> String {

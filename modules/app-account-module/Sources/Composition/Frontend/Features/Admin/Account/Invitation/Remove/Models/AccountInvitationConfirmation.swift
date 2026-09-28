@@ -16,15 +16,13 @@ struct AccountInvitationConfirmation: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
             NewAdminRemoveConfirmation(
-                breadcrumb: state.breadcrumb,
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove user invitation",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: [state.email],
                 action: "/admin/account/invitations/\(state.id)/remove/",
-                cancel: "/admin/account/invitations/",
-                submitLabel: "Remove invitation",
+                submit: .init(label: "Remove invitation", style: .destructive),
                 nonceToken: state.nonceToken
             )
         )

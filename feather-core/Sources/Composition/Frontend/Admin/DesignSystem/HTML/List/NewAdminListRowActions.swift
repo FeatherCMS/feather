@@ -41,19 +41,22 @@ public struct NewAdminListRowActions: Component {
         public let style: NewAdminButtonStyle
         public let permission: PermissionKey
         public let copyText: String?
+        public let dialogURL: String?
 
         public init(
             _ title: String,
             href: String? = nil,
             style: NewAdminButtonStyle = .secondary,
             permission: PermissionKey,
-            copyText: String? = nil
+            copyText: String? = nil,
+            dialogURL: String? = nil
         ) {
             self.title = title
             self.href = href
             self.style = style
             self.permission = permission
             self.copyText = copyText
+            self.dialogURL = dialogURL
         }
     }
 
@@ -94,7 +97,8 @@ public struct NewAdminListRowActions: Component {
                         NewAdminRowButton(
                             action.title,
                             href: action.href,
-                            style: action.style
+                            style: action.style,
+                            dialogURL: action.dialogURL
                         )
                     )
                 }

@@ -18,7 +18,7 @@ struct BlogSettingsEdit: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Blog settings",
                         description:
                             "Configure public list paths and detail prefixes."

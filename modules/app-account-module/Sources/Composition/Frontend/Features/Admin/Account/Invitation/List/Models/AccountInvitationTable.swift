@@ -34,7 +34,7 @@ struct AccountInvitationTable: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "User invitations",
                         description:
                             "Manage invitations sent to prospective users."

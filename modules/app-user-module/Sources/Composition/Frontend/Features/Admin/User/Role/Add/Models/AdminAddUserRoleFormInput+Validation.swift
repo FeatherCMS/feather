@@ -3,6 +3,29 @@ public import FeatherValidation
 
 enum AdminAddUserRoleFormFieldValidator {
 
+    static func key(
+        _ value: String?,
+        required: Bool
+    ) -> Validator<String> {
+        .init(
+            key: "key",
+            value: value,
+            required: required,
+            invocation: .all,
+            rules: [
+                .trimmedNonempty(message: "Key is required."),
+                .min(
+                    length: 4,
+                    message: "Key must be at least 4 characters."
+                ),
+                .max(
+                    length: 254,
+                    message: "Key must be shorter than 255 characters."
+                ),
+            ]
+        )
+    }
+
     static func name(
         _ value: String?,
         required: Bool
@@ -49,6 +72,7 @@ extension AdminAddUserRoleFormInput {
 
     private var validator: GroupValidator {
         GroupValidator {
+            AdminAddUserRoleFormFieldValidator.key(key, required: true)
             AdminAddUserRoleFormFieldValidator.name(name, required: true)
             AdminAddUserRoleFormFieldValidator.notes(notes, required: false)
         }

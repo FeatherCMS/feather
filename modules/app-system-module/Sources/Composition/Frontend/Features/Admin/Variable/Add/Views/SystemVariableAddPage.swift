@@ -14,7 +14,7 @@ struct SystemVariableAddPage: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add system variable",
                         description:
                             "Create a configuration value for the application."

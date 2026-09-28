@@ -31,7 +31,9 @@ struct NewsletterIssuesTable: Component {
             context.build(
                 NewsletterCampaignHeader(
                     campaignId: state.newsletterId,
-                    active: .issues
+                    active: .issues,
+                    title: "Campaign issues",
+                    description: "Manage issues for this newsletter campaign."
                 )
             )
             context.build(

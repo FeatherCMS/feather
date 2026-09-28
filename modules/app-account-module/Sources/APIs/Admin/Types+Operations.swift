@@ -12,6 +12,174 @@ public import struct Foundation.Date
 #endif
 /// API operations, with input and output types, generated from `#/paths` in the OpenAPI document.
 public enum Operations {
+    /// - Remark: HTTP `POST /api/v1/admin/account/users`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)`.
+    public enum AccountCreate {
+        public static let id: Swift.String = "accountCreate"
+        public struct Input: Sendable, Hashable {
+            /// - Remark: Generated from `#/paths/api/v1/admin/account/users/POST/header`.
+            public struct Headers: Sendable, Hashable {
+                public var accept:
+                    [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.AccountCreate.AcceptableContentType
+                    >]
+                /// Creates a new `Headers`.
+                ///
+                /// - Parameters:
+                ///   - accept:
+                public init(
+                    accept: [OpenAPIRuntime.AcceptHeaderContentType<
+                        Operations.AccountCreate.AcceptableContentType
+                    >] = .defaultValues()
+                ) {
+                    self.accept = accept
+                }
+            }
+            public var headers: Operations.AccountCreate.Input.Headers
+            public var body: Components.RequestBodies.AccountCreateRequestBody
+            /// Creates a new `Input`.
+            ///
+            /// - Parameters:
+            ///   - headers:
+            ///   - body:
+            public init(
+                headers: Operations.AccountCreate.Input.Headers = .init(),
+                body: Components.RequestBodies.AccountCreateRequestBody
+            ) {
+                self.headers = headers
+                self.body = body
+            }
+        }
+        @frozen public enum Output: Sendable, Hashable {
+            /// Account response
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)/responses/201`.
+            ///
+            /// HTTP response code: `201 created`.
+            case created(Components.Responses.AccountCreateResponse)
+            /// The associated value of the enum case if `self` is `.created`.
+            ///
+            /// - Throws: An error if `self` is not `.created`.
+            /// - SeeAlso: `.created`.
+            public var created: Components.Responses.AccountCreateResponse {
+                get throws {
+                    switch self {
+                    case .created(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "created",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Unauthorized: Sendable, Hashable {
+                /// Creates a new `Unauthorized`.
+                public init() {}
+            }
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            case unauthorized(Operations.AccountCreate.Output.Unauthorized)
+            /// Unauthorized
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)/responses/401`.
+            ///
+            /// HTTP response code: `401 unauthorized`.
+            public static var unauthorized: Self {
+                .unauthorized(.init())
+            }
+            /// The associated value of the enum case if `self` is `.unauthorized`.
+            ///
+            /// - Throws: An error if `self` is not `.unauthorized`.
+            /// - SeeAlso: `.unauthorized`.
+            public var unauthorized:
+                Operations.AccountCreate.Output.Unauthorized
+            {
+                get throws {
+                    switch self {
+                    case .unauthorized(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "unauthorized",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct Forbidden: Sendable, Hashable {
+                /// Creates a new `Forbidden`.
+                public init() {}
+            }
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            case forbidden(Operations.AccountCreate.Output.Forbidden)
+            /// Forbidden
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)/responses/403`.
+            ///
+            /// HTTP response code: `403 forbidden`.
+            public static var forbidden: Self {
+                .forbidden(.init())
+            }
+            /// The associated value of the enum case if `self` is `.forbidden`.
+            ///
+            /// - Throws: An error if `self` is not `.forbidden`.
+            /// - SeeAlso: `.forbidden`.
+            public var forbidden: Operations.AccountCreate.Output.Forbidden {
+                get throws {
+                    switch self {
+                    case .forbidden(let response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "forbidden",
+                            response: self
+                        )
+                    }
+                }
+            }
+            /// Undocumented response.
+            ///
+            /// A response with a code that is not documented in the OpenAPI document.
+            case undocumented(
+                statusCode: Swift.Int,
+                OpenAPIRuntime.UndocumentedPayload
+            )
+        }
+        @frozen public enum AcceptableContentType: AcceptableProtocol {
+            case json
+            case other(Swift.String)
+            public init?(rawValue: Swift.String) {
+                switch rawValue.lowercased() {
+                case "application/json":
+                    self = .json
+                default:
+                    self = .other(rawValue)
+                }
+            }
+            public var rawValue: Swift.String {
+                switch self {
+                case .other(let string):
+                    return string
+                case .json:
+                    return "application/json"
+                }
+            }
+            public static var allCases: [Self] {
+                [
+                    .json
+                ]
+            }
+        }
+    }
     /// - Remark: HTTP `GET /api/v1/admin/account/settings`.
     /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)`.
     public enum AccountSettingsGet {

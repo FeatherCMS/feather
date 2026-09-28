@@ -22,10 +22,16 @@ struct ContactFormEmailsTable: Component {
         Section {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                AdminContactFormHeader(
-                    formId: state.id,
-                    active: .emails
+                NewAdminPageHeader(
+                    state: .primary(
+                        title: "Contact form emails",
+                        description:
+                            "Configure delivery messages for this contact form."
+                    )
                 )
+            )
+            context.build(
+                AdminContactFormTabs(formId: state.id, active: .emails)
             )
             if let error = state.error {
                 P(error).class("new-admin-form__error")

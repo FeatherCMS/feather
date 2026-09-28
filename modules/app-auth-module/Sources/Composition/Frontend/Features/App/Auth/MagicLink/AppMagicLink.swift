@@ -127,7 +127,7 @@ struct AppMagicLink {
                 Div {
                     context.build(
                         NewAdminPageHeader(
-                            state: .init(
+                            state: .primary(
                                 title: "Sign in",
                                 description:
                                     "Enter your email to receive a sign-in link."

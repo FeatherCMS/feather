@@ -24,7 +24,7 @@ struct SystemVariableTable: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Variables",
                         description:
                             "Manage configuration values used by the application."

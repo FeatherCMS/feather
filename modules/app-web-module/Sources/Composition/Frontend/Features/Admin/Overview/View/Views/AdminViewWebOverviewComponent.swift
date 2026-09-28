@@ -83,7 +83,7 @@ struct AdminViewWebOverviewComponent: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Web",
                         description:
                             "Manage pages, menus, and web settings."

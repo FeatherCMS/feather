@@ -13,6 +13,58 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/schemas` section of the OpenAPI document.
     public enum Schemas {
+        /// - Remark: Generated from `#/components/schemas/AccountCreateEmailField`.
+        public typealias AccountCreateEmailField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AccountCreatePasswordField`.
+        public typealias AccountCreatePasswordField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AccountCreateUserIDField`.
+        public typealias AccountCreateUserIDField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/AccountCreateSchema`.
+        public struct AccountCreateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AccountCreateSchema/email`.
+            public var email: Components.Schemas.AccountCreateEmailField
+            /// - Remark: Generated from `#/components/schemas/AccountCreateSchema/password`.
+            public var password: Components.Schemas.AccountCreatePasswordField
+            /// Creates a new `AccountCreateSchema`.
+            ///
+            /// - Parameters:
+            ///   - email:
+            ///   - password:
+            public init(
+                email: Components.Schemas.AccountCreateEmailField,
+                password: Components.Schemas.AccountCreatePasswordField
+            ) {
+                self.email = email
+                self.password = password
+            }
+            public enum CodingKeys: String, CodingKey {
+                case email
+                case password
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AccountCreateResponseSchema`.
+        public struct AccountCreateResponseSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AccountCreateResponseSchema/userId`.
+            public var userId: Components.Schemas.AccountCreateUserIDField
+            /// - Remark: Generated from `#/components/schemas/AccountCreateResponseSchema/email`.
+            public var email: Components.Schemas.AccountCreateEmailField
+            /// Creates a new `AccountCreateResponseSchema`.
+            ///
+            /// - Parameters:
+            ///   - userId:
+            ///   - email:
+            public init(
+                userId: Components.Schemas.AccountCreateUserIDField,
+                email: Components.Schemas.AccountCreateEmailField
+            ) {
+                self.userId = userId
+                self.email = email
+            }
+            public enum CodingKeys: String, CodingKey {
+                case userId
+                case email
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/AccountSettingsDetailSchema`.
         public struct AccountSettingsDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AccountSettingsDetailSchema/language`.

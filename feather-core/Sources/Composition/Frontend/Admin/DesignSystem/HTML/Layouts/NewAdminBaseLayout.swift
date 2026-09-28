@@ -46,6 +46,8 @@ public struct NewAdminBaseLayout<T: Component>: Component {
                 }
             }
             .class("menu-container")
+
+            context.build(NewAdminDialogHost())
         }
     }
 

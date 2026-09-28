@@ -25,7 +25,7 @@ struct BlogTagAdd: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add tag",
                         description: "Create a new blog tag."
                     )
@@ -36,8 +36,7 @@ struct BlogTagAdd: Component {
                     BlogTagForm(
                         state: state.form,
                         action: "/admin/blog/tags/add/",
-                        submitLabel: "Add tag",
-                        publishLabel: "Publish tag"
+                        submitLabel: "Add tag"
                     )
                 )
             }

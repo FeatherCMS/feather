@@ -14,15 +14,28 @@ struct NewsletterCampaignHeader: Component {
 
     let campaignId: String
     let active: Tab
+    let title: String
+    let description: String
+
+    init(
+        campaignId: String,
+        active: Tab,
+        title: String = "Newsletter campaign",
+        description: String = "Manage this campaign, its subscribers, and issues."
+    ) {
+        self.campaignId = campaignId
+        self.active = active
+        self.title = title
+        self.description = description
+    }
 
     func html(context: inout BuilderContext) -> Div {
         Div {
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
-                        title: "Newsletter campaign",
-                        description:
-                            "Manage this campaign, its subscribers, and issues."
+                    state: .primary(
+                        title: title,
+                        description: description
                     )
                 )
             )

@@ -31,7 +31,7 @@ struct AdminListAuthSessionView: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Sessions",
                         description: "Manage active sessions for this identity."
                     )

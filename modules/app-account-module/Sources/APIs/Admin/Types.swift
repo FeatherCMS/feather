@@ -12,6 +12,10 @@ public import struct Foundation.Date
 #endif
 /// A type that performs HTTP operations defined by the OpenAPI document.
 public protocol APIProtocol: Sendable {
+    /// - Remark: HTTP `POST /api/v1/admin/account/users`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)`.
+    func accountCreate(_ input: Operations.AccountCreate.Input) async throws
+        -> Operations.AccountCreate.Output
     /// - Remark: HTTP `GET /api/v1/admin/account/settings`.
     /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)`.
     func accountSettingsGet(_ input: Operations.AccountSettingsGet.Input)
@@ -82,6 +86,19 @@ public protocol APIProtocol: Sendable {
 
 /// Convenience overloads for operation inputs.
 extension APIProtocol {
+    /// - Remark: HTTP `POST /api/v1/admin/account/users`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)`.
+    public func accountCreate(
+        headers: Operations.AccountCreate.Input.Headers = .init(),
+        body: Components.RequestBodies.AccountCreateRequestBody
+    ) async throws -> Operations.AccountCreate.Output {
+        try await accountCreate(
+            Operations.AccountCreate.Input(
+                headers: headers,
+                body: body
+            )
+        )
+    }
     /// - Remark: HTTP `GET /api/v1/admin/account/settings`.
     /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)`.
     public func accountSettingsGet(

@@ -25,6 +25,7 @@ public func buildMigrations(
         // Tables
         SystemInfrastructure.TableMigration(connection: connection),
         AnalyticsInfrastructure.TableMigration(connection: connection),
+        MediaInfrastructure.TableMigration(connection: connection),
         WebInfrastructure.TableMigration(connection: connection),
         RedirectInfrastructure.TableMigration(connection: connection),
         BlogInfrastructure.TableMigration(connection: connection),
@@ -32,9 +33,22 @@ public func buildMigrations(
         UserInfrastructure.TableMigration(connection: connection),
         AccountInfrastructure.TableMigration(connection: connection),
         AuthInfrastructure.TableMigration(connection: connection),
-        MediaInfrastructure.TableMigration(connection: connection),
         ContactInfrastructure.TableMigration(connection: connection),
         NewsletterInfrastructure.TableMigration(connection: connection),
+
+        // Media folder structure
+        WebInfrastructure.MediaFolderMigration(
+            connection: connection,
+            idGenerator: idGenerator
+        ),
+        BlogInfrastructure.MediaFolderMigration(
+            connection: connection,
+            idGenerator: idGenerator
+        ),
+        NewsInfrastructure.MediaFolderMigration(
+            connection: connection,
+            idGenerator: idGenerator
+        ),
 
         // Seed data
         SystemInfrastructure.TableSeedMigration(
@@ -54,6 +68,12 @@ public func buildMigrations(
         ),
         AuthInfrastructure.TableSeedMigration(
             connection: connection,
+            idGenerator: idGenerator,
+            events: events
+        ),
+        AccountInfrastructure.TableSeedMigration(
+            connection: connection,
+            events: events,
             idGenerator: idGenerator
         ),
         MediaInfrastructure.TableSeedMigration(

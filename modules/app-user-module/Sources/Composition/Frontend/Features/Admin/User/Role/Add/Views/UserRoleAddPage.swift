@@ -13,7 +13,7 @@ struct UserRoleAddPage: Component {
             context.build(NewAdminBreadcrumb(links: UserRoleRoutes.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add user role",
                         description: "Create a user role."
                     )

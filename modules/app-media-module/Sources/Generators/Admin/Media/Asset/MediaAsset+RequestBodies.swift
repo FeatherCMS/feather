@@ -1,10 +1,6 @@
 import FeatherOpenAPI
 
-struct MediaAssetCreateRequestBody: JSONRequestBodyRepresentable {
-    var schema: some SchemaRepresentable {
-        MediaAssetCreateSchema().reference()
-    }
-}
+struct MediaAssetCreateRequestBody: BinaryRequestBodyRepresentable {}
 
 struct MediaAssetPatchRequestBody: JSONRequestBodyRepresentable {
     var schema: some SchemaRepresentable { MediaAssetPatchSchema().reference() }

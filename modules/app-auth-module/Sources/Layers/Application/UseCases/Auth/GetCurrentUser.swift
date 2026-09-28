@@ -9,18 +9,11 @@ public import FeatherContracts
 public import UserApplication
 
 public struct GetCurrentUser: UseCase {
-    struct Action: PermissionAction {
-        let key = PermissionKey("account:profile:read")
-    }
-
-    let authorizer: any Authorizer
     let query: any QueryExecutor<ReadIdentity>
 
     public init(
-        authorizer: any Authorizer,
         query: any QueryExecutor<ReadIdentity>
     ) {
-        self.authorizer = authorizer
         self.query = query
     }
 
@@ -36,17 +29,11 @@ public struct GetCurrentUser: UseCase {
         subject: Subject,
         input: Input
     ) async throws -> CurrentUserDetail {
-        let action = Action()
-
         guard input.id == subject.id else {
             throw AuthError(
                 kind: .forbidden,
                 message: "Cannot access another identity."
             )
-        }
-
-        guard try await authorizer.can(subject: subject, perform: action) else {
-            throw AuthError(kind: .forbidden, message: action.key.rawValue)
         }
 
         return try await query.run { scope in

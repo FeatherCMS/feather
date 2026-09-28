@@ -107,11 +107,11 @@ extension UseCases {
         excerpt: String
     ) -> PageMetadataInput {
         .init(
-            slug: title,
+            slug: title.slugified,
             template: "default",
             publicationDate: nil,
             expirationDate: nil,
-            status: .published,
+            status: .draft,
             title: title,
             excerpt: excerpt,
             imageURL: nil,

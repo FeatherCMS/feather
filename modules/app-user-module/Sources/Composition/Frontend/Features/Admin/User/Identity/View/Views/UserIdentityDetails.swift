@@ -36,7 +36,7 @@ struct UserIdentityDetails: Component {
         return context.build(
             NewAdminDetailView(
                 breadcrumb: UserIdentityRoutes.breadcrumb,
-                pageHeader: .init(
+                pageHeader: .primary(
                     title: "User identity details",
                     description: "Inspect this user identity."
                 ),

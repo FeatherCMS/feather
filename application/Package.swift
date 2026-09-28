@@ -74,7 +74,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/hummingbird-project/swift-mustache",
-            from: "2.0.0"
+            from: "2.1.1"
         ),
         .package(
             url: "https://github.com/apple/swift-log",

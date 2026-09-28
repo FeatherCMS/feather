@@ -27,7 +27,7 @@ struct AccountProfileDetails: Component {
         return context.build(
             NewAdminDetailView(
                 breadcrumb: state.breadcrumb,
-                pageHeader: .init(
+                pageHeader: .primary(
                     title: "Profile",
                     description: "Inspect the current administrator profile."
                 ),

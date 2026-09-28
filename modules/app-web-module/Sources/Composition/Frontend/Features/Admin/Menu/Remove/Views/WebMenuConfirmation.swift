@@ -22,16 +22,14 @@ struct WebMenuConfirmation: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
             NewAdminRemoveConfirmation(
-                breadcrumb: state.breadcrumb,
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove menu",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: [state.source],
                 action: WebMenuRoutes.details(RouterPath(state.id))
                     .appendingPath(RouterPath("remove")).description,
-                cancel: WebMenuRoutes.list.description,
-                submitLabel: "Remove menu",
+                submit: .init(label: "Remove menu", style: .destructive),
                 nonceToken: state.nonceToken,
                 hiddenFields: [.init(name: "ids", value: state.id)]
             )

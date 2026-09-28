@@ -13,6 +13,11 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/requestBodies` section of the OpenAPI document.
     public enum RequestBodies {
+        /// - Remark: Generated from `#/components/requestBodies/AccountCreateRequestBody`.
+        @frozen public enum AccountCreateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/AccountCreateRequestBody/content/application\/json`.
+            case json(Components.Schemas.AccountCreateSchema)
+        }
         /// - Remark: Generated from `#/components/requestBodies/AccountSettingsUpdateRequestBody`.
         @frozen public enum AccountSettingsUpdateRequestBody: Sendable, Hashable
         {

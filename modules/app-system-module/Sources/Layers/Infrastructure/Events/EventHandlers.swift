@@ -16,5 +16,13 @@ public enum EventHandlers {
                     .init(permission: $0)
                 }
         }
+
+        registry.register(
+            event: AccessControlProvider.self,
+            context: AccessControlContext.self
+        ) { event, _ in
+            guard event.roleKey == "editor" else { return [] }
+            return [SystemPermissions.Admin.access]
+        }
     }
 }

@@ -49,10 +49,12 @@ struct NewsletterIssueAddView: Component {
             context.build(
                 NewsletterCampaignHeader(
                     campaignId: state.newsletterId,
-                    active: .issues
+                    active: .issues,
+                    title: state.issueId == nil
+                        ? "Add campaign issue" : "Edit campaign issue",
+                    description: "Compose the issue content and delivery schedule."
                 )
             )
-            H2(state.issueId == nil ? "Add issue" : "Edit issue")
             let form = NewAdminForm(action: action) {
                 if let error = state.error {
                     P(error).class("new-admin-form__error")

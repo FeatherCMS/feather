@@ -20,7 +20,7 @@ struct WebPageTable: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Web pages",
                         description:
                             "Manage the pages published on the website."

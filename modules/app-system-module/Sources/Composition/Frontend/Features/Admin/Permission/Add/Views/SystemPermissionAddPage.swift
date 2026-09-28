@@ -20,7 +20,7 @@ struct SystemPermissionAddPage: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add system permission",
                         description: "Create a system permission."
                     )

@@ -16,6 +16,10 @@ public struct NewAdminControlButton: Component {
         self.style = style
     }
 
+    public init(state: NewAdminButton.State) {
+        self.init(state.label, style: state.style)
+    }
+
     public func html(context: inout BuilderContext) -> Button {
         var button = Button(label)
             .type(.button)

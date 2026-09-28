@@ -63,13 +63,8 @@ struct AdminEditMediaAssetDefaultController: AdminEditMediaAssetController {
             )
         }
         catch {
-            let fallback = try? await runtime.interactor.load(id: id)
             let model = AdminEditMediaAssetModel(
                 id: id,
-                url: fallback?.url ?? "",
-                extension: fallback?.extension ?? "",
-                status: fallback?.status ?? "",
-                sizeBytes: fallback?.sizeBytes ?? 0,
                 title: payload.normalizedTitle ?? "",
                 altText: payload.normalizedAltText ?? "",
                 error: error.displayMessage

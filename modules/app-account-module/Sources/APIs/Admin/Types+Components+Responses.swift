@@ -13,6 +13,35 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/responses` section of the OpenAPI document.
     public enum Responses {
+        public struct AccountCreateResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/AccountCreateResponse/content`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/components/responses/AccountCreateResponse/content/application\/json`.
+                case json(Components.Schemas.AccountCreateResponseSchema)
+                /// The associated value of the enum case if `self` is `.json`.
+                ///
+                /// - Throws: An error if `self` is not `.json`.
+                /// - SeeAlso: `.json`.
+                public var json: Components.Schemas.AccountCreateResponseSchema
+                {
+                    get throws {
+                        switch self {
+                        case .json(let body):
+                            return body
+                        }
+                    }
+                }
+            }
+            /// Received HTTP response body
+            public var body: Components.Responses.AccountCreateResponse.Body
+            /// Creates a new `AccountCreateResponse`.
+            ///
+            /// - Parameters:
+            ///   - body: Received HTTP response body
+            public init(body: Components.Responses.AccountCreateResponse.Body) {
+                self.body = body
+            }
+        }
         public struct AccountSettingsDetailResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/AccountSettingsDetailResponse/content`.
             @frozen public enum Body: Sendable, Hashable {

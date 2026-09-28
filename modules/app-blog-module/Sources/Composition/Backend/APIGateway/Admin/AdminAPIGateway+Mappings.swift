@@ -1,6 +1,7 @@
 import BlogAdminAPI
 import BlogApplication
 import FeatherApplication
+import FeatherContracts
 import Foundation
 import WebAdminAPI
 import WebApplication
@@ -71,7 +72,7 @@ extension AdminAPIGateway {
         excerpt: String
     ) -> PageMetadataInput {
         .init(
-            slug: title,
+            slug: title.slugified,
             publicationDate: nil,
             expirationDate: nil,
             status: .draft,

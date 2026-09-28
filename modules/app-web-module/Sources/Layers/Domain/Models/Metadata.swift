@@ -473,7 +473,13 @@ extension Metadata {
         let newStatus = status ?? self.status
         let newTitle = title ?? self.title
         let newExcerpt = excerpt ?? self.excerpt
-        let newImageURL = imageURL ?? self.imageURL
+        let newImageURL: String?
+        if let imageURL {
+            newImageURL = imageURL.emptyToNil
+        }
+        else {
+            newImageURL = self.imageURL
+        }
         let newCanonicalURL =
             canonicalURL?.emptyToNil ?? self.canonicalURL
         let newNoIndex = noIndex ?? self.noIndex

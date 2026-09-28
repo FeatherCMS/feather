@@ -86,7 +86,7 @@ struct AdminViewAnalyticsOverviewComponent: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Analytics",
                         description:
                             "Explore web, API, log, and not-found analytics."

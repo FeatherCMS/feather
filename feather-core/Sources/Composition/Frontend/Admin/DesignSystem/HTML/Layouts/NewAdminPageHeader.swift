@@ -9,25 +9,49 @@ public struct NewAdminPageHeader: Component {
     public struct State: Sendable {
         public let title: String
         public let description: String
-        public let previewHref: String?
-        public let previewLabel: String
+        public let preview: NewAdminButton.State?
         public let level: Int
         public let showSeparator: Bool
 
-        public init(
+        private init(
             title: String,
             description: String,
-            previewHref: String? = nil,
-            previewLabel: String = "Preview",
-            level: Int = 1,
-            showSeparator: Bool = false
+            preview: NewAdminButton.State?,
+            level: Int,
+            showSeparator: Bool
         ) {
             self.title = title
             self.description = description
-            self.previewHref = previewHref
-            self.previewLabel = previewLabel
+            self.preview = preview
             self.level = min(max(level, 1), 6)
             self.showSeparator = showSeparator
+        }
+
+        public static func primary(
+            title: String,
+            description: String,
+            preview: NewAdminButton.State? = nil
+        ) -> Self {
+            .init(
+                title: title,
+                description: description,
+                preview: preview,
+                level: 1,
+                showSeparator: false
+            )
+        }
+
+        public static func secondary(
+            title: String,
+            description: String
+        ) -> Self {
+            .init(
+                title: title,
+                description: description,
+                preview: nil,
+                level: 2,
+                showSeparator: true
+            )
         }
     }
 
@@ -101,12 +125,12 @@ public struct NewAdminPageHeader: Component {
 
     private func headingContents() -> [any PhrasingContent] {
         var contents: [any PhrasingContent] = [Span(state.title)]
-        if let previewHref = state.previewHref {
+        if let preview = state.preview, let previewHref = preview.href {
             contents.append(
                 A { FeatherIcons.externalLink() }
                     .href(previewHref)
                     .target(.blank)
-                    .ariaLabel(state.previewLabel)
+                    .ariaLabel(preview.label)
                     .class("admin-page-header__preview-link")
             )
         }

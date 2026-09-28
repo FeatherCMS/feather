@@ -25,13 +25,18 @@ struct AccountApplicationTestSuite {
             AccountPermissions.Profile.allPermissions() == [
                 AccountPermissions.Profile.read,
                 AccountPermissions.Profile.update,
-                AccountPermissions.Profile.manage,
             ]
         )
         #expect(
             AccountPermissions.allPermissions()
                 .contains(
                     AccountPermissions.Profile.read
+                )
+        )
+        #expect(
+            AccountPermissions.allPermissions()
+                .contains(
+                    AccountPermissions.Profile.update
                 )
         )
     }
@@ -401,7 +406,7 @@ struct AccountApplicationTestSuite {
             context: ReadAccountProfile(profile: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [AccountPermissions.Profile.read]
+            permissions: []
         )
         let useCase = GetAccountProfile(authorizer: authorizer, query: query)
 
@@ -416,41 +421,40 @@ struct AccountApplicationTestSuite {
         #expect(await repository.getCallCount == 1)
         #expect(await repository.requestedUserIds == [profile.userId])
         #expect(await query.runCallCount == 1)
+        #expect(await authorizer.canCallCount == 1)
     }
 
     @Test
-    func getAccountProfileDoesNotReadWithoutPermission() async throws {
-        let repository = MockAccountProfileRepository(
-            result: makeAccountProfile()
-        )
-        let query = MockQueryExecutor(
-            context: ReadAccountProfile(profile: repository)
-        )
-        let authorizer = MockPermissionAuthorizer(
-            permissions: [AccountPermissions.Profile.update]
-        )
-        let useCase = GetAccountProfile(authorizer: authorizer, query: query)
-
-        await #expect(throws: AuthError.self) {
-            _ = try await useCase.execute(
-                subject: Subject(id: "account-1"),
-                input: .init()
-            )
-        }
-
-        #expect(await repository.getCallCount == 0)
-        #expect(await query.runCallCount == 0)
-    }
-
-    @Test
-    func getAccountProfileReadsTargetUserWithManagePermission() async throws {
+    func getAccountProfileAllowsOwnProfileWithoutPermission() async throws {
         let profile = makeAccountProfile()
         let repository = MockAccountProfileRepository(result: profile)
         let query = MockQueryExecutor(
             context: ReadAccountProfile(profile: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [AccountPermissions.Profile.manage]
+            permissions: []
+        )
+        let useCase = GetAccountProfile(authorizer: authorizer, query: query)
+
+        _ = try await useCase.execute(
+            subject: Subject(id: profile.userId),
+            input: .init()
+        )
+
+        #expect(await repository.getCallCount == 1)
+        #expect(await query.runCallCount == 1)
+        #expect(await authorizer.canCallCount == 1)
+    }
+
+    @Test
+    func getAccountProfileReadsTargetUserWithReadPermission() async throws {
+        let profile = makeAccountProfile()
+        let repository = MockAccountProfileRepository(result: profile)
+        let query = MockQueryExecutor(
+            context: ReadAccountProfile(profile: repository)
+        )
+        let authorizer = MockPermissionAuthorizer(
+            permissions: [AccountPermissions.Profile.read]
         )
         let useCase = GetAccountProfile(authorizer: authorizer, query: query)
 
@@ -460,10 +464,11 @@ struct AccountApplicationTestSuite {
         )
 
         #expect(await repository.requestedUserIds == [profile.userId])
+        #expect(await authorizer.canCallCount == 1)
     }
 
     @Test
-    func getAccountProfileDoesNotReadTargetUserWithOwnPermission() async throws
+    func getAccountProfileDoesNotReadTargetUserWithoutPermission() async throws
     {
         let profile = makeAccountProfile()
         let repository = MockAccountProfileRepository(result: profile)
@@ -471,7 +476,7 @@ struct AccountApplicationTestSuite {
             context: ReadAccountProfile(profile: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [AccountPermissions.Profile.read]
+            permissions: []
         )
         let useCase = GetAccountProfile(authorizer: authorizer, query: query)
 
@@ -484,10 +489,11 @@ struct AccountApplicationTestSuite {
 
         #expect(await repository.requestedUserIds.isEmpty)
         #expect(await query.runCallCount == 0)
+        #expect(await authorizer.canCallCount == 1)
     }
 
     @Test
-    func editAccountProfilePersistsTargetUserWithManagePermission() async throws
+    func editAccountProfilePersistsTargetUserWithUpdatePermission() async throws
     {
         let profile = makeAccountProfile()
         let repository = MockAccountProfileRepository(result: profile)
@@ -495,7 +501,7 @@ struct AccountApplicationTestSuite {
             context: WriteAccountProfile(profile: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [AccountPermissions.Profile.manage]
+            permissions: [AccountPermissions.Profile.update]
         )
         let useCase = EditAccountProfile(
             authorizer: authorizer,
@@ -529,7 +535,7 @@ struct AccountApplicationTestSuite {
             context: WriteAccountProfile(profile: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [AccountPermissions.Profile.update]
+            permissions: []
         )
         let useCase = EditAccountProfile(
             authorizer: authorizer,
@@ -560,7 +566,7 @@ struct AccountApplicationTestSuite {
             context: WriteAccountProfile(profile: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [AccountPermissions.Profile.update]
+            permissions: []
         )
         let useCase = EditAccountProfile(
             authorizer: authorizer,
@@ -582,37 +588,37 @@ struct AccountApplicationTestSuite {
         #expect(await repository.updatedModel?.firstName == "Grace")
         #expect(await repository.updatedModel?.lastName == "Hopper")
         #expect(await transaction.runCallCount == 1)
+        #expect(await authorizer.canCallCount == 1)
     }
 
     @Test
-    func editAccountProfileDoesNotWriteWithoutPermission() async throws {
-        let repository = MockAccountProfileRepository(
-            result: makeAccountProfile()
-        )
+    func editAccountProfileAllowsOwnProfileWithoutPermission() async throws {
+        let profile = makeAccountProfile()
+        let repository = MockAccountProfileRepository(result: profile)
         let transaction = MockTransactionExecutor(
             context: WriteAccountProfile(profile: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [AccountPermissions.Profile.read]
+            permissions: []
         )
         let useCase = EditAccountProfile(
             authorizer: authorizer,
             transaction: transaction
         )
 
-        await #expect(throws: AuthError.self) {
-            _ = try await useCase.execute(
-                subject: Subject(id: "account-1"),
-                input: .init(
-                    firstName: "Grace",
-                    lastName: "Hopper",
-                    profileImageAssetId: nil
-                )
+        let result = try await useCase.execute(
+            subject: Subject(id: profile.userId),
+            input: .init(
+                firstName: "Grace",
+                lastName: "Hopper",
+                profileImageAssetId: nil
             )
-        }
+        )
 
-        #expect(await repository.updateCallCount == 0)
-        #expect(await transaction.runCallCount == 0)
+        #expect(result.userId == profile.userId)
+        #expect(await repository.updateCallCount == 1)
+        #expect(await transaction.runCallCount == 1)
+        #expect(await authorizer.canCallCount == 1)
     }
 
     @Test
@@ -656,7 +662,6 @@ struct AccountApplicationTestSuite {
             settingsPermissions == [
                 AccountPermissions.Settings.read,
                 AccountPermissions.Settings.update,
-                AccountPermissions.Settings.manage,
             ]
         )
         #expect(
@@ -668,14 +673,14 @@ struct AccountApplicationTestSuite {
     }
 
     @Test
-    func getSettingsReadsTargetUserWithManagePermission() async throws {
+    func getSettingsReadsTargetUserWithReadPermission() async throws {
         let settings = makeSettings()
         let repository = MockSettingsRepository(result: settings)
         let query = MockQueryExecutor(
             context: ReadSettings(settings: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [AccountPermissions.Settings.manage]
+            permissions: [AccountPermissions.Settings.read]
         )
         let useCase = GetSettings(authorizer: authorizer, query: query)
 
@@ -685,6 +690,7 @@ struct AccountApplicationTestSuite {
         )
 
         #expect(await repository.getCallCount == 1)
+        #expect(await authorizer.canCallCount == 1)
     }
 
     @Test
@@ -695,7 +701,7 @@ struct AccountApplicationTestSuite {
             context: ReadSettings(settings: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [AccountPermissions.Settings.read]
+            permissions: []
         )
         let useCase = GetSettings(
             authorizer: authorizer,
@@ -718,12 +724,13 @@ struct AccountApplicationTestSuite {
 
     @Test
     func getSettingsDoesNotQueryForForbiddenSubject() async throws {
-        let repository = MockSettingsRepository(result: makeSettings())
+        let settings = makeSettings()
+        let repository = MockSettingsRepository(result: settings)
         let query = MockQueryExecutor(
             context: ReadSettings(settings: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [AccountPermissions.Settings.update]
+            permissions: []
         )
         let useCase = GetSettings(
             authorizer: authorizer,
@@ -732,8 +739,8 @@ struct AccountApplicationTestSuite {
 
         await #expect(throws: AuthError.self) {
             _ = try await useCase.execute(
-                subject: Subject(id: "account-1"),
-                input: .init()
+                subject: Subject(id: "admin-1"),
+                input: .init(userId: settings.userId)
             )
         }
 
@@ -752,7 +759,7 @@ struct AccountApplicationTestSuite {
             context: WriteSettings(settings: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [AccountPermissions.Settings.update]
+            permissions: []
         )
         let useCase = EditSettings(
             authorizer: authorizer,
@@ -782,12 +789,13 @@ struct AccountApplicationTestSuite {
 
     @Test
     func editSettingsDoesNotWriteForForbiddenSubject() async throws {
-        let repository = MockSettingsRepository(result: makeSettings())
+        let settings = makeSettings()
+        let repository = MockSettingsRepository(result: settings)
         let transaction = MockTransactionExecutor(
             context: WriteSettings(settings: repository)
         )
         let authorizer = MockPermissionAuthorizer(
-            permissions: [AccountPermissions.Settings.read]
+            permissions: []
         )
         let useCase = EditSettings(
             authorizer: authorizer,
@@ -796,11 +804,12 @@ struct AccountApplicationTestSuite {
 
         await #expect(throws: AuthError.self) {
             _ = try await useCase.execute(
-                subject: Subject(id: "account-1"),
+                subject: Subject(id: "admin-1"),
                 input: .init(
                     language: "de",
                     timezone: "Europe/Berlin",
-                    pageSize: 50
+                    pageSize: 50,
+                    userId: settings.userId
                 )
             )
         }

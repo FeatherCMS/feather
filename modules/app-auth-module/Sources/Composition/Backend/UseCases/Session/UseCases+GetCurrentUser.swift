@@ -16,9 +16,6 @@ extension UseCases {
                 )
             }
         )
-        return .init(
-            authorizer: authorizer,
-            query: query
-        )
+        return .init(query: query)
     }
 }

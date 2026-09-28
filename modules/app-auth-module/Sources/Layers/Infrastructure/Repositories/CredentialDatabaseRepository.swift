@@ -10,8 +10,6 @@ extension CredentialTable.Row {
         .init(
             id: id,
             authEmailId: authEmailId,
-            userId: userId,
-            email: email,
             passwordHash: passwordHash,
             createdAt: createdAt,
             updatedAt: updatedAt
@@ -51,27 +49,10 @@ public struct CredentialDatabaseRepository: CredentialRepository {
         _ model: Credential.New
     ) async throws -> Credential {
         let table = CredentialTable(connection: context.connection)
-        let emailTable = AuthEmailTable(connection: context.connection)
-        let authEmail: AuthEmailTable.Row
-        if let existing = try await emailTable.findBy(
-            identityId: model.userId,
-            email: model.email
-        ) {
-            authEmail = existing
-        }
-        else {
-            authEmail = try await emailTable.save(
-                id: context.idGenerator.generate(),
-                identityId: model.userId,
-                email: model.email
-            )
-        }
         let saved = try await table.save(
             row: .init(
                 id: context.idGenerator.generate(),
-                authEmailId: authEmail.id,
-                userId: model.userId,
-                email: model.email,
+                authEmailId: model.authEmailId,
                 passwordHash: model.passwordHash,
                 createdAt: .init(timeIntervalSince1970: 0),
                 updatedAt: .init(timeIntervalSince1970: 0)
@@ -84,28 +65,11 @@ public struct CredentialDatabaseRepository: CredentialRepository {
         _ model: Credential
     ) async throws -> Credential {
         let table = CredentialTable(connection: context.connection)
-        let emailTable = AuthEmailTable(connection: context.connection)
-        let authEmail: AuthEmailTable.Row
-        if let existing = try await emailTable.findBy(
-            identityId: model.userId,
-            email: model.email
-        ) {
-            authEmail = existing
-        }
-        else {
-            authEmail = try await emailTable.save(
-                id: context.idGenerator.generate(),
-                identityId: model.userId,
-                email: model.email
-            )
-        }
         let updated = try await table.update(
             id: model.id,
             row: .init(
                 id: model.id,
-                authEmailId: authEmail.id,
-                userId: model.userId,
-                email: model.email,
+                authEmailId: model.authEmailId,
                 passwordHash: model.passwordHash,
                 createdAt: model.createdAt,
                 updatedAt: model.updatedAt

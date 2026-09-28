@@ -121,7 +121,7 @@ struct AnalyticsNotFoundView: Component {
                 )
                 context.build(
                     NewAdminPageHeader(
-                        state: .init(
+                        state: .primary(
                             title: model.title,
                             description: model.description
                         )

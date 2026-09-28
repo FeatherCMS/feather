@@ -13,53 +13,6 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/schemas` section of the OpenAPI document.
     public enum Schemas {
-        /// - Remark: Generated from `#/components/schemas/MediaAssetCreateSchema`.
-        public struct MediaAssetCreateSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MediaAssetCreateSchema/parentId`.
-            public var parentId: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/MediaAssetCreateSchema/fileName`.
-            public var fileName: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaAssetCreateSchema/extension`.
-            public var _extension: Swift.String
-            /// - Remark: Generated from `#/components/schemas/MediaAssetCreateSchema/title`.
-            public var title: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/MediaAssetCreateSchema/altText`.
-            public var altText: Swift.String?
-            /// - Remark: Generated from `#/components/schemas/MediaAssetCreateSchema/data`.
-            public var data: Swift.String
-            /// Creates a new `MediaAssetCreateSchema`.
-            ///
-            /// - Parameters:
-            ///   - parentId:
-            ///   - fileName:
-            ///   - _extension:
-            ///   - title:
-            ///   - altText:
-            ///   - data:
-            public init(
-                parentId: Swift.String? = nil,
-                fileName: Swift.String,
-                _extension: Swift.String,
-                title: Swift.String? = nil,
-                altText: Swift.String? = nil,
-                data: Swift.String
-            ) {
-                self.parentId = parentId
-                self.fileName = fileName
-                self._extension = _extension
-                self.title = title
-                self.altText = altText
-                self.data = data
-            }
-            public enum CodingKeys: String, CodingKey {
-                case parentId
-                case fileName
-                case _extension = "extension"
-                case title
-                case altText
-                case data
-            }
-        }
         /// - Remark: Generated from `#/components/schemas/MediaAssetDetailSchema`.
         public struct MediaAssetDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MediaAssetDetailSchema/id`.

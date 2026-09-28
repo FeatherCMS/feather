@@ -19,11 +19,49 @@ paths:
       tags:
       - MediaAssets
       operationId: mediaAssetCreate
+      parameters:
+      - name: X-Media-Asset-Parent-ID
+        in: header
+        required: false
+        schema:
+          type: string
+        description: Optional parent folder id
+      - name: X-Media-Asset-File-Name
+        in: header
+        required: true
+        schema:
+          type: string
+        description: Original file name
+      - name: X-Media-Asset-Extension
+        in: header
+        required: true
+        schema:
+          type: string
+        description: Canonical file extension
+      - name: X-Media-Asset-Title
+        in: header
+        required: false
+        schema:
+          type: string
+        description: Optional asset title
+      - name: X-Media-Asset-Alt-Text
+        in: header
+        required: false
+        schema:
+          type: string
+        description: Optional alternative text
       requestBody:
-        $ref: '#/components/requestBodies/MediaAssetCreateRequestBody'
+        content:
+          application/octet-stream:
+            schema:
+              type: string
+              format: binary
+        required: true
       responses:
         201:
           $ref: '#/components/responses/MediaAssetDetailResponse'
+        409:
+          description: A media asset with this path already exists
         401:
           description: Unauthorized
         403:
@@ -150,6 +188,8 @@ paths:
           description: Unauthorized
         403:
           description: Forbidden
+        409:
+          description: A media folder with this path already exists
       security:
       - bearerAuth: []
   /api/v1/admin/media/folders/list:
@@ -399,31 +439,6 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    MediaAssetCreateSchema:
-      type: object
-      properties:
-        parentId:
-          type: string
-          nullable: true
-        fileName:
-          type: string
-          example: cover-image.jpg
-        extension:
-          type: string
-          example: jpeg
-        title:
-          type: string
-          nullable: true
-        altText:
-          type: string
-          nullable: true
-        data:
-          type: string
-          example: AQID
-      required:
-      - fileName
-      - extension
-      - data
     MediaAssetDetailSchema:
       type: object
       properties:
@@ -1336,12 +1351,6 @@ components:
         $ref: '#/components/schemas/MediaVariantIdField'
       description: Media variant processor id
   requestBodies:
-    MediaAssetCreateRequestBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/MediaAssetCreateSchema'
-      required: true
     DeleteRequestBody:
       content:
         application/json:

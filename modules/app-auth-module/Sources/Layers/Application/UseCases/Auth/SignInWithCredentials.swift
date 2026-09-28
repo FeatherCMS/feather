@@ -40,13 +40,16 @@ public struct SignInWithCredentials: SignIn {
                 let credential = try await scope.credential.findBy(
                     email: input.object.email
                 ),
+                let authEmail = try await scope.authEmail.findBy(
+                    id: credential.authEmailId
+                ),
                 try await checkPasswordHash(
                     using: passwordHasher,
                     original: input.object.password,
                     hash: credential.passwordHash
                 ),
                 let user = try await scope.identity.findBy(
-                    id: credential.userId
+                    id: authEmail.identityId
                 ),
                 user.status == .active
             else {

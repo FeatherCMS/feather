@@ -18,30 +18,24 @@ struct AdminRemoveNewsletterCampaignDefaultPresenter:
             path: NewsletterAdminRoutes.campaigns.description,
             returnTo: returnTo
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove campaign",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                breadcrumb: NewsletterAdminRoutes.breadcrumb + [
-                    .init(
-                        label: "Campaigns",
-                        link: NewsletterAdminRoutes.campaigns.description
-                    )
-                ],
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove campaign",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: items.map(\.label),
                 action: NewsletterAdminRoutes.campaignRemove.description,
-                cancel: cancel,
-                submitLabel: "Remove campaign",
+                submit: .init(label: "Remove campaign", style: .destructive),
                 nonceToken: nonceToken,
                 hiddenFields: items.map {
                     .init(name: "ids", value: $0.id)
                 } + [.init(name: "returnTo", value: cancel)]
-            )
+            ),
+            size: .small
         )
     }
 }

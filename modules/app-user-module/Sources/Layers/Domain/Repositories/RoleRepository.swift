@@ -16,6 +16,10 @@ public protocol RoleRepository: Repository {
         name: String
     ) async throws -> Role?
 
+    func findBy(
+        key: String
+    ) async throws -> Role?
+
     func insert(
         _ model: Role.New
     ) async throws -> Role

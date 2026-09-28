@@ -33,6 +33,19 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.accountCreate(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .post,
+            path: server.apiPathComponentsWithServerPrefix(
+                "/api/v1/admin/account/users"
+            )
+        )
+        try transport.register(
+            {
                 try await server.accountSettingsGet(
                     request: $0,
                     body: $1,
@@ -217,6 +230,92 @@ extension APIProtocol {
 }
 
 extension UniversalServer where APIHandler: APIProtocol {
+    /// - Remark: HTTP `POST /api/v1/admin/account/users`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)`.
+    fileprivate func accountCreate(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.AccountCreate.id,
+            using: {
+                APIHandler.accountCreate($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let headers: Operations.AccountCreate.Input.Headers = .init(
+                    accept: try converter.extractAcceptHeaderIfPresent(
+                        in: request.headerFields
+                    )
+                )
+                let contentType = converter.extractContentTypeIfPresent(
+                    in: request.headerFields
+                )
+                let body: Components.RequestBodies.AccountCreateRequestBody
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.AccountCreateSchema.self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure(
+                        "bestContentType chose an invalid content type."
+                    )
+                }
+                return Operations.AccountCreate.Input(
+                    headers: headers,
+                    body: body
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case .created(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 201)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case .json(let value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case .unauthorized(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .forbidden(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
+                case .undocumented(let statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
     /// - Remark: HTTP `GET /api/v1/admin/account/settings`.
     /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)`.
     fileprivate func accountSettingsGet(

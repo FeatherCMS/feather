@@ -62,10 +62,12 @@ struct NewsletterIssueDetailsView: Component {
             context.build(
                 NewsletterCampaignHeader(
                     campaignId: newsletterId,
-                    active: .issues
+                    active: .issues,
+                    title: "Campaign issue details",
+                    description:
+                        "Review the issue content and delivery schedule."
                 )
             )
-            H2("Issue details")
             Div {
                 context.build(
                     NewAdminDetailField(label: "Subject", value: model.subject)

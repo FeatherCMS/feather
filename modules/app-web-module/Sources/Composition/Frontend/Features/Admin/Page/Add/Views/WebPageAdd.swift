@@ -22,7 +22,7 @@ struct WebPageAdd: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add page",
                         description:
                             "Create and publish a page for the public website."
@@ -33,8 +33,7 @@ struct WebPageAdd: Component {
                 WebPageForm(
                     state: state.form,
                     action: WebPageRoutes.add.description,
-                    submitLabel: "Add page",
-                    publishLabel: "Publish page"
+                    submitLabel: "Add page"
                 )
             )
         }

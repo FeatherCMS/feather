@@ -25,7 +25,7 @@ struct MediaVariantTable: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Media variants",
                         description:
                             "Manage reusable media outputs and their processors."

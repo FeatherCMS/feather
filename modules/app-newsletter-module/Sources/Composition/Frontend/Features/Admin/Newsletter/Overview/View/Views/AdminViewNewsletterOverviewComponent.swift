@@ -77,7 +77,7 @@ struct AdminViewNewsletterOverviewComponent: Component {
             )
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Newsletter",
                         description:
                             "Manage newsletter campaigns and subscribers."

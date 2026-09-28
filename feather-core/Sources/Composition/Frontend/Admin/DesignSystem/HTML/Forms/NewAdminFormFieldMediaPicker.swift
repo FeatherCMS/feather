@@ -1,11 +1,18 @@
 public import CSS
 import FeatherContracts
+import Foundation
 public import HTML
 import SGML
 import WebBuilders
 public import WebComponents
 
 public struct NewAdminFormFieldMediaPicker: Component {
+    public enum PreviewStyle: String, Sendable {
+        case square
+        case wide
+        case circular
+    }
+
     public enum OutputMode: String, Sendable {
         case assetId
         case originalURL = "original_url"
@@ -38,24 +45,30 @@ public struct NewAdminFormFieldMediaPicker: Component {
         public let field: FieldState
         public let selectedAsset: NewAdminMediaAsset?
         public let browsePath: String
-        public let allowedExtensions: [String]
+        public let defaultFolderPath: String?
+        public let allowedExtensions: AllowedExtensions
         public let outputMode: OutputMode
         public let showsCurrentCard: Bool
+        public let previewStyle: PreviewStyle
 
         public init(
             field: FieldState,
             selectedAsset: NewAdminMediaAsset?,
             browsePath: String,
-            allowedExtensions: [String],
+            defaultFolderPath: String? = nil,
+            allowedExtensions: AllowedExtensions,
             outputMode: OutputMode = .assetId,
-            showsCurrentCard: Bool = true
+            showsCurrentCard: Bool = true,
+            previewStyle: PreviewStyle = .square
         ) {
             self.field = field
             self.selectedAsset = selectedAsset
             self.browsePath = browsePath
+            self.defaultFolderPath = defaultFolderPath
             self.allowedExtensions = allowedExtensions
             self.outputMode = outputMode
             self.showsCurrentCard = showsCurrentCard
+            self.previewStyle = previewStyle
         }
     }
 
@@ -68,14 +81,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
     public func rules() -> [any Rule] {
         let root = ".new-admin-media-picker"
 
-        return NewAdminListSearch(
-            state: .init(
-                action: "",
-                placeholder: "",
-                search: ""
-            )
-        )
-        .rules() + [
+        return [
             Media {
                 Custom(root) {
                     Display(.flex)
@@ -113,6 +119,11 @@ public struct NewAdminFormFieldMediaPicker: Component {
                         .variable(TokenKey.Colors.Materials.Primary.tint)
                     )
                 }
+                Custom("\(root)__current--wide") {
+                    GridTemplateColumns(
+                        .tracks([.length(213.33.px), .fraction(1.fr)])
+                    )
+                }
                 Custom("\(root)__preview") {
                     Width(120.px)
                     Height(120.px)
@@ -124,6 +135,13 @@ public struct NewAdminFormFieldMediaPicker: Component {
                         .variable(TokenKey.Colors.Materials.Secondary.tint)
                     )
                     Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+                }
+                Custom("\(root)__preview--wide") {
+                    Width(213.33.px)
+                    Height(120.px)
+                }
+                Custom("\(root)__preview--circular") {
+                    BorderRadius(50.percent)
                 }
                 Custom("\(root)__preview img") {
                     Width(100.percent)
@@ -150,152 +168,6 @@ public struct NewAdminFormFieldMediaPicker: Component {
                     FlexWrap(.wrap)
                     AlignItems(.center)
                     Gap(8.px)
-                }
-                Custom("\(root)__modal") {
-                    Position(.fixed)
-                    UnsafeRawProperty(name: "inset", value: "0")
-                    Display(.none)
-                    AlignItems(.center)
-                    JustifyContent(.center)
-                    Padding(24.px)
-                    Background(color: .transparent)
-                    ZIndex(.number(2000))
-                }
-                Custom("\(root)__modal::before") {
-                    Content(.string("\"\""))
-                    Position(.absolute)
-                    UnsafeRawProperty(name: "inset", value: "0")
-                    Background(
-                        .variable(TokenKey.Colors.Materials.Primary.tint)
-                    )
-                    Opacity(0.5)
-                }
-                Custom("\(root)__modal.is-visible") {
-                    Display(.flex)
-                }
-                Custom("\(root)__dialog") {
-                    Position(.relative)
-                    ZIndex(.number(1))
-                    Width(100.percent)
-                    Height(100.percent)
-                    MaxWidth(1200.px)
-                    MaxHeight(820.px)
-                    Display(.grid)
-                    GridTemplateRows(
-                        .tracks([.auto, .auto, .fraction(1.fr)])
-                    )
-                    Gap(12.px)
-                    Padding(18.px)
-                    Border(
-                        1.px,
-                        .solid,
-                        .variable(TokenKey.Colors.Materials.Primary.border)
-                    )
-                    BorderRadius(16.px)
-                    Background(
-                        .variable(TokenKey.Colors.Materials.Primary.tint)
-                    )
-                }
-                Custom("\(root)__dialog-header") {
-                    Display(.flex)
-                    AlignItems(.flexStart)
-                    JustifyContent(.spaceBetween)
-                    Gap(12.px)
-                }
-                Custom("\(root)__dialog-header .admin-page-header") {
-                    MarginBottom(0.px)
-                }
-                Custom("\(root)__tabs") {
-                    Display(.flex)
-                    Gap(4.px)
-                    Padding(4.px)
-                    Border(
-                        1.px,
-                        .solid,
-                        .variable(TokenKey.Colors.Materials.Secondary.border)
-                    )
-                    BorderRadius(999.px)
-                    Background(
-                        .variable(TokenKey.Colors.Materials.Secondary.tint)
-                    )
-                }
-                Custom("\(root)__tabs > .button") {
-                    Flex(1)
-                }
-                Custom("\(root)__panel") {
-                    MinHeight(0.px)
-                    Overflow(.auto)
-                }
-                Custom("\(root)__panel .table-search-form") {
-                    Display(.flex)
-                    AlignItems(.center)
-                    FlexWrap(.nowrap)
-                    Gap(8.px)
-                    MarginBottom(0.px)
-                    Width(100.percent)
-                    MaxWidth(640.px)
-                }
-                Custom(
-                    "\(root)__panel .table-search-form .table-search-input"
-                ) {
-                    Position(.relative)
-                    Flex(1, .number(1), .auto)
-                    MinWidth(0.px)
-                    Width(100.percent)
-                }
-                Custom(
-                    "\(root)__panel .table-search-form input[type='search']"
-                ) {
-                    BoxSizing(.borderBox)
-                    MinWidth(0.px)
-                    Width(100.percent)
-                    Padding(vertical: 8.px, horizontal: 10.px)
-                    PaddingRight(34.px)
-                    Border(
-                        1.px,
-                        .solid,
-                        .variable(TokenKey.Colors.Materials.Tertiary.border)
-                    )
-                    BorderRadius(9.px)
-                    Background(
-                        .variable(TokenKey.Colors.Materials.Tertiary.tint)
-                    )
-                    Color(.variable(TokenKey.Colors.Materials.Secondary.text))
-                    FontSize(0.9.rem)
-                }
-                Custom(
-                    "\(root)__panel .table-search-form :is(button, input[type='submit'])"
-                ) {
-                    Flex(0, .number(0), .auto)
-                }
-                Custom(
-                    "\(root)__panel .table-search-form .table-search-reset"
-                ) {
-                    Position(.absolute)
-                    Top(50.percent)
-                    Right(9.px)
-                    Transform(.translateY((-50).percent))
-                    Display(.inlineFlex)
-                    AlignItems(.center)
-                    JustifyContent(.center)
-                    Width(24.px)
-                    Height(24.px)
-                    Padding(0.px)
-                    BorderRadius(999.px)
-                    Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                    FontSize(1.15.rem)
-                    LineHeight(1)
-                    TextDecoration(.none)
-                }
-                Custom("\(root)__loading") {
-                    Display(.grid)
-                    UnsafeRawProperty(name: "place-items", value: "center")
-                    MinHeight(12.rem)
-                    Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                }
-                Custom("\(root) .field-error") {
-                    Color(.variable(TokenKey.Colors.Palette.Red.text))
-                    FontSize(0.86.rem)
                 }
             },
             Media(.screen && .maxWidth(600.px)) {
@@ -326,19 +198,17 @@ public struct NewAdminFormFieldMediaPicker: Component {
                 currentCard(context: &context)
             }
             else {
-                context.build(
-                    NewAdminControlButton("Choose asset")
-                )
-                .data("media-picker-open", state.field.key)
-                .hidden()
+                pickerActions(context: &context)
             }
             if let error = state.field.error {
                 Span(error).class("field-error")
             }
-            modal(context: &context)
+            Script(pickerScript())
         }
         .if(state.field.error != nil) { $0.class("has-error") }
         .class("new-admin-media-picker")
+        .data("media-picker-field", state.field.key)
+        .data("media-picker-output", state.outputMode.rawValue)
     }
 }
 
@@ -356,14 +226,7 @@ extension NewAdminFormFieldMediaPicker {
                     .data("media-picker-title", state.field.key)
                     .data("empty-title", "No asset selected")
                 Div {
-                    context.build(
-                        NewAdminControlButton(
-                            "Choose asset",
-                            style: .ghost(.primary)
-                        )
-                    )
-                    .class("new-admin-media-picker__choose", "row-button")
-                    .data("media-picker-open", state.field.key)
+                    pickerActions(context: &context)
                     context.build(
                         NewAdminControlButton(
                             "Clear",
@@ -376,17 +239,43 @@ extension NewAdminFormFieldMediaPicker {
                 .class("new-admin-media-picker__actions")
             }
         }
-        .class("new-admin-media-picker__current")
+        .class(
+            "new-admin-media-picker__current",
+            "new-admin-media-picker__current--\(state.previewStyle.rawValue)"
+        )
+    }
+
+    fileprivate func pickerActions(context: inout BuilderContext)
+        -> some FlowContent
+    {
+        Div {
+            context.build(
+                MediaPickerDialogButton(
+                    label: "Choose asset",
+                    style: .ghost(.primary),
+                    url: dialogBrowsePath(),
+                    field: state.field.key
+                )
+            )
+            .class("new-admin-media-picker__choose", "row-button")
+            context.build(
+                MediaPickerDialogButton(
+                    label: "Upload",
+                    style: .ghost(.secondary),
+                    url: dialogUploadPath(),
+                    field: state.field.key
+                )
+            )
+            .class("new-admin-media-picker__upload", "row-button")
+        }
+        .class("new-admin-media-picker__actions")
     }
 
     fileprivate func previewBlock() -> some FlowContent {
         Div {
             if let selectedAsset = state.selectedAsset {
                 if let previewURL = previewURL(for: selectedAsset) {
-                    Img(
-                        src: previewURL,
-                        alt: displayTitle(selectedAsset)
-                    )
+                    Img(src: previewURL, alt: displayTitle(selectedAsset))
                 }
                 else {
                     FeatherIcons.file()
@@ -397,166 +286,67 @@ extension NewAdminFormFieldMediaPicker {
             }
         }
         .class("new-admin-media-picker__preview")
+        .class(
+            "new-admin-media-picker__preview--\(state.previewStyle.rawValue)"
+        )
         .data("media-picker-preview", state.field.key)
-    }
-
-    fileprivate func modal(context: inout BuilderContext) -> some FlowContent {
-        let helperText =
-            state.allowedExtensions.isEmpty
-            ? "Browse folders, search assets, or upload a new item."
-            : "Allowed types: \(state.allowedExtensions.joined(separator: ", "))."
-
-        return Div {
-            Div {
-                Div {
-                    context.build(
-                        NewAdminPageHeader(
-                            state: .init(
-                                title: state.field.label,
-                                description: helperText
-                            )
-                        )
-                    )
-                    context.build(
-                        NewAdminControlButton(
-                            "Close",
-                            style: .ghost(.secondary)
-                        )
-                    )
-                    .class("new-admin-media-picker__close")
-                    .data("media-picker-close", state.field.key)
-                }
-                .class("new-admin-media-picker__dialog-header")
-                Div {
-                    context.build(
-                        NewAdminControlButton("Gallery")
-                    )
-                    .class("is-current")
-                    .data("media-picker-tab", "gallery")
-                    .data("media-picker-field", state.field.key)
-                    context.build(
-                        NewAdminControlButton(
-                            "Upload",
-                            style: .ghost(.primary)
-                        )
-                    )
-                    .data("media-picker-tab", "upload")
-                    .data("media-picker-field", state.field.key)
-                }
-                .class("new-admin-media-picker__tabs")
-                Style("")
-                    .data("media-picker-style", state.field.key)
-                Div {
-                    Div {
-                        "Loading..."
-                    }
-                    .class("new-admin-media-picker__loading")
-                }
-                .class("new-admin-media-picker__panel")
-                .data("media-picker-panel", state.field.key)
-            }
-            .class("new-admin-media-picker__dialog")
-            Script(pickerScript())
-        }
-        .id("newAdminMediaPickerModal-\(state.field.key)")
-        .class("new-admin-media-picker__modal")
-        .data("media-picker-browse-path", state.browsePath)
-        .data("media-picker-upload-path", uploadPath())
-        .data("media-picker-active-tab", "gallery")
-        .data("media-picker-output", state.outputMode.rawValue)
     }
 
     fileprivate func pickerScript() -> String {
         #"""
         (function() {
-          if (window.__newAdminMediaPickerInit) { return; }
-          window.__newAdminMediaPickerInit = true;
-
-          function modalFor(field) {
-            return document.getElementById("newAdminMediaPickerModal-" + field);
-          }
-
-          function hide(modal) {
-            if (modal) { modal.classList.remove("is-visible"); }
-          }
-
-          function detachedFormID(field) {
-            return "newAdminMediaPickerDetachedForm-" + String(field || "").replace(/[^A-Za-z0-9_-]/g, "-");
-          }
-
-          function isolatePanelControls(field, panel) {
-            var id = detachedFormID(field);
-            if (!document.getElementById(id)) {
-              var form = document.createElement("form");
-              form.id = id;
-              form.hidden = true;
-              document.body.appendChild(form);
-            }
-            panel.querySelectorAll("[name]").forEach(function(element) {
-              element.setAttribute("form", id);
-            });
-          }
-
-          function browsePath(modal) {
-            return modal.getAttribute("data-media-picker-browse-path") || "";
-          }
-
-          function uploadPath(modal) {
-            return modal.getAttribute("data-media-picker-upload-path") || "";
-          }
-
-          function deriveBrowsePath(url) {
-            return url.indexOf("/admin/media/assets/add/") === 0
-              ? url.replace("/admin/media/assets/add/", "/admin/media/assets/")
-              : url;
-          }
-
-          function deriveUploadPath(url) {
-            return url.indexOf("/admin/media/assets/add/") === 0
-              ? url
-              : url.replace("/admin/media/assets/", "/admin/media/assets/add/");
-          }
-
-          function mediaURL(asset) {
-            return String(asset && asset.url || "");
-          }
-
-          function previewURL(asset) {
-            return String(asset && asset.previewURL || "");
-          }
-
-          function fileName(asset) {
-            var title = String(asset && asset.title || "").trim();
-            var base = String(asset && asset.name || "").trim();
-            return title || base || "No asset selected";
-          }
-
           function escapeHTML(value) {
-            return String(value || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\"/g, "&quot;").replace(/'/g, "&#39;");
+            return String(value || "")
+              .replace(/&/g, "&amp;")
+              .replace(/</g, "&lt;")
+              .replace(/>/g, "&gt;")
+              .replace(/\"/g, "&quot;")
+              .replace(/'/g, "&#39;");
           }
 
-          function preview(asset) {
-            if (!asset) {
-              return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><circle cx="8.5" cy="10.5" r="1.5"></circle><path d="M21 15l-5-5L5 21"></path></svg>';
+          function titleFor(asset) {
+            var title = String(asset && asset.title || "").trim();
+            return title || String(asset && asset.name || "No asset selected");
+          }
+
+          function previewFor(asset) {
+            if (asset && asset.previewURL) {
+              return '<img src="' + escapeHTML(asset.previewURL) + '" alt="' +
+                escapeHTML(titleFor(asset)) + '">';
             }
-            return asset.previewURL
-              ? '<img src="' + escapeHTML(previewURL(asset)) + '" alt="' + escapeHTML(fileName(asset)) + '">'
-              : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>';
+            return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path d="M14 2v6h6"></path></svg>';
+          }
+
+          function outputMode(field) {
+            var root = document.querySelector(
+              '[data-media-picker-field="' + field + '"]'
+            );
+            return root ? root.getAttribute("data-media-picker-output") : "assetId";
           }
 
           function update(field, asset) {
-            var modal = modalFor(field);
             var input = document.getElementById(field);
-            var output = modal ? modal.getAttribute("data-media-picker-output") : "assetId";
+            var mode = outputMode(field);
             if (input) {
-              input.value = asset ? (output === "original_url" || output === "relative_url" ? mediaURL(asset) : asset.id || "") : "";
+              input.value = asset && (mode === "original_url" || mode === "relative_url")
+                ? String(asset.url || "")
+                : asset ? String(asset.id || "") : "";
               input.dispatchEvent(new Event("change", { bubbles: true }));
             }
-            var previewNode = document.querySelector('[data-media-picker-preview="' + field + '"]');
-            if (previewNode) { previewNode.innerHTML = preview(asset); }
-            var title = document.querySelector('[data-media-picker-title="' + field + '"]');
-            if (title) { title.textContent = asset ? fileName(asset) : title.getAttribute("data-empty-title"); }
-            var clear = document.querySelector('[data-media-picker-clear="' + field + '"]');
+            var preview = document.querySelector(
+              '[data-media-picker-preview="' + field + '"]'
+            );
+            if (preview) { preview.innerHTML = previewFor(asset); }
+            var title = document.querySelector(
+              '[data-media-picker-title="' + field + '"]'
+            );
+            if (title) {
+              title.textContent = asset ? titleFor(asset) : title.getAttribute("data-empty-title");
+              title.classList.toggle("is-empty", !asset);
+            }
+            var clear = document.querySelector(
+              '[data-media-picker-clear="' + field + '"]'
+            );
             if (clear) {
               clear.disabled = !asset;
               clear.classList.toggle("destructive", !!asset);
@@ -564,234 +354,105 @@ extension NewAdminFormFieldMediaPicker {
             }
           }
 
-          function setTab(modal, tab) {
-            modal.setAttribute("data-media-picker-active-tab", tab);
-            modal.querySelectorAll("[data-media-picker-tab]").forEach(function(button) {
-              var isCurrent = button.getAttribute("data-media-picker-tab") === tab;
-              button.classList.toggle("is-current", isCurrent);
-              button.classList.toggle("primary", isCurrent);
-              button.classList.toggle("primary-ghost", !isCurrent);
-            });
+          function close(dialog) {
+            if (!dialog) { return; }
+            if (dialog.close) { dialog.close(); }
+            else { dialog.remove(); }
           }
 
-          function extractSection(doc) {
-            return doc.querySelector("[data-admin-media-picker-section]") || doc.querySelector(".cms-section");
+          function assetFromNode(node) {
+            return {
+              id: node.getAttribute("data-picker-select"),
+              url: node.getAttribute("data-picker-url"),
+              previewURL: node.getAttribute("data-picker-preview-url"),
+              name: node.getAttribute("data-picker-name"),
+              extension: node.getAttribute("data-picker-extension"),
+              title: node.getAttribute("data-picker-title")
+            };
           }
 
-          function executeScripts(panel, section) {
-            Array.from(section.querySelectorAll("script")).forEach(function(script) {
-              var replacement = document.createElement("script");
-              replacement.textContent = script.textContent || "";
-              panel.appendChild(replacement);
-            });
-          }
-
-          function applyMarker(field, panel) {
-            var marker = panel.querySelector("[data-media-picker-selected-id]");
-            if (!marker) { return false; }
+          function applyMarker(dialog) {
+            if (!dialog || !dialog.matches("dialog[data-admin-dialog]")) { return; }
+            var marker = dialog.querySelector("[data-media-picker-selected-id]");
+            var field = dialog.getAttribute("data-media-picker-field");
+            if (!field) {
+              var fieldNode = dialog.querySelector("[data-media-picker-field]");
+              field = fieldNode && fieldNode.getAttribute("data-media-picker-field");
+            }
+            if (!field) {
+              field = marker && marker.getAttribute("data-media-picker-selected-field");
+            }
+            if (!marker || !field) { return; }
             update(field, {
               id: marker.getAttribute("data-media-picker-selected-id"),
               url: marker.getAttribute("data-media-picker-selected-url"),
               previewURL: marker.getAttribute("data-media-picker-selected-preview-url"),
               name: marker.getAttribute("data-media-picker-selected-name"),
-              extension: marker.getAttribute("data-media-picker-selected-extension")
+              extension: marker.getAttribute("data-media-picker-selected-extension"),
+              title: marker.getAttribute("data-media-picker-selected-title")
             });
-            return true;
+            close(dialog);
           }
 
-          function normalizeExtension(filename, mime) {
-            var name = String(filename || "").toLowerCase();
-            var type = String(mime || "").toLowerCase();
-            var dot = name.lastIndexOf(".");
-            var extension = dot >= 0 ? name.slice(dot + 1) : "";
-            if (extension === "jpg") { return "jpeg"; }
-            if (extension) { return extension; }
-            if (type.indexOf("/") >= 0) { return type.split("/")[1] || "bin"; }
-            return "bin";
-          }
-
-          function readFile(file) {
-            return new Promise(function(resolve, reject) {
-              var reader = new FileReader();
-              reader.onload = function() {
-                var result = String(reader.result || "");
-                var comma = result.indexOf(",");
-                resolve(comma >= 0 ? result.slice(comma + 1) : result);
-              };
-              reader.onerror = function() { reject(new Error("File read failed.")); };
-              reader.readAsDataURL(file);
+          if (!window.__newAdminMediaPickerController) {
+            window.__newAdminMediaPickerController = {
+              applyMarker: applyMarker
+            };
+            document.addEventListener("click", function(event) {
+              var select = event.target.closest && event.target.closest("[data-picker-select]");
+              if (select) {
+                event.preventDefault();
+                var field = select.getAttribute("data-picker-field");
+                if (field) {
+                  update(field, assetFromNode(select));
+                  close(select.closest("dialog[data-admin-dialog]"));
+                }
+                return;
+              }
+              var clear = event.target.closest && event.target.closest("[data-media-picker-clear]");
+              if (clear) {
+                update(clear.getAttribute("data-media-picker-clear"), null);
+              }
             });
-          }
+            document.addEventListener(
+              "new-admin-media-picker-selection",
+              function(event) {
+                var detail = event.detail || {};
+                var assets = Array.isArray(detail.assets) ? detail.assets : [];
+                var field = String(detail.field || "");
+                if (!field || !assets.length) { return; }
+                update(field, assets[0]);
+                close(
+                  document.querySelector(
+                    "dialog[data-admin-dialog][open]"
+                  )
+                );
+              }
+            );
 
-          async function prepareUpload(container) {
-            var fileInput = container.querySelector('input[type="file"][name="file"]');
-            var dataInput = container.querySelector('input[name="data"]');
-            var extensionInput = container.querySelector('input[name="extension"]');
-            var nameInput = container.querySelector('input[name="fileName"]');
-            var file = fileInput && fileInput.files && fileInput.files[0];
-            if (!file || !dataInput || !extensionInput || !nameInput) {
-              throw new Error("Please choose a file.");
+            function observeDialogHost() {
+              var host = document.getElementById("new-admin-dialog-host");
+              if (
+                !host ||
+                !window.MutationObserver ||
+                host.getAttribute("data-media-picker-observer") === "1"
+              ) {
+                return;
+              }
+              host.setAttribute("data-media-picker-observer", "1");
+              new MutationObserver(function() {
+                host.querySelectorAll("dialog[data-admin-dialog]").forEach(applyMarker);
+              }).observe(host, { childList: true, subtree: true });
             }
-            extensionInput.value = normalizeExtension(file.name, file.type);
-            nameInput.value = file.name || "";
-            dataInput.value = await readFile(file);
-          }
 
-          function uploadPayload(container) {
-            var payload = new URLSearchParams();
-            container.querySelectorAll("[name]").forEach(function(element) {
-              if (element.type === "file") { return; }
-              if ((element.type === "checkbox" || element.type === "radio") && !element.checked) { return; }
-              payload.append(element.name, element.value || "");
-            });
-            return payload;
-          }
-
-          async function load(field, tab, url, options) {
-            var modal = modalFor(field);
-            var panel = modal && modal.querySelector('[data-media-picker-panel="' + field + '"]');
-            var style = document.querySelector('style[data-media-picker-style="' + field + '"]');
-            if (!modal || !panel || !style) { return; }
-            setTab(modal, tab);
-            modal.setAttribute("data-media-picker-browse-path", deriveBrowsePath(url));
-            modal.setAttribute("data-media-picker-upload-path", deriveUploadPath(url));
-            panel.innerHTML = '<div class="new-admin-media-picker__loading">Loading...</div>';
-            var response = await fetch(url, Object.assign({ credentials: "same-origin" }, options || {}));
-            var doc = new DOMParser().parseFromString(await response.text(), "text/html");
-            var section = extractSection(doc);
-            if (!section) { panel.textContent = "Unable to load media picker."; return; }
-            style.textContent = Array.from(doc.querySelectorAll("head style")).map(function(node) { return node.textContent || ""; }).join("\n");
-            if (style.parentNode !== document.head) { document.head.appendChild(style); }
-            panel.innerHTML = section.outerHTML;
-            executeScripts(panel, section);
-            isolatePanelControls(field, panel);
-            applyMarker(field, panel);
-          }
-
-          function submitSearch(container) {
-            var panel = container.closest("[data-media-picker-panel]");
-            var field = panel && panel.getAttribute("data-media-picker-panel");
-            var modal = field && modalFor(field);
-            if (!modal) { return; }
-            var url = new URL(container.getAttribute("data-admin-media-picker-search-path") || browsePath(modal), window.location.origin);
-            var input = container.querySelector("input[name='search']");
-            var search = input ? String(input.value || "").trim() : "";
-            if (search) { url.searchParams.set("search", search); } else { url.searchParams.delete("search"); }
-            load(field, modal.getAttribute("data-media-picker-active-tab") || "gallery", url.pathname + url.search);
-          }
-
-          function loadLayout(field, link) {
-            var modal = modalFor(field);
-            if (!modal) { return; }
-            var url = new URL(link.getAttribute("href") || browsePath(modal), window.location.origin);
-            var view = url.searchParams.get("view") === "list" ? "list" : "grid";
-            url.searchParams.set("view", view);
-            load(field, modal.getAttribute("data-media-picker-active-tab") || "gallery", url.pathname + url.search);
-          }
-
-          document.addEventListener("click", async function(event) {
-            var open = event.target.closest("[data-media-picker-open]");
-            if (open) {
-              var field = open.getAttribute("data-media-picker-open");
-              var modal = modalFor(field);
-              if (modal) { modal.classList.add("is-visible"); load(field, "gallery", browsePath(modal)); }
-              return;
-            }
-            var close = event.target.closest("[data-media-picker-close]");
-            if (close) { hide(modalFor(close.getAttribute("data-media-picker-close"))); return; }
-            var clear = event.target.closest("[data-media-picker-clear]");
-            if (clear) { update(clear.getAttribute("data-media-picker-clear"), null); return; }
-            var tab = event.target.closest("[data-media-picker-tab]");
-            if (tab) {
-              var field = tab.getAttribute("data-media-picker-field");
-              var modal = modalFor(field);
-              load(field, tab.getAttribute("data-media-picker-tab"), tab.getAttribute("data-media-picker-tab") === "upload" ? uploadPath(modal) : browsePath(modal));
-              return;
-            }
-            var search = event.target.closest("[data-admin-media-picker-search-path] button[type='submit']");
-            if (search) { event.preventDefault(); submitSearch(search.closest("[data-admin-media-picker-search-path]")); return; }
-            var select = event.target.closest("[data-picker-select]");
-            if (select) {
-              event.preventDefault();
-              var field = select.getAttribute("data-picker-field");
-              update(field, {
-                id: select.getAttribute("data-picker-select"),
-                url: select.getAttribute("data-picker-url"),
-                previewURL: select.getAttribute("data-picker-preview-url"),
-                name: select.getAttribute("data-picker-name"),
-                extension: select.getAttribute("data-picker-extension")
+            observeDialogHost();
+            if (document.readyState === "loading") {
+              document.addEventListener("DOMContentLoaded", observeDialogHost, {
+                once: true
               });
-              hide(modalFor(field));
-              return;
             }
-            var upload = event.target.closest("[data-admin-media-picker-upload-submit]");
-            if (upload) {
-              event.preventDefault();
-              var container = upload.closest("[data-admin-media-picker-upload]");
-              var panel = container && container.closest("[data-media-picker-panel]");
-              var field = panel && panel.getAttribute("data-media-picker-panel");
-              var modal = field && modalFor(field);
-              if (!container || !field || !modal) { return; }
-              try {
-                await prepareUpload(container);
-                var response = await fetch(container.getAttribute("data-action") || uploadPath(modal), {
-                  method: "POST",
-                  body: uploadPayload(container),
-                  credentials: "same-origin",
-                  headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" }
-                });
-                var documentHTML = await response.text();
-                var uploadDocument = new DOMParser().parseFromString(documentHTML, "text/html");
-                var marker = uploadDocument.querySelector("[data-media-picker-selected-id]");
-                if (marker) {
-                  update(field, {
-                    id: marker.getAttribute("data-media-picker-selected-id"),
-                    url: marker.getAttribute("data-media-picker-selected-url"),
-                    previewURL: marker.getAttribute("data-media-picker-selected-preview-url"),
-                    name: marker.getAttribute("data-media-picker-selected-name"),
-                    extension: marker.getAttribute("data-media-picker-selected-extension")
-                  });
-                  hide(modal);
-                }
-                else {
-                  load(field, "upload", uploadPath(modal), {
-                    method: "POST",
-                    body: uploadPayload(container)
-                  });
-                }
-              }
-              catch (error) {
-                window.alert(error && error.message ? error.message : "Unable to upload media.");
-              }
-              return;
-            }
-            var layout = event.target.closest(".new-admin-media-picker__panel .pill-tabs a");
-            if (layout) {
-              event.preventDefault();
-              var layoutPanel = layout.closest("[data-media-picker-panel]");
-              var layoutField = layoutPanel && layoutPanel.getAttribute("data-media-picker-panel");
-              if (layoutField) { loadLayout(layoutField, layout); }
-              return;
-            }
-            var link = event.target.closest(".new-admin-media-picker__panel a");
-            if (link && link.getAttribute("target") !== "_blank") {
-              event.preventDefault();
-              var panel = link.closest("[data-media-picker-panel]");
-              var field = panel && panel.getAttribute("data-media-picker-panel");
-              var modal = field && modalFor(field);
-              if (modal) { load(field, modal.getAttribute("data-media-picker-active-tab") || "gallery", link.getAttribute("href")); }
-            }
-          });
-
-          document.addEventListener("keydown", function(event) {
-            if (event.key === "Enter" && event.target.closest("[data-media-picker-panel] input[name='search']")) {
-              event.preventDefault(); submitSearch(event.target.closest("[data-admin-media-picker-search-path]"));
-            }
-            if (event.key === "Escape") {
-              document.querySelectorAll(".new-admin-media-picker__modal.is-visible").forEach(hide);
-            }
-          });
-        })();
+          }
+        }());
         """#
     }
 
@@ -800,17 +461,80 @@ extension NewAdminFormFieldMediaPicker {
         return title?.isEmpty == false ? title! : asset.name
     }
 
-    fileprivate func previewURL(for asset: NewAdminMediaAsset)
-        -> String?
-    {
-        asset.previewURL.map(NewAdminMediaAsset.mediaURL(path:))
+    fileprivate func previewURL(for asset: NewAdminMediaAsset) -> String? {
+        let path =
+            state.previewStyle == .wide
+            ? asset.coverURL ?? asset.previewURL
+            : asset.previewURL
+        let fallbackPath = path ?? asset.url
+        return fallbackPath.isEmpty
+            ? nil
+            : NewAdminMediaAsset.mediaURL(path: fallbackPath)
     }
 
-    fileprivate func uploadPath() -> String {
-        if let queryIndex = state.browsePath.firstIndex(of: "?") {
-            return "/admin/media/assets/add/" + state.browsePath[queryIndex...]
+    fileprivate func previewVariant() -> String {
+        state.previewStyle == .wide ? "cover" : "preview"
+    }
+
+    fileprivate func dialogBrowsePath() -> String {
+        dialogPath(state.browsePath)
+    }
+
+    fileprivate func dialogUploadPath() -> String {
+        let marker = "/admin/media/assets/"
+        let addMarker = "/admin/media/assets/add/"
+        let path: String
+        if let range = state.browsePath.range(of: marker) {
+            path = state.browsePath.replacingCharacters(
+                in: range,
+                with: addMarker
+            )
         }
-        return "/admin/media/assets/add/"
+        else {
+            path = state.browsePath
+        }
+        return dialogPath(path)
     }
 
+    fileprivate func dialogPath(_ path: String) -> String {
+        var query: [String] = []
+        if !state.allowedExtensions.isAnything && !path.contains("extensions=")
+        {
+            query.append(
+                "extensions=\(state.allowedExtensions.queryValue.queryEncoded())"
+            )
+        }
+        if let defaultFolderPath = state.defaultFolderPath,
+            !defaultFolderPath.isEmpty
+        {
+            query.append(
+                "default_folder_path=\(defaultFolderPath.queryEncoded())"
+            )
+        }
+        if !path.contains("preview_variant=") {
+            query.append("preview_variant=\(previewVariant().queryEncoded())")
+        }
+        if !path.contains("selection=") {
+            query.append("selection=single")
+        }
+        query.append("presentation=dialog")
+        let separator = path.contains("?") ? "&" : "?"
+        return "\(path)\(separator)\(query.joined(separator: "&"))"
+    }
+}
+
+private struct MediaPickerDialogButton: Component {
+    let label: String
+    let style: NewAdminButtonStyle
+    let url: String
+    let field: String
+
+    func html(context: inout BuilderContext) -> Button {
+        var button = context.build(
+            NewAdminControlButton(label, style: style)
+        )
+        button = button.data("admin-dialog-url", url)
+        button = button.data("media-picker-open", field)
+        return button
+    }
 }

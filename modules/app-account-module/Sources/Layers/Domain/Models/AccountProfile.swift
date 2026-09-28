@@ -48,6 +48,12 @@ public struct AccountProfile: Model {
 
 extension AccountProfile {
 
+    private static func normalizeProfileImageAssetId(
+        _ profileImageAssetId: String?
+    ) -> String? {
+        profileImageAssetId?.isEmpty == true ? nil : profileImageAssetId
+    }
+
     private static func validate(userId: String) throws(Self.Error) {
         guard !userId.isEmpty else { throw .invalidUserId }
     }
@@ -72,7 +78,9 @@ extension AccountProfile {
             userId: userId,
             firstName: firstName,
             lastName: lastName,
-            profileImageAssetId: profileImageAssetId
+            profileImageAssetId: normalizeProfileImageAssetId(
+                profileImageAssetId
+            )
         )
     }
 
@@ -86,6 +94,8 @@ extension AccountProfile {
         try Self.validate(name: lastName, error: .lastNameTooLong)
         self.firstName = firstName
         self.lastName = lastName
-        self.profileImageAssetId = profileImageAssetId
+        self.profileImageAssetId = Self.normalizeProfileImageAssetId(
+            profileImageAssetId
+        )
     }
 }

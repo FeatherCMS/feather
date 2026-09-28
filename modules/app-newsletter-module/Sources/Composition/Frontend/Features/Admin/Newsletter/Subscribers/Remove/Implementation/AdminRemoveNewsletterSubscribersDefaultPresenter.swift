@@ -12,49 +12,30 @@ struct AdminRemoveNewsletterSubscribersDefaultPresenter:
 
     func renderRemovePage(
         items: [NewAdminRemoveItemContext],
-        search: String?,
+        search _: String?,
         campaignId: String?,
-        returnTo: String?
+        returnTo _: String?
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        let list = NewAdminLocation.url(
-            path: NewsletterAdminRoutes.subscribers.description,
-            search: search,
-            queryItems: campaignId?.emptyToNil.map { [("campaignId", $0)] }
-                ?? []
-        )
-        let cancel =
-            returnTo.map {
-                NewAdminLocation.removeCancel(
-                    path: NewsletterAdminRoutes.subscribers.description,
-                    returnTo: $0
-                )
-            } ?? list
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove subscribers",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
-                breadcrumb: NewsletterAdminRoutes.breadcrumb + [
-                    .init(
-                        label: "Subscribers",
-                        link: NewsletterAdminRoutes.subscribers.description
-                    )
-                ],
-                pageHeader: .init(
+                header: .primary(
                     title: "Remove selected subscribers",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: items.map(\.label),
                 action: NewsletterAdminRoutes.subscriberRemove.description,
-                cancel: cancel,
                 nonceToken: nonceToken,
                 hiddenFields: items.map { .init(name: "ids", value: $0.id) }
                     + (campaignId?.emptyToNil
                         .map { [.init(name: "campaignId", value: $0)] } ?? [])
-            )
+            ),
+            size: .small
         )
     }
 }

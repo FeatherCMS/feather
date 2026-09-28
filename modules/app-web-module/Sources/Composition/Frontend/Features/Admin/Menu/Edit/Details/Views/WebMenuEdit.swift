@@ -23,7 +23,7 @@ struct WebMenuEdit: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Edit menu",
                         description: "Update the navigation menu configuration."
                     )

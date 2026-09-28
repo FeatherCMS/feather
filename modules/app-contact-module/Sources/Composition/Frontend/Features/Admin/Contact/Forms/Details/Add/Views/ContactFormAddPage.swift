@@ -18,7 +18,7 @@ struct ContactFormAddPage: Component {
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
-                    state: .init(
+                    state: .primary(
                         title: "Add contact form",
                         description:
                             "Create a reusable contact form and choose its fields."
