@@ -9,6 +9,10 @@ protocol AdminListWebPageRepository: Sendable {
         search: String?
     ) async throws -> AdminListWebPageModel
 
+    func title(
+        id: String
+    ) async throws -> String
+
     func delete(
         id: String
     ) async throws

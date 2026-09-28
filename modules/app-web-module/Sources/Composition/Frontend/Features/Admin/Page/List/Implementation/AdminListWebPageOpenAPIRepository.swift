@@ -65,6 +65,32 @@ struct AdminListWebPageOpenAPIRepository:
         }
     }
 
+    func title(
+        id: String
+    ) async throws -> String {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response = try await client.webPageGet(
+                path: .init(webPageId: id),
+                headers: .init(accept: [.init(contentType: .json)])
+            )
+            switch response {
+            case .ok(let okResponse):
+                return try okResponse.body.json.title
+            case .notFound:
+                throw OpenAPIRepositoryError.notFound
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+
     private func loadItems(
         _ items: [Components.Schemas.WebPageListItemSchema],
         using client: WebAdminAPI.Client

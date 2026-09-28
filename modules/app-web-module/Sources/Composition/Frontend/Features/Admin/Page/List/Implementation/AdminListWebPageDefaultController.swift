@@ -61,7 +61,7 @@ struct AdminListWebPageDefaultController:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (_, presenter) = buildRuntime((request, context))
+        let (interactor, presenter) = buildRuntime((request, context))
         let selectedIds = request.queryStrings("ids")
         let page = request.queryPage()
         let search = request.querySearch()
@@ -77,11 +77,12 @@ struct AdminListWebPageDefaultController:
                 ]
             )
         }
+        let items = try await interactor.resolveRemoveItems(ids: selectedIds)
         return
             try await presenter.renderRemovePage(
                 page: page,
                 search: search,
-                items: selectedIds.map { .init(id: $0, label: $0) }
+                items: items
             )
             .response(from: request, context: context)
     }
