@@ -14,7 +14,7 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
             title: "Remove user invitation",
@@ -27,7 +27,8 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
                     ),
                     nonceToken: nonceToken
                 )
-            )
+            ),
+            size: .small
         )
     }
 

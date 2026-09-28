@@ -19,6 +19,14 @@ public struct NewAdminSubmitButton: Component {
         self.isRowButton = isRowButton
     }
 
+    public init(state: NewAdminButton.State, isRowButton: Bool = false) {
+        self.init(
+            state.label,
+            style: state.style,
+            isRowButton: isRowButton
+        )
+    }
+
     public func html(context: inout BuilderContext) -> Button {
         var button = Button(label)
             .type(.submit)

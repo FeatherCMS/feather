@@ -18,14 +18,12 @@ struct AuthEmailConfirmation: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
             NewAdminRemoveConfirmation(
-                breadcrumb: state.breadcrumb,
                 pageHeader: .init(
                     title: "Remove user email",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: [state.item.label],
                 action: "/admin/auth/emails/\(state.item.id)/remove/",
-                cancel: "/admin/auth/emails/",
                 nonceToken: state.nonceToken
             )
         )

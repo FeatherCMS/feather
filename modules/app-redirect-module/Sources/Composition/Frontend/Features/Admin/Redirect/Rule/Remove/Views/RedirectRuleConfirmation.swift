@@ -12,14 +12,12 @@ struct RedirectRuleConfirmation: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
             NewAdminRemoveConfirmation(
-                breadcrumb: RedirectRuleRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove redirect rule",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: [source],
                 action: RedirectRuleRoutes.remove(RouterPath(id)).description,
-                cancel: RedirectRuleRoutes.details(RouterPath(id)).description,
                 hiddenFields: [
                     .init(name: "ids", value: id),
                     .init(name: "_nonce", value: nonceToken),

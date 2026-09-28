@@ -88,10 +88,10 @@ struct AdminListWebMenuItemDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Edit menu",
+            title: "Remove menu items",
             content: WebMenuItemBulkConfirmation(
                 state: .init(
                     menuId: menuId,
@@ -100,7 +100,8 @@ struct AdminListWebMenuItemDefaultPresenter:
                     items: items,
                     nonceToken: nonceToken
                 )
-            )
+            ),
+            size: .small
         )
     }
 

@@ -25,7 +25,7 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
             title: "Remove blog author link",
@@ -39,7 +39,8 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
                     ),
                     nonceToken: nonceToken
                 )
-            )
+            ),
+            size: .small
         )
     }
 

@@ -25,15 +25,13 @@ struct BlogTagConfirmation: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
             NewAdminRemoveConfirmation(
-                breadcrumb: state.breadcrumb,
                 pageHeader: .init(
                     title: "Remove tag",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: [state.source],
                 action: "/admin/blog/tags/\(state.id)/remove/",
-                cancel: "/admin/blog/tags/",
-                submitLabel: "Remove tag",
+                submit: .init(label: "Remove tag", style: .destructive),
                 nonceToken: state.nonceToken,
                 hiddenFields: [.init(name: "ids", value: state.id)]
             )

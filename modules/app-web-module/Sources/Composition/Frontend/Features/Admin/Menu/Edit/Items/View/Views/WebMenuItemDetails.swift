@@ -16,8 +16,7 @@ struct WebMenuItemDetails: Component {
     let state: State
 
     func selectors() -> [any CSS.Selector] {
-        NewAdminRelationshipGroup.groupSelectors()
-            + [
+        [
                 Custom(".web-menu-item-details-fields") {
                     Display(.grid)
                     Gap(12.px)
@@ -69,18 +68,14 @@ struct WebMenuItemDetails: Component {
                 )
             )
             context.build(
-                NewAdminRelationshipGroup {
-                    context.build(
-                        NewAdminPageHeader(
-                            state: .init(
-                                title: "View item",
-                                description:
-                                    "Review the navigation menu link.",
-                                level: 2,
-                                showSeparator: true
-                            )
-                        )
+                NewAdminRelationshipGroup(
+                    pageHeader: .init(
+                        title: "View item",
+                        description: "Review the navigation menu link.",
+                        level: 2,
+                        showSeparator: true
                     )
+                ) {
                     Div {
                         detailField(label: "Label", value: state.item.label)
                         detailField(label: "URL", value: state.item.url)

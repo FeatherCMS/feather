@@ -15,7 +15,7 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
             let nonceToken = await AdminNonceStore.shared.issue(
                 sessionToken: context.sessionToken
             )
-            return try await renderingEngine.renderNewAdminPage(
+            return try await renderingEngine.renderNewAdminDialog(
                 request: request,
                 context: context,
                 title: "Remove redirect rule",
@@ -24,8 +24,9 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
                     source: item.label,
                     nonceToken: nonceToken,
                     returnTo: returnTo
-                )
-            )
+                ),
+            size: .small
+)
         }
         return try await renderBulkRemovePage(items: items, returnTo: returnTo)
     }
@@ -37,12 +38,11 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
             title: "Remove redirect rule",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: RedirectRuleRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove selected redirect rules",
                     description:
@@ -50,13 +50,10 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
                 ),
                 selectedItems: items.map(\.label),
                 action: RedirectRuleRoutes.remove.description,
-                cancel: NewAdminLocation.removeCancel(
-                    path: RedirectRuleRoutes.list.description,
-                    returnTo: returnTo
-                ),
                 nonceToken: nonceToken,
                 hiddenFields: items.map { .init(name: "ids", value: $0.id) }
-            )
+            ),
+            size: .small
         )
     }
 

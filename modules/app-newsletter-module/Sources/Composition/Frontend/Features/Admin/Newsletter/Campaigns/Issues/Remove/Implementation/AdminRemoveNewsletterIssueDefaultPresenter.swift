@@ -15,21 +15,11 @@ struct AdminRemoveNewsletterIssueDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
             title: "Remove campaign issue",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: NewsletterAdminRoutes.breadcrumb + [
-                    .init(
-                        label: "Issues",
-                        link:
-                            NewsletterAdminRoutes.campaignIssues(
-                                RouterPath(newsletterId)
-                            )
-                            .description
-                    )
-                ],
                 pageHeader: .init(
                     title: "Remove campaign issue",
                     description: "This action cannot be undone."
@@ -41,15 +31,11 @@ struct AdminRemoveNewsletterIssueDefaultPresenter:
                         issueID: RouterPath(item.id)
                     )
                     .description,
-                cancel:
-                    NewsletterAdminRoutes.campaignIssues(
-                        RouterPath(newsletterId)
-                    )
-                    .description,
-                submitLabel: "Remove issue",
+                submit: .init(label: "Remove issue", style: .destructive),
                 nonceToken: nonceToken,
                 hiddenFields: [.init(name: "ids", value: item.id)]
-            )
+            ),
+            size: .small
         )
     }
 }

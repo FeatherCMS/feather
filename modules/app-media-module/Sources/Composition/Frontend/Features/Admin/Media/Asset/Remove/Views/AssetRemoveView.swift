@@ -15,7 +15,6 @@ struct AssetRemoveView: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
             NewAdminRemoveConfirmation(
-                breadcrumb: MediaAssetRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove media item",
                     description: "Confirm removal of this media item."
@@ -23,8 +22,7 @@ struct AssetRemoveView: Component {
                 selectedItems: [item.label],
                 action: MediaAssetRoutes.remove(RouterPath(item.id))
                     .description,
-                cancel: MediaAssetRoutes.list.description,
-                submitLabel: "Remove item",
+                submit: .init(label: "Remove item", style: .destructive),
                 nonceToken: nonceToken,
                 hiddenFields: [.init(name: "ids", value: item.id)]
             )

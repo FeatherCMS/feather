@@ -86,28 +86,23 @@ struct AdminListWebMenuDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
             title: "Remove selected menus",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: WebMenuRoutes.listBreadcrumb,
                 pageHeader: .init(
                     title: "Remove selected menus",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: items.map(\.label),
                 action: WebMenuRoutes.remove.description,
-                cancel: NewAdminLocation.url(
-                    path: WebMenuRoutes.list.description,
-                    page: page,
-                    search: search
-                ),
                 nonceToken: nonceToken,
                 hiddenFields: items.map {
                     .init(name: "ids", value: $0.id)
                 }
-            )
+            ),
+            size: .small
         )
     }
 

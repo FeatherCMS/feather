@@ -18,7 +18,6 @@ struct AuthSessionRemoveConfirmation: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
             NewAdminRemoveConfirmation(
-                breadcrumb: state.breadcrumb,
                 pageHeader: .init(
                     title: "Remove session",
                     description: "The session will be signed out immediately."
@@ -29,7 +28,6 @@ struct AuthSessionRemoveConfirmation: Component {
                 ],
                 action:
                     "/admin/user/identities/\(state.identityId)/sessions/\(state.item.id)/remove/",
-                cancel: "/admin/user/identities/\(state.identityId)/",
                 nonceToken: state.nonceToken
             )
         )

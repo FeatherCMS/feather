@@ -21,12 +21,11 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
             path: SystemPermissionRoutes.list.description,
             returnTo: returnTo
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
             title: "Manage system permissions",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: SystemPermissionRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove selected permissions",
                     description:
@@ -34,13 +33,13 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
                 ),
                 selectedItems: items.map(\.label),
                 action: SystemPermissionRoutes.remove.description,
-                cancel: cancel,
                 hiddenFields: items.map { .init(name: "ids", value: $0.id) }
                     + [
                         .init(name: "_nonce", value: nonceToken),
                         .init(name: "returnTo", value: cancel),
                     ]
-            )
+            ),
+            size: .small
         )
     }
 

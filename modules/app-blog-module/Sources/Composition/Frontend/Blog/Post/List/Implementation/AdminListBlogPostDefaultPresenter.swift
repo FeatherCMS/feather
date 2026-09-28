@@ -68,24 +68,23 @@ struct AdminListBlogPostDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
             title: "Remove blog posts",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: BlogAdminRoutes.postsBreadcrumb,
                 pageHeader: .init(
                     title: "Remove blog posts",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: items.map(\.label),
                 action: BlogAdminRoutes.postRemove().description,
-                cancel: BlogAdminRoutes.posts.description,
                 nonceToken: nonceToken,
                 hiddenFields: items.map {
                     .init(name: "ids", value: $0.id)
                 }
-            )
+            ),
+            size: .small
         )
     }
 

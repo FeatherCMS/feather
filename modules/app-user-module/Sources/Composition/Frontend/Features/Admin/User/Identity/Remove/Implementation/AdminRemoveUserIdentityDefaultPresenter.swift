@@ -21,7 +21,7 @@ struct AdminRemoveUserIdentityDefaultPresenter: AdminRemoveUserIdentityPresenter
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
             title: "Remove user identity",
@@ -29,7 +29,8 @@ struct AdminRemoveUserIdentityDefaultPresenter: AdminRemoveUserIdentityPresenter
                 id: items[0].id,
                 name: items[0].label,
                 nonceToken: nonceToken
-            )
+            ),
+            size: .small
         )
     }
 
@@ -44,24 +45,23 @@ struct AdminRemoveUserIdentityDefaultPresenter: AdminRemoveUserIdentityPresenter
             path: UserIdentityRoutes.list.description,
             returnTo: returnTo
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
             title: "Manage user identities",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: UserIdentityRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove selected user identities",
                     description: "This action cannot be undone."
                 ),
                 selectedItems: items.map(\.label),
                 action: UserIdentityRoutes.remove.description,
-                cancel: cancel,
                 hiddenFields: items.map { .init(name: "ids", value: $0.id) } + [
                     .init(name: "_nonce", value: nonceToken),
                     .init(name: "returnTo", value: cancel),
                 ]
-            )
+            ),
+            size: .small
         )
     }
 

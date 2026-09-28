@@ -24,12 +24,11 @@ struct AdminRemoveContactFormEmailDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
             title: "Remove contact form email",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: ContactAdminRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove contact form email",
                     description: "This action cannot be undone."
@@ -37,12 +36,11 @@ struct AdminRemoveContactFormEmailDefaultPresenter:
                 selectedItems: [item.label],
                 action: ContactAdminRoutes.formEmailRemove(RouterPath(formId))
                     .description,
-                cancel: ContactAdminRoutes.formEmails(RouterPath(formId))
-                    .description,
-                submitLabel: "Remove email",
+                submit: .init(label: "Remove email", style: .destructive),
                 nonceToken: nonceToken,
                 hiddenFields: [.init(name: "ids", value: item.id)]
-            )
+            ),
+            size: .small
         )
     }
 
@@ -53,12 +51,11 @@ struct AdminRemoveContactFormEmailDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
             title: "Remove contact form emails",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: ContactAdminRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove contact form emails",
                     description: "This action cannot be undone."
@@ -66,13 +63,12 @@ struct AdminRemoveContactFormEmailDefaultPresenter:
                 selectedItems: items.map(\.label),
                 action: ContactAdminRoutes.formEmailRemove(RouterPath(formId))
                     .description,
-                cancel: ContactAdminRoutes.formEmails(RouterPath(formId))
-                    .description,
                 nonceToken: nonceToken,
                 hiddenFields: items.map {
                     .init(name: "ids", value: $0.id)
                 }
-            )
+            ),
+            size: .small
         )
     }
 }

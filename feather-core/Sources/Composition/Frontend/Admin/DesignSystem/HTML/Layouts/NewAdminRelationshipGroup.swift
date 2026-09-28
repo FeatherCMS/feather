@@ -5,11 +5,14 @@ import WebBuilders
 public import WebComponents
 
 public struct NewAdminRelationshipGroup: Component {
+    public let pageHeader: NewAdminPageHeader.State
     public let content: [any FlowContent]
 
     public init(
+        pageHeader: NewAdminPageHeader.State,
         @Builder<FlowContent> content: () -> [any FlowContent]
     ) {
+        self.pageHeader = pageHeader
         self.content = content()
     }
 
@@ -33,8 +36,9 @@ public struct NewAdminRelationshipGroup: Component {
         Self.groupSelectors()
     }
 
-    public func html(context _: inout BuilderContext) -> Div {
+    public func html(context: inout BuilderContext) -> Div {
         Div {
+            context.build(NewAdminPageHeader(state: pageHeader))
             for item in content {
                 item
             }

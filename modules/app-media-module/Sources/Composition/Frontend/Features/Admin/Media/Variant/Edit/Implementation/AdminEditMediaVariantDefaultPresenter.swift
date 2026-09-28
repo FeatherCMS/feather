@@ -95,12 +95,11 @@ struct AdminEditMediaVariantDefaultPresenter: AdminEditMediaVariantPresenter {
                 .description,
             returnTo: returnTo
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
             title: "Remove media variant processors",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: MediaVariantRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove selected processors",
                     description:
@@ -110,12 +109,12 @@ struct AdminEditMediaVariantDefaultPresenter: AdminEditMediaVariantPresenter {
                 action:
                     MediaVariantRoutes.processorRemove(RouterPath(variantId))
                     .description,
-                cancel: cancel,
                 hiddenFields: items.map { .init(name: "ids", value: $0.id) } + [
                     .init(name: "_nonce", value: nonce),
                     .init(name: "returnTo", value: cancel),
                 ]
-            )
+            ),
+            size: .small
         )
     }
 

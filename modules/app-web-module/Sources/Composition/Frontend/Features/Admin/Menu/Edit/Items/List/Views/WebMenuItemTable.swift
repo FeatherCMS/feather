@@ -33,18 +33,15 @@ struct WebMenuItemTable: Component {
                 AdminWebMenuTabs(menuID: state.menuId, active: .items)
             )
             context.build(
-                NewAdminRelationshipGroup {
-                    context.build(
-                        NewAdminPageHeader(
-                            state: .init(
-                                title: "Menu items",
-                                description:
-                                    "Manage the links and order in this navigation menu.",
-                                level: 2,
-                                showSeparator: true
-                            )
-                        )
+                NewAdminRelationshipGroup(
+                    pageHeader: .init(
+                        title: "Menu items",
+                        description:
+                            "Manage the links and order in this navigation menu.",
+                        level: 2,
+                        showSeparator: true
                     )
+                ) {
                     context.build(
                         WebMenuItemTableContent(
                             state: .init(

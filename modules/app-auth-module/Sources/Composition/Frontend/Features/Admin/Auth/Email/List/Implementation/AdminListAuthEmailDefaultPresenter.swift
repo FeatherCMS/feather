@@ -61,12 +61,11 @@ struct AdminListAuthEmailDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
             title: "Remove selected emails",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: AuthEmailRoutes.listBreadcrumb,
                 pageHeader: .init(
                     title: "Remove selected emails",
                     description:
@@ -74,11 +73,6 @@ struct AdminListAuthEmailDefaultPresenter:
                 ),
                 selectedItems: items.map(\.label),
                 action: "/admin/auth/emails/remove/",
-                cancel: listLocation(
-                    page: page,
-                    search: search,
-                    userID: userID
-                ),
                 nonceToken: nonceToken,
                 hiddenFields: [
                     .init(name: "page", value: "\(page)"),
@@ -88,7 +82,8 @@ struct AdminListAuthEmailDefaultPresenter:
                     + items.map {
                         .init(name: "ids", value: $0.id)
                     }
-            )
+            ),
+            size: .small
         )
     }
 

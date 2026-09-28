@@ -20,7 +20,7 @@ struct AdminRemoveWebPageDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
             title: "Remove page",
@@ -31,7 +31,8 @@ struct AdminRemoveWebPageDefaultPresenter:
                     breadcrumb: WebPageRoutes.breadcrumb,
                     nonceToken: nonceToken
                 )
-            )
+            ),
+            size: .small
         )
     }
 

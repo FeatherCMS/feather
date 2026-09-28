@@ -119,12 +119,11 @@ struct AdminRemoveSystemVariableDefaultPresenter:
             path: SystemVariableRoutes.list.description,
             returnTo: returnTo
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
             title: "Manage system variables",
             content: NewAdminRemoveConfirmation(
-                breadcrumb: SystemVariableRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Remove selected variables",
                     description:
@@ -132,14 +131,14 @@ struct AdminRemoveSystemVariableDefaultPresenter:
                 ),
                 selectedItems: items.map(\.label),
                 action: SystemVariableRoutes.remove.description,
-                cancel: cancel,
                 hiddenFields: items.map {
                     .init(name: "ids", value: $0.id)
                 } + [
                     .init(name: "_nonce", value: nonceToken),
                     .init(name: "returnTo", value: cancel),
                 ]
-            )
+            ),
+            size: .small
         )
     }
 

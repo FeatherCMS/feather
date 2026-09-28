@@ -1,4 +1,3 @@
-import CSS
 import FeatherAdmin
 import FeatherValidation
 import HTML
@@ -20,14 +19,9 @@ struct WebMenuItemBulkConfirmation: Component {
 
     let state: State
 
-    func selectors() -> [any CSS.Selector] {
-        NewAdminRelationshipGroup.groupSelectors()
-    }
-
     func html(context: inout BuilderContext) -> Section {
         context.build(
             NewAdminRemoveConfirmation(
-                breadcrumb: WebMenuRoutes.breadcrumb,
                 pageHeader: .init(
                     title: "Edit menu",
                     description:
@@ -39,33 +33,16 @@ struct WebMenuItemBulkConfirmation: Component {
                         RouterPath(state.menuId)
                     )
                     .description,
-                cancel: NewAdminLocation.url(
-                    path:
-                        WebMenuItemRoutes.list(
-                            RouterPath(state.menuId)
-                        )
-                        .description,
-                    page: state.page,
-                    search: state.search
-                ),
                 nonceToken: state.nonceToken,
                 hiddenFields: state.items.map {
                     .init(name: "ids", value: $0.id)
                 },
-                tabBar: NewAdminTabBar(
-                    links: AdminWebMenuTabs(
-                        menuID: state.menuId,
-                        active: .items
-                    )
-                    .links
-                ),
-                sectionHeader: .init(
+                relationshipGroupHeader: .init(
                     title: "Remove selected items",
                     description: "This action cannot be undone.",
                     level: 2,
                     showSeparator: true
-                ),
-                contentClass: "new-admin-relationship-group"
+                )
             )
         )
     }

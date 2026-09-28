@@ -34,18 +34,14 @@ struct WebMenuItemEdit: Component {
                 AdminWebMenuTabs(menuID: state.menuId, active: .items)
             )
             context.build(
-                NewAdminRelationshipGroup {
-                    context.build(
-                        NewAdminPageHeader(
-                            state: .init(
-                                title: "Edit item",
-                                description:
-                                    "Update the navigation menu link.",
-                                level: 2,
-                                showSeparator: true
-                            )
-                        )
+                NewAdminRelationshipGroup(
+                    pageHeader: .init(
+                        title: "Edit item",
+                        description: "Update the navigation menu link.",
+                        level: 2,
+                        showSeparator: true
                     )
+                ) {
                     context.build(
                         WebMenuItemForm(
                             state: state.form,
