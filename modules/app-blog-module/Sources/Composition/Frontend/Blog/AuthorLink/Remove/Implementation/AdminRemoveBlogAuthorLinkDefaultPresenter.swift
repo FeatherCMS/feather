@@ -28,7 +28,7 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
         return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove blog author link",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: BlogAuthorLinkConfirmation(
                 state: .init(
                     menuId: menuId,

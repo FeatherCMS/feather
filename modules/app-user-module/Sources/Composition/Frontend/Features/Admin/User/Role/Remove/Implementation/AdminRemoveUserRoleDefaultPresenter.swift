@@ -22,7 +22,7 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
         return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove user role",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: UserRoleConfirmation(
                 id: items[0].id,
                 name: items[0].label,
@@ -46,7 +46,7 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
         return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Manage user roles",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
                 pageHeader: .init(
                     title: "Remove selected user roles",

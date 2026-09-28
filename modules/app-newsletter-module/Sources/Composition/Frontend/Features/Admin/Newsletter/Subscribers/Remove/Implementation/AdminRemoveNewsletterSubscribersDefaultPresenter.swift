@@ -22,7 +22,7 @@ struct AdminRemoveNewsletterSubscribersDefaultPresenter:
         return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove subscribers",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
                 pageHeader: .init(
                     title: "Remove selected subscribers",

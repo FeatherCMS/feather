@@ -26,7 +26,7 @@ struct AdminRemoveContactFieldDefaultPresenter:
         return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove contact form field",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
                 pageHeader: .init(
                     title: "Remove contact form field",
@@ -52,7 +52,7 @@ struct AdminRemoveContactFieldDefaultPresenter:
         return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove contact fields",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
                 pageHeader: .init(
                     title: "Remove contact fields",

@@ -20,7 +20,7 @@ struct AdminRemoveAuthSessionDefaultPresenter:
         return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove session",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: AuthSessionRemoveConfirmation(
                 state: .init(
                     item: item,

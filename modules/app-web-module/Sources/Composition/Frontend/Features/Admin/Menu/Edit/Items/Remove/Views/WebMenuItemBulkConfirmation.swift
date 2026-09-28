@@ -23,9 +23,8 @@ struct WebMenuItemBulkConfirmation: Component {
         context.build(
             NewAdminRemoveConfirmation(
                 pageHeader: .init(
-                    title: "Edit menu",
-                    description:
-                        "Update the navigation menu configuration."
+                    title: "Remove selected menu items",
+                    description: "This action cannot be undone."
                 ),
                 selectedItems: state.items.map(\.label),
                 action:
@@ -36,13 +35,7 @@ struct WebMenuItemBulkConfirmation: Component {
                 nonceToken: state.nonceToken,
                 hiddenFields: state.items.map {
                     .init(name: "ids", value: $0.id)
-                },
-                relationshipGroupHeader: .init(
-                    title: "Remove selected items",
-                    description: "This action cannot be undone.",
-                    level: 2,
-                    showSeparator: true
-                )
+                }
             )
         )
     }

@@ -24,7 +24,7 @@ struct AdminRemoveUserIdentityDefaultPresenter: AdminRemoveUserIdentityPresenter
         return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove user identity",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: UserIdentityConfirmation(
                 id: items[0].id,
                 name: items[0].label,
@@ -48,7 +48,7 @@ struct AdminRemoveUserIdentityDefaultPresenter: AdminRemoveUserIdentityPresenter
         return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Manage user identities",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
                 pageHeader: .init(
                     title: "Remove selected user identities",

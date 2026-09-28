@@ -71,7 +71,7 @@ struct AdminListBlogPostDefaultPresenter:
         return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove blog posts",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
                 pageHeader: .init(
                     title: "Remove blog posts",

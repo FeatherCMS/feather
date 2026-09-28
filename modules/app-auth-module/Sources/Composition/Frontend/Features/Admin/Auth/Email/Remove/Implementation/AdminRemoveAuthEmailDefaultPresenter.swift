@@ -33,7 +33,7 @@ struct AdminRemoveAuthEmailDefaultPresenter:
         return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Manage user emails",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: AuthEmailConfirmation(
                 state: .init(
                     item: item,

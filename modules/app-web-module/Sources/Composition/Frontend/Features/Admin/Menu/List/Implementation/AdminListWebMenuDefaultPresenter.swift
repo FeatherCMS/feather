@@ -89,7 +89,7 @@ struct AdminListWebMenuDefaultPresenter:
         return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove selected menus",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
                 pageHeader: .init(
                     title: "Remove selected menus",

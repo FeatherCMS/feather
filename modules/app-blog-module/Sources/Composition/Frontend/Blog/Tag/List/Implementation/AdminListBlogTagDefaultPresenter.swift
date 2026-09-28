@@ -67,7 +67,7 @@ struct AdminListBlogTagDefaultPresenter:
         return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove blog tags",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
                 pageHeader: .init(
                     title: "Remove blog tags",

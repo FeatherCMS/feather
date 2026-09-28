@@ -18,7 +18,7 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
             return try await renderingEngine.renderNewAdminDialog(
                 request: request,
                 context: context,
-                title: "Remove redirect rule",
+                title: NewAdminRemoveConfirmation.dialogTitle,
                 content: RedirectRuleConfirmation(
                     id: item.id,
                     source: item.label,
@@ -41,7 +41,7 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
         return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove redirect rule",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
                 pageHeader: .init(
                     title: "Remove selected redirect rules",

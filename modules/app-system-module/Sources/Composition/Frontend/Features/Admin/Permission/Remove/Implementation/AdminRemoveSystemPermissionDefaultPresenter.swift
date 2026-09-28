@@ -24,7 +24,7 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
         return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Manage system permissions",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
                 pageHeader: .init(
                     title: "Remove selected permissions",

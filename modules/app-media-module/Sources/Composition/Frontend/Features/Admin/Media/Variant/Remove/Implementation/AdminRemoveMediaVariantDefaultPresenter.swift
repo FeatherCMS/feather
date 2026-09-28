@@ -20,7 +20,7 @@ struct AdminRemoveMediaVariantDefaultPresenter: AdminRemoveMediaVariantPresenter
         return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove media variants",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
                 pageHeader: .init(
                     title: "Remove selected variants",

@@ -6,6 +6,7 @@ public import WebComponents
 
 public struct NewAdminRemoveConfirmation: Component {
     public typealias ButtonState = NewAdminButton.State
+    public static let dialogTitle = "Are you sure?"
 
     public let pageHeader: NewAdminPageHeader.State
     public let selectedItems: [String]

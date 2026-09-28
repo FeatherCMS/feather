@@ -17,7 +17,7 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
         return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove user invitation",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: AccountInvitationConfirmation(
                 state: .init(
                     id: item.id,

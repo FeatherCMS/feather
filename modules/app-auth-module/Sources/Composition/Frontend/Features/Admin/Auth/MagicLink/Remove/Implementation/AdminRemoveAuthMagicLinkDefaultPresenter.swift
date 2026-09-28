@@ -33,7 +33,7 @@ struct AdminRemoveAuthMagicLinkDefaultPresenter:
         return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Manage user magic links",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: AuthMagicLinkConfirmation(
                 state: .init(
                     item: item,

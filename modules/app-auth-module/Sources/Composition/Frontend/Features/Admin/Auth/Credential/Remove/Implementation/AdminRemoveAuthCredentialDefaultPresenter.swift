@@ -35,7 +35,7 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
         return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove credential",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: AuthCredentialConfirmation(
                 state: .init(
                     item: item,

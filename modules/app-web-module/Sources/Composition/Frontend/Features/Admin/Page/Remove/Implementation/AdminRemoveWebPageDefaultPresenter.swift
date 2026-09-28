@@ -23,7 +23,7 @@ struct AdminRemoveWebPageDefaultPresenter:
         return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove page",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: WebPageConfirmation(
                 state: .init(
                     id: item.id,

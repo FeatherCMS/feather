@@ -98,7 +98,7 @@ struct AdminEditMediaVariantDefaultPresenter: AdminEditMediaVariantPresenter {
         return try await renderingEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove media variant processors",
+            title: NewAdminRemoveConfirmation.dialogTitle,
             content: NewAdminRemoveConfirmation(
                 pageHeader: .init(
                     title: "Remove selected processors",
