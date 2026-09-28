@@ -49,7 +49,7 @@ The media picker and uploader should remain generic. Domain features such as sho
 
 ### Current feature-specific implementation
 
-- `ava/modules/app-avalliance-module/Sources/Composition/Frontend/Avalliance/Showcase/Edit/Galleries/List/Views/ShowcaseGalleryAssetActions.swift`
+- `ava/modules/app-example-module/Sources/Composition/Frontend/Example/Showcase/Edit/Galleries/List/Views/ShowcaseGalleryAssetActions.swift`
   - Composes the generic picker and uploader controls.
   - Uses the selection bridge to create hidden `assetIds` fields.
   - Submits the gallery association form.
@@ -156,7 +156,7 @@ Expected behavior:
 
 Its single picker and uploader dialogs can use the shared media routes and result contract, but the field component remains responsible for applying the one returned asset to its own input.
 
-This continues to support existing users in Web, Account, Avalliance, News, and rich content forms without changing their semantics.
+This continues to support existing users in Web, Account, News, and rich content forms without changing their semantics.
 
 ## Consumer B: relationship management
 
@@ -182,7 +182,7 @@ The relationship screen should use:
 The media dialogs return asset references only. The relationship feature then submits those IDs to its own endpoint, for example:
 
 ```text
-POST /admin/avalliance/showcases/{showcaseID}/gallery/add/
+POST /admin/example/showcases/{showcaseID}/gallery/add/
 assetIds=<id>&assetIds=<id>
 ```
 
@@ -217,7 +217,7 @@ The same pattern can then be reused for showcase galleries, member galleries, se
 5. Keep `NewAdminFormFieldMediaPicker` single-item only and migrate its internal buttons to the shared route contract where practical.
 6. Add the reusable selection bridge for one hidden value versus repeated relationship IDs.
 7. Replace the custom gallery picker JavaScript in `ShowcaseGalleryAssetActions` with the generic controls and bridge.
-8. Keep showcase gallery association, connected-list rendering, ordering, remove, and bulk-remove logic in the Avalliance feature.
+8. Keep showcase gallery association, connected-list rendering, ordering, remove, and bulk-remove logic in the Example feature.
 9. Audit every current media picker caller and classify it explicitly as either:
    - form value assignment; or
    - relationship management.
@@ -247,7 +247,7 @@ The implementation should be verified with:
 - connected-list refresh after association;
 - single and bulk removal dialogs;
 - correct target folder for relationship uploads;
-- existing Web, Account, Avalliance, News, and rich-content form users.
+- existing Web, Account, News, and rich-content form users.
 
 The implementation now follows this plan: form fields remain single-asset consumers, while relationship screens use the reusable multi-asset popup controls and selection bridge.
 
