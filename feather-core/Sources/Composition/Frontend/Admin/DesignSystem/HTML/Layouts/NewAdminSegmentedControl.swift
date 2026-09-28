@@ -61,7 +61,9 @@ public struct NewAdminSegmentedControl: Component {
                 TextDecoration(.none)
                 WhiteSpace(.nowrap)
             }
-            Custom(".new-admin-segmented-control__track a:hover:not(.is-current)") {
+            Custom(
+                ".new-admin-segmented-control__track a:hover:not(.is-current)"
+            ) {
                 Color(.variable(TokenKey.Colors.Link.hover))
                 TextDecoration(.underline)
             }

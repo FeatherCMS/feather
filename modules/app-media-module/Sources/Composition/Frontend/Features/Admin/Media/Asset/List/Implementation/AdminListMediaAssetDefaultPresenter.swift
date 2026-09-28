@@ -20,7 +20,8 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         search: String?,
         permissions: NewAdminListActions
     ) async throws -> HTMLResponse {
-        let isDialog = request.queryString("presentation") == "dialog"
+        let isDialog =
+            request.queryString("presentation") == "dialog"
             && request.headers[.accept]?.contains("type=admin-dialog") == true
         if model.picker.isEnabled && isDialog {
             let navigation = MediaAssetPickerDialogNavigation(
@@ -97,7 +98,8 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
         message: String,
         picker: Bool
     ) async throws -> HTMLResponse {
-        let isDialog = request.queryString("presentation") == "dialog"
+        let isDialog =
+            request.queryString("presentation") == "dialog"
             && request.headers[.accept]?.contains("type=admin-dialog") == true
         if picker {
             let errorContent = MediaAssetErrorView(
@@ -156,7 +158,8 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
             path: MediaAssetRoutes.list.description,
             returnTo: returnTo
         )
-        let isDialog = request.queryString("presentation") == "dialog"
+        let isDialog =
+            request.queryString("presentation") == "dialog"
             && request.headers[.accept]?.contains("type=admin-dialog") == true
         let confirmation = NewAdminRemoveConfirmation(
             breadcrumb: MediaAssetRoutes.breadcrumb,

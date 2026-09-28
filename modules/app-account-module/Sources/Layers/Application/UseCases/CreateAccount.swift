@@ -3,8 +3,8 @@ import AuthDomain
 public import FeatherApplication
 public import FeatherContracts
 public import FeatherDomain
-import UserDomain
 import UserApplication
+import UserDomain
 
 public struct CreateAccount: UseCase {
     struct Action: PermissionAction {

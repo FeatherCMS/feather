@@ -86,9 +86,9 @@ public struct DefaultThemeRenderer: PublicThemeRenderer {
     }
 }
 
-private extension String {
+extension String {
 
-    var trimmingTrailingSlash: String {
+    fileprivate var trimmingTrailingSlash: String {
         var result = self
         while result.hasSuffix("/") {
             result.removeLast()

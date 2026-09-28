@@ -39,7 +39,7 @@ struct AdminAddMediaFolderDefaultInteractor: AdminAddMediaFolderInteractor {
                 message =
                     "A folder with this name already exists in this location."
             case .failure(let failure)
-                where failure.backendError?.trace?.containsDuplicatePath == true:
+            where failure.backendError?.trace?.containsDuplicatePath == true:
                 message =
                     "A folder with this name already exists in this location."
             default:
@@ -62,10 +62,10 @@ struct AdminAddMediaFolderDefaultInteractor: AdminAddMediaFolderInteractor {
     }
 }
 
-private extension OpenAPIRepositoryError.BackendError.Trace {
-    var containsDuplicatePath: Bool {
+extension OpenAPIRepositoryError.BackendError.Trace {
+    fileprivate var containsDuplicatePath: Bool {
         if id == "MediaApplication.CreateMediaFolder.Error",
-           message == "duplicatePath"
+            message == "duplicatePath"
         {
             return true
         }

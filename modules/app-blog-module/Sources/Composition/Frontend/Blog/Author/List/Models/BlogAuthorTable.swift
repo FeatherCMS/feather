@@ -149,15 +149,20 @@ private struct BlogAuthorTableContent: Component {
                                                             context.build(
                                                                 NewAdminImageCell(
                                                                     imageURL:
-                                                                        item.profileImage?
+                                                                        item
+                                                                        .profileImage?
                                                                         .originalURL,
                                                                     alt:
-                                                                        item.profileImage?
+                                                                        item
+                                                                        .profileImage?
                                                                         .altText
-                                                                        ?? item.profileImage?
+                                                                        ?? item
+                                                                        .profileImage?
                                                                         .title
-                                                                        ?? item.name,
-                                                                    size: .square
+                                                                        ?? item
+                                                                        .name,
+                                                                    size:
+                                                                        .square
                                                                 )
                                                             )
                                                         }

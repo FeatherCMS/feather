@@ -5,10 +5,10 @@ public import FeatherContracts
 public import FeatherDatabase
 public import FeatherDomain
 public import FeatherInfrastructure
+import SystemApplication
 import UserApplication
 import UserDomain
 import UserInfrastructure
-import SystemApplication
 
 public struct TableSeedMigration: DatabaseMigration {
     public let connection: any DatabaseConnection
@@ -32,14 +32,18 @@ public struct TableSeedMigration: DatabaseMigration {
             connection: connection,
             idGenerator: idGenerator
         )
-        let definitions = try await events.trigger(
-            event: AccountSeedProvider(),
-            using: EventContext()
-        ).flatMap { $0 }
+        let definitions =
+            try await events.trigger(
+                event: AccountSeedProvider(),
+                using: EventContext()
+            )
+            .flatMap { $0 }
 
         let identityRepository = IdentityDatabaseRepository(context: context)
         let authEmailRepository = AuthEmailDatabaseRepository(context: context)
-        let credentialRepository = CredentialDatabaseRepository(context: context)
+        let credentialRepository = CredentialDatabaseRepository(
+            context: context
+        )
         let roleRepository = RoleDatabaseRepository(context: context)
         let passwordHasher = BCryptPasswordHasher()
 
@@ -70,9 +74,11 @@ public struct TableSeedMigration: DatabaseMigration {
             if try await credentialRepository.findBy(
                 email: definition.email
             ) == nil {
-                guard let authEmail = try await authEmailRepository.findBy(
-                    email: definition.email
-                ) else {
+                guard
+                    let authEmail = try await authEmailRepository.findBy(
+                        email: definition.email
+                    )
+                else {
                     throw RepositoryError.notFound
                 }
                 let passwordHash = try await passwordHasher.hash(

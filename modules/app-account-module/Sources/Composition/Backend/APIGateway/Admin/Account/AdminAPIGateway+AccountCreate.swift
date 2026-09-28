@@ -14,13 +14,14 @@ extension AdminAPIGateway {
         }
 
         let subject = try await CurrentSubject.require()
-        let result = try await useCases.makeCreateAccount().execute(
-            subject: subject,
-            input: .init(
-                email: body.email,
-                password: body.password
+        let result = try await useCases.makeCreateAccount()
+            .execute(
+                subject: subject,
+                input: .init(
+                    email: body.email,
+                    password: body.password
+                )
             )
-        )
 
         return .created(
             .init(

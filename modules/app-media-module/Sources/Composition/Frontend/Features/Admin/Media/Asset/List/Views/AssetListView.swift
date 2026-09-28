@@ -501,7 +501,7 @@ extension AssetListView {
 
     fileprivate func toolbar(context: inout BuilderContext) -> some FlowContent
     {
-        return Div {
+        Div {
             Div {
                 if state.permissions.allows(MediaPermissions.Assets.create)
                     && !state.picker.isEnabled
@@ -869,7 +869,7 @@ extension AssetListView {
         returnTo: String,
         context: inout BuilderContext
     ) -> some FlowContent {
-        return Div {
+        Div {
             A {
                 Div {
                     FeatherIcons.folder()
@@ -1088,7 +1088,7 @@ extension AssetListView {
                 context: &context
             )
             Td("..")
-            .data("label", "Name")
+                .data("label", "Name")
             Td("Folder")
                 .data("label", "Type")
             Td("-")

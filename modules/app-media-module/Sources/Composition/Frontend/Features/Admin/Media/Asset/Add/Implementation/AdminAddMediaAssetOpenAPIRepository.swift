@@ -71,16 +71,20 @@ struct AdminAddMediaAssetOpenAPIRepository {
         payload: AssetAddUpload,
         variants: [String]? = nil
     ) async throws -> NewAdminMediaAsset {
-        let asset: Components.Schemas.MediaAssetDetailSchema = try await api
+        let asset: Components.Schemas.MediaAssetDetailSchema =
+            try await api
             .withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client
+                let response =
+                    try await client
                     .mediaAssetCreate(
                         headers: .init(
                             xMediaAssetParentID: payload.parentId
                                 .whitespaceTrimmed
                                 .emptyToNil,
-                            xMediaAssetFileName: payload.fileName.whitespaceTrimmed,
-                            xMediaAssetExtension: payload.extension.whitespaceTrimmed,
+                            xMediaAssetFileName: payload.fileName
+                                .whitespaceTrimmed,
+                            xMediaAssetExtension: payload.extension
+                                .whitespaceTrimmed,
                             xMediaAssetTitle: payload.title.emptyToNil,
                             xMediaAssetAltText: payload.altText.emptyToNil
                         ),
@@ -109,7 +113,8 @@ struct AdminAddMediaAssetOpenAPIRepository {
                 ids: [asset.id],
                 variants: variants
             )
-            resolvedVariants = resolved
+            resolvedVariants =
+                resolved
                 .first(where: { $0.id == asset.id })?
                 .variants
                 .map {

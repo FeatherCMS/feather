@@ -153,14 +153,15 @@ public struct ArticleDatabaseQueries: ArticleQueries {
     ) async throws -> ArticleList {
         let page = pageSizeOffset(query.page)
         let table = ArticleTable(connection: context.connection)
-        let items = try await table.listPublic(
-            search: query.search,
-            categoryID: categoryID,
-            orderBy: orderByArticle(query),
-            limit: page.size,
-            offset: page.offset
-        )
-        .map(\.asQueryListItem)
+        let items =
+            try await table.listPublic(
+                search: query.search,
+                categoryID: categoryID,
+                orderBy: orderByArticle(query),
+                limit: page.size,
+                offset: page.offset
+            )
+            .map(\.asQueryListItem)
 
         return .init(items: items)
     }

@@ -18,11 +18,13 @@ struct AdminEditSettingsDefaultController:
         let targetUserID = context.parameters.get("userId", as: String.self)
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
-        let canRead = targetUserID == nil
+        let canRead =
+            targetUserID == nil
             || context.isCurrentUserAllowed(
                 to: AccountPermissions.Settings.read
             )
-        let canEdit = targetUserID == nil
+        let canEdit =
+            targetUserID == nil
             || context.isCurrentUserAllowed(
                 to: AccountPermissions.Settings.update
             )
@@ -76,7 +78,8 @@ struct AdminEditSettingsDefaultController:
         let targetUserID = context.parameters.get("userId", as: String.self)
         let (interactor, presenter) = buildRuntime((request, context))
         let permissions = context.currentUserPermissions
-        let canEdit = targetUserID == nil
+        let canEdit =
+            targetUserID == nil
             || context.isCurrentUserAllowed(
                 to: AccountPermissions.Settings.update
             )

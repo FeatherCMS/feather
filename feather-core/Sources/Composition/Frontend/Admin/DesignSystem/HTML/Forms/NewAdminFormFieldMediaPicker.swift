@@ -1,6 +1,6 @@
 public import CSS
-import Foundation
 import FeatherContracts
+import Foundation
 public import HTML
 import SGML
 import WebBuilders
@@ -245,7 +245,9 @@ extension NewAdminFormFieldMediaPicker {
         )
     }
 
-    fileprivate func pickerActions(context: inout BuilderContext) -> some FlowContent {
+    fileprivate func pickerActions(context: inout BuilderContext)
+        -> some FlowContent
+    {
         Div {
             context.build(
                 MediaPickerDialogButton(
@@ -284,7 +286,9 @@ extension NewAdminFormFieldMediaPicker {
             }
         }
         .class("new-admin-media-picker__preview")
-        .class("new-admin-media-picker__preview--\(state.previewStyle.rawValue)")
+        .class(
+            "new-admin-media-picker__preview--\(state.previewStyle.rawValue)"
+        )
         .data("media-picker-preview", state.field.key)
     }
 
@@ -458,7 +462,8 @@ extension NewAdminFormFieldMediaPicker {
     }
 
     fileprivate func previewURL(for asset: NewAdminMediaAsset) -> String? {
-        let path = state.previewStyle == .wide
+        let path =
+            state.previewStyle == .wide
             ? asset.coverURL ?? asset.previewURL
             : asset.previewURL
         let fallbackPath = path ?? asset.url
@@ -480,7 +485,10 @@ extension NewAdminFormFieldMediaPicker {
         let addMarker = "/admin/media/assets/add/"
         let path: String
         if let range = state.browsePath.range(of: marker) {
-            path = state.browsePath.replacingCharacters(in: range, with: addMarker)
+            path = state.browsePath.replacingCharacters(
+                in: range,
+                with: addMarker
+            )
         }
         else {
             path = state.browsePath
@@ -490,14 +498,18 @@ extension NewAdminFormFieldMediaPicker {
 
     fileprivate func dialogPath(_ path: String) -> String {
         var query: [String] = []
-        if !state.allowedExtensions.isAnything && !path.contains("extensions=") {
+        if !state.allowedExtensions.isAnything && !path.contains("extensions=")
+        {
             query.append(
                 "extensions=\(state.allowedExtensions.queryValue.queryEncoded())"
             )
         }
         if let defaultFolderPath = state.defaultFolderPath,
-           !defaultFolderPath.isEmpty {
-            query.append("default_folder_path=\(defaultFolderPath.queryEncoded())")
+            !defaultFolderPath.isEmpty
+        {
+            query.append(
+                "default_folder_path=\(defaultFolderPath.queryEncoded())"
+            )
         }
         if !path.contains("preview_variant=") {
             query.append("preview_variant=\(previewVariant().queryEncoded())")

@@ -1,9 +1,9 @@
-import MediaDomain
-import MediaInfrastructure
 import FeatherContracts
 public import FeatherDatabase
 public import FeatherDomain
 public import FeatherInfrastructure
+import MediaDomain
+import MediaInfrastructure
 
 public struct MediaFolderMigration: DatabaseMigration {
     public let connection: any DatabaseConnection
@@ -39,7 +39,8 @@ public struct MediaFolderMigration: DatabaseMigration {
             var parentId: String?
             var currentPath = ""
             for component in path.split(separator: "/").map(String.init) {
-                currentPath = currentPath.isEmpty
+                currentPath =
+                    currentPath.isEmpty
                     ? component
                     : "\(currentPath)/\(component)"
                 if let existing = try await repository.find(

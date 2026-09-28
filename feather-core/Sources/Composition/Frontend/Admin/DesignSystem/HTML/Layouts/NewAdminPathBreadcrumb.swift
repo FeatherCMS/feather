@@ -65,7 +65,9 @@ public struct NewAdminPathBreadcrumb: Component {
                 MarginLeft(2.px)
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
             }
-            Custom(".new-admin-path-breadcrumb a, .new-admin-path-breadcrumb span") {
+            Custom(
+                ".new-admin-path-breadcrumb a, .new-admin-path-breadcrumb span"
+            ) {
                 Display(.inlineFlex)
                 AlignItems(.center)
                 WhiteSpace(.normal)

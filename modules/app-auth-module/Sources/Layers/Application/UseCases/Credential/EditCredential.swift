@@ -82,13 +82,16 @@ public struct EditCredential: UseCase {
             guard let userId, let email else {
                 throw UseCaseError(
                     reason: .validation,
-                    logMessage: "Auth email not found for credential: \(input.id)",
+                    logMessage:
+                        "Auth email not found for credential: \(input.id)",
                     userFriendlyMessage: "Auth email not found"
                 )
             }
-            guard let authEmail = try await scope.authEmail.findBy(
-                email: email
-            ), authEmail.identityId == userId else {
+            guard
+                let authEmail = try await scope.authEmail.findBy(
+                    email: email
+                ), authEmail.identityId == userId
+            else {
                 throw UseCaseError(
                     reason: .validation,
                     logMessage: "Auth email not found for identity: \(userId)",

@@ -55,7 +55,8 @@ struct AdminAddMediaFolderDefaultController: AdminAddMediaFolderController {
                 return Response(
                     status: .noContent,
                     headers: [
-                        .setCookie: AdminNotificationFlash
+                        .setCookie:
+                            AdminNotificationFlash
                             .cookie(for: notification)
                             .description
                     ]

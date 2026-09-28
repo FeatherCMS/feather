@@ -2,9 +2,9 @@ public import FeatherApplication
 public import FeatherContracts
 public import FeatherStorage
 public import Foundation
-import NIOCore
 import MediaContracts
 import MediaDomain
+import NIOCore
 
 public struct CreateMediaAsset: UseCase {
     public enum Error: Swift.Error, Sendable {

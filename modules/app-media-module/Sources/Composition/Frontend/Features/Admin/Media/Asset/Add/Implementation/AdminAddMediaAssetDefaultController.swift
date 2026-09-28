@@ -3,8 +3,8 @@ import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
-import Hummingbird
 import HTTPTypes
+import Hummingbird
 import MediaAdminAPI
 import OpenAPIRuntime
 import SGML
@@ -34,13 +34,15 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
             parentId = requestedParentId
         }
         else if let defaultFolderPath = picker.defaultFolderPath {
-            parentId = try await interactor.folderID(forPath: defaultFolderPath)
+            parentId =
+                try await interactor.folderID(forPath: defaultFolderPath)
                 ?? ""
         }
         else {
             parentId = ""
         }
-        let isDialog = request.queryString("presentation") == "dialog"
+        let isDialog =
+            request.queryString("presentation") == "dialog"
             && request.headers[.accept]?.contains("type=admin-dialog") == true
         var model = try await interactor.getAddMediaAsset()
         model = .init(
@@ -71,19 +73,22 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
-        let isDialog = request.queryString("presentation") == "dialog"
+        let isDialog =
+            request.queryString("presentation") == "dialog"
             && request.headers[.accept]?.contains("type=admin-dialog") == true
         let picker = pickerState(request: request)
         guard
             let fileName = header(
                 "X-Media-Asset-File-Name",
                 from: request
-            )?.whitespaceTrimmed,
+            )?
+            .whitespaceTrimmed,
             !fileName.isEmpty,
             let fileExtension = header(
                 "X-Media-Asset-Extension",
                 from: request
-            )?.whitespaceTrimmed,
+            )?
+            .whitespaceTrimmed,
             !fileExtension.isEmpty,
             let rawLength = request.headers[.contentLength],
             let contentLength = Int64(rawLength),
@@ -94,13 +99,15 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         let requestedParentId = header(
             "X-Media-Asset-Parent-ID",
             from: request
-        )?.whitespaceTrimmed.emptyToNil
+        )?
+        .whitespaceTrimmed.emptyToNil
         let parentId: String
         if let requestedParentId {
             parentId = requestedParentId
         }
         else if let defaultFolderPath = picker.defaultFolderPath {
-            parentId = try await interactor.folderID(forPath: defaultFolderPath)
+            parentId =
+                try await interactor.folderID(forPath: defaultFolderPath)
                 ?? ""
         }
         else {
@@ -108,8 +115,10 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
         }
 
         if picker.isEnabled,
-           !picker.allowedExtensions.isAnything,
-           !picker.allowedExtensions.values.contains(fileExtension.lowercased())
+            !picker.allowedExtensions.isAnything,
+            !picker.allowedExtensions.values.contains(
+                fileExtension.lowercased()
+            )
         {
             let view = request.queryString("view") ?? "grid"
             let errorModel = AdminAddMediaAssetModel(
@@ -132,10 +141,11 @@ struct AdminAddMediaAssetDefaultController: AdminAddMediaAssetController {
                 isPicker: true,
                 selectedAsset: nil
             )
-            return try await presenter.renderPage(
-                model: errorModel
-            )
-            .response(from: request, context: context)
+            return
+                try await presenter.renderPage(
+                    model: errorModel
+                )
+                .response(from: request, context: context)
         }
         let payload = AssetAddUpload(
             parentId: parentId,
@@ -284,7 +294,8 @@ extension AdminAddMediaAssetDefaultController {
             configuration: isPicker
                 ? .init(
                     field: request.queryString("field")?.emptyToNil ?? "",
-                    selectionMode: request.queryString("selection") == "multiple"
+                    selectionMode: request.queryString("selection")
+                        == "multiple"
                         ? .multiple
                         : .single,
                     allowedExtensions: .custom(
@@ -294,7 +305,8 @@ extension AdminAddMediaAssetDefaultController {
                     ),
                     defaultFolderPath: request.queryString(
                         "default_folder_path"
-                    )?.emptyToNil,
+                    )?
+                    .emptyToNil,
                     previewVariant: request.queryString("preview_variant")?
                         .emptyToNil
                 )

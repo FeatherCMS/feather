@@ -14,7 +14,8 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
     let repository: AdminAddMediaAssetOpenAPIRepository
 
     func folderID(forPath path: String) async throws -> String? {
-        let components = path
+        let components =
+            path
             .split(separator: "/")
             .map { $0.whitespaceTrimmed }
             .filter { !$0.isEmpty }
@@ -31,7 +32,10 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
             }
 
             do {
-                try await repository.createFolder(name: name, parentId: parentID)
+                try await repository.createFolder(
+                    name: name,
+                    parentId: parentID
+                )
             }
             catch let error as OpenAPIRepositoryError {
                 guard case .conflict = error else { throw error }
@@ -40,9 +44,11 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
             let resolvedFolders = try await repository.listFolders(
                 parentId: parentID
             )
-            guard let folder = resolvedFolders.first(where: {
-                $0.name.caseInsensitiveCompare(name) == .orderedSame
-            }) else {
+            guard
+                let folder = resolvedFolders.first(where: {
+                    $0.name.caseInsensitiveCompare(name) == .orderedSame
+                })
+            else {
                 return nil
             }
             parentID = folder.id
@@ -96,7 +102,7 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
                 message =
                     "A media asset with this name already exists in this location."
             case .failure(let failure)
-                where failure.backendError?.trace?.containsDuplicatePath == true:
+            where failure.backendError?.trace?.containsDuplicatePath == true:
                 message =
                     "A media asset with this name already exists in this location."
             default:
@@ -120,10 +126,10 @@ struct AdminAddMediaAssetDefaultInteractor: AdminAddMediaAssetInteractor {
     }
 }
 
-private extension OpenAPIRepositoryError.BackendError.Trace {
-    var containsDuplicatePath: Bool {
+extension OpenAPIRepositoryError.BackendError.Trace {
+    fileprivate var containsDuplicatePath: Bool {
         if id == "MediaApplication.CreateMediaAsset.Error",
-           message == "duplicatePath"
+            message == "duplicatePath"
         {
             return true
         }

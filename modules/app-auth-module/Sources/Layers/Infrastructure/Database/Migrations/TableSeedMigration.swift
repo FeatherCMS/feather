@@ -48,27 +48,33 @@ public struct TableSeedMigration: DatabaseMigration {
         let rolePermissionRepository = RolePermissionDatabaseRepository(
             context: context
         )
-        let roleDefinitions = try await events.trigger(
-            event: UserRoleSeedProvider(),
-            using: UserEventContext(idGenerator: idGenerator)
-        ).flatMap { $0 }
+        let roleDefinitions =
+            try await events.trigger(
+                event: UserRoleSeedProvider(),
+                using: UserEventContext(idGenerator: idGenerator)
+            )
+            .flatMap { $0 }
 
         for definition in roleDefinitions {
-            guard let role = try await roleRepository.findBy(key: definition.key)
+            guard
+                let role = try await roleRepository.findBy(key: definition.key)
             else {
                 continue
             }
 
-            let permissions = try await events.trigger(
-                event: AccessControlProvider(roleKey: definition.key),
-                using: AccessControlContext()
-            ).flatMap { $0 }
+            let permissions =
+                try await events.trigger(
+                    event: AccessControlProvider(roleKey: definition.key),
+                    using: AccessControlContext()
+                )
+                .flatMap { $0 }
 
             for permission in Set(permissions) {
-                guard try await rolePermissionRepository.findBy(
-                    roleId: role.id,
-                    permissionId: permission.rawValue
-                ) == nil
+                guard
+                    try await rolePermissionRepository.findBy(
+                        roleId: role.id,
+                        permissionId: permission.rawValue
+                    ) == nil
                 else {
                     continue
                 }
@@ -95,7 +101,8 @@ public struct TableSeedMigration: DatabaseMigration {
 
         let rootEmail = "mail.tib@gmail.com"
         let authEmail: AuthEmail
-        if let existing = try await authEmailRepository.findBy(email: rootEmail) {
+        if let existing = try await authEmailRepository.findBy(email: rootEmail)
+        {
             authEmail = existing
         }
         else {

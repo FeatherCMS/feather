@@ -16,9 +16,9 @@ public protocol TemplateLoader: Sendable {
     func loadMetadata() throws -> [String: TemplateMetadata]
 }
 
-public extension TemplateLoader {
+extension TemplateLoader {
 
-    func loadMetadata() throws -> [String: TemplateMetadata] {
+    public func loadMetadata() throws -> [String: TemplateMetadata] {
         [:]
     }
 }

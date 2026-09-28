@@ -64,9 +64,10 @@ struct MediaAssetUploadView: Component {
                     )
                     .data(
                         "media-picker-selected-preview-url",
-                        selectedPreviewURL(for: selectedAsset).map {
-                            NewAdminMediaAsset.mediaURL(path: $0)
-                        } ?? ""
+                        selectedPreviewURL(for: selectedAsset)
+                            .map {
+                                NewAdminMediaAsset.mediaURL(path: $0)
+                            } ?? ""
                     )
                     .data(
                         "media-picker-selected-name",
@@ -96,167 +97,167 @@ struct MediaAssetUploadView: Component {
             }
             uploadForm(context: &context)
             Style(
-                    """
-                        .new-admin-media-upload__dropzone {
-                            position: relative;
-                            display: flex;
-                            flex-direction: column;
-                            align-items: center;
-                            justify-content: center;
-                            gap: 8px;
-                            min-height: 150px;
-                            padding: 24px;
-                            overflow: hidden;
-                            border: 2px dashed var(--material-color-tertiary-border);
-                            border-radius: 12px;
-                            background: var(--material-color-tertiary-tint);
-                            color: var(--material-color-tertiary-text);
-                            text-align: center;
-                            margin-bottom: 12px;
-                            transition: border-color .15s ease, background .15s ease;
-                        }
-                        .new-admin-media-upload__dropzone.is-dragover {
-                            border-color: var(--link-color-hover);
-                            background: var(--material-color-secondary-tint);
-                        }
-                        .new-admin-media-upload__icon {
-                            display: block;
-                            flex: 0 0 auto;
-                            width: 32px;
-                            height: 32px;
-                            color: var(--link-color-default);
-                        }
-                        .new-admin-media-upload__help {
-                            margin: 0;
-                            color: var(--material-color-tertiary-text);
-                            font-size: .9rem;
-                        }
-                        .new-admin-media-upload__input {
-                            position: absolute;
-                            inset: 0;
-                            width: 100%;
-                            height: 100%;
-                            cursor: pointer;
-                            opacity: 0;
-                        }
-                        .new-admin-media-upload__queue {
-                            display: flex;
-                            flex-direction: column;
-                            gap: 6px;
-                            margin: 0 0 12px;
-                            padding: 0;
-                            list-style: none;
-                        }
-                        .new-admin-media-upload > .new-admin-form__error {
-                            margin: 0 0 12px;
-                        }
-                        .new-admin-media-upload__summary {
-                            display: flex;
-                            flex-direction: column;
-                            gap: 8px;
-                            margin: 0 0 12px;
-                            padding: 10px 12px;
-                            border: 1px solid var(--material-color-tertiary-border);
-                            border-radius: 8px;
-                            background: var(--material-color-tertiary-tint);
-                        }
-                        .new-admin-media-upload__summary[hidden] {
-                            display: none;
-                        }
-                        .new-admin-media-upload__summary-header {
-                            display: flex;
-                            align-items: center;
-                            justify-content: space-between;
-                            gap: 12px;
-                        }
-                        .new-admin-media-upload__summary-total {
-                            display: inline-flex;
-                            align-items: center;
-                            gap: 6px;
-                        }
-                        .new-admin-media-upload__summary-label,
-                        .new-admin-media-upload__summary-size,
-                        .new-admin-media-upload__summary-count,
-                        .new-admin-media-upload__summary-progress {
-                            color: var(--material-color-tertiary-text);
-                            font-size: .86rem;
-                        }
-                        .new-admin-media-upload__summary-label {
-                            font-weight: 600;
-                        }
-                        .new-admin-media-upload__progress[hidden],
-                        .new-admin-media-upload__summary-progress[hidden] {
-                            display: none;
-                        }
-                        .new-admin-media-upload__progress {
-                            height: 6px;
-                            overflow: hidden;
-                            border-radius: 999px;
-                            background: var(--material-color-tertiary-border);
-                        }
-                        .new-admin-media-upload__progress-bar {
-                            width: 0;
-                            height: 100%;
-                            border-radius: inherit;
-                            background: var(--link-color-default);
-                            transition: width .15s ease;
-                        }
-                        .new-admin-media-upload__item {
-                            display: flex;
-                            align-items: center;
-                            justify-content: space-between;
-                            gap: 16px;
-                            min-height: 58px;
-                            padding: 9px 12px;
-                            border: 1px solid var(--material-color-tertiary-border);
-                            border-radius: 8px;
-                            background: var(--material-color-tertiary-tint);
-                        }
-                        .new-admin-media-upload__details {
-                            display: flex;
-                            flex-direction: column;
-                            min-width: 0;
-                            gap: 3px;
-                        }
-                        .new-admin-media-upload__name {
-                            min-width: 0;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                            white-space: nowrap;
-                        }
-                        .new-admin-media-upload__size {
-                            color: var(--material-color-tertiary-text);
-                            font-size: .82rem;
-                        }
-                        .new-admin-media-upload__actions {
-                            display: inline-flex;
-                            align-items: center;
-                            justify-content: flex-end;
-                            flex: 0 0 auto;
-                            gap: 8px;
-                            min-width: 88px;
-                            min-height: 32px;
-                        }
-                        .new-admin-media-upload__status {
-                            display: inline-flex;
-                            align-items: center;
-                            justify-content: flex-end;
-                            min-width: 88px;
-                            min-height: 32px;
-                            color: var(--material-color-tertiary-text);
-                            font-size: .86rem;
-                            text-align: right;
-                        }
-                        .new-admin-media-upload__item.is-uploading .new-admin-media-upload__status {
-                            color: var(--link-color-default);
-                        }
-                        .new-admin-media-upload__item.is-success .new-admin-media-upload__status {
-                            color: var(--color-green-foreground);
-                        }
-                        .new-admin-media-upload__item.is-error .new-admin-media-upload__status {
-                            color: var(--color-red-foreground);
-                        }
-                    """
+                """
+                    .new-admin-media-upload__dropzone {
+                        position: relative;
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 8px;
+                        min-height: 150px;
+                        padding: 24px;
+                        overflow: hidden;
+                        border: 2px dashed var(--material-color-tertiary-border);
+                        border-radius: 12px;
+                        background: var(--material-color-tertiary-tint);
+                        color: var(--material-color-tertiary-text);
+                        text-align: center;
+                        margin-bottom: 12px;
+                        transition: border-color .15s ease, background .15s ease;
+                    }
+                    .new-admin-media-upload__dropzone.is-dragover {
+                        border-color: var(--link-color-hover);
+                        background: var(--material-color-secondary-tint);
+                    }
+                    .new-admin-media-upload__icon {
+                        display: block;
+                        flex: 0 0 auto;
+                        width: 32px;
+                        height: 32px;
+                        color: var(--link-color-default);
+                    }
+                    .new-admin-media-upload__help {
+                        margin: 0;
+                        color: var(--material-color-tertiary-text);
+                        font-size: .9rem;
+                    }
+                    .new-admin-media-upload__input {
+                        position: absolute;
+                        inset: 0;
+                        width: 100%;
+                        height: 100%;
+                        cursor: pointer;
+                        opacity: 0;
+                    }
+                    .new-admin-media-upload__queue {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 6px;
+                        margin: 0 0 12px;
+                        padding: 0;
+                        list-style: none;
+                    }
+                    .new-admin-media-upload > .new-admin-form__error {
+                        margin: 0 0 12px;
+                    }
+                    .new-admin-media-upload__summary {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 8px;
+                        margin: 0 0 12px;
+                        padding: 10px 12px;
+                        border: 1px solid var(--material-color-tertiary-border);
+                        border-radius: 8px;
+                        background: var(--material-color-tertiary-tint);
+                    }
+                    .new-admin-media-upload__summary[hidden] {
+                        display: none;
+                    }
+                    .new-admin-media-upload__summary-header {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: 12px;
+                    }
+                    .new-admin-media-upload__summary-total {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 6px;
+                    }
+                    .new-admin-media-upload__summary-label,
+                    .new-admin-media-upload__summary-size,
+                    .new-admin-media-upload__summary-count,
+                    .new-admin-media-upload__summary-progress {
+                        color: var(--material-color-tertiary-text);
+                        font-size: .86rem;
+                    }
+                    .new-admin-media-upload__summary-label {
+                        font-weight: 600;
+                    }
+                    .new-admin-media-upload__progress[hidden],
+                    .new-admin-media-upload__summary-progress[hidden] {
+                        display: none;
+                    }
+                    .new-admin-media-upload__progress {
+                        height: 6px;
+                        overflow: hidden;
+                        border-radius: 999px;
+                        background: var(--material-color-tertiary-border);
+                    }
+                    .new-admin-media-upload__progress-bar {
+                        width: 0;
+                        height: 100%;
+                        border-radius: inherit;
+                        background: var(--link-color-default);
+                        transition: width .15s ease;
+                    }
+                    .new-admin-media-upload__item {
+                        display: flex;
+                        align-items: center;
+                        justify-content: space-between;
+                        gap: 16px;
+                        min-height: 58px;
+                        padding: 9px 12px;
+                        border: 1px solid var(--material-color-tertiary-border);
+                        border-radius: 8px;
+                        background: var(--material-color-tertiary-tint);
+                    }
+                    .new-admin-media-upload__details {
+                        display: flex;
+                        flex-direction: column;
+                        min-width: 0;
+                        gap: 3px;
+                    }
+                    .new-admin-media-upload__name {
+                        min-width: 0;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    .new-admin-media-upload__size {
+                        color: var(--material-color-tertiary-text);
+                        font-size: .82rem;
+                    }
+                    .new-admin-media-upload__actions {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: flex-end;
+                        flex: 0 0 auto;
+                        gap: 8px;
+                        min-width: 88px;
+                        min-height: 32px;
+                    }
+                    .new-admin-media-upload__status {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: flex-end;
+                        min-width: 88px;
+                        min-height: 32px;
+                        color: var(--material-color-tertiary-text);
+                        font-size: .86rem;
+                        text-align: right;
+                    }
+                    .new-admin-media-upload__item.is-uploading .new-admin-media-upload__status {
+                        color: var(--link-color-default);
+                    }
+                    .new-admin-media-upload__item.is-success .new-admin-media-upload__status {
+                        color: var(--color-green-foreground);
+                    }
+                    .new-admin-media-upload__item.is-error .new-admin-media-upload__status {
+                        color: var(--color-red-foreground);
+                    }
+                """
             )
             Script(
                 """
@@ -951,11 +952,12 @@ struct MediaAssetUploadView: Component {
                 FeatherIcons.get(named: "plusCircle")!
                     .class("new-admin-media-upload__icon")
                 Strong(
-                        state.form.isPicker && state.form.selectionMode != .multiple
+                    state.form.isPicker && state.form.selectionMode != .multiple
                         ? "Drop a file here or choose a file"
                         : "Drop files here or choose files"
-                    )
-                if !state.form.isPicker || state.form.selectionMode == .multiple {
+                )
+                if !state.form.isPicker || state.form.selectionMode == .multiple
+                {
                     P("You can upload multiple files at once.")
                         .class("new-admin-media-upload__help")
                 }
@@ -963,7 +965,10 @@ struct MediaAssetUploadView: Component {
                     .type(.file)
                     .name("file")
                     .id("file")
-                    .if(!state.form.isPicker || state.form.selectionMode == .multiple) {
+                    .if(
+                        !state.form.isPicker
+                            || state.form.selectionMode == .multiple
+                    ) {
                         $0.setAttribute(name: "multiple", value: "multiple")
                     }
                     .if(!state.form.allowedExtensions.isAnything) {

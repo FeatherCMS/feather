@@ -37,7 +37,7 @@ public struct RedirectRuleMiddleware: RouterMiddleware {
         }
 
         let api = RedirectAppAPIClient(apiBaseURL: apiBaseURL)
-        guard 
+        guard
             let rule = try await matchedRedirectRule(api: api, path: path)
         else {
             return response

@@ -37,7 +37,8 @@ public enum AllowedExtensions: Hashable, Sendable {
     private static func normalize(_ extensions: [String]) -> [String] {
         var result: [String] = []
         for value in extensions {
-            let normalized = value
+            let normalized =
+                value
                 .trimmingCharacters(in: .whitespacesAndNewlines)
                 .lowercased()
                 .trimmingCharacters(in: CharacterSet(charactersIn: "."))

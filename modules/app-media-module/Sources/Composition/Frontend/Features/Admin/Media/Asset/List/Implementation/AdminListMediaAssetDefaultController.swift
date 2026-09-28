@@ -31,9 +31,10 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
             .emptyToNil
         let requestedView = request.queryString("view")
             .flatMap(AdminListMediaAssetModel.ViewMode.init(rawValue:))
-        let storedView = request.cookies[Self.viewCookieName].flatMap {
-            AdminListMediaAssetModel.ViewMode(rawValue: $0.value)
-        }
+        let storedView = request.cookies[Self.viewCookieName]
+            .flatMap {
+                AdminListMediaAssetModel.ViewMode(rawValue: $0.value)
+            }
         let view = requestedView ?? storedView ?? .grid
         let isPicker = request.queryString("picker") == "1"
         let picker = AdminListMediaAssetModel.PickerState(
@@ -41,7 +42,8 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
             configuration: isPicker
                 ? .init(
                     field: request.queryString("field")?.emptyToNil ?? "",
-                    selectionMode: request.queryString("selection") == "multiple"
+                    selectionMode: request.queryString("selection")
+                        == "multiple"
                         ? .multiple
                         : .single,
                     allowedExtensions: .custom(
@@ -51,7 +53,8 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
                     ),
                     defaultFolderPath: request.queryString(
                         "default_folder_path"
-                    )?.emptyToNil,
+                    )?
+                    .emptyToNil,
                     previewVariant: request.queryString("preview_variant")?
                         .emptyToNil
                 )

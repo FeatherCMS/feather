@@ -26,7 +26,7 @@ struct MediaFolderCreateOperation: MediaFolderOperation {
             201: MediaFolderDetailResponse().reference(),
             409: CustomResponse(
                 description: "A media folder with this path already exists"
-            )
+            ),
         ]
     }
 }

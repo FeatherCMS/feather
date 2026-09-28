@@ -86,7 +86,9 @@ public struct NewAdminDialog<Content: Component>: Component {
                     color: CSSColor(stringLiteral: "rgba(0, 0, 0, 0.24)")
                 )
             }
-            Custom("html.new-admin-dialog-open, html.new-admin-dialog-open body") {
+            Custom(
+                "html.new-admin-dialog-open, html.new-admin-dialog-open body"
+            ) {
                 Overflow(.hidden)
             }
             Class("new-admin-dialog__header") {

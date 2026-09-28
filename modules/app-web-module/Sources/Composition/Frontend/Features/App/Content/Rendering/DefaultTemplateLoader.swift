@@ -10,15 +10,17 @@ public struct DefaultTemplateLoader: TemplateLoader {
     }
 
     public func load() throws -> [String: MustacheTemplate] {
-        try loadSources().reduce(into: [:]) { templates, source in
-            templates[source.id] = try MustacheTemplate(string: source.body)
-        }
+        try loadSources()
+            .reduce(into: [:]) { templates, source in
+                templates[source.id] = try MustacheTemplate(string: source.body)
+            }
     }
 
     public func loadMetadata() throws -> [String: TemplateMetadata] {
-        try loadSources().reduce(into: [:]) { metadata, source in
-            metadata[source.id] = source.metadata
-        }
+        try loadSources()
+            .reduce(into: [:]) { metadata, source in
+                metadata[source.id] = source.metadata
+            }
     }
 
     private func loadSources() throws -> [LoadedTemplateSource] {
@@ -104,18 +106,26 @@ private func parseFrontMatter(_ source: String) throws -> ParsedTemplateSource {
             character == "\r" || character == "\n"
         }
     )
-    guard lines.first.map(String.init)?.trimmingCharacters(in: .whitespaces) == "---" else {
+    guard
+        lines.first.map(String.init)?.trimmingCharacters(in: .whitespaces)
+            == "---"
+    else {
         return .init(body: source, metadata: .init())
     }
 
-    guard let closingIndex = lines.dropFirst().firstIndex(where: {
-        String($0).trimmingCharacters(in: .whitespaces) == "---"
-    }) else {
+    guard
+        let closingIndex = lines.dropFirst()
+            .firstIndex(where: {
+                String($0).trimmingCharacters(in: .whitespaces) == "---"
+            })
+    else {
         throw TemplateFrontMatterError.missingClosingDelimiter
     }
 
-    let frontMatterLines = lines[lines.index(after: lines.startIndex)..<closingIndex]
-        .compactMap(FrontMatterLine.init)
+    let frontMatterLines = lines[
+        lines.index(after: lines.startIndex)..<closingIndex
+    ]
+    .compactMap(FrontMatterLine.init)
     var parser = FrontMatterParser(lines: frontMatterLines)
     let values = try parser.parse()
     try validateAssetValues(values)
@@ -182,7 +192,9 @@ private struct FrontMatterParser {
         guard let firstLine = lines.first else { return [:] }
         let value = try parseBlock(indentation: firstLine.indentation)
         guard case .object(let values) = value else {
-            throw TemplateFrontMatterError.invalidEntry("Front matter must be a mapping")
+            throw TemplateFrontMatterError.invalidEntry(
+                "Front matter must be a mapping"
+            )
         }
         guard index == lines.endIndex else {
             throw TemplateFrontMatterError.invalidEntry(lines[index].content)
@@ -198,7 +210,8 @@ private struct FrontMatterParser {
             throw TemplateFrontMatterError.invalidEntry(lines[index].content)
         }
         if lines[index].content == "-"
-            || lines[index].content.hasPrefix("- ") {
+            || lines[index].content.hasPrefix("- ")
+        {
             return try parseSequence(indentation: indentation)
         }
         return try parseMapping(indentation: indentation)
@@ -236,16 +249,19 @@ private struct FrontMatterParser {
             guard line.content == "-" || line.content.hasPrefix("- ") else {
                 break
             }
-            let item = line.content == "-"
+            let item =
+                line.content == "-"
                 ? ""
                 : String(line.content.dropFirst(2))
                     .trimmingCharacters(in: .whitespacesAndNewlines)
             index += 1
 
             if item.isEmpty {
-                values.append(try parseNestedValue(
-                    parentIndentation: indentation
-                ))
+                values.append(
+                    try parseNestedValue(
+                        parentIndentation: indentation
+                    )
+                )
                 continue
             }
 
@@ -336,12 +352,15 @@ private func splitMapping(_ value: String) -> (String, String)? {
         }
         guard character == ":", quote == nil else { continue }
         let nextIndex = value.index(after: index)
-        guard nextIndex == value.endIndex
-            || value[nextIndex].isWhitespace
+        guard
+            nextIndex == value.endIndex
+                || value[nextIndex].isWhitespace
         else {
             continue
         }
-        let key = unquote(String(value[..<index]).trimmingCharacters(in: .whitespaces))
+        let key = unquote(
+            String(value[..<index]).trimmingCharacters(in: .whitespaces)
+        )
         let rawValue = String(value[nextIndex...])
             .trimmingCharacters(in: .whitespacesAndNewlines)
         guard !key.isEmpty else { return nil }
@@ -360,12 +379,13 @@ private func parseScalar(_ value: String) -> FrontMatterValue {
     }
     if value.hasPrefix("{") && value.hasSuffix("}") {
         let contents = String(value.dropFirst().dropLast())
-        let object = splitInlineValues(contents).reduce(
-            into: [String: FrontMatterValue]()
-        ) { result, entry in
-            guard let (key, rawValue) = splitMapping(entry) else { return }
-            result[unquote(key)] = parseScalar(rawValue)
-        }
+        let object = splitInlineValues(contents)
+            .reduce(
+                into: [String: FrontMatterValue]()
+            ) { result, entry in
+                guard let (key, rawValue) = splitMapping(entry) else { return }
+                result[unquote(key)] = parseScalar(rawValue)
+            }
         return .object(object)
     }
     if value == "true" { return .boolean(true) }
@@ -383,8 +403,12 @@ private func splitInlineValues(_ value: String) -> [String] {
     for index in value.indices {
         let character = value[index]
         if character == "'" || character == "\"" {
-            if quote == character { quote = nil }
-            else if quote == nil { quote = character }
+            if quote == character {
+                quote = nil
+            }
+            else if quote == nil {
+                quote = character
+            }
         }
         guard character == ",", quote == nil else { continue }
         result.append(
@@ -401,12 +425,13 @@ private func unquote(_ value: String) -> String {
     guard value.count >= 2,
         let first = value.first,
         let last = value.last,
-        (first == "'" || first == "\""),
+        first == "'" || first == "\"",
         first == last
     else { return value }
     let unquoted = String(value.dropFirst().dropLast())
     if first == "\"" {
-        return unquoted
+        return
+            unquoted
             .replacingOccurrences(of: "\\\"", with: "\"")
             .replacingOccurrences(of: "\\\\", with: "\\")
     }

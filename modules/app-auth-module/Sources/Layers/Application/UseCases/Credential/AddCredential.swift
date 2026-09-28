@@ -51,12 +51,15 @@ public struct AddCredential: UseCase {
 
         let passwordHash = try await passwordHasher.hash(input.password)
         let model = try await transaction.run { scope in
-            guard let authEmail = try await scope.authEmail.findBy(
-                email: input.email
-            ), authEmail.identityId == input.userId else {
+            guard
+                let authEmail = try await scope.authEmail.findBy(
+                    email: input.email
+                ), authEmail.identityId == input.userId
+            else {
                 throw UseCaseError(
                     reason: .validation,
-                    logMessage: "Auth email not found for identity: \(input.userId)",
+                    logMessage:
+                        "Auth email not found for identity: \(input.userId)",
                     userFriendlyMessage: "Auth email not found"
                 )
             }

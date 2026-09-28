@@ -152,7 +152,10 @@ extension AdminListMediaAssetDefaultInteractor {
             }
 
             do {
-                try await repository.createFolder(name: name, parentId: parentId)
+                try await repository.createFolder(
+                    name: name,
+                    parentId: parentId
+                )
             }
             catch let error as OpenAPIRepositoryError {
                 guard case .conflict = error else { throw error }
@@ -161,9 +164,11 @@ extension AdminListMediaAssetDefaultInteractor {
             let resolvedFolders = try await repository.listFolders(
                 parentId: parentId
             )
-            guard let created = resolvedFolders.first(where: {
-                $0.name.caseInsensitiveCompare(name) == .orderedSame
-            }) else {
+            guard
+                let created = resolvedFolders.first(where: {
+                    $0.name.caseInsensitiveCompare(name) == .orderedSame
+                })
+            else {
                 return nil
             }
             parentId = created.id
@@ -234,7 +239,8 @@ extension AdminListMediaAssetDefaultInteractor {
         key: String?
     ) -> Components.Schemas.MediaAssetResolveVariantSchema? {
         if let key,
-           let preferred = variants.first(where: { $0.key == key }) {
+            let preferred = variants.first(where: { $0.key == key })
+        {
             return preferred
         }
         return variants.first(where: { $0.key == "preview" })

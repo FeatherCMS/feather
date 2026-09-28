@@ -18,9 +18,12 @@ public struct InvitationCredentialWriterAdapter: InvitationCredentialWriter {
         guard let context = context as? DatabaseTransactionContext else {
             throw InvitationCredentialWriterError.invalidTransactionContext
         }
-        guard let authEmail = try await AuthEmailDatabaseRepository(
-            context: context
-        ).findBy(email: email), authEmail.identityId == userID else {
+        guard
+            let authEmail = try await AuthEmailDatabaseRepository(
+                context: context
+            )
+            .findBy(email: email), authEmail.identityId == userID
+        else {
             throw InvitationCredentialWriterError.authEmailNotFound
         }
         let passwordHash = try await BCryptPasswordHasher().hash(password)

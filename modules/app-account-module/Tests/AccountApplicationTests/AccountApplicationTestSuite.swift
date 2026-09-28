@@ -27,12 +27,18 @@ struct AccountApplicationTestSuite {
                 AccountPermissions.Profile.update,
             ]
         )
-        #expect(AccountPermissions.allPermissions().contains(
-            AccountPermissions.Profile.read
-        ))
-        #expect(AccountPermissions.allPermissions().contains(
-            AccountPermissions.Profile.update
-        ))
+        #expect(
+            AccountPermissions.allPermissions()
+                .contains(
+                    AccountPermissions.Profile.read
+                )
+        )
+        #expect(
+            AccountPermissions.allPermissions()
+                .contains(
+                    AccountPermissions.Profile.update
+                )
+        )
     }
 
     @Test

@@ -38,7 +38,8 @@ public struct MediaAssetPopupConfiguration: Sendable {
 
     fileprivate func url(for action: MediaAssetPopupAction) -> String {
         var components = URLComponents()
-        components.path = action == .choose
+        components.path =
+            action == .choose
             ? "/admin/media/assets/"
             : "/admin/media/assets/add/"
 
@@ -100,7 +101,8 @@ public struct AdminMediaAssetPickerButton: Component {
         var button = context.build(
             NewAdminControlButton(label, style: style)
         )
-        button = button
+        button =
+            button
             .data(
                 "admin-dialog-url",
                 configuration.url(for: .choose)
@@ -133,7 +135,8 @@ public struct AdminMediaAssetUploadButton: Component {
         var button = context.build(
             NewAdminControlButton(label, style: style)
         )
-        button = button
+        button =
+            button
             .data(
                 "admin-dialog-url",
                 configuration.url(for: .upload)
@@ -173,66 +176,66 @@ public struct AdminMediaAssetSelectionBridge: Component {
     }
 }
 
-private extension AdminMediaAssetSelectionBridge {
-    func selectionScript() -> String {
+extension AdminMediaAssetSelectionBridge {
+    fileprivate func selectionScript() -> String {
         let field = javascriptString(field)
         let formID = submitFormID.map(javascriptString) ?? "null"
         let outputScript: String
         switch output {
-        case let .singleInput(id):
+        case .singleInput(let id):
             outputScript = """
-            var input = document.getElementById(\(javascriptString(id)));
-            if (!input || !assets.length) { return; }
-            input.value = String(assets[0].id || "");
-            input.dispatchEvent(new Event("change", { bubbles: true }));
-            """
-        case let .multipleInputs(containerID, name):
+                var input = document.getElementById(\(javascriptString(id)));
+                if (!input || !assets.length) { return; }
+                input.value = String(assets[0].id || "");
+                input.dispatchEvent(new Event("change", { bubbles: true }));
+                """
+        case .multipleInputs(let containerID, let name):
             outputScript = """
-            var container = document.getElementById(\(javascriptString(containerID)));
-            if (!container) { return; }
-            container.replaceChildren();
-            assets.forEach(function(asset) {
-              if (!asset || !asset.id) { return; }
-              var input = document.createElement("input");
-              input.type = "hidden";
-              input.name = \(javascriptString(name));
-              input.value = String(asset.id);
-              container.appendChild(input);
-            });
-            if (!container.children.length) { return; }
-            """
-        case let .callback(functionName):
+                var container = document.getElementById(\(javascriptString(containerID)));
+                if (!container) { return; }
+                container.replaceChildren();
+                assets.forEach(function(asset) {
+                  if (!asset || !asset.id) { return; }
+                  var input = document.createElement("input");
+                  input.type = "hidden";
+                  input.name = \(javascriptString(name));
+                  input.value = String(asset.id);
+                  container.appendChild(input);
+                });
+                if (!container.children.length) { return; }
+                """
+        case .callback(let functionName):
             outputScript = """
-            var callback = window[\(javascriptString(functionName))];
-            if (typeof callback !== "function") { return; }
-            callback(assets);
-            """
+                var callback = window[\(javascriptString(functionName))];
+                if (typeof callback !== "function") { return; }
+                callback(assets);
+                """
         }
 
         return """
-        (function() {
-          var field = \(field);
-          var formID = \(formID);
-          var marker = "new-admin-media-selection-bridge:" + field;
-          if (document.documentElement.hasAttribute(marker)) { return; }
-          document.documentElement.setAttribute(marker, "true");
-          document.addEventListener("new-admin-media-picker-selection", function(event) {
-            var detail = event.detail || {};
-            if (String(detail.field || "") !== field) { return; }
-            var assets = Array.isArray(detail.assets) ? detail.assets : [];
-            if (!assets.length) { return; }
-            \(outputScript)
-            var form = formID ? document.getElementById(formID) : null;
-            if (form) {
-              if (form.requestSubmit) { form.requestSubmit(); }
-              else { form.submit(); }
-            }
-          });
-        }());
-        """
+            (function() {
+              var field = \(field);
+              var formID = \(formID);
+              var marker = "new-admin-media-selection-bridge:" + field;
+              if (document.documentElement.hasAttribute(marker)) { return; }
+              document.documentElement.setAttribute(marker, "true");
+              document.addEventListener("new-admin-media-picker-selection", function(event) {
+                var detail = event.detail || {};
+                if (String(detail.field || "") !== field) { return; }
+                var assets = Array.isArray(detail.assets) ? detail.assets : [];
+                if (!assets.length) { return; }
+                \(outputScript)
+                var form = formID ? document.getElementById(formID) : null;
+                if (form) {
+                  if (form.requestSubmit) { form.requestSubmit(); }
+                  else { form.submit(); }
+                }
+              });
+            }());
+            """
     }
 
-    func javascriptString(_ value: String) -> String {
+    fileprivate func javascriptString(_ value: String) -> String {
         let data = try? JSONEncoder().encode(value)
         return data.flatMap { String(data: $0, encoding: .utf8) } ?? "\"\""
     }

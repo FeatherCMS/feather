@@ -31,7 +31,8 @@ struct MediaAssetPickerView: Component {
                 placeholder: "",
                 search: ""
             )
-        ).rules() + [
+        )
+        .rules() + [
             Media {
                 Class("media-asset-picker") {
                     Display(.flex)
@@ -95,7 +96,9 @@ struct MediaAssetPickerView: Component {
                         .variable(TokenKey.Colors.Materials.Primary.border)
                     )
                     BorderRadius(14.px)
-                    Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Primary.tint)
+                    )
                 }
                 Class("media-asset-picker__preview") {
                     Display(.grid)
@@ -220,77 +223,79 @@ struct MediaAssetPickerView: Component {
                     context.build(viewSelector())
                         .class("media-asset-picker__view")
                 }
-            .class("media-asset-picker__navigation")
+                .class("media-asset-picker__navigation")
 
-            Div {
-                searchControls(context: &context)
-            }
-            .class("media-asset-picker__search")
-
-            if state.pageState.isPageOutOfRange {
-                context.build(
-                    NewAdminListInvalidPageState(
-                        pageState: state.pageState,
-                        path: MediaAssetRoutes.list.description
-                    )
-                )
-            }
-            else if hasAnyResults {
-                switch state.view {
-                case .grid:
-                    gridContent(context: &context)
-                case .list:
-                    listContent(context: &context)
+                Div {
+                    searchControls(context: &context)
                 }
-            }
-            else {
-                context.build(
-                    NewAdminListEmptyState(
-                        message: state.search.isEmpty
-                            ? "No media assets or folders yet."
-                            : "No media assets or folders match your search.",
-                        icon: FeatherIcons.image()
-                    )
-                )
-            }
+                .class("media-asset-picker__search")
 
-            context.build(
-                NewAdminListPagination(
-                    state: .init(
-                        path: MediaAssetRoutes.list.description,
-                        pageState: state.pageState,
-                        search: state.search,
-                        queryItems: queryItems(
-                            parentId: state.parentId,
-                            view: state.view,
-                            search: nil,
-                            page: nil
+                if state.pageState.isPageOutOfRange {
+                    context.build(
+                        NewAdminListInvalidPageState(
+                            pageState: state.pageState,
+                            path: MediaAssetRoutes.list.description
+                        )
+                    )
+                }
+                else if hasAnyResults {
+                    switch state.view {
+                    case .grid:
+                        gridContent(context: &context)
+                    case .list:
+                        listContent(context: &context)
+                    }
+                }
+                else {
+                    context.build(
+                        NewAdminListEmptyState(
+                            message: state.search.isEmpty
+                                ? "No media assets or folders yet."
+                                : "No media assets or folders match your search.",
+                            icon: FeatherIcons.image()
+                        )
+                    )
+                }
+
+                context.build(
+                    NewAdminListPagination(
+                        state: .init(
+                            path: MediaAssetRoutes.list.description,
+                            pageState: state.pageState,
+                            search: state.search,
+                            queryItems: queryItems(
+                                parentId: state.parentId,
+                                view: state.view,
+                                search: nil,
+                                page: nil
+                            )
                         )
                     )
                 )
-            )
-        }
-        .class("media-asset-picker__body")
-
-        if state.picker.selectionMode == .multiple,
-           state.picker.field != nil {
-            Div {
-                Button("Use assets")
-                    .type(.button)
-                    .class("button", "primary")
-                    .data("picker-apply", "true")
-                    .disabled()
             }
-            .class("media-asset-picker__selection-actions")
-            Div {}
-                .data("media-picker-selection-markers", "true")
-                .hidden()
-            Script(multiSelectionScript())
-        }
-        else if state.picker.selectionMode == .single,
-                state.picker.field != nil {
-            Script(singleSelectionScript())
-        }
+            .class("media-asset-picker__body")
+
+            if state.picker.selectionMode == .multiple,
+                state.picker.field != nil
+            {
+                Div {
+                    Button("Use assets")
+                        .type(.button)
+                        .class("button", "primary")
+                        .data("picker-apply", "true")
+                        .disabled()
+                }
+                .class("media-asset-picker__selection-actions")
+                Div {}
+                    .data("media-picker-selection-markers", "true")
+                    .hidden()
+                Script(multiSelectionScript())
+            }
+            else if state.picker.selectionMode == .single,
+                state.picker.field != nil
+            {
+                Script(singleSelectionScript())
+            }
         }
         .class("media-asset-picker")
         .data("media-picker-field", state.picker.field ?? "")
@@ -302,12 +307,12 @@ struct MediaAssetPickerView: Component {
     }
 }
 
-private extension MediaAssetPickerView {
-    var hasAnyResults: Bool {
+extension MediaAssetPickerView {
+    fileprivate var hasAnyResults: Bool {
         !state.entries.isEmpty || state.currentFolder != nil
     }
 
-    func queryItems(
+    fileprivate func queryItems(
         parentId: String?,
         view: AdminListMediaAssetModel.ViewMode,
         search: String?,
@@ -359,7 +364,7 @@ private extension MediaAssetPickerView {
         return items
     }
 
-    func browsePath(
+    fileprivate func browsePath(
         parentId: String?,
         view: AdminListMediaAssetModel.ViewMode? = nil,
         search: String? = nil,
@@ -380,7 +385,7 @@ private extension MediaAssetPickerView {
             : "\(path)?\(encoded.joined(separator: "&"))"
     }
 
-    func folderPathItems() -> [NewAdminPathBreadcrumb.Item] {
+    fileprivate func folderPathItems() -> [NewAdminPathBreadcrumb.Item] {
         var items: [NewAdminPathBreadcrumb.Item] = [
             .init(
                 label: "My assets",
@@ -405,7 +410,7 @@ private extension MediaAssetPickerView {
         return items
     }
 
-    func viewSelector() -> NewAdminSegmentedControl {
+    fileprivate func viewSelector() -> NewAdminSegmentedControl {
         NewAdminSegmentedControl(
             links: [
                 .init(
@@ -422,20 +427,21 @@ private extension MediaAssetPickerView {
         )
     }
 
-    func searchControls(context: inout BuilderContext) -> Div {
+    fileprivate func searchControls(context: inout BuilderContext) -> Div {
         var search = context.build(
             NewAdminListSearch(
                 state: .init(
-                action: browsePath(parentId: state.parentId),
+                    action: browsePath(parentId: state.parentId),
                     placeholder: "Quick search assets",
                     search: state.search,
                     resetPath: browsePath(parentId: state.parentId),
-                queryItems: queryItems(
-                    parentId: state.parentId,
-                    view: state.view,
-                    search: nil,
-                    page: nil
-                ).map {
+                    queryItems: queryItems(
+                        parentId: state.parentId,
+                        view: state.view,
+                        search: nil,
+                        page: nil
+                    )
+                    .map {
                         .init(name: $0.name, value: $0.value)
                     }
                 )
@@ -448,7 +454,7 @@ private extension MediaAssetPickerView {
         }
     }
 
-    func pickerSearchScript() -> String {
+    fileprivate func pickerSearchScript() -> String {
         #"""
         (function() {
           var forms = document.querySelectorAll(
@@ -476,7 +482,7 @@ private extension MediaAssetPickerView {
         """#
     }
 
-    func multiSelectionScript() -> String {
+    fileprivate func multiSelectionScript() -> String {
         #"""
         (function() {
           var root = document.querySelector(
@@ -578,7 +584,7 @@ private extension MediaAssetPickerView {
         """#
     }
 
-    func singleSelectionScript() -> String {
+    fileprivate func singleSelectionScript() -> String {
         #"""
         (function() {
           var root = document.querySelector(
@@ -625,7 +631,7 @@ private extension MediaAssetPickerView {
         """#
     }
 
-    func gridContent(context: inout BuilderContext) -> Div {
+    fileprivate func gridContent(context: inout BuilderContext) -> Div {
         Div {
             if let currentFolder = state.currentFolder {
                 upCard(parentId: currentFolder.parentId, context: &context)
@@ -642,7 +648,7 @@ private extension MediaAssetPickerView {
         .class("media-asset-picker__grid")
     }
 
-    func upCard(
+    fileprivate func upCard(
         parentId: String?,
         context: inout BuilderContext
     ) -> Div {
@@ -661,7 +667,11 @@ private extension MediaAssetPickerView {
             .class("media-asset-picker__card-body")
             Div {
                 context.build(
-                    NewAdminRowButton("View", href: href, style: .ghost(.primary))
+                    NewAdminRowButton(
+                        "View",
+                        href: href,
+                        style: .ghost(.primary)
+                    )
                 )
             }
             .class("media-asset-picker__card-actions")
@@ -669,7 +679,7 @@ private extension MediaAssetPickerView {
         .class("media-asset-picker__card")
     }
 
-    func folderCard(
+    fileprivate func folderCard(
         _ folder: Components.Schemas.MediaFolderListItemSchema,
         context: inout BuilderContext
     ) -> Div {
@@ -691,7 +701,11 @@ private extension MediaAssetPickerView {
             .class("media-asset-picker__card-body")
             Div {
                 context.build(
-                    NewAdminRowButton("View", href: href, style: .ghost(.primary))
+                    NewAdminRowButton(
+                        "View",
+                        href: href,
+                        style: .ghost(.primary)
+                    )
                 )
             }
             .class("media-asset-picker__card-actions")
@@ -699,11 +713,11 @@ private extension MediaAssetPickerView {
         .class("media-asset-picker__card")
     }
 
-    func assetCard(
+    fileprivate func assetCard(
         _ item: AdminListMediaAssetModel.AssetItem,
         context: inout BuilderContext
     ) -> Div {
-        return Div {
+        Div {
             Div {
                 if let preview = item.preview {
                     Img(
@@ -736,42 +750,47 @@ private extension MediaAssetPickerView {
         .class("media-asset-picker__card")
     }
 
-    func listContent(context: inout BuilderContext) -> some FlowContent {
-        return context.build(
+    fileprivate func listContent(context: inout BuilderContext)
+        -> some FlowContent
+    {
+        context.build(
             NewAdminListShell(
-            layout: .init(
-                name: "media-asset-picker-list",
-                columns: [.fixed(84), .fraction(1), .fixed(160)]
-            ),
-            hasSelection: false,
-            table: Table {
-                Thead {
-                    Tr {
-                        Th("Preview")
-                        Th("Name")
-                        Th("Actions")
+                layout: .init(
+                    name: "media-asset-picker-list",
+                    columns: [.fixed(84), .fraction(1), .fixed(160)]
+                ),
+                hasSelection: false,
+                table: Table {
+                    Thead {
+                        Tr {
+                            Th("Preview")
+                            Th("Name")
+                            Th("Actions")
+                        }
                     }
-                }
-            Tbody {
-                    if let currentFolder = state.currentFolder {
-                        upRow(parentId: currentFolder.parentId, context: &context)
-                    }
-                    for entry in state.entries {
-                        switch entry {
-                        case .folder(let folder):
-                            folderRow(folder, context: &context)
-                        case .asset(let item):
-                            assetRow(item, context: &context)
+                    Tbody {
+                        if let currentFolder = state.currentFolder {
+                            upRow(
+                                parentId: currentFolder.parentId,
+                                context: &context
+                            )
+                        }
+                        for entry in state.entries {
+                            switch entry {
+                            case .folder(let folder):
+                                folderRow(folder, context: &context)
+                            case .asset(let item):
+                                assetRow(item, context: &context)
+                            }
                         }
                     }
                 }
-            }
-            .class("cms-table", "action-table")
+                .class("cms-table", "action-table")
             )
         )
     }
 
-    func upRow(
+    fileprivate func upRow(
         parentId: String?,
         context: inout BuilderContext
     ) -> Tr {
@@ -790,7 +809,11 @@ private extension MediaAssetPickerView {
             Td("..").data("label", "Name")
             Td {
                 context.build(
-                    NewAdminRowButton("View", href: href, style: .ghost(.primary))
+                    NewAdminRowButton(
+                        "View",
+                        href: href,
+                        style: .ghost(.primary)
+                    )
                 )
             }
             .data("label", "Actions")
@@ -798,7 +821,7 @@ private extension MediaAssetPickerView {
         }
     }
 
-    func folderRow(
+    fileprivate func folderRow(
         _ folder: Components.Schemas.MediaFolderListItemSchema,
         context: inout BuilderContext
     ) -> Tr {
@@ -817,7 +840,11 @@ private extension MediaAssetPickerView {
             Td(folder.name).data("label", "Name")
             Td {
                 context.build(
-                    NewAdminRowButton("View", href: href, style: .ghost(.primary))
+                    NewAdminRowButton(
+                        "View",
+                        href: href,
+                        style: .ghost(.primary)
+                    )
                 )
             }
             .data("label", "Actions")
@@ -825,7 +852,7 @@ private extension MediaAssetPickerView {
         }
     }
 
-    func assetRow(
+    fileprivate func assetRow(
         _ item: AdminListMediaAssetModel.AssetItem,
         context: inout BuilderContext
     ) -> Tr {
@@ -868,14 +895,14 @@ private extension MediaAssetPickerView {
         }
     }
 
-    func pickerTitle(
+    fileprivate func pickerTitle(
         for item: Components.Schemas.MediaAssetListItemSchema
     ) -> String {
         let title = item.title?.whitespaceTrimmed
         return title?.isEmpty == false ? title! : fileName(for: item)
     }
 
-    func fileName(
+    fileprivate func fileName(
         for item: Components.Schemas.MediaAssetListItemSchema
     ) -> String {
         item._extension.isEmpty ? item.name : "\(item.name).\(item._extension)"
