@@ -158,12 +158,9 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
             path: MediaAssetRoutes.list.description,
             returnTo: returnTo
         )
-        let isDialog =
-            request.queryString("presentation") == "dialog"
-            && request.headers[.accept]?.contains("type=admin-dialog") == true
         let confirmation = NewAdminRemoveConfirmation(
             header: .primary(
-                title: NewAdminRemoveConfirmation.dialogTitle,
+                title: "Remove media asset",
                 description: "Confirm removal of the selected media assets."
             ),
             selectedItems: items.map(\.label),
@@ -178,20 +175,12 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 .init(name: "returnTo", value: cancel),
             ],
         )
-        if isDialog {
-            return try await renderEngine.renderNewAdminDialog(
-                request: request,
-                context: context,
-                title: "Remove selected assets",
-                content: confirmation,
-                size: .small
-            )
-        }
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderNewAdminDialog(
             request: request,
             context: context,
-            title: "Remove selected assets",
-            content: confirmation
+            title: NewAdminRemoveConfirmation.dialogTitle,
+            content: confirmation,
+            size: .small
         )
     }
 
