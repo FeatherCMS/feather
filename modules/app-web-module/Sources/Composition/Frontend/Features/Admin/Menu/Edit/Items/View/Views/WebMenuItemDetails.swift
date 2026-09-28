@@ -16,7 +16,7 @@ struct WebMenuItemDetails: Component {
     let state: State
 
     func selectors() -> [any CSS.Selector] {
-        WebMenuItemGroup.groupSelectors()
+        NewAdminRelationshipGroup.groupSelectors()
             + [
                 Custom(".web-menu-item-details-fields") {
                     Display(.grid)
@@ -69,7 +69,7 @@ struct WebMenuItemDetails: Component {
                 )
             )
             context.build(
-                WebMenuItemGroup {
+                NewAdminRelationshipGroup {
                     context.build(
                         NewAdminPageHeader(
                             state: .init(

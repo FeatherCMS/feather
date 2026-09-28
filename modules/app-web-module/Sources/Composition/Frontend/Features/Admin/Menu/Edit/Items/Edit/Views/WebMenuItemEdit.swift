@@ -34,7 +34,7 @@ struct WebMenuItemEdit: Component {
                 AdminWebMenuTabs(menuID: state.menuId, active: .items)
             )
             context.build(
-                WebMenuItemGroup {
+                NewAdminRelationshipGroup {
                     context.build(
                         NewAdminPageHeader(
                             state: .init(

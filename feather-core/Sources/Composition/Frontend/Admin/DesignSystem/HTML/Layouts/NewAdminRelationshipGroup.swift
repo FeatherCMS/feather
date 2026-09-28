@@ -1,22 +1,21 @@
-import CSS
-import FeatherAdmin
-import HTML
+public import CSS
+public import HTML
 import SGML
 import WebBuilders
-import WebComponents
+public import WebComponents
 
-struct WebMenuItemGroup: Component {
-    let content: [any FlowContent]
+public struct NewAdminRelationshipGroup: Component {
+    public let content: [any FlowContent]
 
-    init(
+    public init(
         @Builder<FlowContent> content: () -> [any FlowContent]
     ) {
         self.content = content()
     }
 
-    static func groupSelectors() -> [any CSS.Selector] {
+    public static func groupSelectors() -> [any Selector] {
         [
-            Class("web-menu-item-group") {
+            Class("new-admin-relationship-group") {
                 Width(100.percent)
                 BoxSizing(.borderBox)
                 Padding(16.px)
@@ -30,16 +29,16 @@ struct WebMenuItemGroup: Component {
         ]
     }
 
-    func selectors() -> [any CSS.Selector] {
+    public func selectors() -> [any Selector] {
         Self.groupSelectors()
     }
 
-    func html(context: inout BuilderContext) -> Div {
+    public func html(context _: inout BuilderContext) -> Div {
         Div {
             for item in content {
                 item
             }
         }
-        .class("web-menu-item-group")
+        .class("new-admin-relationship-group")
     }
 }

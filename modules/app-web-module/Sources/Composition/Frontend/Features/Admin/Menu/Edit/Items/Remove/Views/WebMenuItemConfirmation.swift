@@ -23,7 +23,7 @@ struct WebMenuItemConfirmation: Component {
     let state: State
 
     func selectors() -> [any CSS.Selector] {
-        WebMenuItemGroup.groupSelectors()
+        NewAdminRelationshipGroup.groupSelectors()
     }
 
     func html(context: inout BuilderContext) -> Section {
@@ -62,7 +62,7 @@ struct WebMenuItemConfirmation: Component {
                     level: 2,
                     showSeparator: true
                 ),
-                contentClass: "web-menu-item-group"
+                contentClass: "new-admin-relationship-group"
             )
         )
     }
