@@ -104,8 +104,8 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/contact/form/{contactFormKey}/submit`.
-    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/submit/post(appContactFormSubmission)`.
+    /// - Remark: HTTP `POST /api/v1/contact/{contactFormKey}/submissions`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/{contactFormKey}/submissions/post(appContactFormSubmission)`.
     public func appContactFormSubmission(
         _ input: Operations.AppContactFormSubmission.Input
     ) async throws -> Operations.AppContactFormSubmission.Output {
@@ -114,7 +114,7 @@ public struct Client: APIProtocol {
             forOperation: Operations.AppContactFormSubmission.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/contact/form/{}/submit",
+                    template: "/api/v1/contact/{}/submissions",
                     parameters: [
                         input.path.contactFormKey
                     ]

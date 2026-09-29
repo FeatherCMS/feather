@@ -10,9 +10,19 @@ import WebComponents
 public struct AppNewsletterCampaignSubscription {
     let controller: any AppNewsletterCampaignSubscriptionController
 
-    public init(apiBuilder: NewsletterAPIBuilder) {
+    public static let defaultRoute = NewsletterSubscriptionRoute(
+        prefix: RouterPath("api/v1/newsletter/campaigns"),
+        parameterName: "campaignKey",
+        suffix: RouterPath("subscribe")
+    )
+
+    public init(
+        apiBuilder: NewsletterAPIBuilder,
+        route: NewsletterSubscriptionRoute = AppNewsletterCampaignSubscription.defaultRoute
+    ) {
         self.controller = AppNewsletterCampaignSubscriptionDefaultController(
-            apiBuilder: apiBuilder
+            apiBuilder: apiBuilder,
+            route: route
         )
     }
 

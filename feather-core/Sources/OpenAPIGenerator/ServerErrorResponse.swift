@@ -1,5 +1,5 @@
-import FeatherOpenAPI
-import OpenAPIKit30
+public import FeatherOpenAPI
+public import OpenAPIKit30
 
 public struct ServerErrorCodeField: IntSchemaRepresentable {}
 

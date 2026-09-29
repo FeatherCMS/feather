@@ -21,8 +21,18 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
     public func render(
         markdown: String
     ) async -> String {
+        await render(
+            markdown: markdown,
+            context: WebMarkdownRenderingContext()
+        ).html
+    }
+
+    public func render(
+        markdown: String,
+        context: WebMarkdownRenderingContext
+    ) async -> (html: String, usesFormSubmissionNonce: Bool) {
         guard !markdown.isEmpty else {
-            return markdown
+            return (markdown, false)
         }
         var source = markdown
         let transformers =
@@ -52,29 +62,34 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
                     "error": .string(String(describing: error))
                 ]
             )
-            return markdown
+            return (markdown, false)
         }
         if renderers.isEmpty && source.contains("@") {
             Logger.current.error(
                 "Markdown contains custom blocks but no block renderers are registered."
             )
         }
-        let output = await renderDocument(source: source, renderers: renderers)
-        if output.isEmpty
+        let output = await renderDocument(
+            source: source,
+            renderers: renderers,
+            context: context
+        )
+        if output.html.isEmpty
             && !markdown.whitespaceTrimmed.isEmpty
         {
             Logger.current.warning(
                 "Markdown rendering produced empty output.",
             )
-            return markdown
+            return (markdown, false)
         }
         return output
     }
 
     private func renderDocument(
         source: String,
-        renderers: [any WebMarkdownBlockRenderer]
-    ) async -> String {
+        renderers: [any WebMarkdownBlockRenderer],
+        context: WebMarkdownRenderingContext
+    ) async -> (html: String, usesFormSubmissionNonce: Bool) {
         let normalizedSource =
             source
             .replacingOccurrences(of: "\r\n", with: "\n")
@@ -84,34 +99,49 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
             options: [.parseBlockDirectives]
         )
         var output = ""
+        var usesFormSubmissionNonce = false
         for child in document.children {
-            output += await render(child, renderers: renderers)
+            let rendered = await render(
+                child,
+                renderers: renderers,
+                context: context
+            )
+            output += rendered.html
+            usesFormSubmissionNonce =
+                usesFormSubmissionNonce || rendered.usesFormSubmissionNonce
         }
-        return output
+        return (output, usesFormSubmissionNonce)
     }
 
     private func render(
         _ markup: any Markup,
-        renderers: [any WebMarkdownBlockRenderer]
-    ) async -> String {
+        renderers: [any WebMarkdownBlockRenderer],
+        context: WebMarkdownRenderingContext
+    ) async -> (html: String, usesFormSubmissionNonce: Bool) {
         guard let directive = markup as? BlockDirective else {
-            return HTMLFormatter.format(markup)
+            return (HTMLFormatter.format(markup), false)
         }
 
         let arguments = directiveArguments(from: directive.argumentText)
         var children: [WebMarkdownBlockRendererRequest.Child] = []
+        var childUsesFormSubmissionNonce = false
         for child in directive.children {
             if let childDirective = child as? BlockDirective {
+                let rendered = await render(
+                    childDirective,
+                    renderers: renderers,
+                    context: context
+                )
+                childUsesFormSubmissionNonce =
+                    childUsesFormSubmissionNonce
+                    || rendered.usesFormSubmissionNonce
                 children.append(
                     .init(
                         name: childDirective.name,
                         arguments: directiveArguments(
                             from: childDirective.argumentText
                         ),
-                        html: await render(
-                            childDirective,
-                            renderers: renderers
-                        )
+                        html: rendered.html
                     )
                 )
                 continue
@@ -127,7 +157,9 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
 
         let request = WebMarkdownBlockRendererRequest(
             arguments: arguments,
-            children: children
+            children: children,
+            formSubmissionNonce: context.formSubmissionNonce,
+            formSubmissionFeedback: context.formSubmissionFeedback
         )
         guard
             let renderer = renderers.first(where: {
@@ -135,12 +167,22 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
             })
         else {
             if directive.name.caseInsensitiveCompare("Cell") == .orderedSame {
-                return children.map { $0.html }.joined()
+                return (
+                    children.map { $0.html }.joined(),
+                    childUsesFormSubmissionNonce
+                )
             }
-            return HTMLFormatter.format(markup)
+            return (HTMLFormatter.format(markup), false)
         }
-        return await renderer.render(request: request)
-            ?? HTMLFormatter.format(markup)
+        guard let html = await renderer.render(request: request) else {
+            return (HTMLFormatter.format(markup), false)
+        }
+        return (
+            html,
+            childUsesFormSubmissionNonce
+                || (renderer.usesFormSubmissionNonce
+                    && context.formSubmissionNonce != nil)
+        )
     }
 
     private func directiveArguments(

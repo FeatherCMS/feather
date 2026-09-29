@@ -1,8 +1,8 @@
-import FeatherOpenAPI
-import OpenAPIKit30
+public import FeatherOpenAPI
+public import OpenAPIKit30
 
 public struct SearchQuerySchema: ObjectSchemaRepresentable {
-    var items: SchemaRepresentable
+    var items: any SchemaRepresentable
     var sortFieldKeys: [String]?
     var filters: (any ObjectSchemaRepresentable)?
 
@@ -105,7 +105,7 @@ struct SearchQuerySortListSchema: ArraySchemaRepresentable {
         "\(identifier)SearchQuerySortListSchema"
     }
 
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         SearchQuerySortListItemSchema(
             identifier: identifier,
             sortFieldKeys: sortFieldKeys
@@ -149,12 +149,12 @@ struct SearchResultItemSchema: ObjectSchemaRepresentable {
 }
 
 struct SearchResultItemsSchema: ArraySchemaRepresentable {
-    private var privateItems: SchemaRepresentable
+    private var privateItems: any SchemaRepresentable
     public init<T: SchemaRepresentable>(_ items: T) {
         self.privateItems = items.reference()
     }
 
-    var items: SchemaRepresentable? { privateItems }
+    var items: (any SchemaRepresentable)? { privateItems }
 }
 
 struct SearchResultTotalField: IntSchemaRepresentable {
@@ -163,7 +163,7 @@ struct SearchResultTotalField: IntSchemaRepresentable {
 
 public struct SearchResultDataSchema: ObjectSchemaRepresentable {
 
-    private var items: SchemaRepresentable
+    private var items: any SchemaRepresentable
     public init<T: SchemaRepresentable>(_ items: T) {
         self.items = items
     }

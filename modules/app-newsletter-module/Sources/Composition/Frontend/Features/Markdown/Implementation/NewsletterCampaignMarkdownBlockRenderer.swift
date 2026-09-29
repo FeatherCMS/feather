@@ -1,23 +1,55 @@
-import Foundation
+import HTML
+import SGML
+import WebBuilders
 import WebFrontend
 
 struct NewsletterCampaignMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     let name = "NewsletterCampaign"
+    let usesFormSubmissionNonce = true
+    let submissionRoute: NewsletterSubscriptionRoute
 
     func render(
         request: WebMarkdownBlockRendererRequest
     ) async -> String? {
-        guard let identifier = request.arguments["key"] else { return nil }
-        guard !identifier.isEmpty else { return nil }
-        return
-            "<form method=\"post\" action=\"/api/v1/newsletter/campaigns/\(escape(identifier))/subscribe\" class=\"newsletter-subscription-form\"><label for=\"newsletter-campaign-\(escape(identifier))\">Email</label><input type=\"email\" id=\"newsletter-campaign-\(escape(identifier))\" name=\"email\" required><button type=\"submit\">Subscribe</button></form>"
-    }
-
-    private func escape(_ value: String) -> String {
-        value
-            .replacingOccurrences(of: "&", with: "&amp;")
-            .replacingOccurrences(of: "\"", with: "&quot;")
-            .replacingOccurrences(of: "<", with: "&lt;")
-            .replacingOccurrences(of: ">", with: "&gt;")
+        guard
+            let identifier = request.arguments["key"],
+            !identifier.isEmpty,
+            let nonce = request.formSubmissionNonce
+        else {
+            return nil
+        }
+        let action = submissionRoute.actionPath(for: identifier)
+        var children: [any Element] = []
+        if
+            let feedback = request.formSubmissionFeedback,
+            feedback.source == .newsletter,
+            feedback.key == identifier
+        {
+            let message = feedback.status == .success
+                ? "You are subscribed to the newsletter."
+                : "Your subscription could not be completed. Please try again."
+            let messageClass = feedback.status == .success
+                ? "web-form-feedback web-form-feedback--success"
+                : "web-form-feedback web-form-feedback--failure"
+            children.append(P(message).setClass(messageClass))
+        }
+        children.append(
+            Label {
+                Span("Email")
+                Input()
+                    .type(.email)
+                    .name("email")
+                    .required()
+            }
+        )
+        children.append(
+            Input().type(.hidden).name("nonce").value(nonce)
+        )
+        children.append(Button("Subscribe").type(.submit))
+        let form = Form { children }
+            .method(.post)
+            .action(action)
+            .setClass("newsletter-subscription-form")
+        return Document(root: form).render()
     }
 }

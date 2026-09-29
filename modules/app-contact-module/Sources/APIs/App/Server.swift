@@ -54,7 +54,7 @@ extension APIProtocol {
             },
             method: .post,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/contact/form/{contactFormKey}/submit"
+                "/api/v1/contact/{contactFormKey}/submissions"
             )
         )
     }
@@ -121,8 +121,8 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `POST /api/v1/contact/form/{contactFormKey}/submit`.
-    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/submit/post(appContactFormSubmission)`.
+    /// - Remark: HTTP `POST /api/v1/contact/{contactFormKey}/submissions`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/{contactFormKey}/submissions/post(appContactFormSubmission)`.
     fileprivate func appContactFormSubmission(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,

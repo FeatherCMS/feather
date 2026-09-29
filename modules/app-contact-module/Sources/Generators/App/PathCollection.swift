@@ -8,7 +8,7 @@ struct PathCollection: PathCollectionRepresentable {
         [
             "api/v1/contact/form/{contactFormKey}":
                 AppContactFormGetPathItems(),
-            "api/v1/contact/form/{contactFormKey}/submit":
+            "api/v1/contact/{contactFormKey}/submissions":
                 AppContactFormSubmissionPathItems(),
         ]
     }

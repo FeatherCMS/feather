@@ -5,8 +5,8 @@
 //  Created by Tibor Bödecs on 2026. 03. 13..
 //
 
-import FeatherOpenAPI
-import OpenAPIKit30
+public import FeatherOpenAPI
+public import OpenAPIKit30
 
 public struct CustomResponse: ResponseRepresentable {
 

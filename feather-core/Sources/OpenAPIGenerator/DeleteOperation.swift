@@ -1,12 +1,12 @@
-import FeatherOpenAPI
-import OpenAPIKit30
+public import FeatherOpenAPI
+public import OpenAPIKit30
 
 struct DeleteIdField: StringSchemaRepresentable {
     var example: String? = "id1"
 }
 
 struct DeleteIdListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { DeleteIdField() }
+    var items: (any SchemaRepresentable)? { DeleteIdField() }
 }
 
 struct DeleteOutputRequestField: BoolSchemaRepresentable {
@@ -38,7 +38,7 @@ struct DeleteResultItemSchema: ObjectSchemaRepresentable {
 }
 
 struct DeleteResultListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { DeleteResultItemSchema() }
+    var items: (any SchemaRepresentable)? { DeleteResultItemSchema() }
 }
 
 struct DeleteSummaryCountField: IntSchemaRepresentable {
@@ -83,7 +83,7 @@ public protocol DeleteOperation: BearerProtectedOperation {
 
 extension DeleteOperation {
 
-    public var requestBody: RequestBodyRepresentable? {
+    public var requestBody: (any RequestBodyRepresentable)? {
         DeleteRequestBody().reference()
     }
 

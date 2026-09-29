@@ -16,8 +16,8 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/get(appContactFormGet)`.
     func appContactFormGet(_ input: Operations.AppContactFormGet.Input)
         async throws -> Operations.AppContactFormGet.Output
-    /// - Remark: HTTP `POST /api/v1/contact/form/{contactFormKey}/submit`.
-    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/submit/post(appContactFormSubmission)`.
+    /// - Remark: HTTP `POST /api/v1/contact/{contactFormKey}/submissions`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/{contactFormKey}/submissions/post(appContactFormSubmission)`.
     func appContactFormSubmission(
         _ input: Operations.AppContactFormSubmission.Input
     ) async throws -> Operations.AppContactFormSubmission.Output
@@ -38,8 +38,8 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `POST /api/v1/contact/form/{contactFormKey}/submit`.
-    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/submit/post(appContactFormSubmission)`.
+    /// - Remark: HTTP `POST /api/v1/contact/{contactFormKey}/submissions`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/{contactFormKey}/submissions/post(appContactFormSubmission)`.
     public func appContactFormSubmission(
         path: Operations.AppContactFormSubmission.Input.Path,
         headers: Operations.AppContactFormSubmission.Input.Headers = .init(),

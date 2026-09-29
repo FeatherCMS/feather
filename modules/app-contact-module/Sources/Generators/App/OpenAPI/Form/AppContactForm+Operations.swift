@@ -16,19 +16,19 @@ struct AppContactFormSubmissionResponse: JSONResponseRepresentable {
     var schema = AppContactFormSubmissionResponseSchema().reference()
 }
 struct AppContactFormGetOperation: OperationRepresentable {
-    var tags: [TagRepresentable] { [AppContactFormsTag()] }
-    var parameters: [ParameterRepresentable] {
+    var tags: [any TagRepresentable] { [AppContactFormsTag()] }
+    var parameters: [any ParameterRepresentable] {
         [AppContactFormKeyParameter().reference()]
     }
     var responseMap: ResponseMap { [200: AppContactFormResponse().reference()] }
 }
 
 struct AppContactFormSubmissionOperation: OperationRepresentable {
-    var tags: [TagRepresentable] { [AppContactFormsTag()] }
-    var parameters: [ParameterRepresentable] {
+    var tags: [any TagRepresentable] { [AppContactFormsTag()] }
+    var parameters: [any ParameterRepresentable] {
         [AppContactFormKeyParameter().reference()]
     }
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AppContactFormSubmissionRequestBody().reference()
     }
     var responseMap: ResponseMap {
