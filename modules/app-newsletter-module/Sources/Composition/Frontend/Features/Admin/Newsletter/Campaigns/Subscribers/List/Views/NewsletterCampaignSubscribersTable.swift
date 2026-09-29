@@ -37,44 +37,29 @@ struct NewsletterCampaignSubscribersTable: Component {
                 )
             )
             context.build(
-                NewAdminTabBar(links: [
-                    .init(
-                        label: "Details",
-                        href:
-                            NewsletterAdminRoutes.campaignDetails(
-                                RouterPath(state.newsletterId)
-                            )
-                            .description,
-                        isCurrent: false
-                    ),
-                    .init(
-                        label: "Subscribers",
-                        href:
-                            NewsletterAdminRoutes.campaignSubscribers(
-                                RouterPath(state.newsletterId)
-                            )
-                            .description,
-                        isCurrent: true
-                    ),
-                    .init(
-                        label: "Issues",
-                        href:
-                            NewsletterAdminRoutes.campaignIssues(
-                                RouterPath(state.newsletterId)
-                            )
-                            .description,
-                        isCurrent: false
-                    ),
-                ])
+                NewsletterCampaignTabs(
+                    id: state.newsletterId,
+                    active: .subscribers
+                )
             )
             context.build(
-                NewsletterCampaignSubscribersTableContent(
-                    newsletterId: state.newsletterId,
-                    items: state.items,
-                    pageState: state.pageState,
-                    search: state.search,
-                    permissions: state.permissions
-                )
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Subscribers",
+                        description:
+                            "Manage the subscribers linked to this campaign."
+                    )
+                ) {
+                    context.build(
+                        NewsletterCampaignSubscribersTableContent(
+                            newsletterId: state.newsletterId,
+                            items: state.items,
+                            pageState: state.pageState,
+                            search: state.search,
+                            permissions: state.permissions
+                        )
+                    )
+                }
             )
         }
         .class("cms-section")

@@ -124,14 +124,14 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `POST /api/v1/contact/form/{contactFormKey}/submit`.
-    /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/submit/post(appContactFormSubmission)`.
+    /// - Remark: HTTP `POST /api/v1/contact/{contactFormKey}/submissions`.
+    /// - Remark: Generated from `#/paths//api/v1/contact/{contactFormKey}/submissions/post(appContactFormSubmission)`.
     public enum AppContactFormSubmission {
         public static let id: Swift.String = "appContactFormSubmission"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/contact/form/{contactFormKey}/submit/POST/path`.
+            /// - Remark: Generated from `#/paths/api/v1/contact/{contactFormKey}/submissions/POST/path`.
             public struct Path: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/contact/form/{contactFormKey}/submit/POST/path/contactFormKey`.
+                /// - Remark: Generated from `#/paths/api/v1/contact/{contactFormKey}/submissions/POST/path/contactFormKey`.
                 public var contactFormKey:
                     Components.Parameters.AppContactFormKeyParameter
                 /// Creates a new `Path`.
@@ -146,7 +146,7 @@ public enum Operations {
                 }
             }
             public var path: Operations.AppContactFormSubmission.Input.Path
-            /// - Remark: Generated from `#/paths/api/v1/contact/form/{contactFormKey}/submit/POST/header`.
+            /// - Remark: Generated from `#/paths/api/v1/contact/{contactFormKey}/submissions/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
@@ -191,7 +191,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Contact form submission response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/contact/form/{contactFormKey}/submit/post(appContactFormSubmission)/responses/201`.
+            /// - Remark: Generated from `#/paths//api/v1/contact/{contactFormKey}/submissions/post(appContactFormSubmission)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
             case created(Components.Responses.AppContactFormSubmissionResponse)

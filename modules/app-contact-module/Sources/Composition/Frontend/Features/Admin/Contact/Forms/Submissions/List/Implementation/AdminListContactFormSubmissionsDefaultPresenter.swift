@@ -43,9 +43,7 @@ struct AdminListContactFormSubmissionsDefaultPresenter:
                     pageState: pageState,
                     search: search,
                     error: error,
-                    breadcrumb: ContactAdminRoutes.formSubmissionsBreadcrumb(
-                        RouterPath(formId)
-                    ),
+                    breadcrumb: ContactAdminRoutes.formsBreadcrumb,
                     permissions: .init(Set(permissions.map(PermissionKey.init)))
                 )
             )

@@ -44,31 +44,84 @@ struct NewsletterIssueDetailsView: Component {
                 )
             )
         }
-        return context.build(
-            NewAdminDetailView(
-                breadcrumb: NewsletterAdminRoutes.breadcrumb + [
-                    .init(
-                        label: "Issues",
-                        link:
-                            NewsletterAdminRoutes.campaignIssues(
-                                RouterPath(newsletterId)
-                            )
-                            .description
-                    )
-                ],
-                pageHeader: .primary(
-                    title: "Campaign issue details",
-                    description:
-                        "Review the issue content and delivery schedule."
-                ),
-                fields: [
-                    .init(label: "Subject", value: model.subject),
-                    .init(label: "Content", value: model.content),
-                    .init(label: "Scheduled", value: formattedScheduledAt),
-                ],
-                actions: actions
+        return Section {
+            context.build(
+                NewAdminBreadcrumb(
+                    links: NewsletterAdminRoutes.breadcrumb + [
+                        .init(
+                            label: "Issues",
+                            link:
+                                NewsletterAdminRoutes.campaignIssues(
+                                    RouterPath(newsletterId)
+                                )
+                                .description
+                        )
+                    ]
+                )
             )
-        )
+            context.build(
+                NewAdminPageHeader(
+                    state: .primary(
+                        title: "Campaign issue details",
+                        description:
+                            "Review the issue content and delivery schedule."
+                    )
+                )
+            )
+            context.build(
+                NewsletterCampaignTabs(id: newsletterId, active: .issues)
+            )
+            context.build(
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Issue content",
+                        description:
+                            "Review the subject, message, and delivery schedule."
+                    )
+                ) {
+                    Div {
+                        context.build(
+                            NewAdminDetailField(
+                                label: "Subject",
+                                value: model.subject
+                            )
+                        )
+                        context.build(
+                            NewAdminDetailField(
+                                label: "Content",
+                                value: model.content
+                            )
+                        )
+                        context.build(
+                            NewAdminDetailField(
+                                label: "Scheduled",
+                                value: formattedScheduledAt
+                            )
+                        )
+                    }
+                    .class("admin-detail-view-fields")
+                    .style("display:grid;gap:12px;")
+                    if !actions.isEmpty {
+                        Div {
+                            for action in actions {
+                                context.build(
+                                    NewAdminButton(
+                                        action.label,
+                                        href: action.href,
+                                        style: action.style
+                                    )
+                                )
+                            }
+                        }
+                        .class("new-admin-detail-actions")
+                        .style(
+                            "display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;"
+                        )
+                    }
+                }
+            )
+        }
+        .class("cms-section")
     }
 
     private var formattedScheduledAt: String {

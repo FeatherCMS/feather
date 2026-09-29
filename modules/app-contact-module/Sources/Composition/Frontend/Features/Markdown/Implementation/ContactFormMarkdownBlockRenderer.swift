@@ -1,15 +1,23 @@
 import ContactAppAPI
-import Foundation
+import HTML
+import Hummingbird
+import SGML
+import WebBuilders
 import WebFrontend
 
 struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     let name = "ContactForm"
+    let usesFormSubmissionNonce = true
     let api: ContactAppAPIClient
 
     func render(
         request: WebMarkdownBlockRendererRequest
     ) async -> String? {
-        guard let identifier = request.arguments["key"] else {
+        guard
+            let identifier = request.arguments["key"],
+            !identifier.isEmpty,
+            let nonce = request.formSubmissionNonce
+        else {
             return nil
         }
         do {
@@ -22,7 +30,11 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
                 }
             guard case .ok(let value) = response else { return nil }
             let form = try value.body.json
-            return render(form: form)
+            return render(
+                form: form,
+                nonce: nonce,
+                feedback: request.formSubmissionFeedback
+            )
         }
         catch {
             return nil
@@ -30,57 +42,136 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     }
 
     private func render(
-        form: ContactAppAPI.Components.Schemas.AppContactFormSchema
+        form: ContactAppAPI.Components.Schemas.AppContactFormSchema,
+        nonce: String,
+        feedback: WebFormSubmissionFeedback?
     ) -> String {
         let fields = form.items.sorted { $0.position < $1.position }
-            .map(renderField).joined()
-        return
-            "<form method=\"post\" action=\"/api/v1/contact/forms/\(escape(form.key))/submissions\" class=\"contact-form\">\(fields)<button type=\"submit\">Submit</button></form>"
+            .map(renderField)
+        let action = ContactAppRoutes.submissionAction(for: form.key)
+        var children: [any Element] = []
+        children.append(Input().type(.hidden).name("nonce").value(nonce))
+        if
+            let feedback,
+            feedback.source == .contact,
+            feedback.key == form.key
+        {
+            let message: String
+            let messageClass: String
+            switch feedback.status {
+            case .success:
+                message = form.successMessage.isEmpty
+                    ? "Your message has been sent."
+                    : form.successMessage
+                messageClass = "web-form-feedback web-form-feedback--success"
+            case .failure:
+                message = form.failureMessage.isEmpty
+                    ? "Your message could not be sent. Please try again."
+                    : form.failureMessage
+                messageClass = "web-form-feedback web-form-feedback--failure"
+            }
+            children.append(P(message).setClass(messageClass))
+        }
+        children.append(contentsOf: fields)
+        children.append(Button("Submit").type(.submit))
+        let formElement = Form { children }
+            .method(.post)
+            .action(action)
+            .setClass("contact-form")
+        return Document(root: formElement).render()
     }
 
     private func renderField(
         _ field: ContactAppAPI.Components.Schemas.AppFormFieldSchema
-    ) -> String {
-        let required = field.isRequired ? " required" : ""
-        let label =
-            "<label for=\"contact-form-\(escape(field.key))\">\(escape(field.label))</label>"
+    ) -> any Element {
+        let name = "values[\(field.key)]"
         switch field._type {
         case "textarea":
-            return
-                "<div class=\"contact-form-field\">\(label)<textarea id=\"contact-form-\(escape(field.key))\" name=\"values[\(escape(field.key))]\"\(required)></textarea></div>"
+            let textarea = Textarea("")
+                .name(name)
+            return Label {
+                Span(field.label)
+                if field.isRequired {
+                    textarea.required()
+                }
+                else {
+                    textarea
+                }
+            }
+            .setClass("contact-form-field")
         case "select":
-            let options = (field.allowedValues ?? [])
-                .map {
-                    "<option value=\"\(escape($0))\">\(escape($0))</option>"
+            let select = Select {
+                for value in field.allowedValues ?? [] {
+                    Option(value).value(value)
                 }
-                .joined()
-            return
-                "<div class=\"contact-form-field\">\(label)<select id=\"contact-form-\(escape(field.key))\" name=\"values[\(escape(field.key))]\"\(required)>\(options)</select></div>"
+            }
+            .name(name)
+            return Label {
+                Span(field.label)
+                if field.isRequired {
+                    select.required()
+                }
+                else {
+                    select
+                }
+            }
+            .setClass("contact-form-field")
         case "radio":
-            let options = (field.allowedValues ?? [])
-                .map {
-                    "<label><input type=\"radio\" name=\"values[\(escape(field.key))]\" value=\"\(escape($0))\"\(required)>\(escape($0))</label>"
+            return Fieldset {
+                Legend(field.label)
+                for value in field.allowedValues ?? [] {
+                    Label {
+                        let input = Input()
+                            .type(.radio)
+                            .name(name)
+                            .value(value)
+                        if field.isRequired {
+                            input.required()
+                        }
+                        else {
+                            input
+                        }
+                        Span(value)
+                    }
                 }
-                .joined()
-            return
-                "<fieldset class=\"contact-form-field\"><legend>\(escape(field.label))</legend>\(options)</fieldset>"
+            }
+            .setClass("contact-form-field")
         case "toggle":
-            return
-                "<label class=\"contact-form-field\"><input type=\"checkbox\" id=\"contact-form-\(escape(field.key))\" name=\"values[\(escape(field.key))]\" value=\"true\"\(required)>\(escape(field.label))</label>"
+            let input = Input()
+                .type(.checkbox)
+                .name(name)
+                .value("true")
+            return Label {
+                if field.isRequired {
+                    input.required()
+                }
+                else {
+                    input
+                }
+                Span(field.label)
+            }
+            .setClass("contact-form-field")
         case "hidden":
-            return
-                "<input type=\"hidden\" id=\"contact-form-\(escape(field.key))\" name=\"values[\(escape(field.key))]\" value=\"true\">"
+            return Input()
+                .type(.hidden)
+                .name(name)
+                .value("true")
         default:
-            return
-                "<div class=\"contact-form-field\">\(label)<input type=\"text\" id=\"contact-form-\(escape(field.key))\" name=\"values[\(escape(field.key))]\"\(required)></div>"
+            let type: Input.Types = field.key.lowercased().contains("email")
+                ? .email : .text
+            let input = Input()
+                .type(type)
+                .name(name)
+            return Label {
+                Span(field.label)
+                if field.isRequired {
+                    input.required()
+                }
+                else {
+                    input
+                }
+            }
+            .setClass("contact-form-field")
         }
-    }
-
-    private func escape(_ value: String) -> String {
-        value
-            .replacingOccurrences(of: "&", with: "&amp;")
-            .replacingOccurrences(of: "\"", with: "&quot;")
-            .replacingOccurrences(of: "<", with: "&lt;")
-            .replacingOccurrences(of: ">", with: "&gt;")
     }
 }

@@ -6,9 +6,9 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
+import WebFrontend
 
 protocol AppContactFormSubmissionController: Sendable {
-
     func submit(
         request: Request,
         context: DefaultRequestContext
@@ -20,9 +20,6 @@ extension AppContactFormSubmissionController {
     func route(
         on router: Router<DefaultRequestContext>
     ) {
-        router.post(
-            "/api/v1/contact/forms/:formKey/submissions",
-            use: submit
-        )
+        router.post(ContactAppRoutes.submission, use: submit)
     }
 }

@@ -9,4 +9,6 @@ import WebComponents
 
 struct AppNewsletterCampaignSubscriptionForm: Codable, Sendable {
     let email: String
+    let nonce: String?
+    let redirect: String?
 }

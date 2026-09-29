@@ -20,9 +20,6 @@ struct ContactFormEmailsTable: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(
-                AdminContactFormTabs(formId: state.id, active: .emails)
-            )
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
@@ -33,15 +30,28 @@ struct ContactFormEmailsTable: Component {
                     )
                 )
             )
-            if let error = state.error {
-                P(error).class("new-admin-form__error")
-            }
             context.build(
-                ContactFormEmailsTableContent(
-                    id: state.id,
-                    mails: state.mails,
-                    permissions: state.permissions
-                )
+                AdminContactFormTabs(formId: state.id, active: .emails)
+            )
+            context.build(
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Emails",
+                        description:
+                            "Manage the notification emails configured for this contact form."
+                    )
+                ) {
+                    if let error = state.error {
+                        P(error).class("new-admin-form__error")
+                    }
+                    context.build(
+                        ContactFormEmailsTableContent(
+                            id: state.id,
+                            mails: state.mails,
+                            permissions: state.permissions
+                        )
+                    )
+                }
             )
         }
         .class("cms-section")

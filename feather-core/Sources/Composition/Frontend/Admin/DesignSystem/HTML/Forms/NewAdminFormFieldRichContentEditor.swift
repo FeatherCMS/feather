@@ -107,15 +107,27 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             function openEmbedPicker(type, apply) {
               let modal = document.getElementById('mceEmbedPicker');
               if (!modal) {
-                modal = document.createElement('div'); modal.id = 'mceEmbedPicker'; modal.className = 'mce-embed-picker';
-                modal.innerHTML = '<div class="mce-embed-picker-dialog"><div class="mce-embed-picker-header"><strong></strong><button type="button" class="button secondary-ghost mce-embed-picker-close" aria-label="Close" title="Close" data-embed-picker-close>Close</button></div><div class="mce-embed-picker-search"><input type="search" placeholder="Search…"><button type="button">Search</button></div><div class="mce-embed-picker-list"></div></div>';
+                modal = document.createElement('dialog'); modal.id = 'mceEmbedPicker'; modal.className = 'mce-embed-picker';
+                modal.setAttribute('aria-label', 'Choose from list');
+                modal.innerHTML = '<div class="new-admin-dialog__panel mce-embed-picker-dialog"><div class="new-admin-dialog__header mce-embed-picker-header"><h2></h2><button type="button" class="button secondary-ghost new-admin-dialog__close mce-embed-picker-close" aria-label="Close" title="Close" data-embed-picker-close>Close</button></div><div class="mce-embed-picker-search"><input type="search" placeholder="Search…"><button type="button">Search</button></div><div class="mce-embed-picker-list"></div></div>';
                 editorRoot.append(modal);
-                modal.querySelector('[data-embed-picker-close]').addEventListener('click', () => modal.classList.remove('is-visible'));
+                modal.addEventListener('close', () => document.documentElement.classList.remove('new-admin-dialog-open'));
+                modal.addEventListener('click', event => { if (event.target === modal) { if (modal.close) modal.close(); else modal.removeAttribute('open'); } });
+                modal.querySelector('[data-embed-picker-close]').addEventListener('click', () => { if (modal.close) modal.close(); else modal.removeAttribute('open'); });
                 modal.querySelector('.mce-embed-picker-search button').addEventListener('click', () => loadEmbedPicker(modal));
                 modal.querySelector('.mce-embed-picker-search input').addEventListener('keydown', event => { if (event.key === 'Enter') loadEmbedPicker(modal); });
               }
               modal.dataset.embedType = type; modal.__apply = apply;
-              modal.classList.add('is-visible');
+              modal.querySelector('.mce-embed-picker-header h2').textContent = 'Choose from list';
+              if (!modal.open) {
+                if (modal.showModal) {
+                  document.documentElement.classList.add('new-admin-dialog-open');
+                  modal.showModal();
+                } else {
+                  modal.setAttribute('open', '');
+                }
+              }
+              modal.querySelector('.mce-embed-picker-search input').focus();
               loadEmbedPicker(modal);
             }
             async function loadEmbedPicker(modal) {
@@ -127,7 +139,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 const response = await fetch(url, { credentials: 'same-origin' }); const html = await response.text();
                 const doc = new DOMParser().parseFromString(html, 'text/html'); const items = [...doc.querySelectorAll('[data-mce-picker-item]')];
                 list.innerHTML = items.length ? '' : '<p>No matching items.</p>';
-                items.forEach(item => { const button = document.createElement('button'); button.type = 'button'; button.textContent = item.getAttribute('data-mce-picker-label') || item.textContent.trim(); button.addEventListener('click', () => { modal.__apply(item.getAttribute('data-mce-picker-item'), button.textContent); modal.classList.remove('is-visible'); render(); }); list.append(button); });
+                items.forEach(item => { const button = document.createElement('button'); button.type = 'button'; button.textContent = item.getAttribute('data-mce-picker-label') || item.textContent.trim(); button.addEventListener('click', () => { modal.__apply(item.getAttribute('data-mce-picker-item'), button.textContent); if (modal.close) modal.close(); else modal.removeAttribute('open'); render(); }); list.append(button); });
               } catch (_) { list.innerHTML = '<p class="error">Unable to load items.</p>'; }
             }
             function renderEmbedControl(body, block, update) {
@@ -714,46 +726,70 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             Custom("\(root) .drop-marker.visible") {
                 Opacity(1)
             },
-            Custom("\(root) .mce-embed-picker") {
+            Custom("\(root) dialog.mce-embed-picker") {
                 Position(.fixed)
                 Top(0.px)
                 Right(0.px)
                 Bottom(0.px)
                 Left(0.px)
                 ZIndex(.number(20))
-                Display(.none)
-                AlignItems(.center)
-                JustifyContent(.center)
+                Width(100.percent)
+                Height(100.vh)
+                MaxWidth(100.percent)
+                MaxHeight(100.vh)
+                Margin(0.px)
+                Border(0)
+                BorderRadius(0.px)
+                Overflow(.visible)
                 Padding(24.px)
                 Background(.transparent)
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
             },
-            Custom("\(root) .mce-embed-picker::before") {
-                Content(.string("\"\""))
-                Position(.absolute)
-                UnsafeRawProperty(name: "inset", value: "0")
-                Background(
-                    .variable(TokenKey.Colors.Materials.Primary.tint)
-                )
-                Opacity(0.75)
-            },
-            Custom("\(root) .mce-embed-picker.is-visible") {
+            Custom("\(root) dialog.mce-embed-picker[open]") {
                 Display(.flex)
+                AlignItems(.center)
+                JustifyContent(.center)
+            },
+            Custom("\(root) dialog.mce-embed-picker::backdrop") {
+                Background(
+                    color: .color(
+                        CSSColor(stringLiteral: "rgba(128, 128, 128, 0.46)")
+                    )
+                )
+                BackdropFilter(.blur(12.px))
+            },
+            Custom(
+                "html.new-admin-dialog-open, html.new-admin-dialog-open body"
+            ) {
+                Overflow(.hidden)
             },
             Custom("\(root) .mce-embed-picker-dialog") {
                 Position(.relative)
                 ZIndex(.number(1))
-                Width(90.percent)
-                MaxWidth(720.px)
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(18.px)
+                Width(92.percent)
+                MaxWidth(640.px)
                 MaxHeight(90.vh)
                 Overflow(.auto)
                 Border(
                     1.px,
                     .solid,
-                    .variable(TokenKey.Colors.Materials.Primary.border)
+                    .variable(TokenKey.Colors.Materials.Secondary.border)
                 )
-                BorderRadius(12.px)
-                Padding(18.px)
-                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+                BorderRadius(18.px)
+                Padding(24.px)
+                Background(
+                    color: .color(CSSColor(stringLiteral: "#ffffff"))
+                )
+                BoxShadow(
+                    0.px,
+                    18.px,
+                    blur: 48.px,
+                    spread: 0.px,
+                    color: CSSColor(stringLiteral: "rgba(0, 0, 0, 0.24)")
+                )
             },
             Custom(
                 "\(root) .mce-embed-picker-header, \(root) .mce-embed-picker-search"
@@ -764,7 +800,15 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             },
             Custom("\(root) .mce-embed-picker-header") {
                 JustifyContent(.spaceBetween)
-                Margin(bottom: 14.px)
+                Gap(16.px)
+            },
+            Custom("\(root) .mce-embed-picker-header h2") {
+                Margin(0.px)
+                FontSize(1.35.rem)
+                LineHeight(1.2)
+            },
+            Custom("\(root) .mce-embed-picker-close") {
+                FlexShrink(0)
             },
             Custom("\(root) .mce-embed-picker-search") {
                 Margin(bottom: 12.px)
@@ -800,6 +844,20 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             Media {
                 for selector in baseSelectors {
                     selector
+                }
+            },
+            Media(.prefersColorScheme(.dark)) {
+                Custom("\(root) dialog.mce-embed-picker::backdrop") {
+                    Background(
+                        color: .color(
+                            CSSColor(stringLiteral: "rgba(0, 0, 0, 0.68)")
+                        )
+                    )
+                }
+                Custom("\(root) .mce-embed-picker-dialog") {
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Primary.tint)
+                    )
                 }
             },
             Media(.maxWidth(900.px)) {

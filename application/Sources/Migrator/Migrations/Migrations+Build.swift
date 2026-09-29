@@ -11,6 +11,7 @@ import MediaInfrastructure
 import NewsletterInfrastructure
 import NewsInfrastructure
 import RedirectInfrastructure
+import SystemApplication
 import SystemInfrastructure
 import UserInfrastructure
 import WebInfrastructure
@@ -51,6 +52,11 @@ public func buildMigrations(
 
         // Seed data
         SystemInfrastructure.TableSeedMigration(
+            connection: connection,
+            events: events,
+            idGenerator: idGenerator
+        ),
+        SystemInfrastructure.MailFromVariableMigration(
             connection: connection,
             events: events,
             idGenerator: idGenerator
@@ -100,6 +106,7 @@ public func buildMigrations(
 public func buildMigrationEventPublisher() -> any EventPublisher {
     var events = EventRegistry()
     SystemInfrastructure.EventHandlers.register(in: &events)
+    FeatherMailFromAddressEventHandlers.register(in: &events)
     AuthInfrastructure.EventHandlers.register(in: &events)
     UserInfrastructure.EventHandlers.register(in: &events)
     AccountInfrastructure.EventHandlers.register(in: &events)

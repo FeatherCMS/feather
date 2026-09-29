@@ -2,7 +2,7 @@ import FeatherOpenAPI
 import OpenAPIKit30
 
 struct ContactAllowedValuesSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { AppContactNameField() }
+    var items: (any SchemaRepresentable)? { AppContactNameField() }
 }
 
 struct AppContactIdField: StringSchemaRepresentable {}
@@ -49,7 +49,7 @@ struct AppFormFieldSchema: ObjectSchemaRepresentable {
     }
 }
 struct AppFormFieldsSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { AppFormFieldSchema().reference() }
+    var items: (any SchemaRepresentable)? { AppFormFieldSchema().reference() }
 }
 struct AppContactFormSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {

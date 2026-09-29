@@ -25,20 +25,3 @@ public protocol VariableQueries: Sendable {
         query: VariableList.Query
     ) async throws -> Int
 }
-
-extension VariableQueries {
-
-    public func get(
-        _ key: String
-    ) async throws -> String? {
-        try await list(
-            query: .init(
-                page: .init(size: 1, number: 1),
-                ids: [key]
-            )
-        )
-        .items
-        .first { $0.key == key }?
-        .value
-    }
-}

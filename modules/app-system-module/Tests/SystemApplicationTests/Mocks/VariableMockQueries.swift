@@ -28,6 +28,12 @@ actor VariableMockQueries: VariableQueries {
         self.countResult = countResult
     }
 
+    func get(
+        _ key: String
+    ) async throws -> String? {
+        listResult.items.first { $0.key == key }?.value
+    }
+
     func find(
         id: String
     ) async throws -> VariableDetail {

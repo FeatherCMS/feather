@@ -9,14 +9,21 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
     let contentRenderer: any WebContentRenderer
 
     func render(
-        content: AppPublicContentModel
-    ) async -> HTMLResponse {
-        let context = await buildPageContext(
-            context: buildContext(from: content.results)
+        content: AppPublicContentModel,
+        formSubmissionNonce: String,
+        formSubmissionFeedback: WebFormSubmissionFeedback?
+    ) async -> (response: HTMLResponse, usesFormSubmissionNonce: Bool) {
+        let page = await buildPageContext(
+            context: buildContext(from: content.results),
+            formSubmissionNonce: formSubmissionNonce,
+            formSubmissionFeedback: formSubmissionFeedback
         )
-        return themeRenderer.render(
-            templateIdentifier: content.metadata.template,
-            context: context
+        return (
+            themeRenderer.render(
+                templateIdentifier: content.metadata.template,
+                context: page.context
+            ),
+            page.usesFormSubmissionNonce
         )
     }
 
@@ -33,36 +40,54 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
     }
 
     private func buildPageContext(
-        context: [String: any Sendable]
-    ) async -> [String: any Sendable] {
+        context: [String: any Sendable],
+        formSubmissionNonce: String,
+        formSubmissionFeedback: WebFormSubmissionFeedback?
+    ) async -> (
+        context: [String: any Sendable],
+        usesFormSubmissionNonce: Bool
+    ) {
         let pageKey = "page"
         guard let page = context[pageKey] as? [String: any Sendable] else {
-            return context
+            return (context, false)
         }
         var result = context
-        result[pageKey] = await renderPageContentsToContext(
-            context: page
+        let rendered = await renderPageContentsToContext(
+            context: page,
+            formSubmissionNonce: formSubmissionNonce,
+            formSubmissionFeedback: formSubmissionFeedback
         )
-        return result
+        result[pageKey] = rendered.context
+        return (result, rendered.usesFormSubmissionNonce)
     }
 
     private func renderPageContentsToContext(
-        context: [String: any Sendable]
-    ) async -> [String: any Sendable] {
+        context: [String: any Sendable],
+        formSubmissionNonce: String,
+        formSubmissionFeedback: WebFormSubmissionFeedback?
+    ) async -> (
+        context: [String: any Sendable],
+        usesFormSubmissionNonce: Bool
+    ) {
         var result = context
         let contents = context["contents"]
         let markdown =
             (contents as? [String: any Sendable])?["html"] as? String
             ?? (contents as? [String: String])?["html"]
             ?? (context["content"] as? String)
-        guard let markdown else { return result }
+        guard let markdown else { return (result, false) }
         var renderedContents: [String: any Sendable] =
             (contents as? [String: any Sendable])
             ?? ["html": markdown]
-        renderedContents["html"] = await contentRenderer.render(
-            markdown: markdown
+        let rendered = await contentRenderer.render(
+            markdown: markdown,
+            context: WebMarkdownRenderingContext(
+                formSubmissionNonce: formSubmissionNonce,
+                formSubmissionFeedback: formSubmissionFeedback
+            )
         )
+        renderedContents["html"] = rendered.html
         result["contents"] = renderedContents
-        return result
+        return (result, rendered.usesFormSubmissionNonce)
     }
 }
