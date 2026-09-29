@@ -6,8 +6,11 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
+import WebFrontend
 
 protocol AppNewsletterCampaignSubscriptionController: Sendable {
+    var route: NewsletterSubscriptionRoute { get }
+
     func subscribe(
         request: Request,
         context: DefaultRequestContext
@@ -18,9 +21,6 @@ extension AppNewsletterCampaignSubscriptionController {
     func route(
         on router: Router<DefaultRequestContext>
     ) {
-        router.post(
-            "/api/v1/newsletter/campaigns/:campaignId/subscribe",
-            use: subscribe
-        )
+        router.post(route.routerPath, use: subscribe)
     }
 }

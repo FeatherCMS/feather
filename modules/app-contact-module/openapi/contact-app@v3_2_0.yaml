@@ -18,7 +18,7 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/AppContactFormResponse'
-  /api/v1/contact/form/{contactFormKey}/submit:
+  /api/v1/contact/{contactFormKey}/submissions:
     post:
       tags:
       - ContactForms

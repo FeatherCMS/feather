@@ -245,6 +245,15 @@
       }
     },
     {
+      "identity" : "swift-mustache",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hummingbird-project/swift-mustache",
+      "state" : {
+        "revision" : "745ed99c22ad23aeb1dede7142c6f04ee6b6d5ae",
+        "version" : "2.1.1"
+      }
+    },
+    {
       "identity" : "swift-nanoid",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/binarybirds/swift-nanoid",

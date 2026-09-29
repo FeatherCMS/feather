@@ -28,7 +28,11 @@ struct AdminViewNewsletterCampaignSubscriberDefaultPresenter:
                 status: item.status,
                 isEdit: true,
                 error: nil,
-                editAction: nil
+                editAction: nil,
+                pageHeader: .primary(
+                    title: "Campaign subscriber",
+                    description: "Review this campaign subscription."
+                )
             )
         )
         return try await renderingEngine.renderNewAdminPage(

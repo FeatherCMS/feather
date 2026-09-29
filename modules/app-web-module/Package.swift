@@ -205,6 +205,7 @@ let package = Package(
             name: "WebFrontend",
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
+                .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "Markdown", package: "swift-markdown"),
                 .product(name: "Mustache", package: "swift-mustache"),
                 .product(name: "SystemContracts", package: "app-system-module"),
@@ -235,6 +236,14 @@ let package = Package(
             dependencies: [
                 .target(name: "WebApplication")
             ],
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "WebFrontendTests",
+            dependencies: [
+                .target(name: "WebFrontend")
+            ],
+            path: "Tests/WebFrontendTests",
             swiftSettings: swiftSettings
         ),
         .testTarget(

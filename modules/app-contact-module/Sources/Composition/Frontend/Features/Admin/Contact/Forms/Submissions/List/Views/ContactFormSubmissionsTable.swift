@@ -22,9 +22,6 @@ struct ContactFormSubmissionsTable: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(
-                AdminContactFormTabs(formId: state.formId, active: .submissions)
-            )
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
@@ -34,17 +31,33 @@ struct ContactFormSubmissionsTable: Component {
                     )
                 )
             )
-            if let error = state.error {
-                P(error).class("new-admin-form__error")
-            }
             context.build(
-                ContactFormSubmissionsTableContent(
+                AdminContactFormTabs(
                     formId: state.formId,
-                    items: state.items,
-                    pageState: state.pageState,
-                    search: state.search,
-                    permissions: state.permissions
+                    active: .submissions
                 )
+            )
+            context.build(
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Submissions",
+                        description:
+                            "Review submissions received through this contact form."
+                    )
+                ) {
+                    if let error = state.error {
+                        P(error).class("new-admin-form__error")
+                    }
+                    context.build(
+                        ContactFormSubmissionsTableContent(
+                            formId: state.formId,
+                            items: state.items,
+                            pageState: state.pageState,
+                            search: state.search,
+                            permissions: state.permissions
+                        )
+                    )
+                }
             )
         }
         .class("cms-section")

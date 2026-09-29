@@ -30,7 +30,12 @@ struct AdminEditNewsletterIssueDefaultPresenter:
                     scheduledAt: model.scheduledAt,
                     newsletterId: model.newsletterId,
                     issueId: issueId,
-                    error: error
+                    error: error,
+                    pageHeader: .primary(
+                        title: "Edit campaign issue",
+                        description:
+                            "Compose the issue content and delivery schedule."
+                    )
                 )
             )
         )

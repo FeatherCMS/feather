@@ -38,44 +38,26 @@ struct NewsletterIssuesTable: Component {
                 )
             )
             context.build(
-                NewAdminTabBar(links: [
-                    .init(
-                        label: "Details",
-                        href:
-                            NewsletterAdminRoutes.campaignDetails(
-                                RouterPath(state.newsletterId)
-                            )
-                            .description,
-                        isCurrent: false
-                    ),
-                    .init(
-                        label: "Subscribers",
-                        href:
-                            NewsletterAdminRoutes.campaignSubscribers(
-                                RouterPath(state.newsletterId)
-                            )
-                            .description,
-                        isCurrent: false
-                    ),
-                    .init(
-                        label: "Issues",
-                        href:
-                            NewsletterAdminRoutes.campaignIssues(
-                                RouterPath(state.newsletterId)
-                            )
-                            .description,
-                        isCurrent: true
-                    ),
-                ])
+                NewsletterCampaignTabs(id: state.newsletterId, active: .issues)
             )
             context.build(
-                NewsletterIssuesTableContent(
-                    newsletterId: state.newsletterId,
-                    items: state.items,
-                    pageState: state.pageState,
-                    permissions: state.permissions,
-                    search: state.search
-                )
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Issues",
+                        description:
+                            "Manage the issues scheduled for this campaign."
+                    )
+                ) {
+                    context.build(
+                        NewsletterIssuesTableContent(
+                            newsletterId: state.newsletterId,
+                            items: state.items,
+                            pageState: state.pageState,
+                            permissions: state.permissions,
+                            search: state.search
+                        )
+                    )
+                }
             )
         }
         .class("cms-section")

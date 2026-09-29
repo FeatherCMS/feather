@@ -17,9 +17,6 @@ struct ContactFormEditPage: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(
-                AdminContactFormTabs(formId: state.key, active: .details)
-            )
             context.build(NewAdminBreadcrumb(links: state.breadcrumb))
             context.build(
                 NewAdminPageHeader(
@@ -33,13 +30,27 @@ struct ContactFormEditPage: Component {
                 )
             )
             context.build(
-                ContactFormForm(
-                    state: state.form,
-                    action: ContactAdminRoutes.formEdit(RouterPath(state.key))
-                        .description,
-                    submitLabel: "Save changes",
-                    isReadOnly: state.isReadOnly
-                )
+                AdminContactFormTabs(formId: state.key, active: .details)
+            )
+            context.build(
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Form configuration",
+                        description:
+                            "Configure the form settings and selected fields."
+                    )
+                ) {
+                    context.build(
+                        ContactFormForm(
+                            state: state.form,
+                            action: ContactAdminRoutes.formEdit(
+                                RouterPath(state.key)
+                            ).description,
+                            submitLabel: "Save changes",
+                            isReadOnly: state.isReadOnly
+                        )
+                    )
+                }
             )
         }
         .class("cms-section")

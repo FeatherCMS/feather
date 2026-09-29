@@ -15,13 +15,23 @@ import UserDomain
 public struct AddInvitation: UseCase {
     enum Error: UseCaseError {
         case roleNotFound(String)
+        case mailFromNotConfigured
 
         var message: String {
             switch self {
             case .roleNotFound(let roleID):
                 "Role not found: \(roleID)"
+            case .mailFromNotConfigured:
+                "System mail from address is not configured. Configure the system-settings-mail-from-address variable in System → Variables."
             }
         }
+    }
+
+    private struct MailContext: Sendable {
+        let invitation: Invitation
+        let publicBaseURL: String
+        let mailFromAddress: String
+        let mailFromName: String?
     }
 
     struct Action: PermissionAction {
@@ -69,6 +79,17 @@ public struct AddInvitation: UseCase {
         }
 
         let model = try await transaction.run { scope, context in
+            guard
+                let mailFromAddress = try await scope.variable.get(
+                    "system-settings-mail-from-address"
+                )?.whitespaceTrimmed,
+                !mailFromAddress.isEmpty
+            else {
+                throw Error.mailFromNotConfigured
+            }
+            let mailFromName = try await scope.variable.get(
+                "system-settings-mail-from-name"
+            )?.whitespaceTrimmed.emptyToNil
             let identityRepository = scope.identity
             let roleRepository = scope.role
             let token = generateToken()
@@ -103,12 +124,17 @@ public struct AddInvitation: UseCase {
                 configuredPublicBaseURL?.isEmpty == false
                 ? configuredPublicBaseURL!
                 : "http://localhost:3456"
-            return (invitation: invitation, publicBaseURL: publicBaseURL)
+            return MailContext(
+                invitation: invitation,
+                publicBaseURL: publicBaseURL,
+                mailFromAddress: mailFromAddress,
+                mailFromName: mailFromName
+            )
         }
 
         try await mailSender.send(
             .init(
-                from: .init("info@binarybirds.com"),
+                from: .init(model.mailFromAddress, name: model.mailFromName),
                 to: [.init(model.invitation.email)],
                 subject: "Application - Invitation",
                 body: #"""

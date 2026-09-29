@@ -3,6 +3,8 @@ public import FeatherContracts
 public struct WebMarkdownBlockRendererRequest: Sendable, ExecutionContext {
     public let arguments: [String: String]
     public let children: [Child]
+    public let formSubmissionNonce: String?
+    public let formSubmissionFeedback: WebFormSubmissionFeedback?
 
     public struct Child: Sendable {
         public let name: String
@@ -22,9 +24,13 @@ public struct WebMarkdownBlockRendererRequest: Sendable, ExecutionContext {
 
     public init(
         arguments: [String: String] = [:],
-        children: [Child] = []
+        children: [Child] = [],
+        formSubmissionNonce: String? = nil,
+        formSubmissionFeedback: WebFormSubmissionFeedback? = nil
     ) {
         self.arguments = arguments
         self.children = children
+        self.formSubmissionNonce = formSubmissionNonce
+        self.formSubmissionFeedback = formSubmissionFeedback
     }
 }

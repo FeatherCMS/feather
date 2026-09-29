@@ -1,8 +1,8 @@
 import FeatherOpenAPI
 
 struct AppContactFormSubmissionPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { AppContactFormSubmissionOperation() }
+    var post: (any OperationRepresentable)? { AppContactFormSubmissionOperation() }
 }
 struct AppContactFormGetPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { AppContactFormGetOperation() }
+    var get: (any OperationRepresentable)? { AppContactFormGetOperation() }
 }

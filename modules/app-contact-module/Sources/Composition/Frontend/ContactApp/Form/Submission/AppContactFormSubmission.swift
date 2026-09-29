@@ -10,7 +10,9 @@ import WebComponents
 public struct AppContactFormSubmission {
     let controller: any AppContactFormSubmissionController
 
-    public init(apiBuilder: ContactAPIBuilder) {
+    public init(
+        apiBuilder: ContactAPIBuilder
+    ) {
         self.controller = AppContactFormSubmissionDefaultController(
             apiBuilder: apiBuilder
         )

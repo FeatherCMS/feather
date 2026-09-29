@@ -10,7 +10,9 @@ public enum ContactMarkdownEventHandlers {
             event: WebMarkdownBlockRendererProvider.self,
             context: WebMarkdownBlockRendererRequest.self
         ) { _, _ in
-            ContactFormMarkdownBlockRenderer(api: api)
+            ContactFormMarkdownBlockRenderer(
+                api: api
+            )
         }
     }
 }

@@ -1,5 +1,5 @@
 {
-  "originHash" : "8ff5fd2fcfa1562632d74a081a44648b99a8a30f0fbb3c8a4c47ffe8b9d80a22",
+  "originHash" : "8545135344af2a5e304c928694bf4149d44d9d0325a2b1ea901c6b8bfab0dc3c",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -231,8 +231,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/hummingbird-project/swift-mustache",
       "state" : {
-        "revision" : "0b91b3127baee1d97c45a7390a49779256b4295d",
-        "version" : "2.1.0"
+        "revision" : "745ed99c22ad23aeb1dede7142c6f04ee6b6d5ae",
+        "version" : "2.1.1"
       }
     },
     {

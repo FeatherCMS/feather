@@ -4,6 +4,8 @@ import Hummingbird
 protocol AppPublicContentPresenter: Sendable {
 
     func render(
-        content: AppPublicContentModel
-    ) async -> HTMLResponse
+        content: AppPublicContentModel,
+        formSubmissionNonce: String,
+        formSubmissionFeedback: WebFormSubmissionFeedback?
+    ) async -> (response: HTMLResponse, usesFormSubmissionNonce: Bool)
 }

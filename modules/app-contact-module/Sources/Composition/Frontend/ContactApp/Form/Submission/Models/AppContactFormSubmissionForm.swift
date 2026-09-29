@@ -9,4 +9,6 @@ import WebComponents
 
 struct AppContactFormSubmissionForm: Codable, Sendable {
     let values: [String: String]
+    let nonce: String?
+    let redirect: String?
 }

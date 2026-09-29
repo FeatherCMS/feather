@@ -11,6 +11,25 @@ import Foundation
 import SystemApplication
 
 public struct RequestMagicLink: UseCase {
+    public enum Error: FeatherApplication.UseCaseError {
+        case mailFromNotConfigured
+
+        public var message: String {
+            switch self {
+            case .mailFromNotConfigured:
+                "System mail from address is not configured. Configure the system-settings-mail-from-address variable in System → Variables."
+            }
+        }
+    }
+
+    private struct MailContext: Sendable {
+        let token: String
+        let publicBaseURL: String
+        let template: String?
+        let mailFromAddress: String
+        let mailFromName: String?
+    }
+
     let transaction: any TransactionExecutor<WriteRequestMagicLink>
     let mailSender: any MailSender
 
@@ -38,8 +57,20 @@ public struct RequestMagicLink: UseCase {
     public func execute(
         _ input: Input
     ) async throws -> Bool {
-        let result: (token: String, publicBaseURL: String, template: String?)? =
+        let result: MailContext? =
             try await transaction.run { scope in
+                guard
+                    let mailFromAddress = try await scope.variable.get(
+                        "system-settings-mail-from-address"
+                    )?.whitespaceTrimmed,
+                    !mailFromAddress.isEmpty
+                else {
+                    throw Error.mailFromNotConfigured
+                }
+                let mailFromName = try await scope.variable.get(
+                    "system-settings-mail-from-name"
+                )?.whitespaceTrimmed.emptyToNil
+
                 guard
                     let authEmail = try await scope.authEmail.findBy(
                         email: input.email
@@ -69,12 +100,14 @@ public struct RequestMagicLink: UseCase {
                     }
                     ?? "http://localhost:3456"
 
-                return (
+                return MailContext(
                     token: token,
                     publicBaseURL: publicBaseURL,
                     template: try await scope.variable.get(
                         "auth.magic_link.email.template"
-                    )
+                    ),
+                    mailFromAddress: mailFromAddress,
+                    mailFromName: mailFromName
                 )
             }
 
@@ -106,7 +139,7 @@ public struct RequestMagicLink: UseCase {
 
         try await mailSender.send(
             .init(
-                from: .init("info@binarybirds.com", name: "Binary Birds"),
+                from: .init(result.mailFromAddress, name: result.mailFromName),
                 to: [.init(input.email)],
                 subject: "Application - Sign In Link",
                 body: body

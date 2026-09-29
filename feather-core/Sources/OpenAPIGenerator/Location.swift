@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 03. 19..
 //
 
-import FeatherOpenAPI
+public import FeatherOpenAPI
 
 public struct Location: LocationRepresentable {
     public var location: String

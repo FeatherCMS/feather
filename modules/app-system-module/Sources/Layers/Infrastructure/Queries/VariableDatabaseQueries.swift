@@ -96,10 +96,10 @@ public struct VariableDatabaseQueries: VariableQueries {
     }
 
     public func get(
-        _ name: String
+        _ key: String
     ) async throws -> String? {
         try await VariableTable(connection: context.connection)
-            .find(name: name)?
+            .find(key: key)?
             .value
     }
 

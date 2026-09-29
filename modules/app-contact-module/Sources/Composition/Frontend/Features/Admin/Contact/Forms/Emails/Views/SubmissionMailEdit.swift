@@ -16,9 +16,6 @@ struct SubmissionMailEdit: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(
-                AdminContactFormTabs(formId: formId, active: .emails)
-            )
             context.build(NewAdminBreadcrumb(links: breadcrumb))
             context.build(
                 NewAdminPageHeader(
@@ -29,15 +26,28 @@ struct SubmissionMailEdit: Component {
                     )
                 )
             )
-            replacementVariables
             context.build(
-                SubmissionMailForm(
-                    mail: mail,
-                    action:
-                        "/admin/contact/forms/\(formId)/emails/\(mail.id)/edit/",
-                    submitLabel: "Save",
-                    error: error
-                )
+                AdminContactFormTabs(formId: formId, active: .emails)
+            )
+            context.build(
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Notification email",
+                        description:
+                            "Configure the notification message for this contact form."
+                    )
+                ) {
+                    replacementVariables
+                    context.build(
+                        SubmissionMailForm(
+                            mail: mail,
+                            action:
+                                "/admin/contact/forms/\(formId)/emails/\(mail.id)/edit/",
+                            submitLabel: "Save",
+                            error: error
+                        )
+                    )
+                }
             )
         }
         .class("cms-section")

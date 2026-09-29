@@ -46,6 +46,10 @@ struct AdminEditNewsletterCampaignDefaultPresenter:
                     isDetails: false,
                     permissions: NewAdminListActions(
                         Set(permissions.map(PermissionKey.init))
+                    ),
+                    pageHeader: .primary(
+                        title: "Edit campaign",
+                        description: "Update this newsletter campaign."
                     )
                 )
             )

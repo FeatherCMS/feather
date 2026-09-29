@@ -74,8 +74,7 @@ public enum WebPublicContentEventHandlers {
                 )
             ],
         ]
-        switch context.baseMetadata.template {
-        case "web.page":
+        if context.baseMetadata.referenceType == "web.page" {
             guard !context.baseMetadata.referenceId.isEmpty else { return nil }
             let referenceID = context.baseMetadata.referenceId
             let response = try await api.withOpenAPIRepositoryErrorMapping {
@@ -102,7 +101,8 @@ public enum WebPublicContentEventHandlers {
                     responseBody: response.body
                 )
             }
-        case "not-found":
+        }
+        else if context.baseMetadata.template == "not-found" {
             payload["page"] =
                 [
                     "title": "Page not found",
@@ -116,8 +116,6 @@ public enum WebPublicContentEventHandlers {
                     "css": [String](),
                     "js": [String](),
                 ] as [String: any Sendable]
-        default:
-            break
         }
         return .init(payload: payload)
     }

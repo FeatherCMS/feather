@@ -13,6 +13,7 @@ public struct AppPublicContent {
         mediaResolver: MediaResolver
     ) {
         self.controller = AppPublicContentDefaultController(
+            usesSecureCookies: publicOrigins.usesSecureCookies,
             buildRuntime: { request, context in
                 (
                     interactor: AppPublicContentDefaultInteractor(

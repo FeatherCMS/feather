@@ -83,7 +83,11 @@ struct AuthApplicationTestSuite {
             context: WriteRequestMagicLink(
                 credential: credentialRepository,
                 magicLink: magicLinkRepository,
-                variable: MockVariableQueries(value: "https://example.test")
+                variable: MockVariableQueries(
+                    value: "https://example.test",
+                    mailFromAddress: "magic-links@example.test",
+                    mailFromName: "Binary Birds"
+                )
             )
         )
         let mailSender = MockMailSender()
@@ -99,6 +103,11 @@ struct AuthApplicationTestSuite {
         #expect(sent)
         #expect(await magicLinkRepository.insertCallCount == 1)
         #expect(await mailSender.sendCallCount == 1)
+        #expect(
+            await mailSender.lastMessage?.from.email
+                == "magic-links@example.test"
+        )
+        #expect(await mailSender.lastMessage?.from.name == "Binary Birds")
         #expect(
             await mailSender.lastMessage?.body.contains("user@example.com")
                 == true
