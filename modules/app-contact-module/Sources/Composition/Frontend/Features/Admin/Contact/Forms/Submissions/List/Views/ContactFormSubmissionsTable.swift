@@ -37,17 +37,27 @@ struct ContactFormSubmissionsTable: Component {
                     active: .submissions
                 )
             )
-            if let error = state.error {
-                P(error).class("new-admin-form__error")
-            }
             context.build(
-                ContactFormSubmissionsTableContent(
-                    formId: state.formId,
-                    items: state.items,
-                    pageState: state.pageState,
-                    search: state.search,
-                    permissions: state.permissions
-                )
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Submissions",
+                        description:
+                            "Review submissions received through this contact form."
+                    )
+                ) {
+                    if let error = state.error {
+                        P(error).class("new-admin-form__error")
+                    }
+                    context.build(
+                        ContactFormSubmissionsTableContent(
+                            formId: state.formId,
+                            items: state.items,
+                            pageState: state.pageState,
+                            search: state.search,
+                            permissions: state.permissions
+                        )
+                    )
+                }
             )
         }
         .class("cms-section")

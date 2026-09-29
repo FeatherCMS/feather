@@ -29,7 +29,11 @@ struct AdminEditNewsletterCampaignSubscriberDefaultPresenter:
                 status: item.status,
                 isEdit: true,
                 error: error,
-                editAction: nil
+                editAction: nil,
+                pageHeader: .primary(
+                    title: "Edit campaign subscriber",
+                    description: "Manage this campaign subscription."
+                )
             )
         )
         return try await renderingEngine.renderNewAdminPage(

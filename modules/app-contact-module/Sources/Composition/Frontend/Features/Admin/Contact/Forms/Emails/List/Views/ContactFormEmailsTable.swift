@@ -33,15 +33,25 @@ struct ContactFormEmailsTable: Component {
             context.build(
                 AdminContactFormTabs(formId: state.id, active: .emails)
             )
-            if let error = state.error {
-                P(error).class("new-admin-form__error")
-            }
             context.build(
-                ContactFormEmailsTableContent(
-                    id: state.id,
-                    mails: state.mails,
-                    permissions: state.permissions
-                )
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Emails",
+                        description:
+                            "Manage the notification emails configured for this contact form."
+                    )
+                ) {
+                    if let error = state.error {
+                        P(error).class("new-admin-form__error")
+                    }
+                    context.build(
+                        ContactFormEmailsTableContent(
+                            id: state.id,
+                            mails: state.mails,
+                            permissions: state.permissions
+                        )
+                    )
+                }
             )
         }
         .class("cms-section")

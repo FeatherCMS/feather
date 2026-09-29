@@ -33,13 +33,24 @@ struct ContactFormEditPage: Component {
                 AdminContactFormTabs(formId: state.key, active: .details)
             )
             context.build(
-                ContactFormForm(
-                    state: state.form,
-                    action: ContactAdminRoutes.formEdit(RouterPath(state.key))
-                        .description,
-                    submitLabel: "Save changes",
-                    isReadOnly: state.isReadOnly
-                )
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Form configuration",
+                        description:
+                            "Configure the form settings and selected fields."
+                    )
+                ) {
+                    context.build(
+                        ContactFormForm(
+                            state: state.form,
+                            action: ContactAdminRoutes.formEdit(
+                                RouterPath(state.key)
+                            ).description,
+                            submitLabel: "Save changes",
+                            isReadOnly: state.isReadOnly
+                        )
+                    )
+                }
             )
         }
         .class("cms-section")

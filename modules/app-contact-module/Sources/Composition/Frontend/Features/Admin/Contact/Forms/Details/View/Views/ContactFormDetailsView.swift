@@ -15,39 +15,87 @@ struct ContactFormDetailsView: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            if let error {
-                P(error).class("new-admin-form__error")
-            }
+            context.build(NewAdminBreadcrumb(links: breadcrumb))
             context.build(
-                NewAdminDetailView(
-                    breadcrumb: breadcrumb,
-                    pageHeader: .primary(
+                NewAdminPageHeader(
+                    state: .primary(
                         title: "Contact form details",
                         description: "Review the contact form configuration."
-                    ),
-                    fields: [
-                        .init(label: "Key", value: item.key),
-                        .init(label: "Name", value: item.name),
-                        .init(
-                            label: "Success message",
-                            value: item.successMessage.emptyToNil ?? "—"
-                        ),
-                        .init(
-                            label: "Failure message",
-                            value: item.failureMessage.emptyToNil ?? "—"
-                        ),
-                        .init(
-                            label: "Redirect URL",
-                            value: item.redirectUrl?.emptyToNil ?? "—"
-                        ),
-                        .init(label: "Fields", value: selectedFieldLabels),
-                        .init(
-                            label: "Email definitions",
-                            value: "\(item.mails.count)"
-                        ),
-                    ],
-                    actions: actions
+                    )
                 )
+            )
+            context.build(
+                AdminContactFormTabs(formId: item.key, active: .details)
+            )
+            context.build(
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Form configuration",
+                        description:
+                            "Review the form settings and selected fields."
+                    )
+                ) {
+                    if let error {
+                        P(error).class("new-admin-form__error")
+                    }
+                    Div {
+                        context.build(
+                            NewAdminDetailField(label: "Key", value: item.key)
+                        )
+                        context.build(
+                            NewAdminDetailField(label: "Name", value: item.name)
+                        )
+                        context.build(
+                            NewAdminDetailField(
+                                label: "Success message",
+                                value: item.successMessage.emptyToNil ?? "—"
+                            )
+                        )
+                        context.build(
+                            NewAdminDetailField(
+                                label: "Failure message",
+                                value: item.failureMessage.emptyToNil ?? "—"
+                            )
+                        )
+                        context.build(
+                            NewAdminDetailField(
+                                label: "Redirect URL",
+                                value: item.redirectUrl?.emptyToNil ?? "—"
+                            )
+                        )
+                        context.build(
+                            NewAdminDetailField(
+                                label: "Fields",
+                                value: selectedFieldLabels
+                            )
+                        )
+                        context.build(
+                            NewAdminDetailField(
+                                label: "Email definitions",
+                                value: "\(item.mails.count)"
+                            )
+                        )
+                    }
+                    .class("admin-detail-view-fields")
+                    .style("display:grid;gap:12px;")
+                    if !actions.isEmpty {
+                        Div {
+                            for action in actions {
+                                context.build(
+                                    NewAdminButton(
+                                        action.label,
+                                        href: action.href,
+                                        style: action.style
+                                    )
+                                )
+                            }
+                        }
+                        .class("new-admin-detail-actions")
+                        .style(
+                            "display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;"
+                        )
+                    }
+                }
             )
         }
         .class("cms-section")

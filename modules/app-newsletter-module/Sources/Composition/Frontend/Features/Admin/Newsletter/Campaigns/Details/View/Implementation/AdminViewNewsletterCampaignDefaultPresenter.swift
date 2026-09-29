@@ -36,6 +36,10 @@ struct AdminViewNewsletterCampaignDefaultPresenter:
                     isDetails: true,
                     permissions: NewAdminListActions(
                         Set(permissions.map(PermissionKey.init))
+                    ),
+                    pageHeader: .primary(
+                        title: "Campaign details",
+                        description: "View this newsletter campaign."
                     )
                 )
             )

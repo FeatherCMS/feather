@@ -29,15 +29,25 @@ struct SubmissionMailEdit: Component {
             context.build(
                 AdminContactFormTabs(formId: formId, active: .emails)
             )
-            replacementVariables
             context.build(
-                SubmissionMailForm(
-                    mail: mail,
-                    action:
-                        "/admin/contact/forms/\(formId)/emails/\(mail.id)/edit/",
-                    submitLabel: "Save",
-                    error: error
-                )
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Notification email",
+                        description:
+                            "Configure the notification message for this contact form."
+                    )
+                ) {
+                    replacementVariables
+                    context.build(
+                        SubmissionMailForm(
+                            mail: mail,
+                            action:
+                                "/admin/contact/forms/\(formId)/emails/\(mail.id)/edit/",
+                            submitLabel: "Save",
+                            error: error
+                        )
+                    )
+                }
             )
         }
         .class("cms-section")

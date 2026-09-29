@@ -28,7 +28,12 @@ struct AdminAddNewsletterIssueDefaultPresenter:
                     scheduledAt: model.scheduledAt,
                     newsletterId: model.newsletterId,
                     issueId: nil,
-                    error: model.error
+                    error: model.error,
+                    pageHeader: .primary(
+                        title: "Add campaign issue",
+                        description:
+                            "Compose the issue content and delivery schedule."
+                    )
                 )
             )
         )

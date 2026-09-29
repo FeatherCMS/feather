@@ -29,21 +29,37 @@ struct NewsletterCampaignSubscribersTable: Component {
                 )
             )
             context.build(
-                NewsletterCampaignHeader(
-                    campaignId: state.newsletterId,
-                    active: .subscribers,
-                    title: "Campaign subscribers",
-                    description: "Manage subscribers for this campaign."
+                NewAdminPageHeader(
+                    state: .primary(
+                        title: "Campaign subscribers",
+                        description: "Manage subscribers for this campaign."
+                    )
                 )
             )
             context.build(
-                NewsletterCampaignSubscribersTableContent(
-                    newsletterId: state.newsletterId,
-                    items: state.items,
-                    pageState: state.pageState,
-                    search: state.search,
-                    permissions: state.permissions
+                NewsletterCampaignTabs(
+                    id: state.newsletterId,
+                    active: .subscribers
                 )
+            )
+            context.build(
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Subscribers",
+                        description:
+                            "Manage the subscribers linked to this campaign."
+                    )
+                ) {
+                    context.build(
+                        NewsletterCampaignSubscribersTableContent(
+                            newsletterId: state.newsletterId,
+                            items: state.items,
+                            pageState: state.pageState,
+                            search: state.search,
+                            permissions: state.permissions
+                        )
+                    )
+                }
             )
         }
         .class("cms-section")

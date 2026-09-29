@@ -13,6 +13,7 @@ struct NewsletterIssueAddView: Component {
         let newsletterId: String
         let issueId: String?
         let error: String?
+        let pageHeader: NewAdminPageHeader.State
     }
     let state: State
 
@@ -46,13 +47,11 @@ struct NewsletterIssueAddView: Component {
                     ]
                 )
             )
+            context.build(NewAdminPageHeader(state: state.pageHeader))
             context.build(
-                NewsletterCampaignHeader(
-                    campaignId: state.newsletterId,
-                    active: .issues,
-                    title: state.issueId == nil
-                        ? "Add campaign issue" : "Edit campaign issue",
-                    description: "Compose the issue content and delivery schedule."
+                NewsletterCampaignTabs(
+                    id: state.newsletterId,
+                    active: .issues
                 )
             )
             let form = NewAdminForm(action: action) {
@@ -109,7 +108,17 @@ struct NewsletterIssueAddView: Component {
                 }
                 .class("new-admin-form__actions")
             }
-            context.build(form)
+            context.build(
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Issue content",
+                        description:
+                            "Compose the subject, message, and delivery schedule."
+                    )
+                ) {
+                    context.build(form)
+                }
+            )
             Div {
                 Div {
                     Div {

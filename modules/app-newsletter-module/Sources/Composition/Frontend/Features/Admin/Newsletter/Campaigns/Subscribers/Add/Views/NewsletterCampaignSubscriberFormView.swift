@@ -16,6 +16,7 @@ struct NewsletterCampaignSubscriberFormView: Component {
         let isEdit: Bool
         let error: String?
         let editAction: String?
+        let pageHeader: NewAdminPageHeader.State
     }
     let state: State
 
@@ -51,14 +52,11 @@ struct NewsletterCampaignSubscriberFormView: Component {
                     ]
                 )
             )
+            context.build(NewAdminPageHeader(state: state.pageHeader))
             context.build(
-                NewsletterCampaignHeader(
-                    campaignId: state.newsletterId,
-                    active: .subscribers,
-                    title: state.isEdit
-                        ? "Edit campaign subscriber"
-                        : "Add campaign subscriber",
-                    description: "Manage this campaign subscription."
+                NewsletterCampaignTabs(
+                    id: state.newsletterId,
+                    active: .subscribers
                 )
             )
             let form = NewAdminForm(action: action) {
@@ -122,7 +120,17 @@ struct NewsletterCampaignSubscriberFormView: Component {
                 }
                 .class("new-admin-form__actions")
             }
-            context.build(form)
+            context.build(
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Subscriber details",
+                        description:
+                            "Manage this subscriber’s information and campaign status."
+                    )
+                ) {
+                    context.build(form)
+                }
+            )
         }
         .class("cms-section")
     }

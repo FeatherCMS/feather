@@ -29,14 +29,24 @@ struct SubmissionMailAdd: Component {
             context.build(
                 AdminContactFormTabs(formId: formId, active: .emails)
             )
-            replacementVariables
             context.build(
-                SubmissionMailForm(
-                    mail: mail,
-                    action: "/admin/contact/forms/\(formId)/emails/add/",
-                    submitLabel: "Add email",
-                    error: error
-                )
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Notification email",
+                        description:
+                            "Configure the notification message for this contact form."
+                    )
+                ) {
+                    replacementVariables
+                    context.build(
+                        SubmissionMailForm(
+                            mail: mail,
+                            action: "/admin/contact/forms/\(formId)/emails/add/",
+                            submitLabel: "Add email",
+                            error: error
+                        )
+                    )
+                }
             )
         }
         .class("cms-section")

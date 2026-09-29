@@ -29,21 +29,35 @@ struct NewsletterIssuesTable: Component {
                 )
             )
             context.build(
-                NewsletterCampaignHeader(
-                    campaignId: state.newsletterId,
-                    active: .issues,
-                    title: "Campaign issues",
-                    description: "Manage issues for this newsletter campaign."
+                NewAdminPageHeader(
+                    state: .primary(
+                        title: "Campaign issues",
+                        description:
+                            "Manage issues for this newsletter campaign."
+                    )
                 )
             )
             context.build(
-                NewsletterIssuesTableContent(
-                    newsletterId: state.newsletterId,
-                    items: state.items,
-                    pageState: state.pageState,
-                    permissions: state.permissions,
-                    search: state.search
-                )
+                NewsletterCampaignTabs(id: state.newsletterId, active: .issues)
+            )
+            context.build(
+                NewAdminRelationshipGroup(
+                    pageHeader: .secondary(
+                        title: "Issues",
+                        description:
+                            "Manage the issues scheduled for this campaign."
+                    )
+                ) {
+                    context.build(
+                        NewsletterIssuesTableContent(
+                            newsletterId: state.newsletterId,
+                            items: state.items,
+                            pageState: state.pageState,
+                            permissions: state.permissions,
+                            search: state.search
+                        )
+                    )
+                }
             )
         }
         .class("cms-section")
