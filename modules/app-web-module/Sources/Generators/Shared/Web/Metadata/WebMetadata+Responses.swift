@@ -7,3 +7,10 @@ public struct WebMetadataResponse: JSONResponseRepresentable {
 
     public init() {}
 }
+
+public struct WebMetadataListResponse: JSONResponseRepresentable {
+    public var description: String = "Public web metadata slugs"
+    public var schema = WebMetadataSlugListSchema().reference()
+
+    public init() {}
+}

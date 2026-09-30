@@ -6,3 +6,9 @@ public struct WebMetadataGetPathItems: PathItemRepresentable {
 
     public init() {}
 }
+
+public struct WebMetadataListPathItems: PathItemRepresentable {
+    public var get: (any OperationRepresentable)? { WebMetadataListOperation() }
+
+    public init() {}
+}

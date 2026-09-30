@@ -8,6 +8,14 @@ public struct WebMetadataSlugField: StringSchemaRepresentable {
     public init() {}
 }
 
+public struct WebMetadataSlugListSchema: ArraySchemaRepresentable {
+    public var items: (any SchemaRepresentable)? {
+        WebMetadataSlugField().reference()
+    }
+
+    public init() {}
+}
+
 public struct WebMetadataTemplateField: StringSchemaRepresentable {
     public var example: String? = "default"
 

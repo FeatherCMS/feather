@@ -90,6 +90,10 @@ let package = Package(
             url: "https://github.com/apple/swift-markdown",
             from: "0.8.0"
         ),
+        .package(
+            url: "https://github.com/BinaryBirds/swift-web-standards",
+            exact: "1.0.0-beta.4"
+        ),
         .package(path: "../../feather-core"),
         .package(path: "../app-media-module"),
         .package(path: "../app-system-module"),
@@ -208,6 +212,9 @@ let package = Package(
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "Markdown", package: "swift-markdown"),
                 .product(name: "Mustache", package: "swift-mustache"),
+                .product(name: "RSS", package: "swift-web-standards"),
+                .product(name: "SGML", package: "swift-web-standards"),
+                .product(name: "Sitemap", package: "swift-web-standards"),
                 .product(name: "SystemContracts", package: "app-system-module"),
 
                 .target(name: "WebContracts"),

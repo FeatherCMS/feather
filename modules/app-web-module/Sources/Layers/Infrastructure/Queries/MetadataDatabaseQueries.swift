@@ -151,6 +151,11 @@ public struct MetadataDatabaseQueries: MetadataQueries {
         return try await table.find(slug: slug)?.asDetail
     }
 
+    public func listPublic() async throws -> [MetadataList.Item] {
+        let table = WebMetadataTable(connection: context.connection)
+        return try await table.listPublic().map(\.asQueryListItem)
+    }
+
     public func list(
         query: MetadataList.Query
     ) async throws -> MetadataList {

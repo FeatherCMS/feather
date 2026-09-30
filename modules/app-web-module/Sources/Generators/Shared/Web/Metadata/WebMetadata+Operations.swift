@@ -14,3 +14,9 @@ struct WebMetadataGetOperation: WebOperation {
         ]
     }
 }
+
+struct WebMetadataListOperation: WebOperation {
+    var responseMap: ResponseMap {
+        [200: WebMetadataListResponse().reference()]
+    }
+}

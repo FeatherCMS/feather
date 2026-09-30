@@ -1,15 +1,47 @@
 import FeatherAdmin
 import Foundation
 import Hummingbird
+import NIOCore
 
 struct AppPublicContentDefaultController: AppPublicContentController {
 
     let usesSecureCookies: Bool
+    let buildRSS: @Sendable (
+        Request,
+        DefaultRequestContext
+    ) async throws -> String
+    let buildSitemap: @Sendable (
+        DefaultRequestContext
+    ) async throws -> String
     let buildRuntime:
         RuntimeBuilder<
             any AppPublicContentInteractor,
-            any AppPublicContentPresenter
+        any AppPublicContentPresenter
         >
+
+    func getRSS(
+        request: Request,
+        context: DefaultRequestContext
+    ) async throws -> Response {
+        let content = try await buildRSS(request, context)
+        return .init(
+            status: .ok,
+            headers: [.contentType: "application/rss+xml; charset=utf-8"],
+            body: .init(byteBuffer: ByteBuffer(string: content))
+        )
+    }
+
+    func getSitemap(
+        request: Request,
+        context: DefaultRequestContext
+    ) async throws -> Response {
+        let content = try await buildSitemap(context)
+        return .init(
+            status: .ok,
+            headers: [.contentType: "application/xml; charset=utf-8"],
+            body: .init(byteBuffer: ByteBuffer(string: content))
+        )
+    }
 
     func getContent(
         request: Request,
