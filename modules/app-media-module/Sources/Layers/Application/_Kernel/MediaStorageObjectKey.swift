@@ -1,5 +1,5 @@
 public enum MediaStorageObjectKey {
-    public static let assetNamespace = "/media/assets"
+    public static let assetNamespace = "media/assets"
 
     public static func original(
         assetID: String,

@@ -10,17 +10,6 @@ public struct TableMigration: DatabaseMigration {
 
     public func apply(on connection: any DatabaseConnection) async throws {
         let queries: [DatabaseQuery] = [
-            // Clean-install media schema. Legacy media tables are removed.
-            #"DROP TABLE IF EXISTS media_asset_variant;"#,
-            #"DROP TABLE IF EXISTS media_variant_processor;"#,
-            #"DROP TABLE IF EXISTS media_variant;"#,
-            #"DROP TABLE IF EXISTS media_asset_node_file;"#,
-            #"DROP TABLE IF EXISTS media_asset_node_folder;"#,
-            #"DROP TABLE IF EXISTS media_asset_storage_object;"#,
-            #"DROP TABLE IF EXISTS media_asset_node;"#,
-            #"DROP TABLE IF EXISTS media_asset;"#,
-            #"DROP TABLE IF EXISTS media_folder;"#,
-
             #"""
             CREATE TABLE IF NOT EXISTS media_asset_node (
                 id TEXT PRIMARY KEY,
@@ -61,7 +50,7 @@ public struct TableMigration: DatabaseMigration {
             #"""
             CREATE TABLE IF NOT EXISTS media_asset_storage_object (
                 id TEXT PRIMARY KEY,
-                object_key TEXT NOT NULL UNIQUE CHECK (object_key LIKE '/media/assets/%'),
+                object_key TEXT NOT NULL UNIQUE CHECK (object_key LIKE 'media/assets/%'),
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 deleted_at TIMESTAMPTZ
             );
