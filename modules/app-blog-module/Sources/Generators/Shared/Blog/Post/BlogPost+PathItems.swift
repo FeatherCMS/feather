@@ -1,14 +1,14 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 
 public struct BlogPostListPathItems: PathItemRepresentable {
-    public var get: OperationRepresentable? { BlogPostListOperation() }
+    public var get: (any OperationRepresentable)? { BlogPostListOperation() }
 
     public init() {}
 }
 
 public struct BlogPostGetPathItems: PathItemRepresentable {
-    public var get: OperationRepresentable? { BlogPostGetOperation() }
+    public var get: (any OperationRepresentable)? { BlogPostGetOperation() }
 
     public init() {}
 }

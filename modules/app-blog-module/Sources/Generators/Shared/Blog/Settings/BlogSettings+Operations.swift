@@ -1,11 +1,11 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 public protocol BlogOperation: OperationRepresentable {}
 
 extension BlogOperation {
-    public var tags: [TagRepresentable] { [BlogContentTag()] }
+    public var tags: [any TagRepresentable] { [BlogContentTag()] }
 }
 
 struct BlogRouteSettingsOperation: BlogOperation {

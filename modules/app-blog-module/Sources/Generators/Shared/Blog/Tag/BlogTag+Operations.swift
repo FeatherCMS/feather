@@ -9,7 +9,7 @@ struct BlogTagListOperation: BlogOperation {
 }
 
 struct BlogTagGetOperation: BlogOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [BlogTagIdParameter().reference()]
     }
 

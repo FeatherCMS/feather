@@ -1,6 +1,6 @@
 import FeatherOpenAPI
 
 struct AccountSettingsPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { AccountSettingsGetOperation() }
-    var put: OperationRepresentable? { AccountSettingsUpdateOperation() }
+    var get: (any OperationRepresentable)? { AccountSettingsGetOperation() }
+    var put: (any OperationRepresentable)? { AccountSettingsUpdateOperation() }
 }

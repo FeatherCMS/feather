@@ -1,20 +1,20 @@
 import FeatherOpenAPI
 
 struct WebPagePathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { WebPageCreateOperation() }
-    var delete: OperationRepresentable? { WebPageRemoveOperation() }
+    var post: (any OperationRepresentable)? { WebPageCreateOperation() }
+    var delete: (any OperationRepresentable)? { WebPageRemoveOperation() }
 }
 
 struct WebPageSearchPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { WebPageSearchOperation() }
+    var post: (any OperationRepresentable)? { WebPageSearchOperation() }
 }
 
 struct WebPageListPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { WebPageListOperation() }
+    var get: (any OperationRepresentable)? { WebPageListOperation() }
 }
 
 struct WebPageIdPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { WebPageGetOperation() }
-    var put: OperationRepresentable? { WebPageUpdateOperation() }
-    var patch: OperationRepresentable? { WebPagePatchOperation() }
+    var get: (any OperationRepresentable)? { WebPageGetOperation() }
+    var put: (any OperationRepresentable)? { WebPageUpdateOperation() }
+    var patch: (any OperationRepresentable)? { WebPagePatchOperation() }
 }

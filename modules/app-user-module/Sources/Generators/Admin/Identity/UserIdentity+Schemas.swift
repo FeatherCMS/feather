@@ -22,13 +22,13 @@ struct UserIdentityListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct UserIdentityListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         UserIdentityListItemSchema().reference()
     }
 }
 
 struct UserIdentityRoleIdsField: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         UserRoleIdField().reference()
     }
 }

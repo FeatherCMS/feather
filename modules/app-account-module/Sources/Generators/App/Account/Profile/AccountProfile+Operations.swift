@@ -6,7 +6,7 @@ import OpenAPIKit30
 protocol AccountProfileOperation: BearerProtectedOperation {}
 
 extension AccountProfileOperation {
-    var tags: [TagRepresentable] { [AccountTag()] }
+    var tags: [any TagRepresentable] { [AccountTag()] }
 }
 
 struct AccountProfileGetOperation: AccountProfileOperation {
@@ -16,7 +16,7 @@ struct AccountProfileGetOperation: AccountProfileOperation {
 }
 
 struct AccountProfileUpdateOperation: AccountProfileOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AccountProfileUpdateRequestBody().reference()
     }
 

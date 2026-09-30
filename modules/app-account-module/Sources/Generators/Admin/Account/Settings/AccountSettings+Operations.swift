@@ -5,13 +5,13 @@ import OpenAPIKit30
 protocol AccountSettingsOperation: BearerProtectedOperation {}
 
 extension AccountSettingsOperation {
-    var tags: [TagRepresentable] { [AccountSettingsTag()] }
+    var tags: [any TagRepresentable] { [AccountSettingsTag()] }
 }
 
 protocol AdminAccountSettingsOperation: AccountSettingsOperation {}
 
 extension AdminAccountSettingsOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [AccountSettingsUserIDParameter().reference()]
     }
 }
@@ -23,7 +23,7 @@ struct AccountSettingsGetOperation: AccountSettingsOperation {
 }
 
 struct AccountSettingsUpdateOperation: AccountSettingsOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AccountSettingsUpdateRequestBody().reference()
     }
 

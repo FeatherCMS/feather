@@ -49,7 +49,7 @@ struct ContactFormSchema: ObjectSchemaRepresentable {
 }
 
 struct ContactFormListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { ContactFormSchema().reference() }
+    var items: (any SchemaRepresentable)? { ContactFormSchema().reference() }
 }
 
 struct ContactFormCreateSchema: ObjectSchemaRepresentable {

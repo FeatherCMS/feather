@@ -1,20 +1,20 @@
 import FeatherOpenAPI
 
 struct UserRolePathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { UserRoleCreateOperation() }
-    var delete: OperationRepresentable? { UserRoleRemoveOperation() }
+    var post: (any OperationRepresentable)? { UserRoleCreateOperation() }
+    var delete: (any OperationRepresentable)? { UserRoleRemoveOperation() }
 }
 
 struct UserRoleSearchPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { UserRoleSearchOperation() }
+    var post: (any OperationRepresentable)? { UserRoleSearchOperation() }
 }
 
 struct UserRoleListPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { UserRoleListOperation() }
+    var get: (any OperationRepresentable)? { UserRoleListOperation() }
 }
 
 struct UserRoleIdPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { UserRoleGetOperation() }
-    var put: OperationRepresentable? { UserRoleUpdateOperation() }
-    var patch: OperationRepresentable? { UserRolePatchOperation() }
+    var get: (any OperationRepresentable)? { UserRoleGetOperation() }
+    var put: (any OperationRepresentable)? { UserRoleUpdateOperation() }
+    var patch: (any OperationRepresentable)? { UserRolePatchOperation() }
 }

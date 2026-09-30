@@ -4,13 +4,13 @@ import OpenAPIKit30
 
 protocol NewsletterSubscriberOperation: NewsletterCampaignOperation {}
 extension NewsletterSubscriberOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [NewsletterCampaignKeyParameter().reference()]
     }
 }
 protocol NewsletterSubscriberIDOperation: NewsletterSubscriberOperation {}
 extension NewsletterSubscriberIDOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [
             NewsletterCampaignKeyParameter().reference(),
             NewsletterSubscriberEmailParameter().reference(),
@@ -24,7 +24,7 @@ struct NewsletterSubscriberListOperation: NewsletterSubscriberOperation {
     }
 }
 struct NewsletterSubscriberCreateOperation: NewsletterSubscriberOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         NewsletterSubscriberCreateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -40,7 +40,7 @@ struct NewsletterSubscriberGetOperation: NewsletterSubscriberIDOperation {
     }
 }
 struct NewsletterSubscriberUpdateOperation: NewsletterSubscriberIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         NewsletterSubscriberPatchRequestBody().reference()
     }
     var responseMap: ResponseMap {

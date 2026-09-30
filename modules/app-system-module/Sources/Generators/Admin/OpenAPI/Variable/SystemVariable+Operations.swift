@@ -1,19 +1,19 @@
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 public protocol SystemVariableOperation: BearerProtectedOperation {
 }
 
 extension SystemVariableOperation {
-    public var tags: [TagRepresentable] { [SystemVariableTag()] }
+    public var tags: [any TagRepresentable] { [SystemVariableTag()] }
 }
 
 public protocol SystemVariableIDOperation: SystemVariableOperation {
 }
 
 extension SystemVariableIDOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             SystemVariableIDParameter().reference()
         ]
@@ -21,7 +21,7 @@ extension SystemVariableIDOperation {
 }
 
 struct SystemVariableCreateOperation: SystemVariableOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SystemVariableRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -55,7 +55,7 @@ struct SystemVariableSearchOperation: SystemVariableOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -81,7 +81,7 @@ struct SystemVariableGetOperation: SystemVariableIDOperation {
 }
 
 struct SystemVariableUpdateOperation: SystemVariableIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SystemVariableUpdateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -93,7 +93,7 @@ struct SystemVariableUpdateOperation: SystemVariableIDOperation {
 }
 
 struct SystemVariablePatchOperation: SystemVariableIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SystemVariablePatchRequestBody().reference()
     }
     var responseMap: ResponseMap {

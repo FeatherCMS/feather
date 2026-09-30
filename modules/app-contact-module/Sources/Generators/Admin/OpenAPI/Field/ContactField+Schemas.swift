@@ -13,10 +13,10 @@ struct FormFieldPositionField: IntSchemaRepresentable {}
 struct ContactRequiredField: BoolSchemaRepresentable {}
 
 struct ContactAllowedValuesSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { ContactAllowedValueField() }
+    var items: (any SchemaRepresentable)? { ContactAllowedValueField() }
 }
 struct ContactFieldIDsSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { ContactIdField() }
+    var items: (any SchemaRepresentable)? { ContactIdField() }
 }
 
 struct FormFieldSchema: ObjectSchemaRepresentable {
@@ -36,10 +36,10 @@ struct FormFieldSchema: ObjectSchemaRepresentable {
     }
 }
 struct FormFieldsSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { FormFieldSchema().reference() }
+    var items: (any SchemaRepresentable)? { FormFieldSchema().reference() }
 }
 struct FormFieldListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { FormFieldSchema().reference() }
+    var items: (any SchemaRepresentable)? { FormFieldSchema().reference() }
 }
 struct FormFieldCreateSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {

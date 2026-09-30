@@ -14,7 +14,7 @@ struct AccountInvitationTokenField: StringSchemaRepresentable {
 }
 
 struct AccountInvitationRoleIDsField: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         AccountInvitationRoleIDField()
     }
 }
@@ -70,7 +70,7 @@ struct AccountInvitationListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct AccountInvitationListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         AccountInvitationListItemSchema().reference()
     }
 }

@@ -1,20 +1,20 @@
 import FeatherOpenAPI
 
 struct SystemVariablePathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { SystemVariableCreateOperation() }
-    var delete: OperationRepresentable? { SystemVariableRemoveOperation() }
+    var post: (any OperationRepresentable)? { SystemVariableCreateOperation() }
+    var delete: (any OperationRepresentable)? { SystemVariableRemoveOperation() }
 }
 
 struct SystemVariableSearchPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { SystemVariableSearchOperation() }
+    var post: (any OperationRepresentable)? { SystemVariableSearchOperation() }
 }
 
 struct SystemVariableListPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { SystemVariableListOperation() }
+    var get: (any OperationRepresentable)? { SystemVariableListOperation() }
 }
 
 struct SystemVariableIdPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { SystemVariableGetOperation() }
-    var put: OperationRepresentable? { SystemVariableUpdateOperation() }
-    var patch: OperationRepresentable? { SystemVariablePatchOperation() }
+    var get: (any OperationRepresentable)? { SystemVariableGetOperation() }
+    var put: (any OperationRepresentable)? { SystemVariableUpdateOperation() }
+    var patch: (any OperationRepresentable)? { SystemVariablePatchOperation() }
 }

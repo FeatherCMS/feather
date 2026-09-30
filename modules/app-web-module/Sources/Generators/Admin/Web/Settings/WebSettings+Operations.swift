@@ -1,5 +1,5 @@
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 import WebSharedOpenAPIGenerator
 
@@ -7,7 +7,7 @@ public protocol WebSettingsOperation: BearerProtectedOperation {
 }
 
 extension WebSettingsOperation {
-    public var tags: [TagRepresentable] { [WebSettingsTag()] }
+    public var tags: [any TagRepresentable] { [WebSettingsTag()] }
 }
 
 struct WebSettingsGetOperation: WebSettingsOperation {
@@ -19,7 +19,7 @@ struct WebSettingsGetOperation: WebSettingsOperation {
 }
 
 struct WebSettingsUpdateOperation: WebSettingsOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         WebSettingsUpdateRequestBody().reference()
     }
 

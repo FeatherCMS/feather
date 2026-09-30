@@ -1,6 +1,6 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
+public import OpenAPIKit30
 
 public struct WebSiteSettingsTitleField: StringSchemaRepresentable {
     public var example: String? = "Example Site"

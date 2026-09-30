@@ -1,6 +1,6 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
+public import OpenAPIKit30
 
 public struct BlogSettingsPostListPathField: StringSchemaRepresentable {
     public var example: String? = "blog"

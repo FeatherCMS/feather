@@ -108,5 +108,5 @@ struct WebMenuItemListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct WebMenuItemListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { WebMenuItemListItemSchema().reference() }
+    var items: (any SchemaRepresentable)? { WebMenuItemListItemSchema().reference() }
 }

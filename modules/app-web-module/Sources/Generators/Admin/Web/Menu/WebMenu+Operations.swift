@@ -1,5 +1,5 @@
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 import WebSharedOpenAPIGenerator
 
@@ -7,14 +7,14 @@ public protocol WebMenuOperation: BearerProtectedOperation {
 }
 
 extension WebMenuOperation {
-    public var tags: [TagRepresentable] { [WebMenuTag()] }
+    public var tags: [any TagRepresentable] { [WebMenuTag()] }
 }
 
 public protocol WebMenuIDOperation: WebMenuOperation {
 }
 
 extension WebMenuIDOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             WebMenuIdParameter().reference()
         ]
@@ -22,7 +22,7 @@ extension WebMenuIDOperation {
 }
 
 struct WebMenuCreateOperation: WebMenuOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         WebMenuRequestBody().reference()
     }
 
@@ -56,7 +56,7 @@ struct WebMenuSearchOperation: WebMenuOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -77,7 +77,7 @@ struct WebMenuGetOperation: WebMenuIDOperation {
 }
 
 struct WebMenuUpdateOperation: WebMenuIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         WebMenuUpdateRequestBody().reference()
     }
 
@@ -90,7 +90,7 @@ struct WebMenuUpdateOperation: WebMenuIDOperation {
 }
 
 struct WebMenuPatchOperation: WebMenuIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         WebMenuPatchRequestBody().reference()
     }
 

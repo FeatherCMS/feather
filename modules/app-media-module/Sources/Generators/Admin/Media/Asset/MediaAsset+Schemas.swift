@@ -88,7 +88,7 @@ struct MediaAssetVariantTypeField: StringSchemaRepresentable {
 }
 
 struct MediaAssetVariantItemsField: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         MediaAssetVariantListItemSchema().reference()
     }
 }
@@ -112,7 +112,7 @@ struct MediaAssetPatchSchema: ObjectSchemaRepresentable {
 }
 
 struct MediaAssetResolveIDsField: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { MediaAssetIdField() }
+    var items: (any SchemaRepresentable)? { MediaAssetIdField() }
 }
 
 struct MediaAssetResolveRequestSchema: ObjectSchemaRepresentable {
@@ -126,7 +126,7 @@ struct MediaAssetResolveRequestSchema: ObjectSchemaRepresentable {
 }
 
 struct MediaAssetResolveVariantsField: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { MediaAssetVariantNameField() }
+    var items: (any SchemaRepresentable)? { MediaAssetVariantNameField() }
 }
 
 struct MediaAssetDetailSchema: ObjectSchemaRepresentable {
@@ -225,13 +225,13 @@ struct MediaAssetResolveVariantSchema: ObjectSchemaRepresentable {
 }
 
 struct MediaAssetResolveVariantListField: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         MediaAssetResolveVariantSchema().reference()
     }
 }
 
 struct MediaAssetResolveSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         MediaAssetResolveItemSchema().reference()
     }
 }

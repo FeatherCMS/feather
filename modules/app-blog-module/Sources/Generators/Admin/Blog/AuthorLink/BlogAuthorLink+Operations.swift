@@ -1,20 +1,20 @@
 import BlogSharedOpenAPIGenerator
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 public protocol BlogAuthorLinkOperation: BearerProtectedOperation {
 }
 
 extension BlogAuthorLinkOperation {
-    public var tags: [TagRepresentable] { [BlogAuthorLinkTag()] }
+    public var tags: [any TagRepresentable] { [BlogAuthorLinkTag()] }
 }
 
 public protocol BlogAuthorLinkMenuOperation: BlogAuthorLinkOperation {
 }
 
 extension BlogAuthorLinkMenuOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             BlogAuthorLinkMenuIdParameter().reference()
         ]
@@ -25,7 +25,7 @@ public protocol BlogAuthorLinkIDOperation: BlogAuthorLinkMenuOperation {
 }
 
 extension BlogAuthorLinkIDOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             BlogAuthorLinkMenuIdParameter().reference(),
             BlogAuthorLinkIdParameter().reference(),
@@ -34,7 +34,7 @@ extension BlogAuthorLinkIDOperation {
 }
 
 struct BlogAuthorLinkCreateOperation: BlogAuthorLinkMenuOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         BlogAuthorLinkRequestBody().reference()
     }
 
@@ -70,7 +70,7 @@ struct BlogAuthorLinkSearchOperation: BlogAuthorLinkMenuOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -91,7 +91,7 @@ struct BlogAuthorLinkGetOperation: BlogAuthorLinkIDOperation {
 }
 
 struct BlogAuthorLinkUpdateOperation: BlogAuthorLinkIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         BlogAuthorLinkUpdateRequestBody().reference()
     }
 
@@ -104,7 +104,7 @@ struct BlogAuthorLinkUpdateOperation: BlogAuthorLinkIDOperation {
 }
 
 struct BlogAuthorLinkPatchOperation: BlogAuthorLinkIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         BlogAuthorLinkPatchRequestBody().reference()
     }
 

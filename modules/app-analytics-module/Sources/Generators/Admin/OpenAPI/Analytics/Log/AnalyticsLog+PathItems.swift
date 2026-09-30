@@ -1,13 +1,13 @@
 import FeatherOpenAPI
 
 struct AnalyticsLogListPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { AnalyticsLogListOperation() }
+    var get: (any OperationRepresentable)? { AnalyticsLogListOperation() }
 }
 
 struct AnalyticsLogSearchPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { AnalyticsLogSearchOperation() }
+    var post: (any OperationRepresentable)? { AnalyticsLogSearchOperation() }
 }
 
 struct AnalyticsLogIdPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { AnalyticsLogGetOperation() }
+    var get: (any OperationRepresentable)? { AnalyticsLogGetOperation() }
 }

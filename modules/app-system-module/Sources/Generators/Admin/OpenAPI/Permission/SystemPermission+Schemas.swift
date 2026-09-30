@@ -59,12 +59,12 @@ struct SystemPermissionListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct SystemPermissionListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         SystemPermissionListItemSchema().reference()
     }
 }
 
 struct SystemPermissionIDsFilter: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { SystemPermissionIDField() }
+    var items: (any SchemaRepresentable)? { SystemPermissionIDField() }
     var required: Bool { false }
 }

@@ -1,5 +1,5 @@
 import FeatherOpenAPI
 
 struct AnalyticsLogOverviewPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { AnalyticsLogOverviewOperation() }
+    var post: (any OperationRepresentable)? { AnalyticsLogOverviewOperation() }
 }

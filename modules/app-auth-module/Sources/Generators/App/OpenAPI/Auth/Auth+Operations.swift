@@ -4,7 +4,7 @@ import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 struct AuthLoginOperation: OperationRepresentable {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AuthLoginRequestBody().reference()
     }
 
@@ -20,7 +20,7 @@ struct AuthLogoutOperation: OperationRepresentable, BearerProtectedOperation {
 }
 
 struct AuthMagicLinkOperation: OperationRepresentable {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AuthMagicLinkRequestBody().reference()
     }
 
@@ -30,7 +30,7 @@ struct AuthMagicLinkOperation: OperationRepresentable {
 }
 
 struct AuthMagicLinkVerifyOperation: OperationRepresentable {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AuthMagicLinkVerifyRequestBody().reference()
     }
 

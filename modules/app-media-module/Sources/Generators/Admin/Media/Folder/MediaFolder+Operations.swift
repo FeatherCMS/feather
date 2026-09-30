@@ -5,19 +5,19 @@ import OpenAPIKit30
 protocol MediaFolderOperation: BearerProtectedOperation {}
 
 extension MediaFolderOperation {
-    var tags: [TagRepresentable] { [MediaFolderTag()] }
+    var tags: [any TagRepresentable] { [MediaFolderTag()] }
 }
 
 protocol MediaFolderIDOperation: MediaFolderOperation {}
 
 extension MediaFolderIDOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [MediaFolderIdParameter().reference()]
     }
 }
 
 struct MediaFolderCreateOperation: MediaFolderOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         MediaFolderCreateRequestBody().reference()
     }
 
@@ -48,7 +48,7 @@ struct MediaFolderListOperation: MediaFolderOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -69,7 +69,7 @@ struct MediaFolderGetOperation: MediaFolderIDOperation {
 }
 
 struct MediaFolderUpdateOperation: MediaFolderIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         MediaFolderPatchRequestBody().reference()
     }
 

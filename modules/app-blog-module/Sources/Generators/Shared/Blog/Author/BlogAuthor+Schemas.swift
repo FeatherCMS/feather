@@ -1,6 +1,6 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
+public import OpenAPIKit30
 
 public struct BlogAuthorIdField: StringSchemaRepresentable {
     public var example: String? = "blog_author_1"
@@ -33,7 +33,7 @@ public struct BlogAuthorImageURLField: StringSchemaRepresentable {
 }
 
 public struct BlogAuthorSummaryListSchema: ArraySchemaRepresentable {
-    public var items: SchemaRepresentable? {
+    public var items: (any SchemaRepresentable)? {
         BlogAuthorSummarySchema().reference()
     }
 
@@ -75,7 +75,7 @@ public struct BlogAuthorDetailSchema: ObjectSchemaRepresentable {
 }
 
 public struct BlogAuthorListSchema: ArraySchemaRepresentable {
-    public var items: SchemaRepresentable? {
+    public var items: (any SchemaRepresentable)? {
         BlogAuthorSummarySchema().reference()
     }
 

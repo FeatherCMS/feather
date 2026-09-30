@@ -1,14 +1,14 @@
 import FeatherOpenAPI
 
 struct MediaFolderPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { MediaFolderCreateOperation() }
+    var post: (any OperationRepresentable)? { MediaFolderCreateOperation() }
 }
 
 struct MediaFolderListPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { MediaFolderListOperation() }
+    var post: (any OperationRepresentable)? { MediaFolderListOperation() }
 }
 
 struct MediaFolderIdPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { MediaFolderGetOperation() }
-    var patch: OperationRepresentable? { MediaFolderUpdateOperation() }
+    var get: (any OperationRepresentable)? { MediaFolderGetOperation() }
+    var patch: (any OperationRepresentable)? { MediaFolderUpdateOperation() }
 }

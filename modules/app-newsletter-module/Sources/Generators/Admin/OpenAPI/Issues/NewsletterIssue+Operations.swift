@@ -4,13 +4,13 @@ import OpenAPIKit30
 
 protocol NewsletterIssueOperation: NewsletterCampaignOperation {}
 extension NewsletterIssueOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [NewsletterCampaignKeyParameter().reference()]
     }
 }
 protocol NewsletterIssueIDOperation: NewsletterIssueOperation {}
 extension NewsletterIssueIDOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [
             NewsletterCampaignKeyParameter().reference(),
             NewsletterIssueIdParameter().reference(),
@@ -24,7 +24,7 @@ struct NewsletterIssueListOperation: NewsletterIssueOperation {
     }
 }
 struct NewsletterIssueCreateOperation: NewsletterIssueOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         NewsletterIssueCreateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -40,7 +40,7 @@ struct NewsletterIssueGetOperation: NewsletterIssueIDOperation {
     }
 }
 struct NewsletterIssueUpdateOperation: NewsletterIssueIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         NewsletterIssuePatchRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -55,7 +55,7 @@ struct NewsletterIssueRemoveOperation: NewsletterIssueOperation,
 {
 }
 struct NewsletterIssueTestEmailOperation: NewsletterIssueIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         NewsletterIssueTestEmailRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -66,7 +66,7 @@ struct NewsletterIssueTestEmailOperation: NewsletterIssueIDOperation {
     }
 }
 struct NewsletterCampaignTestEmailOperation: NewsletterIssueOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         NewsletterIssueTestEmailRequestBody().reference()
     }
     var responseMap: ResponseMap {

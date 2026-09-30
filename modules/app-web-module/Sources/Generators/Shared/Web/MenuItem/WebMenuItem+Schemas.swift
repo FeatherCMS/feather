@@ -1,6 +1,6 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
+public import OpenAPIKit30
 
 public struct WebMenuItemIdField: StringSchemaRepresentable {
     public var example: String? = "wmi_home"
@@ -33,7 +33,7 @@ public struct WebMenuItemIsBlankField: BoolSchemaRepresentable {
 }
 
 public struct WebMenuItemListSchema: ArraySchemaRepresentable {
-    public var items: SchemaRepresentable? { WebMenuItemSchema().reference() }
+    public var items: (any SchemaRepresentable)? { WebMenuItemSchema().reference() }
 
     public init() {}
 }

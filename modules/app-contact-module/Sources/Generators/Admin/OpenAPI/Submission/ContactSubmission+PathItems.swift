@@ -1,14 +1,14 @@
 import FeatherOpenAPI
 
 struct ContactFormSubmissionPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { ContactFormSubmissionListOperation() }
-    var delete: OperationRepresentable? {
+    var get: (any OperationRepresentable)? { ContactFormSubmissionListOperation() }
+    var delete: (any OperationRepresentable)? {
         ContactFormSubmissionRemoveOperation()
     }
 }
 struct ContactFormSubmissionIDPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { ContactFormSubmissionGetOperation() }
-    var patch: OperationRepresentable? {
+    var get: (any OperationRepresentable)? { ContactFormSubmissionGetOperation() }
+    var patch: (any OperationRepresentable)? {
         ContactFormSubmissionUpdateOperation()
     }
 }

@@ -1,4 +1,4 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
@@ -7,12 +7,12 @@ public protocol AuthOperation: OperationRepresentable {
 }
 
 extension AuthOperation {
-    public var tags: [TagRepresentable] { [AuthTag()] }
+    public var tags: [any TagRepresentable] { [AuthTag()] }
 }
 
 struct AuthLoginOperation: AuthOperation {
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AuthLoginRequestBody().reference()
     }
 
@@ -34,7 +34,7 @@ struct AuthLogoutOperation: AuthOperation, BearerProtectedOperation {
 
 struct AuthMagicLinkOperation: AuthOperation {
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AuthMagicLinkRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -46,7 +46,7 @@ struct AuthMagicLinkOperation: AuthOperation {
 
 struct AuthMagicLinkVerifyOperation: AuthOperation {
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AuthMagicLinkVerifyRequestBody().reference()
     }
 

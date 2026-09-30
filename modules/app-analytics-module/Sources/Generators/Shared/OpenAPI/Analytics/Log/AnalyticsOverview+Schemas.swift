@@ -1,6 +1,6 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
+public import OpenAPIKit30
 
 struct AnalyticsLogOverviewDateField: DoubleSchemaRepresentable {
     var example: Double? = 1_717_171_717
@@ -52,7 +52,7 @@ struct AnalyticsLogOverviewDailyPointSchema: ObjectSchemaRepresentable {
 }
 
 struct AnalyticsLogOverviewDailyListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         AnalyticsLogOverviewDailyPointSchema().reference()
     }
 }
@@ -68,7 +68,7 @@ struct AnalyticsLogOverviewBreakdownItemSchema: ObjectSchemaRepresentable {
 }
 
 struct AnalyticsLogOverviewBreakdownListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         AnalyticsLogOverviewBreakdownItemSchema().reference()
     }
 }

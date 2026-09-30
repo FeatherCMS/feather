@@ -6,8 +6,8 @@ import OpenAPIKit30
 protocol AdminAccountProfileOperation: BearerProtectedOperation {}
 
 extension AdminAccountProfileOperation {
-    var tags: [TagRepresentable] { [AccountTag()] }
-    var parameters: [ParameterRepresentable] {
+    var tags: [any TagRepresentable] { [AccountTag()] }
+    var parameters: [any ParameterRepresentable] {
         [AccountProfileUserIDParameter().reference()]
     }
 }
@@ -19,7 +19,7 @@ struct AdminAccountProfileGetOperation: AdminAccountProfileOperation {
 }
 
 struct AdminAccountProfileUpdateOperation: AdminAccountProfileOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AccountProfileUpdateRequestBody().reference()
     }
 

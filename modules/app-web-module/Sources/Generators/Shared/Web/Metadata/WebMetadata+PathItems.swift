@@ -1,8 +1,8 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 
 public struct WebMetadataGetPathItems: PathItemRepresentable {
-    public var get: OperationRepresentable? { WebMetadataGetOperation() }
+    public var get: (any OperationRepresentable)? { WebMetadataGetOperation() }
 
     public init() {}
 }

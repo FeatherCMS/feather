@@ -1,22 +1,22 @@
 import FeatherOpenAPI
 
 struct SystemPermissionPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { SystemPermissionCreateOperation() }
-    var delete: OperationRepresentable? {
+    var post: (any OperationRepresentable)? { SystemPermissionCreateOperation() }
+    var delete: (any OperationRepresentable)? {
         SystemPermissionRemoveOperation()
     }
 }
 
 struct SystemPermissionSearchPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { SystemPermissionSearchOperation() }
+    var post: (any OperationRepresentable)? { SystemPermissionSearchOperation() }
 }
 
 struct SystemPermissionListPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { SystemPermissionListOperation() }
+    var get: (any OperationRepresentable)? { SystemPermissionListOperation() }
 }
 
 struct SystemPermissionIdPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { SystemPermissionGetOperation() }
-    var put: OperationRepresentable? { SystemPermissionUpdateOperation() }
-    var patch: OperationRepresentable? { SystemPermissionPatchOperation() }
+    var get: (any OperationRepresentable)? { SystemPermissionGetOperation() }
+    var put: (any OperationRepresentable)? { SystemPermissionUpdateOperation() }
+    var patch: (any OperationRepresentable)? { SystemPermissionPatchOperation() }
 }

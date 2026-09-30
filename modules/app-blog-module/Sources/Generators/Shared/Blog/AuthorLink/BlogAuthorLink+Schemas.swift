@@ -1,6 +1,6 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
+public import OpenAPIKit30
 
 public struct BlogAuthorLinkLabelField: StringSchemaRepresentable {
     public var example: String? = "Website"
@@ -21,7 +21,7 @@ public struct BlogAuthorLinkIsBlankField: BoolSchemaRepresentable {
 }
 
 public struct BlogAuthorLinkListSchema: ArraySchemaRepresentable {
-    public var items: SchemaRepresentable? {
+    public var items: (any SchemaRepresentable)? {
         BlogAuthorLinkSchema().reference()
     }
 

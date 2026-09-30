@@ -5,9 +5,9 @@
 //  Created by Tibor Bödecs on 2026. 02. 12..
 //
 
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
+public import OpenAPIKit30
 
 // MARK: - fields
 
@@ -43,7 +43,7 @@ public struct UserIdentityRoleIDField: StringSchemaRepresentable {
 public struct UserIdentityRoleIDListSchema: ArraySchemaRepresentable {
     public init() {}
 
-    public var items: SchemaRepresentable? {
+    public var items: (any SchemaRepresentable)? {
         UserIdentityRoleIDField()
     }
 }
@@ -55,7 +55,7 @@ public struct UserIdentityPermissionIDField: StringSchemaRepresentable {
 public struct UserIdentityPermissionIDListSchema: ArraySchemaRepresentable {
     public init() {}
 
-    public var items: SchemaRepresentable? {
+    public var items: (any SchemaRepresentable)? {
         UserIdentityPermissionIDField()
     }
 }

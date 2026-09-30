@@ -19,7 +19,7 @@ struct ContactFormSubmissionSchema: ObjectSchemaRepresentable {
     }
 }
 struct ContactFormSubmissionListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         ContactFormSubmissionSchema().reference()
     }
 }

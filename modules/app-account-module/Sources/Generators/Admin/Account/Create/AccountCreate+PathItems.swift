@@ -1,7 +1,7 @@
 import FeatherOpenAPI
 
 struct AccountCreatePathItems: PathItemRepresentable {
-    var post: OperationRepresentable? {
+    var post: (any OperationRepresentable)? {
         AccountCreateOperationDefinition()
     }
 }

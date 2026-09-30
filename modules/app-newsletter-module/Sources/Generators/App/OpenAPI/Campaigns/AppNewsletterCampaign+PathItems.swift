@@ -1,12 +1,12 @@
 import FeatherOpenAPI
 
 struct AppNewsletterCampaignSubscribePathItems: PathItemRepresentable {
-    var post: OperationRepresentable? {
+    var post: (any OperationRepresentable)? {
         AppNewsletterCampaignSubscribeOperation()
     }
 }
 struct AppNewsletterCampaignUnsubscribePathItems: PathItemRepresentable {
-    var post: OperationRepresentable? {
+    var post: (any OperationRepresentable)? {
         AppNewsletterCampaignUnsubscribeOperation()
     }
 }

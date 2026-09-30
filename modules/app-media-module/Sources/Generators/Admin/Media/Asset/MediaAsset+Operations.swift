@@ -5,19 +5,19 @@ import OpenAPIKit30
 protocol MediaAssetOperation: BearerProtectedOperation {}
 
 extension MediaAssetOperation {
-    var tags: [TagRepresentable] { [MediaAssetTag()] }
+    var tags: [any TagRepresentable] { [MediaAssetTag()] }
 }
 
 protocol MediaAssetIDOperation: MediaAssetOperation {}
 
 extension MediaAssetIDOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [MediaAssetIdParameter().reference()]
     }
 }
 
 struct MediaAssetCreateOperation: MediaAssetOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [
             MediaAssetParentIDHeader().reference(),
             MediaAssetFileNameHeader().reference(),
@@ -27,7 +27,7 @@ struct MediaAssetCreateOperation: MediaAssetOperation {
         ]
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         MediaAssetCreateRequestBody().reference()
     }
 
@@ -60,7 +60,7 @@ struct MediaAssetListOperation: MediaAssetOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -81,7 +81,7 @@ struct MediaAssetGetOperation: MediaAssetIDOperation {
 }
 
 struct MediaAssetResolveOperation: MediaAssetOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         MediaAssetResolveRequestBody().reference()
     }
 
@@ -93,7 +93,7 @@ struct MediaAssetResolveOperation: MediaAssetOperation {
 }
 
 struct MediaAssetUpdateOperation: MediaAssetIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         MediaAssetPatchRequestBody().reference()
     }
 

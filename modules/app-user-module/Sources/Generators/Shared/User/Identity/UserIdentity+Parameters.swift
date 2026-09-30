@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 02. 12..
 //
 
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 
 public struct UserIdentityIdParameter: PathParameterRepresentable {

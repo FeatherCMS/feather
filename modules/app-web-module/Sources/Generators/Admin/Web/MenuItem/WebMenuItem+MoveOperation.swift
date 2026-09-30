@@ -3,7 +3,7 @@ import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 struct WebMenuItemMoveOperation: WebMenuItemIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         WebMenuItemMoveRequestBody().reference()
     }
 

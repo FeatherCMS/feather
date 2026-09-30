@@ -1,8 +1,8 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 
 public struct RedirectRuleGetPathItems: PathItemRepresentable {
-    public var get: OperationRepresentable? { RedirectRuleGetOperation() }
+    public var get: (any OperationRepresentable)? { RedirectRuleGetOperation() }
 
     public init() {}
 }

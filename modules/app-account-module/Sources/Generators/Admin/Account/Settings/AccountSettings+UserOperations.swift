@@ -8,7 +8,7 @@ struct AdminAccountSettingsGetOperation: AdminAccountSettingsOperation {
 }
 
 struct AdminAccountSettingsUpdateOperation: AdminAccountSettingsOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AccountSettingsUpdateRequestBody().reference()
     }
 

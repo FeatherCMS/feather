@@ -1,6 +1,6 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
+public import OpenAPIKit30
 import UserSharedOpenAPIGenerator
 
 public struct AccountInvitationValidationSchema: ObjectSchemaRepresentable {
@@ -59,8 +59,8 @@ public struct AccountInvitationExchangeRequestBody:
 }
 
 public struct AccountInvitationExchangeOperation: OperationRepresentable {
-    public var tags: [TagRepresentable] { [AccountTag()] }
-    public var requestBody: RequestBodyRepresentable? {
+    public var tags: [any TagRepresentable] { [AccountTag()] }
+    public var requestBody: (any RequestBodyRepresentable)? {
         AccountInvitationExchangeRequestBody().reference()
     }
     public var responseMap: ResponseMap {
@@ -71,11 +71,11 @@ public struct AccountInvitationExchangeOperation: OperationRepresentable {
 }
 
 public struct AccountInvitationExchangePathItems: PathItemRepresentable {
-    public var get: OperationRepresentable? {
+    public var get: (any OperationRepresentable)? {
         AccountInvitationValidationOperation()
     }
 
-    public var post: OperationRepresentable? {
+    public var post: (any OperationRepresentable)? {
         AccountInvitationExchangeOperation()
     }
 
@@ -83,8 +83,8 @@ public struct AccountInvitationExchangePathItems: PathItemRepresentable {
 }
 
 struct AccountInvitationValidationOperation: OperationRepresentable {
-    public var tags: [TagRepresentable] { [AccountTag()] }
-    public var parameters: [ParameterRepresentable] {
+    public var tags: [any TagRepresentable] { [AccountTag()] }
+    public var parameters: [any ParameterRepresentable] {
         [AccountInvitationTokenParameter().reference()]
     }
     public var responseMap: ResponseMap {

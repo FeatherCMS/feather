@@ -1,6 +1,6 @@
 import AuthSharedOpenAPIGenerator
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 import UserSharedOpenAPIGenerator
 
@@ -8,14 +8,14 @@ public protocol AuthMagicLinkOperation: BearerProtectedOperation {
 }
 
 extension AuthMagicLinkOperation {
-    public var tags: [TagRepresentable] { [AuthMagicLinkTag()] }
+    public var tags: [any TagRepresentable] { [AuthMagicLinkTag()] }
 }
 
 public protocol AuthMagicLinkIdOperation: AuthMagicLinkOperation {
 }
 
 extension AuthMagicLinkIdOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             AuthMagicLinkIdParameter().reference()
         ]
@@ -23,7 +23,7 @@ extension AuthMagicLinkIdOperation {
 }
 
 struct AuthMagicLinkCreateOperation: AuthMagicLinkOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AuthMagicLinkManagementRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -62,7 +62,7 @@ struct AuthMagicLinkSearchOperation: AuthMagicLinkOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -88,7 +88,7 @@ struct AuthMagicLinkGetOperation: AuthMagicLinkIdOperation {
 }
 
 struct AuthMagicLinkUpdateOperation: AuthMagicLinkIdOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AuthMagicLinkUpdateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -100,7 +100,7 @@ struct AuthMagicLinkUpdateOperation: AuthMagicLinkIdOperation {
 }
 
 struct AuthMagicLinkPatchOperation: AuthMagicLinkIdOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AuthMagicLinkPatchRequestBody().reference()
     }
     var responseMap: ResponseMap {

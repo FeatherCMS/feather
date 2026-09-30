@@ -85,5 +85,5 @@ struct WebPageListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct WebPageListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { WebPageListItemSchema().reference() }
+    var items: (any SchemaRepresentable)? { WebPageListItemSchema().reference() }
 }

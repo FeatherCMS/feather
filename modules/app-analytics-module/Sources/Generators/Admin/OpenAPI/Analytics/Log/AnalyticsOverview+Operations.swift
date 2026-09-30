@@ -6,11 +6,11 @@ import OpenAPIKit30
 protocol AnalyticsLogOverviewBaseOperation: BearerProtectedOperation {}
 
 extension AnalyticsLogOverviewBaseOperation {
-    var tags: [TagRepresentable] { [AnalyticsLogTag()] }
+    var tags: [any TagRepresentable] { [AnalyticsLogTag()] }
 }
 
 struct AnalyticsLogOverviewOperation: AnalyticsLogOverviewBaseOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AnalyticsLogOverviewRequestBody().reference()
     }
 

@@ -1,5 +1,5 @@
 import FeatherOpenAPI
 
 struct WebMenuItemMovePathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { WebMenuItemMoveOperation() }
+    var post: (any OperationRepresentable)? { WebMenuItemMoveOperation() }
 }

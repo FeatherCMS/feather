@@ -1,17 +1,17 @@
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 public protocol SystemJobOperation: BearerProtectedOperation {}
 
 extension SystemJobOperation {
-    public var tags: [TagRepresentable] { [SystemJobTag()] }
+    public var tags: [any TagRepresentable] { [SystemJobTag()] }
 }
 
 public protocol SystemJobIDOperation: SystemJobOperation {}
 
 extension SystemJobIDOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [SystemJobIdParameter().reference()]
     }
 }

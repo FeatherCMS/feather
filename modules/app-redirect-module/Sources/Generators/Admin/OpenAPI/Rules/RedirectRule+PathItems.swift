@@ -1,20 +1,20 @@
 import FeatherOpenAPI
 
 struct RedirectRulePathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { RedirectRuleCreateOperation() }
-    var delete: OperationRepresentable? { RedirectRuleRemoveOperation() }
+    var post: (any OperationRepresentable)? { RedirectRuleCreateOperation() }
+    var delete: (any OperationRepresentable)? { RedirectRuleRemoveOperation() }
 }
 
 struct RedirectRuleSearchPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { RedirectRuleSearchOperation() }
+    var post: (any OperationRepresentable)? { RedirectRuleSearchOperation() }
 }
 
 struct RedirectRuleListPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { RedirectRuleListOperation() }
+    var get: (any OperationRepresentable)? { RedirectRuleListOperation() }
 }
 
 struct RedirectRuleIdPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { RedirectRuleGetOperation() }
-    var put: OperationRepresentable? { RedirectRuleUpdateOperation() }
-    var patch: OperationRepresentable? { RedirectRulePatchOperation() }
+    var get: (any OperationRepresentable)? { RedirectRuleGetOperation() }
+    var put: (any OperationRepresentable)? { RedirectRuleUpdateOperation() }
+    var patch: (any OperationRepresentable)? { RedirectRulePatchOperation() }
 }
