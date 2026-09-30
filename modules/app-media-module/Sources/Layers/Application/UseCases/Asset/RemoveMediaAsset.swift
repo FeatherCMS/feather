@@ -1,6 +1,6 @@
 public import FeatherApplication
 public import FeatherContracts
-public import FeatherStorage
+import FeatherStorage
 import MediaContracts
 import MediaDomain
 
@@ -8,19 +8,16 @@ public struct RemoveMediaAsset: UseCase {
     struct Action: PermissionAction { let key = MediaPermissions.Assets.delete }
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<WriteMedia>
-    let storage: any StorageClient
-    let storageKeyShard: MediaStorageKeyShard
+    let storageContext: StorageContext
 
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteMedia>,
-        storage: any StorageClient,
-        storageKeyShard: MediaStorageKeyShard = .init()
+        storageContext: StorageContext
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
-        self.storage = storage
-        self.storageKeyShard = storageKeyShard
+        self.storageContext = storageContext
     }
 
     public struct Input: DTO {
@@ -63,15 +60,20 @@ public struct RemoveMediaAsset: UseCase {
             )
         }
         for asset in snapshot.assets {
-            _ = try? await MediaStorageData.delete(
-                from: storage,
-                key: storageKeyShard.physicalKey(for: asset.objectKey)
+            let storagePrefix = try storageContext.objectKeyGenerator.generate(
+                from: asset.id
+            )
+            try? await storageContext.storage.delete(
+                key: "\(storagePrefix)/original.\(asset.extension)"
             )
         }
         for variant in snapshot.variants {
-            _ = try? await MediaStorageData.delete(
-                from: storage,
-                key: storageKeyShard.physicalKey(for: variant.objectKey)
+            let storagePrefix = try storageContext.objectKeyGenerator.generate(
+                from: variant.nodeId
+            )
+            try? await storageContext.storage.delete(
+                key:
+                    "\(storagePrefix)/variants/\(variant.name).\(variant.extension)"
             )
         }
         return try await transaction.run { scope in

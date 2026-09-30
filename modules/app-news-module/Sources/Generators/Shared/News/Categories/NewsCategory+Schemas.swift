@@ -21,7 +21,7 @@ public struct NewsCategoryExcerptField: StringSchemaRepresentable {
 }
 
 public struct NewsCategoryImageURLField: StringSchemaRepresentable {
-    public var example: String? = "/media/assets/news-category.png"
+    public var example: String? = "/123456789/originals/news-category.png"
 
     public init() {}
 }

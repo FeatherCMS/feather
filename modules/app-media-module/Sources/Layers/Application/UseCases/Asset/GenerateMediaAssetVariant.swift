@@ -1,8 +1,9 @@
 public import FeatherApplication
 public import FeatherContracts
-public import FeatherStorage
+import FeatherStorage
 import Foundation
 import MediaDomain
+import NIOCore
 
 public struct GenerateMediaAssetVariants: UseCase {
     public enum Error: UseCaseError {
@@ -44,19 +45,16 @@ public struct GenerateMediaAssetVariants: UseCase {
     }
 
     let transaction: any TransactionExecutor<WriteMedia>
-    let storage: any StorageClient
-    let storageKeyShard: MediaStorageKeyShard
+    let storageContext: StorageContext
     let shellRunner: any MediaShellRunner
 
     public init(
         transaction: any TransactionExecutor<WriteMedia>,
-        storage: any StorageClient,
-        storageKeyShard: MediaStorageKeyShard = .init(),
+        storageContext: StorageContext,
         shellRunner: any MediaShellRunner
     ) {
         self.transaction = transaction
-        self.storage = storage
-        self.storageKeyShard = storageKeyShard
+        self.storageContext = storageContext
         self.shellRunner = shellRunner
     }
 
@@ -94,10 +92,15 @@ public struct GenerateMediaAssetVariants: UseCase {
             return
         }
 
-        let inputData = try await MediaStorageData.download(
-            from: storage,
-            key: storageKeyShard.physicalKey(for: prepared.asset.objectKey)
+        let inputSequence = try await storageContext.storage.download(
+            key:
+                "\(try storageContext.objectKeyGenerator.generate(from: prepared.asset.id))/original.\(prepared.asset.extension)",
+            range: nil
         )
+        var inputData = Data()
+        for try await buffer in inputSequence {
+            inputData.append(contentsOf: buffer.readableBytesView)
+        }
         let inputExtension =
             MediaExtensionMatcher.canonicalExtension(
                 from: prepared.asset.extension
@@ -122,12 +125,18 @@ public struct GenerateMediaAssetVariants: UseCase {
                     plan: plan,
                     extension: output.extension
                 )
-                try await MediaStorageData.upload(
-                    output.data,
-                    to: storage,
-                    key: storageKeyShard.physicalKey(for: generated.objectKey)
+                let storagePrefix = try storageContext.objectKeyGenerator
+                    .generate(from: generated.assetID)
+                let storageObjectKey =
+                    "\(storagePrefix)/variants/\(generated.plan.variant.key).\(generated.extension)"
+                var buffer = ByteBufferAllocator()
+                    .buffer(capacity: output.data.count)
+                buffer.writeBytes(output.data)
+                try await storageContext.storage.upload(
+                    key: storageObjectKey,
+                    sequence: .init(buffer: buffer)
                 )
-                uploadedKeys.append(generated.objectKey)
+                uploadedKeys.append(storageObjectKey)
                 outputs.append(generated)
             }
         }
@@ -243,10 +252,7 @@ extension GenerateMediaAssetVariants {
 
     fileprivate func deleteUploaded(keys: [String]) async {
         for key in keys {
-            _ = try? await MediaStorageData.delete(
-                from: storage,
-                key: storageKeyShard.physicalKey(for: key)
-            )
+            try? await storageContext.storage.delete(key: key)
         }
     }
 

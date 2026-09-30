@@ -77,10 +77,14 @@ func buildServer(
             idGenerator: idGenerator,
             events: events,
             jobQueue: jobQueue,
-            storage: StorageClientFS(rootPath: config.media.storageRootPath),
-            storageKeyShard: .init(
-                depth: config.media.storageShardDepth,
-                segmentLength: config.media.storageShardSegmentLength
+            storageContext: .init(
+                storage: StorageClientFS(
+                    rootPath: config.media.storageRootPath
+                ),
+                objectKeyGenerator: HierarchicalObjectKeyGenerator(
+                    depth: config.media.storageShardDepth,
+                    segmentLength: config.media.storageShardSegmentLength
+                )
             )
         ),
         mediaResolver: MediaResolver(

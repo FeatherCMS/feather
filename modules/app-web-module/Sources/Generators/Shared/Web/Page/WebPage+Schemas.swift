@@ -21,7 +21,7 @@ public struct WebPageExcerptField: StringSchemaRepresentable {
 }
 
 public struct WebPageImageURLField: StringSchemaRepresentable {
-    public var example: String? = "/media/assets/homepage.png"
+    public var example: String? = "/123456789/originals/homepage.png"
 
     public init() {}
 }

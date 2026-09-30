@@ -1,7 +1,6 @@
 import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
-import FeatherStorage
 import Jobs
 import MediaApplication
 
@@ -10,6 +9,5 @@ struct AppInfrastructure: Sendable {
     let idGenerator: any IDGenerator
     let events: any EventPublisher
     let jobQueue: any JobQueueProtocol
-    let storage: any StorageClient
-    let storageKeyShard: MediaStorageKeyShard
+    let storageContext: StorageContext
 }

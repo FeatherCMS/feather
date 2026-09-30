@@ -141,10 +141,12 @@ func buildWorker(
         queue: jobQueue,
         database: database,
         idGenerator: idGenerator,
-        storage: StorageClientFS(rootPath: config.media.storageRootPath),
-        storageKeyShard: .init(
-            depth: config.media.storageShardDepth,
-            segmentLength: config.media.storageShardSegmentLength
+        storageContext: .init(
+            storage: StorageClientFS(rootPath: config.media.storageRootPath),
+            objectKeyGenerator: HierarchicalObjectKeyGenerator(
+                depth: config.media.storageShardDepth,
+                segmentLength: config.media.storageShardSegmentLength
+            )
         ),
         maxConcurrentProcessing: config.media.maxConcurrentProcessing
     )

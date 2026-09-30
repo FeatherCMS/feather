@@ -43,8 +43,12 @@ func buildTestServer(
             idGenerator: idGenerator,
             events: eventPublisher,
             jobQueue: jobQueue,
-            storage: StorageClientFS(rootPath: config.media.storageRootPath),
-            storageKeyShard: .init()
+            storageContext: .init(
+                storage: StorageClientFS(
+                    rootPath: config.media.storageRootPath
+                ),
+                objectKeyGenerator: HierarchicalObjectKeyGenerator()
+            )
         ),
         mediaResolver: MediaResolver(
             mediaBaseURL: URL(string: "http://localhost:8080")!

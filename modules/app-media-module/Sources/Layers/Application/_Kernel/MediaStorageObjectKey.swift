@@ -1,11 +1,9 @@
 public enum MediaStorageObjectKey {
-    public static let assetNamespace = "media/assets"
-
     public static func original(
         assetID: String,
         fileExtension: String
     ) -> String {
-        "\(assetNamespace)/\(assetID)/original.\(fileExtension)"
+        "\(assetID)/original.\(fileExtension)"
     }
 
     public static func variant(
@@ -13,6 +11,6 @@ public enum MediaStorageObjectKey {
         variantKey: String,
         fileExtension: String
     ) -> String {
-        "\(assetNamespace)/\(assetID)/variants/\(variantKey).\(fileExtension)"
+        "\(assetID)/variants/\(variantKey).\(fileExtension)"
     }
 }

@@ -11,7 +11,7 @@ struct MediaAssetKeyField: StringSchemaRepresentable {
 }
 
 struct MediaAssetURLField: StringSchemaRepresentable {
-    var example: String? = "/media/assets/media_asset_1/cover-image.jpg"
+    var example: String? = "/123456789/originals/cover-image.jpg"
 }
 
 struct MediaAssetTypeField: StringSchemaRepresentable {

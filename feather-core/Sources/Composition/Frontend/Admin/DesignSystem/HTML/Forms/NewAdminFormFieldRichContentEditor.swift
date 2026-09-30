@@ -98,7 +98,9 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             const editorRoot = document.querySelector('.mce-app');
             const mediaBaseURL = input.getAttribute('data-media-base-url') || editorRoot?.dataset.markdownMediaBaseUrl || editorRoot?.getAttribute('data-markdown-media-base-url') || '';
             function mediaURL(value) {
-              if (!value || !value.startsWith('/media/assets/') || !mediaBaseURL) return value;
+              if (!value || !value.startsWith('/') || !mediaBaseURL) return value;
+              const pathSegments = value.split('/').filter(Boolean);
+              if (!pathSegments.includes('originals') && !pathSegments.includes('variants')) return value;
               try { return new URL(value, mediaBaseURL).toString(); } catch (_) { return mediaBaseURL.replace(/\/$/, '') + value; }
             }
             function pickerFieldKey(type) { const app = document.querySelector('.mce-app'); return app && app.getAttribute(`data-markdown-${type}-picker`); }

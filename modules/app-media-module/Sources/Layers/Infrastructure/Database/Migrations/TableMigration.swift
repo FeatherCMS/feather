@@ -50,10 +50,21 @@ public struct TableMigration: DatabaseMigration {
             #"""
             CREATE TABLE IF NOT EXISTS media_asset_storage_object (
                 id TEXT PRIMARY KEY,
-                object_key TEXT NOT NULL UNIQUE CHECK (object_key LIKE 'media/assets/%'),
+                object_key TEXT NOT NULL UNIQUE,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 deleted_at TIMESTAMPTZ
             );
+            """#,
+            #"""
+            ALTER TABLE media_asset_storage_object
+                DROP CONSTRAINT IF EXISTS media_asset_storage_object_object_key_check;
+            """#,
+            #"""
+            ALTER TABLE media_asset_storage_object
+                ADD CONSTRAINT media_asset_storage_object_object_key_check
+                CHECK (
+                    object_key ~ '^[A-Za-z0-9_-]+/(original[.][A-Za-z0-9]+|variants/[A-Za-z0-9_-]+[.][A-Za-z0-9]+)$'
+                );
             """#,
             #"""
             CREATE TABLE IF NOT EXISTS media_asset_node_folder (

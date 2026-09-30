@@ -6,8 +6,7 @@ extension UseCases {
         .init(
             authorizer: authorizer,
             transaction: writeTransaction(),
-            storage: storage,
-            storageKeyShard: storageKeyShard
+            storageContext: storageContext
         )
     }
 }

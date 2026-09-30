@@ -1,17 +1,24 @@
 public import MediaDomain
 
 extension MediaAssetNodeFile {
-    public var asDetail: MediaAssetDetail {
+    public func asDetail(
+        objectKeyGenerator: any ObjectKeyGenerator =
+            HierarchicalObjectKeyGenerator()
+    )
+        throws -> MediaAssetDetail
+    {
         .init(
             id: id,
             folderId: folderId,
             name: name,
             slug: slug,
             slugPath: slugPath,
-            url: mediaAssetPublicURL(
+            url: try mediaAssetPublicURL(
                 id: id,
                 slugPath: slugPath,
-                extension: `extension`
+                filename: name,
+                extension: `extension`,
+                objectKeyGenerator: objectKeyGenerator
             ),
             extension: `extension`,
             contentType: contentType,
@@ -24,17 +31,24 @@ extension MediaAssetNodeFile {
         )
     }
 
-    public var asListItem: MediaAssetList.Item {
+    public func asListItem(
+        objectKeyGenerator: any ObjectKeyGenerator =
+            HierarchicalObjectKeyGenerator()
+    )
+        throws -> MediaAssetList.Item
+    {
         .init(
             id: id,
             folderId: folderId,
             name: name,
             slug: slug,
             slugPath: slugPath,
-            url: mediaAssetPublicURL(
+            url: try mediaAssetPublicURL(
                 id: id,
                 slugPath: slugPath,
-                extension: `extension`
+                filename: name,
+                extension: `extension`,
+                objectKeyGenerator: objectKeyGenerator
             ),
             extension: `extension`,
             contentType: contentType,

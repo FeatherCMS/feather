@@ -123,16 +123,11 @@ extension AdminAPIGateway {
     func map(_ item: MediaBackend.UseCases.AssociatedVariantFile)
         -> MediaAdminAPI.Components.Schemas.MediaAssetVariantListItemSchema
     {
-        let url = mediaVariantPublicURL(
-            assetId: item.assetId,
-            name: item.name,
-            extension: item.extension
-        )
-        return .init(
+        .init(
             variantId: item.variantId,
             name: item.name,
             _extension: item.extension,
-            url: mediaResolver.resolve(imagePath: url) ?? url
+            url: mediaResolver.resolve(imagePath: item.url) ?? item.url
         )
     }
 

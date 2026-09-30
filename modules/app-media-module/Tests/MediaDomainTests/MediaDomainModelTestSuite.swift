@@ -31,7 +31,7 @@ struct MediaDomainModelTestSuite {
             variantProcessorId: "processor-1",
             name: "preview",
             storageObjectId: "object-2",
-            objectKey: "/media/assets/asset-1/variants/processor-1.webp",
+            objectKey: "asset-1/variants/processor-1.webp",
             extension: "webp"
         )
 
@@ -50,7 +50,7 @@ struct MediaDomainModelTestSuite {
             slug: "hero",
             slugPath: "hero",
             storageObjectId: "object-1",
-            objectKey: "/media/assets/asset-1/original.jpg",
+            objectKey: "asset-1/original.jpg",
             extension: "jpg",
             contentType: "image/jpeg",
             sizeBytes: 123,

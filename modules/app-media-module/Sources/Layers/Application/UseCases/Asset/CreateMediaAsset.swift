@@ -17,19 +17,16 @@ public struct CreateMediaAsset: UseCase {
 
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<WriteMedia>
-    let storage: any StorageClient
-    let storageKeyShard: MediaStorageKeyShard
+    let storageContext: StorageContext
 
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteMedia>,
-        storage: any StorageClient,
-        storageKeyShard: MediaStorageKeyShard = .init()
+        storageContext: StorageContext
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
-        self.storage = storage
-        self.storageKeyShard = storageKeyShard
+        self.storageContext = storageContext
     }
 
     public struct Input: DTO {
@@ -119,8 +116,12 @@ public struct CreateMediaAsset: UseCase {
             assetID: storageIdentity.nodeId,
             fileExtension: file.extension
         )
-        try await storage.upload(
-            key: storageKeyShard.physicalKey(for: objectKey),
+        let storagePrefix = try storageContext.objectKeyGenerator.generate(
+            from: storageIdentity.nodeId
+        )
+        let storageObjectKey = "\(storagePrefix)/original.\(file.extension)"
+        try await storageContext.storage.upload(
+            key: storageObjectKey,
             sequence: input.content
         )
 
@@ -159,13 +160,12 @@ public struct CreateMediaAsset: UseCase {
                 )
                 return asset
             }
-            return asset.asDetail
+            return try asset.asDetail(
+                objectKeyGenerator: storageContext.objectKeyGenerator
+            )
         }
         catch {
-            _ = try? await MediaStorageData.delete(
-                from: storage,
-                key: storageKeyShard.physicalKey(for: objectKey)
-            )
+            try? await storageContext.storage.delete(key: storageObjectKey)
             throw error
         }
     }
