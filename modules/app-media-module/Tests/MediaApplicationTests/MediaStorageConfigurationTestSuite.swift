@@ -4,12 +4,11 @@ import Testing
 @Suite
 struct HierarchicalObjectKeyGeneratorTestSuite {
     @Test
-    func disabledShardingIsTheDefault() {
+    func hierarchicalShardingIsEnabledByDefault() {
         let configuration = HierarchicalObjectKeyGenerator()
 
-        #expect(configuration.depth == 0)
+        #expect(configuration.depth == 2)
         #expect(configuration.segmentLength == 2)
-        #expect(configuration.isEnabled == false)
     }
 
     @Test

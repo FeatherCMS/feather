@@ -6,8 +6,7 @@ public struct StorageContext: Sendable {
 
     public init(
         storage: any StorageClient,
-        objectKeyGenerator: any ObjectKeyGenerator =
-            HierarchicalObjectKeyGenerator()
+        objectKeyGenerator: any ObjectKeyGenerator
     ) {
         self.storage = storage
         self.objectKeyGenerator = objectKeyGenerator

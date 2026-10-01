@@ -3,22 +3,18 @@ public struct HierarchicalObjectKeyGenerator: ObjectKeyGenerator, Equatable {
     public let segmentLength: Int
 
     public init(
-        depth: Int = 0,
+        depth: Int = 2,
         segmentLength: Int = 2
     ) {
         self.depth = max(0, depth)
         self.segmentLength = max(1, segmentLength)
     }
 
-    public var isEnabled: Bool {
-        depth > 0
-    }
-
     public func generate(from value: String) throws -> String {
         guard !value.isEmpty else {
             throw ObjectKeyGeneratorError.emptyValue
         }
-        guard isEnabled else { return value }
+        guard depth > 0 else { return value }
 
         let characters = Array(value)
         let requiredLength = depth * segmentLength
