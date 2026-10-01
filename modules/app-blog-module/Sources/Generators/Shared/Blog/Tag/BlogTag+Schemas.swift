@@ -21,7 +21,7 @@ public struct BlogTagExcerptField: StringSchemaRepresentable {
 }
 
 public struct BlogTagImageURLField: StringSchemaRepresentable {
-    public var example: String? = "/123456789/originals/tag.png"
+    public var example: String? = "/public/12/34/56789/originals/tag.png"
 
     public init() {}
 }

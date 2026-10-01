@@ -75,7 +75,7 @@ public struct WebMetadataExcerptField: StringSchemaRepresentable {
 }
 
 public struct WebMetadataImageURLField: StringSchemaRepresentable {
-    public var example: String? = "/123456789/originals/example.png"
+    public var example: String? = "/public/12/34/56789/originals/example.png"
 
     public init() {}
 }

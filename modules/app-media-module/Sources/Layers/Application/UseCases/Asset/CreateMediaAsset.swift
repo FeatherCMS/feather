@@ -113,10 +113,12 @@ public struct CreateMediaAsset: UseCase {
             }
             return slugPath
         }
-        let storagePrefix = try storageContext.objectKeyGenerator.generate(
-            from: storageIdentity.nodeId
+        let storageObjectKey = try MediaAssetStorageObject.storageKey(
+            assetID: storageIdentity.nodeId,
+            key: "original",
+            extension: file.extension,
+            objectKeyGenerator: storageContext.objectKeyGenerator
         )
-        let storageObjectKey = "\(storagePrefix)/original.\(file.extension)"
         try await storageContext.storage.upload(
             key: storageObjectKey,
             sequence: input.content

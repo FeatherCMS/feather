@@ -9,6 +9,7 @@ import PostgresMigrations
 import PostgresNIO
 import Environment
 import FeatherInfrastructure
+import FeatherDomain
 import FeatherStorage
 import FeatherStorageFS
 import MediaApplication
@@ -82,8 +83,8 @@ func buildServer(
                     rootPath: config.media.storageRootPath
                 ),
                 objectKeyGenerator: HierarchicalObjectKeyGenerator(
-                    depth: config.media.storageShardDepth,
-                    segmentLength: config.media.storageShardSegmentLength
+                    depth: config.storage.objectKey.depth,
+                    segmentLength: config.storage.objectKey.segmentLength
                 )
             )
         ),

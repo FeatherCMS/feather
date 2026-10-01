@@ -34,13 +34,13 @@ right. `depth` is the number of shard segments; `segmentLength` is the number
 of ID characters in each shard segment. The remaining characters form the
 last ID segment.
 
-For ID `123456789`:
+For ID `abcdefghijklmno`:
 
 | Depth | Segment length | Shard prefix |
 | ---: | ---: | --- |
-| 2 | 2 | `12/34/56789` |
-| 3 | 2 | `12/34/56/789` |
-| 2 | 1 | `1/2/3456789` |
+| 2 | 2 | `ab/cd/efghijklmno` |
+| 3 | 2 | `ab/cd/ef/ghijklmno` |
+| 2 | 1 | `a/b/cdefghijklmno` |
 
 The ID must be longer than `depth × segmentLength`; otherwise the application
 uses the unsplit ID as the prefix, and the CloudFront rewrite accepts that
@@ -48,9 +48,10 @@ explicit fallback. The URL generator, storage adapter, CloudFront Function,
 and Nginx rules must use the same settings. At depth zero, the ID itself
 remains the first path component; only extra shard directories are disabled.
 
-The current deployment variables are `MEDIA_STORAGE_SHARD_DEPTH` and
-`MEDIA_STORAGE_SHARD_SEGMENT_LENGTH`. Sharding is disabled when the depth is
-zero.
+The deployment variables are `STORAGE_OBJECT_KEY_DEPTH` and
+`STORAGE_OBJECT_KEY_SEGMENT_LENGTH`. The defaults are depth `2` and segment
+length `2`, producing `ab/cd/efghijklmno`. Depth zero explicitly disables
+additional shard directories.
 
 ## Target public URL and object-key contract
 
@@ -59,15 +60,15 @@ slug. This fixed position distinguishes originals from variants and keeps
 variant selection independent of filename punctuation.
 
 ```text
-/{shard-prefix}/originals/{virtual-path}/{filename}.{extension}
-/{shard-prefix}/variants/{variant-key}/{virtual-path}/{filename}.{extension}
+/public/{shard-prefix}/originals/{virtual-path}/{filename}.{extension}
+/public/{shard-prefix}/variants/{variant-key}/{virtual-path}/{filename}.{extension}
 ```
 
 The corresponding stored object keys are:
 
 ```text
-{shard-prefix}/original.{original-extension}
-{shard-prefix}/variants/{variant-key}.{generated-extension}
+public/{shard-prefix}/original.{original-extension}
+public/{shard-prefix}/variants/{variant-key}.{generated-extension}
 ```
 
 The object key has no leading slash. The leading slash in an HTTP request URI
@@ -75,7 +76,7 @@ is normal; it is not part of the S3 key.
 
 ### Original example
 
-Assume a nine-character asset ID, a two-level shard configuration with two
+Assume a fifteen-character asset ID, a two-level shard configuration with two
 characters per level, and this database virtual path:
 
 ```text
@@ -85,13 +86,13 @@ example/projects/product-launch/hero-image.png
 The resolver returns:
 
 ```text
-https://<media-domain>/12/34/56789/originals/example/projects/product-launch/hero-image.png
+https://<media-domain>/public/ab/cd/efghijklmno/originals/example/projects/product-launch/hero-image.png
 ```
 
 CloudFront or Nginx maps it to this object key:
 
 ```text
-12/34/56789/original.png
+public/ab/cd/efghijklmno/original.png
 ```
 
 ### Variant examples
@@ -100,15 +101,15 @@ Suppose the stored variants are `cover.webp` and `preview.webp`. Their public
 URLs include both the stable variant key and the descriptive virtual path:
 
 ```text
-https://<media-domain>/12/34/56789/variants/cover/example/projects/product-launch/hero-image.webp
-https://<media-domain>/12/34/56789/variants/preview/example/projects/product-launch/hero-image.webp
+https://<media-domain>/public/ab/cd/efghijklmno/variants/cover/example/projects/product-launch/hero-image.webp
+https://<media-domain>/public/ab/cd/efghijklmno/variants/preview/example/projects/product-launch/hero-image.webp
 ```
 
 They resolve to:
 
 ```text
-12/34/56789/variants/cover.webp
-12/34/56789/variants/preview.webp
+public/ab/cd/efghijklmno/variants/cover.webp
+public/ab/cd/efghijklmno/variants/preview.webp
 ```
 
 The URL extension for a variant comes from that generated variant record; it
@@ -136,26 +137,28 @@ image SEO guidance](https://developers.google.com/search/docs/appearance/google-
 
 ## Current and target storage keys
 
-The target contract uses keys such as:
+The target bucket layout uses keys such as:
 
 ```text
-12/34/56789/original.png
-12/34/56789/variants/cover.webp
+public/ab/cd/efghijklmno/original.png
+public/ab/cd/efghijklmno/variants/cover.webp
 ```
 
-The application stores an unsharded logical key in PostgreSQL:
+PostgreSQL stores the logical object name and extension separately:
 
 ```text
-{asset-id}/original.{extension}
-{asset-id}/variants/{variant-key}.{extension}
+original + {extension}
+variants/{variant-key} + {extension}
 ```
 
-The storage adapter applies the configured shard prefix before accessing the
-object store. For the example ID above, the physical keys are:
+Server and Worker construct physical keys as
+`public/{shard-prefix}/{logical-key}.{extension}`. The `public/` prefix is a
+fixed top-level bucket namespace and is not stored in PostgreSQL. For the
+example ID above, the physical keys are:
 
 ```text
-media/12/34/56789/original.png
-media/12/34/56789/variants/cover.webp
+public/ab/cd/efghijklmno/original.png
+public/ab/cd/efghijklmno/variants/cover.webp
 ```
 
 PostgreSQL's object-key constraint validates the logical key shape. The
@@ -177,14 +180,16 @@ Attach a CloudFront Function to the `viewer-request` event for the behavior
 that receives media requests. The target rewrite is:
 
 ```text
-/{prefix}/originals/{slug...}/{filename}.{extension}
-    -> /{prefix}/original.{extension}
+/public/{prefix}/originals/{slug...}/{filename}.{extension}
+    -> /public/{prefix}/original.{extension}
 
-/{prefix}/variants/{variant}/{slug...}/{filename}.{extension}
-    -> /{prefix}/variants/{variant}.{extension}
+/public/{prefix}/variants/{variant}/{slug...}/{filename}.{extension}
+    -> /public/{prefix}/variants/{variant}.{extension}
 ```
 
 `{prefix}` is the complete shard path, including the remaining ID segment.
+The `public` path component is required and maps to the bucket's top-level
+`public/` folder.
 The function should validate the configured prefix shape, route marker,
 variant key, and extension. It should pass non-media requests through
 unchanged if associated with a behavior that also receives them. The function
@@ -193,7 +198,7 @@ CloudFront fetches the resulting object from S3. The rewrite performs no
 database lookup and does not proxy the image through the application server.
 
 The CloudFront function source is `deploy/cloudfront/media-uri-rewrite.js` in
-the Ava repository. Its `SHARD_DEPTH` and `SHARD_SEGMENT_LENGTH` constants
+the Ava repository. Its `OBJECT_KEY_DEPTH` and `OBJECT_KEY_SEGMENT_LENGTH` constants
 must match Server and Worker configuration. Test both original and variant
 examples, malformed paths, missing objects, and non-media paths before
 publishing or associating it. Publish the tested version to `LIVE`, associate
@@ -220,18 +225,18 @@ server {
     root /srv/media;
     autoindex off;
 
-    # /12/34/56789/originals/<virtual path>/<filename>.png
-    # -> /srv/media/12/34/56789/original.png
-    location ~ ^/(?<shard1>[A-Za-z0-9_-]{2})/(?<shard2>[A-Za-z0-9_-]{2})/(?<asset_tail>[A-Za-z0-9_-]+)/originals/(?:.*/)?[^/]+\.(?<ext>[A-Za-z0-9]+)$ {
-        rewrite ^ /$shard1/$shard2/$asset_tail/original.$ext break;
+    # /public/ab/cd/ef.../originals/<virtual path>/<filename>.png
+    # -> /srv/media/public/ab/cd/ef.../original.png
+    location ~ ^/public/(?<shard1>[A-Za-z0-9_-]{2})/(?<shard2>[A-Za-z0-9_-]{2})/(?<asset_tail>[A-Za-z0-9_-]+)/originals/(?:.*/)?[^/]+\.(?<ext>[A-Za-z0-9]+)$ {
+        rewrite ^ /public/$shard1/$shard2/$asset_tail/original.$ext break;
         try_files $uri =404;
         add_header Cache-Control "public, max-age=3600" always;
     }
 
-    # /12/34/56789/variants/cover/<virtual path>/<filename>.webp
-    # -> /srv/media/12/34/56789/variants/cover.webp
-    location ~ ^/(?<shard1>[A-Za-z0-9_-]{2})/(?<shard2>[A-Za-z0-9_-]{2})/(?<asset_tail>[A-Za-z0-9_-]+)/variants/(?<variant>[A-Za-z0-9_-]+)/(?:.*/)?[^/]+\.(?<ext>[A-Za-z0-9]+)$ {
-        rewrite ^ /$shard1/$shard2/$asset_tail/variants/$variant.$ext break;
+    # /public/ab/cd/ef.../variants/cover/<virtual path>/<filename>.webp
+    # -> /srv/media/public/ab/cd/ef.../variants/cover.webp
+    location ~ ^/public/(?<shard1>[A-Za-z0-9_-]{2})/(?<shard2>[A-Za-z0-9_-]{2})/(?<asset_tail>[A-Za-z0-9_-]+)/variants/(?<variant>[A-Za-z0-9_-]+)/(?:.*/)?[^/]+\.(?<ext>[A-Za-z0-9]+)$ {
+        rewrite ^ /public/$shard1/$shard2/$asset_tail/variants/$variant.$ext break;
         try_files $uri =404;
         add_header Cache-Control "public, max-age=3600" always;
     }

@@ -18,6 +18,16 @@ public struct MediaAssetStorageObject: Model {
     public let sizeInBytes: Int64
     public let createdAt: Date
 
+    public static func storageKey(
+        assetID: String,
+        key: String,
+        extension: String,
+        objectKeyGenerator: any ObjectKeyGenerator
+    ) throws -> String {
+        let shardPrefix = try objectKeyGenerator.generate(from: assetID)
+        return "public/\(shardPrefix)/\(key).\(`extension`)"
+    }
+
     package init(
         id: String,
         key: String,

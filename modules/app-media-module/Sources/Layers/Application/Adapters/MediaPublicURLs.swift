@@ -13,7 +13,8 @@ public func mediaAssetPublicURL(
         .map(String.init).joined(separator: "/")
     let virtualPath = [folderPath, filename].filter { !$0.isEmpty }
         .joined(separator: "/")
-    return "/\(prefix)/originals/\(encodedPath(virtualPath)).\(`extension`)"
+    return
+        "/public/\(prefix)/originals/\(encodedPath(virtualPath)).\(`extension`)"
 }
 
 public func mediaVariantPublicURL(
@@ -30,7 +31,7 @@ public func mediaVariantPublicURL(
     let virtualPath = [folderPath, filename].filter { !$0.isEmpty }
         .joined(separator: "/")
     return
-        "/\(prefix)/variants/\(encodedSegment(variantKey))/\(encodedPath(virtualPath)).\(`extension`)"
+        "/public/\(prefix)/variants/\(encodedSegment(variantKey))/\(encodedPath(virtualPath)).\(`extension`)"
 }
 
 private func encodedPath(_ value: String) -> String {

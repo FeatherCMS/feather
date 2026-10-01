@@ -65,12 +65,13 @@ public struct RemoveMediaAsset: UseCase {
             )
         }
         for storageObject in snapshot.storageObjects {
-            let storagePrefix = try storageContext.objectKeyGenerator.generate(
-                from: storageObject.assetId
-            )
             try? await storageContext.storage.delete(
-                key:
-                    "\(storagePrefix)/\(storageObject.object.key).\(storageObject.object.extension)"
+                key: try MediaAssetStorageObject.storageKey(
+                    assetID: storageObject.assetId,
+                    key: storageObject.object.key,
+                    extension: storageObject.object.extension,
+                    objectKeyGenerator: storageContext.objectKeyGenerator
+                )
             )
         }
         return try await transaction.run { scope in

@@ -145,8 +145,8 @@ func buildWorker(
         storageContext: .init(
             storage: StorageClientFS(rootPath: config.media.storageRootPath),
             objectKeyGenerator: HierarchicalObjectKeyGenerator(
-                depth: config.media.storageShardDepth,
-                segmentLength: config.media.storageShardSegmentLength
+                depth: config.storage.objectKey.depth,
+                segmentLength: config.storage.objectKey.segmentLength
             )
         ),
         maxConcurrentProcessing: config.media.maxConcurrentProcessing

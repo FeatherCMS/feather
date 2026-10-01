@@ -46,6 +46,27 @@ struct AppPublicContentDefaultInteractor: AppPublicContentInteractor {
         )
     }
 
+    func resolveRSS() async throws -> AppPublicRSSModel {
+        let results = try await events.trigger(
+            event: WebRSSContentProvider(),
+            using: WebRSSContentEventContext(runtime: runtime)
+        )
+        let settings = try await repository.publicSiteSettings()
+        return .init(
+            title: settings.title,
+            description: settings.excerpt,
+            siteURL: runtime.publicOrigins.siteBaseURL,
+            items: results.flatMap { $0 }
+        )
+    }
+
+    func resolveSitemap() async throws -> AppPublicSitemapModel {
+        .init(
+            slugs: try await repository.publicMetadataSlugs(),
+            baseURL: runtime.publicOrigins.siteBaseURL
+        )
+    }
+
     private func resolveResults(
         baseMetadata: PublicContent.Metadata.Base
     ) async throws -> [WebPublicContentProvider.Output] {

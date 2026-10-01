@@ -87,8 +87,12 @@ public struct GenerateMediaAssetVariants: UseCase {
         }
 
         let inputSequence = try await storageContext.storage.download(
-            key:
-                "\(try storageContext.objectKeyGenerator.generate(from: prepared.asset.id))/original.\(prepared.asset.extension)",
+            key: try MediaAssetStorageObject.storageKey(
+                assetID: prepared.asset.id,
+                key: "original",
+                extension: prepared.asset.extension,
+                objectKeyGenerator: storageContext.objectKeyGenerator
+            ),
             range: nil
         )
         var inputData = Data()
@@ -120,10 +124,12 @@ public struct GenerateMediaAssetVariants: UseCase {
                     extension: output.extension,
                     sizeInBytes: Int64(output.data.count)
                 )
-                let storagePrefix = try storageContext.objectKeyGenerator
-                    .generate(from: generated.assetID)
-                let storageObjectKey =
-                    "\(storagePrefix)/variants/\(generated.plan.variant.key).\(generated.extension)"
+                let storageObjectKey = try MediaAssetStorageObject.storageKey(
+                    assetID: generated.assetID,
+                    key: "variants/\(generated.plan.variant.key)",
+                    extension: generated.extension,
+                    objectKeyGenerator: storageContext.objectKeyGenerator
+                )
                 var buffer = ByteBufferAllocator()
                     .buffer(capacity: output.data.count)
                 buffer.writeBytes(output.data)

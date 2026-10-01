@@ -1,5 +1,6 @@
 import FeatherDomain
 import FeatherInfrastructure
+import MediaDomain
 import Testing
 
 @testable import MediaApplication
@@ -58,6 +59,23 @@ struct HierarchicalObjectKeyGeneratorTestSuite {
 @Suite
 struct MediaPublicURLTestSuite {
     @Test
+    func storageObjectsUsePublicTopLevelFolderAndTwoLevelShard() throws {
+        let sharder = HierarchicalObjectKeyGenerator(
+            depth: 2,
+            segmentLength: 2
+        )
+
+        #expect(
+            try MediaAssetStorageObject.storageKey(
+                assetID: "abcdefghijklmno",
+                key: "variants/cover",
+                extension: "webp",
+                objectKeyGenerator: sharder
+            ) == "public/ab/cd/efghijklmno/variants/cover.webp"
+        )
+    }
+
+    @Test
     func emitsReadableOriginalAndVariantURLsWithTheConfiguredPrefix() throws {
         let sharder = HierarchicalObjectKeyGenerator(depth: 2, segmentLength: 2)
 
@@ -68,7 +86,8 @@ struct MediaPublicURLTestSuite {
                 filename: "Hero Image",
                 extension: "png",
                 objectKeyGenerator: sharder
-            ) == "/12/34/56789/originals/example/projects/Hero%20Image.png"
+            )
+                == "/public/12/34/56789/originals/example/projects/Hero%20Image.png"
         )
         #expect(
             try mediaVariantPublicURL(
@@ -79,7 +98,7 @@ struct MediaPublicURLTestSuite {
                 extension: "webp",
                 objectKeyGenerator: sharder
             )
-                == "/12/34/56789/variants/cover/example/projects/Hero%20Image.webp"
+                == "/public/12/34/56789/variants/cover/example/projects/Hero%20Image.webp"
         )
     }
 }

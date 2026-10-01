@@ -177,6 +177,7 @@ let package = Package(
             name: "MediaApplicationTests",
             dependencies: [
                 .target(name: "MediaApplication"),
+                .target(name: "MediaDomain"),
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
                 .product(name: "FeatherDomain", package: "feather-core"),
             ],

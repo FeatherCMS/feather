@@ -39,7 +39,7 @@ public struct WebSiteSettingsLogoDarkField: StringSchemaRepresentable {
 }
 
 public struct WebSiteSettingsMetaImageField: StringSchemaRepresentable {
-    public var example: String? = "/123456789/originals/default-meta-image.webp"
+    public var example: String? = "/public/12/34/56789/originals/default-meta-image.webp"
 
     public init() {}
 }

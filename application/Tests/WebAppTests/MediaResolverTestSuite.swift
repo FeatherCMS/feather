@@ -51,11 +51,12 @@ struct MediaResolverTestSuite {
     @Test
     func resolvesMarkdownMediaPaths() {
         let output = resolver.resolveMarkdownImages(
-            in: "![Photo](/12/34/56789/originals/example/projects/photo.jpg)"
+            in:
+                "![Photo](/public/12/34/56789/originals/example/projects/photo.jpg)"
         )
         #expect(
             output
-                == "![Photo](https://media.example.com/12/34/56789/originals/example/projects/photo.jpg)"
+                == "![Photo](https://media.example.com/public/12/34/56789/originals/example/projects/photo.jpg)"
         )
     }
 
@@ -63,14 +64,14 @@ struct MediaResolverTestSuite {
     func resolvesMarkdownVariantButLeavesAbsoluteURLsUnchanged() {
         let source = """
             ![Variant](/12/34/56789/variants/cover/example/projects/photo.webp)
-            ![External](https://cdn.example.com/12/34/56789/originals/photo.jpg)
+            ![External](https://cdn.example.com/public/12/34/56789/originals/photo.jpg)
             """
         let output = resolver.resolveMarkdownImages(in: source)
 
         #expect(
             output == """
                 ![Variant](https://media.example.com/12/34/56789/variants/cover/example/projects/photo.webp)
-                ![External](https://cdn.example.com/12/34/56789/originals/photo.jpg)
+                ![External](https://cdn.example.com/public/12/34/56789/originals/photo.jpg)
                 """
         )
     }

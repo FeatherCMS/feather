@@ -190,11 +190,13 @@ public struct UseCases: Sendable {
             )
             .find(id: assetId)
         }
-        let storagePrefix = try storageContext.objectKeyGenerator.generate(
-            from: asset.id
-        )
         let sequence = try await storageContext.storage.download(
-            key: "\(storagePrefix)/original.\(asset.extension)",
+            key: try MediaAssetStorageObject.storageKey(
+                assetID: asset.id,
+                key: "original",
+                extension: asset.extension,
+                objectKeyGenerator: storageContext.objectKeyGenerator
+            ),
             range: nil
         )
         var data = Data()
@@ -236,10 +238,12 @@ public struct UseCases: Sendable {
             else { throw RepositoryError.notFound }
             return (value, definition, object)
         }
-        let storagePrefix = try storageContext.objectKeyGenerator.generate(
-            from: assetId
+        let objectKey = try MediaAssetStorageObject.storageKey(
+            assetID: assetId,
+            key: stored.2.key,
+            extension: stored.2.extension,
+            objectKeyGenerator: storageContext.objectKeyGenerator
         )
-        let objectKey = "\(storagePrefix)/\(stored.2.key).\(stored.2.extension)"
         let sequence = try await storageContext.storage.download(
             key: objectKey,
             range: nil
@@ -288,9 +292,6 @@ public struct UseCases: Sendable {
             let objectsByID = Dictionary(
                 uniqueKeysWithValues: objects.map { ($0.id, $0) }
             )
-            let storagePrefix = try storageContext.objectKeyGenerator.generate(
-                from: assetId
-            )
             return try await repo.list(nodeId: assetId)
                 .compactMap { relation -> AssociatedVariantFile? in
                     guard
@@ -315,7 +316,13 @@ public struct UseCases: Sendable {
                         ),
                         extension: object.extension,
                         objectKey:
-                            "\(storagePrefix)/\(object.key).\(object.extension)"
+                            try MediaAssetStorageObject.storageKey(
+                                assetID: assetId,
+                                key: object.key,
+                                extension: object.extension,
+                                objectKeyGenerator: storageContext
+                                    .objectKeyGenerator
+                            )
                     )
                 }
         }
