@@ -1,5 +1,6 @@
 public import FeatherApplication
 public import FeatherContracts
+public import FeatherDomain
 import FeatherStorage
 import Foundation
 import MediaDomain
@@ -36,7 +37,7 @@ public struct GenerateMediaAssetVariants: UseCase {
         let `extension`: String
 
         var objectKey: String {
-            MediaStorageObjectKey.variant(
+            MediaAssetStorageObject.variantObjectKey(
                 assetID: assetID,
                 variantKey: plan.variant.key,
                 fileExtension: `extension`
@@ -46,16 +47,16 @@ public struct GenerateMediaAssetVariants: UseCase {
 
     let transaction: any TransactionExecutor<WriteMedia>
     let storageContext: StorageContext
-    let shellRunner: any MediaShellRunner
+    let commandRunner: any CommandRunner
 
     public init(
         transaction: any TransactionExecutor<WriteMedia>,
         storageContext: StorageContext,
-        shellRunner: any MediaShellRunner
+        commandRunner: any CommandRunner
     ) {
         self.transaction = transaction
         self.storageContext = storageContext
-        self.shellRunner = shellRunner
+        self.commandRunner = commandRunner
     }
 
     public struct Input: DTO {
@@ -267,7 +268,7 @@ extension GenerateMediaAssetVariants {
             inputPath: inputURL.path,
             outputPath: outputURL.path
         )
-        let result = try await shellRunner.run(command: command)
+        let result = try await commandRunner.run(command: command)
         guard result.exitCode == 0 else {
             throw Error.commandFailed(
                 processorName: processor.name,

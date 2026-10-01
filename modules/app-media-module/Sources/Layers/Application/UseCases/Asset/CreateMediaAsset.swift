@@ -1,5 +1,6 @@
 public import FeatherApplication
 public import FeatherContracts
+public import FeatherDomain
 public import FeatherStorage
 public import Foundation
 import MediaContracts
@@ -112,7 +113,7 @@ public struct CreateMediaAsset: UseCase {
             }
             return slugPath
         }
-        let objectKey = MediaStorageObjectKey.original(
+        let objectKey = MediaAssetStorageObject.originalObjectKey(
             assetID: storageIdentity.nodeId,
             fileExtension: file.extension
         )

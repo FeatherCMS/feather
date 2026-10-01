@@ -1,32 +1,38 @@
-import MediaApplication
+import FeatherDomain
+import FeatherInfrastructure
 import Testing
+
+@testable import MediaApplication
 
 @Suite
 struct HierarchicalObjectKeyGeneratorTestSuite {
     @Test
     func hierarchicalShardingIsEnabledByDefault() {
-        let configuration = HierarchicalObjectKeyGenerator()
+        let generator = HierarchicalObjectKeyGenerator()
 
-        #expect(configuration.depth == 2)
-        #expect(configuration.segmentLength == 2)
+        #expect(generator.depth == 2)
+        #expect(generator.segmentLength == 2)
     }
 
     @Test
     func shardingConfigurationNormalizesInvalidValues() {
-        let configuration = HierarchicalObjectKeyGenerator(
+        let generator = HierarchicalObjectKeyGenerator(
             depth: -1,
             segmentLength: 0
         )
 
-        #expect(configuration.depth == 0)
-        #expect(configuration.segmentLength == 1)
+        #expect(generator.depth == 0)
+        #expect(generator.segmentLength == 1)
     }
 
     @Test
     func buildsShardPrefixesForObjectKeys() throws {
-        let sharder = HierarchicalObjectKeyGenerator(depth: 2, segmentLength: 2)
+        let generator = HierarchicalObjectKeyGenerator(
+            depth: 2,
+            segmentLength: 2
+        )
 
-        #expect(try sharder.generate(from: "123456789") == "12/34/56789")
+        #expect(try generator.generate(from: "123456789") == "12/34/56789")
     }
 
     @Test
@@ -40,9 +46,12 @@ struct HierarchicalObjectKeyGeneratorTestSuite {
 
     @Test
     func zeroDepthStillUsesAssetIDAsTheObjectNamespace() throws {
-        let sharder = HierarchicalObjectKeyGenerator(depth: 0, segmentLength: 2)
+        let generator = HierarchicalObjectKeyGenerator(
+            depth: 0,
+            segmentLength: 2
+        )
 
-        #expect(try sharder.generate(from: "123456789") == "123456789")
+        #expect(try generator.generate(from: "123456789") == "123456789")
     }
 }
 

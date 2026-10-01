@@ -1,5 +1,6 @@
 public import FeatherApplication
 public import FeatherContracts
+public import FeatherDomain
 import MediaContracts
 import MediaDomain
 
@@ -25,8 +26,7 @@ public struct EditMediaAsset: UseCase {
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteMedia>,
-        objectKeyGenerator: any ObjectKeyGenerator =
-            HierarchicalObjectKeyGenerator()
+        objectKeyGenerator: any ObjectKeyGenerator
     ) {
         self.authorizer = authorizer
         self.transaction = transaction

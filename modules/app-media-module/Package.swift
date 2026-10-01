@@ -48,16 +48,11 @@ let package = Package(
 
         .package(url: "https://github.com/feather-framework/feather-storage", exact: "1.0.0-beta.3"),
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.34.0"),
-        .package(url: "https://github.com/swiftlang/swift-subprocess", from: "1.0.0"),
         .package(url: "https://github.com/mattpolzin/OpenAPIKit", from: "5.0.0"),
         .package(url: "https://github.com/jpsim/Yams", from: "6.2.0"),
         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.12.1"),
         .package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.27.0"),
         .package(url: "https://github.com/swift-server/async-http-client", from: "1.0.0"),
-        .package(url: "https://github.com/feather-framework/feather-database-postgres", exact: "1.0.0-rc.2"),
-        .package(url: "https://github.com/vapor/postgres-nio", from: "1.32.2"),
-        .package(url: "https://github.com/apple/swift-nio-ssl", from: "2.34.0"),
-
         .package(path: "../../feather-core"),
         .package(path: "../app-system-module"),
     ],
@@ -84,6 +79,7 @@ let package = Package(
             name: "MediaApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "FeatherStorage", package: "feather-storage"),
                 .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "SystemApplication", package: "app-system-module"),
@@ -97,10 +93,9 @@ let package = Package(
             name: "MediaInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherDomain", package: "feather-core"),
 
                 .product(name: "FeatherStorage", package: "feather-storage"),
-                .product(name: "Subprocess", package: "swift-subprocess"),
-
                 .target(name: "MediaApplication"),
             ],
             path: "Sources/Layers/Infrastructure",
@@ -148,6 +143,8 @@ let package = Package(
             name: "MediaBackend",
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
+                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherDomain", package: "feather-core"),
 
                 .target(name: "MediaApplication"),
                 .target(name: "MediaInfrastructure"),
@@ -180,17 +177,8 @@ let package = Package(
             name: "MediaApplicationTests",
             dependencies: [
                 .target(name: "MediaApplication"),
-            ],
-            swiftSettings: swiftSettings
-        ),
-        .testTarget(
-            name: "MediaInfrastructureTests",
-            dependencies: [
-                .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
-                .product(name: "PostgresNIO", package: "postgres-nio"),
-                .product(name: "NIOSSL", package: "swift-nio-ssl"),
-
-                .target(name: "MediaInfrastructure"),
+                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherDomain", package: "feather-core"),
             ],
             swiftSettings: swiftSettings
         ),

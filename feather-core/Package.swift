@@ -67,6 +67,14 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
+            url: "https://github.com/feather-framework/feather-storage",
+            exact: "1.0.0-beta.3"
+        ),
+        .package(
+            url: "https://github.com/swiftlang/swift-subprocess",
+            from: "1.0.0"
+        ),
+        .package(
             url: "https://github.com/binarybirds/swift-bcrypt",
             from: "2.0.1"
         ),
@@ -147,7 +155,8 @@ let package = Package(
         .target(
             name: "FeatherDomain",
             dependencies: [
-                .target(name: "FeatherContracts")
+                .target(name: "FeatherContracts"),
+                .product(name: "FeatherStorage", package: "feather-storage"),
             ],
             path: "Sources/Layers/Domain",
             swiftSettings: swiftSettings
@@ -164,6 +173,8 @@ let package = Package(
             name: "FeatherInfrastructure",
             dependencies: [
                 .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(name: "FeatherStorage", package: "feather-storage"),
+                .product(name: "Subprocess", package: "swift-subprocess"),
                 .product(name: "ServiceLifecycle", package: "swift-service-lifecycle"),
                 .product(name: "NanoID", package: "swift-nanoid"),
                 .product(name: "BCrypt", package: "swift-bcrypt"),
@@ -234,6 +245,8 @@ let package = Package(
         .testTarget(
             name: "InfrastructureTests",
             dependencies: [
+                .target(name: "FeatherContracts"),
+                .target(name: "FeatherDomain"),
                 .target(name: "FeatherInfrastructure")
             ],
             swiftSettings: swiftSettings

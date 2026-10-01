@@ -1,5 +1,5 @@
 {
-  "originHash" : "b9afa14ca59214eafa25fb0f956ece67435f1025aea42aadfcb55484d3940859",
+  "originHash" : "aa2420fa4c0e7554c87b3df2b69c40b81dd5897f0dbd5553f67b0089dbb06b03",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -16,15 +16,6 @@
       "location" : "https://github.com/feather-framework/feather-database",
       "state" : {
         "revision" : "d290d92b2617ad5768c293c4edcdd66b4f178d48",
-        "version" : "1.0.0-rc.2"
-      }
-    },
-    {
-      "identity" : "feather-database-postgres",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-database-postgres",
-      "state" : {
-        "revision" : "d7ceeb1371bd21511ac77bd09ebbfaf2e772950e",
         "version" : "1.0.0-rc.2"
       }
     },
@@ -80,15 +71,6 @@
       "state" : {
         "revision" : "fb0c5d4b817ea787eb7a742c985b32a0fe4f37f0",
         "version" : "5.3.0"
-      }
-    },
-    {
-      "identity" : "postgres-nio",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vapor/postgres-nio.git",
-      "state" : {
-        "revision" : "39ce38a93408937bcd27f521f3cdf88266136b80",
-        "version" : "1.33.1"
       }
     },
     {

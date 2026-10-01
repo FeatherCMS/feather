@@ -2,6 +2,7 @@ import Environment
 import FeatherGeneratedSES
 import FeatherMail
 import FeatherMailSES
+import FeatherDomain
 import FeatherInfrastructure
 import FeatherStorage
 import FeatherStorageFS

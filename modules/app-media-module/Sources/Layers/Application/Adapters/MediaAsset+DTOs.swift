@@ -1,9 +1,9 @@
+public import FeatherDomain
 public import MediaDomain
 
 extension MediaAssetNodeFile {
     public func asDetail(
-        objectKeyGenerator: any ObjectKeyGenerator =
-            HierarchicalObjectKeyGenerator()
+        objectKeyGenerator: any ObjectKeyGenerator
     )
         throws -> MediaAssetDetail
     {
@@ -32,8 +32,7 @@ extension MediaAssetNodeFile {
     }
 
     public func asListItem(
-        objectKeyGenerator: any ObjectKeyGenerator =
-            HierarchicalObjectKeyGenerator()
+        objectKeyGenerator: any ObjectKeyGenerator
     )
         throws -> MediaAssetList.Item
     {

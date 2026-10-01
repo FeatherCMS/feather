@@ -1,3 +1,4 @@
+public import FeatherDomain
 import Foundation
 
 public func mediaAssetPublicURL(
@@ -5,8 +6,7 @@ public func mediaAssetPublicURL(
     slugPath: String,
     filename: String,
     `extension`: String,
-    objectKeyGenerator: any ObjectKeyGenerator =
-        HierarchicalObjectKeyGenerator()
+    objectKeyGenerator: any ObjectKeyGenerator
 ) throws -> String {
     let prefix = try objectKeyGenerator.generate(from: id)
     let folderPath = slugPath.split(separator: "/").dropLast()
@@ -22,8 +22,7 @@ public func mediaVariantPublicURL(
     filename: String,
     variantKey: String,
     `extension`: String,
-    objectKeyGenerator: any ObjectKeyGenerator =
-        HierarchicalObjectKeyGenerator()
+    objectKeyGenerator: any ObjectKeyGenerator
 ) throws -> String {
     let prefix = try objectKeyGenerator.generate(from: assetId)
     let folderPath = slugPath.split(separator: "/").dropLast()

@@ -1,3 +1,4 @@
+import FeatherDomain
 import FeatherInfrastructure
 public import MediaApplication
 import MediaInfrastructure

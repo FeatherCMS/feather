@@ -29,4 +29,19 @@ public struct MediaAssetStorageObject: Model {
     ) -> New {
         .init(objectKey: objectKey)
     }
+
+    public static func originalObjectKey(
+        assetID: String,
+        fileExtension: String
+    ) -> String {
+        "\(assetID)/original.\(fileExtension)"
+    }
+
+    public static func variantObjectKey(
+        assetID: String,
+        variantKey: String,
+        fileExtension: String
+    ) -> String {
+        "\(assetID)/variants/\(variantKey).\(fileExtension)"
+    }
 }

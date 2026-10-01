@@ -89,7 +89,7 @@ struct MediaJobController {
             let useCase = GenerateMediaAssetVariants(
                 transaction: transaction,
                 storageContext: storageContext,
-                shellRunner: SubprocessMediaShellRunner()
+                commandRunner: SubprocessCommandRunner()
             )
 
             do {

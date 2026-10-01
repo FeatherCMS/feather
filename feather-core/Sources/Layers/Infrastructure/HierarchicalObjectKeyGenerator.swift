@@ -1,3 +1,5 @@
+public import FeatherDomain
+
 public struct HierarchicalObjectKeyGenerator: ObjectKeyGenerator, Equatable {
     public let depth: Int
     public let segmentLength: Int

@@ -42,6 +42,23 @@ struct MediaDomainModelTestSuite {
     }
 
     @Test
+    func mediaAssetStorageObjectBuildsLogicalOriginalAndVariantKeys() {
+        #expect(
+            MediaAssetStorageObject.originalObjectKey(
+                assetID: "asset-1",
+                fileExtension: "jpg"
+            ) == "asset-1/original.jpg"
+        )
+        #expect(
+            MediaAssetStorageObject.variantObjectKey(
+                assetID: "asset-1",
+                variantKey: "preview",
+                fileExtension: "webp"
+            ) == "asset-1/variants/preview.webp"
+        )
+    }
+
+    @Test
     func mediaExtensionMatcherMatchesCanonicalExtension() {
         let asset = MediaAssetNodeFile(
             id: "asset-1",
