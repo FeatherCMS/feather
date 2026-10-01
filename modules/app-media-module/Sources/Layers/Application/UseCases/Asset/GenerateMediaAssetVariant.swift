@@ -35,14 +35,7 @@ public struct GenerateMediaAssetVariants: UseCase {
         let assetID: String
         let plan: Plan
         let `extension`: String
-
-        var objectKey: String {
-            MediaAssetStorageObject.variantObjectKey(
-                assetID: assetID,
-                variantKey: plan.variant.key,
-                fileExtension: `extension`
-            )
-        }
+        let sizeInBytes: Int64
     }
 
     let transaction: any TransactionExecutor<WriteMedia>
@@ -124,7 +117,8 @@ public struct GenerateMediaAssetVariants: UseCase {
                 let generated = Output(
                     assetID: prepared.asset.id,
                     plan: plan,
-                    extension: output.extension
+                    extension: output.extension,
+                    sizeInBytes: Int64(output.data.count)
                 )
                 let storagePrefix = try storageContext.objectKeyGenerator
                     .generate(from: generated.assetID)
@@ -149,32 +143,36 @@ public struct GenerateMediaAssetVariants: UseCase {
         let generatedOutputs = outputs
         do {
             try await transaction.run { scope in
-                let storageObjects = try await scope.storageObjects.insert(
+                let storedObjects = try await scope.storageObjects.insert(
                     generatedOutputs.map {
-                        MediaAssetStorageObject.create(objectKey: $0.objectKey)
+                        MediaAssetStorageObject.create(
+                            key: "variants/\($0.plan.variant.key)",
+                            extension: $0.extension,
+                            contentType: variantContentType(for: $0.extension),
+                            sizeInBytes: $0.sizeInBytes
+                        )
                     }
                 )
-                let storageObjectIDs = Dictionary(
-                    uniqueKeysWithValues: storageObjects.map {
-                        ($0.objectKey, $0.id)
+                let storageObjectIDsByKey = Dictionary(
+                    uniqueKeysWithValues: storedObjects.map {
+                        ($0.key, $0.id)
                     }
                 )
                 let variants = try generatedOutputs.map { output in
                     guard
-                        let storageObjectID = storageObjectIDs[output.objectKey]
+                        let storageObjectId = storageObjectIDsByKey[
+                            "variants/\(output.plan.variant.key)"
+                        ]
                     else {
                         throw Error.outputMissing(
                             processorName: output.plan.processor.name
                         )
                     }
                     return MediaAssetNodeFileVariant.create(
-                        nodeId: prepared.asset.id,
+                        assetNodeFileId: prepared.asset.id,
                         variantId: output.plan.variant.id,
                         variantProcessorId: output.plan.processor.id,
-                        name: output.plan.variant.key,
-                        storageObjectId: storageObjectID,
-                        objectKey: output.objectKey,
-                        extension: output.extension
+                        storageObjectId: storageObjectId
                     )
                 }
                 try await scope.variants.insert(variants)
@@ -344,5 +342,17 @@ extension GenerateMediaAssetVariants {
             $0.pathExtension == preferredURL.pathExtension
         })
             ?? (candidates.count == 1 ? candidates[0] : preferredURL)
+    }
+}
+
+private func variantContentType(for extension: String) -> String {
+    switch `extension`.lowercased() {
+    case "jpg", "jpeg": "image/jpeg"
+    case "png": "image/png"
+    case "gif": "image/gif"
+    case "webp": "image/webp"
+    case "pdf": "application/pdf"
+    case "mp4": "video/mp4"
+    default: "application/octet-stream"
     }
 }

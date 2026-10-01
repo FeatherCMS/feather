@@ -30,7 +30,7 @@ extension MediaAssetNodeTable.SearchRow {
                 )
             )
         case "file":
-            guard objectKey != nil, let `extension`, let contentType,
+            guard let `extension`, let contentType,
                 let sizeBytes, let status
             else { throw RepositoryError.notFound }
             return .asset(

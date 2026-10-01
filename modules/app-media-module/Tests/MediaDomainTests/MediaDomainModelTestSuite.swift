@@ -12,6 +12,7 @@ struct MediaDomainModelTestSuite {
             name: "hero",
             slug: "hero",
             slugPath: "products/hero",
+            storageObjectId: "storage-1",
             extension: "jpg",
             contentType: "image/jpeg",
             sizeBytes: 123,
@@ -26,36 +27,31 @@ struct MediaDomainModelTestSuite {
     @Test
     func mediaAssetVariantStoresVariantAndProcessorIdentity() {
         let variant = MediaAssetNodeFileVariant.create(
-            nodeId: "asset-1",
+            assetNodeFileId: "asset-1",
             variantId: "variant-1",
             variantProcessorId: "processor-1",
-            name: "preview",
-            storageObjectId: "object-2",
-            objectKey: "asset-1/variants/processor-1.webp",
-            extension: "webp"
+            storageObjectId: "object-1"
         )
 
-        #expect(variant.nodeId == "asset-1")
+        #expect(variant.assetNodeFileId == "asset-1")
         #expect(variant.variantId == "variant-1")
         #expect(variant.variantProcessorId == "processor-1")
-        #expect(variant.objectKey.hasSuffix(".webp"))
+        #expect(variant.storageObjectId == "object-1")
     }
 
     @Test
-    func mediaAssetStorageObjectBuildsLogicalOriginalAndVariantKeys() {
-        #expect(
-            MediaAssetStorageObject.originalObjectKey(
-                assetID: "asset-1",
-                fileExtension: "jpg"
-            ) == "asset-1/original.jpg"
+    func mediaAssetStorageObjectStoresCanonicalFileMetadata() {
+        let object = MediaAssetStorageObject.create(
+            key: "variants/preview",
+            extension: "webp",
+            contentType: "image/webp",
+            sizeInBytes: 123
         )
-        #expect(
-            MediaAssetStorageObject.variantObjectKey(
-                assetID: "asset-1",
-                variantKey: "preview",
-                fileExtension: "webp"
-            ) == "asset-1/variants/preview.webp"
-        )
+
+        #expect(object.key == "variants/preview")
+        #expect(object.extension == "webp")
+        #expect(object.contentType == "image/webp")
+        #expect(object.sizeInBytes == 123)
     }
 
     @Test
@@ -66,8 +62,7 @@ struct MediaDomainModelTestSuite {
             name: "hero",
             slug: "hero",
             slugPath: "hero",
-            storageObjectId: "object-1",
-            objectKey: "asset-1/original.jpg",
+            storageObjectId: "storage-1",
             extension: "jpg",
             contentType: "image/jpeg",
             sizeBytes: 123,

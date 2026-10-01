@@ -211,21 +211,35 @@ public struct UseCases: Sendable {
     public func readVariantFile(assetId: String, variantName: String)
         async throws -> (data: Data, type: String, filename: String)
     {
-        let variant = try await database.withConnection { connection in
+        let stored = try await database.withConnection { connection in
             let repo = MediaAssetNodeFileVariantDatabaseRepository(
                 context: .init(connection: connection, idGenerator: idGenerator)
             )
+            let definitions = try await MediaVariantDatabaseRepository(
+                context: .init(connection: connection, idGenerator: idGenerator)
+            )
+            .list()
             guard
+                let definition = definitions.first(where: {
+                    $0.key == variantName
+                }),
                 let value = try await repo.list(nodeId: assetId)
-                    .first(where: { $0.name == variantName })
+                    .first(where: { $0.variantId == definition.id })
             else { throw RepositoryError.notFound }
-            return value
+            let objectRepository = MediaAssetStorageObjectDatabaseRepository(
+                context: .init(connection: connection, idGenerator: idGenerator)
+            )
+            guard
+                let object = try await objectRepository.find(
+                    storageObjectId: value.storageObjectId
+                )
+            else { throw RepositoryError.notFound }
+            return (value, definition, object)
         }
         let storagePrefix = try storageContext.objectKeyGenerator.generate(
-            from: variant.nodeId
+            from: assetId
         )
-        let objectKey =
-            "\(storagePrefix)/variants/\(variant.name).\(variant.extension)"
+        let objectKey = "\(storagePrefix)/\(stored.2.key).\(stored.2.extension)"
         let sequence = try await storageContext.storage.download(
             key: objectKey,
             range: nil
@@ -236,8 +250,8 @@ public struct UseCases: Sendable {
         }
         return (
             data,
-            mediaType(for: variant.extension),
-            "\(variant.name).\(variant.extension)"
+            stored.2.contentType,
+            "\(stored.1.key).\(stored.2.extension)"
         )
     }
 
@@ -256,7 +270,7 @@ public struct UseCases: Sendable {
                     )
                 )
                 .list()
-                .map { ($0.id, $0.key) }
+                .map { ($0.id, $0) }
             )
             guard
                 let asset = try await MediaAssetNodeFileDatabaseRepository(
@@ -267,42 +281,44 @@ public struct UseCases: Sendable {
                 )
                 .find(id: assetId)
             else { throw RepositoryError.notFound }
+            let objects = try await MediaAssetStorageObjectDatabaseRepository(
+                context: .init(connection: connection, idGenerator: idGenerator)
+            )
+            .list(assetNodeFileIds: [assetId])
+            let objectsByID = Dictionary(
+                uniqueKeysWithValues: objects.map { ($0.id, $0) }
+            )
+            let storagePrefix = try storageContext.objectKeyGenerator.generate(
+                from: assetId
+            )
             return try await repo.list(nodeId: assetId)
-                .map {
-                    .init(
+                .compactMap { relation -> AssociatedVariantFile? in
+                    guard
+                        let definition = variantDefinitions[relation.variantId],
+                        let object = objectsByID[relation.storageObjectId]
+                    else { return nil }
+                    return AssociatedVariantFile(
                         assetId: assetId,
                         slugPath: asset.slugPath,
                         filename: asset.name,
-                        variantId: $0.variantId,
-                        key: variantDefinitions[$0.variantId] ?? $0.name,
-                        name: $0.name,
+                        variantId: relation.variantId,
+                        key: definition.key,
+                        name: definition.name,
                         url: try mediaVariantPublicURL(
                             assetId: assetId,
                             slugPath: asset.slugPath,
                             filename: asset.name,
-                            variantKey: variantDefinitions[$0.variantId]
-                                ?? $0.name,
-                            extension: $0.extension,
+                            variantKey: definition.key,
+                            extension: object.extension,
                             objectKeyGenerator: storageContext
                                 .objectKeyGenerator
                         ),
-                        extension: $0.extension,
-                        objectKey: $0.objectKey
+                        extension: object.extension,
+                        objectKey:
+                            "\(storagePrefix)/\(object.key).\(object.extension)"
                     )
                 }
         }
     }
 
-}
-
-private func mediaType(for extension: String) -> String {
-    switch `extension`.lowercased() {
-    case "jpg", "jpeg": "image/jpeg"
-    case "png": "image/png"
-    case "gif": "image/gif"
-    case "webp": "image/webp"
-    case "pdf": "application/pdf"
-    case "mp4": "video/mp4"
-    default: "application/octet-stream"
-    }
 }

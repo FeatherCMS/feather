@@ -90,9 +90,9 @@ public struct MediaAssetDatabaseQueries: MediaAssetQueries {
             switch rule.field {
             case .id: column = "n.id"
             case .name: column = "n.name"
-            case .slugPath: column = "n.slug_path"
-            case .extension: column = "f.extension"
-            case .sizeBytes: column = "f.size_bytes"
+            case .slugPath: column = MediaAssetNodeSlugPath.sql
+            case .extension: column = "o.extension"
+            case .sizeBytes: column = "o.size_in_bytes"
             case .status: column = "f.status"
             case .title: column = "f.title"
             case .createdAt: column = "n.created_at"
@@ -130,15 +130,17 @@ public struct MediaAssetDatabaseQueries: MediaAssetQueries {
             uniqueKeysWithValues: assets.map { ($0.id, $0) }
         )
         for variant in variantRows {
-            guard let asset = assetsByID[variant.nodeId] else { continue }
-            variantsByAsset[variant.nodeId, default: []]
+            guard let asset = assetsByID[variant.assetNodeFileId] else {
+                continue
+            }
+            variantsByAsset[variant.assetNodeFileId, default: []]
                 .append(
                     .init(
                         id: variant.id,
                         key: variant.key,
                         name: variant.name,
                         url: try mediaVariantPublicURL(
-                            assetId: variant.nodeId,
+                            assetId: variant.assetNodeFileId,
                             slugPath: asset.slugPath,
                             filename: asset.name,
                             variantKey: variant.key,

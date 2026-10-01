@@ -20,7 +20,7 @@ public struct TableMigration: DatabaseMigration {
                 title TEXT NOT NULL,
                 excerpt TEXT NOT NULL DEFAULT '',
                 content TEXT NOT NULL,
-                image_asset_id TEXT REFERENCES media_asset_node_file(node_id) ON DELETE SET NULL,
+                image_asset_id TEXT REFERENCES media_asset_node_file(asset_node_id) ON DELETE SET NULL,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
             );

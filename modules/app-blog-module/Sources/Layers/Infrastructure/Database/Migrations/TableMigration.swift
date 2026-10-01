@@ -26,7 +26,7 @@ public struct TableMigration: DatabaseMigration {
                 title TEXT NOT NULL,
                 excerpt TEXT NOT NULL DEFAULT '',
                 content TEXT NOT NULL,
-                image_asset_id TEXT REFERENCES media_asset_node_file(node_id) ON DELETE SET NULL,
+                image_asset_id TEXT REFERENCES media_asset_node_file(asset_node_id) ON DELETE SET NULL,
                 author_ids TEXT NOT NULL DEFAULT '[]',
                 tag_ids TEXT NOT NULL DEFAULT '[]',
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
@@ -47,7 +47,7 @@ public struct TableMigration: DatabaseMigration {
                 title TEXT NOT NULL,
                 excerpt TEXT NOT NULL DEFAULT '',
                 content TEXT NOT NULL,
-                image_asset_id TEXT REFERENCES media_asset_node_file(node_id) ON DELETE SET NULL,
+                image_asset_id TEXT REFERENCES media_asset_node_file(asset_node_id) ON DELETE SET NULL,
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
             );
@@ -67,7 +67,7 @@ public struct TableMigration: DatabaseMigration {
                 name TEXT NOT NULL,
                 notes TEXT NOT NULL,
                 excerpt TEXT NOT NULL DEFAULT '',
-                profile_image_asset_id TEXT REFERENCES media_asset_node_file(node_id) ON DELETE SET NULL,
+                profile_image_asset_id TEXT REFERENCES media_asset_node_file(asset_node_id) ON DELETE SET NULL,
                 content TEXT NOT NULL DEFAULT '',
                 created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())

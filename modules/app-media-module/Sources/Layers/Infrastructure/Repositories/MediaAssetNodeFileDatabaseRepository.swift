@@ -11,7 +11,6 @@ extension MediaAssetNodeFileTable.Row {
             slug: slug,
             slugPath: slugPath,
             storageObjectId: storageObjectId,
-            objectKey: objectKey,
             extension: `extension`,
             contentType: contentType,
             sizeBytes: sizeBytes,
@@ -39,8 +38,7 @@ public struct MediaAssetNodeFileDatabaseRepository: MediaAssetNodeFileRepository
 
     public func insert(
         _ model: MediaAssetNodeFile.New,
-        storageIdentity: MediaAssetNodeFileStorageIdentity,
-        storageObjectId: String
+        storageIdentity: MediaAssetNodeFileStorageIdentity
     ) async throws -> MediaAssetNodeFile {
         let row = try await MediaAssetNodeFileTable(
             connection: context.connection
@@ -52,7 +50,7 @@ public struct MediaAssetNodeFileDatabaseRepository: MediaAssetNodeFileRepository
                 name: model.name,
                 slug: model.slug,
                 slugPath: model.slugPath,
-                storageObjectId: storageObjectId,
+                storageObjectId: model.storageObjectId,
                 extension: model.extension,
                 contentType: model.contentType,
                 sizeBytes: model.sizeBytes,
@@ -78,7 +76,6 @@ public struct MediaAssetNodeFileDatabaseRepository: MediaAssetNodeFileRepository
                 slug: model.slug,
                 slugPath: model.slugPath,
                 storageObjectId: model.storageObjectId,
-                objectKey: model.objectKey,
                 extension: model.extension,
                 contentType: model.contentType,
                 sizeBytes: model.sizeBytes,

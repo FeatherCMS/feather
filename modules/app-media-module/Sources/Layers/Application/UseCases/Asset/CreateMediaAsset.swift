@@ -113,10 +113,6 @@ public struct CreateMediaAsset: UseCase {
             }
             return slugPath
         }
-        let objectKey = MediaAssetStorageObject.originalObjectKey(
-            assetID: storageIdentity.nodeId,
-            fileExtension: file.extension
-        )
         let storagePrefix = try storageContext.objectKeyGenerator.generate(
             from: storageIdentity.nodeId
         )
@@ -135,23 +131,29 @@ public struct CreateMediaAsset: UseCase {
                 else {
                     parent = nil
                 }
-                let storageObject = try await scope.storageObjects.insert(
-                    MediaAssetStorageObject.create(objectKey: objectKey)
-                )
+                let originalStorageObject = try await scope.storageObjects
+                    .insert(
+                        MediaAssetStorageObject.create(
+                            key: "original",
+                            extension: file.extension,
+                            contentType: contentType(for: file.extension),
+                            sizeInBytes: input.contentLength
+                        )
+                    )
                 let asset = try await scope.assets.insert(
                     MediaAssetNodeFile.create(
                         folderId: parent?.id,
                         name: file.name,
                         slug: file.slug,
                         slugPath: slugPath,
+                        storageObjectId: originalStorageObject.id,
                         extension: file.extension,
                         contentType: contentType(for: file.extension),
                         sizeBytes: input.contentLength,
                         title: input.title,
                         altText: input.altText
                     ),
-                    storageIdentity: storageIdentity,
-                    storageObjectId: storageObject.id
+                    storageIdentity: storageIdentity
                 )
                 try await adjustFolderAggregates(
                     folders: scope.folders,

@@ -6,9 +6,11 @@ extension MediaAssetStorageObjectTable.Row {
     var asDomain: MediaAssetStorageObject {
         .init(
             id: id,
-            objectKey: objectKey,
-            createdAt: createdAt,
-            deletedAt: deletedAt
+            key: key,
+            extension: `extension`,
+            contentType: contentType,
+            sizeInBytes: sizeInBytes,
+            createdAt: createdAt
         )
     }
 }
@@ -31,7 +33,10 @@ public struct MediaAssetStorageObjectDatabaseRepository:
         .create(
             row: .init(
                 id: context.idGenerator.generate(),
-                objectKey: model.objectKey
+                key: model.key,
+                extension: model.extension,
+                contentType: model.contentType,
+                sizeInBytes: model.sizeInBytes
             )
         )
         return row.asDomain
@@ -40,11 +45,13 @@ public struct MediaAssetStorageObjectDatabaseRepository:
     public func insert(_ models: [MediaAssetStorageObject.New]) async throws
         -> [MediaAssetStorageObject]
     {
-        guard !models.isEmpty else { return [] }
         let rows = models.map {
             MediaAssetStorageObjectTable.Row.Create(
                 id: context.idGenerator.generate(),
-                objectKey: $0.objectKey
+                key: $0.key,
+                extension: $0.extension,
+                contentType: $0.contentType,
+                sizeInBytes: $0.sizeInBytes
             )
         }
         return try await MediaAssetStorageObjectTable(
@@ -54,8 +61,19 @@ public struct MediaAssetStorageObjectDatabaseRepository:
         .map(\.asDomain)
     }
 
-    public func delete(ids: [String]) async throws -> [String] {
+    public func find(storageObjectId: String) async throws
+        -> MediaAssetStorageObject?
+    {
         try await MediaAssetStorageObjectTable(connection: context.connection)
-            .delete(ids: ids)
+            .find(storageObjectId: storageObjectId)?
+            .asDomain
+    }
+
+    public func list(assetNodeFileIds: [String]) async throws
+        -> [MediaAssetStorageObject]
+    {
+        try await MediaAssetStorageObjectTable(connection: context.connection)
+            .list(assetNodeFileIds: assetNodeFileIds)
+            .map(\.asDomain)
     }
 }

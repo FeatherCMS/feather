@@ -6,13 +6,10 @@ extension MediaAssetVariantTable.Row {
     var asDomain: MediaAssetNodeFileVariant {
         .init(
             id: id,
-            nodeId: nodeId,
+            assetNodeFileId: assetNodeFileId,
             variantId: variantId,
             variantProcessorId: variantProcessorId,
-            name: name,
             storageObjectId: storageObjectId,
-            objectKey: objectKey,
-            extension: `extension`,
             createdAt: createdAt
         )
     }
@@ -36,12 +33,10 @@ public struct MediaAssetNodeFileVariantDatabaseRepository:
         .create(
             row: .init(
                 id: context.idGenerator.generate(),
-                nodeId: model.nodeId,
+                assetNodeFileId: model.assetNodeFileId,
                 variantId: model.variantId,
                 variantProcessorId: model.variantProcessorId,
-                name: model.name,
-                storageObjectId: model.storageObjectId,
-                extension: model.extension
+                storageObjectId: model.storageObjectId
             )
         )
         return row.asDomain
@@ -52,12 +47,10 @@ public struct MediaAssetNodeFileVariantDatabaseRepository:
         let rows = models.map {
             MediaAssetVariantTable.Row.Create(
                 id: context.idGenerator.generate(),
-                nodeId: $0.nodeId,
+                assetNodeFileId: $0.assetNodeFileId,
                 variantId: $0.variantId,
                 variantProcessorId: $0.variantProcessorId,
-                name: $0.name,
-                storageObjectId: $0.storageObjectId,
-                extension: $0.extension
+                storageObjectId: $0.storageObjectId
             )
         }
         try await MediaAssetVariantTable(connection: context.connection)

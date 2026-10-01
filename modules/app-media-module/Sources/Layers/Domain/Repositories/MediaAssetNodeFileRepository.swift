@@ -12,8 +12,7 @@ public protocol MediaAssetNodeFileRepository: Repository {
     func prepareStorageIdentity() -> MediaAssetNodeFileStorageIdentity
     func insert(
         _ model: MediaAssetNodeFile.New,
-        storageIdentity: MediaAssetNodeFileStorageIdentity,
-        storageObjectId: String
+        storageIdentity: MediaAssetNodeFileStorageIdentity
     ) async throws -> MediaAssetNodeFile
     func update(
         _ model: MediaAssetNodeFile

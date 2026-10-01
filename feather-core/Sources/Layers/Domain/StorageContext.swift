@@ -1,5 +1,6 @@
 public import FeatherStorage
 
+// TODO: move to infrastructure
 public struct StorageContext: Sendable {
     public let storage: any StorageClient
     public let objectKeyGenerator: any ObjectKeyGenerator

@@ -6,9 +6,11 @@ import struct Foundation.Date
 extension MediaAssetStorageObjectTable.Row {
     init(from row: any DatabaseRow) throws {
         id = try row.decode(column: "id", as: String.self)
-        objectKey = try row.decode(column: "object_key", as: String.self)
+        key = try row.decode(column: "key", as: String.self)
+        `extension` = try row.decode(column: "extension", as: String.self)
+        contentType = try row.decode(column: "content_type", as: String.self)
+        sizeInBytes = try row.decode(column: "size_in_bytes", as: Int64.self)
         createdAt = try row.decode(column: "created_at", as: Date.self)
-        deletedAt = try row.decode(column: "deleted_at", as: Date?.self)
     }
 }
 
@@ -16,13 +18,18 @@ struct MediaAssetStorageObjectTable {
     struct Row {
         struct Create {
             let id: String
-            let objectKey: String
+            let key: String
+            let `extension`: String
+            let contentType: String
+            let sizeInBytes: Int64
         }
 
         let id: String
-        let objectKey: String
+        let key: String
+        let `extension`: String
+        let contentType: String
+        let sizeInBytes: Int64
         let createdAt: Date
-        let deletedAt: Date?
     }
 
     let connection: any DatabaseConnection
@@ -30,8 +37,12 @@ struct MediaAssetStorageObjectTable {
     func create(row: Row.Create) async throws -> Row {
         try await connection.run(
             query: #"""
-                INSERT INTO media_asset_storage_object (id, object_key, created_at)
-                VALUES (\#(row.id), \#(row.objectKey), NOW())
+                INSERT INTO media_storage_object (
+                    id, key, extension, content_type, size_in_bytes, created_at
+                ) VALUES (
+                    \#(row.id), \#(row.key), \#(row.extension), \#(row.contentType),
+                    \#(Int(row.sizeInBytes)), NOW()
+                )
                 RETURNING *;
                 """#
         ) { sequence in
@@ -46,42 +57,48 @@ struct MediaAssetStorageObjectTable {
         guard !rows.isEmpty else { return [] }
         let values =
             rows.map { row in
-                let id = row.id.replacingOccurrences(of: "'", with: "''")
-                let objectKey = row.objectKey.replacingOccurrences(
-                    of: "'",
-                    with: "''"
-                )
-                return "('\(id)', '\(objectKey)', NOW())"
+                "(\(sql(row.id)), \(sql(row.key)), \(sql(row.extension)), \(sql(row.contentType)), \(row.sizeInBytes), NOW())"
             }
             .joined(separator: ", ")
         return try await connection.run(
             query:
-                #"INSERT INTO media_asset_storage_object (id, object_key, created_at) VALUES \#(unescaped: values) RETURNING *;"#
+                #"INSERT INTO media_storage_object (id, key, extension, content_type, size_in_bytes, created_at) VALUES \#(unescaped: values) RETURNING *;"#
         ) { sequence in
             try await sequence.collect().map { try Row(from: $0) }
         }
     }
 
-    func delete(ids: [String]) async throws -> [String] {
-        guard !ids.isEmpty else { return [] }
-        let values = mediaStorageObjectSQLValues(ids)
+    func find(storageObjectId: String) async throws -> Row? {
+        try await connection.run(
+            query:
+                #"SELECT * FROM media_storage_object WHERE id = \#(storageObjectId) LIMIT 1;"#
+        ) { sequence in
+            guard let row = try await sequence.collect().first else {
+                return nil
+            }
+            return try Row(from: row)
+        }
+    }
+
+    func list(assetNodeFileIds: [String]) async throws -> [Row] {
+        guard !assetNodeFileIds.isEmpty else { return [] }
+        let values = assetNodeFileIds.map(sql).joined(separator: ", ")
         return try await connection.run(
             query: #"""
-                DELETE FROM media_asset_storage_object
-                WHERE id IN (\#(unescaped: values))
-                RETURNING id;
+                SELECT DISTINCT o.*
+                FROM media_storage_object o
+                LEFT JOIN media_asset_node_file f ON f.storage_object_id = o.id
+                LEFT JOIN media_asset_node_file_variant v ON v.storage_object_id = o.id
+                WHERE f.asset_node_id IN (\#(unescaped: values))
+                   OR v.asset_node_file_id IN (\#(unescaped: values))
+                ORDER BY o.key ASC, o.extension ASC;
                 """#
         ) { sequence in
-            try await sequence.collect()
-                .map { try $0.decode(column: "id", as: String.self) }
+            try await sequence.collect().map { try Row(from: $0) }
         }
     }
 }
 
-private func mediaStorageObjectSQLValues(_ values: [String]) -> String {
-    values.map { value in
-        let escaped = value.replacingOccurrences(of: "'", with: "''")
-        return "'\(escaped)'"
-    }
-    .joined(separator: ", ")
+private func sql(_ value: String) -> String {
+    "'\(value.replacingOccurrences(of: "'", with: "''"))'"
 }

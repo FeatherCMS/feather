@@ -4,44 +4,47 @@ public import struct Foundation.Date
 
 public struct MediaAssetStorageObject: Model {
     public struct New: Sendable {
-        public let objectKey: String
+        public let key: String
+        public let `extension`: String
+        public let contentType: String
+        public let sizeInBytes: Int64
     }
 
+    /// The ID used by media-asset variant relationships to reference this row.
     public let id: String
-    public let objectKey: String
+    public let key: String
+    public let `extension`: String
+    public let contentType: String
+    public let sizeInBytes: Int64
     public let createdAt: Date
-    public let deletedAt: Date?
 
     package init(
         id: String,
-        objectKey: String,
-        createdAt: Date,
-        deletedAt: Date?
+        key: String,
+        extension: String,
+        contentType: String,
+        sizeInBytes: Int64,
+        createdAt: Date
     ) {
         self.id = id
-        self.objectKey = objectKey
+        self.key = key
+        self.extension = `extension`
+        self.contentType = contentType
+        self.sizeInBytes = sizeInBytes
         self.createdAt = createdAt
-        self.deletedAt = deletedAt
     }
 
     public static func create(
-        objectKey: String
+        key: String,
+        extension: String,
+        contentType: String,
+        sizeInBytes: Int64
     ) -> New {
-        .init(objectKey: objectKey)
-    }
-
-    public static func originalObjectKey(
-        assetID: String,
-        fileExtension: String
-    ) -> String {
-        "\(assetID)/original.\(fileExtension)"
-    }
-
-    public static func variantObjectKey(
-        assetID: String,
-        variantKey: String,
-        fileExtension: String
-    ) -> String {
-        "\(assetID)/variants/\(variantKey).\(fileExtension)"
+        .init(
+            key: key,
+            extension: `extension`,
+            contentType: contentType,
+            sizeInBytes: sizeInBytes
+        )
     }
 }

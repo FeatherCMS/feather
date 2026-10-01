@@ -60,7 +60,7 @@ struct MediaAssetNodeFolderTable {
             )
         _ = try await connection.run(
             query: #"""
-                INSERT INTO media_asset_node_folder (node_id, asset_count, total_size_bytes)
+                INSERT INTO media_asset_node_folder (asset_node_id, asset_count, total_size_bytes)
                 VALUES (\#(row.id), \#(row.assetCount), \#(Int(row.totalSizeBytes)));
                 """#
         ) { _ in }
@@ -85,7 +85,7 @@ struct MediaAssetNodeFolderTable {
             query: #"""
                 UPDATE media_asset_node_folder
                 SET asset_count = \#(row.assetCount), total_size_bytes = \#(Int(row.totalSizeBytes))
-                WHERE node_id = \#(row.id);
+                WHERE asset_node_id = \#(row.id);
                 """#
         ) { _ in }
         guard let result = try await find(id: row.id) else {
@@ -97,7 +97,8 @@ struct MediaAssetNodeFolderTable {
     func find(id: String) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT n.id, n.parent_id, n.name, n.slug, n.slug_path,
+                SELECT n.id, n.parent_id, n.name, n.slug,
+                       \#(unescaped: MediaAssetNodeSlugPath.sql) AS slug_path,
                        (
                            SELECT COUNT(*)::integer
                            FROM media_asset_node child
@@ -107,7 +108,7 @@ struct MediaAssetNodeFolderTable {
                        f.total_size_bytes,
                        n.created_at, n.updated_at, n.deleted_at
                 FROM media_asset_node n
-                JOIN media_asset_node_folder f ON f.node_id = n.id
+                JOIN media_asset_node_folder f ON f.asset_node_id = n.id
                 WHERE n.id = \#(id) AND n.deleted_at IS NULL
                 LIMIT 1;
                 """#
@@ -120,9 +121,12 @@ struct MediaAssetNodeFolderTable {
     }
 
     func find(slugPath: String) async throws -> Row? {
-        try await connection.run(
+        let absoluteSlug = MediaAssetNodeSlugPath.parent(of: slugPath)
+        let slug = MediaAssetNodeSlugPath.slug(of: slugPath)
+        return try await connection.run(
             query: #"""
-                SELECT n.id, n.parent_id, n.name, n.slug, n.slug_path,
+                SELECT n.id, n.parent_id, n.name, n.slug,
+                       \#(unescaped: MediaAssetNodeSlugPath.sql) AS slug_path,
                        (
                            SELECT COUNT(*)::integer
                            FROM media_asset_node child
@@ -132,8 +136,10 @@ struct MediaAssetNodeFolderTable {
                        f.total_size_bytes,
                        n.created_at, n.updated_at, n.deleted_at
                 FROM media_asset_node n
-                JOIN media_asset_node_folder f ON f.node_id = n.id
-                WHERE n.slug_path = \#(slugPath) AND n.deleted_at IS NULL
+                JOIN media_asset_node_folder f ON f.asset_node_id = n.id
+                WHERE n.absolute_slug = \#(absoluteSlug)
+                  AND n.slug = \#(slug)
+                  AND n.deleted_at IS NULL
                 LIMIT 1;
                 """#
         ) { sequence in
@@ -147,7 +153,8 @@ struct MediaAssetNodeFolderTable {
     func list(parentId: String?) async throws -> [Row] {
         try await connection.run(
             query: #"""
-                SELECT n.id, n.parent_id, n.name, n.slug, n.slug_path,
+                SELECT n.id, n.parent_id, n.name, n.slug,
+                       \#(unescaped: MediaAssetNodeSlugPath.sql) AS slug_path,
                        (
                            SELECT COUNT(*)::integer
                            FROM media_asset_node child
@@ -157,7 +164,7 @@ struct MediaAssetNodeFolderTable {
                        f.total_size_bytes,
                        n.created_at, n.updated_at, n.deleted_at
                 FROM media_asset_node n
-                JOIN media_asset_node_folder f ON f.node_id = n.id
+                JOIN media_asset_node_folder f ON f.asset_node_id = n.id
                 WHERE n.deleted_at IS NULL
                   AND ((\#(parentId == nil) AND n.parent_id IS NULL) OR n.parent_id = \#(parentId))
                 ORDER BY LOWER(n.name) ASC, n.id ASC;
@@ -170,7 +177,8 @@ struct MediaAssetNodeFolderTable {
     func listDescendants(slugPath: String) async throws -> [Row] {
         try await connection.run(
             query: #"""
-                SELECT n.id, n.parent_id, n.name, n.slug, n.slug_path,
+                SELECT n.id, n.parent_id, n.name, n.slug,
+                       \#(unescaped: MediaAssetNodeSlugPath.sql) AS slug_path,
                        (
                            SELECT COUNT(*)::integer
                            FROM media_asset_node child
@@ -180,10 +188,12 @@ struct MediaAssetNodeFolderTable {
                        f.total_size_bytes,
                        n.created_at, n.updated_at, n.deleted_at
                 FROM media_asset_node n
-                JOIN media_asset_node_folder f ON f.node_id = n.id
+                JOIN media_asset_node_folder f ON f.asset_node_id = n.id
                 WHERE n.deleted_at IS NULL
-                  AND (n.slug_path = \#(slugPath) OR n.slug_path LIKE \#(slugPath + "/%"))
-                ORDER BY LENGTH(n.slug_path) ASC, LOWER(n.name) ASC, n.id ASC;
+                  AND (\#(unescaped: MediaAssetNodeSlugPath.sql) = \#(slugPath)
+                    OR n.absolute_slug = \#(slugPath)
+                    OR n.absolute_slug LIKE \#(slugPath + "/%"))
+                ORDER BY LENGTH(\#(unescaped: MediaAssetNodeSlugPath.sql)) ASC, LOWER(n.name) ASC, n.id ASC;
                 """#
         ) { sequence in
             try await sequence.collect().map { try Row(from: $0) }
@@ -197,7 +207,7 @@ struct MediaAssetNodeFolderTable {
             query: #"""
                 DELETE FROM media_asset_node
                 WHERE id IN (\#(unescaped: values))
-                  AND EXISTS (SELECT 1 FROM media_asset_node_folder f WHERE f.node_id = media_asset_node.id)
+                  AND EXISTS (SELECT 1 FROM media_asset_node_folder f WHERE f.asset_node_id = media_asset_node.id)
                 RETURNING id;
                 """#
         ) { sequence in
