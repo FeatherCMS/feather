@@ -1,7 +1,6 @@
 public import FeatherContracts
 import NewsContracts
 import SystemApplication
-import WebContracts
 
 public enum EventHandlers {
 
@@ -34,22 +33,6 @@ public enum EventHandlers {
                     value: "news/categories",
                     name: "News category path prefix",
                     notes: "Public news category detail path prefix."
-                ),
-            ]
-        }
-
-        registry.register(
-            event: WebMetadataReferenceTypeOptionProvider.self,
-            context: WebEventContext.self
-        ) { _, _ in
-            [
-                .init(
-                    value: "news.article",
-                    title: "News article"
-                ),
-                .init(
-                    value: "news.category",
-                    title: "News category"
                 ),
             ]
         }

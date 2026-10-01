@@ -137,6 +137,7 @@ let package = Package(
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
 
+                .target(name: "WebDomain"),
                 .target(name: "WebApplication"),
             ],
             path: "Sources/Layers/Infrastructure",

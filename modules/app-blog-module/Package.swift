@@ -132,6 +132,7 @@ let package = Package(
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
+                .product(name: "WebDomain", package: "app-web-module"),
 
                 .target(name: "BlogApplication"),
             ],

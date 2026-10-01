@@ -2,6 +2,7 @@ import AuthContracts
 public import FeatherContracts
 import SystemApplication
 import WebContracts
+import WebDomain
 
 public enum EventHandlers {
     public static func register(
@@ -19,7 +20,7 @@ public enum EventHandlers {
 
         registry.register(
             event: WebMenuItemProvider.self,
-            context: WebEventContext.self
+            context: WebSeedEventContext.self
         ) { event, _ in
             guard event.menuKey == "main" else { return [] }
             return [

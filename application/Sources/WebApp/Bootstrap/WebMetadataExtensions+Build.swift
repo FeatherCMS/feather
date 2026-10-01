@@ -18,7 +18,7 @@ func buildWebMetadataExtensions() async throws -> (
 
     let templateProviders = try await events.trigger(
         event: WebTemplateProviderEvent(),
-        using: WebEventContext()
+        using: WebFrontendEventContext()
     )
     let templateDefinitions = templateProviders.flatMap(\.templates)
     return (
