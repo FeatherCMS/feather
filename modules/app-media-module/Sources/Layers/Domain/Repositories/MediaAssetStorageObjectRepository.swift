@@ -7,5 +7,8 @@ public protocol MediaAssetStorageObjectRepository: Repository {
     func insert(
         _ models: [MediaAssetStorageObject.New]
     ) async throws -> [MediaAssetStorageObject]
-    func delete(ids: [String]) async throws -> [String]
+    func find(storageObjectId: String) async throws
+        -> MediaAssetStorageObject?
+    func list(assetNodeFileIds: [String]) async throws
+        -> [MediaAssetStorageObject]
 }

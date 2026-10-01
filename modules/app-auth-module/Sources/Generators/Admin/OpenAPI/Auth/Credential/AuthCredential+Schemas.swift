@@ -83,7 +83,7 @@ struct AuthCredentialIdentityNameField: StringSchemaRepresentable {
 }
 
 struct AuthCredentialListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         AuthCredentialListItemSchema().reference()
     }
 }

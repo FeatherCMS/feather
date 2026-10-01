@@ -24,9 +24,16 @@ struct WorkerConfig: Sendable {
 
     struct MediaConfig: Sendable {
         let storageRootPath: String
-        let storageShardDepth: Int
-        let storageShardSegmentLength: Int
         let maxConcurrentProcessing: Int
+    }
+
+    struct StorageConfig: Sendable {
+        struct ObjectKeyConfig: Sendable {
+            let depth: Int
+            let segmentLength: Int
+        }
+
+        let objectKey: ObjectKeyConfig
     }
 
     struct SESConfig: Sendable {
@@ -39,6 +46,7 @@ struct WorkerConfig: Sendable {
     let queue: QueueConfig
     let processor: ProcessorConfig
     let scheduler: SchedulerConfig
+    let storage: StorageConfig
     let media: MediaConfig
     let ses: SESConfig
     let runMigrations: Bool

@@ -138,9 +138,9 @@ struct MediaVariantProcessorsTableContent: Component {
                                         layout: .init(
                                             name: "media-variant-processors",
                                             columns: [
-                                                .fraction(1), .fraction(2),
-                                                .fraction(2), .fraction(3),
-                                                .fraction(1), .fixed(220),
+                                                .fraction(2), .fraction(2),
+                                                .fraction(3), .fraction(1),
+                                                .fixed(220),
                                             ]
                                         ),
                                         hasSelection: canDelete,
@@ -152,7 +152,6 @@ struct MediaVariantProcessorsTableContent: Component {
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
-                                                    Th("ID")
                                                     Th("Name")
                                                     Th("Input extensions")
                                                     Th("Command template")
@@ -253,7 +252,6 @@ struct MediaVariantProcessorRow: Component {
             if permissions.allows(MediaPermissions.VariantProcessors.delete) {
                 context.build(NewAdminListRowCheckbox(id: processor.id))
             }
-            Td(processor.id).data("label", "ID")
             Td(processor.name).data("label", "Name")
             Td(processor.matchExtensions).data("label", "Input extensions")
             Td(processor.commandTemplate).data("label", "Command template")

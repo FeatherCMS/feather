@@ -1,19 +1,27 @@
 import FeatherApplication
+public import FeatherDomain
 public import FeatherInfrastructure
 public import MediaApplication
 
 extension MediaAssetNodeFileTable.Row {
-    var asDetail: MediaAssetDetail {
+    func asDetail(
+        objectKeyGenerator: any ObjectKeyGenerator =
+            HierarchicalObjectKeyGenerator()
+    )
+        throws -> MediaAssetDetail
+    {
         .init(
             id: id,
             folderId: folderId,
             name: name,
             slug: slug,
             slugPath: slugPath,
-            url: mediaAssetPublicURL(
+            url: try mediaAssetPublicURL(
                 id: id,
                 slugPath: slugPath,
-                extension: `extension`
+                filename: name,
+                extension: `extension`,
+                objectKeyGenerator: objectKeyGenerator
             ),
             extension: `extension`,
             contentType: contentType,
@@ -26,17 +34,24 @@ extension MediaAssetNodeFileTable.Row {
         )
     }
 
-    var asListItem: MediaAssetList.Item {
+    func asListItem(
+        objectKeyGenerator: any ObjectKeyGenerator =
+            HierarchicalObjectKeyGenerator()
+    )
+        throws -> MediaAssetList.Item
+    {
         .init(
             id: id,
             folderId: folderId,
             name: name,
             slug: slug,
             slugPath: slugPath,
-            url: mediaAssetPublicURL(
+            url: try mediaAssetPublicURL(
                 id: id,
                 slugPath: slugPath,
-                extension: `extension`
+                filename: name,
+                extension: `extension`,
+                objectKeyGenerator: objectKeyGenerator
             ),
             extension: `extension`,
             contentType: contentType,
@@ -52,7 +67,15 @@ extension MediaAssetNodeFileTable.Row {
 
 public struct MediaAssetDatabaseQueries: MediaAssetQueries {
     public let context: DatabaseQueryContext
-    public init(context: DatabaseQueryContext) { self.context = context }
+    public let objectKeyGenerator: any ObjectKeyGenerator
+    public init(
+        context: DatabaseQueryContext,
+        objectKeyGenerator: any ObjectKeyGenerator =
+            HierarchicalObjectKeyGenerator()
+    ) {
+        self.context = context
+        self.objectKeyGenerator = objectKeyGenerator
+    }
 
     private func pageSizeOffset(_ page: Search.Page) -> (size: Int, offset: Int)
     {
@@ -67,9 +90,9 @@ public struct MediaAssetDatabaseQueries: MediaAssetQueries {
             switch rule.field {
             case .id: column = "n.id"
             case .name: column = "n.name"
-            case .slugPath: column = "n.slug_path"
-            case .extension: column = "f.extension"
-            case .sizeBytes: column = "f.size_bytes"
+            case .slugPath: column = MediaAssetNodeSlugPath.sql
+            case .extension: column = "o.extension"
+            case .sizeBytes: column = "o.size_in_bytes"
             case .status: column = "f.status"
             case .title: column = "f.title"
             case .createdAt: column = "n.created_at"
@@ -88,7 +111,7 @@ public struct MediaAssetDatabaseQueries: MediaAssetQueries {
             )
             .find(id: id)
         else { throw RepositoryError.notFound }
-        return row.asDetail
+        return try row.asDetail(objectKeyGenerator: objectKeyGenerator)
     }
 
     public func resolve(ids: [String], variants: [String]?) async throws
@@ -103,30 +126,41 @@ public struct MediaAssetDatabaseQueries: MediaAssetQueries {
         )
         .resolve(nodeIds: ids, variantKeys: variants)
         var variantsByAsset: [String: [MediaAssetResolve.Variant]] = [:]
+        let assetsByID = Dictionary(
+            uniqueKeysWithValues: assets.map { ($0.id, $0) }
+        )
         for variant in variantRows {
-            variantsByAsset[variant.nodeId, default: []]
+            guard let asset = assetsByID[variant.assetNodeFileId] else {
+                continue
+            }
+            variantsByAsset[variant.assetNodeFileId, default: []]
                 .append(
                     .init(
                         id: variant.id,
                         key: variant.key,
                         name: variant.name,
-                        url: mediaVariantPublicURL(
-                            assetId: variant.nodeId,
-                            name: variant.key,
-                            extension: variant.extension
+                        url: try mediaVariantPublicURL(
+                            assetId: variant.assetNodeFileId,
+                            slugPath: asset.slugPath,
+                            filename: asset.name,
+                            variantKey: variant.key,
+                            extension: variant.extension,
+                            objectKeyGenerator: objectKeyGenerator
                         ),
                         extension: variant.extension
                     )
                 )
         }
         return .init(
-            items: assets.map {
+            items: try assets.map {
                 .init(
                     id: $0.id,
-                    url: mediaAssetPublicURL(
+                    url: try mediaAssetPublicURL(
                         id: $0.id,
                         slugPath: $0.slugPath,
-                        extension: $0.extension
+                        filename: $0.name,
+                        extension: $0.extension,
+                        objectKeyGenerator: objectKeyGenerator
                     ),
                     extension: $0.extension,
                     title: $0.title,
@@ -150,7 +184,11 @@ public struct MediaAssetDatabaseQueries: MediaAssetQueries {
             limit: page.size,
             offset: page.offset
         )
-        return .init(items: rows.map(\.asListItem))
+        return .init(
+            items: try rows.map {
+                try $0.asListItem(objectKeyGenerator: objectKeyGenerator)
+            }
+        )
     }
 
     public func count(query: MediaAssetList.Query) async throws -> Int {

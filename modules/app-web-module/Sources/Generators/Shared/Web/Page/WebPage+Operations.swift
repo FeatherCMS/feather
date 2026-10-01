@@ -3,7 +3,7 @@ import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 struct WebPageGetOperation: WebOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [WebMetadataIdParameter().reference()]
     }
 

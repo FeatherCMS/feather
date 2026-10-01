@@ -1,19 +1,19 @@
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 public protocol RedirectRuleOperation: BearerProtectedOperation {
 }
 
 extension RedirectRuleOperation {
-    public var tags: [TagRepresentable] { [RedirectRuleTag()] }
+    public var tags: [any TagRepresentable] { [RedirectRuleTag()] }
 }
 
 public protocol RedirectRuleIDOperation: RedirectRuleOperation {
 }
 
 extension RedirectRuleIDOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             RedirectRuleIdParameter().reference()
         ]
@@ -21,7 +21,7 @@ extension RedirectRuleIDOperation {
 }
 
 struct RedirectRuleCreateOperation: RedirectRuleOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         RedirectRuleRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -54,7 +54,7 @@ struct RedirectRuleSearchOperation: RedirectRuleOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -80,7 +80,7 @@ struct RedirectRuleGetOperation: RedirectRuleIDOperation {
 }
 
 struct RedirectRuleUpdateOperation: RedirectRuleIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         RedirectRuleUpdateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -92,7 +92,7 @@ struct RedirectRuleUpdateOperation: RedirectRuleIDOperation {
 }
 
 struct RedirectRulePatchOperation: RedirectRuleIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         RedirectRulePatchRequestBody().reference()
     }
     var responseMap: ResponseMap {

@@ -51,7 +51,7 @@ struct AnalyticsLogOverviewDailyPointSchema: ObjectSchemaRepresentable {
 }
 
 struct AnalyticsLogOverviewDailyListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         AnalyticsLogOverviewDailyPointSchema().reference()
     }
 }
@@ -67,7 +67,7 @@ struct AnalyticsLogOverviewBreakdownItemSchema: ObjectSchemaRepresentable {
 }
 
 struct AnalyticsLogOverviewBreakdownListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         AnalyticsLogOverviewBreakdownItemSchema().reference()
     }
 }

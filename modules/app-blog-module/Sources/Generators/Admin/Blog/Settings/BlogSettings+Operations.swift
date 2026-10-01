@@ -1,13 +1,13 @@
 import BlogSharedOpenAPIGenerator
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 public protocol BlogSettingsOperation: BearerProtectedOperation {
 }
 
 extension BlogSettingsOperation {
-    public var tags: [TagRepresentable] { [BlogSettingsTag()] }
+    public var tags: [any TagRepresentable] { [BlogSettingsTag()] }
 }
 
 struct BlogSettingsGetOperation: BlogSettingsOperation {
@@ -19,7 +19,7 @@ struct BlogSettingsGetOperation: BlogSettingsOperation {
 }
 
 struct BlogSettingsUpdateOperation: BlogSettingsOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         BlogSettingsUpdateRequestBody().reference()
     }
 

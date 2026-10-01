@@ -12,7 +12,7 @@ struct AdminEditWebMetadataDefaultInteractor:
     func getTemplateOptions() async throws -> [WebPageTemplateOption] {
         let providers = try await events.trigger(
             event: WebTemplateProviderEvent(),
-            using: WebEventContext()
+            using: WebFrontendEventContext()
         )
         return
             providers

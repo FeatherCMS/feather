@@ -101,7 +101,7 @@ struct MetadataTestSuite {
             status: .draft,
             title: nil,
             excerpt: nil,
-            imageURL: "/media/assets/image.jpg",
+            imageURL: "/public/12/34/56789/originals/image.jpg",
             canonicalURL: "",
             noIndex: false,
             primaryKeyword: "",

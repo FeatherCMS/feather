@@ -3,11 +3,11 @@ import FeatherOpenAPIGenerator
 import OpenAPIKitCore
 
 struct MediaAssetResolveOperation: OperationRepresentable {
-    var tags: [TagRepresentable] {
+    var tags: [any TagRepresentable] {
         [MediaAssetTag()]
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         MediaAssetResolveRequestBody().reference()
     }
 

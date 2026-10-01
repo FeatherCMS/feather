@@ -128,7 +128,7 @@ struct AnalyticsLogListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct AnalyticsLogListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         AnalyticsLogListItemSchema().reference()
     }
 }

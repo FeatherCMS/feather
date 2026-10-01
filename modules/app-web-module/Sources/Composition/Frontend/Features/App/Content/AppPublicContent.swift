@@ -1,5 +1,8 @@
 public import FeatherAdmin
 public import FeatherContracts
+public import struct Foundation.URL
+import WebAppAPI
+import WebContracts
 
 public struct AppPublicContent {
     public let controller: any AppPublicContentController
@@ -8,26 +11,30 @@ public struct AppPublicContent {
         events: any EventPublisher,
         themeRenderer: any PublicThemeRenderer,
         contentRenderer: any WebContentRenderer,
-        webAPIBuilder: WebAPIBuilder,
+        apiBaseURL: URL,
         publicOrigins: AppPublicOriginConfiguration,
         mediaResolver: MediaResolver
     ) {
         self.controller = AppPublicContentDefaultController(
             usesSecureCookies: publicOrigins.usesSecureCookies,
             buildRuntime: { request, context in
-                (
+                let runtime = PublicContentRuntimeContext(
+                    request: request,
+                    context: context,
+                    apiBaseURL: apiBaseURL,
+                    publicOrigins: publicOrigins,
+                    mediaResolver: mediaResolver
+                )
+                return (
                     interactor: AppPublicContentDefaultInteractor(
                         repository: AppPublicContentOpenAPIRepository(
-                            api: webAPIBuilder.makeWebApp(context)
+                            api: WebAppAPIClient(
+                                apiBaseURL: runtime.apiBaseURL,
+                                sessionToken: runtime.context.sessionToken
+                            )
                         ),
                         events: events,
-                        runtime: .init(
-                            request: request,
-                            context: context,
-                            apiBaseURL: webAPIBuilder.baseURL,
-                            publicOrigins: publicOrigins,
-                            mediaResolver: mediaResolver
-                        )
+                        runtime: runtime
                     ),
                     presenter: AppPublicContentDefaultPresenter(
                         themeRenderer: themeRenderer,

@@ -37,7 +37,7 @@ struct AuthRolePermissionListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct AuthRolePermissionListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         AuthRolePermissionListItemSchema().reference()
     }
 }

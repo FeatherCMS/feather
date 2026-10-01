@@ -43,7 +43,7 @@ struct NewsletterCampaignSchema: ObjectSchemaRepresentable {
 }
 
 struct NewsletterCampaignListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { NewsletterCampaignSchema().reference() }
+    var items: (any SchemaRepresentable)? { NewsletterCampaignSchema().reference() }
 }
 struct NewsletterCampaignCreateSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {

@@ -46,52 +46,67 @@ public struct MediaResolver: Sendable {
     }
 
     public func resolveMarkdownImages(in source: String) -> String {
-        let marker = "/media/assets/"
-        var result = source
-        var searchStart = result.startIndex
+        let markers = ["/originals/", "/variants/"]
+        var result = ""
+        var searchStart = source.startIndex
 
-        while let markerRange = result.range(
-            of: marker,
-            range: searchStart..<result.endIndex
-        ) {
-            let isPathStart: Bool = {
-                guard markerRange.lowerBound > result.startIndex else {
-                    return true
+        while searchStart < source.endIndex {
+            let match =
+                markers.compactMap { marker -> Range<String.Index>? in
+                    source.range(
+                        of: marker,
+                        range: searchStart..<source.endIndex
+                    )
                 }
-                let previous = result[
-                    result.index(before: markerRange.lowerBound)
-                ]
+                .min { $0.lowerBound < $1.lowerBound }
+            guard let match else {
+                result.append(contentsOf: source[searchStart...])
+                break
+            }
+
+            var pathStart = match.lowerBound
+            while pathStart > searchStart {
+                let previous = source.index(before: pathStart)
+                let character = source[previous]
+                guard
+                    character.isLetter || character.isNumber
+                        || "_-/.~%+".contains(character)
+                else { break }
+                pathStart = previous
+            }
+
+            let hasPathBoundary: Bool = {
+                guard pathStart < source.endIndex,
+                    source[pathStart] == "/"
+                else { return false }
+                guard pathStart > source.startIndex else { return true }
+                let previous = source[source.index(before: pathStart)]
                 return !previous.isLetter && !previous.isNumber
                     && !"/:._-".contains(previous)
             }()
-            guard isPathStart else {
-                searchStart = markerRange.upperBound
+
+            guard hasPathBoundary else {
+                result.append(
+                    contentsOf: source[searchStart..<match.upperBound]
+                )
+                searchStart = match.upperBound
                 continue
             }
 
-            var pathEnd = markerRange.upperBound
-            while pathEnd < result.endIndex {
-                let character = result[pathEnd]
+            var pathEnd = match.upperBound
+            while pathEnd < source.endIndex {
+                let character = source[pathEnd]
                 guard
                     character.isLetter || character.isNumber
-                        || "._~/%+-".contains(character)
+                        || "_-/.~%+".contains(character)
                 else { break }
-                pathEnd = result.index(after: pathEnd)
+                pathEnd = source.index(after: pathEnd)
             }
 
-            let path = String(result[markerRange.lowerBound..<pathEnd])
-            let resolvedPath = resolve(imagePath: path) ?? path
-            result.replaceSubrange(
-                markerRange.lowerBound..<pathEnd,
-                with: resolvedPath
-            )
-            searchStart = result.index(
-                result.startIndex,
-                offsetBy: result.distance(
-                    from: result.startIndex,
-                    to: markerRange.lowerBound
-                ) + resolvedPath.count
-            )
+            let path = String(source[pathStart..<pathEnd])
+            result.append(contentsOf: source[searchStart..<pathStart])
+            result.append(contentsOf: resolve(imagePath: path) ?? path)
+            searchStart = pathEnd
         }
         return result
     }

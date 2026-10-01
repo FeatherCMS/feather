@@ -11,7 +11,7 @@ struct MediaAssetKeyField: StringSchemaRepresentable {
 }
 
 struct MediaAssetURLField: StringSchemaRepresentable {
-    var example: String? = "/media/assets/media_asset_1/cover-image.jpg"
+    var example: String? = "/public/12/34/56789/originals/cover-image.jpg"
 }
 
 struct MediaAssetTypeField: StringSchemaRepresentable {
@@ -19,11 +19,11 @@ struct MediaAssetTypeField: StringSchemaRepresentable {
 }
 
 struct MediaAssetResolveIDsField: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { MediaAssetIdField() }
+    var items: (any SchemaRepresentable)? { MediaAssetIdField() }
 }
 
 struct MediaAssetResolveVariantsField: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { MediaAssetKeyField() }
+    var items: (any SchemaRepresentable)? { MediaAssetKeyField() }
 }
 
 struct MediaAssetResolveRequestSchema: ObjectSchemaRepresentable {
@@ -46,7 +46,7 @@ struct MediaAssetResolveVariantSchema: ObjectSchemaRepresentable {
 }
 
 struct MediaAssetResolveVariantListField: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         MediaAssetResolveVariantSchema().reference()
     }
 }
@@ -62,7 +62,7 @@ struct MediaAssetResolveItemSchema: ObjectSchemaRepresentable {
 }
 
 struct MediaAssetResolveSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         MediaAssetResolveItemSchema().reference()
     }
 }

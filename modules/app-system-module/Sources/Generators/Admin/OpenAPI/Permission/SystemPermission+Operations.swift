@@ -1,19 +1,19 @@
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 public protocol SystemPermissionOperation: BearerProtectedOperation {
 }
 
 extension SystemPermissionOperation {
-    public var tags: [TagRepresentable] { [SystemPermissionTag()] }
+    public var tags: [any TagRepresentable] { [SystemPermissionTag()] }
 }
 
 public protocol SystemPermissionIDOperation: SystemPermissionOperation {
 }
 
 extension SystemPermissionIDOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             SystemPermissionIDParameter().reference()
         ]
@@ -21,7 +21,7 @@ extension SystemPermissionIDOperation {
 }
 
 struct SystemPermissionCreateOperation: SystemPermissionOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SystemPermissionRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -54,7 +54,7 @@ struct SystemPermissionSearchOperation: SystemPermissionOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -80,7 +80,7 @@ struct SystemPermissionGetOperation: SystemPermissionIDOperation {
 }
 
 struct SystemPermissionUpdateOperation: SystemPermissionIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SystemPermissionUpdateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -92,7 +92,7 @@ struct SystemPermissionUpdateOperation: SystemPermissionIDOperation {
 }
 
 struct SystemPermissionPatchOperation: SystemPermissionIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SystemPermissionPatchRequestBody().reference()
     }
     var responseMap: ResponseMap {

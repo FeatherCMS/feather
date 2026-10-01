@@ -18,6 +18,48 @@ public enum NewsWebPublicContentEventHandlers {
         ) { _, context in
             try await resolve(context)
         }
+        registry.register(
+            event: WebRSSContentProvider.self,
+            context: WebRSSContentEventContext<PublicContentRuntimeContext>
+                .self
+        ) { _, context in
+            try await resolveRSS(context)
+        }
+    }
+
+    private static func resolveRSS(
+        _ context: WebRSSContentEventContext<PublicContentRuntimeContext>
+    ) async throws -> [WebRSSItem] {
+        let client = NewsAppAPI.Client(
+            serverURL: context.runtime.apiBaseURL,
+            transport: AsyncHTTPClientTransport(
+                configuration: .init(client: .shared, timeout: .seconds(3))
+            ),
+            middlewares: [
+                FeatherAdmin.ClientAPIAuthMiddleware(
+                    sessionToken: context.runtime.context.sessionToken
+                )
+            ]
+        )
+        let response = try await client.newsArticleList(.init())
+        guard case .ok(let value) = response else { return [] }
+
+        return try value.body.json.compactMap { article in
+            guard !article.metadata.noIndex else { return nil }
+            let url = normalizedURL(
+                base: context.runtime.publicOrigins.siteBaseURL,
+                slug: article.metadata.canonicalURL?.emptyToNil
+                    ?? article.metadata.slug
+            )
+            return WebRSSItem(
+                title: article.metadata.title,
+                description: article.metadata.excerpt,
+                url: url,
+                publicationDate: article.metadata.publicationDate.map {
+                    Date(timeIntervalSince1970: $0)
+                }
+            )
+        }
     }
 
     private static func resolve(
@@ -216,6 +258,23 @@ public enum NewsWebPublicContentEventHandlers {
                 ? permalink
                 : "/\(permalink)",
         ]
+    }
+
+    private static func normalizedURL(
+        base: String,
+        slug: String
+    ) -> String {
+        if slug.hasPrefix("http://") || slug.hasPrefix("https://") {
+            return slug
+        }
+        var url = base.hasSuffix("/") ? base : base + "/"
+        let normalizedSlug = slug.trimmingCharacters(
+            in: CharacterSet(charactersIn: "/")
+        )
+        if !normalizedSlug.isEmpty {
+            url += normalizedSlug + "/"
+        }
+        return url
     }
 
 }

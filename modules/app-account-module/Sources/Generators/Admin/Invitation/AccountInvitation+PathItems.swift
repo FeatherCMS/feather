@@ -1,26 +1,26 @@
 import FeatherOpenAPI
 
 struct AccountInvitationPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { AccountInvitationCreateOperation() }
-    var delete: OperationRepresentable? {
+    var post: (any OperationRepresentable)? { AccountInvitationCreateOperation() }
+    var delete: (any OperationRepresentable)? {
         AccountInvitationRemoveOperation()
     }
 }
 
 struct AccountInvitationSearchPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { AccountInvitationSearchOperation() }
+    var post: (any OperationRepresentable)? { AccountInvitationSearchOperation() }
 }
 
 struct AccountInvitationListPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { AccountInvitationListOperation() }
+    var get: (any OperationRepresentable)? { AccountInvitationListOperation() }
 }
 
 struct AccountInvitationIdPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { AccountInvitationGetOperation() }
-    var put: OperationRepresentable? { AccountInvitationUpdateOperation() }
-    var patch: OperationRepresentable? { AccountInvitationPatchOperation() }
+    var get: (any OperationRepresentable)? { AccountInvitationGetOperation() }
+    var put: (any OperationRepresentable)? { AccountInvitationUpdateOperation() }
+    var patch: (any OperationRepresentable)? { AccountInvitationPatchOperation() }
 }
 
 struct AccountInvitationResendPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { AccountInvitationResendOperation() }
+    var post: (any OperationRepresentable)? { AccountInvitationResendOperation() }
 }

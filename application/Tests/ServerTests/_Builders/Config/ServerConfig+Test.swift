@@ -22,10 +22,11 @@ extension ServerConfig {
                 name: "test",
                 pollTimeMilliseconds: 100
             ),
+            storage: .init(
+                objectKey: .init(depth: 0, segmentLength: 2)
+            ),
             media: .init(
                 storageRootPath: "/tmp/backend-media-tests",
-                storageShardDepth: 0,
-                storageShardSegmentLength: 2,
                 publicBaseURL: URL(string: "http://localhost:8080")!
             )
         )

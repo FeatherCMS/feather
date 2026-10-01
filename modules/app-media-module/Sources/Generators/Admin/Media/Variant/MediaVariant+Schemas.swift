@@ -53,7 +53,7 @@ struct MediaVariantProcessorDetailSchema: ObjectSchemaRepresentable {
 }
 
 struct MediaVariantProcessorListField: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         MediaVariantProcessorListItemSchema().reference()
     }
 }

@@ -40,7 +40,7 @@ struct AuthEmailDetailSchema: ObjectSchemaRepresentable {
     }
 }
 struct AuthEmailListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         AuthEmailDetailSchema().reference()
     }
 }
@@ -74,27 +74,27 @@ struct AuthEmailIdParameter: PathParameterRepresentable {
 }
 protocol AuthEmailOperation: BearerProtectedOperation {}
 extension AuthEmailOperation {
-    var tags: [TagRepresentable] { [AuthEmailTag()] }
+    var tags: [any TagRepresentable] { [AuthEmailTag()] }
 }
 protocol AuthEmailIdOperation: AuthEmailOperation {}
 extension AuthEmailIdOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [AuthEmailIdParameter().reference()]
     }
 }
 struct AuthEmailPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { AuthEmailCreateOperation() }
-    var delete: OperationRepresentable? { AuthEmailRemoveOperation() }
+    var post: (any OperationRepresentable)? { AuthEmailCreateOperation() }
+    var delete: (any OperationRepresentable)? { AuthEmailRemoveOperation() }
 }
 struct AuthEmailListPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { AuthEmailListOperation() }
+    var get: (any OperationRepresentable)? { AuthEmailListOperation() }
 }
 struct AuthEmailIdPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { AuthEmailGetOperation() }
-    var patch: OperationRepresentable? { AuthEmailPatchOperation() }
+    var get: (any OperationRepresentable)? { AuthEmailGetOperation() }
+    var patch: (any OperationRepresentable)? { AuthEmailPatchOperation() }
 }
 struct AuthEmailCreateOperation: AuthEmailOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AuthEmailRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -115,7 +115,7 @@ struct AuthEmailGetOperation: AuthEmailIdOperation {
     }
 }
 struct AuthEmailPatchOperation: AuthEmailIdOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AuthEmailPatchRequestBody().reference()
     }
     var responseMap: ResponseMap {

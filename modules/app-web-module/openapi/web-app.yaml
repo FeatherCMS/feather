@@ -36,6 +36,14 @@ paths:
           $ref: '#/components/responses/WebMetadataResponse'
         404:
           description: Web metadata not found
+  /api/v1/web/metadata:
+    get:
+      tags:
+      - Web
+      operationId: webMetadataList
+      responses:
+        200:
+          $ref: '#/components/responses/WebMetadataListResponse'
   /api/v1/web/pages/{id}:
     get:
       tags:
@@ -237,6 +245,10 @@ components:
     WebMetadataTemplateField:
       type: string
       example: default
+    WebMetadataSlugListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/WebMetadataSlugField'
     WebPageDetailSchema:
       type: object
       properties:
@@ -389,6 +401,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/WebMetadataSchema'
+    WebMetadataListResponse:
+      description: Public web metadata slugs
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMetadataSlugListSchema'
     WebPageDetailResponse:
       description: Web page detail
       content:

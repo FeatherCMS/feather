@@ -1,17 +1,17 @@
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 public protocol MediaVariantOperation: BearerProtectedOperation {}
 
 extension MediaVariantOperation {
-    public var tags: [TagRepresentable] { [MediaVariantTag()] }
+    public var tags: [any TagRepresentable] { [MediaVariantTag()] }
 }
 
 public protocol MediaVariantIDOperation: MediaVariantOperation {}
 
 extension MediaVariantIDOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [MediaVariantIdParameter().reference()]
     }
 }
@@ -19,7 +19,7 @@ extension MediaVariantIDOperation {
 public protocol MediaVariantProcessorIDOperation: MediaVariantIDOperation {}
 
 extension MediaVariantProcessorIDOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             MediaVariantIdParameter().reference(),
             MediaVariantProcessorIdParameter().reference(),
@@ -28,7 +28,7 @@ extension MediaVariantProcessorIDOperation {
 }
 
 struct MediaVariantCreateOperation: MediaVariantOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         MediaVariantCreateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -44,7 +44,7 @@ struct MediaVariantListOperation: MediaVariantOperation {
             filters: SearchFilterSchema()
         )
     }
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
     var responseMap: ResponseMap {
@@ -62,7 +62,7 @@ struct MediaVariantGetOperation: MediaVariantIDOperation {
 }
 
 struct MediaVariantUpdateOperation: MediaVariantIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         MediaVariantCreateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -76,7 +76,7 @@ struct MediaVariantUpdateOperation: MediaVariantIDOperation {
 struct MediaVariantRemoveOperation: MediaVariantOperation, DeleteOperation {}
 
 struct MediaVariantProcessorCreateOperation: MediaVariantIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         MediaVariantProcessorCreateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -97,7 +97,7 @@ struct MediaVariantProcessorListOperation: MediaVariantIDOperation {
             filters: SearchFilterSchema()
         )
     }
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
     var responseMap: ResponseMap {
@@ -120,7 +120,7 @@ struct MediaVariantProcessorGetOperation: MediaVariantProcessorIDOperation {
 }
 
 struct MediaVariantProcessorUpdateOperation: MediaVariantProcessorIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         MediaVariantProcessorCreateRequestBody().reference()
     }
     var responseMap: ResponseMap {

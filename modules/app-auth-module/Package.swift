@@ -126,6 +126,7 @@ let package = Package(
 
                 .product(name: "UserApplication", package: "app-user-module"),
                 .product(name: "UserInfrastructure", package: "app-user-module"),
+                .product(name: "WebDomain", package: "app-web-module"),
 
                 .target(name: "AuthApplication"),
             ],

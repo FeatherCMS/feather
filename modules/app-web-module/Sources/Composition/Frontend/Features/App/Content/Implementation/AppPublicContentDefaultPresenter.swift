@@ -27,6 +27,22 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
         )
     }
 
+    func renderRSS(model: AppPublicRSSModel) -> String {
+        PublicRSSXML.render(
+            title: model.title,
+            description: model.description,
+            siteURL: model.siteURL,
+            items: model.items
+        )
+    }
+
+    func renderSitemap(model: AppPublicSitemapModel) -> String {
+        PublicSitemapXML.render(
+            slugs: model.slugs,
+            baseURL: model.baseURL
+        )
+    }
+
     private func buildContext(
         from results: [WebPublicContentProvider.Output]
     ) -> [String: any Sendable] {

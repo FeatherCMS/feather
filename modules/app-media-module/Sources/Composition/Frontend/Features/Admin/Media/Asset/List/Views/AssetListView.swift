@@ -763,8 +763,7 @@ extension AssetListView {
                     pageState: state.pageState,
                     search: state.search,
                     button: .init("Remove selected", style: .destructive),
-                    isEnabled: canRemove,
-                    usesDialog: canRemove
+                    isEnabled: canRemove
                 ),
                 table: context.build(
                     NewAdminListShell(

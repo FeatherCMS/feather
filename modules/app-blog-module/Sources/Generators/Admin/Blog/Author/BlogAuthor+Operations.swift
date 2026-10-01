@@ -1,20 +1,20 @@
 import BlogSharedOpenAPIGenerator
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 public protocol BlogAuthorOperation: BearerProtectedOperation {
 }
 
 extension BlogAuthorOperation {
-    public var tags: [TagRepresentable] { [BlogAuthorTag()] }
+    public var tags: [any TagRepresentable] { [BlogAuthorTag()] }
 }
 
 public protocol BlogAuthorIDOperation: BlogAuthorOperation {
 }
 
 extension BlogAuthorIDOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             BlogAuthorIdParameter().reference()
         ]
@@ -22,7 +22,7 @@ extension BlogAuthorIDOperation {
 }
 
 struct BlogAuthorCreateOperation: BlogAuthorOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         BlogAuthorRequestBody().reference()
     }
 
@@ -56,7 +56,7 @@ struct BlogAuthorSearchOperation: BlogAuthorOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -77,7 +77,7 @@ struct BlogAuthorGetOperation: BlogAuthorIDOperation {
 }
 
 struct BlogAuthorUpdateOperation: BlogAuthorIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         BlogAuthorUpdateRequestBody().reference()
     }
 
@@ -90,7 +90,7 @@ struct BlogAuthorUpdateOperation: BlogAuthorIDOperation {
 }
 
 struct BlogAuthorPatchOperation: BlogAuthorIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         BlogAuthorPatchRequestBody().reference()
     }
 

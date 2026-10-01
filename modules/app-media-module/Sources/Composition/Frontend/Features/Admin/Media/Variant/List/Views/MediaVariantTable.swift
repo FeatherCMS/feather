@@ -138,9 +138,9 @@ struct MediaVariantTableContent: Component {
                                         layout: .init(
                                             name: "media-variants",
                                             columns: [
-                                                .fraction(1), .fraction(2),
-                                                .fraction(2), .fraction(1),
-                                                .fraction(1), .fixed(220),
+                                                .fraction(2), .fraction(2),
+                                                .fraction(1), .fraction(1),
+                                                .fixed(220),
                                             ]
                                         ),
                                         hasSelection: canDelete,
@@ -152,7 +152,6 @@ struct MediaVariantTableContent: Component {
                                                             NewAdminListSelectAllCheckbox()
                                                         )
                                                     }
-                                                    Th("ID")
                                                     Th("Key")
                                                     Th("Name")
                                                     Th("Required")
@@ -234,7 +233,6 @@ struct MediaVariantRow: Component {
             if permissions.allows(MediaPermissions.Variants.delete) {
                 context.build(NewAdminListRowCheckbox(id: variant.id))
             }
-            Td(variant.id).data("label", "ID")
             Td(variant.key).data("label", "Key")
             Td(variant.name).data("label", "Name")
             Td(variant.isRequired ? "Yes" : "No").data("label", "Required")

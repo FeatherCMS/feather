@@ -1,5 +1,5 @@
-import FeatherOpenAPI
-import OpenAPIKit30
+public import FeatherOpenAPI
+public import OpenAPIKit30
 import WebSharedOpenAPIGenerator
 
 public struct WebMetadataSlugField: StringSchemaRepresentable {
@@ -124,7 +124,7 @@ public struct WebMetadataPatchSchema: ObjectSchemaRepresentable {
 
 public struct WebMetadataReferenceIDsSchema: ArraySchemaRepresentable {
     public init() {}
-    public var items: SchemaRepresentable? {
+    public var items: (any SchemaRepresentable)? {
         WebMetadataReferenceIDField()
     }
 }
@@ -157,7 +157,7 @@ public struct WebMetadataResolveItemSchema: ObjectSchemaRepresentable {
 
 public struct WebMetadataResolveSchema: ArraySchemaRepresentable {
     public init() {}
-    public var items: SchemaRepresentable? {
+    public var items: (any SchemaRepresentable)? {
         WebMetadataResolveItemSchema().reference()
     }
 }
@@ -189,7 +189,7 @@ public struct WebMetadataListItemSchema: ObjectSchemaRepresentable {
 
 public struct WebMetadataListSchema: ArraySchemaRepresentable {
     public init() {}
-    public var items: SchemaRepresentable? {
+    public var items: (any SchemaRepresentable)? {
         WebMetadataListItemSchema().reference()
     }
 }

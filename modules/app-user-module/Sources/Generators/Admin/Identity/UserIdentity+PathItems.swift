@@ -8,21 +8,21 @@
 import FeatherOpenAPI
 
 struct UserIdentityPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { UserIdentityCreateOperation() }
-    //    var get: OperationRepresentable? { UserIdentityListOperation() }
-    var delete: OperationRepresentable? { UserIdentityRemoveOperation() }
+    var post: (any OperationRepresentable)? { UserIdentityCreateOperation() }
+    //    var get: (any OperationRepresentable)? { UserIdentityListOperation() }
+    var delete: (any OperationRepresentable)? { UserIdentityRemoveOperation() }
 }
 
 struct UserIdentitySearchPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { UserIdentitySearchOperation() }
+    var post: (any OperationRepresentable)? { UserIdentitySearchOperation() }
 }
 
 struct UserIdentityListPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { UserIdentityListOperation() }
+    var get: (any OperationRepresentable)? { UserIdentityListOperation() }
 }
 
 struct UserIdentityIdPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { UserIdentityGetOperation() }
-    var put: OperationRepresentable? { UserIdentityUpdateOperation() }
-    var patch: OperationRepresentable? { UserIdentityPatchOperation() }
+    var get: (any OperationRepresentable)? { UserIdentityGetOperation() }
+    var put: (any OperationRepresentable)? { UserIdentityUpdateOperation() }
+    var patch: (any OperationRepresentable)? { UserIdentityPatchOperation() }
 }

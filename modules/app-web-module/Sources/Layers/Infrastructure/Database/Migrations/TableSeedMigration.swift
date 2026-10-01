@@ -31,7 +31,7 @@ public struct TableSeedMigration: DatabaseMigration {
         let pageRepository = PageDatabaseRepository(context: context)
         let definitions = try await events.trigger(
             event: WebPageProvider(),
-            using: WebEventContext()
+            using: WebSeedEventContext()
         )
         for definition in definitions.flatMap({ $0 }) {
             let page = try Page.create(
@@ -84,7 +84,7 @@ public struct TableSeedMigration: DatabaseMigration {
         let menus =
             try await events.trigger(
                 event: WebMenuProvider(),
-                using: WebEventContext()
+                using: WebSeedEventContext()
             )
             .flatMap { $0 }
 
@@ -95,7 +95,7 @@ public struct TableSeedMigration: DatabaseMigration {
             let items =
                 try await events.trigger(
                     event: WebMenuItemProvider(menuKey: menu.key),
-                    using: WebEventContext()
+                    using: WebSeedEventContext()
                 )
                 .flatMap { $0 }
 

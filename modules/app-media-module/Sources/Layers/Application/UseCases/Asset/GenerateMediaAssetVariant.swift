@@ -1,8 +1,10 @@
 public import FeatherApplication
 public import FeatherContracts
-public import FeatherStorage
+public import FeatherDomain
+import FeatherStorage
 import Foundation
 import MediaDomain
+import NIOCore
 
 public struct GenerateMediaAssetVariants: UseCase {
     public enum Error: UseCaseError {
@@ -33,31 +35,21 @@ public struct GenerateMediaAssetVariants: UseCase {
         let assetID: String
         let plan: Plan
         let `extension`: String
-
-        var objectKey: String {
-            MediaStorageObjectKey.variant(
-                assetID: assetID,
-                variantKey: plan.variant.key,
-                fileExtension: `extension`
-            )
-        }
+        let sizeInBytes: Int64
     }
 
     let transaction: any TransactionExecutor<WriteMedia>
-    let storage: any StorageClient
-    let storageKeyShard: MediaStorageKeyShard
-    let shellRunner: any MediaShellRunner
+    let storageContext: StorageContext
+    let commandRunner: any CommandRunner
 
     public init(
         transaction: any TransactionExecutor<WriteMedia>,
-        storage: any StorageClient,
-        storageKeyShard: MediaStorageKeyShard = .init(),
-        shellRunner: any MediaShellRunner
+        storageContext: StorageContext,
+        commandRunner: any CommandRunner
     ) {
         self.transaction = transaction
-        self.storage = storage
-        self.storageKeyShard = storageKeyShard
-        self.shellRunner = shellRunner
+        self.storageContext = storageContext
+        self.commandRunner = commandRunner
     }
 
     public struct Input: DTO {
@@ -94,10 +86,19 @@ public struct GenerateMediaAssetVariants: UseCase {
             return
         }
 
-        let inputData = try await MediaStorageData.download(
-            from: storage,
-            key: storageKeyShard.physicalKey(for: prepared.asset.objectKey)
+        let inputSequence = try await storageContext.storage.download(
+            key: try MediaAssetStorageObject.storageKey(
+                assetID: prepared.asset.id,
+                key: "original",
+                extension: prepared.asset.extension,
+                objectKeyGenerator: storageContext.objectKeyGenerator
+            ),
+            range: nil
         )
+        var inputData = Data()
+        for try await buffer in inputSequence {
+            inputData.append(contentsOf: buffer.readableBytesView)
+        }
         let inputExtension =
             MediaExtensionMatcher.canonicalExtension(
                 from: prepared.asset.extension
@@ -120,14 +121,23 @@ public struct GenerateMediaAssetVariants: UseCase {
                 let generated = Output(
                     assetID: prepared.asset.id,
                     plan: plan,
-                    extension: output.extension
+                    extension: output.extension,
+                    sizeInBytes: Int64(output.data.count)
                 )
-                try await MediaStorageData.upload(
-                    output.data,
-                    to: storage,
-                    key: storageKeyShard.physicalKey(for: generated.objectKey)
+                let storageObjectKey = try MediaAssetStorageObject.storageKey(
+                    assetID: generated.assetID,
+                    key: "variants/\(generated.plan.variant.key)",
+                    extension: generated.extension,
+                    objectKeyGenerator: storageContext.objectKeyGenerator
                 )
-                uploadedKeys.append(generated.objectKey)
+                var buffer = ByteBufferAllocator()
+                    .buffer(capacity: output.data.count)
+                buffer.writeBytes(output.data)
+                try await storageContext.storage.upload(
+                    key: storageObjectKey,
+                    sequence: .init(buffer: buffer)
+                )
+                uploadedKeys.append(storageObjectKey)
                 outputs.append(generated)
             }
         }
@@ -139,32 +149,36 @@ public struct GenerateMediaAssetVariants: UseCase {
         let generatedOutputs = outputs
         do {
             try await transaction.run { scope in
-                let storageObjects = try await scope.storageObjects.insert(
+                let storedObjects = try await scope.storageObjects.insert(
                     generatedOutputs.map {
-                        MediaAssetStorageObject.create(objectKey: $0.objectKey)
+                        MediaAssetStorageObject.create(
+                            key: "variants/\($0.plan.variant.key)",
+                            extension: $0.extension,
+                            contentType: variantContentType(for: $0.extension),
+                            sizeInBytes: $0.sizeInBytes
+                        )
                     }
                 )
-                let storageObjectIDs = Dictionary(
-                    uniqueKeysWithValues: storageObjects.map {
-                        ($0.objectKey, $0.id)
+                let storageObjectIDsByKey = Dictionary(
+                    uniqueKeysWithValues: storedObjects.map {
+                        ($0.key, $0.id)
                     }
                 )
                 let variants = try generatedOutputs.map { output in
                     guard
-                        let storageObjectID = storageObjectIDs[output.objectKey]
+                        let storageObjectId = storageObjectIDsByKey[
+                            "variants/\(output.plan.variant.key)"
+                        ]
                     else {
                         throw Error.outputMissing(
                             processorName: output.plan.processor.name
                         )
                     }
                     return MediaAssetNodeFileVariant.create(
-                        nodeId: prepared.asset.id,
+                        assetNodeFileId: prepared.asset.id,
                         variantId: output.plan.variant.id,
                         variantProcessorId: output.plan.processor.id,
-                        name: output.plan.variant.key,
-                        storageObjectId: storageObjectID,
-                        objectKey: output.objectKey,
-                        extension: output.extension
+                        storageObjectId: storageObjectId
                     )
                 }
                 try await scope.variants.insert(variants)
@@ -243,10 +257,7 @@ extension GenerateMediaAssetVariants {
 
     fileprivate func deleteUploaded(keys: [String]) async {
         for key in keys {
-            _ = try? await MediaStorageData.delete(
-                from: storage,
-                key: storageKeyShard.physicalKey(for: key)
-            )
+            try? await storageContext.storage.delete(key: key)
         }
     }
 
@@ -261,7 +272,7 @@ extension GenerateMediaAssetVariants {
             inputPath: inputURL.path,
             outputPath: outputURL.path
         )
-        let result = try await shellRunner.run(command: command)
+        let result = try await commandRunner.run(command: command)
         guard result.exitCode == 0 else {
             throw Error.commandFailed(
                 processorName: processor.name,
@@ -337,5 +348,17 @@ extension GenerateMediaAssetVariants {
             $0.pathExtension == preferredURL.pathExtension
         })
             ?? (candidates.count == 1 ? candidates[0] : preferredURL)
+    }
+}
+
+private func variantContentType(for extension: String) -> String {
+    switch `extension`.lowercased() {
+    case "jpg", "jpeg": "image/jpeg"
+    case "png": "image/png"
+    case "gif": "image/gif"
+    case "webp": "image/webp"
+    case "pdf": "application/pdf"
+    case "mp4": "video/mp4"
+    default: "application/octet-stream"
     }
 }

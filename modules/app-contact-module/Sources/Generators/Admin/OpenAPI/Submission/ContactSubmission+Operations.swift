@@ -4,13 +4,13 @@ import OpenAPIKit30
 
 protocol ContactFormSubmissionOperation: ContactFormOperation {}
 extension ContactFormSubmissionOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [ContactFormKeyParameter().reference()]
     }
 }
 protocol ContactFormSubmissionIDOperation: ContactFormSubmissionOperation {}
 extension ContactFormSubmissionIDOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [
             ContactFormKeyParameter().reference(),
             ContactFormSubmissionIdParameter().reference(),
@@ -34,7 +34,7 @@ struct ContactFormSubmissionGetOperation: ContactFormSubmissionIDOperation {
     }
 }
 struct ContactFormSubmissionUpdateOperation: ContactFormSubmissionIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         ContactFormSubmissionPatchRequestBody().reference()
     }
     var responseMap: ResponseMap {

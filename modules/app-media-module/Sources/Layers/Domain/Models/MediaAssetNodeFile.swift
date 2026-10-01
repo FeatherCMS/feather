@@ -15,6 +15,7 @@ public struct MediaAssetNodeFile: Model {
         public let name: String
         public let slug: String
         public let slugPath: String
+        public let storageObjectId: String
         public let `extension`: String
         public let contentType: String
         public let sizeBytes: Int64
@@ -29,7 +30,6 @@ public struct MediaAssetNodeFile: Model {
     public var slug: String
     public var slugPath: String
     public let storageObjectId: String
-    public let objectKey: String
     public let `extension`: String
     public let contentType: String
     public let sizeBytes: Int64
@@ -47,7 +47,6 @@ public struct MediaAssetNodeFile: Model {
         slug: String,
         slugPath: String,
         storageObjectId: String,
-        objectKey: String,
         `extension`: String,
         contentType: String,
         sizeBytes: Int64,
@@ -64,7 +63,6 @@ public struct MediaAssetNodeFile: Model {
         self.slug = slug
         self.slugPath = slugPath
         self.storageObjectId = storageObjectId
-        self.objectKey = objectKey
         self.extension = `extension`
         self.contentType = contentType
         self.sizeBytes = sizeBytes
@@ -83,6 +81,7 @@ extension MediaAssetNodeFile {
         name: String,
         slug: String,
         slugPath: String,
+        storageObjectId: String,
         extension ext: String,
         contentType: String,
         sizeBytes: Int64,
@@ -94,6 +93,7 @@ extension MediaAssetNodeFile {
             name: name,
             slug: slug,
             slugPath: slugPath,
+            storageObjectId: storageObjectId,
             extension: ext,
             contentType: contentType,
             sizeBytes: sizeBytes,

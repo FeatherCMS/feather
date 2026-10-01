@@ -20,6 +20,7 @@ struct WorkerConfigLoader {
         )
         let workerScope = reader.scoped(to: "worker")
         let mediaScope = reader.scoped(to: "media")
+        let objectKeyScope = reader.scoped(to: "storage.object_key")
         let sesScope = reader.scoped(to: "ses")
 
         return .init(
@@ -107,24 +108,22 @@ struct WorkerConfigLoader {
                     )
                 )
             ),
+            storage: .init(
+                objectKey: .init(
+                    depth: max(
+                        0,
+                        objectKeyScope.int(forKey: "depth", default: 2)
+                    ),
+                    segmentLength: max(
+                        1,
+                        objectKeyScope.int(forKey: "segment_length", default: 2)
+                    )
+                )
+            ),
             media: .init(
                 storageRootPath: mediaScope.string(
                     forKey: "storage_root_path",
                     default: "/tmp/backend-media"
-                ),
-                storageShardDepth: max(
-                    0,
-                    mediaScope.int(
-                        forKey: "storage_shard_depth",
-                        default: 0
-                    )
-                ),
-                storageShardSegmentLength: max(
-                    1,
-                    mediaScope.int(
-                        forKey: "storage_shard_segment_length",
-                        default: 2
-                    )
                 ),
                 maxConcurrentProcessing: max(
                     1,

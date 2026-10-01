@@ -5,8 +5,8 @@
 //  Created by Tibor Bödecs on 2026. 03. 24..
 //
 
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 import UserSharedOpenAPIGenerator
 
@@ -14,7 +14,7 @@ public protocol UserIdentityOperation: BearerProtectedOperation {
 }
 
 extension UserIdentityOperation {
-    public var tags: [TagRepresentable] { [UserIdentityTag()] }
+    public var tags: [any TagRepresentable] { [UserIdentityTag()] }
 }
 
 public protocol UserIdentityIDOperation: UserIdentityOperation {
@@ -23,7 +23,7 @@ public protocol UserIdentityIDOperation: UserIdentityOperation {
 
 extension UserIdentityIDOperation {
 
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             UserIdentityIdParameter().reference()
         ]
@@ -34,7 +34,7 @@ struct UserIdentityCreateOperation: UserIdentityOperation {
     var summary: String? = "Create user identity"
     var description: String? = "Creates an user identity"
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         UserIdentityCreateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -69,7 +69,7 @@ struct UserIdentitySearchOperation: UserIdentityOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -98,7 +98,7 @@ struct UserIdentityGetOperation: UserIdentityIDOperation {
 
 struct UserIdentityUpdateOperation: UserIdentityIDOperation {
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         UserIdentityUpdateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -111,7 +111,7 @@ struct UserIdentityUpdateOperation: UserIdentityIDOperation {
 
 struct UserIdentityPatchOperation: UserIdentityIDOperation {
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         UserIdentityPatchRequestBody().reference()
     }
 

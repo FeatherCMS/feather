@@ -12,12 +12,12 @@ struct MediaResolverTestSuite {
     @Test
     func resolvesRelativeAndAbsoluteImagePaths() {
         #expect(
-            resolver.resolve(imagePath: "/media/assets/photo.jpg")
-                == "https://media.example.com/media/assets/photo.jpg"
+            resolver.resolve(imagePath: "/asset/originals/photo.jpg")
+                == "https://media.example.com/asset/originals/photo.jpg"
         )
         #expect(
-            resolver.resolve(imagePath: "media/assets/photo.jpg")
-                == "https://media.example.com/media/assets/photo.jpg"
+            resolver.resolve(imagePath: "asset/originals/photo.jpg")
+                == "https://media.example.com/asset/originals/photo.jpg"
         )
         #expect(
             resolver.resolve(imagePath: "https://cdn.example.com/photo.jpg")
@@ -31,17 +31,17 @@ struct MediaResolverTestSuite {
         let variants = [
             MediaURLVariant(
                 key: "preview",
-                url: "/media/variants/asset/preview.jpg"
+                url: "/asset/originals/preview.jpg"
             ),
             MediaURLVariant(
                 key: "cover",
-                url: "/media/variants/asset/cover.jpg"
+                url: "/asset/variants/cover/preview.jpg"
             ),
         ]
 
         #expect(
             resolver.resolve(variants: variants, variantKey: "cover")
-                == "https://media.example.com/media/variants/asset/cover.jpg"
+                == "https://media.example.com/asset/variants/cover/preview.jpg"
         )
         #expect(
             resolver.resolve(variants: variants, variantKey: "original") == nil
@@ -51,11 +51,28 @@ struct MediaResolverTestSuite {
     @Test
     func resolvesMarkdownMediaPaths() {
         let output = resolver.resolveMarkdownImages(
-            in: "![Photo](/media/assets/photo.jpg)"
+            in:
+                "![Photo](/public/12/34/56789/originals/example/projects/photo.jpg)"
         )
         #expect(
             output
-                == "![Photo](https://media.example.com/media/assets/photo.jpg)"
+                == "![Photo](https://media.example.com/public/12/34/56789/originals/example/projects/photo.jpg)"
+        )
+    }
+
+    @Test
+    func resolvesMarkdownVariantButLeavesAbsoluteURLsUnchanged() {
+        let source = """
+            ![Variant](/12/34/56789/variants/cover/example/projects/photo.webp)
+            ![External](https://cdn.example.com/public/12/34/56789/originals/photo.jpg)
+            """
+        let output = resolver.resolveMarkdownImages(in: source)
+
+        #expect(
+            output == """
+                ![Variant](https://media.example.com/12/34/56789/variants/cover/example/projects/photo.webp)
+                ![External](https://cdn.example.com/public/12/34/56789/originals/photo.jpg)
+                """
         )
     }
 }

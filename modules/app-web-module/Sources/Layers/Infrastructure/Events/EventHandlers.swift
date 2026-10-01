@@ -1,6 +1,7 @@
 public import FeatherContracts
 import SystemApplication
 import WebContracts
+import WebDomain
 
 public enum EventHandlers {
 
@@ -9,25 +10,13 @@ public enum EventHandlers {
     ) {
         registry.register(
             event: WebMenuProvider.self,
-            context: WebEventContext.self
+            context: WebSeedEventContext.self
         ) { _, _ in
             [
                 .init(
                     key: "main",
                     name: "Main Menu",
                     notes: "Main navigation."
-                )
-            ]
-        }
-
-        registry.register(
-            event: WebMetadataReferenceTypeOptionProvider.self,
-            context: WebEventContext.self
-        ) { _, _ in
-            [
-                .init(
-                    value: "web.page",
-                    title: "Web page"
                 )
             ]
         }
@@ -52,7 +41,7 @@ public enum EventHandlers {
 
         registry.register(
             event: WebPageProvider.self,
-            context: WebEventContext.self
+            context: WebSeedEventContext.self
         ) { _, _ in
             [
                 .init(

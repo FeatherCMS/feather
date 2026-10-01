@@ -67,12 +67,12 @@ struct SystemVariableListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct SystemVariableListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         SystemVariableListItemSchema().reference()
     }
 }
 
 struct SystemVariableIDsFilter: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { SystemVariableIDField() }
+    var items: (any SchemaRepresentable)? { SystemVariableIDField() }
     var required: Bool { false }
 }

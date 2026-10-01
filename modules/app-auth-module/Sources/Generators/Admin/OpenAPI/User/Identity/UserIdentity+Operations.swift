@@ -6,8 +6,8 @@
 //
 
 import AuthSharedOpenAPIGenerator
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 import UserSharedOpenAPIGenerator
 
@@ -15,13 +15,13 @@ public protocol UserIdentityOperation: BearerProtectedOperation {
 }
 
 extension UserIdentityOperation {
-    public var tags: [TagRepresentable] { [UserIdentityTag()] }
+    public var tags: [any TagRepresentable] { [UserIdentityTag()] }
 }
 
 public protocol UserIdentitySessionOperation: UserIdentityOperation {}
 
 extension UserIdentitySessionOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             UserIdentityIdParameter().reference()
         ]
@@ -31,7 +31,7 @@ extension UserIdentitySessionOperation {
 public protocol UserIdentitySessionIdOperation: UserIdentitySessionOperation {}
 
 extension UserIdentitySessionIdOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             UserIdentityIdParameter().reference(),
             UserIdentitySessionIdParameter().reference(),

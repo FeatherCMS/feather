@@ -10,6 +10,7 @@ struct PathCollection: PathCollectionRepresentable {
             "api/v1/web/settings": WebSiteSettingsPathItems(),
             "api/v1/web/menus": WebMenuListPathItems(),
             "api/v1/web/routes/{slug}": WebMetadataGetPathItems(),
+            "api/v1/web/metadata": WebMetadataListPathItems(),
             "api/v1/web/pages/{id}": WebPageGetPathItems(),
         ]
     }

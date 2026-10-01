@@ -5,12 +5,26 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherApplication
+import FeatherDomain
 import Testing
 
+@testable import FeatherContracts
 @testable import FeatherInfrastructure
 
 @Suite
 struct InfrastructureTestSuite {
+
+    @Test
+    func subprocessCommandRunnerCapturesOutputAndExitCode() async throws {
+        let result = try await SubprocessCommandRunner()
+            .run(
+                command: "printf output; printf error >&2"
+            )
+
+        #expect(result.exitCode == 0)
+        #expect(result.standardOutput == "output")
+        #expect(result.standardError == "error")
+    }
 
     @Test
     func collectsTypedResultsInRegistrationOrder() async throws {

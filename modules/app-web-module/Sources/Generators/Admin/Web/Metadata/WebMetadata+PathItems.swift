@@ -1,24 +1,24 @@
 import FeatherOpenAPI
 
 struct WebMetadataPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { WebMetadataCreateOperation() }
-    var delete: OperationRepresentable? { WebMetadataRemoveOperation() }
+    var post: (any OperationRepresentable)? { WebMetadataCreateOperation() }
+    var delete: (any OperationRepresentable)? { WebMetadataRemoveOperation() }
 }
 
 struct WebMetadataSearchPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { WebMetadataSearchOperation() }
+    var post: (any OperationRepresentable)? { WebMetadataSearchOperation() }
 }
 
 struct WebMetadataResolvePathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { WebMetadataResolveOperation() }
+    var post: (any OperationRepresentable)? { WebMetadataResolveOperation() }
 }
 
 struct WebMetadataListPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { WebMetadataListOperation() }
+    var get: (any OperationRepresentable)? { WebMetadataListOperation() }
 }
 
 struct WebMetadataIdPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { WebMetadataGetOperation() }
-    var put: OperationRepresentable? { WebMetadataUpdateOperation() }
-    var patch: OperationRepresentable? { WebMetadataPatchOperation() }
+    var get: (any OperationRepresentable)? { WebMetadataGetOperation() }
+    var put: (any OperationRepresentable)? { WebMetadataUpdateOperation() }
+    var patch: (any OperationRepresentable)? { WebMetadataPatchOperation() }
 }

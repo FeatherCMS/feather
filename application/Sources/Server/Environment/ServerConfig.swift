@@ -9,9 +9,16 @@ struct ServerConfig: Sendable {
 
     struct MediaConfig: Sendable {
         let storageRootPath: String
-        let storageShardDepth: Int
-        let storageShardSegmentLength: Int
         let publicBaseURL: URL
+    }
+
+    struct StorageConfig: Sendable {
+        struct ObjectKeyConfig: Sendable {
+            let depth: Int
+            let segmentLength: Int
+        }
+
+        let objectKey: ObjectKeyConfig
     }
 
     let host: String
@@ -20,5 +27,6 @@ struct ServerConfig: Sendable {
 
     let system: SystemConfig
     let queue: QueueConfig
+    let storage: StorageConfig
     let media: MediaConfig
 }

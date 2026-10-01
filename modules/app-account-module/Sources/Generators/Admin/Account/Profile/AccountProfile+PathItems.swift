@@ -1,6 +1,6 @@
 import FeatherOpenAPI
 
 struct AdminAccountProfilePathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { AdminAccountProfileGetOperation() }
-    var put: OperationRepresentable? { AdminAccountProfileUpdateOperation() }
+    var get: (any OperationRepresentable)? { AdminAccountProfileGetOperation() }
+    var put: (any OperationRepresentable)? { AdminAccountProfileUpdateOperation() }
 }

@@ -1,11 +1,11 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 public protocol WebOperation: OperationRepresentable {}
 
 extension WebOperation {
-    public var tags: [TagRepresentable] { [WebContentTag()] }
+    public var tags: [any TagRepresentable] { [WebContentTag()] }
 }
 
 struct WebMenuListOperation: WebOperation {

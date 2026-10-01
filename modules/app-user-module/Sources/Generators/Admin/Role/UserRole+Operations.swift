@@ -1,5 +1,5 @@
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 import UserSharedOpenAPIGenerator
 
@@ -7,14 +7,14 @@ public protocol UserRoleOperation: BearerProtectedOperation {
 }
 
 extension UserRoleOperation {
-    public var tags: [TagRepresentable] { [UserRoleTag()] }
+    public var tags: [any TagRepresentable] { [UserRoleTag()] }
 }
 
 public protocol UserRoleIDOperation: UserRoleOperation {
 }
 
 extension UserRoleIDOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             UserRoleIdParameter().reference()
         ]
@@ -22,7 +22,7 @@ extension UserRoleIDOperation {
 }
 
 struct UserRoleCreateOperation: UserRoleOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         UserRoleRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -53,7 +53,7 @@ struct UserRoleSearchOperation: UserRoleOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -77,7 +77,7 @@ struct UserRoleGetOperation: UserRoleIDOperation {
 }
 
 struct UserRoleUpdateOperation: UserRoleIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         UserRoleUpdateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -89,7 +89,7 @@ struct UserRoleUpdateOperation: UserRoleIDOperation {
 }
 
 struct UserRolePatchOperation: UserRoleIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         UserRolePatchRequestBody().reference()
     }
     var responseMap: ResponseMap {

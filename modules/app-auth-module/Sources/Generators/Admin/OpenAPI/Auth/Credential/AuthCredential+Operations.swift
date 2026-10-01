@@ -1,6 +1,6 @@
 import AuthSharedOpenAPIGenerator
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 import UserSharedOpenAPIGenerator
 
@@ -8,14 +8,14 @@ public protocol AuthCredentialOperation: BearerProtectedOperation {
 }
 
 extension AuthCredentialOperation {
-    public var tags: [TagRepresentable] { [AuthCredentialTag()] }
+    public var tags: [any TagRepresentable] { [AuthCredentialTag()] }
 }
 
 public protocol AuthCredentialIdOperation: AuthCredentialOperation {
 }
 
 extension AuthCredentialIdOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             AuthCredentialIdParameter().reference()
         ]
@@ -23,7 +23,7 @@ extension AuthCredentialIdOperation {
 }
 
 struct AuthCredentialCreateOperation: AuthCredentialOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AuthCredentialRequestBody().reference()
     }
 
@@ -54,7 +54,7 @@ struct AuthCredentialSearchOperation: AuthCredentialOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -80,7 +80,7 @@ struct AuthCredentialGetOperation: AuthCredentialIdOperation {
 }
 
 struct AuthCredentialUpdateOperation: AuthCredentialIdOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AuthCredentialUpdateRequestBody().reference()
     }
 
@@ -93,7 +93,7 @@ struct AuthCredentialUpdateOperation: AuthCredentialIdOperation {
 }
 
 struct AuthCredentialPatchOperation: AuthCredentialIdOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AuthCredentialPatchRequestBody().reference()
     }
 

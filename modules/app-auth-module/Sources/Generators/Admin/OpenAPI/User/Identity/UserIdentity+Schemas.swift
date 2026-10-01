@@ -20,7 +20,7 @@ struct UserAuthSessionAuthenticationTypeField: StringSchemaRepresentable {}
 struct UserAuthSessionAuthenticationReferenceField: StringSchemaRepresentable {}
 
 struct UserAuthSessionListItemsField: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         UserAuthSessionListItemSchema().reference()
     }
 }

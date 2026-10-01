@@ -138,6 +138,36 @@ public struct WebAppAPIClient: Sendable {
             )
         }
     }
+
+    public func publicMetadataSlugs() async throws -> [String] {
+        let response = try await client.webMetadataList(
+            .init(headers: .init(accept: [.init(contentType: .json)]))
+        )
+        switch response {
+        case .ok(let value):
+            return try value.body.json
+        case .undocumented(let statusCode, let response):
+            throw try await failure(
+                statusCode: statusCode,
+                responseBody: response.body
+            )
+        }
+    }
+
+    public func publicSiteSettings() async throws
+        -> WebAppAPI.Components.Schemas.WebSiteSettingsSchema
+    {
+        let response = try await client.webSiteSettings(.init())
+        switch response {
+        case .ok(let value):
+            return try value.body.json
+        case .undocumented(let statusCode, let response):
+            throw try await failure(
+                statusCode: statusCode,
+                responseBody: response.body
+            )
+        }
+    }
 }
 
 public struct WebAPIBuilder: Sendable {

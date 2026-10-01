@@ -2,6 +2,7 @@ import Environment
 import FeatherGeneratedSES
 import FeatherMail
 import FeatherMailSES
+import FeatherDomain
 import FeatherInfrastructure
 import FeatherStorage
 import FeatherStorageFS
@@ -141,10 +142,12 @@ func buildWorker(
         queue: jobQueue,
         database: database,
         idGenerator: idGenerator,
-        storage: StorageClientFS(rootPath: config.media.storageRootPath),
-        storageKeyShard: .init(
-            depth: config.media.storageShardDepth,
-            segmentLength: config.media.storageShardSegmentLength
+        storageContext: .init(
+            storage: StorageClientFS(rootPath: config.media.storageRootPath),
+            objectKeyGenerator: HierarchicalObjectKeyGenerator(
+                depth: config.storage.objectKey.depth,
+                segmentLength: config.storage.objectKey.segmentLength
+            )
         ),
         maxConcurrentProcessing: config.media.maxConcurrentProcessing
     )

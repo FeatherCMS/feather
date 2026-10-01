@@ -74,7 +74,7 @@ struct AuthMagicLinkListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct AuthMagicLinkListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         AuthMagicLinkListItemSchema().reference()
     }
 }

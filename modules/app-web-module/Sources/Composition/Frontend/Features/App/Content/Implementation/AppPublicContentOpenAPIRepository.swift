@@ -32,4 +32,14 @@ public struct AppPublicContentOpenAPIRepository: AppPublicContentRepository {
             }
         }
     }
+
+    public func publicSiteSettings() async throws
+        -> WebAppAPI.Components.Schemas.WebSiteSettingsSchema
+    {
+        try await api.publicSiteSettings()
+    }
+
+    public func publicMetadataSlugs() async throws -> [String] {
+        try await api.publicMetadataSlugs()
+    }
 }

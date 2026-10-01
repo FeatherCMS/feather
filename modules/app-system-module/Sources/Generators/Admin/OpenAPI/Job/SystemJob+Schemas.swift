@@ -22,5 +22,5 @@ struct SystemJobSchema: ObjectSchemaRepresentable {
 }
 
 struct SystemJobListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { SystemJobSchema().reference() }
+    var items: (any SchemaRepresentable)? { SystemJobSchema().reference() }
 }

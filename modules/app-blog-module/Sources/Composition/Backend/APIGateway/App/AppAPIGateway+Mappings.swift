@@ -28,10 +28,7 @@ extension AppAPIGateway {
             .map {
                 PublicContentMediaVariant(
                     key: $0.key,
-                    url: resolver.resolve(
-                        imagePath:
-                            "/media/variants/\(asset.id)/\($0.key).\($0.extension)"
-                    ) ?? "/media/variants/\(asset.id)/\($0.key).\($0.extension)"
+                    url: resolver.resolve(imagePath: $0.url) ?? $0.url
                 )
             }
         let defaultURL =

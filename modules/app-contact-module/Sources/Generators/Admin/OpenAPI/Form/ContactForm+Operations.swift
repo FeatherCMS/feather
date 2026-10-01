@@ -4,11 +4,11 @@ import OpenAPIKit30
 
 protocol ContactFormOperation: BearerProtectedOperation {}
 extension ContactFormOperation {
-    var tags: [TagRepresentable] { [ContactFormsTag()] }
+    var tags: [any TagRepresentable] { [ContactFormsTag()] }
 }
 protocol ContactFormKeyOperation: ContactFormOperation {}
 extension ContactFormKeyOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [ContactFormKeyParameter().reference()]
     }
 }
@@ -19,7 +19,7 @@ struct ContactFormListOperation: ContactFormOperation {
     }
 }
 struct ContactFormCreateOperation: ContactFormOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         ContactFormCreateRequestBody().reference()
     }
     var responseMap: ResponseMap { [201: ContactFormResponse().reference()] }
@@ -33,7 +33,7 @@ struct ContactFormGetOperation: ContactFormKeyOperation {
     }
 }
 struct ContactFormUpdateOperation: ContactFormKeyOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         ContactFormCreateRequestBody().reference()
     }
     var responseMap: ResponseMap {

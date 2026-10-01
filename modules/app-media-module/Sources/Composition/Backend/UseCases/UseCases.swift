@@ -3,41 +3,42 @@ public import FeatherContracts
 public import FeatherDatabase
 public import FeatherDomain
 import FeatherInfrastructure
-public import FeatherStorage
+import FeatherStorage
 public import Foundation
 public import MediaApplication
 public import MediaDomain
 import MediaInfrastructure
+import NIOCore
 
 public struct UseCases: Sendable {
     public struct AssociatedVariantFile: Sendable {
         public let assetId: String
+        public let slugPath: String
+        public let filename: String
         public let variantId: String
         public let key: String
         public let name: String
+        public let url: String
         public let `extension`: String
         public let objectKey: String
     }
 
     let database: any DatabaseClient
     let idGenerator: any IDGenerator
-    let storage: any StorageClient
-    let storageKeyShard: MediaStorageKeyShard
+    let storageContext: StorageContext
     let variantQueue: any MediaVariantQueue
     let authorizer: any Authorizer
 
     public init(
         database: any DatabaseClient,
         idGenerator: any IDGenerator,
-        storage: any StorageClient,
+        storageContext: StorageContext,
         authorizer: any Authorizer,
-        variantQueue: any MediaVariantQueue,
-        storageKeyShard: MediaStorageKeyShard = .init()
+        variantQueue: any MediaVariantQueue
     ) {
         self.database = database
         self.idGenerator = idGenerator
-        self.storage = storage
-        self.storageKeyShard = storageKeyShard
+        self.storageContext = storageContext
         self.variantQueue = variantQueue
         self.authorizer = authorizer
     }
@@ -148,7 +149,10 @@ public struct UseCases: Sendable {
             }
             var value = asset
             value.status = matchingProcessors.isEmpty ? .ready : .processing
-            return try await repo.update(value).asDetail
+            return try await repo.update(value)
+                .asDetail(
+                    objectKeyGenerator: storageContext.objectKeyGenerator
+                )
         }
         if !matchingProcessors.isEmpty {
             try await enqueueVariantGeneration(
@@ -169,7 +173,8 @@ public struct UseCases: Sendable {
     public func getAssetDetails(id: String) async throws -> MediaAssetDetail {
         try await database.withConnection { connection in
             try await MediaAssetDatabaseQueries(
-                context: .init(connection: connection)
+                context: .init(connection: connection),
+                objectKeyGenerator: storageContext.objectKeyGenerator
             )
             .find(id: id)
         }
@@ -180,15 +185,26 @@ public struct UseCases: Sendable {
     ) {
         let asset = try await database.withConnection { connection in
             try await MediaAssetDatabaseQueries(
-                context: .init(connection: connection)
+                context: .init(connection: connection),
+                objectKeyGenerator: storageContext.objectKeyGenerator
             )
             .find(id: assetId)
         }
-        return (
-            try await MediaStorageData.download(
-                from: storage,
-                key: storageKeyShard.physicalKey(for: objectKey(for: asset))
+        let sequence = try await storageContext.storage.download(
+            key: try MediaAssetStorageObject.storageKey(
+                assetID: asset.id,
+                key: "original",
+                extension: asset.extension,
+                objectKeyGenerator: storageContext.objectKeyGenerator
             ),
+            range: nil
+        )
+        var data = Data()
+        for try await buffer in sequence {
+            data.append(contentsOf: buffer.readableBytesView)
+        }
+        return (
+            data,
             asset.contentType, "\(asset.name).\(asset.extension)",
             asset.slugPath
         )
@@ -197,23 +213,49 @@ public struct UseCases: Sendable {
     public func readVariantFile(assetId: String, variantName: String)
         async throws -> (data: Data, type: String, filename: String)
     {
-        let variant = try await database.withConnection { connection in
+        let stored = try await database.withConnection { connection in
             let repo = MediaAssetNodeFileVariantDatabaseRepository(
                 context: .init(connection: connection, idGenerator: idGenerator)
             )
+            let definitions = try await MediaVariantDatabaseRepository(
+                context: .init(connection: connection, idGenerator: idGenerator)
+            )
+            .list()
             guard
+                let definition = definitions.first(where: {
+                    $0.key == variantName
+                }),
                 let value = try await repo.list(nodeId: assetId)
-                    .first(where: { $0.name == variantName })
+                    .first(where: { $0.variantId == definition.id })
             else { throw RepositoryError.notFound }
-            return value
+            let objectRepository = MediaAssetStorageObjectDatabaseRepository(
+                context: .init(connection: connection, idGenerator: idGenerator)
+            )
+            guard
+                let object = try await objectRepository.find(
+                    storageObjectId: value.storageObjectId
+                )
+            else { throw RepositoryError.notFound }
+            return (value, definition, object)
+        }
+        let objectKey = try MediaAssetStorageObject.storageKey(
+            assetID: assetId,
+            key: stored.2.key,
+            extension: stored.2.extension,
+            objectKeyGenerator: storageContext.objectKeyGenerator
+        )
+        let sequence = try await storageContext.storage.download(
+            key: objectKey,
+            range: nil
+        )
+        var data = Data()
+        for try await buffer in sequence {
+            data.append(contentsOf: buffer.readableBytesView)
         }
         return (
-            try await MediaStorageData.download(
-                from: storage,
-                key: storageKeyShard.physicalKey(for: variant.objectKey)
-            ),
-            mediaType(for: variant.extension),
-            "\(variant.name).\(variant.extension)"
+            data,
+            stored.2.contentType,
+            "\(stored.1.key).\(stored.2.extension)"
         )
     }
 
@@ -232,47 +274,58 @@ public struct UseCases: Sendable {
                     )
                 )
                 .list()
-                .map { ($0.id, $0.key) }
+                .map { ($0.id, $0) }
             )
             guard
-                try await MediaAssetNodeFileDatabaseRepository(
+                let asset = try await MediaAssetNodeFileDatabaseRepository(
                     context: .init(
                         connection: connection,
                         idGenerator: idGenerator
                     )
                 )
-                .find(id: assetId) != nil
+                .find(id: assetId)
             else { throw RepositoryError.notFound }
+            let objects = try await MediaAssetStorageObjectDatabaseRepository(
+                context: .init(connection: connection, idGenerator: idGenerator)
+            )
+            .list(assetNodeFileIds: [assetId])
+            let objectsByID = Dictionary(
+                uniqueKeysWithValues: objects.map { ($0.id, $0) }
+            )
             return try await repo.list(nodeId: assetId)
-                .map {
-                    .init(
+                .compactMap { relation -> AssociatedVariantFile? in
+                    guard
+                        let definition = variantDefinitions[relation.variantId],
+                        let object = objectsByID[relation.storageObjectId]
+                    else { return nil }
+                    return AssociatedVariantFile(
                         assetId: assetId,
-                        variantId: $0.variantId,
-                        key: variantDefinitions[$0.variantId] ?? $0.name,
-                        name: $0.name,
-                        extension: $0.extension,
-                        objectKey: $0.objectKey
+                        slugPath: asset.slugPath,
+                        filename: asset.name,
+                        variantId: relation.variantId,
+                        key: definition.key,
+                        name: definition.name,
+                        url: try mediaVariantPublicURL(
+                            assetId: assetId,
+                            slugPath: asset.slugPath,
+                            filename: asset.name,
+                            variantKey: definition.key,
+                            extension: object.extension,
+                            objectKeyGenerator: storageContext
+                                .objectKeyGenerator
+                        ),
+                        extension: object.extension,
+                        objectKey:
+                            try MediaAssetStorageObject.storageKey(
+                                assetID: assetId,
+                                key: object.key,
+                                extension: object.extension,
+                                objectKeyGenerator: storageContext
+                                    .objectKeyGenerator
+                            )
                     )
                 }
         }
     }
 
-    private func objectKey(for asset: MediaAssetDetail) -> String {
-        MediaStorageObjectKey.original(
-            assetID: asset.id,
-            fileExtension: asset.extension
-        )
-    }
-}
-
-private func mediaType(for extension: String) -> String {
-    switch `extension`.lowercased() {
-    case "jpg", "jpeg": "image/jpeg"
-    case "png": "image/png"
-    case "gif": "image/gif"
-    case "webp": "image/webp"
-    case "pdf": "application/pdf"
-    case "mp4": "video/mp4"
-    default: "application/octet-stream"
-    }
 }

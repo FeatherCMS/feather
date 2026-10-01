@@ -4,11 +4,11 @@ import FeatherOpenAPIGenerator
 protocol AccountCreateOperation: BearerProtectedOperation {}
 
 extension AccountCreateOperation {
-    var tags: [TagRepresentable] { [AccountCreateTag()] }
+    var tags: [any TagRepresentable] { [AccountCreateTag()] }
 }
 
 struct AccountCreateOperationDefinition: AccountCreateOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AccountCreateRequestBody().reference()
     }
 

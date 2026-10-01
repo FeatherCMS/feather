@@ -1,11 +1,11 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 public protocol RedirectRuleOperation: OperationRepresentable {}
 
 struct RedirectRuleGetOperation: RedirectRuleOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [RedirectSourceParameter().reference()]
     }
 

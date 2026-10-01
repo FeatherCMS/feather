@@ -1,6 +1,7 @@
 public import FeatherApplication
 public import FeatherContracts
-public import FeatherStorage
+public import FeatherDomain
+import FeatherStorage
 import MediaContracts
 import MediaDomain
 
@@ -8,19 +9,16 @@ public struct RemoveMediaAsset: UseCase {
     struct Action: PermissionAction { let key = MediaPermissions.Assets.delete }
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<WriteMedia>
-    let storage: any StorageClient
-    let storageKeyShard: MediaStorageKeyShard
+    let storageContext: StorageContext
 
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteMedia>,
-        storage: any StorageClient,
-        storageKeyShard: MediaStorageKeyShard = .init()
+        storageContext: StorageContext
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
-        self.storage = storage
-        self.storageKeyShard = storageKeyShard
+        self.storageContext = storageContext
     }
 
     public struct Input: DTO {
@@ -50,28 +48,30 @@ public struct RemoveMediaAsset: UseCase {
             for asset in try await scope.assets.list(
                 folderIds: Array(folders.keys)
             ) { assets[asset.id] = asset }
-            var variants: [MediaAssetNodeFileVariant] = []
+            var storageObjects: [Snapshot.StorageObject] = []
             for asset in assets.values {
-                variants.append(
-                    contentsOf: try await scope.variants.list(nodeId: asset.id)
+                storageObjects.append(
+                    contentsOf: try await scope.storageObjects
+                        .list(
+                            assetNodeFileIds: [asset.id]
+                        )
+                        .map { .init(assetId: asset.id, object: $0) }
                 )
             }
             return Snapshot(
                 assets: Array(assets.values),
                 folders: Array(folders.values),
-                variants: variants
+                storageObjects: storageObjects
             )
         }
-        for asset in snapshot.assets {
-            _ = try? await MediaStorageData.delete(
-                from: storage,
-                key: storageKeyShard.physicalKey(for: asset.objectKey)
-            )
-        }
-        for variant in snapshot.variants {
-            _ = try? await MediaStorageData.delete(
-                from: storage,
-                key: storageKeyShard.physicalKey(for: variant.objectKey)
+        for storageObject in snapshot.storageObjects {
+            try? await storageContext.storage.delete(
+                key: try MediaAssetStorageObject.storageKey(
+                    assetID: storageObject.assetId,
+                    key: storageObject.object.key,
+                    extension: storageObject.object.extension,
+                    objectKeyGenerator: storageContext.objectKeyGenerator
+                )
             )
         }
         return try await transaction.run { scope in
@@ -82,17 +82,12 @@ public struct RemoveMediaAsset: UseCase {
                     sizeDelta: -asset.sizeBytes,
                     assetCountDelta: -1
                 )
-                try await scope.variants.deleteAll(nodeId: asset.id)
             }
             let assetIds = try await scope.assets.delete(
                 ids: snapshot.assets.map(\.id)
             )
             let folderIds = try await scope.folders.delete(
                 ids: snapshot.folders.map(\.id)
-            )
-            _ = try await scope.storageObjects.delete(
-                ids: snapshot.variants.map(\.storageObjectId)
-                    + snapshot.assets.map(\.storageObjectId)
             )
             return folderIds + assetIds
         }
@@ -101,9 +96,14 @@ public struct RemoveMediaAsset: UseCase {
 
 extension RemoveMediaAsset {
     fileprivate struct Snapshot: Sendable {
+        struct StorageObject: Sendable {
+            let assetId: String
+            let object: MediaAssetStorageObject
+        }
+
         let assets: [MediaAssetNodeFile]
         let folders: [MediaAssetNodeFolder]
-        let variants: [MediaAssetNodeFileVariant]
+        let storageObjects: [StorageObject]
     }
     fileprivate func adjustFolderAggregates(
         folders: any MediaAssetNodeFolderRepository,

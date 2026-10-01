@@ -1,13 +1,13 @@
 import FeatherOpenAPI
 
 struct NewsletterCampaignPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { NewsletterCampaignListOperation() }
-    var post: OperationRepresentable? { NewsletterCampaignCreateOperation() }
-    var delete: OperationRepresentable? {
+    var get: (any OperationRepresentable)? { NewsletterCampaignListOperation() }
+    var post: (any OperationRepresentable)? { NewsletterCampaignCreateOperation() }
+    var delete: (any OperationRepresentable)? {
         NewsletterCampaignRemoveOperation()
     }
 }
 struct NewsletterCampaignIDPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { NewsletterCampaignGetOperation() }
-    var patch: OperationRepresentable? { NewsletterCampaignUpdateOperation() }
+    var get: (any OperationRepresentable)? { NewsletterCampaignGetOperation() }
+    var patch: (any OperationRepresentable)? { NewsletterCampaignUpdateOperation() }
 }

@@ -1,5 +1,5 @@
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 import WebSharedOpenAPIGenerator
 
@@ -7,14 +7,14 @@ public protocol WebPageOperation: BearerProtectedOperation {
 }
 
 extension WebPageOperation {
-    public var tags: [TagRepresentable] { [WebPageTag()] }
+    public var tags: [any TagRepresentable] { [WebPageTag()] }
 }
 
 public protocol WebPageIDOperation: WebPageOperation {
 }
 
 extension WebPageIDOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             WebPageIdParameter().reference()
         ]
@@ -22,7 +22,7 @@ extension WebPageIDOperation {
 }
 
 struct WebPageCreateOperation: WebPageOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         WebPageRequestBody().reference()
     }
 
@@ -55,7 +55,7 @@ struct WebPageSearchOperation: WebPageOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -76,7 +76,7 @@ struct WebPageGetOperation: WebPageIDOperation {
 }
 
 struct WebPageUpdateOperation: WebPageIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         WebPageUpdateRequestBody().reference()
     }
 
@@ -89,7 +89,7 @@ struct WebPageUpdateOperation: WebPageIDOperation {
 }
 
 struct WebPagePatchOperation: WebPageIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         WebPagePatchRequestBody().reference()
     }
 

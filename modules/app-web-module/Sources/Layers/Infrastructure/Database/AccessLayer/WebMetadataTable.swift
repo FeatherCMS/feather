@@ -209,6 +209,25 @@ struct WebMetadataTable {
         }
     }
 
+    func listPublic() async throws -> [Row] {
+        try await connection.run(
+            query: """
+                SELECT *
+                FROM web_metadata
+                WHERE status = 'published'
+                    AND publication_date <= NOW()
+                    AND (
+                        expiration_date IS NULL
+                        OR expiration_date > NOW()
+                    )
+                    AND no_index = FALSE
+                ORDER BY slug ASC, id ASC;
+                """
+        ) { sequence in
+            try await sequence.collect().map { try Row(from: $0) }
+        }
+    }
+
     func resolve(
         referenceType: String,
         referenceIDs: [String]

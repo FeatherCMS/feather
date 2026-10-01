@@ -1,6 +1,6 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
+public import OpenAPIKit30
 
 public struct WebPageIdField: StringSchemaRepresentable {
     public var example: String? = "wp_home"
@@ -21,7 +21,7 @@ public struct WebPageExcerptField: StringSchemaRepresentable {
 }
 
 public struct WebPageImageURLField: StringSchemaRepresentable {
-    public var example: String? = "/media/assets/homepage.png"
+    public var example: String? = "/public/12/34/56789/originals/homepage.png"
 
     public init() {}
 }

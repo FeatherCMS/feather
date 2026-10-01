@@ -1,6 +1,6 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
+public import OpenAPIKit30
 
 public struct WebSiteSettingsTitleField: StringSchemaRepresentable {
     public var example: String? = "Example Site"
@@ -39,7 +39,7 @@ public struct WebSiteSettingsLogoDarkField: StringSchemaRepresentable {
 }
 
 public struct WebSiteSettingsMetaImageField: StringSchemaRepresentable {
-    public var example: String? = "/media/assets/default-meta-image.webp"
+    public var example: String? = "/public/12/34/56789/originals/default-meta-image.webp"
 
     public init() {}
 }

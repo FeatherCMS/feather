@@ -4,11 +4,11 @@ import OpenAPIKit30
 
 protocol NewsletterCampaignOperation: BearerProtectedOperation {}
 extension NewsletterCampaignOperation {
-    var tags: [TagRepresentable] { [NewsletterTag()] }
+    var tags: [any TagRepresentable] { [NewsletterTag()] }
 }
 protocol NewsletterCampaignKeyOperation: NewsletterCampaignOperation {}
 extension NewsletterCampaignKeyOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [NewsletterCampaignKeyParameter().reference()]
     }
 }
@@ -19,7 +19,7 @@ struct NewsletterCampaignListOperation: NewsletterCampaignOperation {
     }
 }
 struct NewsletterCampaignCreateOperation: NewsletterCampaignOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         NewsletterCampaignCreateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -35,7 +35,7 @@ struct NewsletterCampaignGetOperation: NewsletterCampaignKeyOperation {
     }
 }
 struct NewsletterCampaignUpdateOperation: NewsletterCampaignKeyOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         NewsletterCampaignPatchRequestBody().reference()
     }
     var responseMap: ResponseMap {

@@ -1,5 +1,5 @@
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 import WebSharedOpenAPIGenerator
 
@@ -7,14 +7,14 @@ public protocol WebMetadataOperation: BearerProtectedOperation {
 }
 
 extension WebMetadataOperation {
-    public var tags: [TagRepresentable] { [WebMetadataTag()] }
+    public var tags: [any TagRepresentable] { [WebMetadataTag()] }
 }
 
 public protocol WebMetadataIDOperation: WebMetadataOperation {
 }
 
 extension WebMetadataIDOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             WebMetadataIdParameter().reference()
         ]
@@ -22,7 +22,7 @@ extension WebMetadataIDOperation {
 }
 
 struct WebMetadataCreateOperation: WebMetadataOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         WebMetadataRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -63,7 +63,7 @@ struct WebMetadataSearchOperation: WebMetadataOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -75,7 +75,7 @@ struct WebMetadataSearchOperation: WebMetadataOperation {
 }
 
 struct WebMetadataResolveOperation: WebMetadataOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         WebMetadataResolveRequestBody().reference()
     }
 
@@ -99,7 +99,7 @@ struct WebMetadataGetOperation: WebMetadataIDOperation {
 }
 
 struct WebMetadataUpdateOperation: WebMetadataIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         WebMetadataUpdateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -111,7 +111,7 @@ struct WebMetadataUpdateOperation: WebMetadataIDOperation {
 }
 
 struct WebMetadataPatchOperation: WebMetadataIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         WebMetadataPatchRequestBody().reference()
     }
     var responseMap: ResponseMap {

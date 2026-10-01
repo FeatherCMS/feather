@@ -1,20 +1,20 @@
 import AccountSharedOpenAPIGenerator
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 public protocol AccountInvitationOperation: BearerProtectedOperation {
 }
 
 extension AccountInvitationOperation {
-    public var tags: [TagRepresentable] { [AccountInvitationTag()] }
+    public var tags: [any TagRepresentable] { [AccountInvitationTag()] }
 }
 
 public protocol AccountInvitationIDOperation: AccountInvitationOperation {
 }
 
 extension AccountInvitationIDOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             AccountInvitationIdParameter().reference()
         ]
@@ -22,7 +22,7 @@ extension AccountInvitationIDOperation {
 }
 
 struct AccountInvitationCreateOperation: AccountInvitationOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AccountInvitationRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -54,7 +54,7 @@ struct AccountInvitationSearchOperation: AccountInvitationOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -80,7 +80,7 @@ struct AccountInvitationGetOperation: AccountInvitationIDOperation {
 }
 
 struct AccountInvitationUpdateOperation: AccountInvitationIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AccountInvitationUpdateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -92,7 +92,7 @@ struct AccountInvitationUpdateOperation: AccountInvitationIDOperation {
 }
 
 struct AccountInvitationPatchOperation: AccountInvitationIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AccountInvitationPatchRequestBody().reference()
     }
     var responseMap: ResponseMap {

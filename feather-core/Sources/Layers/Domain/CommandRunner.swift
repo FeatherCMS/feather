@@ -1,10 +1,4 @@
-//
-//  MediaShellRunner.swift
-//  app-media-module
-//
-//  Created by Binary Birds on 2026. 06. 18.
-
-public struct MediaCommandResult: Sendable {
+public struct CommandResult: Sendable {
     public let exitCode: Int32
     public let standardOutput: String?
     public let standardError: String?
@@ -20,8 +14,6 @@ public struct MediaCommandResult: Sendable {
     }
 }
 
-public protocol MediaShellRunner: Sendable {
-    func run(
-        command: String
-    ) async throws -> MediaCommandResult
+public protocol CommandRunner: Sendable {
+    func run(command: String) async throws -> CommandResult
 }

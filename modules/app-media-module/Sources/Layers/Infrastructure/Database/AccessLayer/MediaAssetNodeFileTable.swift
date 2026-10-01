@@ -6,15 +6,14 @@ import struct Foundation.Date
 extension MediaAssetNodeFileTable.Row {
     init(from row: any DatabaseRow) throws {
         id = try row.decode(column: "id", as: String.self)
-        folderId = try row.decode(column: "folder_id", as: String?.self)
-        name = try row.decode(column: "name", as: String.self)
-        slug = try row.decode(column: "slug", as: String.self)
-        slugPath = try row.decode(column: "slug_path", as: String.self)
         storageObjectId = try row.decode(
             column: "storage_object_id",
             as: String.self
         )
-        objectKey = try row.decode(column: "object_key", as: String.self)
+        folderId = try row.decode(column: "folder_id", as: String?.self)
+        name = try row.decode(column: "name", as: String.self)
+        slug = try row.decode(column: "slug", as: String.self)
+        slugPath = try row.decode(column: "slug_path", as: String.self)
         `extension` = try row.decode(column: "extension", as: String.self)
         contentType = try row.decode(column: "content_type", as: String.self)
         sizeBytes = try row.decode(column: "size_bytes", as: Int64.self)
@@ -50,7 +49,6 @@ struct MediaAssetNodeFileTable {
         let slug: String
         let slugPath: String
         let storageObjectId: String
-        let objectKey: String
         let `extension`: String
         let contentType: String
         let sizeBytes: Int64
@@ -65,7 +63,7 @@ struct MediaAssetNodeFileTable {
     let connection: any DatabaseConnection
 
     func create(row: Row.Create) async throws -> Row {
-        _ = try await MediaAssetNodeTable(connection: connection)
+        let node = try await MediaAssetNodeTable(connection: connection)
             .create(
                 row: .init(
                     id: row.id,
@@ -78,18 +76,29 @@ struct MediaAssetNodeFileTable {
         _ = try await connection.run(
             query: #"""
                 INSERT INTO media_asset_node_file (
-                    node_id, storage_object_id, extension, content_type,
-                    size_bytes, status, title, alt_text
+                    asset_node_id, storage_object_id, status, title, alt_text
                 ) VALUES (
-                    \#(row.id), \#(row.storageObjectId), \#(row.extension), \#(row.contentType),
-                    \#(Int(row.sizeBytes)), \#(row.status), \#(row.title), \#(row.altText)
+                    \#(row.id), \#(row.storageObjectId), \#(row.status), \#(row.title), \#(row.altText)
                 );
                 """#
         ) { _ in }
-        guard let result = try await find(id: row.id) else {
-            throw RepositoryError.notFound
-        }
-        return result
+        return Row(
+            id: node.id,
+            folderId: node.parentId,
+            name: node.name,
+            slug: node.slug,
+            slugPath: node.slugPath,
+            storageObjectId: row.storageObjectId,
+            extension: row.extension,
+            contentType: row.contentType,
+            sizeBytes: row.sizeBytes,
+            status: row.status,
+            title: row.title,
+            altText: row.altText,
+            createdAt: node.createdAt,
+            updatedAt: node.updatedAt,
+            deletedAt: node.deletedAt
+        )
     }
 
     func find(id: String) async throws -> Row? {
@@ -108,10 +117,14 @@ struct MediaAssetNodeFileTable {
     }
 
     func find(slugPath: String) async throws -> Row? {
-        try await connection.run(
+        let absoluteSlug = MediaAssetNodeSlugPath.parent(of: slugPath)
+        let slug = MediaAssetNodeSlugPath.slug(of: slugPath)
+        return try await connection.run(
             query: #"""
                 \#(unescaped: mediaAssetNodeFileSelectPrefix)
-                WHERE n.slug_path = \#(slugPath) AND n.deleted_at IS NULL
+                WHERE n.absolute_slug = \#(absoluteSlug)
+                  AND n.slug = \#(slug)
+                  AND n.deleted_at IS NULL
                 LIMIT 1;
                 """#
         ) { sequence in
@@ -150,7 +163,7 @@ struct MediaAssetNodeFileTable {
             query: #"""
                 UPDATE media_asset_node_file
                 SET status = \#(row.status), title = \#(row.title), alt_text = \#(row.altText)
-                WHERE node_id = \#(row.id);
+                WHERE asset_node_id = \#(row.id);
                 """#
         ) { _ in }
         guard let result = try await find(id: row.id) else {
@@ -162,18 +175,38 @@ struct MediaAssetNodeFileTable {
     func updateStatus(id: String, status: String) async throws {
         try await connection.run(
             query:
-                #"UPDATE media_asset_node_file SET status = \#(status) WHERE node_id = \#(id);"#
+                #"UPDATE media_asset_node_file SET status = \#(status) WHERE asset_node_id = \#(id);"#
         ) { _ in }
     }
 
     func delete(ids: [String]) async throws -> [String] {
         guard !ids.isEmpty else { return [] }
         let values = mediaAssetNodeFileSQLValues(ids)
-        return try await connection.run(
+        let storageObjectIds = try await connection.run(
+            query: #"""
+                SELECT storage_object_id AS id
+                FROM media_asset_node_file
+                WHERE asset_node_id IN (\#(unescaped: values))
+                UNION
+                SELECT storage_object_id AS id
+                FROM media_asset_node_file_variant
+                WHERE asset_node_file_id IN (\#(unescaped: values));
+                """#
+        ) { sequence in
+            try await sequence.collect()
+                .map {
+                    try $0.decode(column: "id", as: String.self)
+                }
+        }
+        _ = try await connection.run(
+            query:
+                #"DELETE FROM media_asset_node_file_variant WHERE asset_node_file_id IN (\#(unescaped: values));"#
+        ) { _ in }
+        let deletedIds = try await connection.run(
             query: #"""
                 DELETE FROM media_asset_node
                 WHERE id IN (\#(unescaped: values))
-                  AND EXISTS (SELECT 1 FROM media_asset_node_file f WHERE f.node_id = media_asset_node.id)
+                  AND EXISTS (SELECT 1 FROM media_asset_node_file f WHERE f.asset_node_id = media_asset_node.id)
                 RETURNING id;
                 """#
         ) { sequence in
@@ -182,6 +215,14 @@ struct MediaAssetNodeFileTable {
                     try $0.decode(column: "id", as: String.self)
                 }
         }
+        if !storageObjectIds.isEmpty {
+            let storageValues = mediaAssetNodeFileSQLValues(storageObjectIds)
+            _ = try await connection.run(
+                query:
+                    #"DELETE FROM media_storage_object WHERE id IN (\#(unescaped: storageValues));"#
+            ) { _ in }
+        }
+        return deletedIds
     }
 
     func list(
@@ -201,8 +242,8 @@ struct MediaAssetNodeFileTable {
                     OR LOWER(n.id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(n.name) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(n.slug) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(n.slug_path) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(f.extension) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(\#(unescaped: MediaAssetNodeSlugPath.sql)) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(o.extension) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(f.status) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(COALESCE(f.title, '')) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(COALESCE(f.alt_text, '')) LIKE '%' || LOWER(\#(search ?? "")) || '%'
@@ -221,14 +262,14 @@ struct MediaAssetNodeFileTable {
             query: #"""
                 SELECT COUNT(*) AS count
                 FROM media_asset_node n
-                JOIN media_asset_node_file f ON f.node_id = n.id
+                JOIN media_asset_node_file f ON f.asset_node_id = n.id
                 WHERE n.deleted_at IS NULL
                   AND ((\#(parentId == nil) AND n.parent_id IS NULL) OR n.parent_id = \#(parentId))
                   AND (
                     \#(search == nil)
                     OR LOWER(n.id) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                     OR LOWER(n.name) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(n.slug_path) LIKE '%' || LOWER(\#(search ?? "")) || '%'
+                    OR LOWER(\#(unescaped: MediaAssetNodeSlugPath.sql)) LIKE '%' || LOWER(\#(search ?? "")) || '%'
                   );
                 """#
         ) { sequence in
@@ -258,12 +299,11 @@ private let mediaAssetNodeFileSelectPrefix = #"""
         n.parent_id AS folder_id,
         n.name,
         n.slug,
-        n.slug_path,
+        \#(MediaAssetNodeSlugPath.sql) AS slug_path,
         f.storage_object_id,
-        o.object_key,
-        f.extension,
-        f.content_type,
-        f.size_bytes,
+        o.extension,
+        o.content_type,
+        o.size_in_bytes AS size_bytes,
         f.status,
         f.title,
         f.alt_text,
@@ -271,8 +311,8 @@ private let mediaAssetNodeFileSelectPrefix = #"""
         n.updated_at,
         n.deleted_at
     FROM media_asset_node n
-    JOIN media_asset_node_file f ON f.node_id = n.id
-    JOIN media_asset_storage_object o ON o.id = f.storage_object_id
+    JOIN media_asset_node_file f ON f.asset_node_id = n.id
+    JOIN media_storage_object o ON o.id = f.storage_object_id AND o.key = 'original'
     """#
 
 private func mediaAssetNodeFileSQLValues(_ values: [String]) -> String {

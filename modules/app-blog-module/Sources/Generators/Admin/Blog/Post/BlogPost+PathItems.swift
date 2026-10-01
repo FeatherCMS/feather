@@ -1,20 +1,20 @@
 import FeatherOpenAPI
 
 struct BlogPostPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { BlogPostCreateOperation() }
-    var delete: OperationRepresentable? { BlogPostRemoveOperation() }
+    var post: (any OperationRepresentable)? { BlogPostCreateOperation() }
+    var delete: (any OperationRepresentable)? { BlogPostRemoveOperation() }
 }
 
 struct BlogPostSearchPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { BlogPostSearchOperation() }
+    var post: (any OperationRepresentable)? { BlogPostSearchOperation() }
 }
 
 struct BlogPostListPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { BlogPostListOperation() }
+    var get: (any OperationRepresentable)? { BlogPostListOperation() }
 }
 
 struct BlogPostIdPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { BlogPostGetOperation() }
-    var put: OperationRepresentable? { BlogPostUpdateOperation() }
-    var patch: OperationRepresentable? { BlogPostPatchOperation() }
+    var get: (any OperationRepresentable)? { BlogPostGetOperation() }
+    var put: (any OperationRepresentable)? { BlogPostUpdateOperation() }
+    var patch: (any OperationRepresentable)? { BlogPostPatchOperation() }
 }

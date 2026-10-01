@@ -1,9 +1,9 @@
 import FeatherOpenAPI
 
 struct SystemJobPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { SystemJobListOperation() }
+    var get: (any OperationRepresentable)? { SystemJobListOperation() }
 }
 
 struct SystemJobIDPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { SystemJobGetOperation() }
+    var get: (any OperationRepresentable)? { SystemJobGetOperation() }
 }

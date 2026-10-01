@@ -8,8 +8,8 @@
 import FeatherOpenAPI
 
 struct UserIdentitySessionPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { UserIdentitySessionListOperation() }
-    var delete: OperationRepresentable? {
+    var get: (any OperationRepresentable)? { UserIdentitySessionListOperation() }
+    var delete: (any OperationRepresentable)? {
         UserIdentitySessionRemoveOperation()
     }
 }

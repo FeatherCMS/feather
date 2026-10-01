@@ -2,6 +2,7 @@ import BlogContracts
 public import FeatherContracts
 import SystemApplication
 import WebContracts
+import WebDomain
 
 public enum EventHandlers {
 
@@ -64,7 +65,7 @@ public enum EventHandlers {
 
         registry.register(
             event: WebMenuItemProvider.self,
-            context: WebEventContext.self
+            context: WebSeedEventContext.self
         ) { event, _ in
             guard event.menuKey == "main" else { return [] }
             return [
@@ -87,28 +88,8 @@ public enum EventHandlers {
         }
 
         registry.register(
-            event: WebMetadataReferenceTypeOptionProvider.self,
-            context: WebEventContext.self
-        ) { _, _ in
-            [
-                .init(
-                    value: "blog.post",
-                    title: "Blog post"
-                ),
-                .init(
-                    value: "blog.author",
-                    title: "Blog author"
-                ),
-                .init(
-                    value: "blog.tag",
-                    title: "Blog tag"
-                ),
-            ]
-        }
-
-        registry.register(
             event: WebPageProvider.self,
-            context: WebEventContext.self
+            context: WebSeedEventContext.self
         ) { _, _ in
             [
                 .init(

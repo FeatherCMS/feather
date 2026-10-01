@@ -1,5 +1,6 @@
 public import FeatherApplication
 public import FeatherContracts
+public import FeatherDomain
 public import FeatherStorage
 public import Foundation
 import MediaContracts
@@ -17,19 +18,16 @@ public struct CreateMediaAsset: UseCase {
 
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<WriteMedia>
-    let storage: any StorageClient
-    let storageKeyShard: MediaStorageKeyShard
+    let storageContext: StorageContext
 
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteMedia>,
-        storage: any StorageClient,
-        storageKeyShard: MediaStorageKeyShard = .init()
+        storageContext: StorageContext
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
-        self.storage = storage
-        self.storageKeyShard = storageKeyShard
+        self.storageContext = storageContext
     }
 
     public struct Input: DTO {
@@ -115,12 +113,14 @@ public struct CreateMediaAsset: UseCase {
             }
             return slugPath
         }
-        let objectKey = MediaStorageObjectKey.original(
+        let storageObjectKey = try MediaAssetStorageObject.storageKey(
             assetID: storageIdentity.nodeId,
-            fileExtension: file.extension
+            key: "original",
+            extension: file.extension,
+            objectKeyGenerator: storageContext.objectKeyGenerator
         )
-        try await storage.upload(
-            key: storageKeyShard.physicalKey(for: objectKey),
+        try await storageContext.storage.upload(
+            key: storageObjectKey,
             sequence: input.content
         )
 
@@ -133,23 +133,29 @@ public struct CreateMediaAsset: UseCase {
                 else {
                     parent = nil
                 }
-                let storageObject = try await scope.storageObjects.insert(
-                    MediaAssetStorageObject.create(objectKey: objectKey)
-                )
+                let originalStorageObject = try await scope.storageObjects
+                    .insert(
+                        MediaAssetStorageObject.create(
+                            key: "original",
+                            extension: file.extension,
+                            contentType: contentType(for: file.extension),
+                            sizeInBytes: input.contentLength
+                        )
+                    )
                 let asset = try await scope.assets.insert(
                     MediaAssetNodeFile.create(
                         folderId: parent?.id,
                         name: file.name,
                         slug: file.slug,
                         slugPath: slugPath,
+                        storageObjectId: originalStorageObject.id,
                         extension: file.extension,
                         contentType: contentType(for: file.extension),
                         sizeBytes: input.contentLength,
                         title: input.title,
                         altText: input.altText
                     ),
-                    storageIdentity: storageIdentity,
-                    storageObjectId: storageObject.id
+                    storageIdentity: storageIdentity
                 )
                 try await adjustFolderAggregates(
                     folders: scope.folders,
@@ -159,13 +165,12 @@ public struct CreateMediaAsset: UseCase {
                 )
                 return asset
             }
-            return asset.asDetail
+            return try asset.asDetail(
+                objectKeyGenerator: storageContext.objectKeyGenerator
+            )
         }
         catch {
-            _ = try? await MediaStorageData.delete(
-                from: storage,
-                key: storageKeyShard.physicalKey(for: objectKey)
-            )
+            try? await storageContext.storage.delete(key: storageObjectKey)
             throw error
         }
     }

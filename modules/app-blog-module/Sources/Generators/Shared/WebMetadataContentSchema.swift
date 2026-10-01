@@ -1,6 +1,6 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
+public import OpenAPIKit30
 
 public struct WebMetadataSlugField: StringSchemaRepresentable {
     public var example: String? = "homepage"
@@ -34,7 +34,7 @@ public struct WebMetadataExcerptField: StringSchemaRepresentable {
 }
 
 public struct WebMetadataImageURLField: StringSchemaRepresentable {
-    public var example: String? = "/media/assets/example.png"
+    public var example: String? = "/public/12/34/56789/originals/example.png"
     public init() {}
 }
 

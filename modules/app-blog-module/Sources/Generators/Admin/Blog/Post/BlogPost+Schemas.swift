@@ -23,13 +23,13 @@ struct BlogPostImageAssetIdField: StringSchemaRepresentable {
 }
 
 struct BlogPostAuthorIdsField: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         BlogAuthorIdField().reference()
     }
 }
 
 struct BlogPostTagIdsField: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         BlogTagIdField().reference()
     }
 }
@@ -103,5 +103,5 @@ struct BlogPostListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct BlogPostListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? { BlogPostListItemSchema().reference() }
+    var items: (any SchemaRepresentable)? { BlogPostListItemSchema().reference() }
 }

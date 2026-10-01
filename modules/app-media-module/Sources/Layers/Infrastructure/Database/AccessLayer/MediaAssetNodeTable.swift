@@ -49,7 +49,6 @@ struct MediaAssetNodeTable {
         let name: String
         let slug: String
         let slugPath: String
-        let objectKey: String?
         let `extension`: String?
         let contentType: String?
         let sizeBytes: Int64?
@@ -68,7 +67,6 @@ struct MediaAssetNodeTable {
             name = try row.decode(column: "name", as: String.self)
             slug = try row.decode(column: "slug", as: String.self)
             slugPath = try row.decode(column: "slug_path", as: String.self)
-            objectKey = try row.decode(column: "object_key", as: String?.self)
             `extension` = try row.decode(column: "extension", as: String?.self)
             contentType = try row.decode(
                 column: "content_type",
@@ -94,9 +92,10 @@ struct MediaAssetNodeTable {
         _ = try await connection.run(
             query: #"""
                 INSERT INTO media_asset_node (
-                    id, parent_id, name, slug, slug_path, created_at, updated_at
+                    id, parent_id, name, slug, absolute_slug, created_at, updated_at
                 ) VALUES (
-                    \#(row.id), \#(row.parentId), \#(row.name), \#(row.slug), \#(row.slugPath), NOW(), NOW()
+                    \#(row.id), \#(row.parentId), \#(row.name), \#(row.slug),
+                    \#(MediaAssetNodeSlugPath.parent(of: row.slugPath)), NOW(), NOW()
                 );
                 """#
         ) { _ in }
@@ -116,7 +115,7 @@ struct MediaAssetNodeTable {
                 SET parent_id = \#(row.parentId),
                     name = \#(row.name),
                     slug = \#(row.slug),
-                    slug_path = \#(row.slugPath),
+                    absolute_slug = \#(MediaAssetNodeSlugPath.parent(of: row.slugPath)),
                     updated_at = NOW()
                 WHERE id = \#(row.id) AND deleted_at IS NULL;
                 """#
@@ -125,9 +124,10 @@ struct MediaAssetNodeTable {
             _ = try await connection.run(
                 query: #"""
                     UPDATE media_asset_node
-                    SET slug_path = \#(row.slugPath) || SUBSTRING(slug_path FROM \#(old.slugPath.count + 1)),
-                        updated_at = NOW()
-                    WHERE slug_path LIKE \#(old.slugPath + "/%") AND deleted_at IS NULL;
+                    SET absolute_slug = \#(row.slugPath) || SUBSTRING(absolute_slug FROM \#(old.slugPath.count + 1)),
+                    updated_at = NOW()
+                    WHERE (absolute_slug = \#(old.slugPath) OR absolute_slug LIKE \#(old.slugPath + "/%"))
+                      AND deleted_at IS NULL;
                     """#
             ) { _ in }
         }
@@ -140,9 +140,10 @@ struct MediaAssetNodeTable {
     func find(id: String) async throws -> Row? {
         try await connection.run(
             query: #"""
-                SELECT id, parent_id, name, slug, slug_path,
+                SELECT id, parent_id, name, slug,
+                       \#(unescaped: MediaAssetNodeSlugPath.sql) AS slug_path,
                        created_at, updated_at, deleted_at
-                FROM media_asset_node
+                FROM media_asset_node n
                 WHERE id = \#(id) AND deleted_at IS NULL
                 LIMIT 1;
                 """#
@@ -155,12 +156,17 @@ struct MediaAssetNodeTable {
     }
 
     func find(slugPath: String) async throws -> Row? {
-        try await connection.run(
+        let absoluteSlug = MediaAssetNodeSlugPath.parent(of: slugPath)
+        let slug = MediaAssetNodeSlugPath.slug(of: slugPath)
+        return try await connection.run(
             query: #"""
-                SELECT id, parent_id, name, slug, slug_path,
+                SELECT id, parent_id, name, slug,
+                       \#(unescaped: MediaAssetNodeSlugPath.sql) AS slug_path,
                        created_at, updated_at, deleted_at
-                FROM media_asset_node
-                WHERE slug_path = \#(slugPath) AND deleted_at IS NULL
+                FROM media_asset_node n
+                WHERE absolute_slug = \#(absoluteSlug)
+                  AND slug = \#(slug)
+                  AND deleted_at IS NULL
                 LIMIT 1;
                 """#
         ) { sequence in
@@ -196,8 +202,9 @@ struct MediaAssetNodeTable {
         try await connection.run(
             query: #"""
                 WITH entries AS (
-                    SELECT 'folder' AS kind, 0 AS kind_rank, n.id, n.parent_id, n.name, n.slug, n.slug_path,
-                           NULL::text AS object_key, NULL::text AS extension, NULL::text AS content_type,
+                    SELECT 'folder' AS kind, 0 AS kind_rank, n.id, n.parent_id, n.name, n.slug,
+                           \#(unescaped: MediaAssetNodeSlugPath.sql) AS slug_path,
+                           NULL::text AS extension, NULL::text AS content_type,
                            NULL::bigint AS size_bytes, NULL::text AS status, NULL::text AS title, NULL::text AS alt_text,
                            (
                                SELECT COUNT(*)::integer
@@ -207,20 +214,21 @@ struct MediaAssetNodeTable {
                            ) AS asset_count,
                            f.total_size_bytes, n.created_at, n.updated_at
                     FROM media_asset_node n
-                    JOIN media_asset_node_folder f ON f.node_id = n.id
+                    JOIN media_asset_node_folder f ON f.asset_node_id = n.id
                     WHERE n.deleted_at IS NULL
                       AND ((\#(parentId == nil) AND n.parent_id IS NULL) OR n.parent_id = \#(parentId))
-                      AND (\#(search == nil) OR LOWER(n.name) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(n.slug_path) LIKE '%' || LOWER(\#(search ?? "")) || '%')
+                      AND (\#(search == nil) OR LOWER(n.name) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(\#(unescaped: MediaAssetNodeSlugPath.sql)) LIKE '%' || LOWER(\#(search ?? "")) || '%')
                     UNION ALL
-                    SELECT 'file' AS kind, 1 AS kind_rank, n.id, n.parent_id, n.name, n.slug, n.slug_path,
-                           o.object_key, f.extension, f.content_type, f.size_bytes, f.status, f.title, f.alt_text,
+                    SELECT 'file' AS kind, 1 AS kind_rank, n.id, n.parent_id, n.name, n.slug,
+                           \#(unescaped: MediaAssetNodeSlugPath.sql) AS slug_path,
+                           o.extension, o.content_type, o.size_in_bytes AS size_bytes, f.status, f.title, f.alt_text,
                            NULL::integer AS asset_count, NULL::bigint AS total_size_bytes, n.created_at, n.updated_at
                     FROM media_asset_node n
-                    JOIN media_asset_node_file f ON f.node_id = n.id
-                    JOIN media_asset_storage_object o ON o.id = f.storage_object_id
+                    JOIN media_asset_node_file f ON f.asset_node_id = n.id
+                    JOIN media_storage_object o ON o.id = f.storage_object_id AND o.key = 'original'
                     WHERE n.deleted_at IS NULL
                       AND ((\#(parentId == nil) AND n.parent_id IS NULL) OR n.parent_id = \#(parentId))
-                      AND (\#(search == nil) OR LOWER(n.id) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(n.name) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(n.slug_path) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(f.extension) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(f.status) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(COALESCE(f.title, '')) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(COALESCE(f.alt_text, '')) LIKE '%' || LOWER(\#(search ?? "")) || '%')
+                      AND (\#(search == nil) OR LOWER(n.id) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(n.name) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(\#(unescaped: MediaAssetNodeSlugPath.sql)) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(o.extension) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(f.status) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(COALESCE(f.title, '')) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(COALESCE(f.alt_text, '')) LIKE '%' || LOWER(\#(search ?? "")) || '%')
                 )
                 SELECT * FROM entries
                 ORDER BY \#(unescaped: orderBy)
@@ -238,7 +246,7 @@ struct MediaAssetNodeTable {
                 FROM media_asset_node n
                 WHERE n.deleted_at IS NULL
                   AND ((\#(parentId == nil) AND n.parent_id IS NULL) OR n.parent_id = \#(parentId))
-                  AND (\#(search == nil) OR LOWER(n.name) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(n.slug_path) LIKE '%' || LOWER(\#(search ?? "")) || '%');
+                  AND (\#(search == nil) OR LOWER(n.name) LIKE '%' || LOWER(\#(search ?? "")) || '%' OR LOWER(\#(unescaped: MediaAssetNodeSlugPath.sql)) LIKE '%' || LOWER(\#(search ?? "")) || '%');
                 """#
         ) { sequence in
             guard let row = try await sequence.collect().first else { return 0 }

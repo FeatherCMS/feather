@@ -5,7 +5,7 @@ import OpenAPIKit30
 protocol ContactFieldOperation: ContactFormOperation {}
 protocol ContactFieldIDOperation: ContactFieldOperation {}
 extension ContactFieldIDOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [FormFieldIdParameter().reference()]
     }
 }
@@ -16,7 +16,7 @@ struct ContactFieldListOperation: ContactFieldOperation {
     }
 }
 struct ContactFieldCreateOperation: ContactFieldOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         FormFieldCreateRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -32,7 +32,7 @@ struct ContactFieldGetOperation: ContactFieldIDOperation {
     }
 }
 struct ContactFieldUpdateOperation: ContactFieldIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         FormFieldPatchRequestBody().reference()
     }
     var responseMap: ResponseMap {

@@ -1,5 +1,5 @@
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 import WebSharedOpenAPIGenerator
 
@@ -7,14 +7,14 @@ public protocol WebMenuItemOperation: BearerProtectedOperation {
 }
 
 extension WebMenuItemOperation {
-    public var tags: [TagRepresentable] { [WebMenuItemTag()] }
+    public var tags: [any TagRepresentable] { [WebMenuItemTag()] }
 }
 
 public protocol WebMenuItemMenuOperation: WebMenuItemOperation {
 }
 
 extension WebMenuItemMenuOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             WebMenuItemMenuIdParameter().reference()
         ]
@@ -25,7 +25,7 @@ public protocol WebMenuItemIDOperation: WebMenuItemMenuOperation {
 }
 
 extension WebMenuItemIDOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             WebMenuItemMenuIdParameter().reference(),
             WebMenuItemIdParameter().reference(),
@@ -34,7 +34,7 @@ extension WebMenuItemIDOperation {
 }
 
 struct WebMenuItemCreateOperation: WebMenuItemMenuOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         WebMenuItemRequestBody().reference()
     }
 
@@ -70,7 +70,7 @@ struct WebMenuItemSearchOperation: WebMenuItemMenuOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -91,7 +91,7 @@ struct WebMenuItemGetOperation: WebMenuItemIDOperation {
 }
 
 struct WebMenuItemUpdateOperation: WebMenuItemIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         WebMenuItemUpdateRequestBody().reference()
     }
 
@@ -104,7 +104,7 @@ struct WebMenuItemUpdateOperation: WebMenuItemIDOperation {
 }
 
 struct WebMenuItemPatchOperation: WebMenuItemIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         WebMenuItemPatchRequestBody().reference()
     }
 

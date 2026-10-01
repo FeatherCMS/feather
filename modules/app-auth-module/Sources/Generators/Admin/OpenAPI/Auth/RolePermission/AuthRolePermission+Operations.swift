@@ -1,6 +1,6 @@
 import AuthSharedOpenAPIGenerator
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 import UserSharedOpenAPIGenerator
 
@@ -8,14 +8,14 @@ public protocol AuthRolePermissionOperation: BearerProtectedOperation {
 }
 
 extension AuthRolePermissionOperation {
-    public var tags: [TagRepresentable] { [AuthRolePermissionTag()] }
+    public var tags: [any TagRepresentable] { [AuthRolePermissionTag()] }
 }
 
 public protocol AuthRolePermissionIdOperation: AuthRolePermissionOperation {
 }
 
 extension AuthRolePermissionIdOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             AuthRolePermissionRoleIdParameter().reference(),
             AuthRolePermissionPermissionIdParameter().reference(),
@@ -24,7 +24,7 @@ extension AuthRolePermissionIdOperation {
 }
 
 struct AuthRolePermissionCreateOperation: AuthRolePermissionOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AuthRolePermissionRequestBody().reference()
     }
 
@@ -47,7 +47,7 @@ struct AuthRolePermissionSearchOperation: AuthRolePermissionOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 

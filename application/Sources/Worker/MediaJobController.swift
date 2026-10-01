@@ -2,7 +2,6 @@ import FeatherDomain
 import Environment
 import FeatherDatabase
 import FeatherInfrastructure
-import FeatherStorage
 import Jobs
 import MediaApplication
 import MediaInfrastructure
@@ -48,8 +47,7 @@ struct MediaJobController {
         queue: some JobQueueProtocol,
         database: any DatabaseClient,
         idGenerator: any IDGenerator,
-        storage: any StorageClient,
-        storageKeyShard: MediaStorageKeyShard,
+        storageContext: StorageContext,
         maxConcurrentProcessing: Int
     ) {
         let coordinator = ProcessingCoordinator(limit: maxConcurrentProcessing)
@@ -90,9 +88,8 @@ struct MediaJobController {
 
             let useCase = GenerateMediaAssetVariants(
                 transaction: transaction,
-                storage: storage,
-                storageKeyShard: storageKeyShard,
-                shellRunner: SubprocessMediaShellRunner()
+                storageContext: storageContext,
+                commandRunner: SubprocessCommandRunner()
             )
 
             do {

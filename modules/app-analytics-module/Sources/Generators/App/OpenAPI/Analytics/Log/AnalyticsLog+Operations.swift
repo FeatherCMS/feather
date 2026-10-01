@@ -9,9 +9,9 @@ struct AppAnalyticsLogTag: TagRepresentable {
 }
 
 struct AnalyticsLogTrackOperation: OperationRepresentable {
-    var tags: [TagRepresentable] { [AppAnalyticsLogTag()] }
+    var tags: [any TagRepresentable] { [AppAnalyticsLogTag()] }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         AnalyticsLogTrackRequestBody().reference()
     }
 

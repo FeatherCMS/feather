@@ -1,20 +1,20 @@
 import BlogSharedOpenAPIGenerator
-import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 public protocol BlogTagOperation: BearerProtectedOperation {
 }
 
 extension BlogTagOperation {
-    public var tags: [TagRepresentable] { [BlogTagTag()] }
+    public var tags: [any TagRepresentable] { [BlogTagTag()] }
 }
 
 public protocol BlogTagIDOperation: BlogTagOperation {
 }
 
 extension BlogTagIDOperation {
-    public var parameters: [ParameterRepresentable] {
+    public var parameters: [any ParameterRepresentable] {
         [
             BlogTagIdParameter().reference()
         ]
@@ -22,7 +22,7 @@ extension BlogTagIDOperation {
 }
 
 struct BlogTagCreateOperation: BlogTagOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         BlogTagRequestBody().reference()
     }
 
@@ -55,7 +55,7 @@ struct BlogTagSearchOperation: BlogTagOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 
@@ -76,7 +76,7 @@ struct BlogTagGetOperation: BlogTagIDOperation {
 }
 
 struct BlogTagUpdateOperation: BlogTagIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         BlogTagUpdateRequestBody().reference()
     }
 
@@ -89,7 +89,7 @@ struct BlogTagUpdateOperation: BlogTagIDOperation {
 }
 
 struct BlogTagPatchOperation: BlogTagIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         BlogTagPatchRequestBody().reference()
     }
 

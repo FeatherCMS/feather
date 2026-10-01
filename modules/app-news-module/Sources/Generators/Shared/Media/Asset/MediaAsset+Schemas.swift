@@ -1,6 +1,6 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
+public import OpenAPIKit30
 
 public struct MediaAssetIdField: StringSchemaRepresentable {
     public var example: String? = "media_asset_1"
@@ -15,7 +15,7 @@ public struct MediaAssetKeyField: StringSchemaRepresentable {
 }
 
 public struct MediaAssetURLField: StringSchemaRepresentable {
-    public var example: String? = "/media/assets/example.png"
+    public var example: String? = "/public/12/34/56789/originals/example.png"
 
     public init() {}
 }
@@ -42,7 +42,7 @@ public struct MediaAssetPixelSizeField: SchemaRepresentable {
 }
 
 public struct MediaAssetVariantListSchema: ArraySchemaRepresentable {
-    public var items: SchemaRepresentable? {
+    public var items: (any SchemaRepresentable)? {
         MediaAssetVariantSchema().reference()
     }
 

@@ -20,7 +20,7 @@ struct NewsletterDeliverySchema: ObjectSchemaRepresentable {
 }
 
 struct NewsletterDeliveryListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         NewsletterDeliverySchema().reference()
     }
 }

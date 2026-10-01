@@ -1,11 +1,11 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 public protocol NewsCategoryOperation: OperationRepresentable {}
 
 extension NewsCategoryOperation {
-    public var tags: [TagRepresentable] { [NewsContentTag()] }
+    public var tags: [any TagRepresentable] { [NewsContentTag()] }
 }
 
 struct NewsCategoryListOperation: NewsCategoryOperation {
@@ -15,7 +15,7 @@ struct NewsCategoryListOperation: NewsCategoryOperation {
 }
 
 struct NewsCategoryGetOperation: NewsCategoryOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [NewsCategoryIdParameter().reference()]
     }
 

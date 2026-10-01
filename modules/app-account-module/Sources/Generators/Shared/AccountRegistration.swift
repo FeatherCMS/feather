@@ -1,6 +1,6 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
+public import OpenAPIKit30
 
 public struct AccountRegisterEmailField: StringSchemaRepresentable {
     public var example: String? = "admin@example.com"
@@ -36,9 +36,9 @@ public struct AccountRegisterRequestBody: RequestBodyRepresentable {
 }
 
 public struct AccountRegisterOperation: OperationRepresentable {
-    public var tags: [TagRepresentable] { [AccountTag()] }
+    public var tags: [any TagRepresentable] { [AccountTag()] }
 
-    public var requestBody: RequestBodyRepresentable? {
+    public var requestBody: (any RequestBodyRepresentable)? {
         AccountRegisterRequestBody().reference()
     }
 
@@ -52,7 +52,7 @@ public struct AccountRegisterOperation: OperationRepresentable {
 }
 
 public struct AccountRegisterPathItems: PathItemRepresentable {
-    public var post: OperationRepresentable? {
+    public var post: (any OperationRepresentable)? {
         AccountRegisterOperation()
     }
 
@@ -62,7 +62,7 @@ public struct AccountRegisterPathItems: PathItemRepresentable {
 public struct AccountSettingsOperation: OperationRepresentable,
     BearerProtectedOperation
 {
-    public var tags: [TagRepresentable] { [AccountTag()] }
+    public var tags: [any TagRepresentable] { [AccountTag()] }
 
     public var responseMap: ResponseMap {
         [200: AccountSettingsResponse().reference()]
@@ -72,7 +72,7 @@ public struct AccountSettingsOperation: OperationRepresentable,
 }
 
 public struct AccountSettingsPathItems: PathItemRepresentable {
-    public var get: OperationRepresentable? {
+    public var get: (any OperationRepresentable)? {
         AccountSettingsOperation()
     }
 

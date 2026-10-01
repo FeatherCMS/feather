@@ -1,0 +1,27 @@
+import FeatherApplication
+import FeatherContracts
+import FeatherDatabase
+import FeatherDomain
+import FeatherInfrastructure
+import SystemInfrastructure
+import WebAdminAPI
+import WebAppAPI
+import WebApplication
+import WebInfrastructure
+
+extension UseCases {
+
+    func makeListPublicMetadata() -> ListPublicMetadata {
+        let query = DatabaseQueryExecutor(
+            database: database,
+            scope: { context in
+                ReadMetadata(
+                    metadata: MetadataDatabaseQueries(
+                        context: context
+                    )
+                )
+            }
+        )
+        return .init(query: query)
+    }
+}

@@ -1,5 +1,6 @@
 public import FeatherApplication
 public import FeatherContracts
+public import FeatherDomain
 import MediaContracts
 import MediaDomain
 
@@ -20,13 +21,16 @@ public struct EditMediaAsset: UseCase {
 
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<WriteMedia>
+    let objectKeyGenerator: any ObjectKeyGenerator
 
     public init(
         authorizer: any Authorizer,
-        transaction: any TransactionExecutor<WriteMedia>
+        transaction: any TransactionExecutor<WriteMedia>,
+        objectKeyGenerator: any ObjectKeyGenerator
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
+        self.objectKeyGenerator = objectKeyGenerator
     }
 
     public struct Input: DTO {
@@ -62,7 +66,10 @@ public struct EditMediaAsset: UseCase {
             asset.title = input.title
             asset.altText = input.altText
 
-            return try await scope.assets.update(asset).asDetail
+            return try await scope.assets.update(asset)
+                .asDetail(
+                    objectKeyGenerator: objectKeyGenerator
+                )
         }
     }
 }

@@ -24,6 +24,7 @@ struct ServerConfigLoader {
         )
         let queueReader = reader.scoped(to: "server.queue")
         let mediaReader = reader.scoped(to: "media")
+        let objectKeyReader = reader.scoped(to: "storage.object_key")
         let serverHTTPReader = reader.scoped(to: "server.http")
         return .init(
             host: serverHTTPReader.string(
@@ -46,24 +47,25 @@ struct ServerConfigLoader {
                     queueReader.int(forKey: "poll_time_ms", default: 100)
                 )
             ),
+            storage: .init(
+                objectKey: .init(
+                    depth: max(
+                        0,
+                        objectKeyReader.int(forKey: "depth", default: 2)
+                    ),
+                    segmentLength: max(
+                        1,
+                        objectKeyReader.int(
+                            forKey: "segment_length",
+                            default: 2
+                        )
+                    )
+                )
+            ),
             media: .init(
                 storageRootPath: mediaReader.string(
                     forKey: "storage_root_path",
                     default: "/tmp/backend-media"
-                ),
-                storageShardDepth: max(
-                    0,
-                    mediaReader.int(
-                        forKey: "storage_shard_depth",
-                        default: 0
-                    )
-                ),
-                storageShardSegmentLength: max(
-                    1,
-                    mediaReader.int(
-                        forKey: "storage_shard_segment_length",
-                        default: 2
-                    )
                 ),
                 publicBaseURL: URL(
                     string: mediaReader.string(

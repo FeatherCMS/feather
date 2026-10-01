@@ -1,3 +1,4 @@
+import FeatherDomain
 import FeatherInfrastructure
 public import MediaApplication
 import MediaInfrastructure
@@ -13,10 +14,12 @@ extension UseCases {
                         context: context
                     ),
                     assets: MediaAssetDatabaseQueries(
-                        context: context
+                        context: context,
+                        objectKeyGenerator: storageContext.objectKeyGenerator
                     ),
                     assetSearch: MediaAssetSearchDatabaseQueries(
-                        context: context
+                        context: context,
+                        objectKeyGenerator: storageContext.objectKeyGenerator
                     )
                 )
             }

@@ -99,7 +99,7 @@ struct BlogAuthorLinkListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct BlogAuthorLinkListSchema: ArraySchemaRepresentable {
-    var items: SchemaRepresentable? {
+    var items: (any SchemaRepresentable)? {
         BlogAuthorLinkListItemSchema().reference()
     }
 }

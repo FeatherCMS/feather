@@ -1,5 +1,5 @@
 import FeatherOpenAPI
 
 struct MediaAssetResolvePathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { MediaAssetResolveOperation() }
+    var post: (any OperationRepresentable)? { MediaAssetResolveOperation() }
 }

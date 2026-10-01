@@ -1,8 +1,8 @@
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 
 public struct BlogRouteSettingsPathItems: PathItemRepresentable {
-    public var get: OperationRepresentable? { BlogRouteSettingsOperation() }
+    public var get: (any OperationRepresentable)? { BlogRouteSettingsOperation() }
 
     public init() {}
 }

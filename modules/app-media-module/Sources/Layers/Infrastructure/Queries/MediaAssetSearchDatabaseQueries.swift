@@ -1,9 +1,16 @@
 import FeatherApplication
+public import FeatherDomain
 public import FeatherInfrastructure
 public import MediaApplication
 
 extension MediaAssetNodeTable.SearchRow {
-    func asItem() throws -> MediaAssetSearchList.Item {
+    func asItem(
+        objectKeyGenerator: any ObjectKeyGenerator =
+            HierarchicalObjectKeyGenerator()
+    )
+        throws
+        -> MediaAssetSearchList.Item
+    {
         switch kind {
         case "folder":
             guard let assetCount, let totalSizeBytes else {
@@ -23,7 +30,7 @@ extension MediaAssetNodeTable.SearchRow {
                 )
             )
         case "file":
-            guard objectKey != nil, let `extension`, let contentType,
+            guard let `extension`, let contentType,
                 let sizeBytes, let status
             else { throw RepositoryError.notFound }
             return .asset(
@@ -33,10 +40,12 @@ extension MediaAssetNodeTable.SearchRow {
                     name: name,
                     slug: slug,
                     slugPath: slugPath,
-                    url: mediaAssetPublicURL(
+                    url: try mediaAssetPublicURL(
                         id: id,
                         slugPath: slugPath,
-                        extension: `extension`
+                        filename: name,
+                        extension: `extension`,
+                        objectKeyGenerator: objectKeyGenerator
                     ),
                     extension: `extension`,
                     contentType: contentType,
@@ -55,7 +64,15 @@ extension MediaAssetNodeTable.SearchRow {
 
 public struct MediaAssetSearchDatabaseQueries: MediaAssetSearchQueries {
     public let context: DatabaseQueryContext
-    public init(context: DatabaseQueryContext) { self.context = context }
+    public let objectKeyGenerator: any ObjectKeyGenerator
+    public init(
+        context: DatabaseQueryContext,
+        objectKeyGenerator: any ObjectKeyGenerator =
+            HierarchicalObjectKeyGenerator()
+    ) {
+        self.context = context
+        self.objectKeyGenerator = objectKeyGenerator
+    }
 
     private func pageSizeOffset(_ page: Search.Page) -> (size: Int, offset: Int)
     {
@@ -97,7 +114,11 @@ public struct MediaAssetSearchDatabaseQueries: MediaAssetSearchQueries {
                 limit: page.size,
                 offset: page.offset
             )
-        return .init(items: try rows.map { try $0.asItem() })
+        return .init(
+            items: try rows.map {
+                try $0.asItem(objectKeyGenerator: objectKeyGenerator)
+            }
+        )
     }
 
     public func count(query: MediaAssetList.Query) async throws -> Int {

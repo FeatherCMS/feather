@@ -25,6 +25,8 @@ public protocol MetadataQueries: Sendable {
         slug: String
     ) async throws -> MetadataDetail?
 
+    func listPublic() async throws -> [MetadataList.Item]
+
     func list(
         query: MetadataList.Query
     ) async throws -> MetadataList

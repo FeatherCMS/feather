@@ -6,13 +6,13 @@ import OpenAPIKit30
 protocol AnalyticsLogOperation: BearerProtectedOperation {}
 
 extension AnalyticsLogOperation {
-    var tags: [TagRepresentable] { [AnalyticsLogTag()] }
+    var tags: [any TagRepresentable] { [AnalyticsLogTag()] }
 }
 
 protocol AnalyticsLogIDOperation: AnalyticsLogOperation {}
 
 extension AnalyticsLogIDOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [
             AnalyticsLogIdParameter().reference()
         ]
@@ -46,7 +46,7 @@ struct AnalyticsLogSearchOperation: AnalyticsLogOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         SearchRequestBody(query: searchQuery)
     }
 

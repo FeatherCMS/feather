@@ -1,6 +1,6 @@
 import FeatherOpenAPI
 
 struct BlogSettingsPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { BlogSettingsGetOperation() }
-    var put: OperationRepresentable? { BlogSettingsUpdateOperation() }
+    var get: (any OperationRepresentable)? { BlogSettingsGetOperation() }
+    var put: (any OperationRepresentable)? { BlogSettingsUpdateOperation() }
 }

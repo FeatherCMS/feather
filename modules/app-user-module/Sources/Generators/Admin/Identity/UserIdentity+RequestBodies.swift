@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 02. 12..
 //
 
-import FeatherOpenAPI
+public import FeatherOpenAPI
 import OpenAPIKit30
 
 public struct UserIdentityCreateRequestBody: RequestBodyRepresentable {
