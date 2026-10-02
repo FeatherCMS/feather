@@ -7,6 +7,7 @@ struct NewsletterCampaignMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     let name = "NewsletterCampaign"
     let usesFormSubmissionNonce = true
     let submissionRoute: NewsletterSubscriptionRoute
+    let turnstileSiteKey: String?
 
     func render(
         request: WebMarkdownBlockRendererRequest
@@ -45,6 +46,17 @@ struct NewsletterCampaignMarkdownBlockRenderer: WebMarkdownBlockRenderer {
         children.append(
             Input().type(.hidden).name("nonce").value(nonce)
         )
+        if let turnstileSiteKey, !turnstileSiteKey.isEmpty {
+            children.append(
+                Div {}.class("cf-turnstile").data("sitekey", turnstileSiteKey)
+            )
+            children.append(
+                Script()
+                    .src("https://challenges.cloudflare.com/turnstile/v0/api.js")
+                    .async()
+                    .defer()
+            )
+        }
         children.append(Button("Subscribe").type(.submit))
         let form = Form { children }
             .method(.post)

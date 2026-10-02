@@ -14,6 +14,7 @@ struct AppContactFormSubmissionDefaultController:
     AppContactFormSubmissionController
 {
     let apiBuilder: ContactAPIBuilder
+    let turnstileVerifier: (any TurnstileVerifier)?
 
     func submit(
         request: Request,
@@ -33,6 +34,13 @@ struct AppContactFormSubmissionDefaultController:
             throw HTTPError(.forbidden)
         }
         do {
+            if let turnstileVerifier,
+                try await !turnstileVerifier.verify(
+                    token: form.turnstileResponse
+                )
+            {
+                throw HTTPError(.forbidden)
+            }
             let response = try await apiBuilder.makeContactApp(context)
                 .withOpenAPIRepositoryErrorMapping { client in
                     try await client.appContactFormSubmission(

@@ -29,7 +29,8 @@ struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
         email: String = "",
         password: String = "",
         isPersistent: Bool = true,
-        redirectPath: String = "/"
+        redirectPath: String = "/",
+        turnstileSiteKey: String? = nil
     ) -> LoginForm.State {
         .init(
             email: .init(
@@ -54,7 +55,8 @@ struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
                 checkboxLabel: "Keep me signed in",
                 isChecked: isPersistent
             ),
-            redirectPath: redirectPath
+            redirectPath: redirectPath,
+            turnstileSiteKey: turnstileSiteKey
         )
     }
 }

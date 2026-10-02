@@ -15,6 +15,7 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
 {
     let apiBuilder: NewsletterAPIBuilder
     let route: NewsletterSubscriptionRoute
+    let turnstileVerifier: (any TurnstileVerifier)?
     func subscribe(
         request: Request,
         context: DefaultRequestContext
@@ -33,6 +34,13 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
             throw HTTPError(.forbidden)
         }
         do {
+            if let turnstileVerifier,
+                try await !turnstileVerifier.verify(
+                    token: form.turnstileResponse
+                )
+            {
+                throw HTTPError(.forbidden)
+            }
             let response = try await apiBuilder.makeNewsletterApp(context)
                 .withOpenAPIRepositoryErrorMapping { client in
                     try await client.appNewsletterCampaignSubscribe(

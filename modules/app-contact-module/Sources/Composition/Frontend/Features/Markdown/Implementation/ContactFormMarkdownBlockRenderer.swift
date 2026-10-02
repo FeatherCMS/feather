@@ -9,6 +9,7 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     let name = "ContactForm"
     let usesFormSubmissionNonce = true
     let api: ContactAppAPIClient
+    let turnstileSiteKey: String?
 
     func render(
         request: WebMarkdownBlockRendererRequest
@@ -73,6 +74,17 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
             children.append(P(message).setClass(messageClass))
         }
         children.append(contentsOf: fields)
+        if let turnstileSiteKey, !turnstileSiteKey.isEmpty {
+            children.append(
+                Div {}.class("cf-turnstile").data("sitekey", turnstileSiteKey)
+            )
+            children.append(
+                Script()
+                    .src("https://challenges.cloudflare.com/turnstile/v0/api.js")
+                    .async()
+                    .defer()
+            )
+        }
         children.append(Button("Submit").type(.submit))
         let formElement = Form { children }
             .method(.post)

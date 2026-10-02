@@ -205,6 +205,7 @@ let package = Package(
                 .product(name: "UserFrontend", package: "app-user-module"),
                 .product(name: "SystemFrontend", package: "app-system-module"),
                 .product(name: "WebContracts", package: "app-web-module"),
+                .product(name: "WebFrontend", package: "app-web-module"),
 
                 .target(name: "AuthContracts"),
                 .target(name: "AuthAdminAPI"),

@@ -2,6 +2,7 @@ public import FeatherAdmin
 import FeatherValidation
 import HTML
 public import Hummingbird
+public import WebFrontend
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -18,11 +19,13 @@ public struct AppNewsletterCampaignSubscription {
 
     public init(
         apiBuilder: NewsletterAPIBuilder,
-        route: NewsletterSubscriptionRoute = AppNewsletterCampaignSubscription.defaultRoute
+        route: NewsletterSubscriptionRoute = AppNewsletterCampaignSubscription.defaultRoute,
+        turnstileVerifier: (any TurnstileVerifier)? = nil
     ) {
         self.controller = AppNewsletterCampaignSubscriptionDefaultController(
             apiBuilder: apiBuilder,
-            route: route
+            route: route,
+            turnstileVerifier: turnstileVerifier
         )
     }
 

@@ -1,5 +1,6 @@
 import FeatherAdmin
 import HTML
+import SGML
 import WebBuilders
 import WebComponents
 
@@ -10,6 +11,7 @@ struct LoginForm: Component {
         var password: NewAdminFormFieldInput.State
         var isPersistent: NewAdminFormFieldCheckbox.State
         var redirectPath: String
+        var turnstileSiteKey: String?
 
         mutating func apply(
             errors: [String: String]
@@ -41,6 +43,13 @@ struct LoginForm: Component {
             context.build(
                 NewAdminFormFieldCheckbox(state: state.isPersistent)
             )
+            if let siteKey = state.turnstileSiteKey, !siteKey.isEmpty {
+                Div {}.class("cf-turnstile").data("sitekey", siteKey)
+                Script()
+                    .src("https://challenges.cloudflare.com/turnstile/v0/api.js")
+                    .async()
+                    .defer()
+            }
             Div {
                 context.build(NewAdminSubmitButton("Sign in"))
             }

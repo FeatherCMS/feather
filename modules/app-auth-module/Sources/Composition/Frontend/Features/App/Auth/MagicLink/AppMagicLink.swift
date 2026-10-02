@@ -4,28 +4,35 @@ import FeatherAdmin
 import HTML
 import Hummingbird
 import OpenAPIRuntime
+import SGML
 import WebBuilders
 import WebComponents
+import WebFrontend
 
 struct AppMagicLink {
     let apiBuilder: AuthAPIBuilder
     let usesSecureCookies: Bool
+    let turnstileVerifier: (any TurnstileVerifier)?
 
     init(
         apiBuilder: AuthAPIBuilder,
-        usesSecureCookies: Bool
+        usesSecureCookies: Bool,
+        turnstileVerifier: (any TurnstileVerifier)? = nil
     ) {
         self.apiBuilder = apiBuilder
         self.usesSecureCookies = usesSecureCookies
+        self.turnstileVerifier = turnstileVerifier
     }
 
     struct RequestInput: Codable, Sendable {
         let email: String
         let isPersistent: NewAdminFormFieldCheckbox.Input
+        let turnstileResponse: String?
 
         enum CodingKeys: String, CodingKey {
             case email
             case isPersistent = "is_persistent"
+            case turnstileResponse = "cf-turnstile-response"
         }
     }
 
@@ -34,6 +41,7 @@ struct AppMagicLink {
         let isPersistent: Bool
         let error: String?
         let message: String?
+        let turnstileSiteKey: String?
 
         func rules() -> [any Rule] {
             NewAdminDesignSystem().rules()
@@ -164,6 +172,17 @@ struct AppMagicLink {
                                     )
                                 )
                             )
+                            if let siteKey = turnstileSiteKey,
+                                !siteKey.isEmpty
+                            {
+                                Div {}
+                                    .class("cf-turnstile")
+                                    .data("sitekey", siteKey)
+                                Script()
+                                    .src("https://challenges.cloudflare.com/turnstile/v0/api.js")
+                                    .async()
+                                    .defer()
+                            }
                             Div {
                                 context.build(
                                     NewAdminSubmitButton("Send magic link")
@@ -209,6 +228,7 @@ struct AppMagicLink {
             isPersistent: true,
             error: nil,
             message: nil,
+            turnstileSiteKey: turnstileVerifier?.siteKey,
             context: &buildContext
         )
     }
@@ -222,6 +242,28 @@ struct AppMagicLink {
             as: RequestInput.self,
             context: context
         )
+        if let turnstileVerifier {
+            let isVerified: Bool
+            do {
+                isVerified = try await turnstileVerifier.verify(
+                    token: input.turnstileResponse
+                )
+            }
+            catch {
+                isVerified = false
+            }
+            guard isVerified else {
+                return render(
+                    request: request,
+                    email: input.email,
+                    isPersistent: input.isPersistent.value,
+                    error: "Please complete the verification and try again.",
+                    message: nil,
+                    turnstileSiteKey: turnstileVerifier.siteKey,
+                    context: &buildContext
+                )
+            }
+        }
         do {
             let response = try await apiBuilder.makeAuthApp(context)
                 .withOpenAPIRepositoryErrorMapping { client in
@@ -242,6 +284,7 @@ struct AppMagicLink {
                     isPersistent: input.isPersistent.value,
                     error: nil,
                     message: "If registered, your sign-in link is on its way.",
+                    turnstileSiteKey: turnstileVerifier?.siteKey,
                     context: &buildContext
                 )
             case .undocumented(let statusCode, let response):
@@ -259,6 +302,7 @@ struct AppMagicLink {
                 isPersistent: input.isPersistent.value,
                 error: error.errorDescription,
                 message: nil,
+                turnstileSiteKey: turnstileVerifier?.siteKey,
                 context: &buildContext
             )
         }
@@ -304,6 +348,7 @@ struct AppMagicLink {
                     error:
                         "This magic link is invalid, expired, or has already been used.",
                     message: nil,
+                    turnstileSiteKey: turnstileVerifier?.siteKey,
                     context: &buildContext
                 )
                 .response(from: request, context: context)
@@ -322,6 +367,7 @@ struct AppMagicLink {
                 isPersistent: true,
                 error: error.errorDescription,
                 message: nil,
+                turnstileSiteKey: turnstileVerifier?.siteKey,
                 context: &buildContext
             )
             .response(from: request, context: context)
@@ -334,6 +380,7 @@ struct AppMagicLink {
         isPersistent: Bool,
         error: String?,
         message: String?,
+        turnstileSiteKey: String?,
         context: inout BuilderContext
     ) -> HTMLResponse {
         let component = NewAdminHTML(
@@ -343,7 +390,8 @@ struct AppMagicLink {
                     email: email,
                     isPersistent: isPersistent,
                     error: error,
-                    message: message
+                    message: message,
+                    turnstileSiteKey: turnstileSiteKey
                 ),
                 showsFooter: false,
                 allowsPasswordManagerAutofill: true
