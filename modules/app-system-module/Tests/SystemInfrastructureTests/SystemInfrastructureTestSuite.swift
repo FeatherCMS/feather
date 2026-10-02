@@ -73,9 +73,11 @@ struct SystemInfrastructureTestSuite {
                 migrations: [
                     TableMigration(connection: connection),
                     TableSeedMigration(
-                        connection: connection,
+                        context: .init(
+                            connection: connection,
+                            idGenerator: Foo()
+                        ),
                         events: EventRegistry(),
-                        idGenerator: Foo()
                     ),
                 ]
             )

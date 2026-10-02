@@ -2,19 +2,23 @@ public import FeatherDatabase
 public import FeatherInfrastructure
 
 public struct TableSeedMigration: DatabaseMigration {
-    public let connection: any DatabaseConnection
+    public let context: DatabaseTransactionContext
+
+    public var connection: any DatabaseConnection {
+        context.connection
+    }
 
     public init(
-        connection: any DatabaseConnection
+        context: DatabaseTransactionContext
     ) {
-        self.connection = connection
+        self.context = context
     }
 
     public func apply(
         on connection: any DatabaseConnection
     ) async throws {
-        try await applyInsightsPermissionSeedMigration(on: connection)
-        try await applyNotFoundPermissionSeedMigration(on: connection)
+        try await applyInsightsPermissionSeedMigration(on: context.connection)
+        try await applyNotFoundPermissionSeedMigration(on: context.connection)
     }
 
     private func applyInsightsPermissionSeedMigration(

@@ -21,7 +21,11 @@ public func buildMigrations(
     events: any EventPublisher,
     idGenerator: any IDGenerator
 ) -> [any Migration] {
-    [
+    let context = DatabaseTransactionContext(
+        connection: connection,
+        idGenerator: idGenerator
+    )
+    return [
         // Tables
         SystemInfrastructure.TableMigration(connection: connection),
         AnalyticsInfrastructure.TableMigration(connection: connection),
@@ -52,9 +56,8 @@ public func buildMigrations(
 
         // Seed data
         SystemInfrastructure.TableSeedMigration(
-            connection: connection,
-            events: events,
-            idGenerator: idGenerator
+            context: context,
+            events: events
         ),
         SystemInfrastructure.MailFromVariableMigration(
             connection: connection,
@@ -62,44 +65,28 @@ public func buildMigrations(
             idGenerator: idGenerator
         ),
         UserInfrastructure.TableSeedMigration(
-            connection: connection,
-            events: events,
-            idGenerator: idGenerator
+            context: context,
+            events: events
         ),
         AuthInfrastructure.TableSeedMigration(
-            connection: connection,
-            idGenerator: idGenerator,
+            context: context,
             events: events
         ),
         AccountInfrastructure.TableSeedMigration(
-            connection: connection,
-            events: events,
-            idGenerator: idGenerator
-        ),
-        MediaInfrastructure.TableSeedMigration(
-            connection: connection,
-            idGenerator: idGenerator
-        ),
-        WebInfrastructure.TableSeedMigration(
-            connection: connection,
-            idGenerator: idGenerator,
+            context: context,
             events: events
         ),
-        AnalyticsInfrastructure.TableSeedMigration(
-            connection: connection
+        MediaInfrastructure.TableSeedMigration(
+            context: context
         ),
-        ContactInfrastructure.TableSeedMigration(
-            connection: connection,
-            idGenerator: idGenerator
+        WebInfrastructure.TableSeedMigration(
+            context: context,
+            events: events
         ),
-        BlogInfrastructure.TableSeedMigration(
-            connection: connection,
-            idGenerator: idGenerator
-        ),
-        NewsInfrastructure.TableSeedMigration(
-            connection: connection,
-            idGenerator: idGenerator
-        ),
+        AnalyticsInfrastructure.TableSeedMigration(context: context),
+        ContactInfrastructure.TableSeedMigration(context: context),
+        BlogInfrastructure.TableSeedMigration(context: context),
+        NewsInfrastructure.TableSeedMigration(context: context),
     ]
 }
 

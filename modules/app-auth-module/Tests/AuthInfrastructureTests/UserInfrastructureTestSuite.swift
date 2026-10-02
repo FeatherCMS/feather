@@ -77,20 +77,27 @@ struct AuthInfrastructureTestSuite {
                 migrations: [
                     SystemInfrastructure.TableMigration(connection: connection),
                     SystemInfrastructure.TableSeedMigration(
-                        connection: connection,
-                        events: events,
-                        idGenerator: idGenerator
+                        context: .init(
+                            connection: connection,
+                            idGenerator: idGenerator
+                        ),
+                        events: events
                     ),
                     UserInfrastructure.TableMigration(connection: connection),
                     UserInfrastructure.TableSeedMigration(
-                        connection: connection,
-                        events: events,
-                        idGenerator: idGenerator
+                        context: .init(
+                            connection: connection,
+                            idGenerator: idGenerator
+                        ),
+                        events: events
                     ),
                     AuthInfrastructure.TableMigration(connection: connection),
                     AuthInfrastructure.TableSeedMigration(
-                        connection: connection,
-                        idGenerator: idGenerator
+                        context: .init(
+                            connection: connection,
+                            idGenerator: idGenerator
+                        ),
+                        events: events
                     ),
                 ]
             )

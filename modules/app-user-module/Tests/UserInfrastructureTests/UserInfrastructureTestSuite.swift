@@ -74,9 +74,11 @@ struct UserInfrastructureTestSuite {
                 migrations: [
                     UserInfrastructure.TableMigration(connection: connection),
                     UserInfrastructure.TableSeedMigration(
-                        connection: connection,
+                        context: .init(
+                            connection: connection,
+                            idGenerator: TestIDGenerator()
+                        ),
                         events: events,
-                        idGenerator: TestIDGenerator()
                     ),
                 ]
             )

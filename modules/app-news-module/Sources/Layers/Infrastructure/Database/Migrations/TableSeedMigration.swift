@@ -1,29 +1,25 @@
 import FeatherContracts
 public import FeatherDatabase
-public import FeatherDomain
 public import FeatherInfrastructure
 import NewsDomain
 import WebDomain
 
 public struct TableSeedMigration: DatabaseMigration {
-    public let connection: any DatabaseConnection
-    private let idGenerator: any IDGenerator
+    public let context: DatabaseTransactionContext
+
+    public var connection: any DatabaseConnection {
+        context.connection
+    }
 
     public init(
-        connection: any DatabaseConnection,
-        idGenerator: any IDGenerator
+        context: DatabaseTransactionContext
     ) {
-        self.connection = connection
-        self.idGenerator = idGenerator
+        self.context = context
     }
 
     public func apply(
         on connection: any DatabaseConnection
     ) async throws {
-        let context = DatabaseTransactionContext(
-            connection: connection,
-            idGenerator: idGenerator
-        )
         let category = try await CategoryDatabaseRepository(
             context: context
         )
@@ -31,7 +27,7 @@ public struct TableSeedMigration: DatabaseMigration {
             Category.create(
                 title: "Getting Started",
                 excerpt: "Starter category for seeded news content.",
-                content: "<p>Starter category for seeded news content.</p>",
+                content: "Starter category for seeded news content.",
                 metadata: .init(
                     template: "news.category",
                     slug: "Getting Started"
@@ -50,7 +46,7 @@ public struct TableSeedMigration: DatabaseMigration {
                 excerpt:
                     "A sample news article for local content verification.",
                 content:
-                    "<p>This is a seeded news article for clean local setups.</p>",
+                    "This is a seeded news article for clean local setups.",
                 categoryIds: [category.id],
                 metadata: .init(
                     template: "news.article",

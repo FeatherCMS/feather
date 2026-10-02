@@ -1,33 +1,28 @@
 public import FeatherContracts
 public import FeatherDatabase
-public import FeatherDomain
 public import FeatherInfrastructure
 import SystemApplication
 import SystemDomain
 
 public struct TableSeedMigration: DatabaseMigration {
-    public let connection: any DatabaseConnection
+    public let context: DatabaseTransactionContext
     private let events: any EventPublisher
-    private let idGenerator: any IDGenerator
+
+    public var connection: any DatabaseConnection {
+        context.connection
+    }
 
     public init(
-        connection: any DatabaseConnection,
-        events: any EventPublisher,
-        idGenerator: any IDGenerator
+        context: DatabaseTransactionContext,
+        events: any EventPublisher
     ) {
-        self.connection = connection
+        self.context = context
         self.events = events
-        self.idGenerator = idGenerator
     }
 
     public func apply(
         on connection: any DatabaseConnection
     ) async throws {
-        let context = DatabaseTransactionContext(
-            connection: connection,
-            idGenerator: idGenerator
-        )
-
         // insert permissions via the event hook
 
         let permissions =
