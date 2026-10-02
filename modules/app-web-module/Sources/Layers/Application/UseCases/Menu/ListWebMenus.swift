@@ -38,38 +38,58 @@ public struct ListPublicMenus: Sendable {
             var result: [PublicMenu] = []
 
             for menu in menus.items {
-                let menuItems = try await scope.menuItem.list(
-                    menuId: menu.id,
-                    query: .init(
-                        page: .init(size: 10_000, number: 1),
-                        sort: [
-                            .init(field: .priority, direction: .asc),
-                            .init(field: .label, direction: .asc),
-                        ]
-                    )
-                )
-
-                let items = try await filterItems(
-                    menuItems.items,
+                let publicMenu = try await makePublicMenu(
+                    id: menu.id,
+                    key: menu.key,
+                    name: menu.name,
+                    menuItems: scope.menuItem,
                     subject: subject
                 )
-
-                guard !items.isEmpty else {
-                    continue
-                }
-
-                result.append(
-                    .init(
-                        id: menu.id,
-                        key: menu.key,
-                        name: menu.name,
-                        items: items
-                    )
-                )
+                guard !publicMenu.items.isEmpty else { continue }
+                result.append(publicMenu)
             }
 
             return result
         }
+    }
+
+    public func execute(
+        key: String,
+        subject: Subject?
+    ) async throws -> PublicMenu? {
+        try await query.run { scope in
+            guard let menu = try await scope.menu.find(key: key) else {
+                return nil
+            }
+            return try await makePublicMenu(
+                id: menu.id,
+                key: menu.key,
+                name: menu.name,
+                menuItems: scope.menuItem,
+                subject: subject
+            )
+        }
+    }
+
+    private func makePublicMenu(
+        id: String,
+        key: String,
+        name: String,
+        menuItems: any MenuItemQueries,
+        subject: Subject?
+    ) async throws -> PublicMenu {
+        let menuItems = try await menuItems.list(
+            menuId: id,
+            query: .init(
+                page: .init(size: 10_000, number: 1),
+                sort: [
+                    .init(field: .priority, direction: .asc),
+                    .init(field: .label, direction: .asc),
+                ]
+            )
+        )
+        let items = try await filterItems(menuItems.items, subject: subject)
+        return .init(id: id, key: key, name: name, items: items)
     }
 
     private func filterItems(

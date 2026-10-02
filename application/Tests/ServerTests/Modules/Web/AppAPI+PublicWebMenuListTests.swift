@@ -25,21 +25,37 @@ struct AppAPIPublicWebMenuListTests {
         let response = try await runner.run(
             request: JSONRequest(
                 method: .get,
-                path: "/api/v1/web/menus",
+                path: "/api/v1/web/menus/main",
                 body: ""
             )
-        ) { response -> [WebAppAPI.Components.Schemas.WebMenuSchema] in
+        ) { response -> WebAppAPI.Components.Schemas.WebMenuSchema in
             try await response.json(
                 status: .ok,
-                [WebAppAPI.Components.Schemas.WebMenuSchema].self
+                WebAppAPI.Components.Schemas.WebMenuSchema.self
             )
         }
 
-        let menu = try #require(response.first(where: { $0.key == "main" }))
-        #expect(menu.items.count == 4)
+        #expect(response.key == "main")
+        #expect(response.items.count == 4)
         #expect(
-            menu.items.contains(where: { $0.label == "Root only" }) == false
+            response.items.contains(where: { $0.label == "Root only" }) == false
         )
+    }
+
+    @Test
+    func missingMenuKeyReturnsNotFound() async throws {
+        let runner = try await TestRunner()
+        try await runner.setupMigratedDatabase()
+
+        try await runner.run(
+            request: JSONRequest(
+                method: .get,
+                path: "/api/v1/web/menus/unknown",
+                body: ""
+            )
+        ) { response in
+            #expect(response.status == .notFound)
+        }
     }
 
     @Test

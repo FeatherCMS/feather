@@ -24,6 +24,18 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/WebMenuListResponse'
+  /api/v1/web/menus/{key}:
+    get:
+      tags:
+      - Web
+      operationId: webMenuGetByKey
+      parameters:
+      - $ref: '#/components/parameters/WebMenuKeyParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/WebMenuResponse'
+        404:
+          description: Web menu not found
   /api/v1/web/routes/{slug}:
     get:
       tags:
@@ -126,7 +138,7 @@ components:
       example: /images/logo-dark.svg
     WebSiteSettingsMetaImageField:
       type: string
-      example: /media/assets/default-meta-image.webp
+      example: /public/12/34/56789/originals/default-meta-image.webp
     WebSiteSettingsPrimaryColorField:
       type: string
       example: '#1d4ed8'
@@ -281,7 +293,7 @@ components:
       example: <h1>Homepage</h1>
     WebPageImageURLField:
       type: string
-      example: /media/assets/homepage.png
+      example: /public/12/34/56789/originals/homepage.png
     MediaAssetSchema:
       type: object
       properties:
@@ -303,7 +315,7 @@ components:
       example: media_asset_1
     MediaAssetURLField:
       type: string
-      example: /media/assets/example.png
+      example: /public/12/34/56789/originals/example.png
     MediaAssetVariantListSchema:
       type: array
       items:
@@ -372,7 +384,7 @@ components:
       example: Short summary
     WebMetadataImageURLField:
       type: string
-      example: /media/assets/example.png
+      example: /public/12/34/56789/originals/example.png
     WebMetadataCanonicalURLField:
       type: string
       example: https://example.com/posts/hello-world
@@ -395,6 +407,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/WebMenuListSchema'
+    WebMenuResponse:
+      description: Web menu
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMenuSchema'
     WebMetadataResponse:
       description: Web metadata resolution
       content:
@@ -414,6 +432,13 @@ components:
           schema:
             $ref: '#/components/schemas/WebPageDetailSchema'
   parameters:
+    WebMenuKeyParameter:
+      name: key
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMenuKeyField'
+      description: Web menu key
     WebMetadataSlugParameter:
       name: slug
       in: path

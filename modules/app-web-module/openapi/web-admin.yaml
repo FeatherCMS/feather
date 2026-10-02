@@ -1567,7 +1567,7 @@ components:
           example: /images/logo-dark.svg
         metaImage:
           type: string
-          example: /media/assets/default-meta-image.webp
+          example: /public/12/34/56789/originals/default-meta-image.webp
         primaryColor:
           type: string
           example: '#1d4ed8'
@@ -1639,7 +1639,7 @@ components:
           example: /images/logo-dark.svg
         metaImage:
           type: string
-          example: /media/assets/default-meta-image.webp
+          example: /public/12/34/56789/originals/default-meta-image.webp
         primaryColor:
           type: string
           example: '#1d4ed8'

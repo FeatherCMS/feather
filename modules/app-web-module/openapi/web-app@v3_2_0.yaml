@@ -24,6 +24,18 @@ paths:
       responses:
         200:
           $ref: '#/components/responses/WebMenuListResponse'
+  /api/v1/web/menus/{key}:
+    get:
+      tags:
+      - Web
+      operationId: webMenuGetByKey
+      parameters:
+      - $ref: '#/components/parameters/WebMenuKeyParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/WebMenuResponse'
+        404:
+          description: Web menu not found
   /api/v1/web/routes/{slug}:
     get:
       tags:
@@ -134,7 +146,7 @@ components:
     WebSiteSettingsMetaImageField:
       type: string
       examples:
-      - /media/assets/default-meta-image.webp
+      - /public/12/34/56789/originals/default-meta-image.webp
     WebSiteSettingsPrimaryColorField:
       type: string
       examples:
@@ -323,7 +335,7 @@ components:
     WebPageImageURLField:
       type: string
       examples:
-      - /media/assets/homepage.png
+      - /public/12/34/56789/originals/homepage.png
     MediaAssetSchema:
       type: object
       properties:
@@ -348,7 +360,7 @@ components:
     MediaAssetURLField:
       type: string
       examples:
-      - /media/assets/example.png
+      - /public/12/34/56789/originals/example.png
     MediaAssetVariantListSchema:
       type: array
       items:
@@ -427,7 +439,7 @@ components:
     WebMetadataImageURLField:
       type: string
       examples:
-      - /media/assets/example.png
+      - /public/12/34/56789/originals/example.png
     WebMetadataCanonicalURLField:
       type: string
       examples:
@@ -453,6 +465,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/WebMenuListSchema'
+    WebMenuResponse:
+      description: Web menu
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WebMenuSchema'
     WebMetadataResponse:
       description: Web metadata resolution
       content:
@@ -472,6 +490,13 @@ components:
           schema:
             $ref: '#/components/schemas/WebPageDetailSchema'
   parameters:
+    WebMenuKeyParameter:
+      name: key
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/WebMenuKeyField'
+      description: Web menu key
     WebMetadataSlugParameter:
       name: slug
       in: path

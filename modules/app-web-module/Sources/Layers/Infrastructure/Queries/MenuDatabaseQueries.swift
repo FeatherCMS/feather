@@ -91,6 +91,13 @@ public struct MenuDatabaseQueries: MenuQueries {
         return row.asDetail
     }
 
+    public func find(
+        key: String
+    ) async throws -> MenuDetail? {
+        let table = MenuTable(connection: context.connection)
+        return try await table.find(key: key)?.asDetail
+    }
+
     public func list(
         query: MenuList.Query
     ) async throws -> MenuList {
