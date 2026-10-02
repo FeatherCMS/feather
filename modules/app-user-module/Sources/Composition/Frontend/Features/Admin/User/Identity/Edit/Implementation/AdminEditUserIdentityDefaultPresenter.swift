@@ -87,9 +87,9 @@ struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
         }
     }
 
-    func renderSuccess() -> Response {
+    func renderSuccess(id: String) -> Response {
         AdminNotificationFlash.redirect(
-            to: UserIdentityRoutes.list.description,
+            to: UserIdentityRoutes.edit(RouterPath(id)).description,
             notification: .init(
                 title: "Saved",
                 message: "User identity updated successfully."

@@ -18,7 +18,7 @@ protocol AdminEditUserIdentityPresenter: Sendable {
         error: AdminEditUserIdentityError,
         roleOptions: [UserIdentityEditRoleOptionModel]
     ) async throws -> HTMLResponse
-    func renderSuccess() -> Response
+    func renderSuccess(id: String) -> Response
     func renderUnauthorizedPage() async throws -> HTMLResponse
     func renderForbiddenPage() async throws -> HTMLResponse
     func renderInvalidNoncePage() async throws -> HTMLResponse

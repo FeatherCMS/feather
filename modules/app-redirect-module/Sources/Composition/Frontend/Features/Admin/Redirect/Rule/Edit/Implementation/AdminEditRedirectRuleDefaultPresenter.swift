@@ -86,9 +86,9 @@ struct AdminEditRedirectRuleDefaultPresenter: AdminEditRedirectRulePresenter {
         }
     }
 
-    func renderSuccess() -> Response {
+    func renderSuccess(id: String) -> Response {
         AdminNotificationFlash.redirect(
-            to: RedirectRuleRoutes.list.description,
+            to: RedirectRuleRoutes.edit(RouterPath(id)).description,
             notification: .init(
                 title: "Saved",
                 message: "Redirect rule updated successfully."
