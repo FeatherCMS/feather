@@ -27,30 +27,27 @@ public struct ListPublicCategories {
                     sort: [.init(field: .createdAt, direction: .desc)]
                 )
             )
-            var result: [PublicNewsCategorySummary] = []
-            for item in categories.items {
-                guard
-                    let metadata = try await scope.metadata.find(
+            let metadataByID = Dictionary(
+                uniqueKeysWithValues: try await scope.metadata
+                    .resolveDetails(
                         referenceType: "news.category",
-                        referenceID: item.id
-                    ),
-                    metadata.isPublic(at: now)
-                else {
-                    continue
-                }
-                result.append(
-                    .init(
-                        id: item.id,
-                        title: item.title,
-                        excerpt: item.excerpt,
-                        imageAssetId: item.imageAssetId,
-                        imageURL: "",
-                        media: nil,
-                        metadata: metadata
+                        referenceIDs: categories.items.map(\.id)
                     )
+                    .filter { $0.isPublic(at: now) }
+                    .map { ($0.referenceID, $0) }
+            )
+            return categories.items.compactMap { item in
+                guard let metadata = metadataByID[item.id] else { return nil }
+                return .init(
+                    id: item.id,
+                    title: item.title,
+                    excerpt: item.excerpt,
+                    imageAssetId: item.imageAssetId,
+                    imageURL: "",
+                    media: nil,
+                    metadata: metadata
                 )
             }
-            return result
         }
     }
 }
