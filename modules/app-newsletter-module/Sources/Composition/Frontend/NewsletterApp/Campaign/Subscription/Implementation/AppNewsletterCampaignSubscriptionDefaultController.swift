@@ -15,6 +15,7 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
 {
     let apiBuilder: NewsletterAPIBuilder
     let route: NewsletterSubscriptionRoute
+    let formChallengeProvider: (any WebFormChallengeProvider)?
     func subscribe(
         request: Request,
         context: DefaultRequestContext
@@ -31,6 +32,22 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
             ]?.value
         ) else {
             throw HTTPError(.forbidden)
+        }
+        if let formChallengeProvider {
+            let isVerified: Bool
+            do {
+                isVerified = try await formChallengeProvider.verify(
+                    response: form.challengeResponses[
+                        formChallengeProvider.responseFieldName
+                    ]
+                )
+            }
+            catch {
+                throw HTTPError(.serviceUnavailable)
+            }
+            guard isVerified else {
+                throw HTTPError(.forbidden)
+            }
         }
         do {
             let response = try await apiBuilder.makeNewsletterApp(context)

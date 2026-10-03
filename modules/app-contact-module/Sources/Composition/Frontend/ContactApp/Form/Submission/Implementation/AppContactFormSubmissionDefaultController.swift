@@ -14,6 +14,7 @@ struct AppContactFormSubmissionDefaultController:
     AppContactFormSubmissionController
 {
     let apiBuilder: ContactAPIBuilder
+    let formChallengeProvider: (any WebFormChallengeProvider)?
 
     func submit(
         request: Request,
@@ -31,6 +32,22 @@ struct AppContactFormSubmissionDefaultController:
             ]?.value
         ) else {
             throw HTTPError(.forbidden)
+        }
+        if let formChallengeProvider {
+            let isVerified: Bool
+            do {
+                isVerified = try await formChallengeProvider.verify(
+                    response: form.challengeResponses[
+                        formChallengeProvider.responseFieldName
+                    ]
+                )
+            }
+            catch {
+                throw HTTPError(.serviceUnavailable)
+            }
+            guard isVerified else {
+                throw HTTPError(.forbidden)
+            }
         }
         do {
             let response = try await apiBuilder.makeContactApp(context)

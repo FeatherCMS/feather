@@ -7,6 +7,7 @@ struct NewsletterCampaignMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     let name = "NewsletterCampaign"
     let usesFormSubmissionNonce = true
     let submissionRoute: NewsletterSubscriptionRoute
+    let formChallengeProvider: (any WebFormChallengeProvider)?
 
     func render(
         request: WebMarkdownBlockRendererRequest
@@ -45,10 +46,24 @@ struct NewsletterCampaignMarkdownBlockRenderer: WebMarkdownBlockRenderer {
         children.append(
             Input().type(.hidden).name("nonce").value(nonce)
         )
+        if let formChallengeProvider {
+            children.append(
+                Div {
+                    for element in formChallengeProvider.widget() {
+                        element
+                    }
+                }
+                .setClass("web-form-challenge")
+            )
+        }
         children.append(Button("Subscribe").type(.submit))
         let form = Form { children }
             .method(.post)
             .action(action)
+            .data(
+                "challenge-response-field-name",
+                formChallengeProvider?.responseFieldName ?? ""
+            )
             .setClass("newsletter-subscription-form")
         return Document(root: form).render()
     }

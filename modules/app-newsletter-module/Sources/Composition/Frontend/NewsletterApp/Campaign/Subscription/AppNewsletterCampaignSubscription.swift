@@ -6,6 +6,7 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
+public import WebFrontend
 
 public struct AppNewsletterCampaignSubscription {
     let controller: any AppNewsletterCampaignSubscriptionController
@@ -18,11 +19,13 @@ public struct AppNewsletterCampaignSubscription {
 
     public init(
         apiBuilder: NewsletterAPIBuilder,
-        route: NewsletterSubscriptionRoute = AppNewsletterCampaignSubscription.defaultRoute
+        route: NewsletterSubscriptionRoute = AppNewsletterCampaignSubscription.defaultRoute,
+        formChallengeProvider: (any WebFormChallengeProvider)? = nil
     ) {
         self.controller = AppNewsletterCampaignSubscriptionDefaultController(
             apiBuilder: apiBuilder,
-            route: route
+            route: route,
+            formChallengeProvider: formChallengeProvider
         )
     }
 
