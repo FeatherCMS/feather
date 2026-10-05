@@ -165,6 +165,7 @@ let package = Package(
             name: "FeatherApplication",
             dependencies: [
                 .target(name: "FeatherDomain"),
+                .product(name: "FeatherStorage", package: "feather-storage"),
             ],
             path: "Sources/Layers/Application",
             swiftSettings: swiftSettings
