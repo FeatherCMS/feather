@@ -1,48 +1,29 @@
 public import FeatherContracts
-public import FeatherDatabase
-public import FeatherDomain
-import FeatherInfrastructure
-import NewsletterApplication
+import FeatherDatabase
+import FeatherDomain
+public import FeatherInfrastructure
+public import NewsletterApplication
 import NewsletterDomain
 import NewsletterInfrastructure
 
-public import struct Foundation.Date
-
-public protocol NewsletterMailQueue: Sendable {
-    func enqueue(
-        mailFrom: String,
-        mailTo: String,
-        subject: String,
-        additionalHeaders: [String],
-        messageBody: String,
-        deliveryIssueId: String?,
-        deliveryNewsletterId: String?,
-        scheduledAt: Date?
-    ) async throws
-}
-
 public struct UseCases: Sendable {
-    let database: any DatabaseClient
-    let idGenerator: any IDGenerator
+    let databaseContext: DatabaseClientContext
     let authorizer: any Authorizer
-    let mailQueue: any NewsletterMailQueue
+    let jobs: any NewsletterJobs
 
     public init(
-        database: any DatabaseClient,
-        idGenerator: any IDGenerator,
+        databaseContext: DatabaseClientContext,
         authorizer: any Authorizer,
-        mailQueue: any NewsletterMailQueue
+        jobs: any NewsletterJobs
     ) {
-        self.database = database
-        self.idGenerator = idGenerator
+        self.databaseContext = databaseContext
         self.authorizer = authorizer
-        self.mailQueue = mailQueue
+        self.jobs = jobs
     }
 
     func transaction() -> DatabaseTransactionExecutor<Write> {
         DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 Write(
                     newsletter: CampaignDatabaseRepository(context: context),
@@ -72,7 +53,7 @@ public struct UseCases: Sendable {
                 email: subscriber.email
             )
             guard shouldEnqueue else { continue }
-            try await mailQueue.enqueue(
+            try await jobs.enqueue(
                 mailFrom: newsletter.fromEmail,
                 mailTo: subscriber.email,
                 subject: issue.subject,
@@ -123,7 +104,7 @@ public struct UseCases: Sendable {
         let newsletter = try await makeGetNewsletterCampaign()
             .execute(subject: authSubject, input: .init(key: newsletterKey))
         guard !newsletter.fromEmail.isEmpty else { return }
-        try await mailQueue.enqueue(
+        try await jobs.enqueue(
             mailFrom: newsletter.fromEmail,
             mailTo: email,
             subject: subject,

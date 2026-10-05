@@ -3,37 +3,22 @@ import ContactContracts
 import ContactInfrastructure
 import FeatherApplication
 public import FeatherContracts
-public import FeatherDatabase
-public import FeatherDomain
-import FeatherInfrastructure
+public import FeatherInfrastructure
 import Foundation
 
-public protocol ContactMailQueue: Sendable {
-    func enqueue(
-        mailFrom: String,
-        mailTo: String,
-        subject: String,
-        additionalHeaders: [String],
-        messageBody: String
-    ) async throws
-}
-
 public struct UseCases: Sendable {
-    let database: any DatabaseClient
-    let idGenerator: any IDGenerator
+    let databaseContext: DatabaseClientContext
     let authorizer: any Authorizer
-    let mailQueue: any ContactMailQueue
+    let jobs: any ContactJobs
 
     public init(
-        database: any DatabaseClient,
-        idGenerator: any IDGenerator,
+        databaseContext: DatabaseClientContext,
         authorizer: any Authorizer,
-        mailQueue: any ContactMailQueue
+        jobs: any ContactJobs
     ) {
-        self.database = database
-        self.idGenerator = idGenerator
+        self.databaseContext = databaseContext
         self.authorizer = authorizer
-        self.mailQueue = mailQueue
+        self.jobs = jobs
     }
 }
 
@@ -51,7 +36,7 @@ extension UseCases {
         }
 
         for mail in form.mails {
-            try await mailQueue.enqueue(
+            try await jobs.enqueueSubmissionMail(
                 mailFrom: render(mail.mailFrom, values: values),
                 mailTo: render(mail.mailTo, values: values),
                 subject: render(mail.subject, values: values),
@@ -102,8 +87,7 @@ extension UseCases {
         WriteForm
     > {
         DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteForm(
                     form: FormDatabaseRepository(context: context),

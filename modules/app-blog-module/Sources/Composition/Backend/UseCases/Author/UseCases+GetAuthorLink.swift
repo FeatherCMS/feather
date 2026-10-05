@@ -6,7 +6,7 @@ extension UseCases {
 
     public func makeGetAuthorLink() -> GetAuthorLink {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadAuthorLink(
                     authorLink: AuthorLinkDatabaseQueries(

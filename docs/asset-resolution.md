@@ -265,7 +265,7 @@ Paths below are relative to the `feather` repository root.
 | `modules/app-media-module/Sources/Layers/Domain/Models/MediaAssetStorageObject.swift` | Builds unsharded logical original and variant object keys. |
 | `feather-core/Sources/Layers/Domain/ObjectKeyGenerator.swift` | Defines the generator protocol and its error. |
 | `feather-core/Sources/Layers/Infrastructure/HierarchicalObjectKeyGenerator.swift` | Builds hierarchical object-key prefixes. |
-| `feather-core/Sources/Layers/Domain/StorageContext.swift` | Pairs a storage client with an object-key generator without depending on Infrastructure. |
+| `feather-core/Sources/Layers/Infrastructure/Storage/StorageClientContext.swift` | Pairs a storage client with an object-key generator for application-lifetime infrastructure dependencies. |
 | `deploy/cloudfront/media-uri-rewrite.js` in Ava | Rewrites the public URL contract to physical object keys. |
 
 ## Implementation status

@@ -93,6 +93,10 @@ func buildWorker(
         client: postgresClient
     )
     let idGenerator = NanoIDGenerator()
+    let databaseContext = DatabaseClientContext(
+        database: database,
+        idGenerator: idGenerator
+    )
 
     let postgresMigrations = DatabaseMigrations()
     let jobQueue: JobQueue<PostgresJobQueue> = await JobQueue(
@@ -140,8 +144,7 @@ func buildWorker(
     )
     _ = MediaJobController(
         queue: jobQueue,
-        database: database,
-        idGenerator: idGenerator,
+        databaseContext: databaseContext,
         storageContext: .init(
             storage: StorageClientFS(rootPath: config.media.storageRootPath),
             objectKeyGenerator: HierarchicalObjectKeyGenerator(

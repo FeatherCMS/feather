@@ -1,6 +1,7 @@
 public import FeatherApplication
 public import FeatherContracts
 public import FeatherDomain
+public import FeatherInfrastructure
 import FeatherStorage
 import Foundation
 import MediaDomain
@@ -40,12 +41,12 @@ public struct GenerateMediaAssetVariants: UseCase {
     }
 
     let transaction: any TransactionExecutor<WriteMedia>
-    let storageContext: StorageContext
+    let storageContext: StorageClientContext
     let commandRunner: any CommandRunner
 
     public init(
         transaction: any TransactionExecutor<WriteMedia>,
-        storageContext: StorageContext,
+        storageContext: StorageClientContext,
         commandRunner: any CommandRunner
     ) {
         self.transaction = transaction

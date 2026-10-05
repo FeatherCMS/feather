@@ -13,7 +13,7 @@ extension UseCases {
 
     func makeListMenuItems() -> ListMenuItems {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadMenuItem(
                     menuItem: MenuItemDatabaseQueries(

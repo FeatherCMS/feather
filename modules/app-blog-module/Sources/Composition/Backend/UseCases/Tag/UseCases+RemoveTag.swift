@@ -13,27 +13,17 @@ extension UseCases {
 
     public func makeRemoveTag() -> RemoveTag {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteTagPostsMetadata(
                     post: PostDatabaseRepository(
-                        context: .init(
-                            connection: context.connection,
-                            idGenerator: idGenerator
-                        )
+                        context: context
                     ),
                     tag: TagDatabaseRepository(
-                        context: .init(
-                            connection: context.connection,
-                            idGenerator: idGenerator
-                        )
+                        context: context
                     ),
                     metadata: MetadataDatabaseRepository(
-                        context: .init(
-                            connection: context.connection,
-                            idGenerator: idGenerator
-                        )
+                        context: context
                     )
                 )
             }

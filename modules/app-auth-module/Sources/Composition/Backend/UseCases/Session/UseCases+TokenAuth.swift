@@ -7,8 +7,7 @@ extension UseCases {
 
     public func makeTokenAuth() -> TokenAuth {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteAuth(
                     identity: IdentityDatabaseRepository(context: context),

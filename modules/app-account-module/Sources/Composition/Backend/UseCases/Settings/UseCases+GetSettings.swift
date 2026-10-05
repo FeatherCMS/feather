@@ -6,7 +6,7 @@ extension UseCases {
 
     func makeGetSettings() -> AccountApplication.GetSettings {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadSettings(
                     settings: SettingsDatabaseQueries(context: context)

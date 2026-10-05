@@ -8,7 +8,7 @@ extension UseCases {
         .init(
             authorizer: authorizer,
             query: DatabaseQueryExecutor(
-                database: database,
+                databaseContext: databaseContext,
                 scope: { context in
                     ReadJob(
                         job: JobDatabaseQueries(

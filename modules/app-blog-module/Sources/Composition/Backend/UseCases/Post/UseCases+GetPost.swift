@@ -7,7 +7,7 @@ extension UseCases {
 
     public func makeGetPost() -> GetPost {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadPostMetadata(
                     post: PostDatabaseQueries(

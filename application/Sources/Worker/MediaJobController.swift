@@ -45,9 +45,8 @@ struct MediaJobController {
 
     init(
         queue: some JobQueueProtocol,
-        database: any DatabaseClient,
-        idGenerator: any IDGenerator,
-        storageContext: StorageContext,
+        databaseContext: DatabaseClientContext,
+        storageContext: StorageClientContext,
         maxConcurrentProcessing: Int
     ) {
         let coordinator = ProcessingCoordinator(limit: maxConcurrentProcessing)
@@ -58,8 +57,7 @@ struct MediaJobController {
                 return
             }
             let transaction = DatabaseTransactionExecutor(
-                database: database,
-                idGenerator: idGenerator,
+                databaseContext: databaseContext,
                 scope: { context in
                     return WriteMedia(
                         folders: MediaAssetNodeFolderDatabaseRepository(

@@ -6,8 +6,7 @@ extension UseCases {
 
     func makeRemoveIdentity() -> RemoveIdentity {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteIdentity(
                     identity: IdentityDatabaseRepository(context: context),

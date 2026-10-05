@@ -4,7 +4,7 @@
 //
 
 public import FeatherContracts
-public import FeatherDatabase
+import FeatherDatabase
 
 public struct DatabaseQueryExecutor<S: Scope>:
     ContextualQueryExecutor
@@ -17,11 +17,11 @@ public struct DatabaseQueryExecutor<S: Scope>:
     }
 
     public init(
-        database: any DatabaseClient,
+        databaseContext: DatabaseClientContext,
         scope: @Sendable @escaping (DatabaseQueryContext) -> S
     ) {
         self.executor = .init(
-            database: database,
+            database: databaseContext.database,
             scope: scope
         )
     }

@@ -43,7 +43,7 @@ struct AppModules: Sendable {
         self.mediaResolver = mediaResolver
 
         let query = DatabaseQueryExecutor(
-            database: infrastructure.database,
+            databaseContext: infrastructure.databaseContext,
             scope: { context in
                 return AuthScope(
                     identity: IdentityDatabaseQueries(
@@ -58,85 +58,73 @@ struct AppModules: Sendable {
         self.authorizer = DefaultAuthorizer(query: query)
 
         let system = SystemBackend.UseCases(
-            database: infrastructure.database,
-            idGenerator: infrastructure.idGenerator,
+            databaseContext: infrastructure.databaseContext,
             authorizer: authorizer
         )
         self.system = system
         let analytics = AnalyticsBackend.UseCases(
-            database: infrastructure.database,
-            idGenerator: infrastructure.idGenerator,
+            databaseContext: infrastructure.databaseContext,
             authorizer: authorizer
         )
         self.analytics = analytics
         let redirect = RedirectBackend.UseCases(
-            database: infrastructure.database,
-            idGenerator: infrastructure.idGenerator,
+            databaseContext: infrastructure.databaseContext,
             authorizer: authorizer
         )
         self.redirect = redirect
         let news = NewsBackend.UseCases(
-            database: infrastructure.database,
-            idGenerator: infrastructure.idGenerator,
+            databaseContext: infrastructure.databaseContext,
             authorizer: authorizer
         )
         self.news = news
         let user = UserBackend.UseCases(
-            database: infrastructure.database,
-            idGenerator: infrastructure.idGenerator,
+            databaseContext: infrastructure.databaseContext,
             authorizer: authorizer,
             events: infrastructure.events
         )
         self.user = user
         let account = AccountBackend.UseCases(
-            database: infrastructure.database,
-            idGenerator: infrastructure.idGenerator,
+            databaseContext: infrastructure.databaseContext,
             authorizer: authorizer,
-            mailSender: JobQueueMailSender(queue: infrastructure.jobQueue),
+            jobs: JobQueueMailSender(queue: infrastructure.jobQueue),
             events: infrastructure.events
         )
         self.account = account
         let auth = AuthBackend.UseCases(
-            database: infrastructure.database,
-            idGenerator: infrastructure.idGenerator,
+            databaseContext: infrastructure.databaseContext,
             authorizer: authorizer,
-            mailSender: JobQueueMailSender(queue: infrastructure.jobQueue)
+            jobs: JobQueueMailSender(queue: infrastructure.jobQueue)
         )
         self.auth = auth
         let media = MediaBackend.UseCases(
-            database: infrastructure.database,
-            idGenerator: infrastructure.idGenerator,
+            databaseContext: infrastructure.databaseContext,
             storageContext: infrastructure.storageContext,
             authorizer: authorizer,
-            variantQueue: JobMediaVariantQueue(queue: infrastructure.jobQueue)
+            jobs: MediaWorkerJobs(queue: infrastructure.jobQueue)
         )
         self.media = media
         let blog = BlogBackend.UseCases(
-            database: infrastructure.database,
-            idGenerator: infrastructure.idGenerator,
+            databaseContext: infrastructure.databaseContext,
             authorizer: authorizer,
             media: media,
             mediaResolver: mediaResolver
         )
         self.blog = blog
         let web = WebBackend.UseCases(
-            database: infrastructure.database,
-            idGenerator: infrastructure.idGenerator,
+            databaseContext: infrastructure.databaseContext,
             authorizer: authorizer
         )
         self.web = web
         let contact = ContactBackend.UseCases(
-            database: infrastructure.database,
-            idGenerator: infrastructure.idGenerator,
+            databaseContext: infrastructure.databaseContext,
             authorizer: authorizer,
-            mailQueue: JobContactMailQueue(queue: infrastructure.jobQueue)
+            jobs: ContactWorkerJobs(queue: infrastructure.jobQueue)
         )
         self.contact = contact
         let newsletter = NewsletterBackend.UseCases(
-            database: infrastructure.database,
-            idGenerator: infrastructure.idGenerator,
+            databaseContext: infrastructure.databaseContext,
             authorizer: authorizer,
-            mailQueue: JobNewsletterMailQueue(queue: infrastructure.jobQueue)
+            jobs: NewsletterWorkerJobs(queue: infrastructure.jobQueue)
         )
         self.newsletter = newsletter
     }

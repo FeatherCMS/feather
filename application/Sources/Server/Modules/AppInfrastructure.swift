@@ -1,13 +1,13 @@
 import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
+import FeatherInfrastructure
 import Jobs
 import MediaApplication
 
 struct AppInfrastructure: Sendable {
-    let database: any DatabaseClient
-    let idGenerator: any IDGenerator
+    let databaseContext: DatabaseClientContext
     let events: any EventPublisher
     let jobQueue: any JobQueueProtocol
-    let storageContext: StorageContext
+    let storageContext: StorageClientContext
 }

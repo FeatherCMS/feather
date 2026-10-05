@@ -7,8 +7,7 @@ extension UseCases {
 
     func makeRequestMagicLink() -> RequestMagicLink {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteRequestMagicLink(
                     credential: CredentialDatabaseRepository(context: context),

@@ -8,8 +8,7 @@ extension UseCases {
 
     func makeAddInvitation() -> AddInvitation {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteInvitationWithVariable(
                     invitation: InvitationDatabaseRepository(context: context),

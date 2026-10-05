@@ -6,7 +6,7 @@ extension UseCases {
 
     func makeListInvitations() -> ListInvitations {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadInvitation(
                     invitation: InvitationDatabaseQueries(

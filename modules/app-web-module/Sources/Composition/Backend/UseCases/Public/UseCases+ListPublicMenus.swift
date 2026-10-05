@@ -13,7 +13,7 @@ extension UseCases {
 
     func makeListPublicMenus() -> ListPublicMenus {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadPublicMenu(
                     menu: MenuDatabaseQueries(

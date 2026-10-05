@@ -7,7 +7,7 @@ extension UseCases {
 
     public func makeGetPublicAuthor() -> GetPublicAuthor {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadPublic(
                     post: PostDatabaseQueries(

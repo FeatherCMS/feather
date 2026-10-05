@@ -13,7 +13,7 @@ extension UseCases {
 
     func makeListPages() -> ListPages {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadPageMetadata(
                     page: PageDatabaseQueries(

@@ -6,7 +6,7 @@ extension UseCases {
 
     func makeGetRule() -> GetRule {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadRule(
                     rule: RuleDatabaseQueries(

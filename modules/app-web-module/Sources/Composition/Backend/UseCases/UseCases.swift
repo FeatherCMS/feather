@@ -1,8 +1,8 @@
 import FeatherApplication
 public import FeatherContracts
-public import FeatherDatabase
-public import FeatherDomain
-import FeatherInfrastructure
+import FeatherDatabase
+import FeatherDomain
+public import FeatherInfrastructure
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
@@ -11,19 +11,17 @@ import WebInfrastructure
 
 public struct UseCases: Sendable {
 
-    let database: any DatabaseClient
-    let idGenerator: any IDGenerator
+    let databaseContext: DatabaseClientContext
     public let authorizer: any Authorizer
 
     public init(
-        database: any DatabaseClient,
-        idGenerator: any IDGenerator,
+        databaseContext: DatabaseClientContext,
         authorizer: any Authorizer
     ) {
-        self.database = database
-        self.idGenerator = idGenerator
+        self.databaseContext = databaseContext
         self.authorizer = authorizer
     }
+
 }
 
 extension UseCases {

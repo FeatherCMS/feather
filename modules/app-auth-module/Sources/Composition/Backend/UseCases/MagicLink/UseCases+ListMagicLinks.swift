@@ -6,7 +6,7 @@ extension UseCases {
 
     func makeListMagicLinks() -> ListMagicLinks {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadMagicLink(
                     magicLink: MagicLinkDatabaseQueries(

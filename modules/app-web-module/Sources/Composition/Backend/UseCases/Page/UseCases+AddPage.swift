@@ -13,8 +13,7 @@ extension UseCases {
 
     func makeAddPage() -> AddPage {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WritePageMetadata(
                     page: PageDatabaseRepository(context: context),

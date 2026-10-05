@@ -6,8 +6,7 @@ extension UseCases {
 
     func makeEditSettings() -> AccountApplication.EditSettings {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteSettings(
                     settings: SettingsDatabaseRepository(context: context)

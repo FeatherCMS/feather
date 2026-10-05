@@ -11,7 +11,7 @@ extension UseCases {
 
     public func makeGetFolder() -> GetMediaFolder {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadMedia(
                     folders: MediaFolderDatabaseQueries(

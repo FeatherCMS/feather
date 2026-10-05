@@ -1,8 +1,9 @@
+import Environment
 import Jobs
-import NewsletterBackend
+import NewsletterApplication
 import struct Foundation.Date
 
-struct JobNewsletterMailQueue: NewsletterMailQueue {
+struct NewsletterWorkerJobs: NewsletterJobs {
     let queue: any JobQueueProtocol
 
     func enqueue(
@@ -15,7 +16,8 @@ struct JobNewsletterMailQueue: NewsletterMailQueue {
         deliveryNewsletterId: String?,
         scheduledAt: Date?
     ) async throws {
-        try await queue.enqueueSubmissionMail(
+        try await SubmissionMailJobPayload.enqueue(
+            on: queue,
             mailFrom: mailFrom,
             mailTo: mailTo,
             subject: subject,

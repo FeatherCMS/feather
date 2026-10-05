@@ -21,7 +21,7 @@ extension AccountModule {
 
     func makeGetSettings() -> GetSettings {
         let query = DatabaseQueryExecutor(
-            database: infrastructure.database,
+            databaseContext: infrastructure.databaseContext,
             scope: { context in
                 ReadSettings(
                     settings: SettingsDatabaseQueries(context: context)
@@ -36,8 +36,7 @@ extension AccountModule {
 
     func makeEditSettings() -> EditSettings {
         let transaction = DatabaseTransactionExecutor(
-            database: infrastructure.database,
-            idGenerator: infrastructure.idGenerator,
+            databaseContext: infrastructure.databaseContext,
             scope: { context in
                 return WriteSettings(
                     settings: SettingsDatabaseRepository(context: context)

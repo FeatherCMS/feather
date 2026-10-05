@@ -6,8 +6,7 @@ extension UseCases {
 
     func makeEditMagicLink() -> AuthApplication.EditMagicLink {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteMagicLink(
                     magicLink: MagicLinkDatabaseRepository(context: context)

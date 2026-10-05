@@ -2,8 +2,9 @@ import Environment
 import Jobs
 import struct Foundation.Date
 
-extension JobQueueProtocol {
-    func enqueueSubmissionMail(
+extension SubmissionMailJobPayload {
+    static func enqueue(
+        on queue: some JobQueueProtocol,
         mailFrom: String,
         mailTo: String,
         subject: String,
@@ -13,7 +14,7 @@ extension JobQueueProtocol {
         deliveryNewsletterId: String? = nil,
         scheduledAt: Date? = nil
     ) async throws {
-        _ = try await push(
+        _ = try await queue.push(
             .init(SubmissionMailJobPayload.jobName),
             parameters: SubmissionMailJobPayload(
                 mailFrom: mailFrom,

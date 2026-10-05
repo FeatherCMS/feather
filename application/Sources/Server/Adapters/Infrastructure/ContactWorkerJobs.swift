@@ -1,17 +1,19 @@
-import ContactBackend
+import ContactApplication
+import Environment
 import Jobs
 
-struct JobContactMailQueue: ContactMailQueue {
+struct ContactWorkerJobs: ContactJobs {
     let queue: any JobQueueProtocol
 
-    func enqueue(
+    func enqueueSubmissionMail(
         mailFrom: String,
         mailTo: String,
         subject: String,
         additionalHeaders: [String],
         messageBody: String
     ) async throws {
-        try await queue.enqueueSubmissionMail(
+        try await SubmissionMailJobPayload.enqueue(
+            on: queue,
             mailFrom: mailFrom,
             mailTo: mailTo,
             subject: subject,

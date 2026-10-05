@@ -81,10 +81,13 @@ struct RedirectInfrastructureTestSuite {
         }
 
         let authorizer = AllowAllAuthorizer()
-
-        let transaction = DatabaseTransactionExecutor(
+        let databaseContext = DatabaseClientContext(
             database: database,
             idGenerator: Foo()
+        )
+
+        let transaction = DatabaseTransactionExecutor(
+            databaseContext: databaseContext
         ) { context in
             WriteRule(
                 rule: RuleDatabaseRepository(
@@ -109,7 +112,7 @@ struct RedirectInfrastructureTestSuite {
         )
         #expect(res.source == "/foo-bar")
 
-        let query = DatabaseQueryExecutor(database: database) { context in
+        let query = DatabaseQueryExecutor(databaseContext: databaseContext) { context in
             GenericScope(
                 [
                     "rule": RuleDatabaseQueries(context: context)

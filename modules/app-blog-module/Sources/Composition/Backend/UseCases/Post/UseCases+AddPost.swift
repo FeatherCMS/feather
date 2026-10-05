@@ -8,21 +8,14 @@ extension UseCases {
 
     public func makeAddPost() -> AddPost {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WritePostMetadata(
                     post: PostDatabaseRepository(
-                        context: .init(
-                            connection: context.connection,
-                            idGenerator: idGenerator
-                        )
+                        context: context
                     ),
                     metadata: MetadataDatabaseRepository(
-                        context: .init(
-                            connection: context.connection,
-                            idGenerator: idGenerator
-                        )
+                        context: context
                     ),
                     variable: VariableDatabaseQueries(
                         context: .init(connection: context.connection)

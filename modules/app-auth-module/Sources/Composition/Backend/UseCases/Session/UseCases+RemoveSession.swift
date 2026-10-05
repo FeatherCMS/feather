@@ -6,8 +6,7 @@ extension UseCases {
 
     func makeRemoveSession() -> RemoveSession {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteSession(
                     session: SessionDatabaseRepository(context: context)

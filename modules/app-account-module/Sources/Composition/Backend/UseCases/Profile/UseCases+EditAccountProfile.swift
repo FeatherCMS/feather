@@ -5,8 +5,7 @@ import FeatherInfrastructure
 extension UseCases {
     func makeEditAccountProfile() -> AccountApplication.EditAccountProfile {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteAccountProfile(
                     profile: AccountProfileDatabaseRepository(context: context)

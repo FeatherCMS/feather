@@ -6,7 +6,7 @@ extension UseCases {
 
     func makeGetVariable() -> GetVariable {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadVariable(
                     variable: VariableDatabaseQueries(

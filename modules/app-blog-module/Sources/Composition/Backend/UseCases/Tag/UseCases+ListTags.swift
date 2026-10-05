@@ -13,7 +13,7 @@ extension UseCases {
 
     public func makeListTags() -> ListTags {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadTagMetadata(
                     tag: TagDatabaseQueries(

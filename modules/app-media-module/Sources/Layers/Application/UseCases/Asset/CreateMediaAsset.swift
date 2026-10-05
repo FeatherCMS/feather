@@ -1,6 +1,7 @@
 public import FeatherApplication
 public import FeatherContracts
 public import FeatherDomain
+public import FeatherInfrastructure
 public import FeatherStorage
 public import Foundation
 import MediaContracts
@@ -19,12 +20,12 @@ public struct CreateMediaAsset: UseCase {
 
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<WriteMedia>
-    let storageContext: StorageContext
+    let storageContext: StorageClientContext
 
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteMedia>,
-        storageContext: StorageContext
+        storageContext: StorageClientContext
     ) {
         self.authorizer = authorizer
         self.transaction = transaction

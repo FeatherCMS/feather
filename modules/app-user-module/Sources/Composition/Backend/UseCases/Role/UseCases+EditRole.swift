@@ -6,8 +6,7 @@ extension UseCases {
 
     func makeEditRole() -> EditRole {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteRole(
                     role: RoleDatabaseRepository(context: context)

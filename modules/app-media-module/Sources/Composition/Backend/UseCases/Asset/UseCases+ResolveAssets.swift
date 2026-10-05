@@ -6,7 +6,7 @@ import MediaInfrastructure
 extension UseCases {
     public func makeResolveAssets() -> ResolveMediaAssets {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadMedia(
                     folders: MediaFolderDatabaseQueries(
@@ -30,7 +30,7 @@ extension UseCases {
         -> PublicResolveMediaAssets
     {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadMedia(
                     folders: MediaFolderDatabaseQueries(

@@ -4,7 +4,7 @@
 //
 
 public import FeatherContracts
-public import FeatherDatabase
+import FeatherDatabase
 public import FeatherDomain
 
 public struct DatabaseTransactionExecutor<S: Scope>:
@@ -12,26 +12,26 @@ public struct DatabaseTransactionExecutor<S: Scope>:
 {
 
     public let executor: DatabaseExecutor<S, DatabaseTransactionContext>
-    public let idGenerator: any IDGenerator
+    public let databaseContext: DatabaseClientContext
+    public var idGenerator: any IDGenerator { databaseContext.idGenerator }
 
     public init(
         executor: DatabaseExecutor<S, DatabaseTransactionContext>,
-        idGenerator: any IDGenerator
+        databaseContext: DatabaseClientContext
     ) {
         self.executor = executor
-        self.idGenerator = idGenerator
+        self.databaseContext = databaseContext
     }
 
     public init(
-        database: any DatabaseClient,
-        idGenerator: any IDGenerator,
+        databaseContext: DatabaseClientContext,
         scope: @Sendable @escaping (DatabaseTransactionContext) -> S
     ) {
         self.executor = .init(
-            database: database,
+            database: databaseContext.database,
             scope: scope
         )
-        self.idGenerator = idGenerator
+        self.databaseContext = databaseContext
     }
 
     public func run<T: Sendable>(

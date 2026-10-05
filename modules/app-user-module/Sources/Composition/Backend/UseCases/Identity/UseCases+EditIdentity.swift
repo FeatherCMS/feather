@@ -6,8 +6,7 @@ extension UseCases {
 
     func makeEditIdentity() -> EditIdentity {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteIdentityRole(
                     identity: IdentityDatabaseRepository(context: context),

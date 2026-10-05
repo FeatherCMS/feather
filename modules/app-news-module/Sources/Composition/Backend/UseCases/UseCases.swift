@@ -1,26 +1,24 @@
 public import FeatherContracts
-public import FeatherDatabase
-public import FeatherDomain
-import FeatherInfrastructure
+import FeatherDatabase
+import FeatherDomain
+public import FeatherInfrastructure
 import NewsApplication
 import NewsInfrastructure
 import SystemInfrastructure
 import WebInfrastructure
 
 public struct UseCases: Sendable {
-    let database: any DatabaseClient
-    let idGenerator: any IDGenerator
+    let databaseContext: DatabaseClientContext
     let authorizer: any Authorizer
 
     public init(
-        database: any DatabaseClient,
-        idGenerator: any IDGenerator,
+        databaseContext: DatabaseClientContext,
         authorizer: any Authorizer
     ) {
-        self.database = database
-        self.idGenerator = idGenerator
+        self.databaseContext = databaseContext
         self.authorizer = authorizer
     }
+
 }
 
 extension UseCases {
@@ -32,7 +30,7 @@ extension UseCases {
         ReadArticleMetadata
     > {
         DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadArticleMetadata(
                     article: ArticleDatabaseQueries(
@@ -53,8 +51,7 @@ extension UseCases {
         WriteArticleMetadata
     > {
         DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteArticleMetadata(
                     article: ArticleDatabaseRepository(context: context),
@@ -71,7 +68,7 @@ extension UseCases {
         ReadCategoryMetadata
     > {
         DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadCategoryMetadata(
                     category: CategoryDatabaseQueries(
@@ -92,8 +89,7 @@ extension UseCases {
         WriteCategoryMetadata
     > {
         DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteCategoryMetadata(
                     category: CategoryDatabaseRepository(context: context),
@@ -112,8 +108,7 @@ extension UseCases {
         >
     {
         DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteCategoryArticlesMetadata(
                     article: ArticleDatabaseRepository(context: context),

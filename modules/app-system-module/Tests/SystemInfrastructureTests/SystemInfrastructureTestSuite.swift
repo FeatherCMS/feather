@@ -87,11 +87,14 @@ struct SystemInfrastructureTestSuite {
         }
 
         let idGenerator = Foo()
+        let databaseContext = DatabaseClientContext(
+            database: database,
+            idGenerator: idGenerator
+        )
         let authorizer = AllowAllAuthorizer()
 
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator
+            databaseContext: databaseContext
         ) { context in
             WriteVariable(
                 variable: VariableDatabaseRepository(context: context)
@@ -114,7 +117,7 @@ struct SystemInfrastructureTestSuite {
         )
         #expect(res.name == "foo-bar")
 
-        let query = DatabaseQueryExecutor(database: database) { context in
+        let query = DatabaseQueryExecutor(databaseContext: databaseContext) { context in
             GenericScope(
                 [
                     "variable": VariableDatabaseRepository(context: context)

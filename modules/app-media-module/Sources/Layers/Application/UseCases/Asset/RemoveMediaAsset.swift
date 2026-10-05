@@ -1,6 +1,7 @@
 public import FeatherApplication
 public import FeatherContracts
 public import FeatherDomain
+public import FeatherInfrastructure
 import FeatherStorage
 import MediaContracts
 import MediaDomain
@@ -9,12 +10,12 @@ public struct RemoveMediaAsset: UseCase {
     struct Action: PermissionAction { let key = MediaPermissions.Assets.delete }
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<WriteMedia>
-    let storageContext: StorageContext
+    let storageContext: StorageClientContext
 
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteMedia>,
-        storageContext: StorageContext
+        storageContext: StorageClientContext
     ) {
         self.authorizer = authorizer
         self.transaction = transaction

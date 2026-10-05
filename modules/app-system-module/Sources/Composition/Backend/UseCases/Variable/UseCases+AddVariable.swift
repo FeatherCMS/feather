@@ -6,8 +6,7 @@ extension UseCases {
 
     func makeAddVariable() -> AddVariable {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteVariable(
                     variable: VariableDatabaseRepository(context: context)

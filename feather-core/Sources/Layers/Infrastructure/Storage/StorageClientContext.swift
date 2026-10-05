@@ -1,7 +1,8 @@
+public import FeatherDomain
 public import FeatherStorage
 
-// TODO: move to infrastructure
-public struct StorageContext: Sendable {
+/// Application-lifetime storage dependencies shared by module composition.
+public struct StorageClientContext: Sendable {
     public let storage: any StorageClient
     public let objectKeyGenerator: any ObjectKeyGenerator
 

@@ -6,7 +6,7 @@ extension UseCases {
 
     func makeListRoles() -> ListRoles {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadRole(
                     role: RoleDatabaseQueries(

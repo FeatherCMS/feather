@@ -6,7 +6,7 @@ extension UseCases {
 
     func makeGetPermissions() -> GetPermission {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadPermission(
                     permission: PermissionDatabaseQueries(
