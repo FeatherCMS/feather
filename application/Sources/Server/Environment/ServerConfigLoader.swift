@@ -70,7 +70,7 @@ struct ServerConfigLoader {
                 publicBaseURL: URL(
                     string: mediaReader.string(
                         forKey: "public_base_url",
-                        default: "http://localhost:8080"
+                        default: "http://localhost:8081"
                     )
                 )!
             )

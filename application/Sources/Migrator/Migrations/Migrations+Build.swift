@@ -90,7 +90,9 @@ public func buildMigrations(
     ]
 }
 
-public func buildMigrationEventPublisher() -> any EventPublisher {
+public func buildMigrationEventPublisher(
+    webPublicBaseURL: String
+) -> any EventPublisher {
     var events = EventRegistry()
     SystemInfrastructure.EventHandlers.register(in: &events)
     FeatherMailFromAddressEventHandlers.register(in: &events)
@@ -104,6 +106,9 @@ public func buildMigrationEventPublisher() -> any EventPublisher {
     NewsletterInfrastructure.EventHandlers.register(in: &events)
     BlogInfrastructure.EventHandlers.register(in: &events)
     NewsInfrastructure.EventHandlers.register(in: &events)
-    WebInfrastructure.EventHandlers.register(in: &events)
+    WebInfrastructure.EventHandlers.register(
+        in: &events,
+        publicBaseURL: webPublicBaseURL
+    )
     return events
 }

@@ -30,7 +30,10 @@ public func buildTestMigrations(
     ContactInfrastructure.EventHandlers.register(in: &events)
     BlogInfrastructure.EventHandlers.register(in: &events)
     NewsInfrastructure.EventHandlers.register(in: &events)
-    WebInfrastructure.EventHandlers.register(in: &events)
+    WebInfrastructure.EventHandlers.register(
+        in: &events,
+        publicBaseURL: "http://localhost:3456"
+    )
 
     let context = DatabaseTransactionContext(
         connection: connection,

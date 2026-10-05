@@ -31,7 +31,7 @@ public struct AppEnvironmentURLResolver {
     public func publicMediaBaseURL() -> String {
         reader.string(
             forKey: "media.publicBaseURL",
-            default: "http://localhost:8080"
+            default: "http://localhost:8081"
         )
     }
 }
