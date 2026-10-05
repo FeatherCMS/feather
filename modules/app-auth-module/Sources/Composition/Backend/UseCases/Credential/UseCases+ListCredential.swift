@@ -6,7 +6,7 @@ extension UseCases {
 
     func makeListCredential() -> ListCredential {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadCredentialLink(
                     credential: CredentialDatabaseQueries(

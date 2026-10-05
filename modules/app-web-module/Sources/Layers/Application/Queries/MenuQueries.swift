@@ -11,6 +11,10 @@ public protocol MenuQueries: Sendable {
         id: String
     ) async throws -> MenuDetail
 
+    func find(
+        key: String
+    ) async throws -> MenuDetail?
+
     func list(
         query: MenuList.Query
     ) async throws -> MenuList

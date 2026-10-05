@@ -1,4 +1,5 @@
 import FeatherDomain
+import FeatherApplication
 import FeatherInfrastructure
 public import MediaApplication
 import MediaInfrastructure
@@ -7,7 +8,7 @@ extension UseCases {
 
     public func makeGetAssetDetails() -> GetMediaAssetDetails {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadMedia(
                     folders: MediaFolderDatabaseQueries(

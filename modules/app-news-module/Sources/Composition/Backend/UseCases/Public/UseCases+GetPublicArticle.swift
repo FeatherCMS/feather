@@ -8,7 +8,7 @@ extension UseCases {
     public func makeGetPublicArticle() -> GetPublicArticle {
         .init(
             query: DatabaseQueryExecutor(
-                database: database,
+                databaseContext: databaseContext,
                 scope: { context in
                     ReadPublicNewsArticle(
                         article: ArticleDatabaseQueries(

@@ -1,11 +1,11 @@
 public import FeatherContracts
-public import WebFrontend
+import WebFrontend
 
 public enum ContactMarkdownEventHandlers {
     public static func register(
         in registry: inout EventRegistry,
         api: ContactAppAPIClient,
-        formChallengeProvider: (any WebFormChallengeProvider)? = nil
+        turnstileSiteKey: String? = nil
     ) {
         registry.register(
             event: WebMarkdownBlockRendererProvider.self,
@@ -13,7 +13,7 @@ public enum ContactMarkdownEventHandlers {
         ) { _, _ in
             ContactFormMarkdownBlockRenderer(
                 api: api,
-                formChallengeProvider: formChallengeProvider
+                turnstileSiteKey: turnstileSiteKey
             )
         }
     }

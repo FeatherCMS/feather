@@ -26,6 +26,7 @@ protocol AppLoginAuthPresenter: Sendable {
         email: String,
         password: String,
         isPersistent: Bool,
-        redirectPath: String
+        redirectPath: String,
+        turnstileSiteKey: String?
     ) -> LoginForm.State
 }

@@ -1,10 +1,10 @@
 public import FeatherApplication
 public import FeatherContracts
-public import FeatherDomain
 public import FeatherStorage
 public import Foundation
 import MediaContracts
 import MediaDomain
+import MIME
 import NIOCore
 
 public struct CreateMediaAsset: UseCase {
@@ -18,12 +18,12 @@ public struct CreateMediaAsset: UseCase {
 
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<WriteMedia>
-    let storageContext: StorageContext
+    let storageContext: StorageClientContext
 
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteMedia>,
-        storageContext: StorageContext
+        storageContext: StorageClientContext
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
@@ -119,9 +119,14 @@ public struct CreateMediaAsset: UseCase {
             extension: file.extension,
             objectKeyGenerator: storageContext.objectKeyGenerator
         )
+        let mediaType =
+            MediaTypeDetector()
+            .getPossibleMediaTypeForExtension(file.extension)?.rawValue
+            ?? MediaType.Application.octetStream().rawValue
         try await storageContext.storage.upload(
             key: storageObjectKey,
-            sequence: input.content
+            sequence: input.content,
+            contentType: mediaType
         )
 
         do {
@@ -138,7 +143,7 @@ public struct CreateMediaAsset: UseCase {
                         MediaAssetStorageObject.create(
                             key: "original",
                             extension: file.extension,
-                            contentType: contentType(for: file.extension),
+                            contentType: mediaType,
                             sizeInBytes: input.contentLength
                         )
                     )
@@ -150,7 +155,7 @@ public struct CreateMediaAsset: UseCase {
                         slugPath: slugPath,
                         storageObjectId: originalStorageObject.id,
                         extension: file.extension,
-                        contentType: contentType(for: file.extension),
+                        contentType: mediaType,
                         sizeBytes: input.contentLength,
                         title: input.title,
                         altText: input.altText
@@ -212,18 +217,6 @@ extension CreateMediaAsset {
                 options: .regularExpression
             )
             .trimmingCharacters(in: CharacterSet(charactersIn: "-"))
-    }
-
-    fileprivate func contentType(for `extension`: String) -> String {
-        switch `extension` {
-        case "jpeg", "jpg": return "image/jpeg"
-        case "png": return "image/png"
-        case "gif": return "image/gif"
-        case "webp": return "image/webp"
-        case "pdf": return "application/pdf"
-        case "mp4": return "video/mp4"
-        default: return "application/octet-stream"
-        }
     }
 
     fileprivate func adjustFolderAggregates(

@@ -1,8 +1,7 @@
-import FeatherApplication
+public import FeatherApplication
 public import FeatherContracts
-public import FeatherDatabase
-public import FeatherDomain
-import FeatherInfrastructure
+import FeatherDatabase
+public import FeatherInfrastructure
 import FeatherStorage
 public import Foundation
 public import MediaApplication
@@ -23,30 +22,26 @@ public struct UseCases: Sendable {
         public let objectKey: String
     }
 
-    let database: any DatabaseClient
-    let idGenerator: any IDGenerator
-    let storageContext: StorageContext
-    let variantQueue: any MediaVariantQueue
+    let databaseContext: DatabaseClientContext
+    let storageContext: StorageClientContext
+    let jobs: any MediaJobController
     let authorizer: any Authorizer
 
     public init(
-        database: any DatabaseClient,
-        idGenerator: any IDGenerator,
-        storageContext: StorageContext,
+        databaseContext: DatabaseClientContext,
+        storageContext: StorageClientContext,
         authorizer: any Authorizer,
-        variantQueue: any MediaVariantQueue
+        jobs: any MediaJobController
     ) {
-        self.database = database
-        self.idGenerator = idGenerator
+        self.databaseContext = databaseContext
         self.storageContext = storageContext
-        self.variantQueue = variantQueue
+        self.jobs = jobs
         self.authorizer = authorizer
     }
 
     func writeTransaction() -> DatabaseTransactionExecutor<WriteMedia> {
         DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteMedia(
                     folders: MediaAssetNodeFolderDatabaseRepository(
@@ -77,7 +72,7 @@ public struct UseCases: Sendable {
         processors: [MediaVariantProcessor]
     ) async throws {
         guard !processors.isEmpty else { return }
-        try await variantQueue.enqueueMediaGenerateVariants(assetId: assetId)
+        try await jobs.enqueueMediaGenerateVariants(assetId: assetId)
     }
 
     public func createAssetAndEnqueue(
@@ -121,9 +116,9 @@ public struct UseCases: Sendable {
     public func activeVariantProcessors() async throws
         -> [MediaVariantProcessor]
     {
-        try await database.withConnection { connection in
+        try await databaseContext.database.withConnection { connection in
             let repo = MediaVariantProcessorDatabaseRepository(
-                context: .init(connection: connection, idGenerator: idGenerator)
+                context: .init(connection: connection, idGenerator: databaseContext.idGenerator)
             )
             return try await repo.listActive()
         }
@@ -140,9 +135,9 @@ public struct UseCases: Sendable {
                 processor: $0
             )
         }
-        let updated = try await database.withConnection { connection in
+        let updated = try await databaseContext.database.withConnection { connection in
             let repo = MediaAssetNodeFileDatabaseRepository(
-                context: .init(connection: connection, idGenerator: idGenerator)
+                context: .init(connection: connection, idGenerator: databaseContext.idGenerator)
             )
             guard let asset = try await repo.find(id: result.id) else {
                 return result
@@ -171,7 +166,7 @@ public struct UseCases: Sendable {
     }
 
     public func getAssetDetails(id: String) async throws -> MediaAssetDetail {
-        try await database.withConnection { connection in
+        try await databaseContext.database.withConnection { connection in
             try await MediaAssetDatabaseQueries(
                 context: .init(connection: connection),
                 objectKeyGenerator: storageContext.objectKeyGenerator
@@ -183,7 +178,7 @@ public struct UseCases: Sendable {
     public func readOriginalAssetFile(assetId: String) async throws -> (
         data: Data, type: String, filename: String, slugPath: String
     ) {
-        let asset = try await database.withConnection { connection in
+        let asset = try await databaseContext.database.withConnection { connection in
             try await MediaAssetDatabaseQueries(
                 context: .init(connection: connection),
                 objectKeyGenerator: storageContext.objectKeyGenerator
@@ -213,12 +208,12 @@ public struct UseCases: Sendable {
     public func readVariantFile(assetId: String, variantName: String)
         async throws -> (data: Data, type: String, filename: String)
     {
-        let stored = try await database.withConnection { connection in
+        let stored = try await databaseContext.database.withConnection { connection in
             let repo = MediaAssetNodeFileVariantDatabaseRepository(
-                context: .init(connection: connection, idGenerator: idGenerator)
+                context: .init(connection: connection, idGenerator: databaseContext.idGenerator)
             )
             let definitions = try await MediaVariantDatabaseRepository(
-                context: .init(connection: connection, idGenerator: idGenerator)
+                context: .init(connection: connection, idGenerator: databaseContext.idGenerator)
             )
             .list()
             guard
@@ -229,7 +224,7 @@ public struct UseCases: Sendable {
                     .first(where: { $0.variantId == definition.id })
             else { throw RepositoryError.notFound }
             let objectRepository = MediaAssetStorageObjectDatabaseRepository(
-                context: .init(connection: connection, idGenerator: idGenerator)
+                context: .init(connection: connection, idGenerator: databaseContext.idGenerator)
             )
             guard
                 let object = try await objectRepository.find(
@@ -262,15 +257,15 @@ public struct UseCases: Sendable {
     public func listAssociatedVariantFiles(assetId: String) async throws
         -> [AssociatedVariantFile]
     {
-        try await database.withConnection { connection in
+        try await databaseContext.database.withConnection { connection in
             let repo = MediaAssetNodeFileVariantDatabaseRepository(
-                context: .init(connection: connection, idGenerator: idGenerator)
+                context: .init(connection: connection, idGenerator: databaseContext.idGenerator)
             )
             let variantDefinitions = Dictionary(
                 uniqueKeysWithValues: try await MediaVariantDatabaseRepository(
                     context: .init(
                         connection: connection,
-                        idGenerator: idGenerator
+                        idGenerator: databaseContext.idGenerator
                     )
                 )
                 .list()
@@ -280,13 +275,13 @@ public struct UseCases: Sendable {
                 let asset = try await MediaAssetNodeFileDatabaseRepository(
                     context: .init(
                         connection: connection,
-                        idGenerator: idGenerator
+                        idGenerator: databaseContext.idGenerator
                     )
                 )
                 .find(id: assetId)
             else { throw RepositoryError.notFound }
             let objects = try await MediaAssetStorageObjectDatabaseRepository(
-                context: .init(connection: connection, idGenerator: idGenerator)
+                context: .init(connection: connection, idGenerator: databaseContext.idGenerator)
             )
             .list(assetNodeFileIds: [assetId])
             let objectsByID = Dictionary(

@@ -7,7 +7,7 @@ extension UseCases {
 
     public func makeGetPublicPost() -> GetPublicPost {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadPublic(
                     post: PostDatabaseQueries(

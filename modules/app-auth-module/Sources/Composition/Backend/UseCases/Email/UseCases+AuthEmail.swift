@@ -9,8 +9,7 @@ extension UseCases {
         WriteAuth
     > {
         DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator
+            databaseContext: databaseContext,
         ) { context in
             WriteAuth(
                 identity: IdentityDatabaseRepository(context: context),

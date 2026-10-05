@@ -6,15 +6,11 @@ extension UseCases {
 
     public func makeAddAuthorLink() -> AddAuthorLink {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteAuthorLink(
                     authorLink: AuthorLinkDatabaseRepository(
-                        context: .init(
-                            connection: context.connection,
-                            idGenerator: idGenerator
-                        )
+                        context: context
                     )
                 )
             }

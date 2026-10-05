@@ -185,7 +185,7 @@ struct AccountApplicationTestSuite {
             ),
             transaction: transaction,
             events: MockEventPublisher(),
-            mailSender: MockMailSender()
+            jobs: MockSendMailJobController()
         )
 
         await #expect(throws: AddInvitation.Error.self) {
@@ -231,14 +231,14 @@ struct AccountApplicationTestSuite {
                 )
             )
         )
-        let mailSender = MockMailSender()
+        let jobs = MockSendMailJobController()
         let useCase = AddInvitation(
             authorizer: MockPermissionAuthorizer(
                 permissions: [AccountPermissions.Invitations.create]
             ),
             transaction: transaction,
             events: MockEventPublisher(),
-            mailSender: mailSender
+            jobs: jobs
         )
 
         _ = try await useCase.execute(
@@ -247,17 +247,17 @@ struct AccountApplicationTestSuite {
         )
 
         #expect(
-            await mailSender.lastMessage?.body
+            await jobs.lastBody
                 .contains(
                     "https://example.test/account/invitation/accept/?token=\(token)"
                 ) == true
         )
         #expect(
-            await mailSender.lastMessage?.from.email
+            await jobs.lastMail?.from.email
                 == "invitations@example.test"
         )
-        #expect(await mailSender.lastMessage?.from.name == "Binary Birds")
-        #expect(await mailSender.lastMessage?.body.contains("\\(") == false)
+        #expect(await jobs.lastMail?.from.name == "Binary Birds")
+        #expect(await jobs.lastBody?.contains("\\(") == false)
     }
 
     @Test
@@ -284,13 +284,13 @@ struct AccountApplicationTestSuite {
                 )
             )
         )
-        let mailSender = MockMailSender()
+        let jobs = MockSendMailJobController()
         let useCase = ResendInvitation(
             authorizer: MockPermissionAuthorizer(
                 permissions: [AccountPermissions.Invitations.create]
             ),
             transaction: transaction,
-            mailSender: mailSender
+            jobs: jobs
         )
 
         let result = try await useCase.execute(
@@ -301,19 +301,19 @@ struct AccountApplicationTestSuite {
         #expect(result.id == invitation.id)
         #expect(result.token != invitation.token)
         #expect(await repository.updateCallCount == 1)
-        #expect(await mailSender.sendCallCount == 1)
+        #expect(await jobs.enqueueCallCount == 1)
         #expect(
-            await mailSender.lastMessage?.from.email == "resend@example.test"
+            await jobs.lastMail?.from.email == "resend@example.test"
         )
-        #expect(await mailSender.lastMessage?.from.name == "Binary Birds")
+        #expect(await jobs.lastMail?.from.name == "Binary Birds")
         #expect(
-            await mailSender.lastMessage?.body
+            await jobs.lastBody
                 .contains(
                     "This is a reminder for your application identity invitation."
                 ) == true
         )
         #expect(
-            await mailSender.lastMessage?.body.contains(result.token) == true
+            await jobs.lastBody?.contains(result.token) == true
         )
     }
 
@@ -385,7 +385,7 @@ struct AccountApplicationTestSuite {
         let useCase = ResendInvitation(
             authorizer: MockPermissionAuthorizer(permissions: []),
             transaction: transaction,
-            mailSender: MockMailSender()
+            jobs: MockSendMailJobController()
         )
 
         await #expect(throws: AuthError.self) {

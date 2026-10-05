@@ -12,6 +12,10 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/parameters` section of the OpenAPI document.
     public enum Parameters {
+        /// Web menu key
+        ///
+        /// - Remark: Generated from `#/components/parameters/WebMenuKeyParameter`.
+        public typealias WebMenuKeyParameter = Components.Schemas.WebMenuKeyField
         /// Web metadata slug
         ///
         /// - Remark: Generated from `#/components/parameters/WebMetadataSlugParameter`.

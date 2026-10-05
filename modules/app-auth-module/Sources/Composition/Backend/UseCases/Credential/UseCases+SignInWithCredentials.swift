@@ -7,8 +7,7 @@ extension UseCases {
 
     func makeSignInWithCredentials() -> SignInWithCredentials {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteAuth(
                     identity: IdentityDatabaseRepository(context: context),

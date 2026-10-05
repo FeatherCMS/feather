@@ -13,8 +13,7 @@ extension UseCases {
 
     func makeEditMenuItem() -> EditMenuItem {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteMenuItem(
                     menuItem: MenuItemDatabaseRepository(context: context)

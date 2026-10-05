@@ -7,7 +7,7 @@ extension UseCases {
     public func makeGetPublicSettings() -> DatabaseQueryExecutor<WriteSettings>
     {
         DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteSettings(
                     settings: SettingsDatabaseRepository(context: context)

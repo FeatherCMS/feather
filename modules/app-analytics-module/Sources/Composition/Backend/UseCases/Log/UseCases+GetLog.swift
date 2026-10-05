@@ -6,7 +6,7 @@ extension UseCases {
 
     func makeGetLog() -> GetLog {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadLog(
                     log: LogDatabaseQueries(

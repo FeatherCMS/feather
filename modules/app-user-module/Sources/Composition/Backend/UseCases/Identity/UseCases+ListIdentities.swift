@@ -6,7 +6,7 @@ extension UseCases {
 
     func makeListIdentities() -> ListIdentities {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadIdentity(
                     identity: IdentityDatabaseQueries(

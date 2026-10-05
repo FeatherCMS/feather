@@ -8,7 +8,7 @@ extension UseCases {
     public func makeListPublicCategories() -> ListPublicCategories {
         .init(
             query: DatabaseQueryExecutor(
-                database: database,
+                databaseContext: databaseContext,
                 scope: { context in
                     ReadPublicNewsCategory(
                         category: CategoryDatabaseQueries(

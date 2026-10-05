@@ -6,7 +6,7 @@ extension UseCases {
 
     public func makeGetIdentity() -> GetIdentity {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadIdentity(
                     identity: IdentityDatabaseQueries(

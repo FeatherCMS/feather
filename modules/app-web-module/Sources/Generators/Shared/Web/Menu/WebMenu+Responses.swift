@@ -7,3 +7,10 @@ public struct WebMenuListResponse: JSONResponseRepresentable {
 
     public init() {}
 }
+
+public struct WebMenuResponse: JSONResponseRepresentable {
+    public var description: String = "Web menu"
+    public var schema = WebMenuSchema().reference()
+
+    public init() {}
+}

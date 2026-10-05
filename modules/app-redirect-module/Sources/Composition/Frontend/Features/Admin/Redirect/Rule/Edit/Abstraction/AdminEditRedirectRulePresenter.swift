@@ -20,7 +20,7 @@ protocol AdminEditRedirectRulePresenter: Sendable {
         input: RedirectRuleEditFormInput?,
         error: AdminEditRedirectRuleError
     ) async throws -> HTMLResponse
-    func renderSuccess() -> Response
+    func renderSuccess(id: String) -> Response
     func renderForbiddenPage() async throws -> HTMLResponse
     func renderInvalidNoncePage() async throws -> HTMLResponse
 }

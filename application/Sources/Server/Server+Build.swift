@@ -8,6 +8,7 @@ import NIOSSL
 import PostgresMigrations
 import PostgresNIO
 import Environment
+import FeatherApplication
 import FeatherInfrastructure
 import FeatherDomain
 import FeatherStorage
@@ -70,12 +71,15 @@ func buildServer(
     )
 
     let idGenerator = NanoIDGenerator()
+    let databaseContext = DatabaseClientContext(
+        database: database,
+        idGenerator: idGenerator
+    )
     let events = buildAppEventPublisher()
 
     let modules = AppModules(
         infrastructure: .init(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             events: events,
             jobQueue: jobQueue,
             storageContext: .init(

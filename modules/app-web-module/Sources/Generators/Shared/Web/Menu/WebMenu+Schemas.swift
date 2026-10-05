@@ -14,6 +14,16 @@ public struct WebMenuKeyField: StringSchemaRepresentable {
     public init() {}
 }
 
+public struct WebMenuKeyParameter: PathParameterRepresentable {
+    public var name: String { "key" }
+    public var description: String? { "Web menu key" }
+    public var schema: any OpenAPISchemaRepresentable {
+        WebMenuKeyField().reference()
+    }
+
+    public init() {}
+}
+
 public struct WebMenuNameField: StringSchemaRepresentable {
     public var example: String? = "Header menu"
 

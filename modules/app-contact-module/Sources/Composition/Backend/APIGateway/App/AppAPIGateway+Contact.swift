@@ -52,9 +52,7 @@ extension AppAPIGateway {
         let metadataJSON = try body.metadata.map {
             try String(decoding: JSONEncoder().encode($0), as: UTF8.self)
         }
-        let form = try await self.useCases.makeGetPublicForm()
-            .execute(.init(key: input.path.contactFormKey))
-        _ = try await self.useCases.makeSubmitContactForm()
+        let result = try await self.useCases.makeSubmitContactForm()
             .execute(
                 .init(
                     formKey: input.path.contactFormKey,
@@ -63,12 +61,8 @@ extension AppAPIGateway {
                     metadataJSON: metadataJSON
                 )
             )
-        try await useCases.enqueueMailTasks(
-            form: form,
-            valuesJSON: valuesJSON
-        )
         return .created(
-            .init(body: .json(.init(redirectUrl: form.redirectUrl)))
+            .init(body: .json(.init(redirectUrl: result.redirectUrl)))
         )
     }
 }

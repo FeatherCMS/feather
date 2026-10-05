@@ -67,8 +67,9 @@ struct AdminEditNewsletterCampaignSubscriberDefaultController:
             )
             return AdminNotificationFlash.redirect(
                 to:
-                    NewsletterAdminRoutes.campaignSubscribers(
-                        RouterPath(newsletterId)
+                    NewsletterAdminRoutes.campaignSubscriberEdit(
+                        newsletterID: RouterPath(newsletterId),
+                        subscriberID: RouterPath(subscriberId)
                     )
                     .description,
                 notification: .init(

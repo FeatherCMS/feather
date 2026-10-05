@@ -26,7 +26,7 @@ public enum WebPublicContentEventHandlers {
             apiBaseURL: context.runtime.apiBaseURL,
             sessionToken: context.runtime.context.sessionToken
         )
-        let siteSettings = try await api.withOpenAPIRepositoryErrorMapping {
+        async let siteSettingsTask = api.withOpenAPIRepositoryErrorMapping {
             client in
             let response = try await client.webSiteSettings(.init())
             switch response {
@@ -38,24 +38,47 @@ public enum WebPublicContentEventHandlers {
                 )
             }
         }
-        let menus = try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.webMenuList(.init())
-            switch response {
-            case .ok(let value): return try value.body.json
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
+        async let menuTask: WebAppAPI.Components.Schemas.WebMenuSchema? =
+            api.withOpenAPIRepositoryErrorMapping { client in
+                let response = try await client.webMenuGetByKey(
+                    path: .init(key: "main")
                 )
+                switch response {
+                case .ok(let value): return try value.body.json
+                case .notFound: return nil
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
             }
         }
+        async let accountActionsMenuTask:
+            WebAppAPI.Components.Schemas.WebMenuSchema? =
+            api.withOpenAPIRepositoryErrorMapping { client in
+                let response = try await client.webMenuGetByKey(
+                    path: .init(key: "account_actions")
+                )
+                switch response {
+                case .ok(let value): return try value.body.json
+                case .notFound: return nil
+                case .undocumented(let statusCode, let response):
+                    throw try await api.failure(
+                        statusCode: statusCode,
+                        responseBody: response.body
+                    )
+                }
+            }
+        let (siteSettings, menu, accountActionsMenu) = try await (
+            siteSettingsTask,
+            menuTask,
+            accountActionsMenuTask
+        )
         let origins = context.runtime.publicOrigins
         let mediaResolver = context.runtime.mediaResolver
-        let navigation =
-            menus
-            .first(where: { $0.key == "main" })?
-            .items
-            .map(menuItemContext) ?? []
+        let navigation = menu?.items.map(menuItemContext) ?? []
+        let accountActions = accountActionsMenu?.items.map(menuItemContext)
+            ?? []
         var payload: [String: any Sendable] = [
             "baseUrl": normalizedURL(
                 base: origins.staticBaseURL,
@@ -66,6 +89,7 @@ public enum WebPublicContentEventHandlers {
             "site": siteContext(
                 settings: siteSettings,
                 navigation: navigation,
+                accountActions: accountActions,
                 mediaResolver: mediaResolver
             ),
             "generation": [
@@ -123,10 +147,12 @@ public enum WebPublicContentEventHandlers {
     private static func siteContext(
         settings: WebAppAPI.Components.Schemas.WebSiteSettingsSchema,
         navigation: [[String: any Sendable]],
+        accountActions: [[String: any Sendable]],
         mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
         var context: [String: any Sendable] = [
             "navigation": navigation,
+            "accountActions": accountActions,
             "noIndex": settings.noIndex,
         ]
 

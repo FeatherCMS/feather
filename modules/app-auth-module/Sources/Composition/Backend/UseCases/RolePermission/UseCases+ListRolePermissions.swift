@@ -7,7 +7,7 @@ extension UseCases {
 
     func makeListRolePermissions() -> ListRolePermissions {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 AuthScope(
                     identity: IdentityDatabaseQueries(

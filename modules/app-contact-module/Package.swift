@@ -49,8 +49,11 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.12.1"),
         .package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.27.0"),
         .package(url: "https://github.com/swift-server/async-http-client", from: "1.0.0"),
-
         .package(path: "../../feather-core"),
+        .package(
+            url: "https://github.com/feather-framework/feather-mail",
+            exact: "1.0.0-rc.1"
+        ),
         .package(path: "../app-system-module"),
         .package(path: "../app-web-module"),
     ],
@@ -77,6 +80,7 @@ let package = Package(
             name: "ContactApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "SystemApplication", package: "app-system-module"),
 
                 .target(name: "ContactDomain"),

@@ -1,17 +1,21 @@
 import ContactDomain
 public import FeatherApplication
 public import FeatherContracts
+import FeatherMail
 import Foundation
 
 import struct Foundation.Date
 
 public struct SubmitForm: UseCase {
     let transaction: any TransactionExecutor<WriteForm>
+    let jobs: any SendMailJobController
 
     public init(
-        transaction: any TransactionExecutor<WriteForm>
+        transaction: any TransactionExecutor<WriteForm>,
+        jobs: any SendMailJobController
     ) {
         self.transaction = transaction
+        self.jobs = jobs
     }
 
     public struct Input: DTO {
@@ -33,15 +37,29 @@ public struct SubmitForm: UseCase {
         }
     }
 
+    public struct Output: DTO {
+        public let submission: SubmissionDetail
+        public let redirectUrl: String?
+
+        package init(
+            submission: SubmissionDetail,
+            redirectUrl: String?
+        ) {
+            self.submission = submission
+            self.redirectUrl = redirectUrl
+        }
+    }
+
     public func execute(
         _ input: Input
-    ) async throws -> SubmissionDetail {
-        try await transaction.run { scope in
+    ) async throws -> Output {
+        let result = try await transaction.run { scope in
             guard let form = try await scope.form.findBy(key: input.formKey)
             else {
                 throw Error.formNotFound
             }
             let fields = try await scope.field.listBy(formId: form.id)
+            let mails = try await scope.mail.listBy(formId: form.id)
             try validate(
                 valuesJSON: input.valuesJSON,
                 against: fields
@@ -53,8 +71,122 @@ public struct SubmitForm: UseCase {
                 itemsSnapshotJSON: input.itemsSnapshotJSON,
                 metadataJSON: input.metadataJSON,
             )
-            return (try await scope.submission.insert(model)).asDetail
+            return (
+                submission: (try await scope.submission.insert(model)).asDetail,
+                redirectUrl: form.redirectUrl,
+                mails: mails.map(\.asDetail)
+            )
         }
+
+        try await enqueueMailTasks(
+            mails: result.mails,
+            valuesJSON: input.valuesJSON
+        )
+
+        return .init(
+            submission: result.submission,
+            redirectUrl: result.redirectUrl
+        )
+    }
+
+    private func enqueueMailTasks(
+        mails: [SubmissionMailDetail],
+        valuesJSON: String
+    ) async throws {
+        guard
+            let data = valuesJSON.data(using: .utf8),
+            let values = try JSONSerialization.jsonObject(with: data)
+                as? [String: Any]
+        else {
+            return
+        }
+
+        for mail in mails {
+            try await jobs.enqueue(
+                makeMail(
+                    from: render(mail.mailFrom, values: values),
+                    to: render(mail.mailTo, values: values),
+                    subject: render(mail.subject, values: values),
+                    additionalHeaders: mail.additionalHeaders.map {
+                        render($0, values: values)
+                    },
+                    body: renderHTML(mail.messageBody, values: values)
+                )
+            )
+        }
+    }
+
+    private func makeMail(
+        from: String,
+        to: String,
+        subject: String,
+        additionalHeaders: [String],
+        body: String
+    ) -> Mail {
+        let headers = parseHeaders(additionalHeaders)
+        return .init(
+            from: .init(from),
+            to: [.init(to)],
+            cc: headers["cc", default: []].map { .init($0) },
+            bcc: headers["bcc", default: []].map { .init($0) },
+            replyTo: headers["reply-to", default: []].map { .init($0) },
+            subject: subject,
+            body: .html(body)
+        )
+    }
+
+    private func parseHeaders(
+        _ values: [String]
+    ) -> [String: [String]] {
+        values.reduce(into: [:]) { result, line in
+            let parts = line.split(separator: ":", maxSplits: 1)
+                .map(String.init)
+            guard parts.count == 2 else { return }
+            let key = parts[0]
+                .trimmingCharacters(in: .whitespacesAndNewlines)
+                .lowercased()
+            guard ["cc", "bcc", "reply-to"].contains(key) else { return }
+            result[key, default: []] += parts[1]
+                .split(separator: ",")
+                .map {
+                    $0.trimmingCharacters(in: .whitespacesAndNewlines)
+                }
+        }
+    }
+
+    private func render(
+        _ template: String,
+        values: [String: Any]
+    ) -> String {
+        values.reduce(template) { result, entry in
+            let value = String(describing: entry.value)
+            return
+                result
+                .replacingOccurrences(of: "[\(entry.key)]", with: value)
+                .replacingOccurrences(of: "{{\(entry.key)}}", with: value)
+        }
+    }
+
+    private func renderHTML(
+        _ template: String,
+        values: [String: Any]
+    ) -> String {
+        values.reduce(template) { result, entry in
+            let value = htmlEscaped(String(describing: entry.value))
+            return
+                result
+                .replacingOccurrences(of: "[\(entry.key)]", with: value)
+                .replacingOccurrences(of: "{{\(entry.key)}}", with: value)
+        }
+    }
+
+    private func htmlEscaped(_ value: String) -> String {
+        value
+            .replacingOccurrences(of: "&", with: "&amp;")
+            .replacingOccurrences(of: "<", with: "&lt;")
+            .replacingOccurrences(of: ">", with: "&gt;")
+            .replacingOccurrences(of: "\"", with: "&quot;")
+            .replacingOccurrences(of: "'", with: "&#39;")
     }
 
     private func validate(

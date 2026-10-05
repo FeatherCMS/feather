@@ -7,8 +7,7 @@ extension UseCases {
 
     func makeSignInWithMagicLink() -> SignInWithMagicLink {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteAuth(
                     identity: IdentityDatabaseRepository(context: context),

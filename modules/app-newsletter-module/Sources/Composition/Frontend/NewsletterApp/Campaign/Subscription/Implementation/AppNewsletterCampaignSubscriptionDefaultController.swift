@@ -15,16 +15,17 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
 {
     let apiBuilder: NewsletterAPIBuilder
     let route: NewsletterSubscriptionRoute
-    let formChallengeProvider: (any WebFormChallengeProvider)?
+    let turnstileVerifier: (any TurnstileVerifier)?
     func subscribe(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
         let campaignId = try context.requiredParameter(route.parameterName)
-        let form = try await request.decode(
-            as: AppNewsletterCampaignSubscriptionForm.self,
+        let decoded = try await request.decode(
+            as: TurnstileDecoded<AppNewsletterCampaignSubscriptionForm>.self,
             context: context
         )
+        let form = decoded.data
         guard WebFormSubmissionNonce.matches(
             formValue: form.nonce,
             cookieValue: request.cookies[
@@ -33,23 +34,14 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
         ) else {
             throw HTTPError(.forbidden)
         }
-        if let formChallengeProvider {
-            let isVerified: Bool
-            do {
-                isVerified = try await formChallengeProvider.verify(
-                    response: form.challengeResponses[
-                        formChallengeProvider.responseFieldName
-                    ]
+        do {
+            if let turnstileVerifier,
+                try await !turnstileVerifier.verify(
+                    token: decoded.token
                 )
-            }
-            catch {
-                throw HTTPError(.serviceUnavailable)
-            }
-            guard isVerified else {
+            {
                 throw HTTPError(.forbidden)
             }
-        }
-        do {
             let response = try await apiBuilder.makeNewsletterApp(context)
                 .withOpenAPIRepositoryErrorMapping { client in
                     try await client.appNewsletterCampaignSubscribe(

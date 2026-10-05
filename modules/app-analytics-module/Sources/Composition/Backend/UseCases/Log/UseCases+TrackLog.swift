@@ -6,8 +6,7 @@ extension UseCases {
 
     func makeTrackLog() -> TrackLog {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteLog(
                     log: LogDatabaseRepository(context: context)

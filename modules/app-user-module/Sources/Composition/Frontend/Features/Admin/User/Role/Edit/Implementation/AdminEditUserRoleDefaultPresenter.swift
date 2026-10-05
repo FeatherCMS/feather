@@ -79,7 +79,7 @@ struct AdminEditUserRoleDefaultPresenter: AdminEditUserRolePresenter {
 
     func renderSuccess(id: String) -> Response {
         AdminNotificationFlash.redirect(
-            to: UserRoleRoutes.list.description,
+            to: UserRoleRoutes.edit(RouterPath(id)).description,
             notification: .init(
                 title: "Saved",
                 message: "User role updated successfully."

@@ -85,35 +85,60 @@ extension GetPublicCategory {
         pageSize: Int
     ) async throws -> PublicArticlePage {
         let resolvedPageSize = max(1, pageSize)
-        let total = try await context.article.countPublic(
+        let requestedPage = max(1, pageNumber)
+        async let totalTask = context.article.countPublic(
             query: .init(),
             categoryID: categoryID
         )
-        let pageCount = max(
-            1,
-            (total + resolvedPageSize - 1) / resolvedPageSize
-        )
-        let currentPage = min(max(1, pageNumber), pageCount)
-        let articles = try await context.article.listPublic(
+        async let requestedArticlesTask = context.article.listPublic(
             query: .init(
                 page: .init(
                     size: resolvedPageSize,
-                    number: currentPage
+                    number: requestedPage
                 ),
                 sort: [.init(field: .createdAt, direction: .desc)]
             ),
             categoryID: categoryID
         )
-        let categoryIDsByArticleID = try await context.article.categoryIDs(
+        let (total, requestedArticles) = try await (
+            totalTask,
+            requestedArticlesTask
+        )
+        let pageCount = max(1, (total + resolvedPageSize - 1) / resolvedPageSize)
+        let currentPage = min(requestedPage, pageCount)
+        let articles: ArticleList
+        if currentPage == requestedPage || total == 0 {
+            articles = requestedArticles
+        } else {
+            articles = try await context.article.listPublic(
+                query: .init(
+                    page: .init(
+                        size: resolvedPageSize,
+                        number: currentPage
+                    ),
+                    sort: [.init(field: .createdAt, direction: .desc)]
+                ),
+                categoryID: categoryID
+            )
+        }
+        async let categoryIDsTask = context.article.categoryIDs(
             for: articles.items.map(\.id)
+        )
+        async let metadataTask = context.metadata.resolveDetails(
+            referenceType: "news.article",
+            referenceIDs: articles.items.map(\.id)
+        )
+        let (categoryIDsByArticleID, metadata) = try await (
+            categoryIDsTask,
+            metadataTask
+        )
+        let metadataByArticleID = Dictionary(
+            uniqueKeysWithValues: metadata.map { ($0.referenceID, $0) }
         )
         var result: [PublicNewsArticleSummary] = []
         for item in articles.items {
             guard
-                let metadata = try await context.metadata.find(
-                    referenceType: "news.article",
-                    referenceID: item.id
-                ),
+                let metadata = metadataByArticleID[item.id],
                 metadata.isPublic(at: now)
             else {
                 continue

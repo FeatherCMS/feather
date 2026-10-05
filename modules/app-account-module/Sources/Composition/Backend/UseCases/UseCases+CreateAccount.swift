@@ -8,8 +8,7 @@ extension UseCases {
 
     func makeCreateAccount() -> AccountApplication.CreateAccount {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteAccount(
                     identity: IdentityDatabaseRepository(context: context),

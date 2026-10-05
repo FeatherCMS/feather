@@ -2,9 +2,11 @@ import FeatherAdmin
 import FeatherValidation
 import Foundation
 import Hummingbird
+import WebFrontend
 
 struct AppLoginAuthDefaultController: AppLoginAuthController {
     let usesSecureCookies: Bool
+    let turnstileVerifier: (any TurnstileVerifier)?
     let buildRuntime:
         RuntimeBuilder<
             any AppLoginAuthInteractor,
@@ -22,7 +24,8 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
                 email: "",
                 password: "",
                 isPersistent: true,
-                redirectPath: redirectPath
+                redirectPath: redirectPath,
+                turnstileSiteKey: turnstileVerifier?.siteKey
             ),
             message: nil
         )
@@ -35,12 +38,40 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
         let (interactor, presenter) = buildRuntime((request, context))
         var lastPayload: LoginFormInput?
         do {
-            let payload = try await request.decode(
-                as: LoginFormInput.self,
+            let decoded = try await request.decode(
+                as: TurnstileDecoded<LoginFormInput>.self,
                 context: context
             )
+            let payload = decoded.data
             lastPayload = payload
             try await payload.validate()
+
+            if let turnstileVerifier {
+                let isVerified: Bool
+                do {
+                    isVerified = try await turnstileVerifier.verify(
+                        token: decoded.token
+                    )
+                }
+                catch {
+                    isVerified = false
+                }
+                guard isVerified else {
+                    return try loginFormErrorResponse(
+                        request: request,
+                        context: context,
+                        presenter: presenter,
+                        state: presenter.formState(
+                            email: payload.email,
+                            password: payload.password,
+                            isPersistent: payload.isPersistent.value,
+                            redirectPath: request.queryString("redirect") ?? "/",
+                            turnstileSiteKey: turnstileVerifier.siteKey
+                        ),
+                        message: "Please complete the verification and try again."
+                    )
+                }
+            }
 
             let result = try await interactor.execute(
                 entity: .init(
@@ -89,7 +120,8 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
                 email: lastPayload?.email ?? "",
                 password: lastPayload?.password ?? "",
                 isPersistent: lastPayload?.isPersistent.value ?? true,
-                redirectPath: request.queryString("redirect") ?? "/"
+                redirectPath: request.queryString("redirect") ?? "/",
+                turnstileSiteKey: turnstileVerifier?.siteKey
             )
             state.apply(errors: errors)
 
@@ -109,7 +141,8 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
                     email: lastPayload?.email ?? "",
                     password: lastPayload?.password ?? "",
                     isPersistent: lastPayload?.isPersistent.value ?? true,
-                    redirectPath: request.queryString("redirect") ?? "/"
+                    redirectPath: request.queryString("redirect") ?? "/",
+                    turnstileSiteKey: turnstileVerifier?.siteKey
                 ),
                 message: "Incorrect email or password."
             )

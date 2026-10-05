@@ -14,6 +14,10 @@ public protocol ArticleQueries: Sendable {
         for articleIDs: [String]
     ) async throws -> [String: [String]]
 
+    func resolve(
+        ids: [String]
+    ) async throws -> ArticleList
+
     func list(
         query: ArticleList.Query
     ) async throws -> ArticleList
@@ -21,6 +25,12 @@ public protocol ArticleQueries: Sendable {
     func listPublic(
         query: ArticleList.Query,
         categoryID: String?
+    ) async throws -> ArticleList
+
+    func listPublicRelated(
+        categoryIDs: [String],
+        excludingArticleID: String,
+        limit: Int
     ) async throws -> ArticleList
 
     func count(

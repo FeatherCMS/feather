@@ -14,17 +14,18 @@ struct AppContactFormSubmissionDefaultController:
     AppContactFormSubmissionController
 {
     let apiBuilder: ContactAPIBuilder
-    let formChallengeProvider: (any WebFormChallengeProvider)?
+    let turnstileVerifier: (any TurnstileVerifier)?
 
     func submit(
         request: Request,
         context: DefaultRequestContext
     ) async throws -> Response {
         let formKey = try context.requiredParameter("formKey")
-        let form = try await request.decode(
-            as: AppContactFormSubmissionForm.self,
+        let decoded = try await request.decode(
+            as: TurnstileDecoded<AppContactFormSubmissionForm>.self,
             context: context
         )
+        let form = decoded.data
         guard WebFormSubmissionNonce.matches(
             formValue: form.nonce,
             cookieValue: request.cookies[
@@ -33,23 +34,14 @@ struct AppContactFormSubmissionDefaultController:
         ) else {
             throw HTTPError(.forbidden)
         }
-        if let formChallengeProvider {
-            let isVerified: Bool
-            do {
-                isVerified = try await formChallengeProvider.verify(
-                    response: form.challengeResponses[
-                        formChallengeProvider.responseFieldName
-                    ]
+        do {
+            if let turnstileVerifier,
+                try await !turnstileVerifier.verify(
+                    token: decoded.token
                 )
-            }
-            catch {
-                throw HTTPError(.serviceUnavailable)
-            }
-            guard isVerified else {
+            {
                 throw HTTPError(.forbidden)
             }
-        }
-        do {
             let response = try await apiBuilder.makeContactApp(context)
                 .withOpenAPIRepositoryErrorMapping { client in
                     try await client.appContactFormSubmission(

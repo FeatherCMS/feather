@@ -1,4 +1,5 @@
 import Environment
+import FeatherInfrastructure
 import FeatherMail
 import FeatherMailEphemeral
 import Testing
@@ -11,18 +12,18 @@ struct UserInvitationMailJobTests {
     @Test
     func sendsInvitationMailToPayloadEmail() async throws {
         let mailbox = EphemeralMailbox()
-        let service = EmailService(
-            client: MailClientEphemeral(mailbox: mailbox)
-        )
+        let mailClient = MailClientEphemeral(mailbox: mailbox)
 
-        try await JobController.sendEmail(
+        try await SendMailJobHandler.handle(
             parameters: .init(
-                to: ["invitee@example.com"],
                 from: "info@binarybirds.com",
+                to: ["invitee@example.com"],
                 subject: "Application - Invitation",
-                message: "Use invitation token: invitation-token-123"
+                additionalHeaders: [],
+                body: "Use invitation token: invitation-token-123",
+                contentType: .plainText
             ),
-            emailService: service
+            mailClient: mailClient
         )
 
         let messages = await mailbox.getMessages()
@@ -44,19 +45,19 @@ struct UserInvitationMailJobTests {
     @Test
     func rejectsInvalidRecipientWithoutSending() async throws {
         let mailbox = EphemeralMailbox()
-        let service = EmailService(
-            client: MailClientEphemeral(mailbox: mailbox)
-        )
+        let mailClient = MailClientEphemeral(mailbox: mailbox)
 
         await #expect(throws: MailError.self) {
-            try await JobController.sendEmail(
+            try await SendMailJobHandler.handle(
                 parameters: .init(
-                    to: [""],
                     from: "info@binarybirds.com",
+                    to: [""],
                     subject: "Application - Invitation",
-                    message: "Use invitation token: invitation-token-123"
+                    additionalHeaders: [],
+                    body: "Use invitation token: invitation-token-123",
+                    contentType: .plainText
                 ),
-                emailService: service
+                mailClient: mailClient
             )
         }
 

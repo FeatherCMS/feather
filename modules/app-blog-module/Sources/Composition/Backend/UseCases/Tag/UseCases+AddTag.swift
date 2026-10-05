@@ -13,21 +13,14 @@ extension UseCases {
 
     public func makeAddTag() -> AddTag {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteTagMetadata(
                     tag: TagDatabaseRepository(
-                        context: .init(
-                            connection: context.connection,
-                            idGenerator: idGenerator
-                        )
+                        context: context
                     ),
                     metadata: MetadataDatabaseRepository(
-                        context: .init(
-                            connection: context.connection,
-                            idGenerator: idGenerator
-                        )
+                        context: context
                     ),
                     variable: VariableDatabaseQueries(
                         context: .init(connection: context.connection)

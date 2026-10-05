@@ -5,9 +5,9 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import AuthDomain
+import FeatherDomain
 public import FeatherContracts
 public import FeatherDatabase
-public import FeatherDomain
 public import FeatherInfrastructure
 import UserApplication
 import UserDomain
@@ -15,28 +15,24 @@ import UserInfrastructure
 
 public struct TableSeedMigration: DatabaseMigration {
 
-    public let connection: any DatabaseConnection
-    private let idGenerator: any IDGenerator
+    public let context: DatabaseTransactionContext
     private let events: any EventPublisher
 
+    public var connection: any DatabaseConnection {
+        context.connection
+    }
+
     public init(
-        connection: any DatabaseConnection,
-        idGenerator: any IDGenerator,
+        context: DatabaseTransactionContext,
         events: any EventPublisher
     ) {
-        self.connection = connection
-        self.idGenerator = idGenerator
+        self.context = context
         self.events = events
     }
 
     public func apply(
         on connection: any DatabaseConnection
     ) async throws {
-        let context = DatabaseTransactionContext(
-            connection: connection,
-            idGenerator: idGenerator
-        )
-
         let rootPassword = try await BCryptPasswordHasher().hash("root")
         let identityRepository = IdentityDatabaseRepository(context: context)
         let authEmailRepository = AuthEmailDatabaseRepository(context: context)
@@ -51,7 +47,7 @@ public struct TableSeedMigration: DatabaseMigration {
         let roleDefinitions =
             try await events.trigger(
                 event: UserRoleSeedProvider(),
-                using: UserEventContext(idGenerator: idGenerator)
+                using: UserEventContext(idGenerator: context.idGenerator)
             )
             .flatMap { $0 }
 
@@ -94,7 +90,7 @@ public struct TableSeedMigration: DatabaseMigration {
         }
         else {
             identity = try await identityRepository.insert(
-                id: idGenerator.generate(),
+                id: context.idGenerator.generate(),
                 model: Identity.create(status: .active, isRoot: true)
             )
         }

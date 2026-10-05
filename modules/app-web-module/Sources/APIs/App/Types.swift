@@ -17,6 +17,9 @@ public protocol APIProtocol: Sendable {
     /// - Remark: HTTP `GET /api/v1/web/menus`.
     /// - Remark: Generated from `#/paths//api/v1/web/menus/get(webMenuList)`.
     func webMenuList(_ input: Operations.WebMenuList.Input) async throws -> Operations.WebMenuList.Output
+    /// - Remark: HTTP `GET /api/v1/web/menus/{key}`.
+    /// - Remark: Generated from `#/paths//api/v1/web/menus/{key}/get(webMenuGetByKey)`.
+    func webMenuGetByKey(_ input: Operations.WebMenuGetByKey.Input) async throws -> Operations.WebMenuGetByKey.Output
     /// - Remark: HTTP `GET /api/v1/web/routes/{slug}`.
     /// - Remark: Generated from `#/paths//api/v1/web/routes/{slug}/get(webMetadataGet)`.
     func webMetadataGet(_ input: Operations.WebMetadataGet.Input) async throws -> Operations.WebMetadataGet.Output
@@ -39,6 +42,17 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/web/menus/get(webMenuList)`.
     public func webMenuList(headers: Operations.WebMenuList.Input.Headers = .init()) async throws -> Operations.WebMenuList.Output {
         try await webMenuList(Operations.WebMenuList.Input(headers: headers))
+    }
+    /// - Remark: HTTP `GET /api/v1/web/menus/{key}`.
+    /// - Remark: Generated from `#/paths//api/v1/web/menus/{key}/get(webMenuGetByKey)`.
+    public func webMenuGetByKey(
+        path: Operations.WebMenuGetByKey.Input.Path,
+        headers: Operations.WebMenuGetByKey.Input.Headers = .init()
+    ) async throws -> Operations.WebMenuGetByKey.Output {
+        try await webMenuGetByKey(Operations.WebMenuGetByKey.Input(
+            path: path,
+            headers: headers
+        ))
     }
     /// - Remark: HTTP `GET /api/v1/web/routes/{slug}`.
     /// - Remark: Generated from `#/paths//api/v1/web/routes/{slug}/get(webMetadataGet)`.

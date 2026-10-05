@@ -65,6 +65,13 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             const input = document.querySelector('#markdownInput');
             const status = document.querySelector('#status');
             const marker = document.createElement('div'); marker.className = 'drop-marker';
+            function resizeMarkdownInput() {
+              if (input.offsetParent === null) return;
+              input.style.height = 'auto';
+              input.style.height = `${input.scrollHeight}px`;
+            }
+            input.addEventListener('input', resizeMarkdownInput);
+            window.addEventListener('resize', resizeMarkdownInput);
 
             function newBlock(type, value = '') { return { id: crypto.randomUUID(), type, value, url: '', level: 2 }; }
             function splitMarkdownBlocks(markdown) {
@@ -204,7 +211,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
               if (!state.blocks.length) { canvas.innerHTML = '<div class="empty"><strong>Your canvas is empty.</strong><br>Choose a component to get started.</div>'; return; }
               state.blocks.forEach((block, index) => {
                 const item = document.createElement('article'); item.className = 'block'; item.draggable = true; item.dataset.id = block.id;
-                item.innerHTML = `<div class="drag-controls"><span class="drag-handle" title="Drag to rearrange" aria-label="Drag to rearrange">⠿</span><button class="move-button" data-move="up" title="Move up" aria-label="Move up">↑</button><button class="move-button" data-move="down" title="Move down" aria-label="Move down">↓</button></div><div class="block-body"><label class="block-label">${block.type === 'heading' ? `Heading ${block.level}` : block.type}</label></div><button class="remove" title="Remove component" aria-label="Remove component">×</button>`;
+                item.innerHTML = `<div class="drag-controls"><span class="drag-handle" title="Drag to rearrange" aria-label="Drag to rearrange">⠿</span><button class="move-button" data-move="up" title="Move up" aria-label="Move up">↑</button><button class="move-button" data-move="down" title="Move down" aria-label="Move down">↓</button></div><div class="block-body"><label class="block-label">${block.type === 'heading' ? `Heading ${block.level}` : block.type}</label></div><button type="button" class="remove" title="Remove component" aria-label="Remove component">×</button>`;
                 const body = item.querySelector('.block-body');
                 if (block.type === 'newsletter' || block.type === 'contact-form') { renderEmbedControl(body, block, (key, value) => updateBlock(block.id, key, value)); body.querySelector('.block-label').textContent = block.type === 'newsletter' ? 'Newsletter campaign' : 'Contact form'; }
                 else if (block.type === 'separator') { const rule = document.createElement('div'); rule.className = 'preview-content'; rule.innerHTML = '<hr>'; body.querySelector('.block-label').textContent = 'Separator'; body.append(rule); }
@@ -217,7 +224,32 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 else if (block.type === 'image' || block.type === 'video') { const fields = document.createElement('div'); fields.className = 'media-fields'; const url = document.createElement('input'); url.value = block.value; url.placeholder = block.type === 'image' ? 'Image URL' : 'Video URL'; url.setAttribute('aria-label', `${block.type} URL`); url.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); const picker = document.createElement('button'); picker.type = 'button'; picker.className = 'media-picker-button'; picker.textContent = 'Choose from gallery'; picker.addEventListener('click', () => openMediaPicker(block.type, value => updateBlock(block.id, 'value', value))); fields.append(url, picker); if (block.type === 'image') { const alt = document.createElement('input'); alt.value = block.alt || ''; alt.placeholder = 'Alt text'; alt.setAttribute('aria-label', 'Image alt text'); alt.addEventListener('input', e => updateBlock(block.id, 'alt', e.target.value)); fields.append(alt); } body.querySelector('.block-label').textContent = block.type === 'image' ? 'Image' : 'Video'; body.append(fields); }
                 else if (block.type === 'custom') { const fields = document.createElement('div'); fields.className = 'custom-fields'; const name = document.createElement('input'); name.value = block.name || 'CustomBlock'; name.placeholder = 'Component name'; name.setAttribute('aria-label', 'Custom component name'); name.addEventListener('input', e => updateBlock(block.id, 'name', e.target.value)); const args = document.createElement('input'); args.value = block.value; args.placeholder = 'Arguments, e.g. id: 123'; args.setAttribute('aria-label', 'Custom component arguments'); args.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); fields.append(name, args); body.querySelector('.block-label').textContent = 'Custom block'; body.append(fields); }
                 else { const toolbar = document.createElement('div'); toolbar.className = 'format-toolbar'; toolbar.setAttribute('aria-label', 'Text formatting'); toolbar.innerHTML = '<button type="button" data-format="bold" title="Bold"><strong>B</strong></button><button type="button" data-format="italic" title="Italic"><em>I</em></button><button type="button" data-format="underline" title="Underline"><u>U</u></button><button type="button" data-format="strike" title="Strikethrough"><del>S</del></button><button type="button" data-format="link" title="Add link">↗</button>'; const field = document.createElement('textarea'); field.value = block.value; field.placeholder = 'Write text… Select text, then choose a format'; field.setAttribute('aria-label', 'Text with Markdown formatting'); configureTextEditor(field); field.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); body.append(toolbar, field); toolbar.querySelectorAll('[data-format]').forEach(button => button.addEventListener('click', () => formatSelection(field, block.id, button.dataset.format))); }
-                item.querySelector(':scope > .remove').addEventListener('click', e => { e.stopPropagation(); state.blocks.splice(index, 1); syncRaw(); render(); setStatus('Removed'); });
+                const removeButton = item.querySelector(':scope > .remove');
+                removeButton.addEventListener('click', e => {
+                  e.stopPropagation();
+                  if (removeButton.dataset.confirming === 'true') {
+                    const blockIndex = state.blocks.findIndex(value => value.id === block.id);
+                    if (blockIndex < 0) return;
+                    state.blocks.splice(blockIndex, 1);
+                    syncRaw();
+                    render();
+                    setStatus('Removed');
+                    return;
+                  }
+                  editorRoot.querySelectorAll('.remove.is-confirming').forEach(button => {
+                    button.classList.remove('is-confirming');
+                    delete button.dataset.confirming;
+                    button.textContent = '×';
+                    button.title = 'Remove component';
+                    button.setAttribute('aria-label', 'Remove component');
+                  });
+                  removeButton.dataset.confirming = 'true';
+                  removeButton.classList.add('is-confirming');
+                  removeButton.textContent = 'Confirm';
+                  removeButton.title = 'Click again to delete this block';
+                  removeButton.setAttribute('aria-label', 'Confirm delete block');
+                  clearTimeout(setStatus.timer);
+                });
                 item.querySelector('.drag-controls').querySelectorAll('[data-move]').forEach(button => button.addEventListener('click', e => { e.stopPropagation(); const target = button.dataset.move === 'up' ? index - 1 : index + 1; if (target < 0 || target >= state.blocks.length) return; [state.blocks[index], state.blocks[target]] = [state.blocks[target], state.blocks[index]]; syncRaw(); render(); setStatus('Rearranged'); }));
                 item.addEventListener('dragstart', () => { state.dragging = { kind: 'existing', id: block.id }; item.classList.add('dragging'); }); item.addEventListener('dragend', clearDragState);
                 item.addEventListener('dragover', e => { e.preventDefault(); if (!state.dragging || (state.dragging.kind === 'existing' && state.dragging.id === block.id)) return; const after = e.clientY > item.getBoundingClientRect().top + item.offsetHeight / 2; placeMarker(item, after); canvas.classList.add('drag-over'); });
@@ -231,7 +263,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             function clearDragState() { state.dragging = null; marker.classList.remove('visible'); marker.dataset.position = ''; canvas.classList.remove('drag-over'); document.querySelectorAll('.component-button').forEach(button => button.classList.remove('dragging')); document.querySelectorAll('.grid-column, .grid-child').forEach(element => element.classList.remove('drop-target', 'dragging')); }
             canvas.addEventListener('dragover', e => { e.preventDefault(); if (!state.dragging || e.target.closest('.block') || marker.classList.contains('visible')) return; canvas.append(marker); marker.dataset.position = 'canvas-end'; marker.classList.add('visible'); canvas.classList.add('drag-over'); });
             canvas.addEventListener('drop', e => { e.preventDefault(); if (!state.dragging || e.target.closest('.block')) return; const drag = state.dragging; let to = state.blocks.length; const position = marker.dataset.position; const targetMatch = position && position.match(/^([^:]+):(before|after)$/); if (targetMatch) { to = state.blocks.findIndex(block => block.id === targetMatch[1]) + (targetMatch[2] === 'after' ? 1 : 0); } if (drag.kind === 'existing') { const from = state.blocks.findIndex(b => b.id === drag.id); if (from >= 0) { const [moved] = state.blocks.splice(from, 1); if (from < to) to--; state.blocks.splice(to, 0, moved); } } else if (drag.kind === 'new') state.blocks.splice(to, 0, createBlock(drag.type)); syncRaw(); clearDragState(); render(); setStatus(drag.kind === 'new' ? 'Added' : 'Rearranged'); });
-            function showMode(mode) { state.mode = mode; document.querySelector('#visualView').hidden = mode !== 'visual'; document.querySelector('#previewView').hidden = mode !== 'preview'; document.querySelector('#rawView').hidden = mode !== 'raw'; document.querySelectorAll('[data-mode]').forEach(button => button.classList.toggle('active', button.dataset.mode === mode)); if (mode === 'raw') syncRaw(); if (mode === 'preview') renderPreview(); }
+            function showMode(mode) { state.mode = mode; document.querySelector('#visualView').hidden = mode !== 'visual'; document.querySelector('#previewView').hidden = mode !== 'preview'; document.querySelector('#rawView').hidden = mode !== 'raw'; document.querySelectorAll('[data-mode]').forEach(button => button.classList.toggle('active', button.dataset.mode === mode)); if (mode === 'raw') { syncRaw(); requestAnimationFrame(resizeMarkdownInput); } if (mode === 'preview') renderPreview(); }
             document.querySelectorAll('[data-mode]').forEach(button => button.addEventListener('click', () => { if (state.mode === 'raw' && button.dataset.mode !== 'raw') { state.blocks = parseMarkdown(input.value); render(); } showMode(button.dataset.mode); }));
             function formatSelection(field, id, format) { const start = field.selectionStart; const end = field.selectionEnd; if (start === end) return; const selected = field.value.slice(start, end); const wrappers = { bold: ['**', '**'], italic: ['*', '*'], underline: ['__', '__'], strike: ['~~', '~~'] }; let before; let after; if (format === 'link') { const url = window.prompt('Link URL', 'https://'); if (!url) return; before = '['; after = `](${url})`; } else { [before, after] = wrappers[format]; } const value = field.value.slice(0, start) + before + selected + after + field.value.slice(end); updateBlock(id, 'value', value); field.value = value; field.focus(); field.setSelectionRange(start + before.length, end + before.length); setStatus('Formatted'); }
             document.querySelectorAll('.component-button').forEach(button => { const description = button.querySelector('small'); if (description) button.title = description.textContent; });
@@ -455,7 +487,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 Position(.relative)
                 Display(.grid)
                 GridTemplateColumns(
-                    .tracks([.length(25.px), .fraction(1.fr), .auto])
+                    .tracks([.length(25.px), .fraction(1.fr)])
                 )
                 Gap(10.px)
                 AlignItems(.flexStart)
@@ -486,9 +518,28 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 Cursor(.pointer)
             },
+            Custom("\(root) .remove") {
+                Position(.absolute)
+                Top(8.px)
+                Right(8.px)
+                Width(28.px)
+                Height(28.px)
+                Display(.flex)
+                AlignItems(.center)
+                JustifyContent(.center)
+                BoxSizing(.borderBox)
+            },
             Custom("\(root) .move-button:hover, \(root) .remove:hover") {
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.hover))
                 Color(.variable(TokenKey.Colors.Link.default))
+            },
+            Custom("\(root) .remove.is-confirming") {
+                Width(76.px)
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
+                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+                FontSize(0.75.rem)
+                FontWeight(.number(600))
+                WhiteSpace(.nowrap)
             },
             Custom("\(root) .block-body") {
                 MinWidth(0.px)
@@ -608,7 +659,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             Custom("\(root) #markdownInput") {
                 Display(.block)
                 Width(100.percent)
-                UnsafeRawProperty(name: "min-height", value: "12lh")
+                UnsafeRawProperty(name: "min-height", value: "3lh")
                 Resize(.none)
                 Border(
                     1.px,
@@ -979,7 +1030,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                         Textarea(state.value ?? "")
                             .id("markdownInput")
                             .name(state.key)
-                            .rows(12)
+                            .rows(3)
                             .setAttribute(name: "spellcheck", value: "false")
                             .setAttribute(
                                 name: "data-media-base-url",

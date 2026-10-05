@@ -7,7 +7,7 @@ struct NewsletterCampaignMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     let name = "NewsletterCampaign"
     let usesFormSubmissionNonce = true
     let submissionRoute: NewsletterSubscriptionRoute
-    let formChallengeProvider: (any WebFormChallengeProvider)?
+    let turnstileSiteKey: String?
 
     func render(
         request: WebMarkdownBlockRendererRequest
@@ -46,24 +46,21 @@ struct NewsletterCampaignMarkdownBlockRenderer: WebMarkdownBlockRenderer {
         children.append(
             Input().type(.hidden).name("nonce").value(nonce)
         )
-        if let formChallengeProvider {
+        if let turnstileSiteKey, !turnstileSiteKey.isEmpty {
             children.append(
-                Div {
-                    for element in formChallengeProvider.widget() {
-                        element
-                    }
-                }
-                .setClass("web-form-challenge")
+                Div {}.class("cf-turnstile").data("sitekey", turnstileSiteKey)
+            )
+            children.append(
+                Script()
+                    .src("https://challenges.cloudflare.com/turnstile/v0/api.js")
+                    .async()
+                    .defer()
             )
         }
         children.append(Button("Subscribe").type(.submit))
         let form = Form { children }
             .method(.post)
             .action(action)
-            .data(
-                "challenge-response-field-name",
-                formChallengeProvider?.responseFieldName ?? ""
-            )
             .setClass("newsletter-subscription-form")
         return Document(root: form).render()
     }

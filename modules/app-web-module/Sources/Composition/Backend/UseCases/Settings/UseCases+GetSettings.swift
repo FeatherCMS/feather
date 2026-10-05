@@ -13,7 +13,7 @@ extension UseCases {
 
     func makeGetSettings() -> GetSettings {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteSettings(
                     settings: SettingsDatabaseRepository(context: context)

@@ -29,6 +29,15 @@
       }
     },
     {
+      "identity" : "feather-mail",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-mail",
+      "state" : {
+        "revision" : "699738895348bb43516c8dc351ad53ed6f356997",
+        "version" : "1.0.0-rc.1"
+      }
+    },
+    {
       "identity" : "feather-openapi",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-openapi",
@@ -215,6 +224,15 @@
       "state" : {
         "revision" : "db774a277f60063a32d854f2980299caf06da041",
         "version" : "1.6.0"
+      }
+    },
+    {
+      "identity" : "swift-jobs",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hummingbird-project/swift-jobs",
+      "state" : {
+        "revision" : "329b54d39f461c6dc17f36adb8f0af615c4edee4",
+        "version" : "1.4.0"
       }
     },
     {

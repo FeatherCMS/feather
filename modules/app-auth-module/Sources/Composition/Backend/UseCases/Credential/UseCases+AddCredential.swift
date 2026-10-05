@@ -6,8 +6,7 @@ extension UseCases {
 
     func makeAddCredential() -> AddCredential {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteCredentialLink(
                     credential: CredentialDatabaseRepository(context: context),

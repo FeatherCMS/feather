@@ -1,29 +1,25 @@
 import BlogDomain
 import FeatherContracts
 public import FeatherDatabase
-public import FeatherDomain
 public import FeatherInfrastructure
 import WebDomain
 
 public struct TableSeedMigration: DatabaseMigration {
-    public let connection: any DatabaseConnection
-    private let idGenerator: any IDGenerator
+    public let context: DatabaseTransactionContext
+
+    public var connection: any DatabaseConnection {
+        context.connection
+    }
 
     public init(
-        connection: any DatabaseConnection,
-        idGenerator: any IDGenerator
+        context: DatabaseTransactionContext
     ) {
-        self.connection = connection
-        self.idGenerator = idGenerator
+        self.context = context
     }
 
     public func apply(
         on connection: any DatabaseConnection
     ) async throws {
-        let context = DatabaseTransactionContext(
-            connection: connection,
-            idGenerator: idGenerator
-        )
         let author = try await AuthorDatabaseRepository(
             context: context
         )

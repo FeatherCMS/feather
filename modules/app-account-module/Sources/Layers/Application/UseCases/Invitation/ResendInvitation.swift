@@ -2,6 +2,7 @@ import AccountContracts
 import AccountDomain
 public import FeatherApplication
 public import FeatherContracts
+import FeatherMail
 import SystemApplication
 
 import struct Foundation.Date
@@ -34,16 +35,16 @@ public struct ResendInvitation: UseCase {
 
     let authorizer: any Authorizer
     let transaction: any TransactionExecutor<WriteInvitationOnlyWithVariable>
-    let mailSender: any MailSender
+    let jobs: any SendMailJobController
 
     public init(
         authorizer: any Authorizer,
         transaction: any TransactionExecutor<WriteInvitationOnlyWithVariable>,
-        mailSender: any MailSender
+        jobs: any SendMailJobController
     ) {
         self.authorizer = authorizer
         self.transaction = transaction
-        self.mailSender = mailSender
+        self.jobs = jobs
     }
 
     public struct Input: DTO {
@@ -99,12 +100,12 @@ public struct ResendInvitation: UseCase {
             )
         }
 
-        try await mailSender.send(
+        try await jobs.enqueue(
             .init(
                 from: .init(result.mailFromAddress, name: result.mailFromName),
                 to: [.init(result.invitation.email)],
                 subject: "Application - Invitation",
-                body: """
+                body: .plainText("""
                     Hello,
 
                     This is a reminder for your application identity invitation.
@@ -114,7 +115,7 @@ public struct ResendInvitation: UseCase {
 
                     Cheers,
                     Application Team.
-                    """
+                    """)
             )
         )
         return result.invitation.asDetail

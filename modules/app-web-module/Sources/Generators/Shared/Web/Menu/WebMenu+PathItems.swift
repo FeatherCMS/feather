@@ -6,3 +6,11 @@ public struct WebMenuListPathItems: PathItemRepresentable {
 
     public init() {}
 }
+
+public struct WebMenuGetByKeyPathItems: PathItemRepresentable {
+    public var get: (any OperationRepresentable)? {
+        WebMenuGetByKeyOperation()
+    }
+
+    public init() {}
+}

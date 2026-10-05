@@ -1,33 +1,28 @@
 public import FeatherContracts
 public import FeatherDatabase
-public import FeatherDomain
 public import FeatherInfrastructure
 import WebContracts
 import WebDomain
 
 public struct TableSeedMigration: DatabaseMigration {
-    public let connection: any DatabaseConnection
-    private let idGenerator: any IDGenerator
+    public let context: DatabaseTransactionContext
     private let events: any EventPublisher
 
+    public var connection: any DatabaseConnection {
+        context.connection
+    }
+
     public init(
-        connection: any DatabaseConnection,
-        idGenerator: any IDGenerator,
+        context: DatabaseTransactionContext,
         events: any EventPublisher
     ) {
-        self.connection = connection
-        self.idGenerator = idGenerator
+        self.context = context
         self.events = events
     }
 
     public func apply(
         on connection: any DatabaseConnection
     ) async throws {
-        let context = DatabaseTransactionContext(
-            connection: connection,
-            idGenerator: idGenerator
-        )
-
         let pageRepository = PageDatabaseRepository(context: context)
         let definitions = try await events.trigger(
             event: WebPageProvider(),
@@ -68,19 +63,13 @@ public struct TableSeedMigration: DatabaseMigration {
             _ = try await pageRepository.insert(page)
         }
         try await installWebMenuExtensions(
-            on: connection,
             events: events
         )
     }
 
     private func installWebMenuExtensions(
-        on connection: any DatabaseConnection,
         events: any EventPublisher
     ) async throws {
-        let context = DatabaseTransactionContext(
-            connection: connection,
-            idGenerator: idGenerator
-        )
         let menus =
             try await events.trigger(
                 event: WebMenuProvider(),

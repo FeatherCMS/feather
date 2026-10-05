@@ -8,8 +8,7 @@ extension UseCases {
 
     func makeResendInvitation() -> AccountApplication.ResendInvitation {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteInvitationOnlyWithVariable(
                     invitation: InvitationDatabaseRepository(context: context),
@@ -23,7 +22,7 @@ extension UseCases {
         return .init(
             authorizer: authorizer,
             transaction: transaction,
-            mailSender: mailSender
+            jobs: jobs
         )
     }
 }

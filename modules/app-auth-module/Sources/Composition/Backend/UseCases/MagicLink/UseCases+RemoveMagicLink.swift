@@ -6,8 +6,7 @@ extension UseCases {
 
     func makeRemoveMagicLink() -> RemoveMagicLink {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteMagicLink(
                     magicLink: MagicLinkDatabaseRepository(context: context)

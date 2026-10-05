@@ -13,7 +13,7 @@ extension UseCases {
 
     public func makeListPublicTags() -> ListPublicTags {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadPublic(
                     post: PostDatabaseQueries(

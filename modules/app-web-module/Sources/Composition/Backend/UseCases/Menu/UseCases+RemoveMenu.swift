@@ -13,8 +13,7 @@ extension UseCases {
 
     func makeRemoveMenu() -> RemoveMenu {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteMenu(
                     menu: MenuDatabaseRepository(context: context)

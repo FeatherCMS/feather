@@ -6,8 +6,7 @@ extension UseCases {
 
     func makeAddRule() -> AddRule {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteRule(
                     rule: RuleDatabaseRepository(context: context)

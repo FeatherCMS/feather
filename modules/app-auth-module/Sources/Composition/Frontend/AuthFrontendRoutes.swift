@@ -16,6 +16,7 @@ import UserAppAPI
 import UserFrontend
 import WebBuilders
 import WebComponents
+public import WebFrontend
 
 public enum AuthFrontendRoutes {
 
@@ -23,13 +24,15 @@ public enum AuthFrontendRoutes {
         router: Router<DefaultRequestContext>,
         renderingEngine: any RenderingEngine,
         authAPIBuilder: AuthAPIBuilder,
-        usesSecureCookies: Bool
+        usesSecureCookies: Bool,
+        turnstileVerifier: (any TurnstileVerifier)? = nil
     ) {
         AppLoginAuth(
             repository: AppLoginAuthOpenAPIRepository(
                 appClient: authAPIBuilder.makeAuthApp()
             ),
-            usesSecureCookies: usesSecureCookies
+            usesSecureCookies: usesSecureCookies,
+            turnstileVerifier: turnstileVerifier
         )
         .controller.route(on: router)
 
@@ -43,7 +46,8 @@ public enum AuthFrontendRoutes {
 
         AppMagicLink(
             apiBuilder: authAPIBuilder,
-            usesSecureCookies: usesSecureCookies
+            usesSecureCookies: usesSecureCookies,
+            turnstileVerifier: turnstileVerifier
         )
         .route(on: router)
     }

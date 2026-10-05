@@ -78,7 +78,7 @@ struct AdminEditUserIdentityDefaultController: AdminEditUserIdentityController {
             }
             try await input.validate()
             try await interactor.edit(id: id, input: input)
-            return presenter.renderSuccess()
+            return presenter.renderSuccess(id: id)
         }
         catch let error as ValidationError {
             return

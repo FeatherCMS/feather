@@ -54,6 +54,17 @@ extension APIProtocol {
         )
         try transport.register(
             {
+                try await server.webMenuGetByKey(
+                    request: $0,
+                    body: $1,
+                    metadata: $2
+                )
+            },
+            method: .get,
+            path: server.apiPathComponentsWithServerPrefix("/api/v1/web/menus/{key}")
+        )
+        try transport.register(
+            {
                 try await server.webMetadataGet(
                     request: $0,
                     body: $1,
@@ -173,6 +184,64 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
+                case let .undocumented(statusCode, _):
+                    return (.init(soar_statusCode: statusCode), nil)
+                }
+            }
+        )
+    }
+    /// - Remark: HTTP `GET /api/v1/web/menus/{key}`.
+    /// - Remark: Generated from `#/paths//api/v1/web/menus/{key}/get(webMenuGetByKey)`.
+    func webMenuGetByKey(
+        request: HTTPTypes.HTTPRequest,
+        body: OpenAPIRuntime.HTTPBody?,
+        metadata: OpenAPIRuntime.ServerRequestMetadata
+    ) async throws -> (HTTPTypes.HTTPResponse, OpenAPIRuntime.HTTPBody?) {
+        try await handle(
+            request: request,
+            requestBody: body,
+            metadata: metadata,
+            forOperation: Operations.WebMenuGetByKey.id,
+            using: {
+                APIHandler.webMenuGetByKey($0)
+            },
+            deserializer: { request, requestBody, metadata in
+                let path: Operations.WebMenuGetByKey.Input.Path = .init(key: try converter.getPathParameterAsURI(
+                    in: metadata.pathParameters,
+                    name: "key",
+                    as: Components.Parameters.WebMenuKeyParameter.self
+                ))
+                let headers: Operations.WebMenuGetByKey.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                return Operations.WebMenuGetByKey.Input(
+                    path: path,
+                    headers: headers
+                )
+            },
+            serializer: { output, request in
+                switch output {
+                case let .ok(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .notFound(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
                 case let .undocumented(statusCode, _):
                     return (.init(soar_statusCode: statusCode), nil)
                 }

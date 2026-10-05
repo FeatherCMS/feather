@@ -7,7 +7,7 @@ extension UseCases {
 
     public func makeListAuthors() -> ListAuthors {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadAuthorMetadata(
                     author: AuthorDatabaseQueries(

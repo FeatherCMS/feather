@@ -13,7 +13,7 @@ extension UseCases {
 
     func makeGetPublicPageByID() -> GetPublicPageByID {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadPageMetadata(
                     page: PageDatabaseQueries(

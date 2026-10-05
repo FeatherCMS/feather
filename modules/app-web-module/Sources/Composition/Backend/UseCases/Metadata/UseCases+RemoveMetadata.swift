@@ -13,8 +13,7 @@ extension UseCases {
 
     func makeRemoveMetadata() -> RemoveMetadata {
         let transaction = DatabaseTransactionExecutor(
-            database: database,
-            idGenerator: idGenerator,
+            databaseContext: databaseContext,
             scope: { context in
                 WriteMetadata(
                     metadata: MetadataDatabaseRepository(context: context)

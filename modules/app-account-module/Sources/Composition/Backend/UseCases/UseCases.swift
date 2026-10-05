@@ -1,28 +1,26 @@
 import AccountApplication
 public import FeatherApplication
 public import FeatherContracts
-public import FeatherDatabase
-public import FeatherDomain
+import FeatherDatabase
+import FeatherDomain
+public import FeatherInfrastructure
 
 public struct UseCases: Sendable {
-    let database: any DatabaseClient
-    let idGenerator: any IDGenerator
+    let databaseContext: DatabaseClientContext
     let authorizer: any Authorizer
-    let mailSender: any MailSender
+    let jobs: any SendMailJobController
     let events: any EventPublisher
     let credentialWriter: any InvitationCredentialWriter
 
     public init(
-        database: any DatabaseClient,
-        idGenerator: any IDGenerator,
+        databaseContext: DatabaseClientContext,
         authorizer: any Authorizer,
-        mailSender: any MailSender,
+        jobs: any SendMailJobController,
         events: any EventPublisher
     ) {
-        self.database = database
-        self.idGenerator = idGenerator
+        self.databaseContext = databaseContext
         self.authorizer = authorizer
-        self.mailSender = mailSender
+        self.jobs = jobs
         self.events = events
         self.credentialWriter = InvitationCredentialWriterAdapter()
     }

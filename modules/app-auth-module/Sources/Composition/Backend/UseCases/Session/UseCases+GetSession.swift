@@ -6,7 +6,7 @@ extension UseCases {
 
     func makeGetSession() -> GetSession {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadSession(
                     session: SessionDatabaseQueries(

@@ -6,7 +6,7 @@ extension UseCases {
 
     func makeGetPublicRuleBySource() -> GetPublicRuleBySource {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadRule(
                     rule: RuleDatabaseQueries(

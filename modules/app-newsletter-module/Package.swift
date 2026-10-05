@@ -64,8 +64,16 @@ let package = Package(
             url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
+        .package(
+            url: "https://github.com/hummingbird-project/swift-jobs",
+            from: "1.1.0"
+        ),
 
         .package(path: "../../feather-core"),
+        .package(
+            url: "https://github.com/feather-framework/feather-mail",
+            exact: "1.0.0-rc.1"
+        ),
         .package(path: "../app-system-module"),
         .package(path: "../app-web-module"),
     ],
@@ -92,6 +100,7 @@ let package = Package(
             name: "NewsletterApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "SystemApplication", package: "app-system-module"),
 
                 .target(name: "NewsletterDomain"),
@@ -103,6 +112,7 @@ let package = Package(
             name: "NewsletterInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "Jobs", package: "swift-jobs"),
                 .product(name: "SystemApplication", package: "app-system-module"),
 
                 .target(name: "NewsletterApplication"),

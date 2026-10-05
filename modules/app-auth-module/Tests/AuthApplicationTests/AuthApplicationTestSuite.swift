@@ -90,10 +90,10 @@ struct AuthApplicationTestSuite {
                 )
             )
         )
-        let mailSender = MockMailSender()
+        let jobs = MockSendMailJobController()
         let useCase = RequestMagicLink(
             transaction: transaction,
-            mailSender: mailSender
+            jobs: jobs
         )
 
         let sent = try await useCase.execute(
@@ -102,18 +102,18 @@ struct AuthApplicationTestSuite {
 
         #expect(sent)
         #expect(await magicLinkRepository.insertCallCount == 1)
-        #expect(await mailSender.sendCallCount == 1)
+        #expect(await jobs.enqueueCallCount == 1)
         #expect(
-            await mailSender.lastMessage?.from.email
+            await jobs.lastMail?.from.email
                 == "magic-links@example.test"
         )
-        #expect(await mailSender.lastMessage?.from.name == "Binary Birds")
+        #expect(await jobs.lastMail?.from.name == "Binary Birds")
         #expect(
-            await mailSender.lastMessage?.body.contains("user@example.com")
+            await jobs.lastBody?.contains("user@example.com")
                 == true
         )
         #expect(
-            await mailSender.lastMessage?.body
+            await jobs.lastBody
                 .contains("https://example.test/magic-link/verify/") == true
         )
     }

@@ -104,6 +104,18 @@ struct ArticleTable {
         }
     }
 
+    func resolve(ids: [String]) async throws -> [Row] {
+        let values = ids.map {
+            "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+        }.joined(separator: ", ")
+        guard !values.isEmpty else { return [] }
+        return try await connection.run(
+            query: #"SELECT * FROM news_article WHERE id IN (\#(unescaped: values));"#
+        ) { sequence in
+            try await sequence.collect().map { try Row(from: $0) }
+        }
+    }
+
     func count(
         search: String?
     ) async throws -> Int {
@@ -164,6 +176,47 @@ struct ArticleTable {
                 ORDER BY \#(unescaped: orderBy)
                 LIMIT \#(limit)
                 OFFSET \#(offset);
+                """#
+        ) { sequence in
+            try await sequence.collect().map { try Row(from: $0) }
+        }
+    }
+
+    func listPublicRelated(
+        categoryIDs: [String],
+        excludingArticleID: String,
+        limit: Int,
+        orderBy: String
+    ) async throws -> [Row] {
+        let categoryIDValues = categoryIDs
+            .map { "'\($0.replacingOccurrences(of: "'", with: "''"))'" }
+            .joined(separator: ", ")
+        let escapedArticleID = excludingArticleID.replacingOccurrences(
+            of: "'",
+            with: "''"
+        )
+        return try await connection.run(
+            query: #"""
+                SELECT news_article.*
+                FROM news_article
+                INNER JOIN web_metadata
+                    ON web_metadata.reference_type = 'news.article'
+                    AND web_metadata.reference_id = news_article.id
+                WHERE news_article.id <> '\#(unescaped: escapedArticleID)'
+                    AND web_metadata.status = 'published'
+                    AND web_metadata.publication_date <= NOW()
+                    AND (
+                        web_metadata.expiration_date IS NULL
+                        OR web_metadata.expiration_date > NOW()
+                    )
+                    AND EXISTS (
+                        SELECT 1
+                        FROM news_article_category
+                        WHERE news_article_category.article_id = news_article.id
+                            AND news_article_category.category_id IN (\#(unescaped: categoryIDValues))
+                    )
+                ORDER BY \#(unescaped: orderBy)
+                LIMIT \#(limit);
                 """#
         ) { sequence in
             try await sequence.collect().map { try Row(from: $0) }

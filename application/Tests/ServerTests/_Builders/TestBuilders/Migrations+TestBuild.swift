@@ -35,6 +35,10 @@ public func buildTestMigrations(
         publicBaseURL: "http://localhost:3456"
     )
 
+    let context = DatabaseTransactionContext(
+        connection: connection,
+        idGenerator: idGenerator
+    )
     return [
         // Tables
         SystemInfrastructure.TableMigration(connection: connection),
@@ -51,44 +55,34 @@ public func buildTestMigrations(
         NewsletterInfrastructure.TableMigration(connection: connection),
         // Seed data
         UserInfrastructure.TableSeedMigration(
-            connection: connection,
-            events: events,
-            idGenerator: idGenerator
+            context: context,
+            events: events
         ),
         SystemInfrastructure.TableSeedMigration(
-            connection: connection,
-            events: events,
-            idGenerator: idGenerator
+            context: context,
+            events: events
         ),
-        AnalyticsInfrastructure.TableSeedMigration(connection: connection),
+        AnalyticsInfrastructure.TableSeedMigration(context: context),
         WebInfrastructure.TableSeedMigration(
-            connection: connection,
-            idGenerator: idGenerator,
+            context: context,
             events: events
         ),
         BlogInfrastructure.TableSeedMigration(
-            connection: connection,
-            idGenerator: idGenerator
+            context: context
         ),
 
         NewsInfrastructure.TableSeedMigration(
-            connection: connection,
-            idGenerator: idGenerator
+            context: context
         ),
         AuthInfrastructure.TableSeedMigration(
-            connection: connection,
-            idGenerator: idGenerator,
+            context: context,
             events: events
         ),
         AccountInfrastructure.TableSeedMigration(
-            connection: connection,
-            events: events,
-            idGenerator: idGenerator
+            context: context,
+            events: events
         ),
-        MediaInfrastructure.TableSeedMigration(connection: connection),
-        ContactInfrastructure.TableSeedMigration(
-            connection: connection,
-            idGenerator: idGenerator
-        ),
+        MediaInfrastructure.TableSeedMigration(context: context),
+        ContactInfrastructure.TableSeedMigration(context: context),
     ]
 }

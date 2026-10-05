@@ -13,7 +13,7 @@ extension UseCases {
 
     func makeGetMetadata() -> GetMetadata {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadMetadata(
                     metadata: MetadataDatabaseQueries(

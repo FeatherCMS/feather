@@ -13,3 +13,16 @@ struct WebMenuListOperation: WebOperation {
         [200: WebMenuListResponse().reference()]
     }
 }
+
+struct WebMenuGetByKeyOperation: WebOperation {
+    var parameters: [any ParameterRepresentable] {
+        [WebMenuKeyParameter().reference()]
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: WebMenuResponse().reference(),
+            404: CustomResponse(description: "Web menu not found"),
+        ]
+    }
+}

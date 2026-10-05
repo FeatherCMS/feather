@@ -67,8 +67,9 @@ struct AdminEditNewsletterIssueDefaultController:
             )
             return AdminNotificationFlash.redirect(
                 to:
-                    NewsletterAdminRoutes.campaignIssues(
-                        RouterPath(newsletterId)
+                    NewsletterAdminRoutes.issueEdit(
+                        newsletterID: RouterPath(newsletterId),
+                        issueID: RouterPath(issueId)
                     )
                     .description,
                 notification: .init(

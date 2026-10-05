@@ -5,7 +5,7 @@ import FeatherInfrastructure
 extension UseCases {
     func makeGetAccountProfile() -> AccountApplication.GetAccountProfile {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadAccountProfile(
                     profile: AccountProfileDatabaseQueries(

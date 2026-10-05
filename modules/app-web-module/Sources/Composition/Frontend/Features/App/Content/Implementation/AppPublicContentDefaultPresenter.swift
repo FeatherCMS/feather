@@ -13,10 +13,19 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
         formSubmissionNonce: String,
         formSubmissionFeedback: WebFormSubmissionFeedback?
     ) async -> (response: HTMLResponse, usesFormSubmissionNonce: Bool) {
+        let results = content.results.compactMap { $0 }
+        let usesFormSubmissionNonce = results.contains {
+            $0.usesFormSubmissionNonce
+        }
+        var context = buildContext(from: results)
+        if usesFormSubmissionNonce {
+            context["formSubmissionNonce"] = formSubmissionNonce
+        }
         let page = await buildPageContext(
-            context: buildContext(from: content.results),
+            context: context,
             formSubmissionNonce: formSubmissionNonce,
-            formSubmissionFeedback: formSubmissionFeedback
+            formSubmissionFeedback: formSubmissionFeedback,
+            usesFormSubmissionNonce: usesFormSubmissionNonce
         )
         return (
             themeRenderer.render(
@@ -44,10 +53,10 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
     }
 
     private func buildContext(
-        from results: [WebPublicContentProvider.Output]
+        from results: [WebPublicContentResult]
     ) -> [String: any Sendable] {
         var context: [String: any Sendable] = [:]
-        for result in results.compactMap({ $0 }) {
+        for result in results {
             for (key, value) in result.payload {
                 context[key] = value
             }
@@ -58,14 +67,15 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
     private func buildPageContext(
         context: [String: any Sendable],
         formSubmissionNonce: String,
-        formSubmissionFeedback: WebFormSubmissionFeedback?
+        formSubmissionFeedback: WebFormSubmissionFeedback?,
+        usesFormSubmissionNonce: Bool
     ) async -> (
         context: [String: any Sendable],
         usesFormSubmissionNonce: Bool
     ) {
         let pageKey = "page"
         guard let page = context[pageKey] as? [String: any Sendable] else {
-            return (context, false)
+            return (context, usesFormSubmissionNonce)
         }
         var result = context
         let rendered = await renderPageContentsToContext(
@@ -74,7 +84,10 @@ struct AppPublicContentDefaultPresenter: AppPublicContentPresenter {
             formSubmissionFeedback: formSubmissionFeedback
         )
         result[pageKey] = rendered.context
-        return (result, rendered.usesFormSubmissionNonce)
+        return (
+            result,
+            usesFormSubmissionNonce || rendered.usesFormSubmissionNonce
+        )
     }
 
     private func renderPageContentsToContext(

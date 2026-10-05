@@ -2,6 +2,7 @@ public import FeatherAdmin
 import FeatherValidation
 import HTML
 public import Hummingbird
+public import WebFrontend
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -13,11 +14,11 @@ public struct AppContactFormSubmission {
 
     public init(
         apiBuilder: ContactAPIBuilder,
-        formChallengeProvider: (any WebFormChallengeProvider)? = nil
+        turnstileVerifier: (any TurnstileVerifier)? = nil
     ) {
         self.controller = AppContactFormSubmissionDefaultController(
             apiBuilder: apiBuilder,
-            formChallengeProvider: formChallengeProvider
+            turnstileVerifier: turnstileVerifier
         )
     }
 

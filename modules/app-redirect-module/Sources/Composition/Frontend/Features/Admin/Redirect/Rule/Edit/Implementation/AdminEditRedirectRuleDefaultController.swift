@@ -67,7 +67,7 @@ struct AdminEditRedirectRuleDefaultController: AdminEditRedirectRuleController {
             }
             try await payload.input.validate()
             try await interactor.update(id: id, input: payload.input)
-            return presenter.renderSuccess()
+            return presenter.renderSuccess(id: id)
         }
         catch let error as ValidationError {
             return

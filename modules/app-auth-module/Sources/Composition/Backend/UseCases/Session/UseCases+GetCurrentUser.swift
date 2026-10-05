@@ -7,7 +7,7 @@ extension UseCases {
 
     public func makeGetCurrentUser() -> AuthApplication.GetCurrentUser {
         let query = DatabaseQueryExecutor(
-            database: database,
+            databaseContext: databaseContext,
             scope: { context in
                 ReadIdentity(
                     identity: IdentityDatabaseQueries(
