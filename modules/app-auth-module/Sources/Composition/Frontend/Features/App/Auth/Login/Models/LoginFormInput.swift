@@ -29,12 +29,11 @@ public struct LoginFormInput: Codable, Sendable, Equatable, Hashable {
 
     public init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.email = try container.decode(String.self, forKey: .email)
-        self.password = try container.decode(String.self, forKey: .password)
-        self.isPersistent =
-            try container.decodeIfPresent(
-                CheckboxFormInput.self,
-                forKey: .isPersistent
-            ) ?? .init(value: false)
+        email = try container.decode(String.self, forKey: .email)
+        password = try container.decode(String.self, forKey: .password)
+        isPersistent = try container.decodeIfPresent(
+            CheckboxFormInput.self,
+            forKey: .isPersistent
+        ) ?? .init(value: false)
     }
 }
