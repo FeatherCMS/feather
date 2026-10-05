@@ -93,6 +93,7 @@ services:
     restart: "no"
     environment:
       MEDIA_STORAGE_ROOT_PATH: /media
+      WEB_PUBLIC_BASE_URL: ${WEB_PUBLIC_BASE_URL:-http://localhost:3456}
       POSTGRES_HOST: postgres
       POSTGRES_PORT: 5432
       POSTGRES_USER: postgres
