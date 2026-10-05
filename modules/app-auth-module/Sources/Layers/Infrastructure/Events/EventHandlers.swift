@@ -22,7 +22,7 @@ public enum EventHandlers {
             event: WebMenuItemProvider.self,
             context: WebSeedEventContext.self
         ) { event, _ in
-            guard event.menuKey == "main" else { return [] }
+            guard event.menuKey == "account_actions" else { return [] }
             return [
                 .init(
                     label: "Admin",

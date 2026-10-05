@@ -14,9 +14,12 @@
             <h4>{{site.name}}</h4>
             {{#site.description}}<p><small>{{.}}</small></p>{{/site.description}}
             <ul>
-                {{#site.navigation}}
+            {{#site.navigation}}
                 <li><a href="{{url}}"{{#isBlank}} target="_blank" rel="noreferrer"{{/isBlank}}>{{label}}</a></li>
-                {{/site.navigation}}
+            {{/site.navigation}}
+            {{#site.accountActions}}
+                <li><a href="{{url}}"{{#isBlank}} target="_blank" rel="noreferrer"{{/isBlank}}>{{label}}</a></li>
+            {{/site.accountActions}}
             </ul>
         </div>
 

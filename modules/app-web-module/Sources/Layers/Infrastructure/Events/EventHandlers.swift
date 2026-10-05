@@ -17,6 +17,11 @@ public enum EventHandlers {
                     key: "main",
                     name: "Main Menu",
                     notes: "Main navigation."
+                ),
+                .init(
+                    key: "account_actions",
+                    name: "Account Actions",
+                    notes: "Account navigation actions."
                 )
             ]
         }
