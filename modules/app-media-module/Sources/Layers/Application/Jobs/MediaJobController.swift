@@ -1,3 +1,3 @@
-public protocol MediaJobs: Sendable {
+public protocol MediaJobController: Sendable {
     func enqueueMediaGenerateVariants(assetId: String) async throws
 }

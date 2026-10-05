@@ -4,13 +4,16 @@ import AuthApplication
 import AuthInfrastructure
 import UserInfrastructure
 import MediaBackend
+import MediaInfrastructure
 import AnalyticsBackend
 import WebBackend
 import NewsletterBackend
+import NewsletterInfrastructure
 import RedirectBackend
 import BlogBackend
 import AccountBackend
 import ContactBackend
+import ContactInfrastructure
 import SystemBackend
 import UserBackend
 import AuthBackend
@@ -86,21 +89,21 @@ struct AppModules: Sendable {
         let account = AccountBackend.UseCases(
             databaseContext: infrastructure.databaseContext,
             authorizer: authorizer,
-            jobs: JobQueueMailSender(queue: infrastructure.jobQueue),
+            jobs: JobQueueSendMailJobController(queue: infrastructure.jobQueue),
             events: infrastructure.events
         )
         self.account = account
         let auth = AuthBackend.UseCases(
             databaseContext: infrastructure.databaseContext,
             authorizer: authorizer,
-            jobs: JobQueueMailSender(queue: infrastructure.jobQueue)
+            jobs: JobQueueSendMailJobController(queue: infrastructure.jobQueue)
         )
         self.auth = auth
         let media = MediaBackend.UseCases(
             databaseContext: infrastructure.databaseContext,
             storageContext: infrastructure.storageContext,
             authorizer: authorizer,
-            jobs: MediaWorkerJobs(queue: infrastructure.jobQueue)
+            jobs: JobQueueMediaJobController(queue: infrastructure.jobQueue)
         )
         self.media = media
         let blog = BlogBackend.UseCases(
@@ -118,13 +121,18 @@ struct AppModules: Sendable {
         let contact = ContactBackend.UseCases(
             databaseContext: infrastructure.databaseContext,
             authorizer: authorizer,
-            jobs: ContactWorkerJobs(queue: infrastructure.jobQueue)
+            jobs: JobQueueSendMailJobController(queue: infrastructure.jobQueue)
         )
         self.contact = contact
         let newsletter = NewsletterBackend.UseCases(
             databaseContext: infrastructure.databaseContext,
             authorizer: authorizer,
-            jobs: NewsletterWorkerJobs(queue: infrastructure.jobQueue)
+            jobs: JobQueueNewsletterIssueJobController(
+                queue: infrastructure.jobQueue,
+                mailJobs: JobQueueSendMailJobController(
+                    queue: infrastructure.jobQueue
+                )
+            )
         )
         self.newsletter = newsletter
     }

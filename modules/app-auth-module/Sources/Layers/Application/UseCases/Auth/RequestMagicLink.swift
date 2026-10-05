@@ -7,6 +7,7 @@
 import AuthDomain
 public import FeatherApplication
 public import FeatherContracts
+import FeatherMail
 import Foundation
 import SystemApplication
 
@@ -31,14 +32,14 @@ public struct RequestMagicLink: UseCase {
     }
 
     let transaction: any TransactionExecutor<WriteRequestMagicLink>
-    let mailSender: any MailSender
+    let jobs: any SendMailJobController
 
     public init(
         transaction: any TransactionExecutor<WriteRequestMagicLink>,
-        mailSender: any MailSender
+        jobs: any SendMailJobController
     ) {
         self.transaction = transaction
-        self.mailSender = mailSender
+        self.jobs = jobs
     }
 
     public struct Input: DTO {
@@ -137,12 +138,12 @@ public struct RequestMagicLink: UseCase {
             .replacingOccurrences(of: "{{token}}", with: result.token)
             .replacingOccurrences(of: "{{email}}", with: input.email)
 
-        try await mailSender.send(
+        try await jobs.enqueue(
             .init(
                 from: .init(result.mailFromAddress, name: result.mailFromName),
                 to: [.init(input.email)],
                 subject: "Application - Sign In Link",
-                body: body
+                body: .plainText(body)
             )
         )
         return true

@@ -7,17 +7,16 @@ public import FeatherInfrastructure
 public struct UseCases: Sendable {
     let databaseContext: DatabaseClientContext
     let authorizer: any Authorizer
-    let jobs: any MailSender
+    let jobs: any SendMailJobController
 
     public init(
         databaseContext: DatabaseClientContext,
         authorizer: any Authorizer,
-        jobs: any MailSender
+        jobs: any SendMailJobController
     ) {
         self.databaseContext = databaseContext
         self.authorizer = authorizer
         self.jobs = jobs
     }
 
-    var mailSender: any MailSender { jobs }
 }

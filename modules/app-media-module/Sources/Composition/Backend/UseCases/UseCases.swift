@@ -24,14 +24,14 @@ public struct UseCases: Sendable {
 
     let databaseContext: DatabaseClientContext
     let storageContext: StorageClientContext
-    let jobs: any MediaJobs
+    let jobs: any MediaJobController
     let authorizer: any Authorizer
 
     public init(
         databaseContext: DatabaseClientContext,
         storageContext: StorageClientContext,
         authorizer: any Authorizer,
-        jobs: any MediaJobs
+        jobs: any MediaJobController
     ) {
         self.databaseContext = databaseContext
         self.storageContext = storageContext

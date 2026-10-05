@@ -1,31 +1,26 @@
 import FeatherContracts
 public import NewsletterAdminAPI
-import NewsletterContracts
+import NewsletterApplication
 
 extension AdminAPIGateway {
     public func newsletterCampaignTestEmail(
         _ input: Operations.NewsletterCampaignTestEmail.Input
     ) async throws -> Operations.NewsletterCampaignTestEmail.Output {
         let subject = try await CurrentSubject.require()
-        struct Action: PermissionAction {
-            let key = Permissions.Issues.update
-        }
-        let action = Action()
-        guard
-            try await useCases.authorizer.can(subject: subject, perform: action)
-        else {
-            throw AuthError(kind: .forbidden, message: action.key.rawValue)
-        }
         let body: Components.Schemas.NewsletterIssueTestEmailSchema
         switch input.body {
         case .json(let value): body = value
         }
-        try await useCases.enqueueIssueTestEmail(
-            newsletterKey: input.path.newsletterCampaignKey,
-            email: body.email,
-            subject: body.subject,
-            content: body.content
-        )
+        try await useCases.makeSendNewsletterTestEmail()
+            .execute(
+                subject: subject,
+                input: .init(
+                    newsletterKey: input.path.newsletterCampaignKey,
+                    email: body.email,
+                    subject: body.subject,
+                    content: body.content
+                )
+            )
         return .noContent
     }
 }

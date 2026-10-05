@@ -58,6 +58,10 @@ let package = Package(
             url: "https://github.com/swift-server/swift-service-lifecycle",
             from: "2.0.0"
         ),
+        .package(
+            url: "https://github.com/hummingbird-project/swift-jobs",
+            from: "1.1.0"
+        ),
         //        .package(
         //            url: "https://github.com/apple/swift-log",
         //            from: "1.0.0"
@@ -97,6 +101,10 @@ let package = Package(
         .package(
             url: "https://github.com/feather-framework/feather-validation",
             exact: "1.0.0-beta.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-mail",
+            exact: "1.0.0-rc.1"
         ),
         .package(
             url: "https://github.com/feather-framework/feather-openapi",
@@ -165,6 +173,7 @@ let package = Package(
             name: "FeatherApplication",
             dependencies: [
                 .target(name: "FeatherDomain"),
+                .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "FeatherStorage", package: "feather-storage"),
             ],
             path: "Sources/Layers/Application",
@@ -175,6 +184,8 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "FeatherStorage", package: "feather-storage"),
+                .product(name: "FeatherMail", package: "feather-mail"),
+                .product(name: "Jobs", package: "swift-jobs"),
                 .product(name: "Subprocess", package: "swift-subprocess"),
                 .product(name: "ServiceLifecycle", package: "swift-service-lifecycle"),
                 .product(name: "NanoID", package: "swift-nanoid"),

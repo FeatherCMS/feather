@@ -8,14 +8,14 @@ public import FeatherInfrastructure
 public struct UseCases: Sendable {
     let databaseContext: DatabaseClientContext
     let authorizer: any Authorizer
-    let jobs: any MailSender
+    let jobs: any SendMailJobController
     let events: any EventPublisher
     let credentialWriter: any InvitationCredentialWriter
 
     public init(
         databaseContext: DatabaseClientContext,
         authorizer: any Authorizer,
-        jobs: any MailSender,
+        jobs: any SendMailJobController,
         events: any EventPublisher
     ) {
         self.databaseContext = databaseContext
@@ -24,7 +24,5 @@ public struct UseCases: Sendable {
         self.events = events
         self.credentialWriter = InvitationCredentialWriterAdapter()
     }
-
-    var mailSender: any MailSender { jobs }
 
 }

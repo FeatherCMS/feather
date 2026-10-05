@@ -1,6 +1,7 @@
 import FeatherContracts
 import FeatherDatabase
 import FeatherDomain
+import FeatherApplication
 import FeatherInfrastructure
 import Jobs
 import MediaApplication

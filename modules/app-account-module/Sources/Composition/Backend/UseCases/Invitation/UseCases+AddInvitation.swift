@@ -25,7 +25,7 @@ extension UseCases {
             authorizer: authorizer,
             transaction: transaction,
             events: events,
-            mailSender: mailSender
+            jobs: jobs
         )
     }
 }

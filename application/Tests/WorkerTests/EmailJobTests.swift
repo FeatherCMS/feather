@@ -1,4 +1,4 @@
-import Environment
+import FeatherInfrastructure
 import FeatherMail
 import FeatherMailEphemeral
 import Testing
@@ -11,18 +11,18 @@ struct EmailJobTests {
     @Test
     func sendsGenericEmail() async throws {
         let mailbox = EphemeralMailbox()
-        let service = EmailService(
-            client: MailClientEphemeral(mailbox: mailbox)
-        )
+        let mailClient = MailClientEphemeral(mailbox: mailbox)
 
-        try await JobController.sendEmail(
+        try await SendMailJobHandler.handle(
             parameters: .init(
-                to: ["recipient@example.com"],
                 from: "sender@example.com",
+                to: ["recipient@example.com"],
                 subject: "Test subject",
-                message: "Test message"
+                additionalHeaders: [],
+                body: "Test message",
+                contentType: .plainText
             ),
-            emailService: service
+            mailClient: mailClient
         )
 
         let messages = await mailbox.getMessages()
@@ -45,20 +45,22 @@ struct EmailJobTests {
     @Test
     func sendsContactFormEmailWithHeaders() async throws {
         let mailbox = EphemeralMailbox()
-        let service = EmailService(
-            client: MailClientEphemeral(mailbox: mailbox)
-        )
+        let mailClient = MailClientEphemeral(mailbox: mailbox)
 
-        try await JobController.sendContactFormEmail(
+        try await SendMailJobHandler.handle(
             parameters: .init(
-                mailFrom: "sender@example.com",
-                mailTo: "recipient@example.com",
+                from: "sender@example.com",
+                to: ["recipient@example.com"],
                 subject: "Contact subject",
-                additionalHeaders:
-                    "CC: cc@example.com\nBCC: bcc@example.com\nReply-To: reply@example.com",
-                messageBody: "<p>Contact message</p>"
+                additionalHeaders: [
+                    "CC: cc@example.com",
+                    "BCC: bcc@example.com",
+                    "Reply-To: reply@example.com",
+                ],
+                body: "<p>Contact message</p>",
+                contentType: .html
             ),
-            emailService: service
+            mailClient: mailClient
         )
 
         let messages = await mailbox.getMessages()

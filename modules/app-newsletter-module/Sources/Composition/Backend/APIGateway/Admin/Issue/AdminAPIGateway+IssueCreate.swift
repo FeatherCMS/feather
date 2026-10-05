@@ -34,7 +34,11 @@ extension AdminAPIGateway {
                 )
         }
 
-        try await useCases.enqueueIssueEmails(issue: result)
+        try await useCases.makeSendNewsletterIssueEmails()
+            .execute(
+                subject: subject,
+                input: .init(issue: result)
+            )
 
         return .created(
             .init(

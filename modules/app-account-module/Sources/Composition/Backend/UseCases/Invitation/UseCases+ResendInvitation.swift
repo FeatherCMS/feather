@@ -22,7 +22,7 @@ extension UseCases {
         return .init(
             authorizer: authorizer,
             transaction: transaction,
-            mailSender: mailSender
+            jobs: jobs
         )
     }
 }

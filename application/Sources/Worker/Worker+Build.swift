@@ -1,4 +1,5 @@
 import Environment
+import FeatherApplication
 import FeatherGeneratedSES
 import FeatherMail
 import FeatherMailSES
@@ -49,17 +50,15 @@ func buildWorker(
         byteBufferAllocator: .init(),
         options: []
     )
-    let emailService = EmailService(
-        client: MailClientSES(
-            ses: ses,
-            encoder: RawMailEncoder(
-                headerDateEncodingStrategy: {
-                    let formatter = DateFormatter()
-                    formatter.locale = Locale(identifier: "en_US")
-                    formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"
-                    return formatter.string(from: Date())
-                }
-            )
+    let mailClient = MailClientSES(
+        ses: ses,
+        encoder: RawMailEncoder(
+            headerDateEncodingStrategy: {
+                let formatter = DateFormatter()
+                formatter.locale = Locale(identifier: "en_US")
+                formatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"
+                return formatter.string(from: Date())
+            }
         )
     )
 
@@ -139,11 +138,7 @@ func buildWorker(
 
     _ = JobController(
         queue: jobQueue,
-        emailService: emailService,
-        database: database
-    )
-    _ = MediaJobController(
-        queue: jobQueue,
+        mailClient: mailClient,
         databaseContext: databaseContext,
         storageContext: .init(
             storage: StorageClientFS(rootPath: config.media.storageRootPath),
@@ -152,7 +147,7 @@ func buildWorker(
                 segmentLength: config.storage.objectKey.segmentLength
             )
         ),
-        maxConcurrentProcessing: config.media.maxConcurrentProcessing
+        maxConcurrentMediaProcessing: config.media.maxConcurrentProcessing
     )
 
     var jobSchedule = JobSchedule()

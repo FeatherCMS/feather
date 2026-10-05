@@ -23,7 +23,7 @@ extension UseCases {
         )
         return RequestMagicLink(
             transaction: transaction,
-            mailSender: mailSender
+            jobs: jobs
         )
     }
 }

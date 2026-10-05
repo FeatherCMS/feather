@@ -69,6 +69,10 @@ let package = Package(
         ),
 
         .package(path: "../../feather-core"),
+        .package(
+            url: "https://github.com/feather-framework/feather-mail",
+            exact: "1.0.0-rc.1"
+        ),
         .package(path: "../app-auth-module"),
         .package(path: "../app-media-module"),
         .package(path: "../app-system-module"),
@@ -112,6 +116,7 @@ let package = Package(
             name: "AccountApplication",
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
+                .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "FeatherDomain", package: "feather-core"),
 
                 .product(name: "SystemApplication", package: "app-system-module"),
@@ -237,6 +242,7 @@ let package = Package(
         .testTarget(
             name: "AccountApplicationTests",
             dependencies: [
+                .product(name: "FeatherMail", package: "feather-mail"),
                 .target(name: "AccountApplication"),
             ],
             swiftSettings: swiftSettings
