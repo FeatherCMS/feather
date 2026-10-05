@@ -4,6 +4,7 @@ public import FeatherDomain
 import FeatherStorage
 import Foundation
 import MediaDomain
+import MIME
 import NIOCore
 
 public struct GenerateMediaAssetVariants: UseCase {
@@ -133,9 +134,16 @@ public struct GenerateMediaAssetVariants: UseCase {
                 var buffer = ByteBufferAllocator()
                     .buffer(capacity: output.data.count)
                 buffer.writeBytes(output.data)
+                let outputContentType =
+                    MediaTypeDetector()
+                    .getPossibleMediaTypeForExtension(
+                        output.extension.lowercased()
+                    )?.rawValue
+                    ?? MediaType.Application.octetStream().rawValue
                 try await storageContext.storage.upload(
                     key: storageObjectKey,
-                    sequence: .init(buffer: buffer)
+                    sequence: .init(buffer: buffer),
+                    contentType: outputContentType
                 )
                 uploadedKeys.append(storageObjectKey)
                 outputs.append(generated)
@@ -154,7 +162,12 @@ public struct GenerateMediaAssetVariants: UseCase {
                         MediaAssetStorageObject.create(
                             key: "variants/\($0.plan.variant.key)",
                             extension: $0.extension,
-                            contentType: variantContentType(for: $0.extension),
+                            contentType:
+                                MediaTypeDetector()
+                                .getPossibleMediaTypeForExtension(
+                                    $0.extension.lowercased()
+                                )?.rawValue
+                                ?? MediaType.Application.octetStream().rawValue,
                             sizeInBytes: $0.sizeInBytes
                         )
                     }
@@ -348,17 +361,5 @@ extension GenerateMediaAssetVariants {
             $0.pathExtension == preferredURL.pathExtension
         })
             ?? (candidates.count == 1 ? candidates[0] : preferredURL)
-    }
-}
-
-private func variantContentType(for extension: String) -> String {
-    switch `extension`.lowercased() {
-    case "jpg", "jpeg": "image/jpeg"
-    case "png": "image/png"
-    case "gif": "image/gif"
-    case "webp": "image/webp"
-    case "pdf": "application/pdf"
-    case "mp4": "video/mp4"
-    default: "application/octet-stream"
     }
 }

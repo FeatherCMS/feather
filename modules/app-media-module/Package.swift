@@ -53,6 +53,10 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.12.1"),
         .package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.27.0"),
         .package(url: "https://github.com/swift-server/async-http-client", from: "1.0.0"),
+        .package(
+            url: "https://github.com/BinaryBirds/swift-web-standards",
+            exact: "1.0.0-beta.4"
+        ),
         .package(path: "../../feather-core"),
         .package(path: "../app-system-module"),
     ],
@@ -81,6 +85,7 @@ let package = Package(
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "FeatherStorage", package: "feather-storage"),
+                .product(name: "MIME", package: "swift-web-standards"),
                 .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "SystemApplication", package: "app-system-module"),
 
