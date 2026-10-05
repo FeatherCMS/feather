@@ -123,7 +123,10 @@ let package = Package(
                 .product(name: "FeatherApplication", package: "feather-core"),
 
                 .product(name: "SystemContracts", package: "app-system-module"),
-                .product(name: "SystemApplication", package: "app-system-module"),
+                .product(
+                    name: "SystemApplication",
+                    package: "app-system-module"
+                ),
 
                 .target(name: "WebDomain"),
             ],
@@ -259,7 +262,12 @@ let package = Package(
             dependencies: [
                 .target(name: "WebInfrastructure"),
 
-                .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
+                .product(name: "FeatherContracts", package: "feather-core"),
+                .product(
+                    name: "FeatherDatabasePostgres",
+                    package: "feather-database-postgres"
+                ),
+                .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
             ],

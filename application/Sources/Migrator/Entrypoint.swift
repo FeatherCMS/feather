@@ -72,7 +72,9 @@ struct Entrypoint {
                 let migrator = Migrator(
                     migrations: buildMigrations(
                         connection: connection,
-                        events: buildMigrationEventPublisher(),
+                        events: buildMigrationEventPublisher(
+                            webPublicBaseURL: config.webPublicBaseURL
+                        ),
                         idGenerator: NanoIDGenerator()
                     )
                 )

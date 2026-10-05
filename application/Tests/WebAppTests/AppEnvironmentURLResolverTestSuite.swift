@@ -41,7 +41,7 @@ struct AppEnvironmentURLResolverTestSuite {
 
         #expect(resolver.publicSiteBaseURL() == "http://localhost:3456")
         #expect(resolver.publicStaticBaseURL() == "http://localhost:4567")
-        #expect(resolver.publicMediaBaseURL() == "http://localhost:8080")
+        #expect(resolver.publicMediaBaseURL() == "http://localhost:8081")
         #expect(resolver.apiBaseURL() == "http://localhost:8080")
     }
 

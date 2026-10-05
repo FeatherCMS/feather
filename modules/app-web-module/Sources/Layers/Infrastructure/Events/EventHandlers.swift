@@ -6,7 +6,8 @@ import WebDomain
 public enum EventHandlers {
 
     public static func register(
-        in registry: inout EventRegistry
+        in registry: inout EventRegistry,
+        publicBaseURL: String
     ) {
         registry.register(
             event: WebMenuProvider.self,
@@ -74,7 +75,7 @@ public enum EventHandlers {
                 ),
                 .init(
                     key: "web-settings-public-base-url",
-                    value: "http://localhost:3456",
+                    value: publicBaseURL,
                     name: "Website public base URL",
                     notes: "Canonical public URL of the website"
                 ),
