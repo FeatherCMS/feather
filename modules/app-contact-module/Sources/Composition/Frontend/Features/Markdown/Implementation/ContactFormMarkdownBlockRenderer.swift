@@ -9,6 +9,7 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     let name = "ContactForm"
     let usesFormSubmissionNonce = true
     let api: ContactAppAPIClient
+    let formChallengeProvider: (any WebFormChallengeProvider)?
 
     func render(
         request: WebMarkdownBlockRendererRequest
@@ -73,10 +74,24 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
             children.append(P(message).setClass(messageClass))
         }
         children.append(contentsOf: fields)
+        if let formChallengeProvider {
+            children.append(
+                Div {
+                    for element in formChallengeProvider.widget() {
+                        element
+                    }
+                }
+                .setClass("web-form-challenge")
+            )
+        }
         children.append(Button("Submit").type(.submit))
         let formElement = Form { children }
             .method(.post)
             .action(action)
+            .data(
+                "challenge-response-field-name",
+                formChallengeProvider?.responseFieldName ?? ""
+            )
             .setClass("contact-form")
         return Document(root: formElement).render()
     }
