@@ -21,10 +21,11 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let campaignId = try context.requiredParameter(route.parameterName)
-        let form = try await request.decode(
-            as: AppNewsletterCampaignSubscriptionForm.self,
+        let decoded = try await request.decode(
+            as: TurnstileDecoded<AppNewsletterCampaignSubscriptionForm>.self,
             context: context
         )
+        let form = decoded.data
         guard WebFormSubmissionNonce.matches(
             formValue: form.nonce,
             cookieValue: request.cookies[
@@ -36,7 +37,7 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
         do {
             if let turnstileVerifier,
                 try await !turnstileVerifier.verify(
-                    token: form.turnstileResponse
+                    token: decoded.token
                 )
             {
                 throw HTTPError(.forbidden)

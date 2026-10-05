@@ -38,10 +38,11 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
         let (interactor, presenter) = buildRuntime((request, context))
         var lastPayload: LoginFormInput?
         do {
-            let payload = try await request.decode(
-                as: LoginFormInput.self,
+            let decoded = try await request.decode(
+                as: TurnstileDecoded<LoginFormInput>.self,
                 context: context
             )
+            let payload = decoded.data
             lastPayload = payload
             try await payload.validate()
 
@@ -49,7 +50,7 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
                 let isVerified: Bool
                 do {
                     isVerified = try await turnstileVerifier.verify(
-                        token: payload.turnstileResponse
+                        token: decoded.token
                     )
                 }
                 catch {

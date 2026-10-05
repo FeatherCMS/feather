@@ -7,6 +7,7 @@ import OpenAPIRuntime
 import SGML
 import WebBuilders
 import WebComponents
+public import WebFrontend
 
 public struct AppNewsletterCampaignSubscription {
     let controller: any AppNewsletterCampaignSubscriptionController

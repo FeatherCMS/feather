@@ -27,12 +27,10 @@ struct AppMagicLink {
     struct RequestInput: Codable, Sendable {
         let email: String
         let isPersistent: NewAdminFormFieldCheckbox.Input
-        let turnstileResponse: String?
 
         enum CodingKeys: String, CodingKey {
             case email
             case isPersistent = "is_persistent"
-            case turnstileResponse = "cf-turnstile-response"
         }
     }
 
@@ -238,15 +236,16 @@ struct AppMagicLink {
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
         var buildContext = BuilderContext()
-        let input = try await request.decode(
-            as: RequestInput.self,
+        let decoded = try await request.decode(
+            as: TurnstileDecoded<RequestInput>.self,
             context: context
         )
+        let input = decoded.data
         if let turnstileVerifier {
             let isVerified: Bool
             do {
                 isVerified = try await turnstileVerifier.verify(
-                    token: input.turnstileResponse
+                    token: decoded.token
                 )
             }
             catch {

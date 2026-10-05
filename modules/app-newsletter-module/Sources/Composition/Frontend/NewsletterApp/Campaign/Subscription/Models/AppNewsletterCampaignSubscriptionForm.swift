@@ -7,16 +7,8 @@ import SGML
 import WebBuilders
 import WebComponents
 
-struct AppNewsletterCampaignSubscriptionForm: Codable, Sendable {
+struct AppNewsletterCampaignSubscriptionForm: Decodable, Sendable {
     let email: String
     let nonce: String?
     let redirect: String?
-    let turnstileResponse: String?
-
-    enum CodingKeys: String, CodingKey {
-        case email
-        case nonce
-        case redirect
-        case turnstileResponse = "cf-turnstile-response"
-    }
 }

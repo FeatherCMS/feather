@@ -21,10 +21,11 @@ struct AppContactFormSubmissionDefaultController:
         context: DefaultRequestContext
     ) async throws -> Response {
         let formKey = try context.requiredParameter("formKey")
-        let form = try await request.decode(
-            as: AppContactFormSubmissionForm.self,
+        let decoded = try await request.decode(
+            as: TurnstileDecoded<AppContactFormSubmissionForm>.self,
             context: context
         )
+        let form = decoded.data
         guard WebFormSubmissionNonce.matches(
             formValue: form.nonce,
             cookieValue: request.cookies[
@@ -36,7 +37,7 @@ struct AppContactFormSubmissionDefaultController:
         do {
             if let turnstileVerifier,
                 try await !turnstileVerifier.verify(
-                    token: form.turnstileResponse
+                    token: decoded.token
                 )
             {
                 throw HTTPError(.forbidden)
