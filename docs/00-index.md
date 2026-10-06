@@ -19,6 +19,11 @@ By the end of this guide, you will:
 - The `feather-core` package provides shared contracts for all modules.
 - Each feature module owns its business logic and persistence adapters.
 
+## Reference docs
+
+- [Event list](event-list.md) — event contracts, contexts, platforms, module
+  ownership, registrations, and trigger sites.
+
 ---
 
 ## 1) Big Picture First
