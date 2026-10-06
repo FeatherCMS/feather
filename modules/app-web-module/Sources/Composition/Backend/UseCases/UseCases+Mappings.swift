@@ -276,7 +276,11 @@ extension UseCases {
     func map(
         _ query: WebAdminAPI.Components.Schemas.WebMenuListItemSearchQuerySchema
     ) -> MenuList.Query {
-        .init(page: map(query.page), sort: [], search: query.filters.search)
+        .init(
+            page: map(query.page),
+            sort: [.init(field: .key, direction: .asc)],
+            search: query.filters.search
+        )
     }
 
     func map(_ detail: MenuDetail)
