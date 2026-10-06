@@ -45,40 +45,10 @@ struct VideoMarkdownBlockRenderer: WebMarkdownBlockRenderer {
     private func source(
         from request: WebMarkdownBlockRendererRequest
     ) -> String? {
-        if let source = request.arguments["source"], !source.isEmpty {
-            return source
+        guard let source = request.arguments["source"], !source.isEmpty else {
+            return nil
         }
-
-        let raw = request.rawArguments.trimmingCharacters(in: .whitespacesAndNewlines)
-        let legacy = raw.isEmpty
-            ? request.children.map(\.html).joined()
-                .replacingOccurrences(of: "<p>", with: "")
-                .replacingOccurrences(of: "</p>", with: "")
-                .replacingOccurrences(of: "<br>", with: "")
-                .replacingOccurrences(of: "<br/>", with: "")
-                .replacingOccurrences(of: "<br />", with: "")
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-            : raw
-
-        if legacy.hasPrefix("{") && legacy.hasSuffix("}") {
-            let value = legacy.dropFirst().dropLast()
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-            guard let data = value.data(using: .utf8) else { return nil }
-            return try? JSONDecoder().decode(String.self, from: data)
-        }
-
-        let decoded = legacy
-            .replacingOccurrences(of: "&amp;", with: "&")
-            .replacingOccurrences(of: "&quot;", with: "\"")
-            .replacingOccurrences(of: "&#39;", with: "'")
-        let quotePairs = [("“", "”"), ("\"", "\""), ("‘", "’"), ("'", "'")]
-        for (opening, closing) in quotePairs
-            where decoded.hasPrefix(opening) && decoded.hasSuffix(closing)
-        {
-            return String(decoded.dropFirst(opening.count).dropLast(closing.count))
-                .trimmingCharacters(in: .whitespacesAndNewlines)
-        }
-        return decoded.isEmpty ? nil : decoded
+        return source
     }
 
     private func isAllowed(url: URL, source: String) -> Bool {

@@ -47,11 +47,10 @@ public struct NewAdminFormFieldRichContentEditor: Component {
         .init(title: "Unordered list", icon: "•", type: "ul"),
         .init(title: "Ordered list", icon: "1.", type: "ol"),
         .init(title: "Separator", icon: "—", type: "separator"),
-        .init(title: "Grid", icon: "▦", type: "grid"),
+        .init(title: "Grid", icon: "⊞", type: "grid"),
         .init(title: "Blockquote", icon: "“", type: "blockquote"),
         .init(title: "Code block", icon: "{}", type: "code"),
         .init(title: "HTML", icon: "<>", type: "html"),
-        .init(title: "Custom block", icon: "✦", type: "custom"),
     ]
 
     private static let markdownEditorScript = #"""
@@ -98,10 +97,8 @@ public struct NewAdminFormFieldRichContentEditor: Component {
               return null;
             }
             function parseVideoBlock(part) {
-              const canonical = part.match(/^@Video\\(\\s*source\\s*:\\s*([\\s\\S]+?)\\s*,\\s*kind\\s*:\\s*([\\s\\S]+?)\\s*\\)$/);
+              const canonical = part.match(/^@Video\(\s*source\s*:\s*([\s\S]+?)\s*,\s*kind\s*:\s*([\s\S]+?)\s*\)$/);
               if (canonical) return Object.assign(newBlock('video', parseArgumentValue(canonical[1])), { kind: parseArgumentValue(canonical[2]) });
-              const legacy = part.match(/^@Video\\s*\\{([\\s\\S]*)\\}$/);
-              if (legacy) return Object.assign(newBlock('video', parseArgumentValue(legacy[1])), { kind: 'embed' });
               return null;
             }
             function parseMarkdown(markdown) {

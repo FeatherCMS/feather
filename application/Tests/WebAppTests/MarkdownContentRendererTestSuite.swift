@@ -73,12 +73,11 @@ struct MarkdownContentRendererTestSuite {
         )
 
         let output = await renderer.render(
-            markdown: "@Video(source: \"https://www.youtube.com/embed/example\", kind: \"embed\")\n\n@Video{\"https://www.youtube.com/embed/legacy\"}\n\n@Video {\"https://www.youtube.com/embed/legacy-spaced\"}"
+            markdown: "@Video(source: \"https://www.youtube.com/embed/example\", kind: \"embed\")\n\n@Video(source: \"https://www.youtube.com/embed/second\", kind: \"embed\")"
         )
 
         #expect(output.contains("src=\"https://www.youtube.com/embed/example\""))
-        #expect(output.contains("src=\"https://www.youtube.com/embed/legacy\""))
-        #expect(output.contains("src=\"https://www.youtube.com/embed/legacy-spaced\""))
+        #expect(output.contains("src=\"https://www.youtube.com/embed/second\""))
         #expect(output.contains("<iframe"))
     }
 }
