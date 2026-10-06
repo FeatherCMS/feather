@@ -1,5 +1,5 @@
 {
-  "originHash" : "a0acf02dbcee478112f7e475b326b104980fcc39527454ea054e8a656d99af2d",
+  "originHash" : "d85a5b405c45027283e56892cab347b03d725aa3efaabb4f7cd1e1a02c92a0c4",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -26,15 +26,6 @@
       "state" : {
         "revision" : "699738895348bb43516c8dc351ad53ed6f356997",
         "version" : "1.0.0-rc.1"
-      }
-    },
-    {
-      "identity" : "feather-openapi",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-openapi",
-      "state" : {
-        "revision" : "22df7f076f6ef27f25a80daf7bec8b55fdb40212",
-        "version" : "1.0.0-beta.7"
       }
     },
     {
@@ -78,8 +69,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mattpolzin/OpenAPIKit",
       "state" : {
-        "revision" : "fb0c5d4b817ea787eb7a742c985b32a0fe4f37f0",
-        "version" : "5.3.0"
+        "revision" : "2cabbac1d08b25c5d22960cc9554f7960a3824cf",
+        "version" : "7.0.0"
       }
     },
     {

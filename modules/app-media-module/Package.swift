@@ -51,7 +51,7 @@ let package = Package(
             exact: "1.0.0-rc.1"
         ),
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.34.0"),
-        .package(url: "https://github.com/mattpolzin/OpenAPIKit", from: "5.0.0"),
+        .package(url: "https://github.com/mattpolzin/OpenAPIKit", from: "7.0.0"),
         .package(url: "https://github.com/jpsim/Yams", from: "6.2.0"),
         .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.12.1"),
         .package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.27.0"),

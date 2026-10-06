@@ -1,5 +1,6 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
+import OpenAPIKitCore
 
 protocol AccountCreateOperation: BearerProtectedOperation {}
 

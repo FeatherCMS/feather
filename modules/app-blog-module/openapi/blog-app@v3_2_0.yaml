@@ -174,7 +174,7 @@ components:
     BlogPostImageURLField:
       type: string
       examples:
-      - /media/assets/blog-post.png
+      - /public/12/34/56789/originals/blog-post.png
     MediaAssetSchema:
       type: object
       properties:
@@ -199,7 +199,7 @@ components:
     MediaAssetURLField:
       type: string
       examples:
-      - /media/assets/example.png
+      - /public/12/34/56789/originals/example.png
     MediaAssetVariantListSchema:
       type: array
       items:
@@ -286,7 +286,7 @@ components:
     WebMetadataImageURLField:
       type: string
       examples:
-      - /media/assets/example.png
+      - /public/12/34/56789/originals/example.png
     WebMetadataCanonicalURLField:
       type: string
       examples:
@@ -349,7 +349,7 @@ components:
     BlogAuthorImageURLField:
       type: string
       examples:
-      - /media/assets/author.png
+      - /public/12/34/56789/originals/author.png
     BlogTagSummaryListSchema:
       type: array
       items:
@@ -386,7 +386,7 @@ components:
     BlogTagImageURLField:
       type: string
       examples:
-      - /media/assets/tag.png
+      - /public/12/34/56789/originals/tag.png
     BlogPostDetailSchema:
       type: object
       properties:

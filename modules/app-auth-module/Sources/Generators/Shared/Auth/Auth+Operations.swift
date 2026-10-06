@@ -1,5 +1,5 @@
 public import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPIGenerator
 import OpenAPIKit30
 
 public protocol AuthOperation: OperationRepresentable {

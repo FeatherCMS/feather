@@ -538,11 +538,19 @@ components:
     UserRoleCreateSchema:
       type: object
       properties:
+        key:
+          $ref: '#/components/schemas/UserRoleKeyField'
         name:
           $ref: '#/components/schemas/UserRoleNameField'
         notes:
           $ref: '#/components/schemas/UserRoleNotesField'
-      minProperties: 0
+      required:
+      - key
+      minProperties: 1
+    UserRoleKeyField:
+      type: string
+      examples:
+      - editor
     UserRoleNotesField:
       type: string
       examples:
@@ -554,13 +562,18 @@ components:
           type: string
           examples:
           - role_manager
+        key:
+          type: string
+          examples:
+          - editor
         name:
           $ref: '#/components/schemas/UserRoleNameField'
         notes:
           $ref: '#/components/schemas/UserRoleNotesField'
       required:
       - id
-      minProperties: 1
+      - key
+      minProperties: 2
     UserRoleListSchema:
       type: array
       items:
@@ -572,11 +585,14 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/UserRoleIdField'
+        key:
+          $ref: '#/components/schemas/UserRoleKeyField'
         name:
           $ref: '#/components/schemas/UserRoleNameField'
       required:
       - id
-      minProperties: 1
+      - key
+      minProperties: 2
     UserRoleListItemSearchQuerySchema:
       type: object
       properties:

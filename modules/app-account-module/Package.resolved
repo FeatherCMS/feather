@@ -1,5 +1,5 @@
 {
-  "originHash" : "79727a0a76afbf83a87e4452a9fce1807de413395e2c77931d915110d54a99b8",
+  "originHash" : "7072917805c9d9c16b9a1d130425fada868ddca3f21e250cca5e7eebc0d3c2a7",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -35,15 +35,6 @@
       "state" : {
         "revision" : "699738895348bb43516c8dc351ad53ed6f356997",
         "version" : "1.0.0-rc.1"
-      }
-    },
-    {
-      "identity" : "feather-openapi",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-openapi",
-      "state" : {
-        "revision" : "22df7f076f6ef27f25a80daf7bec8b55fdb40212",
-        "version" : "1.0.0-beta.7"
       }
     },
     {
@@ -87,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mattpolzin/OpenAPIKit",
       "state" : {
-        "revision" : "fb0c5d4b817ea787eb7a742c985b32a0fe4f37f0",
-        "version" : "5.3.0"
+        "revision" : "2cabbac1d08b25c5d22960cc9554f7960a3824cf",
+        "version" : "7.0.0"
       }
     },
     {
@@ -364,7 +355,7 @@
     {
       "identity" : "swift-service-lifecycle",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/swift-server/swift-service-lifecycle.git",
+      "location" : "https://github.com/swift-server/swift-service-lifecycle",
       "state" : {
         "revision" : "9829955b385e5bb88128b73f1b8389e9b9c3191a",
         "version" : "2.11.0"

@@ -1,5 +1,5 @@
 {
-  "originHash" : "55d520d8333d1d667e9be2b60712d86341b8836290372715276c4782b1173f58",
+  "originHash" : "1bed76b7bdbd4dd5c2a21ce63fff12e80545ac8a147cfaf4fb36a478c5704751",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -35,15 +35,6 @@
       "state" : {
         "revision" : "699738895348bb43516c8dc351ad53ed6f356997",
         "version" : "1.0.0-rc.1"
-      }
-    },
-    {
-      "identity" : "feather-openapi",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-openapi",
-      "state" : {
-        "revision" : "22df7f076f6ef27f25a80daf7bec8b55fdb40212",
-        "version" : "1.0.0-beta.7"
       }
     },
     {
@@ -87,8 +78,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mattpolzin/OpenAPIKit",
       "state" : {
-        "revision" : "fb0c5d4b817ea787eb7a742c985b32a0fe4f37f0",
-        "version" : "5.3.0"
+        "revision" : "2cabbac1d08b25c5d22960cc9554f7960a3824cf",
+        "version" : "7.0.0"
       }
     },
     {
@@ -220,7 +211,7 @@
     {
       "identity" : "swift-http-types",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-http-types",
+      "location" : "https://github.com/apple/swift-http-types.git",
       "state" : {
         "revision" : "db774a277f60063a32d854f2980299caf06da041",
         "version" : "1.6.0"

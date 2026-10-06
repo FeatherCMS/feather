@@ -20,43 +20,13 @@ paths:
       - MediaAssets
       operationId: mediaAssetCreate
       parameters:
-      - name: X-Media-Asset-Parent-ID
-        in: header
-        required: false
-        schema:
-          type: string
-        description: Optional parent folder id
-      - name: X-Media-Asset-File-Name
-        in: header
-        required: true
-        schema:
-          type: string
-        description: Original file name
-      - name: X-Media-Asset-Extension
-        in: header
-        required: true
-        schema:
-          type: string
-        description: Canonical file extension
-      - name: X-Media-Asset-Title
-        in: header
-        required: false
-        schema:
-          type: string
-        description: Optional asset title
-      - name: X-Media-Asset-Alt-Text
-        in: header
-        required: false
-        schema:
-          type: string
-        description: Optional alternative text
+      - $ref: '#/components/parameters/MediaAssetParentIDHeader'
+      - $ref: '#/components/parameters/MediaAssetFileNameHeader'
+      - $ref: '#/components/parameters/MediaAssetExtensionHeader'
+      - $ref: '#/components/parameters/MediaAssetTitleHeader'
+      - $ref: '#/components/parameters/MediaAssetAltTextHeader'
       requestBody:
-        content:
-          application/octet-stream:
-            schema:
-              type: string
-              format: binary
-        required: true
+        $ref: '#/components/requestBodies/MediaAssetCreateRequestBody'
       responses:
         201:
           $ref: '#/components/responses/MediaAssetDetailResponse'
@@ -184,12 +154,12 @@ paths:
       responses:
         201:
           $ref: '#/components/responses/MediaFolderDetailResponse'
+        409:
+          description: A media folder with this path already exists
         401:
           description: Unauthorized
         403:
           description: Forbidden
-        409:
-          description: A media folder with this path already exists
       security:
       - bearerAuth: []
   /api/v1/admin/media/folders/list:
@@ -458,7 +428,7 @@ components:
           example: posts/cover-image
         url:
           type: string
-          example: /media/assets/media_asset_1/cover-image.jpg
+          example: /public/12/34/56789/originals/cover-image.jpg
         extension:
           type: string
           example: jpeg
@@ -672,7 +642,7 @@ components:
           example: posts/cover-image
         url:
           type: string
-          example: /media/assets/media_asset_1/cover-image.jpg
+          example: /public/12/34/56789/originals/cover-image.jpg
         extension:
           type: string
           example: jpeg
@@ -782,7 +752,7 @@ components:
           $ref: '#/components/schemas/MediaAssetIdField'
         url:
           type: string
-          example: /media/assets/media_asset_1/cover-image.jpg
+          example: /public/12/34/56789/originals/cover-image.jpg
         extension:
           type: string
           example: jpeg
@@ -811,7 +781,7 @@ components:
           example: thumb
         url:
           type: string
-          example: /media/assets/media_asset_1/cover-image.jpg
+          example: /public/12/34/56789/originals/cover-image.jpg
         extension:
           type: string
           example: jpeg
@@ -857,7 +827,7 @@ components:
           example: jpeg
         url:
           type: string
-          example: /media/assets/media_asset_1/cover-image.jpg
+          example: /public/12/34/56789/originals/cover-image.jpg
       required:
       - variantId
       - name
@@ -1322,6 +1292,38 @@ components:
           schema:
             $ref: '#/components/schemas/MediaVariantProcessorListItemSearchSchema'
   parameters:
+    MediaAssetParentIDHeader:
+      name: X-Media-Asset-Parent-ID
+      in: header
+      schema:
+        type: string
+      description: Optional parent folder id
+    MediaAssetFileNameHeader:
+      name: X-Media-Asset-File-Name
+      in: header
+      required: true
+      schema:
+        type: string
+      description: Original file name
+    MediaAssetExtensionHeader:
+      name: X-Media-Asset-Extension
+      in: header
+      required: true
+      schema:
+        type: string
+      description: Canonical file extension
+    MediaAssetTitleHeader:
+      name: X-Media-Asset-Title
+      in: header
+      schema:
+        type: string
+      description: Optional asset title
+    MediaAssetAltTextHeader:
+      name: X-Media-Asset-Alt-Text
+      in: header
+      schema:
+        type: string
+      description: Optional alternative text
     MediaAssetIdParameter:
       name: mediaAssetId
       in: path
@@ -1351,6 +1353,13 @@ components:
         $ref: '#/components/schemas/MediaVariantIdField'
       description: Media variant processor id
   requestBodies:
+    MediaAssetCreateRequestBody:
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+            format: binary
+      required: true
     DeleteRequestBody:
       content:
         application/json:

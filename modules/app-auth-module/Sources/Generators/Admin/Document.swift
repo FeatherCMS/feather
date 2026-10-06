@@ -15,10 +15,10 @@ struct TestServer: ServerRepresentable {
 }
 
 struct Document: DocumentRepresentable {
-    var info: OpenAPIInfoRepresentable
+    var info: any OpenAPIInfoRepresentable
     var servers: [any OpenAPIServerRepresentable] { [TestServer()] }
     var paths: PathMap
-    var components: OpenAPIComponentsRepresentable
+    var components: any OpenAPIComponentsRepresentable
 
     init() {
         let collection = PathCollection()

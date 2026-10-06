@@ -1,5 +1,5 @@
 {
-  "originHash" : "cda78d7bcebb1e9e5cc391e8a669cc59bb6848123658e46e6df7b06b7a70c8ca",
+  "originHash" : "57a6cbe15297df82135bea9222ec7c659fac384132478146935cef9179c21f6a",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -20,12 +20,12 @@
       }
     },
     {
-      "identity" : "feather-openapi",
+      "identity" : "feather-mail",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-openapi",
+      "location" : "https://github.com/feather-framework/feather-mail",
       "state" : {
-        "revision" : "22df7f076f6ef27f25a80daf7bec8b55fdb40212",
-        "version" : "1.0.0-beta.7"
+        "revision" : "699738895348bb43516c8dc351ad53ed6f356997",
+        "version" : "1.0.0-rc.1"
       }
     },
     {
@@ -69,8 +69,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mattpolzin/OpenAPIKit",
       "state" : {
-        "revision" : "fb0c5d4b817ea787eb7a742c985b32a0fe4f37f0",
-        "version" : "5.3.0"
+        "revision" : "2cabbac1d08b25c5d22960cc9554f7960a3824cf",
+        "version" : "7.0.0"
       }
     },
     {
@@ -197,6 +197,15 @@
       "state" : {
         "revision" : "db774a277f60063a32d854f2980299caf06da041",
         "version" : "1.6.0"
+      }
+    },
+    {
+      "identity" : "swift-jobs",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hummingbird-project/swift-jobs",
+      "state" : {
+        "revision" : "329b54d39f461c6dc17f36adb8f0af615c4edee4",
+        "version" : "1.4.0"
       }
     },
     {

@@ -7,6 +7,7 @@
 
 public import FeatherOpenAPI
 import OpenAPIKit30
+public import OpenAPIKitCore
 
 public struct UserIdentityCreateRequestBody: RequestBodyRepresentable {
 

@@ -106,13 +106,10 @@ let package = Package(
             url: "https://github.com/feather-framework/feather-mail",
             exact: "1.0.0-rc.1"
         ),
-        .package(
-            url: "https://github.com/feather-framework/feather-openapi",
-            exact: "1.0.0-beta.7"
-        ),
+        .package(path: "../../feather-openapi"),
         .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
-            from: "5.0.0"
+            from: "7.0.0"
         ),
         .package(
             url: "https://github.com/swift-server/swift-openapi-async-http-client",
