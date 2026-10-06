@@ -106,7 +106,10 @@ let package = Package(
             url: "https://github.com/feather-framework/feather-mail",
             exact: "1.0.0-rc.1"
         ),
-        .package(path: "../../feather-openapi"),
+        .package(
+            url: "https://github.com/feather-framework/feather-openapi",
+            exact: "1.0.0-rc.1"
+        ),
         .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
             from: "7.0.0"
