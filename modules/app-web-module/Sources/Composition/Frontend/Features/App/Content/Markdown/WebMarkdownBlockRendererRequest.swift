@@ -2,6 +2,7 @@ public import FeatherContracts
 
 public struct WebMarkdownBlockRendererRequest: Sendable, ExecutionContext {
     public let arguments: [String: String]
+    public let rawArguments: String
     public let children: [Child]
     public let formSubmissionNonce: String?
     public let formSubmissionFeedback: WebFormSubmissionFeedback?
@@ -24,11 +25,14 @@ public struct WebMarkdownBlockRendererRequest: Sendable, ExecutionContext {
 
     public init(
         arguments: [String: String] = [:],
+        rawArguments: String = "",
         children: [Child] = [],
         formSubmissionNonce: String? = nil,
         formSubmissionFeedback: WebFormSubmissionFeedback? = nil
     ) {
         self.arguments = arguments
+        // TODO: eliminate this, it's used for legacy @Video { "url" } blocks only
+        self.rawArguments = rawArguments
         self.children = children
         self.formSubmissionNonce = formSubmissionNonce
         self.formSubmissionFeedback = formSubmissionFeedback

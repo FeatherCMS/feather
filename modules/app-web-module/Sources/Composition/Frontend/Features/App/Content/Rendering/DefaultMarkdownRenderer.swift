@@ -124,6 +124,9 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
         }
 
         let arguments = directiveArguments(from: directive.argumentText)
+        let rawArguments = directive.argumentText.segments
+            .map { String($0.trimmedText) }
+            .joined(separator: "\n")
         var children: [WebMarkdownBlockRendererRequest.Child] = []
         var childUsesFormSubmissionNonce = false
         for child in directive.children {
@@ -158,6 +161,7 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
 
         let request = WebMarkdownBlockRendererRequest(
             arguments: arguments,
+            rawArguments: rawArguments,
             children: children,
             formSubmissionNonce: context.formSubmissionNonce,
             formSubmissionFeedback: context.formSubmissionFeedback
