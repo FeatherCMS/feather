@@ -11,7 +11,8 @@ extension UseCases {
     public func makeSubmitContactForm() -> SubmitForm {
         .init(
             transaction: formTransaction(),
-            jobs: jobs
+            jobs: jobs,
+            events: events
         )
     }
 }
