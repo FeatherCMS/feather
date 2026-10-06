@@ -65,7 +65,9 @@ struct NewsletterCampaignEditPage: Component {
                         .class("admin-detail-view-fields")
                         .style("display:grid;gap:12px;")
                         Div {
-                            if state.permissions.allows(Permissions.Campaigns.update) {
+                            if state.permissions.allows(
+                                Permissions.Campaigns.update
+                            ) {
                                 context.build(
                                     NewAdminButton(
                                         "Edit",
@@ -74,16 +76,20 @@ struct NewsletterCampaignEditPage: Component {
                                     )
                                 )
                             }
-                            if state.permissions.allows(Permissions.Campaigns.delete) {
+                            if state.permissions.allows(
+                                Permissions.Campaigns.delete
+                            ) {
                                 context.build(
                                     NewAdminButton(
                                         "Remove",
                                         href: NewAdminLocation.remove(
-                                            path: NewsletterAdminRoutes.campaignRemove
+                                            path: NewsletterAdminRoutes
+                                                .campaignRemove
                                                 .description,
                                             ids: [state.id],
                                             returnTo:
-                                                NewsletterAdminRoutes.campaignDetails(
+                                                NewsletterAdminRoutes
+                                                .campaignDetails(
                                                     RouterPath(state.id)
                                                 )
                                                 .description

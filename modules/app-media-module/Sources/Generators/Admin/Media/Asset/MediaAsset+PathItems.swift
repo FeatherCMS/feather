@@ -2,7 +2,9 @@ import FeatherOpenAPI
 
 struct MediaAssetPathItems: PathItemRepresentable {
     var post: (any OperationRepresentable)? { MediaAssetCreateOperation() }
-    var delete: (any OperationRepresentable)? { MediaAssetNodeRemoveOperation() }
+    var delete: (any OperationRepresentable)? {
+        MediaAssetNodeRemoveOperation()
+    }
 }
 
 struct MediaAssetListPathItems: PathItemRepresentable {
@@ -19,5 +21,7 @@ struct MediaAssetIdPathItems: PathItemRepresentable {
 }
 
 struct MediaAssetVariantPathItems: PathItemRepresentable {
-    var get: (any OperationRepresentable)? { MediaAssetVariantSearchOperation() }
+    var get: (any OperationRepresentable)? {
+        MediaAssetVariantSearchOperation()
+    }
 }

@@ -14,7 +14,8 @@ struct WebSettingsLogoDarkField: StringSchemaRepresentable {
 }
 
 struct WebSettingsMetaImageField: StringSchemaRepresentable {
-    var example: String? = "/public/12/34/56789/originals/default-meta-image.webp"
+    var example: String? =
+        "/public/12/34/56789/originals/default-meta-image.webp"
 }
 
 struct WebSettingsPrimaryColorField: StringSchemaRepresentable {

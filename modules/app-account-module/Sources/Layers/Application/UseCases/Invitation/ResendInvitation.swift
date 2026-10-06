@@ -73,14 +73,16 @@ public struct ResendInvitation: UseCase {
             guard
                 let mailFromAddress = try await scope.variable.get(
                     "system-settings-mail-from-address"
-                )?.whitespaceTrimmed,
+                )?
+                .whitespaceTrimmed,
                 !mailFromAddress.isEmpty
             else {
                 throw Error.mailFromNotConfigured
             }
             let mailFromName = try await scope.variable.get(
                 "system-settings-mail-from-name"
-            )?.whitespaceTrimmed.emptyToNil
+            )?
+            .whitespaceTrimmed.emptyToNil
             let configuredPublicBaseURL =
                 try await scope.variable.get("web-settings-public-base-url")?
                 .whitespaceTrimmed
@@ -105,7 +107,8 @@ public struct ResendInvitation: UseCase {
                 from: .init(result.mailFromAddress, name: result.mailFromName),
                 to: [.init(result.invitation.email)],
                 subject: "Application - Invitation",
-                body: .plainText("""
+                body: .plainText(
+                    """
                     Hello,
 
                     This is a reminder for your application identity invitation.
@@ -115,7 +118,8 @@ public struct ResendInvitation: UseCase {
 
                     Cheers,
                     Application Team.
-                    """)
+                    """
+                )
             )
         )
         return result.invitation.asDetail

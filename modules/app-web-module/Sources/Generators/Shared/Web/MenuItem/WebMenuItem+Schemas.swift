@@ -33,7 +33,9 @@ public struct WebMenuItemIsBlankField: BoolSchemaRepresentable {
 }
 
 public struct WebMenuItemListSchema: ArraySchemaRepresentable {
-    public var items: (any SchemaRepresentable)? { WebMenuItemSchema().reference() }
+    public var items: (any SchemaRepresentable)? {
+        WebMenuItemSchema().reference()
+    }
 
     public init() {}
 }

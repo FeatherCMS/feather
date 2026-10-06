@@ -1,11 +1,13 @@
+public import FeatherApplication
 public import FeatherInfrastructure
 public import FeatherMail
 public import Jobs
-public import FeatherApplication
 public import NewsletterApplication
+
 public import struct Foundation.Date
 
-public struct JobQueueNewsletterIssueJobController: NewsletterIssueJobController {
+public struct JobQueueNewsletterIssueJobController: NewsletterIssueJobController
+{
     public let queue: any JobQueueProtocol
     public let mailJobs: any SendMailJobController
 
@@ -50,7 +52,8 @@ public struct JobQueueNewsletterIssueJobController: NewsletterIssueJobController
     }
 
     private func makeParameters(for mail: Mail) -> SendMailJobParameters {
-        let body: (value: String, contentType: SendMailJobParameters.ContentType)
+        let body:
+            (value: String, contentType: SendMailJobParameters.ContentType)
         switch mail.body {
         case .plainText(let value):
             body = (value, .plainText)

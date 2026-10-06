@@ -27,15 +27,18 @@ struct WebInfrastructureTestSuite {
             publicBaseURL: publicBaseURL
         )
 
-        let variables = try await events.trigger(
-            event: VariableSeedProvider(),
-            using: EventContext()
-        ).flatMap { $0 }
+        let variables =
+            try await events.trigger(
+                event: VariableSeedProvider(),
+                using: EventContext()
+            )
+            .flatMap { $0 }
 
         #expect(
             variables.first(where: {
                 $0.key == "web-settings-public-base-url"
-            })?.value == publicBaseURL
+            })?
+            .value == publicBaseURL
         )
     }
 }

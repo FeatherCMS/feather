@@ -21,15 +21,16 @@ struct NewsletterCampaignMarkdownBlockRenderer: WebMarkdownBlockRenderer {
         }
         let action = submissionRoute.actionPath(for: identifier)
         var children: [any Element] = []
-        if
-            let feedback = request.formSubmissionFeedback,
+        if let feedback = request.formSubmissionFeedback,
             feedback.source == .newsletter,
             feedback.key == identifier
         {
-            let message = feedback.status == .success
+            let message =
+                feedback.status == .success
                 ? "You are subscribed to the newsletter."
                 : "Your subscription could not be completed. Please try again."
-            let messageClass = feedback.status == .success
+            let messageClass =
+                feedback.status == .success
                 ? "web-form-feedback web-form-feedback--success"
                 : "web-form-feedback web-form-feedback--failure"
             children.append(P(message).setClass(messageClass))
@@ -52,7 +53,9 @@ struct NewsletterCampaignMarkdownBlockRenderer: WebMarkdownBlockRenderer {
             )
             children.append(
                 Script()
-                    .src("https://challenges.cloudflare.com/turnstile/v0/api.js")
+                    .src(
+                        "https://challenges.cloudflare.com/turnstile/v0/api.js"
+                    )
                     .async()
                     .defer()
             )

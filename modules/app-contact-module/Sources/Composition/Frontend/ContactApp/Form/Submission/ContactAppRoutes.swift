@@ -3,7 +3,8 @@ public import Hummingbird
 
 public enum ContactAppRoutes {
     public static let contact = RouterPath("api/v1/contact")
-    public static let submission = contact
+    public static let submission =
+        contact
         .appendingPath(RouterPath("{formKey}"))
         .appendingPath(RouterPath("submit"))
 
@@ -11,12 +12,15 @@ public enum ContactAppRoutes {
         for formKey: String
     ) -> String {
         let allowedCharacters = CharacterSet(
-            charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~"
+            charactersIn:
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~"
         )
-        let encodedKey = formKey.addingPercentEncoding(
-            withAllowedCharacters: allowedCharacters
-        ) ?? ""
-        return contact
+        let encodedKey =
+            formKey.addingPercentEncoding(
+                withAllowedCharacters: allowedCharacters
+            ) ?? ""
+        return
+            contact
             .appendingPath(RouterPath(encodedKey))
             .appendingPath(RouterPath("submit"))
             .description + "/"

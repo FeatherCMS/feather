@@ -3,8 +3,8 @@ public import FeatherContracts
 public import FeatherDomain
 import FeatherStorage
 import Foundation
-import MediaDomain
 import MIME
+import MediaDomain
 import NIOCore
 
 public struct GenerateMediaAssetVariants: UseCase {
@@ -138,7 +138,8 @@ public struct GenerateMediaAssetVariants: UseCase {
                     MediaTypeDetector()
                     .getPossibleMediaTypeForExtension(
                         output.extension.lowercased()
-                    )?.rawValue
+                    )?
+                    .rawValue
                     ?? MediaType.Application.octetStream().rawValue
                 try await storageContext.storage.upload(
                     key: storageObjectKey,
@@ -166,7 +167,8 @@ public struct GenerateMediaAssetVariants: UseCase {
                                 MediaTypeDetector()
                                 .getPossibleMediaTypeForExtension(
                                     $0.extension.lowercased()
-                                )?.rawValue
+                                )?
+                                .rawValue
                                 ?? MediaType.Application.octetStream().rawValue,
                             sizeInBytes: $0.sizeInBytes
                         )

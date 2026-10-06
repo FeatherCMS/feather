@@ -26,12 +26,15 @@ public struct NewsletterSubscriptionRoute: Sendable {
         for value: String
     ) -> String {
         let allowedCharacters = CharacterSet(
-            charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~"
+            charactersIn:
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~"
         )
-        let encodedValue = value.addingPercentEncoding(
-            withAllowedCharacters: allowedCharacters
-        ) ?? ""
-        return prefix
+        let encodedValue =
+            value.addingPercentEncoding(
+                withAllowedCharacters: allowedCharacters
+            ) ?? ""
+        return
+            prefix
             .appendingPath(RouterPath(encodedValue))
             .appendingPath(suffix)
             .description

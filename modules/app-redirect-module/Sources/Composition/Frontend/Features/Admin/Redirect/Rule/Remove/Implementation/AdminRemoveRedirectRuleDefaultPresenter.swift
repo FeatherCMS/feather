@@ -25,8 +25,8 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
                     nonceToken: nonceToken,
                     returnTo: returnTo
                 ),
-            size: .small
-)
+                size: .small
+            )
         }
         return try await renderBulkRemovePage(items: items, returnTo: returnTo)
     }

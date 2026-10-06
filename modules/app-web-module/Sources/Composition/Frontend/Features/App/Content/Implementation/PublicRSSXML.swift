@@ -11,11 +11,12 @@ enum PublicRSSXML {
         siteURL: String,
         items: [WebRSSItem]
     ) -> String {
-        let sortedItems = items
+        let sortedItems =
+            items
             .filter { !$0.url.isEmpty }
             .sorted { lhs, rhs in
                 switch (lhs.publicationDate, rhs.publicationDate) {
-                case let (lhs?, rhs?): lhs > rhs
+                case (let lhs?, let rhs?): lhs > rhs
                 case (_?, nil): true
                 case (nil, _?): false
                 case (nil, nil):

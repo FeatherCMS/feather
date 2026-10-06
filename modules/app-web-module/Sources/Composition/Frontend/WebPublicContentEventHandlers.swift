@@ -167,7 +167,7 @@ public enum WebPublicContentEventHandlers {
     private static func menuContext(
         _ menu: WebAppAPI.Components.Schemas.WebMenuSchema
     ) -> [String: any Sendable] {
-        return [
+        [
             "name": menu.name,
             "items": menu.items.map(menuItemContext),
         ]

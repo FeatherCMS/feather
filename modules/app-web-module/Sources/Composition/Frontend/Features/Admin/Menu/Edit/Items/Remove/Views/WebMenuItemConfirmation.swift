@@ -34,7 +34,7 @@ struct WebMenuItemConfirmation: Component {
                         RouterPath(state.menuId),
                         RouterPath(state.id),
                         origin: state.origin
-                ),
+                    ),
                 submit: .init(label: "Remove item", style: .destructive),
                 nonceToken: state.nonceToken,
                 hiddenFields: [.init(name: "ids", value: state.id)]

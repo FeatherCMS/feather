@@ -1,9 +1,9 @@
-public import FeatherInfrastructure
 import FeatherDatabase
+public import FeatherInfrastructure
 public import FeatherMail
-import NewsletterDomain
 import Foundation
 public import Jobs
+import NewsletterDomain
 
 public enum SendNewsletterIssueJobHandler {
 

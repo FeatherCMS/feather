@@ -20,7 +20,9 @@ public struct AuthMagicLinkPathItems: PathItemRepresentable {
 }
 
 public struct AuthMagicLinkVerifyPathItems: PathItemRepresentable {
-    public var post: (any OperationRepresentable)? { AuthMagicLinkVerifyOperation() }
+    public var post: (any OperationRepresentable)? {
+        AuthMagicLinkVerifyOperation()
+    }
 
     public init() {}
 }

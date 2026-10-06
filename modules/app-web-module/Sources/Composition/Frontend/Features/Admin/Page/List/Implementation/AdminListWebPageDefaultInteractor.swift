@@ -25,12 +25,10 @@ struct AdminListWebPageDefaultInteractor:
                 title = try await repository.title(id: id)
             }
             catch let error as OpenAPIRepositoryError {
-                if case .notFound = error {
-                    title = id
-                }
-                else {
+                guard case .notFound = error else {
                     throw error
                 }
+                title = id
             }
             items.append(.init(id: id, label: title))
         }

@@ -10,7 +10,8 @@ public struct JobQueueSendMailJobController: SendMailJobController {
     }
 
     public func enqueue(_ mail: Mail) async throws {
-        let body: (value: String, contentType: SendMailJobParameters.ContentType)
+        let body:
+            (value: String, contentType: SendMailJobParameters.ContentType)
         switch mail.body {
         case .plainText(let value):
             body = (value, .plainText)

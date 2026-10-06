@@ -2,7 +2,9 @@ import FeatherOpenAPI
 
 struct AuthCredentialPathItems: PathItemRepresentable {
     var post: (any OperationRepresentable)? { AuthCredentialCreateOperation() }
-    var delete: (any OperationRepresentable)? { AuthCredentialRemoveOperation() }
+    var delete: (any OperationRepresentable)? {
+        AuthCredentialRemoveOperation()
+    }
 }
 
 struct AuthCredentialSearchPathItems: PathItemRepresentable {

@@ -15,18 +15,24 @@ struct MediaVariantIdPathItems: PathItemRepresentable {
 }
 
 struct MediaVariantProcessorsPathItems: PathItemRepresentable {
-    var post: (any OperationRepresentable)? { MediaVariantProcessorCreateOperation() }
+    var post: (any OperationRepresentable)? {
+        MediaVariantProcessorCreateOperation()
+    }
     var delete: (any OperationRepresentable)? {
         MediaVariantProcessorRemoveOperation()
     }
 }
 
 struct MediaVariantProcessorsListPathItems: PathItemRepresentable {
-    var post: (any OperationRepresentable)? { MediaVariantProcessorListOperation() }
+    var post: (any OperationRepresentable)? {
+        MediaVariantProcessorListOperation()
+    }
 }
 
 struct MediaVariantProcessorIdPathItems: PathItemRepresentable {
-    var get: (any OperationRepresentable)? { MediaVariantProcessorGetOperation() }
+    var get: (any OperationRepresentable)? {
+        MediaVariantProcessorGetOperation()
+    }
     var patch: (any OperationRepresentable)? {
         MediaVariantProcessorUpdateOperation()
     }

@@ -177,7 +177,9 @@ struct AppMagicLink {
                                     .class("cf-turnstile")
                                     .data("sitekey", siteKey)
                                 Script()
-                                    .src("https://challenges.cloudflare.com/turnstile/v0/api.js")
+                                    .src(
+                                        "https://challenges.cloudflare.com/turnstile/v0/api.js"
+                                    )
                                     .async()
                                     .defer()
                             }

@@ -1,5 +1,5 @@
-public import Foundation
 public import FeatherContracts
+public import Foundation
 
 public struct WebRSSItem: Sendable {
     public let title: String

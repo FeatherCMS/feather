@@ -2,7 +2,6 @@ public import FeatherAdmin
 import FeatherValidation
 import HTML
 public import Hummingbird
-public import WebFrontend
 import OpenAPIRuntime
 import SGML
 import WebBuilders

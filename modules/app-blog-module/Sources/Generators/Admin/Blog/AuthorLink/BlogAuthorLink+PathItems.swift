@@ -2,7 +2,9 @@ import FeatherOpenAPI
 
 struct BlogAuthorLinkPathItems: PathItemRepresentable {
     var post: (any OperationRepresentable)? { BlogAuthorLinkCreateOperation() }
-    var delete: (any OperationRepresentable)? { BlogAuthorLinkRemoveOperation() }
+    var delete: (any OperationRepresentable)? {
+        BlogAuthorLinkRemoveOperation()
+    }
 }
 
 struct BlogAuthorLinkSearchPathItems: PathItemRepresentable {

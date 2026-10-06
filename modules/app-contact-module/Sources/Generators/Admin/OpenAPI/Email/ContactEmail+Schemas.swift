@@ -35,5 +35,7 @@ struct SubmissionMailInputSchema: ObjectSchemaRepresentable {
     }
 }
 struct SubmissionMailInputsSchema: ArraySchemaRepresentable {
-    var items: (any SchemaRepresentable)? { SubmissionMailInputSchema().reference() }
+    var items: (any SchemaRepresentable)? {
+        SubmissionMailInputSchema().reference()
+    }
 }

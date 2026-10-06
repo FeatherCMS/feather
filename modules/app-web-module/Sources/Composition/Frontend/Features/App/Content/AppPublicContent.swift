@@ -1,8 +1,9 @@
 public import FeatherAdmin
 public import FeatherContracts
-public import struct Foundation.URL
 import WebAppAPI
 import WebContracts
+
+public import struct Foundation.URL
 
 public struct AppPublicContent {
     public let controller: any AppPublicContentController

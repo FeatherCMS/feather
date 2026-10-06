@@ -17,36 +17,36 @@ struct WebMenuItemDetails: Component {
 
     func selectors() -> [any CSS.Selector] {
         [
-                Custom(".web-menu-item-details-fields") {
-                    Display(.grid)
-                    Gap(12.px)
-                },
-                Custom(".web-menu-item-details-field") {
-                    Padding(vertical: 12.px)
-                },
-                Custom(".web-menu-item-details-field-label") {
-                    Margin(0)
-                    Padding(bottom: 8.px)
-                    BorderBottom(
-                        1.px,
-                        .solid,
-                        .variable(TokenKey.Colors.Materials.Tertiary.border)
-                    )
-                    FontWeight(.normal)
-                    Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
-                    Opacity(0.8)
-                },
-                Custom(".web-menu-item-details-field-value") {
-                    Margin(top: 6.px)
-                    Color(.variable(TokenKey.Colors.Materials.Secondary.text))
-                },
-                Custom(".web-menu-item-details-actions") {
-                    Display(.flex)
-                    FlexWrap(.wrap)
-                    Gap(12.px)
-                    Margin(top: 24.px)
-                },
-            ]
+            Custom(".web-menu-item-details-fields") {
+                Display(.grid)
+                Gap(12.px)
+            },
+            Custom(".web-menu-item-details-field") {
+                Padding(vertical: 12.px)
+            },
+            Custom(".web-menu-item-details-field-label") {
+                Margin(0)
+                Padding(bottom: 8.px)
+                BorderBottom(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
+                FontWeight(.normal)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                Opacity(0.8)
+            },
+            Custom(".web-menu-item-details-field-value") {
+                Margin(top: 6.px)
+                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+            },
+            Custom(".web-menu-item-details-actions") {
+                Display(.flex)
+                FlexWrap(.wrap)
+                Gap(12.px)
+                Margin(top: 24.px)
+            },
+        ]
     }
 
     func html(context: inout BuilderContext) -> Section {

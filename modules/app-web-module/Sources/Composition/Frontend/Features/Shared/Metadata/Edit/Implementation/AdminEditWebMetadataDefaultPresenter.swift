@@ -36,7 +36,11 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
                         title: title,
                         description: configuration?.description
                             ?? "Edit the metadata used when this page is rendered and shared.",
-                        preview: .init(label: "Preview", href: previewPath(for: state)))
+                        preview: .init(
+                            label: "Preview",
+                            href: previewPath(for: state)
+                        )
+                    )
                 )
             )
         )

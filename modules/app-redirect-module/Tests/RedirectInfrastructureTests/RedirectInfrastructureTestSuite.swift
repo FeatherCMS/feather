@@ -112,7 +112,8 @@ struct RedirectInfrastructureTestSuite {
         )
         #expect(res.source == "/foo-bar")
 
-        let query = DatabaseQueryExecutor(databaseContext: databaseContext) { context in
+        let query = DatabaseQueryExecutor(databaseContext: databaseContext) {
+            context in
             GenericScope(
                 [
                     "rule": RuleDatabaseQueries(context: context)

@@ -22,7 +22,8 @@ struct MigratorConfigLoader {
         guard
             let webPublicBaseURL = reader.string(
                 forKey: "web.publicBaseURL"
-            )?.trimmingCharacters(in: .whitespacesAndNewlines),
+            )?
+            .trimmingCharacters(in: .whitespacesAndNewlines),
             !webPublicBaseURL.isEmpty
         else {
             throw MigratorConfigurationError.missing("WEB_PUBLIC_BASE_URL")

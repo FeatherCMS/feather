@@ -24,7 +24,9 @@ struct NewsletterSubscriberSchema: ObjectSchemaRepresentable {
 }
 
 struct NewsletterSubscriberListSchema: ArraySchemaRepresentable {
-    var items: (any SchemaRepresentable)? { NewsletterSubscriberSchema().reference() }
+    var items: (any SchemaRepresentable)? {
+        NewsletterSubscriberSchema().reference()
+    }
 }
 struct NewsletterSubscriberCreateSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {

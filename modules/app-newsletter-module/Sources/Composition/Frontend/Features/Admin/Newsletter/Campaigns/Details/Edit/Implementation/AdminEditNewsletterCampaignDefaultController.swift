@@ -57,9 +57,11 @@ struct AdminEditNewsletterCampaignDefaultController:
                 fromEmail: form.fromEmail
             )
             return AdminNotificationFlash.redirect(
-                to: NewsletterAdminRoutes.campaignEdit(
-                    RouterPath(id)
-                ).description,
+                to:
+                    NewsletterAdminRoutes.campaignEdit(
+                        RouterPath(id)
+                    )
+                    .description,
                 notification: .init(
                     title: "Updated",
                     message: "Campaign updated successfully."
