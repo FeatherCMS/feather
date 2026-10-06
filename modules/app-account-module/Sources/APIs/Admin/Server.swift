@@ -32,7 +32,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.postApiV1AdminAccountUsers(
+                try await server.accountCreate(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -200,8 +200,8 @@ extension APIProtocol {
 
 fileprivate extension UniversalServer where APIHandler: APIProtocol {
     /// - Remark: HTTP `POST /api/v1/admin/account/users`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post`.
-    func postApiV1AdminAccountUsers(
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)`.
+    func accountCreate(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -210,12 +210,12 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.PostApiV1AdminAccountUsers.id,
+            forOperation: Operations.AccountCreate.id,
             using: {
-                APIHandler.postApiV1AdminAccountUsers($0)
+                APIHandler.accountCreate($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.PostApiV1AdminAccountUsers.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.AccountCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.AccountCreateRequestBody
                 let chosenContentType = try converter.bestContentType(
@@ -236,7 +236,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.PostApiV1AdminAccountUsers.Input(
+                return Operations.AccountCreate.Input(
                     headers: headers,
                     body: body
                 )

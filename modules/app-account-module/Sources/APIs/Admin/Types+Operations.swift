@@ -12,22 +12,22 @@ public import struct Foundation.Date
 /// API operations, with input and output types, generated from `#/paths` in the OpenAPI document.
 public enum Operations {
     /// - Remark: HTTP `POST /api/v1/admin/account/users`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post`.
-    public enum PostApiV1AdminAccountUsers {
-        public static let id: Swift.String = "post/api/v1/admin/account/users"
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)`.
+    public enum AccountCreate {
+        public static let id: Swift.String = "accountCreate"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/account/users/POST/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PostApiV1AdminAccountUsers.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.AccountCreate.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.PostApiV1AdminAccountUsers.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.AccountCreate.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.PostApiV1AdminAccountUsers.Input.Headers
+            public var headers: Operations.AccountCreate.Input.Headers
             public var body: Components.RequestBodies.AccountCreateRequestBody
             /// Creates a new `Input`.
             ///
@@ -35,7 +35,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.PostApiV1AdminAccountUsers.Input.Headers = .init(),
+                headers: Operations.AccountCreate.Input.Headers = .init(),
                 body: Components.RequestBodies.AccountCreateRequestBody
             ) {
                 self.headers = headers
@@ -45,7 +45,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Account response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post/responses/201`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
             case created(Components.Responses.AccountCreateResponse)
@@ -72,13 +72,13 @@ public enum Operations {
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.PostApiV1AdminAccountUsers.Output.Unauthorized)
+            case unauthorized(Operations.AccountCreate.Output.Unauthorized)
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
             public static var unauthorized: Self {
@@ -88,7 +88,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.PostApiV1AdminAccountUsers.Output.Unauthorized {
+            public var unauthorized: Operations.AccountCreate.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -107,13 +107,13 @@ public enum Operations {
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.PostApiV1AdminAccountUsers.Output.Forbidden)
+            case forbidden(Operations.AccountCreate.Output.Forbidden)
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
             public static var forbidden: Self {
@@ -123,7 +123,7 @@ public enum Operations {
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.PostApiV1AdminAccountUsers.Output.Forbidden {
+            public var forbidden: Operations.AccountCreate.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):

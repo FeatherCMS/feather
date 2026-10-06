@@ -38,11 +38,11 @@ public struct Client: APIProtocol {
         client.converter
     }
     /// - Remark: HTTP `POST /api/v1/admin/account/users`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post`.
-    public func postApiV1AdminAccountUsers(_ input: Operations.PostApiV1AdminAccountUsers.Input) async throws -> Operations.PostApiV1AdminAccountUsers.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)`.
+    public func accountCreate(_ input: Operations.AccountCreate.Input) async throws -> Operations.AccountCreate.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.PostApiV1AdminAccountUsers.id,
+            forOperation: Operations.AccountCreate.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/account/users",
