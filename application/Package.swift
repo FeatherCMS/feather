@@ -114,11 +114,11 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/feather-framework/feather-storage-fs",
-            exact: "1.0.0-beta.2"
+            exact: "1.0.0-rc.1"
         ),
         .package(
             url: "https://github.com/feather-framework/feather-storage",
-            exact: "1.0.0-beta.3"
+            exact: "1.0.0-rc.1"
         ),
         .package(
             url: "https://github.com/soto-project/soto-core",

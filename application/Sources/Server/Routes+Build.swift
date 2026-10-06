@@ -110,8 +110,6 @@ func buildRouter(
         Response(status: .ok)
     }
 
-    registerMediaAssetRoutes(on: router, media: modules.media)
-
     let middlewares: [any ServerMiddleware] = [
         ErrorMiddleware(),
         //        RandomErrorMiddleware(),
