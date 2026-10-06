@@ -124,12 +124,12 @@ public struct Client: APIProtocol {
                         )
                     }
                     return .created(.init(body: body))
+                case 409:
+                    return .conflict(.init())
                 case 401:
                     return .unauthorized(.init())
                 case 403:
                     return .forbidden(.init())
-                case 409:
-                    return .conflict(.init())
                 default:
                     return .undocumented(
                         statusCode: response.status.code,
@@ -666,12 +666,12 @@ public struct Client: APIProtocol {
                         )
                     }
                     return .created(.init(body: body))
+                case 409:
+                    return .conflict(.init())
                 case 401:
                     return .unauthorized(.init())
                 case 403:
                     return .forbidden(.init())
-                case 409:
-                    return .conflict(.init())
                 default:
                     return .undocumented(
                         statusCode: response.status.code,

@@ -7,9 +7,10 @@ public enum WebFormSubmissionNonce {
 
     public static func generate() -> String {
         var generator = SystemRandomNumberGenerator()
-        let bytes = (0..<32).map { _ in
-            UInt8.random(in: .min ... .max, using: &generator)
-        }
+        let bytes = (0..<32)
+            .map { _ in
+                UInt8.random(in: .min ... .max, using: &generator)
+            }
         return Data(bytes).base64EncodedString()
             .replacingOccurrences(of: "+", with: "-")
             .replacingOccurrences(of: "/", with: "_")
@@ -52,9 +53,10 @@ public enum WebFormSubmissionNonce {
         else {
             return false
         }
-        let difference = zip(formValue.utf8, cookieValue.utf8).reduce(UInt8(0)) {
-            $0 | ($1.0 ^ $1.1)
-        }
+        let difference = zip(formValue.utf8, cookieValue.utf8)
+            .reduce(UInt8(0)) {
+                $0 | ($1.0 ^ $1.1)
+            }
         return difference == 0
     }
 

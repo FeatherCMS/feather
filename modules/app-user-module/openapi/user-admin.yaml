@@ -499,12 +499,12 @@ components:
           $ref: '#/components/schemas/UserRoleNotesField'
       required:
       - key
-    UserRoleNotesField:
-      type: string
-      example: Management role.
     UserRoleKeyField:
       type: string
       example: editor
+    UserRoleNotesField:
+      type: string
+      example: Management role.
     UserRoleDetailSchema:
       type: object
       properties:
@@ -512,7 +512,8 @@ components:
           type: string
           example: role_manager
         key:
-          $ref: '#/components/schemas/UserRoleKeyField'
+          type: string
+          example: editor
         name:
           $ref: '#/components/schemas/UserRoleNameField'
         notes:

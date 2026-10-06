@@ -47,7 +47,8 @@ public struct NewAdminMonthPicker: Component {
                 help: state.help,
                 isDisabled: state.isDisabled
             )
-        ).selectors()
+        )
+        .selectors()
     }
 
     public func html(context: inout BuilderContext) -> Section {

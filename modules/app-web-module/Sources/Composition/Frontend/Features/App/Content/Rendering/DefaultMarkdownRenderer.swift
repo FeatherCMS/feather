@@ -24,7 +24,8 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
         await render(
             markdown: markdown,
             context: WebMarkdownRenderingContext()
-        ).html
+        )
+        .html
     }
 
     public func render(

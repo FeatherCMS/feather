@@ -51,7 +51,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
-            from: "5.0.0"
+            from: "7.0.0"
         ),
         .package(
             url: "https://github.com/jpsim/Yams",

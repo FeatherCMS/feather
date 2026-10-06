@@ -1,10 +1,12 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
+import OpenAPIKitCore
 
 protocol AccountCreateOperation: BearerProtectedOperation {}
 
 extension AccountCreateOperation {
     var tags: [any TagRepresentable] { [AccountCreateTag()] }
+    var operationId: String? { "accountCreate" }
 }
 
 struct AccountCreateOperationDefinition: AccountCreateOperation {

@@ -80,7 +80,7 @@ components:
       example: Short article summary.
     NewsArticleImageURLField:
       type: string
-      example: /media/assets/news.png
+      example: /public/12/34/56789/originals/news.png
     MediaAssetSchema:
       type: object
       properties:
@@ -102,7 +102,7 @@ components:
       example: media_asset_1
     MediaAssetURLField:
       type: string
-      example: /media/assets/example.png
+      example: /public/12/34/56789/originals/example.png
     MediaAssetVariantListSchema:
       type: array
       items:
@@ -177,7 +177,7 @@ components:
       example: Short summary
     WebMetadataImageURLField:
       type: string
-      example: /media/assets/example.png
+      example: /public/12/34/56789/originals/example.png
     WebMetadataCanonicalURLField:
       type: string
       example: https://example.com/posts/hello-world
@@ -244,7 +244,7 @@ components:
       example: Short news category summary.
     NewsCategoryImageURLField:
       type: string
-      example: /media/assets/news-category.png
+      example: /public/12/34/56789/originals/news-category.png
     NewsCategoryListSchema:
       type: array
       items:

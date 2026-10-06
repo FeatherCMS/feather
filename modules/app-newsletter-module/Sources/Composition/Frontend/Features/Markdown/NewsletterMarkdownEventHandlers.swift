@@ -4,7 +4,8 @@ import WebFrontend
 public enum NewsletterMarkdownEventHandlers {
     public static func register(
         in registry: inout EventRegistry,
-        submissionRoute: NewsletterSubscriptionRoute = AppNewsletterCampaignSubscription.defaultRoute,
+        submissionRoute: NewsletterSubscriptionRoute =
+            AppNewsletterCampaignSubscription.defaultRoute,
         turnstileSiteKey: String? = nil
     ) {
         registry.register(

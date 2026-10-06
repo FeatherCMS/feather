@@ -1,9 +1,9 @@
-import NewsletterContracts
-import NewsletterDomain
 public import FeatherApplication
 public import FeatherContracts
 import FeatherMail
 public import Foundation
+import NewsletterContracts
+import NewsletterDomain
 
 public struct SendIssueEmails: UseCase {
     struct CampaignReadAction: PermissionAction {
@@ -75,9 +75,10 @@ public struct SendIssueEmails: UseCase {
         }
 
         let newsletter = try await transaction.run { scope in
-            guard let newsletter = try await scope.newsletter.findBy(
-                id: input.newsletterId
-            )
+            guard
+                let newsletter = try await scope.newsletter.findBy(
+                    id: input.newsletterId
+                )
             else {
                 throw Error.newsletterNotFound
             }

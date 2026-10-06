@@ -773,8 +773,8 @@ components:
         filters:
           type: object
           example:
-            search: foo
             userId: user_7nL3xQ2v
+            search: foo
           properties:
             search:
               $ref: '#/components/schemas/AuthCredentialSearchField'

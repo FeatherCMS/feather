@@ -43,9 +43,11 @@ struct ContactFormEditPage: Component {
                     context.build(
                         ContactFormForm(
                             state: state.form,
-                            action: ContactAdminRoutes.formEdit(
-                                RouterPath(state.key)
-                            ).description,
+                            action:
+                                ContactAdminRoutes.formEdit(
+                                    RouterPath(state.key)
+                                )
+                                .description,
                             submitLabel: "Save changes",
                             isReadOnly: state.isReadOnly
                         )

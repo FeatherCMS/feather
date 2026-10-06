@@ -160,7 +160,7 @@ components:
       example: Short post summary.
     BlogPostImageURLField:
       type: string
-      example: /media/assets/blog-post.png
+      example: /public/12/34/56789/originals/blog-post.png
     MediaAssetSchema:
       type: object
       properties:
@@ -182,7 +182,7 @@ components:
       example: media_asset_1
     MediaAssetURLField:
       type: string
-      example: /media/assets/example.png
+      example: /public/12/34/56789/originals/example.png
     MediaAssetVariantListSchema:
       type: array
       items:
@@ -257,7 +257,7 @@ components:
       example: Short summary
     WebMetadataImageURLField:
       type: string
-      example: /media/assets/example.png
+      example: /public/12/34/56789/originals/example.png
     WebMetadataCanonicalURLField:
       type: string
       example: https://example.com/posts/hello-world
@@ -309,7 +309,7 @@ components:
       example: <p>Author bio</p>
     BlogAuthorImageURLField:
       type: string
-      example: /media/assets/author.png
+      example: /public/12/34/56789/originals/author.png
     BlogTagSummaryListSchema:
       type: array
       items:
@@ -340,7 +340,7 @@ components:
       example: Short tag summary.
     BlogTagImageURLField:
       type: string
-      example: /media/assets/tag.png
+      example: /public/12/34/56789/originals/tag.png
     BlogPostDetailSchema:
       type: object
       properties:

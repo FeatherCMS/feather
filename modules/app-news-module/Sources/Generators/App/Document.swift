@@ -16,5 +16,6 @@ struct Document: DocumentRepresentable {
     var info: any OpenAPIInfoRepresentable = Info()
     var servers: [any OpenAPIServerRepresentable] { [TestServer()] }
     var paths: PathMap = PathCollection().pathMap
-    var components: any OpenAPIComponentsRepresentable = PathCollection().components
+    var components: any OpenAPIComponentsRepresentable = PathCollection()
+        .components
 }

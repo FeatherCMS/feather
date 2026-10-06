@@ -134,7 +134,9 @@ public struct ArticleDatabaseQueries: ArticleQueries {
         guard !ids.isEmpty else { return .init(items: []) }
         let rows = try await ArticleTable(connection: context.connection)
             .resolve(ids: ids)
-        let itemsByID = Dictionary(uniqueKeysWithValues: rows.map { ($0.id, $0.asQueryListItem) })
+        let itemsByID = Dictionary(
+            uniqueKeysWithValues: rows.map { ($0.id, $0.asQueryListItem) }
+        )
         return .init(items: ids.compactMap { itemsByID[$0] })
     }
 
@@ -179,7 +181,8 @@ public struct ArticleDatabaseQueries: ArticleQueries {
         excludingArticleID: String,
         limit: Int
     ) async throws -> ArticleList {
-        let categoryIDs = Array(Set(categoryIDs)).filter { !$0.isEmpty }.sorted()
+        let categoryIDs = Array(Set(categoryIDs)).filter { !$0.isEmpty }
+            .sorted()
         guard !categoryIDs.isEmpty, limit > 0 else { return .init(items: []) }
         let items = try await ArticleTable(connection: context.connection)
             .listPublicRelated(

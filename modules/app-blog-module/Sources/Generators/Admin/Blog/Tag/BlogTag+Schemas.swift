@@ -85,5 +85,7 @@ struct BlogTagListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct BlogTagListSchema: ArraySchemaRepresentable {
-    var items: (any SchemaRepresentable)? { BlogTagListItemSchema().reference() }
+    var items: (any SchemaRepresentable)? {
+        BlogTagListItemSchema().reference()
+    }
 }

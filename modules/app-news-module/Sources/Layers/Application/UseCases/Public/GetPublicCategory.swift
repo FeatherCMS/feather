@@ -104,12 +104,16 @@ extension GetPublicCategory {
             totalTask,
             requestedArticlesTask
         )
-        let pageCount = max(1, (total + resolvedPageSize - 1) / resolvedPageSize)
+        let pageCount = max(
+            1,
+            (total + resolvedPageSize - 1) / resolvedPageSize
+        )
         let currentPage = min(requestedPage, pageCount)
         let articles: ArticleList
         if currentPage == requestedPage || total == 0 {
             articles = requestedArticles
-        } else {
+        }
+        else {
             articles = try await context.article.listPublic(
                 query: .init(
                     page: .init(

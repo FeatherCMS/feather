@@ -1,7 +1,7 @@
 public import FeatherApplication
 public import FeatherInfrastructure
-public import Jobs
 import FeatherStorage
+public import Jobs
 import MediaApplication
 import MediaDomain
 

@@ -65,10 +65,12 @@ struct AppLoginAuthDefaultController: AppLoginAuthController {
                             email: payload.email,
                             password: payload.password,
                             isPersistent: payload.isPersistent.value,
-                            redirectPath: request.queryString("redirect") ?? "/",
+                            redirectPath: request.queryString("redirect")
+                                ?? "/",
                             turnstileSiteKey: turnstileVerifier.siteKey
                         ),
-                        message: "Please complete the verification and try again."
+                        message:
+                            "Please complete the verification and try again."
                     )
                 }
             }

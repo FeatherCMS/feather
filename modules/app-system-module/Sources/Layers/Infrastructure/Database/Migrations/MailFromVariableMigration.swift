@@ -50,7 +50,8 @@ public struct MailFromVariableMigration: DatabaseMigration {
                 try variable.update(value: mailFromAddress.email)
                 _ = try await repository.update(variable)
             }
-        } else {
+        }
+        else {
             _ = try await repository.insert(
                 Variable.create(
                     key: mailFromAddressKey,
@@ -64,15 +65,15 @@ public struct MailFromVariableMigration: DatabaseMigration {
 
         let mailFromNameKey = "system-settings-mail-from-name"
         if var variable = try await repository.find(key: mailFromNameKey) {
-            if
-                variable.value.isEmpty,
+            if variable.value.isEmpty,
                 let name = mailFromAddress.name,
                 !name.isEmpty
             {
                 try variable.update(value: name)
                 _ = try await repository.update(variable)
             }
-        } else {
+        }
+        else {
             _ = try await repository.insert(
                 Variable.create(
                     key: mailFromNameKey,

@@ -302,8 +302,8 @@ components:
           type: object
           example:
             search: /articles/hello-world/
-            method: GET
             source: web_app
+            method: GET
           properties:
             search:
               $ref: '#/components/schemas/AnalyticsLogPathField'

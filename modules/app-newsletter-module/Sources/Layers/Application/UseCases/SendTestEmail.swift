@@ -1,8 +1,8 @@
-import NewsletterContracts
-import NewsletterDomain
 public import FeatherApplication
 public import FeatherContracts
 import FeatherMail
+import NewsletterContracts
+import NewsletterDomain
 
 public struct SendTestEmail: UseCase {
     struct Action: PermissionAction {

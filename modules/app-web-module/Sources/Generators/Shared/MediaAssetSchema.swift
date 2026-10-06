@@ -36,7 +36,9 @@ struct MediaAssetVariantSchema: ObjectSchemaRepresentable {
 }
 
 struct MediaAssetVariantListSchema: ArraySchemaRepresentable {
-    var items: (any SchemaRepresentable)? { MediaAssetVariantSchema().reference() }
+    var items: (any SchemaRepresentable)? {
+        MediaAssetVariantSchema().reference()
+    }
 }
 
 public struct MediaAssetSchema: ObjectSchemaRepresentable {

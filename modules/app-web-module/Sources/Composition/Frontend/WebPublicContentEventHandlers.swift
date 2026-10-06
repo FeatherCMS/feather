@@ -38,47 +38,28 @@ public enum WebPublicContentEventHandlers {
                 )
             }
         }
-        async let menuTask: WebAppAPI.Components.Schemas.WebMenuSchema? =
-            api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.webMenuGetByKey(
-                    path: .init(key: "main")
+        async let menusTask = api.withOpenAPIRepositoryErrorMapping {
+            client in
+            let response = try await client.webMenuList()
+            switch response {
+            case .ok(let value): return try value.body.json
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
                 )
-                switch response {
-                case .ok(let value): return try value.body.json
-                case .notFound: return nil
-                case .undocumented(let statusCode, let response):
-                    throw try await api.failure(
-                        statusCode: statusCode,
-                        responseBody: response.body
-                    )
             }
         }
-        async let accountActionsMenuTask:
-            WebAppAPI.Components.Schemas.WebMenuSchema? =
-            api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.webMenuGetByKey(
-                    path: .init(key: "account_actions")
-                )
-                switch response {
-                case .ok(let value): return try value.body.json
-                case .notFound: return nil
-                case .undocumented(let statusCode, let response):
-                    throw try await api.failure(
-                        statusCode: statusCode,
-                        responseBody: response.body
-                    )
-                }
-            }
-        let (siteSettings, menu, accountActionsMenu) = try await (
+        let (siteSettings, menus) = try await (
             siteSettingsTask,
-            menuTask,
-            accountActionsMenuTask
+            menusTask
         )
         let origins = context.runtime.publicOrigins
         let mediaResolver = context.runtime.mediaResolver
-        let navigation = menu?.items.map(menuItemContext) ?? []
-        let accountActions = accountActionsMenu?.items.map(menuItemContext)
-            ?? []
+        var menusContext: [String: any Sendable] = [:]
+        for menu in menus {
+            menusContext[menu.key] = menuContext(menu)
+        }
         var payload: [String: any Sendable] = [
             "baseUrl": normalizedURL(
                 base: origins.staticBaseURL,
@@ -88,8 +69,7 @@ public enum WebPublicContentEventHandlers {
             "staticBaseUrl": origins.staticBaseURL,
             "site": siteContext(
                 settings: siteSettings,
-                navigation: navigation,
-                accountActions: accountActions,
+                menus: menusContext,
                 mediaResolver: mediaResolver
             ),
             "generation": [
@@ -146,13 +126,11 @@ public enum WebPublicContentEventHandlers {
 
     private static func siteContext(
         settings: WebAppAPI.Components.Schemas.WebSiteSettingsSchema,
-        navigation: [[String: any Sendable]],
-        accountActions: [[String: any Sendable]],
+        menus: [String: any Sendable],
         mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
         var context: [String: any Sendable] = [
-            "navigation": navigation,
-            "accountActions": accountActions,
+            "menus": menus,
             "noIndex": settings.noIndex,
         ]
 
@@ -184,6 +162,15 @@ public enum WebPublicContentEventHandlers {
         }
 
         return context
+    }
+
+    private static func menuContext(
+        _ menu: WebAppAPI.Components.Schemas.WebMenuSchema
+    ) -> [String: any Sendable] {
+        [
+            "name": menu.name,
+            "items": menu.items.map(menuItemContext),
+        ]
     }
 
     private static func pageContext(

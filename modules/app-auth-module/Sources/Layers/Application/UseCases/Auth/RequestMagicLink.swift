@@ -63,14 +63,16 @@ public struct RequestMagicLink: UseCase {
                 guard
                     let mailFromAddress = try await scope.variable.get(
                         "system-settings-mail-from-address"
-                    )?.whitespaceTrimmed,
+                    )?
+                    .whitespaceTrimmed,
                     !mailFromAddress.isEmpty
                 else {
                     throw Error.mailFromNotConfigured
                 }
                 let mailFromName = try await scope.variable.get(
                     "system-settings-mail-from-name"
-                )?.whitespaceTrimmed.emptyToNil
+                )?
+                .whitespaceTrimmed.emptyToNil
 
                 guard
                     let authEmail = try await scope.authEmail.findBy(

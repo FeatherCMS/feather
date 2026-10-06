@@ -117,7 +117,8 @@ struct SystemInfrastructureTestSuite {
         )
         #expect(res.name == "foo-bar")
 
-        let query = DatabaseQueryExecutor(databaseContext: databaseContext) { context in
+        let query = DatabaseQueryExecutor(databaseContext: databaseContext) {
+            context in
             GenericScope(
                 [
                     "variable": VariableDatabaseRepository(context: context)

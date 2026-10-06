@@ -52,8 +52,7 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
         let action = ContactAppRoutes.submissionAction(for: form.key)
         var children: [any Element] = []
         children.append(Input().type(.hidden).name("nonce").value(nonce))
-        if
-            let feedback,
+        if let feedback,
             feedback.source == .contact,
             feedback.key == form.key
         {
@@ -61,12 +60,14 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
             let messageClass: String
             switch feedback.status {
             case .success:
-                message = form.successMessage.isEmpty
+                message =
+                    form.successMessage.isEmpty
                     ? "Your message has been sent."
                     : form.successMessage
                 messageClass = "web-form-feedback web-form-feedback--success"
             case .failure:
-                message = form.failureMessage.isEmpty
+                message =
+                    form.failureMessage.isEmpty
                     ? "Your message could not be sent. Please try again."
                     : form.failureMessage
                 messageClass = "web-form-feedback web-form-feedback--failure"
@@ -80,7 +81,9 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
             )
             children.append(
                 Script()
-                    .src("https://challenges.cloudflare.com/turnstile/v0/api.js")
+                    .src(
+                        "https://challenges.cloudflare.com/turnstile/v0/api.js"
+                    )
                     .async()
                     .defer()
             )
@@ -169,7 +172,8 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
                 .name(name)
                 .value("true")
         default:
-            let type: Input.Types = field.key.lowercased().contains("email")
+            let type: Input.Types =
+                field.key.lowercased().contains("email")
                 ? .email : .text
             let input = Input()
                 .type(type)

@@ -27,7 +27,9 @@ public struct ListPublicArticles {
         return result.items
     }
 
-    public func execute(ids: [String]) async throws -> [PublicNewsArticleSummary] {
+    public func execute(ids: [String]) async throws
+        -> [PublicNewsArticleSummary]
+    {
         var seenIDs = Set<String>()
         let ids = ids.filter { seenIDs.insert($0).inserted }
         guard !ids.isEmpty else { return [] }
@@ -43,12 +45,16 @@ public struct ListPublicArticles {
                     .filter { $0.isPublic(at: now) }
                     .map { ($0.referenceID, $0) }
             )
-            let publicArticles = articles.items.filter { metadataByID[$0.id] != nil }
+            let publicArticles = articles.items.filter {
+                metadataByID[$0.id] != nil
+            }
             let categoriesByArticleID = try await scope.article.categoryIDs(
                 for: publicArticles.map(\.id)
             )
             return publicArticles.compactMap { article in
-                guard let metadata = metadataByID[article.id] else { return nil }
+                guard let metadata = metadataByID[article.id] else {
+                    return nil
+                }
                 return .init(
                     id: article.id,
                     title: article.title,
@@ -168,7 +174,9 @@ public struct ListPublicArticles {
             )
             return .init(
                 items: publicItems.compactMap { item in
-                    guard let metadata = metadataByID[item.id] else { return nil }
+                    guard let metadata = metadataByID[item.id] else {
+                        return nil
+                    }
                     return .init(
                         id: item.id,
                         title: item.title,

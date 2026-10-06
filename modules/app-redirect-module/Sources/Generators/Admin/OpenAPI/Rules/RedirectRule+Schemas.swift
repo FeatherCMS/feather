@@ -74,7 +74,9 @@ struct RedirectRuleListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct RedirectRuleListSchema: ArraySchemaRepresentable {
-    var items: (any SchemaRepresentable)? { RedirectRuleListItemSchema().reference() }
+    var items: (any SchemaRepresentable)? {
+        RedirectRuleListItemSchema().reference()
+    }
 }
 
 struct RedirectRuleFiltersSchema: ObjectSchemaRepresentable {

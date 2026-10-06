@@ -83,14 +83,16 @@ public struct AddInvitation: UseCase {
             guard
                 let mailFromAddress = try await scope.variable.get(
                     "system-settings-mail-from-address"
-                )?.whitespaceTrimmed,
+                )?
+                .whitespaceTrimmed,
                 !mailFromAddress.isEmpty
             else {
                 throw Error.mailFromNotConfigured
             }
             let mailFromName = try await scope.variable.get(
                 "system-settings-mail-from-name"
-            )?.whitespaceTrimmed.emptyToNil
+            )?
+            .whitespaceTrimmed.emptyToNil
             let identityRepository = scope.identity
             let roleRepository = scope.role
             let token = generateToken()
@@ -138,7 +140,8 @@ public struct AddInvitation: UseCase {
                 from: .init(model.mailFromAddress, name: model.mailFromName),
                 to: [.init(model.invitation.email)],
                 subject: "Application - Invitation",
-                body: .plainText(#"""
+                body: .plainText(
+                    #"""
                     Hello,
 
                     You have been invited to create your application identity.
@@ -148,7 +151,8 @@ public struct AddInvitation: UseCase {
 
                     Cheers,
                     Application Team.
-                    """#)
+                    """#
+                )
             )
         )
         return model.invitation.asDetail

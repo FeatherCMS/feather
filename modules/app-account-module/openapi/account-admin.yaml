@@ -3,12 +3,12 @@ info:
   title: Account Admin API
   version: 0.1.0
 tags:
+- name: Accounts
+  description: Create user accounts.
 - name: AccountSettings
   description: Manage account settings.
 - name: Account
   description: Account endpoints.
-- name: Accounts
-  description: Create user accounts.
 - name: AccountInvitations
   description: Manage user invitations.
 servers:
@@ -256,12 +256,6 @@ paths:
       - bearerAuth: []
 components:
   schemas:
-    AccountCreateEmailField:
-      type: string
-    AccountCreatePasswordField:
-      type: string
-    AccountCreateUserIDField:
-      type: string
     AccountCreateSchema:
       type: object
       properties:
@@ -272,13 +266,17 @@ components:
       required:
       - email
       - password
+    AccountCreateEmailField:
+      type: string
+    AccountCreatePasswordField:
+      type: string
     AccountCreateResponseSchema:
       type: object
       properties:
         userId:
-          $ref: '#/components/schemas/AccountCreateUserIDField'
+          type: string
         email:
-          $ref: '#/components/schemas/AccountCreateEmailField'
+          type: string
       required:
       - userId
       - email

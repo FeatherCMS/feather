@@ -1,5 +1,5 @@
 public import FeatherOpenAPI
-import FeatherOpenAPIGenerator
+public import FeatherOpenAPIGenerator
 public import OpenAPIKit30
 
 public struct AccountRegisterEmailField: StringSchemaRepresentable {

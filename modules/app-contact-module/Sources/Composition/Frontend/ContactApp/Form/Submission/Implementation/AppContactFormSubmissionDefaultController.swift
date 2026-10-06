@@ -26,12 +26,15 @@ struct AppContactFormSubmissionDefaultController:
             context: context
         )
         let form = decoded.data
-        guard WebFormSubmissionNonce.matches(
-            formValue: form.nonce,
-            cookieValue: request.cookies[
-                WebFormSubmissionNonce.cookieName
-            ]?.value
-        ) else {
+        guard
+            WebFormSubmissionNonce.matches(
+                formValue: form.nonce,
+                cookieValue: request.cookies[
+                    WebFormSubmissionNonce.cookieName
+                ]?
+                .value
+            )
+        else {
             throw HTTPError(.forbidden)
         }
         do {
@@ -58,7 +61,8 @@ struct AppContactFormSubmissionDefaultController:
             guard case .created(let value) = response else {
                 throw HTTPError(.badRequest)
             }
-            let configuredRedirectURL = try value.body.json.redirectUrl
+            let configuredRedirectURL =
+                try value.body.json.redirectUrl
                 ?? form.redirect.flatMap { value in
                     guard
                         value.hasPrefix("/"),
@@ -80,8 +84,7 @@ struct AppContactFormSubmissionDefaultController:
                 )
             }
             var redirectURL: String?
-            if
-                let referer = request.headers[.referer],
+            if let referer = request.headers[.referer],
                 let refererComponents = URLComponents(string: referer),
                 let refererHost = refererComponents.host,
                 let refererScheme = refererComponents.scheme?.lowercased(),
@@ -97,11 +100,11 @@ struct AppContactFormSubmissionDefaultController:
                 ) == .orderedSame,
                 refererComponents.port == requestComponents.port
             {
-                let path = refererComponents.percentEncodedPath.isEmpty
+                let path =
+                    refererComponents.percentEncodedPath.isEmpty
                     ? "/"
                     : refererComponents.percentEncodedPath
-                if
-                    path.hasPrefix("/"),
+                if path.hasPrefix("/"),
                     !path.hasPrefix("//"),
                     !path.contains("\\")
                 {
@@ -115,13 +118,15 @@ struct AppContactFormSubmissionDefaultController:
                                 WebFormSubmissionFeedback.sourceQueryKey,
                                 WebFormSubmissionFeedback.keyQueryKey,
                                 WebFormSubmissionFeedback.statusQueryKey,
-                            ].contains($0.name)
+                            ]
+                            .contains($0.name)
                         }
                     queryItems.append(
                         contentsOf: [
                             .init(
                                 name: WebFormSubmissionFeedback.sourceQueryKey,
-                                value: WebFormSubmissionFeedback.Source.contact.rawValue
+                                value: WebFormSubmissionFeedback.Source.contact
+                                    .rawValue
                             ),
                             .init(
                                 name: WebFormSubmissionFeedback.keyQueryKey,
@@ -129,7 +134,8 @@ struct AppContactFormSubmissionDefaultController:
                             ),
                             .init(
                                 name: WebFormSubmissionFeedback.statusQueryKey,
-                                value: WebFormSubmissionFeedback.Status.success.rawValue
+                                value: WebFormSubmissionFeedback.Status.success
+                                    .rawValue
                             ),
                         ]
                     )
@@ -163,8 +169,7 @@ struct AppContactFormSubmissionDefaultController:
         }
         catch {
             var redirectURL: String?
-            if
-                let referer = request.headers[.referer],
+            if let referer = request.headers[.referer],
                 let refererComponents = URLComponents(string: referer),
                 let refererHost = refererComponents.host,
                 let refererScheme = refererComponents.scheme?.lowercased(),
@@ -180,11 +185,11 @@ struct AppContactFormSubmissionDefaultController:
                 ) == .orderedSame,
                 refererComponents.port == requestComponents.port
             {
-                let path = refererComponents.percentEncodedPath.isEmpty
+                let path =
+                    refererComponents.percentEncodedPath.isEmpty
                     ? "/"
                     : refererComponents.percentEncodedPath
-                if
-                    path.hasPrefix("/"),
+                if path.hasPrefix("/"),
                     !path.hasPrefix("//"),
                     !path.contains("\\")
                 {
@@ -198,13 +203,15 @@ struct AppContactFormSubmissionDefaultController:
                                 WebFormSubmissionFeedback.sourceQueryKey,
                                 WebFormSubmissionFeedback.keyQueryKey,
                                 WebFormSubmissionFeedback.statusQueryKey,
-                            ].contains($0.name)
+                            ]
+                            .contains($0.name)
                         }
                     queryItems.append(
                         contentsOf: [
                             .init(
                                 name: WebFormSubmissionFeedback.sourceQueryKey,
-                                value: WebFormSubmissionFeedback.Source.contact.rawValue
+                                value: WebFormSubmissionFeedback.Source.contact
+                                    .rawValue
                             ),
                             .init(
                                 name: WebFormSubmissionFeedback.keyQueryKey,
@@ -212,7 +219,8 @@ struct AppContactFormSubmissionDefaultController:
                             ),
                             .init(
                                 name: WebFormSubmissionFeedback.statusQueryKey,
-                                value: WebFormSubmissionFeedback.Status.failure.rawValue
+                                value: WebFormSubmissionFeedback.Status.failure
+                                    .rawValue
                             ),
                         ]
                     )

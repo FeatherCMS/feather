@@ -329,30 +329,34 @@ extension UniversalServer where APIHandler: APIProtocol {
                         try converter.getOptionalHeaderFieldAsURI(
                             in: request.headerFields,
                             name: "X-Media-Asset-Parent-ID",
-                            as: Swift.String.self
+                            as: Components.Parameters.MediaAssetParentIDHeader
+                                .self
                         ),
                     xMediaAssetFileName:
                         try converter.getRequiredHeaderFieldAsURI(
                             in: request.headerFields,
                             name: "X-Media-Asset-File-Name",
-                            as: Swift.String.self
+                            as: Components.Parameters.MediaAssetFileNameHeader
+                                .self
                         ),
                     xMediaAssetExtension:
                         try converter.getRequiredHeaderFieldAsURI(
                             in: request.headerFields,
                             name: "X-Media-Asset-Extension",
-                            as: Swift.String.self
+                            as: Components.Parameters.MediaAssetExtensionHeader
+                                .self
                         ),
                     xMediaAssetTitle: try converter.getOptionalHeaderFieldAsURI(
                         in: request.headerFields,
                         name: "X-Media-Asset-Title",
-                        as: Swift.String.self
+                        as: Components.Parameters.MediaAssetTitleHeader.self
                     ),
                     xMediaAssetAltText:
                         try converter.getOptionalHeaderFieldAsURI(
                             in: request.headerFields,
                             name: "X-Media-Asset-Alt-Text",
-                            as: Swift.String.self
+                            as: Components.Parameters.MediaAssetAltTextHeader
+                                .self
                         ),
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
@@ -361,7 +365,7 @@ extension UniversalServer where APIHandler: APIProtocol {
                 let contentType = converter.extractContentTypeIfPresent(
                     in: request.headerFields
                 )
-                let body: Operations.MediaAssetCreate.Input.Body
+                let body: Components.RequestBodies.MediaAssetCreateRequestBody
                 let chosenContentType = try converter.bestContentType(
                     received: contentType,
                     options: [
@@ -407,6 +411,11 @@ extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
+                case .conflict(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 409)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
                 case .unauthorized(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
@@ -415,11 +424,6 @@ extension UniversalServer where APIHandler: APIProtocol {
                 case .forbidden(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .conflict(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 409)
                     suppressMutabilityWarning(&response)
                     return (response, nil)
                 case .undocumented(let statusCode, _):
@@ -1006,6 +1010,11 @@ extension UniversalServer where APIHandler: APIProtocol {
                         )
                     }
                     return (response, body)
+                case .conflict(let value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 409)
+                    suppressMutabilityWarning(&response)
+                    return (response, nil)
                 case .unauthorized(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 401)
@@ -1014,11 +1023,6 @@ extension UniversalServer where APIHandler: APIProtocol {
                 case .forbidden(let value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 403)
-                    suppressMutabilityWarning(&response)
-                    return (response, nil)
-                case .conflict(let value):
-                    suppressUnusedWarning(value)
-                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 409)
                     suppressMutabilityWarning(&response)
                     return (response, nil)
                 case .undocumented(let statusCode, _):

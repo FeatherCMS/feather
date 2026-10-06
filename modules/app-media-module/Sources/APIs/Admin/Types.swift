@@ -110,7 +110,7 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/media/assets/post(mediaAssetCreate)`.
     public func mediaAssetCreate(
         headers: Operations.MediaAssetCreate.Input.Headers,
-        body: Operations.MediaAssetCreate.Input.Body
+        body: Components.RequestBodies.MediaAssetCreateRequestBody
     ) async throws -> Operations.MediaAssetCreate.Output {
         try await mediaAssetCreate(
             Operations.MediaAssetCreate.Input(

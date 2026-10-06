@@ -18,9 +18,9 @@
             </svg>
         </label>
         <div class="menu-items">
-            {{#site.navigation}}
+            {{#site.menus.main.items}}
             <a href="{{url}}"{{#isBlank}} target="_blank" rel="noreferrer"{{/isBlank}}>{{label}}</a>
-            {{/site.navigation}}
+            {{/site.menus.main.items}}
         </div>
     </nav>
 </header>

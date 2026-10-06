@@ -531,16 +531,16 @@ extension Components {
                 case notes
             }
         }
-        /// - Remark: Generated from `#/components/schemas/UserRoleNotesField`.
-        public typealias UserRoleNotesField = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserRoleKeyField`.
         public typealias UserRoleKeyField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/UserRoleNotesField`.
+        public typealias UserRoleNotesField = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserRoleDetailSchema`.
         public struct UserRoleDetailSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/UserRoleDetailSchema/id`.
             public var id: Swift.String
             /// - Remark: Generated from `#/components/schemas/UserRoleDetailSchema/key`.
-            public var key: Components.Schemas.UserRoleKeyField
+            public var key: Swift.String
             /// - Remark: Generated from `#/components/schemas/UserRoleDetailSchema/name`.
             public var name: Components.Schemas.UserRoleNameField?
             /// - Remark: Generated from `#/components/schemas/UserRoleDetailSchema/notes`.
@@ -554,7 +554,7 @@ extension Components {
             ///   - notes:
             public init(
                 id: Swift.String,
-                key: Components.Schemas.UserRoleKeyField,
+                key: Swift.String,
                 name: Components.Schemas.UserRoleNameField? = nil,
                 notes: Components.Schemas.UserRoleNotesField? = nil
             ) {

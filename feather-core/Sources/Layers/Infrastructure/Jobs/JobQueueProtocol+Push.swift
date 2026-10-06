@@ -1,8 +1,9 @@
-public import struct Foundation.Date
 public import Jobs
 
-public extension JobQueueProtocol {
-    func push<Parameters: JobParameters>(
+public import struct Foundation.Date
+
+extension JobQueueProtocol {
+    public func push<Parameters: JobParameters>(
         _ parameters: Parameters,
         scheduledAt: Date?
     ) async throws {

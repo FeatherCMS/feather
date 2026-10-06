@@ -1,8 +1,6 @@
 import AuthContracts
 public import FeatherContracts
 import SystemApplication
-import WebContracts
-import WebDomain
 
 public enum EventHandlers {
     public static func register(
@@ -16,34 +14,6 @@ public enum EventHandlers {
                 .map {
                     .init(permission: $0)
                 }
-        }
-
-        registry.register(
-            event: WebMenuItemProvider.self,
-            context: WebSeedEventContext.self
-        ) { event, _ in
-            guard event.menuKey == "account_actions" else { return [] }
-            return [
-                .init(
-                    label: "Admin",
-                    url: "/admin/",
-                    priority: 90,
-                    permission: "system.admin.access",
-                    authentication: .authenticated
-                ),
-                .init(
-                    label: "Sign in",
-                    url: "/login/?redirect=/admin/",
-                    priority: 100,
-                    authentication: .anonymous
-                ),
-                .init(
-                    label: "Sign out",
-                    url: "/logout/",
-                    priority: 110,
-                    authentication: .authenticated
-                ),
-            ]
         }
     }
 }

@@ -29,7 +29,8 @@ struct WebPageEdit: Component {
                         title: "Edit page",
                         description:
                             "Update the page content and publication settings.",
-                        preview: .init(label: "Preview", href: previewPath))
+                        preview: .init(label: "Preview", href: previewPath)
+                    )
                 )
             )
             context.build(

@@ -13,6 +13,26 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/parameters` section of the OpenAPI document.
     public enum Parameters {
+        /// Optional parent folder id
+        ///
+        /// - Remark: Generated from `#/components/parameters/MediaAssetParentIDHeader`.
+        public typealias MediaAssetParentIDHeader = Swift.String
+        /// Original file name
+        ///
+        /// - Remark: Generated from `#/components/parameters/MediaAssetFileNameHeader`.
+        public typealias MediaAssetFileNameHeader = Swift.String
+        /// Canonical file extension
+        ///
+        /// - Remark: Generated from `#/components/parameters/MediaAssetExtensionHeader`.
+        public typealias MediaAssetExtensionHeader = Swift.String
+        /// Optional asset title
+        ///
+        /// - Remark: Generated from `#/components/parameters/MediaAssetTitleHeader`.
+        public typealias MediaAssetTitleHeader = Swift.String
+        /// Optional alternative text
+        ///
+        /// - Remark: Generated from `#/components/parameters/MediaAssetAltTextHeader`.
+        public typealias MediaAssetAltTextHeader = Swift.String
         /// MediaAsset id
         ///
         /// - Remark: Generated from `#/components/parameters/MediaAssetIdParameter`.

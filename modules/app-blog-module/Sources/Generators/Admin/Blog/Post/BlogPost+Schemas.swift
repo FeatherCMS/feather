@@ -103,5 +103,7 @@ struct BlogPostListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct BlogPostListSchema: ArraySchemaRepresentable {
-    var items: (any SchemaRepresentable)? { BlogPostListItemSchema().reference() }
+    var items: (any SchemaRepresentable)? {
+        BlogPostListItemSchema().reference()
+    }
 }

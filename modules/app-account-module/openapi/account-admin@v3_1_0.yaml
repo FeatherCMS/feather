@@ -3,6 +3,8 @@ info:
   title: Account Admin API
   version: 0.1.0
 tags:
+- name: Accounts
+  description: Create user accounts.
 - name: AccountSettings
   description: Manage account settings.
 - name: Account
@@ -14,6 +16,22 @@ servers:
 security:
 - bearerAuth: []
 paths:
+  /api/v1/admin/account/users:
+    post:
+      tags:
+      - Accounts
+      operationId: accountCreate
+      requestBody:
+        $ref: '#/components/requestBodies/AccountCreateRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/AccountCreateResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
   /api/v1/admin/account/settings:
     get:
       tags:
@@ -238,6 +256,32 @@ paths:
       - bearerAuth: []
 components:
   schemas:
+    AccountCreateSchema:
+      type: object
+      properties:
+        email:
+          $ref: '#/components/schemas/AccountCreateEmailField'
+        password:
+          $ref: '#/components/schemas/AccountCreatePasswordField'
+      required:
+      - email
+      - password
+      minProperties: 2
+    AccountCreateEmailField:
+      type: string
+    AccountCreatePasswordField:
+      type: string
+    AccountCreateResponseSchema:
+      type: object
+      properties:
+        userId:
+          type: string
+        email:
+          type: string
+      required:
+      - userId
+      - email
+      minProperties: 2
     AccountSettingsDetailSchema:
       type: object
       properties:
@@ -575,6 +619,12 @@ components:
           $ref: '#/components/schemas/AccountInvitationRoleIDsField'
       minProperties: 0
   responses:
+    AccountCreateResponse:
+      description: Account response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountCreateResponseSchema'
     AccountSettingsDetailResponse:
       description: Account settings
       content:
@@ -632,6 +682,12 @@ components:
         $ref: '#/components/schemas/AccountInvitationIdField'
       description: AccountInvitation id
   requestBodies:
+    AccountCreateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AccountCreateSchema'
+      required: true
     AccountSettingsUpdateRequestBody:
       content:
         application/json:

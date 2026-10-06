@@ -48,7 +48,7 @@ components:
           $ref: '#/components/schemas/MediaAssetIdField'
         url:
           type: string
-          example: /media/assets/media_asset_1/cover-image.jpg
+          example: /public/12/34/56789/originals/cover-image.jpg
         variants:
           type: array
           items:
@@ -67,7 +67,7 @@ components:
           $ref: '#/components/schemas/MediaAssetKeyField'
         url:
           type: string
-          example: /media/assets/media_asset_1/cover-image.jpg
+          example: /public/12/34/56789/originals/cover-image.jpg
       required:
       - key
       - url

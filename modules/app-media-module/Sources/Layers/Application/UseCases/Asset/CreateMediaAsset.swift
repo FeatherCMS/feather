@@ -2,9 +2,9 @@ public import FeatherApplication
 public import FeatherContracts
 public import FeatherStorage
 public import Foundation
+import MIME
 import MediaContracts
 import MediaDomain
-import MIME
 import NIOCore
 
 public struct CreateMediaAsset: UseCase {
@@ -121,7 +121,8 @@ public struct CreateMediaAsset: UseCase {
         )
         let mediaType =
             MediaTypeDetector()
-            .getPossibleMediaTypeForExtension(file.extension)?.rawValue
+            .getPossibleMediaTypeForExtension(file.extension)?
+            .rawValue
             ?? MediaType.Application.octetStream().rawValue
         try await storageContext.storage.upload(
             key: storageObjectKey,

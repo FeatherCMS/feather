@@ -86,7 +86,7 @@ components:
     NewsArticleImageURLField:
       type: string
       examples:
-      - /media/assets/news.png
+      - /public/12/34/56789/originals/news.png
     MediaAssetSchema:
       type: object
       properties:
@@ -111,7 +111,7 @@ components:
     MediaAssetURLField:
       type: string
       examples:
-      - /media/assets/example.png
+      - /public/12/34/56789/originals/example.png
     MediaAssetVariantListSchema:
       type: array
       items:
@@ -198,7 +198,7 @@ components:
     WebMetadataImageURLField:
       type: string
       examples:
-      - /media/assets/example.png
+      - /public/12/34/56789/originals/example.png
     WebMetadataCanonicalURLField:
       type: string
       examples:
@@ -276,7 +276,7 @@ components:
     NewsCategoryImageURLField:
       type: string
       examples:
-      - /media/assets/news-category.png
+      - /public/12/34/56789/originals/news-category.png
     NewsCategoryListSchema:
       type: array
       items:

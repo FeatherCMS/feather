@@ -105,12 +105,15 @@ struct ArticleTable {
     }
 
     func resolve(ids: [String]) async throws -> [Row] {
-        let values = ids.map {
-            "'\($0.replacingOccurrences(of: "'", with: "''"))'"
-        }.joined(separator: ", ")
+        let values =
+            ids.map {
+                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
+            }
+            .joined(separator: ", ")
         guard !values.isEmpty else { return [] }
         return try await connection.run(
-            query: #"SELECT * FROM news_article WHERE id IN (\#(unescaped: values));"#
+            query:
+                #"SELECT * FROM news_article WHERE id IN (\#(unescaped: values));"#
         ) { sequence in
             try await sequence.collect().map { try Row(from: $0) }
         }
@@ -188,7 +191,8 @@ struct ArticleTable {
         limit: Int,
         orderBy: String
     ) async throws -> [Row] {
-        let categoryIDValues = categoryIDs
+        let categoryIDValues =
+            categoryIDs
             .map { "'\($0.replacingOccurrences(of: "'", with: "''"))'" }
             .joined(separator: ", ")
         let escapedArticleID = excludingArticleID.replacingOccurrences(

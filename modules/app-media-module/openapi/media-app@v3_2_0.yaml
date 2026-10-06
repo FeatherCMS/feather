@@ -58,7 +58,7 @@ components:
         url:
           type: string
           examples:
-          - /media/assets/media_asset_1/cover-image.jpg
+          - /public/12/34/56789/originals/cover-image.jpg
         variants:
           type: array
           items:
@@ -82,7 +82,7 @@ components:
         url:
           type: string
           examples:
-          - /media/assets/media_asset_1/cover-image.jpg
+          - /public/12/34/56789/originals/cover-image.jpg
       required:
       - key
       - url

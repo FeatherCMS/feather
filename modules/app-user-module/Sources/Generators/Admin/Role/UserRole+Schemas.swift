@@ -58,5 +58,7 @@ struct UserRoleListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct UserRoleListSchema: ArraySchemaRepresentable {
-    var items: (any SchemaRepresentable)? { UserRoleListItemSchema().reference() }
+    var items: (any SchemaRepresentable)? {
+        UserRoleListItemSchema().reference()
+    }
 }

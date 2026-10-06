@@ -13,6 +13,11 @@ public import struct Foundation.Date
 extension Components {
     /// Types generated from the `#/components/requestBodies` section of the OpenAPI document.
     public enum RequestBodies {
+        /// - Remark: Generated from `#/components/requestBodies/MediaAssetCreateRequestBody`.
+        @frozen public enum MediaAssetCreateRequestBody: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/requestBodies/MediaAssetCreateRequestBody/content/application\/octet-stream`.
+            case binary(OpenAPIRuntime.HTTPBody)
+        }
         /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody`.
         @frozen public enum DeleteRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/DeleteRequestBody/content/application\/json`.

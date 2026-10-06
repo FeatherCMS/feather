@@ -41,7 +41,8 @@ struct SubmissionMailAdd: Component {
                     context.build(
                         SubmissionMailForm(
                             mail: mail,
-                            action: "/admin/contact/forms/\(formId)/emails/add/",
+                            action:
+                                "/admin/contact/forms/\(formId)/emails/add/",
                             submitLabel: "Add email",
                             error: error
                         )

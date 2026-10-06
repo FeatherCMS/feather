@@ -26,12 +26,15 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
             context: context
         )
         let form = decoded.data
-        guard WebFormSubmissionNonce.matches(
-            formValue: form.nonce,
-            cookieValue: request.cookies[
-                WebFormSubmissionNonce.cookieName
-            ]?.value
-        ) else {
+        guard
+            WebFormSubmissionNonce.matches(
+                formValue: form.nonce,
+                cookieValue: request.cookies[
+                    WebFormSubmissionNonce.cookieName
+                ]?
+                .value
+            )
+        else {
             throw HTTPError(.forbidden)
         }
         do {
@@ -52,30 +55,27 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
             guard case .noContent = response else {
                 throw HTTPError(.badRequest)
             }
-            if
-                let redirectURL = form.redirect.flatMap({ value -> String? in
-                    guard
-                        value.hasPrefix("/"),
-                        !value.hasPrefix("//"),
-                        !value.contains("\\"),
-                        !value.contains("://"),
-                        value.unicodeScalars.allSatisfy({
-                            !CharacterSet.controlCharacters.contains($0)
-                        })
-                    else {
-                        return nil
-                    }
-                    return value
-                })
-            {
+            if let redirectURL = form.redirect.flatMap({ value -> String? in
+                guard
+                    value.hasPrefix("/"),
+                    !value.hasPrefix("//"),
+                    !value.contains("\\"),
+                    !value.contains("://"),
+                    value.unicodeScalars.allSatisfy({
+                        !CharacterSet.controlCharacters.contains($0)
+                    })
+                else {
+                    return nil
+                }
+                return value
+            }) {
                 return Response(
                     status: .seeOther,
                     headers: [.location: redirectURL]
                 )
             }
             var redirectURL: String?
-            if
-                let referer = request.headers[.referer],
+            if let referer = request.headers[.referer],
                 let refererComponents = URLComponents(string: referer),
                 let refererHost = refererComponents.host,
                 let refererScheme = refererComponents.scheme?.lowercased(),
@@ -91,11 +91,11 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
                 ) == .orderedSame,
                 refererComponents.port == requestComponents.port
             {
-                let path = refererComponents.percentEncodedPath.isEmpty
+                let path =
+                    refererComponents.percentEncodedPath.isEmpty
                     ? "/"
                     : refererComponents.percentEncodedPath
-                if
-                    path.hasPrefix("/"),
+                if path.hasPrefix("/"),
                     !path.hasPrefix("//"),
                     !path.contains("\\")
                 {
@@ -109,13 +109,15 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
                                 WebFormSubmissionFeedback.sourceQueryKey,
                                 WebFormSubmissionFeedback.keyQueryKey,
                                 WebFormSubmissionFeedback.statusQueryKey,
-                            ].contains($0.name)
+                            ]
+                            .contains($0.name)
                         }
                     queryItems.append(
                         contentsOf: [
                             .init(
                                 name: WebFormSubmissionFeedback.sourceQueryKey,
-                                value: WebFormSubmissionFeedback.Source.newsletter.rawValue
+                                value: WebFormSubmissionFeedback.Source
+                                    .newsletter.rawValue
                             ),
                             .init(
                                 name: WebFormSubmissionFeedback.keyQueryKey,
@@ -123,7 +125,8 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
                             ),
                             .init(
                                 name: WebFormSubmissionFeedback.statusQueryKey,
-                                value: WebFormSubmissionFeedback.Status.success.rawValue
+                                value: WebFormSubmissionFeedback.Status.success
+                                    .rawValue
                             ),
                         ]
                     )
@@ -137,7 +140,8 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
                 components.queryItems = [
                     .init(
                         name: WebFormSubmissionFeedback.sourceQueryKey,
-                        value: WebFormSubmissionFeedback.Source.newsletter.rawValue
+                        value: WebFormSubmissionFeedback.Source.newsletter
+                            .rawValue
                     ),
                     .init(
                         name: WebFormSubmissionFeedback.keyQueryKey,
@@ -157,8 +161,7 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
         }
         catch {
             var redirectURL: String?
-            if
-                let referer = request.headers[.referer],
+            if let referer = request.headers[.referer],
                 let refererComponents = URLComponents(string: referer),
                 let refererHost = refererComponents.host,
                 let refererScheme = refererComponents.scheme?.lowercased(),
@@ -174,11 +177,11 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
                 ) == .orderedSame,
                 refererComponents.port == requestComponents.port
             {
-                let path = refererComponents.percentEncodedPath.isEmpty
+                let path =
+                    refererComponents.percentEncodedPath.isEmpty
                     ? "/"
                     : refererComponents.percentEncodedPath
-                if
-                    path.hasPrefix("/"),
+                if path.hasPrefix("/"),
                     !path.hasPrefix("//"),
                     !path.contains("\\")
                 {
@@ -192,13 +195,15 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
                                 WebFormSubmissionFeedback.sourceQueryKey,
                                 WebFormSubmissionFeedback.keyQueryKey,
                                 WebFormSubmissionFeedback.statusQueryKey,
-                            ].contains($0.name)
+                            ]
+                            .contains($0.name)
                         }
                     queryItems.append(
                         contentsOf: [
                             .init(
                                 name: WebFormSubmissionFeedback.sourceQueryKey,
-                                value: WebFormSubmissionFeedback.Source.newsletter.rawValue
+                                value: WebFormSubmissionFeedback.Source
+                                    .newsletter.rawValue
                             ),
                             .init(
                                 name: WebFormSubmissionFeedback.keyQueryKey,
@@ -206,7 +211,8 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
                             ),
                             .init(
                                 name: WebFormSubmissionFeedback.statusQueryKey,
-                                value: WebFormSubmissionFeedback.Status.failure.rawValue
+                                value: WebFormSubmissionFeedback.Status.failure
+                                    .rawValue
                             ),
                         ]
                     )
@@ -220,7 +226,8 @@ struct AppNewsletterCampaignSubscriptionDefaultController:
                 components.queryItems = [
                     .init(
                         name: WebFormSubmissionFeedback.sourceQueryKey,
-                        value: WebFormSubmissionFeedback.Source.newsletter.rawValue
+                        value: WebFormSubmissionFeedback.Source.newsletter
+                            .rawValue
                     ),
                     .init(
                         name: WebFormSubmissionFeedback.keyQueryKey,

@@ -85,5 +85,7 @@ struct BlogAuthorListItemSchema: ObjectSchemaRepresentable {
 }
 
 struct BlogAuthorListSchema: ArraySchemaRepresentable {
-    var items: (any SchemaRepresentable)? { BlogAuthorListItemSchema().reference() }
+    var items: (any SchemaRepresentable)? {
+        BlogAuthorListItemSchema().reference()
+    }
 }
