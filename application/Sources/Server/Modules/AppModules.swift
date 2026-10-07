@@ -121,7 +121,8 @@ struct AppModules: Sendable {
         let contact = ContactBackend.UseCases(
             databaseContext: infrastructure.databaseContext,
             authorizer: authorizer,
-            jobs: JobQueueSendMailJobController(queue: infrastructure.jobQueue)
+            jobs: JobQueueSendMailJobController(queue: infrastructure.jobQueue),
+            events: infrastructure.events
         )
         self.contact = contact
         let newsletter = NewsletterBackend.UseCases(

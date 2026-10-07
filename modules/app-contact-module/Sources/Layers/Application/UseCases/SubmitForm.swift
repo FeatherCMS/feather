@@ -7,15 +7,25 @@ import Foundation
 import struct Foundation.Date
 
 public struct SubmitForm: UseCase {
-    let transaction: any TransactionExecutor<WriteForm>
+    private struct ExecutionResult: Sendable {
+        let submission: SubmissionDetail
+        let redirectUrl: String?
+        let mails: [SubmissionMailDetail]
+        let mailTemplateValues: [String: String]
+    }
+
+    let transaction: any ContextualTransactionExecutor<WriteForm>
     let jobs: any SendMailJobController
+    let events: any EventPublisher
 
     public init(
-        transaction: any TransactionExecutor<WriteForm>,
-        jobs: any SendMailJobController
+        transaction: any ContextualTransactionExecutor<WriteForm>,
+        jobs: any SendMailJobController,
+        events: any EventPublisher
     ) {
         self.transaction = transaction
         self.jobs = jobs
+        self.events = events
     }
 
     public struct Input: DTO {
@@ -53,13 +63,13 @@ public struct SubmitForm: UseCase {
     public func execute(
         _ input: Input
     ) async throws -> Output {
-        let result = try await transaction.run { scope in
+        let result = try await transaction.run { scope, context in
             guard let form = try await scope.form.findBy(key: input.formKey)
             else {
                 throw Error.formNotFound
             }
             let fields = try await scope.field.listBy(formId: form.id)
-            let mails = try await scope.mail.listBy(formId: form.id)
+            let mails = try await scope.mail.listBy(formId: form.id).map(\.asDetail)
             try validate(
                 valuesJSON: input.valuesJSON,
                 against: fields
@@ -71,16 +81,25 @@ public struct SubmitForm: UseCase {
                 itemsSnapshotJSON: input.itemsSnapshotJSON,
                 metadataJSON: input.metadataJSON,
             )
-            return (
+
+            let mailTemplateValues = try await loadMailTemplateValues(
+                formKey: input.formKey,
+                mails: mails,
+                context: context
+            )
+
+            return ExecutionResult(
                 submission: (try await scope.submission.insert(model)).asDetail,
                 redirectUrl: form.redirectUrl,
-                mails: mails.map(\.asDetail)
+                mails: mails,
+                mailTemplateValues: mailTemplateValues
             )
         }
 
         try await enqueueMailTasks(
             mails: result.mails,
-            valuesJSON: input.valuesJSON
+            valuesJSON: input.valuesJSON,
+            templateValues: result.mailTemplateValues
         )
 
         return .init(
@@ -89,16 +108,42 @@ public struct SubmitForm: UseCase {
         )
     }
 
+    private func loadMailTemplateValues(
+        formKey: String,
+        mails: [SubmissionMailDetail],
+        context: (any TransactionContext)
+    ) async throws -> [String: String] {
+        guard !mails.isEmpty else { return [:] }
+
+        let providers = try await events.trigger(
+            event: ContactFormMailTemplateValuesProvider(
+                formKey: formKey
+            ),
+            using: context
+        )
+        var values: [String: String] = [:]
+        for provider in providers {
+            for (key, value) in provider.values where values[key] == nil {
+                values[key] = value
+            }
+        }
+        return values
+    }
+
     private func enqueueMailTasks(
         mails: [SubmissionMailDetail],
-        valuesJSON: String
+        valuesJSON: String,
+        templateValues: [String: String]
     ) async throws {
         guard
             let data = valuesJSON.data(using: .utf8),
-            let values = try JSONSerialization.jsonObject(with: data)
+            var values = try JSONSerialization.jsonObject(with: data)
                 as? [String: Any]
         else {
             return
+        }
+        for (key, value) in templateValues where values[key] == nil {
+            values[key] = value
         }
 
         for mail in mails {
