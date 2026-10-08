@@ -8,12 +8,8 @@ public import FeatherApplication
 public import FeatherContracts
 
 public struct GetPublicRuleBySource {
-    public struct Error: UseCaseError {
-        public let message: String
-
-        public init(message: String) {
-            self.message = message
-        }
+    public enum Error: UseCaseError {
+        case notFound
     }
 
     let query: any QueryExecutor<ReadRule>
@@ -29,7 +25,7 @@ public struct GetPublicRuleBySource {
     ) async throws -> PublicRedirectRule {
         try await query.run { scope in
             guard let rule = try await scope.rule.find(source: source) else {
-                throw Error(message: "Redirect rule not found")
+                throw Error.notFound
             }
             return .init(
                 source: rule.source,

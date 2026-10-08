@@ -1,6 +1,6 @@
 import Environment
 import FeatherApplication
-import FeatherGeneratedSES
+import FeatherSotoSES
 import FeatherMail
 import FeatherMailSES
 import FeatherDomain

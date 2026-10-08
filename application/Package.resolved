@@ -69,8 +69,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-mail-ses",
       "state" : {
-        "revision" : "52c4b06d0a462ea1abcdb51716ea99fe085b1030",
-        "version" : "1.0.0-rc.1"
+        "revision" : "d85a5a25061692d3142a80dec5dcdf502c2eef70",
+        "version" : "1.0.0-rc.2"
       }
     },
     {
@@ -164,30 +164,12 @@
       }
     },
     {
-      "identity" : "soto-codegenerator",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/soto-project/soto-codegenerator",
-      "state" : {
-        "revision" : "282aaa7e8dd38995139a6d0174e05f634719e9da",
-        "version" : "7.9.6"
-      }
-    },
-    {
       "identity" : "soto-core",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/soto-project/soto-core",
       "state" : {
-        "revision" : "47454bf79649691da406978ae803b51b54246d6e",
-        "version" : "7.14.0"
-      }
-    },
-    {
-      "identity" : "soto-smithy",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/soto-project/soto-smithy.git",
-      "state" : {
-        "revision" : "db3370bacb6f725dda79d2954f07789383983167",
-        "version" : "0.4.10"
+        "revision" : "4309f0c0f608b1f4db1d84e5928a925a3894ee91",
+        "version" : "7.17.0"
       }
     },
     {
@@ -197,15 +179,6 @@
       "state" : {
         "revision" : "87e50f483c54e6efd60e885f7f5aa946cee68023",
         "version" : "1.2.1"
-      }
-    },
-    {
-      "identity" : "swift-argument-parser",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/apple/swift-argument-parser.git",
-      "state" : {
-        "revision" : "6a52f3251125d74daf04fcbd5e6f08a75d074382",
-        "version" : "1.8.2"
       }
     },
     {
@@ -483,8 +456,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/swift-server/swift-service-lifecycle.git",
       "state" : {
-        "revision" : "9829955b385e5bb88128b73f1b8389e9b9c3191a",
-        "version" : "2.11.0"
+        "revision" : "c55297914e26ce3085b73ca88c521ef99136f6ad",
+        "version" : "2.12.1"
       }
     },
     {
