@@ -301,8 +301,8 @@ components:
         filters:
           type: object
           example:
-            method: GET
             source: web_app
+            method: GET
             search: /articles/hello-world/
           properties:
             search:
