@@ -9,7 +9,6 @@
 - [ ] RCE undo / redo feature
 - [ ] Search & list -> list + reference API
 - [ ] Readrepository & writerepository
-- [ ] User invitation email + flow
 - [ ] Sign in with magic link + flow
 - [ ] Metadata reference permission checks based on content
 - [ ] Row array encoding for tables. use feather database encoder
