@@ -48,7 +48,7 @@ let package = Package(
 
         .package(
             url: "https://github.com/feather-framework/feather-storage",
-            exact: "1.0.0-rc.1"
+            exact: "1.0.0-rc.2"
         ),
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.34.0"),
         .package(url: "https://github.com/mattpolzin/OpenAPIKit", from: "7.0.0"),
