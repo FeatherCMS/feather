@@ -37,5 +37,5 @@ actor MockIdentityRepository: IdentityRepository {
         return model
     }
 
-    func delete(id: String) async throws -> Bool { false }
+    func delete(ids: [String]) async throws -> [String] { [] }
 }

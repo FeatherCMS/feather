@@ -1,5 +1,6 @@
 import AccountContracts
 import AccountDomain
+import AuthDomain
 public import FeatherApplication
 public import FeatherContracts
 import FeatherMail
@@ -95,15 +96,19 @@ public struct AddInvitation: UseCase {
             .whitespaceTrimmed.emptyToNil
             let identityRepository = scope.identity
             let roleRepository = scope.role
-            let token = generateToken()
-            let identity = try await identityRepository.insert(
-                Identity.create(status: .invited)
-            )
             for roleID in input.roleIDs {
                 guard try await roleRepository.findBy(id: roleID) != nil else {
                     throw Error.roleNotFound(roleID)
                 }
             }
+            let token = generateToken()
+            let identity = try await identityRepository.insert(
+                Identity.create(status: .invited)
+            )
+            _ = try await scope.authEmail.insert(
+                identityId: identity.id,
+                email: input.email
+            )
             try await identityRepository.replaceRoleIds(
                 identityId: identity.id,
                 roleIds: input.roleIDs

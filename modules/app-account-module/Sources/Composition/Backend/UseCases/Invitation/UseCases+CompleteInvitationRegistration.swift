@@ -1,5 +1,6 @@
 import AccountApplication
 import AccountInfrastructure
+import AuthInfrastructure
 import FeatherInfrastructure
 import UserInfrastructure
 
@@ -15,6 +16,7 @@ extension UseCases {
                     invitation: InvitationDatabaseRepository(context: context),
                     identity: IdentityDatabaseRepository(context: context),
                     role: RoleDatabaseRepository(context: context),
+                    authEmail: AuthEmailDatabaseRepository(context: context),
                     credential: credentialWriter
                 )
             }

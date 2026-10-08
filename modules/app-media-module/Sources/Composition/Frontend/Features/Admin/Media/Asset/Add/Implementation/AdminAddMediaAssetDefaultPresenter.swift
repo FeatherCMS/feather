@@ -18,7 +18,6 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
     func renderPage(
         model: AdminAddMediaAssetModel
     ) async throws -> HTMLResponse {
-        var buildContext = BuilderContext()
         let isDialog =
             request.queryString("presentation") == "dialog"
             && request.headers[.accept]?.contains("type=admin-dialog") == true
@@ -64,9 +63,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
                 title: "Upload media asset",
                 description: "Upload media asset",
                 imagePath: "images/logos/logo.png",
-                content: Div {
-                    buildContext.build(content)
-                }
+                content: content
             )
         }
         return try await renderEngine.renderNewAdminPage(

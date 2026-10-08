@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 07. 16.
 
 import AccountDomain
+import AuthDomain
 public import FeatherApplication
 public import FeatherContracts
 public import UserApplication
@@ -50,6 +51,12 @@ public struct CompleteInvitationRegistration: UseCase {
                 identity.status == .invited
             else {
                 throw Error(message: "Invitation or identity not found")
+            }
+            if try await scope.authEmail.findBy(email: invitation.email) == nil {
+                _ = try await scope.authEmail.insert(
+                    identityId: identity.id,
+                    email: invitation.email
+                )
             }
             try await scope.credential.create(
                 userID: identity.id,
