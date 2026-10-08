@@ -1,5 +1,6 @@
 import AccountApplication
 import AccountInfrastructure
+import AuthInfrastructure
 import FeatherInfrastructure
 import UserInfrastructure
 
@@ -11,7 +12,9 @@ extension UseCases {
             scope: { context in
                 WriteInvitationOnly(
                     invitation: InvitationDatabaseRepository(context: context),
-                    role: RoleDatabaseRepository(context: context)
+                    identity: IdentityDatabaseRepository(context: context),
+                    role: RoleDatabaseRepository(context: context),
+                    authEmail: AuthEmailDatabaseRepository(context: context)
                 )
             }
         )

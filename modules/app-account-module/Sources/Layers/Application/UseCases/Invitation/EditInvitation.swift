@@ -1,5 +1,6 @@
 import AccountContracts
 import AccountDomain
+import AuthDomain
 public import FeatherApplication
 public import FeatherContracts
 import UserDomain
@@ -68,7 +69,27 @@ public struct EditInvitation: UseCase {
                 }
             }
 
+            let previousEmail = model.email
             try model.update(email: input.email, roleIDs: input.roleIDs)
+            if previousEmail != model.email,
+                let identity = try await scope.identity.findBy(
+                    id: model.userId
+                ),
+                identity.status == .invited
+            {
+                if var authEmail = try await scope.authEmail.findBy(
+                    email: previousEmail
+                ), authEmail.identityId == identity.id {
+                    authEmail.email = model.email
+                    _ = try await scope.authEmail.update(authEmail)
+                }
+                else {
+                    _ = try await scope.authEmail.insert(
+                        identityId: identity.id,
+                        email: model.email
+                    )
+                }
+            }
             return try await scope.invitation.update(model)
         }
 

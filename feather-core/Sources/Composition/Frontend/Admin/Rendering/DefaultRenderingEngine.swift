@@ -53,10 +53,64 @@ public struct DefaultRenderingEngine: RenderingEngine {
                 noIndex: false
             )
         )
-        let headElements = metadata.children
         let head = Head(
-            elements: headElements.compactMap { $0 as? any MetadataContent }
+            elements: metadata.children.compactMap {
+                $0 as? any MetadataContent
+            }
         )
+        let html = Html {
+            head
+            body
+        }
+        .lang("en-US")
+        return .init(html)
+    }
+
+    public func renderPublicPage<T: Component>(
+        request: Request,
+        title: String,
+        description: String,
+        imagePath: String,
+        content: T
+    ) -> HTMLResponse where T.HTML: FlowContent {
+        var context = BuilderContext()
+        let contentHTML = context.build(content)
+        let body = Body {
+            contentHTML
+        }
+
+        let metadata = context.build(
+            NewAdminMetadata(
+                canonicalUrl: normalizedURL(
+                    base: publicOrigins.siteBaseURL,
+                    path: request.uri.path
+                ),
+                title: title,
+                description: description,
+                imageUrl: normalizedURL(
+                    base: publicOrigins.staticBaseURL,
+                    path: imagePath
+                ),
+                noIndex: false
+            )
+        )
+        let cssRenderer = CSSRenderer(minify: false, indent: 4)
+        let css = cssRenderer.render(context.stylesheet())
+        let scripts = context.scripts()
+        let headElements = metadata.children
+        var renderedHeadElements = headElements.compactMap {
+            $0 as? any MetadataContent
+        }
+        renderedHeadElements.append(
+            Link(rel: .stylesheet).href("/admin/style.css")
+        )
+        if !css.isEmpty {
+            renderedHeadElements.append(Style(css))
+        }
+        for script in scripts where !script.isEmpty {
+            renderedHeadElements.append(Script(script))
+        }
+        let head = Head(elements: renderedHeadElements)
 
         let html = Html {
             head

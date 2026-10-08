@@ -1,7 +1,9 @@
 import AccountContracts
 import AccountDomain
+import AuthDomain
 public import FeatherApplication
 public import FeatherContracts
+import UserDomain
 
 //
 //  RemoveInvitation.swift
@@ -44,7 +46,25 @@ public struct RemoveInvitation: UseCase {
         }
 
         return try await transaction.run { scope in
-            try await scope.invitation.delete(ids: input.ids)
+            var removedIDs: [String] = []
+            for id in input.ids {
+                guard
+                    let invitation = try await scope.invitation.findBy(id: id)
+                else {
+                    continue
+                }
+                if let identity = try await scope.identity.findBy(
+                    id: invitation.userId
+                ), identity.status == .invited,
+                    let authEmail = try await scope.authEmail.findBy(
+                        email: invitation.email
+                    ), authEmail.identityId == identity.id
+                {
+                    _ = try await scope.authEmail.delete(ids: [authEmail.id])
+                }
+                removedIDs += try await scope.invitation.delete(ids: [id])
+            }
+            return removedIDs
         }
     }
 }

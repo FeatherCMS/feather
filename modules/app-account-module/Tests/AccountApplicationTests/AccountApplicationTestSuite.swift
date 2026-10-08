@@ -1,6 +1,7 @@
 import AccountContracts
 import FeatherApplication
 import FeatherContracts
+import FeatherMail
 import Foundation
 import SystemApplication
 import Testing
@@ -23,6 +24,7 @@ struct AccountApplicationTestSuite {
     func exposesAccountProfilePermissions() {
         #expect(
             AccountPermissions.Profile.allPermissions() == [
+                AccountPermissions.Profile.create,
                 AccountPermissions.Profile.read,
                 AccountPermissions.Profile.update,
             ]
@@ -124,12 +126,14 @@ struct AccountApplicationTestSuite {
             deleteResult: true
         )
         let identityRepository = MockIdentityRepository(identity: identity)
+        let authEmailRepository = MockAuthEmailRepository()
         let credentialWriter = MockInvitationCredentialWriter()
         let transaction = MockContextualTransactionExecutor(
             context: WriteInvitation(
                 invitation: invitationRepository,
                 identity: identityRepository,
                 role: MockRoleRepository(),
+                authEmail: authEmailRepository,
                 credential: credentialWriter
             )
         )
@@ -143,6 +147,7 @@ struct AccountApplicationTestSuite {
         #expect(result.status == .active)
         #expect(result.roleIds == invitation.roleIDs)
         #expect(await credentialWriter.createCallCount == 1)
+        #expect(await authEmailRepository.insertCallCount == 1)
         #expect(await identityRepository.replacedRoleIds == invitation.roleIDs)
         #expect(await identityRepository.updateCallCount == 1)
         #expect(await invitationRepository.deleteCallCount == 1)
@@ -175,6 +180,7 @@ struct AccountApplicationTestSuite {
                 ),
                 identity: identityRepository,
                 role: MockRoleRepository(),
+                authEmail: MockAuthEmailRepository(),
                 credential: MockInvitationCredentialWriter(),
                 variable: MockVariableQueries(value: "https://example.test")
             )
@@ -206,6 +212,7 @@ struct AccountApplicationTestSuite {
             updatedAt: Date()
         )
         let token = "token-123456"
+        let authEmailRepository = MockAuthEmailRepository()
         let invitationRepository = MockInvitationRepository(
             result: Invitation(
                 id: "invitation-1",
@@ -223,6 +230,7 @@ struct AccountApplicationTestSuite {
                 invitation: invitationRepository,
                 identity: MockIdentityRepository(identity: identity),
                 role: MockRoleRepository(),
+                authEmail: authEmailRepository,
                 credential: MockInvitationCredentialWriter(),
                 variable: MockVariableQueries(
                     value: "https://example.test",
@@ -247,17 +255,70 @@ struct AccountApplicationTestSuite {
         )
 
         #expect(
-            await jobs.lastBody
-                .contains(
+            await jobs.lastBody?.contains(
                     "https://example.test/account/invitation/accept/?token=\(token)"
                 ) == true
         )
+        #expect(await authEmailRepository.insertedEmails == ["user@example.com"])
         #expect(
             await jobs.lastMail?.from.email
                 == "invitations@example.test"
         )
         #expect(await jobs.lastMail?.from.name == "Binary Birds")
         #expect(await jobs.lastBody?.contains("\\(") == false)
+    }
+
+    @Test
+    func removesAuthEmailWhenPendingInvitationIsRemoved() async throws {
+        let invitation = Invitation(
+            id: "invitation-1",
+            userId: "user-1",
+            email: "user@example.com",
+            token: "token-123456",
+            roleIDs: [],
+            expiresAt: Date().addingTimeInterval(3600),
+            createdAt: Date(),
+            updatedAt: Date()
+        )
+        let authEmailRepository = MockAuthEmailRepository()
+        _ = try await authEmailRepository.insert(
+            identityId: invitation.userId,
+            email: invitation.email
+        )
+        let transaction = MockTransactionExecutor(
+            context: WriteInvitationOnly(
+                invitation: MockInvitationRepository(
+                    result: invitation,
+                    deleteResult: true
+                ),
+                identity: MockIdentityRepository(
+                    identity: Identity(
+                        id: invitation.userId,
+                        status: .invited,
+                        isRoot: false,
+                        createdAt: Date(),
+                        updatedAt: Date()
+                    )
+                ),
+                role: MockRoleRepository(),
+                authEmail: authEmailRepository
+            )
+        )
+        let useCase = RemoveInvitation(
+            authorizer: MockPermissionAuthorizer(
+                permissions: [AccountPermissions.Invitations.delete]
+            ),
+            transaction: transaction
+        )
+
+        let removedIDs = try await useCase.execute(
+            subject: Subject(id: "admin-1"),
+            input: .init(ids: [invitation.id])
+        )
+
+        #expect(removedIDs == [invitation.id])
+        #expect(await authEmailRepository.deleteCallCount == 1)
+        #expect(await authEmailRepository.emailCount() == 0)
     }
 
     @Test
@@ -307,8 +368,7 @@ struct AccountApplicationTestSuite {
         )
         #expect(await jobs.lastMail?.from.name == "Binary Birds")
         #expect(
-            await jobs.lastBody
-                .contains(
+            await jobs.lastBody?.contains(
                     "This is a reminder for your application identity invitation."
                 ) == true
         )
@@ -347,6 +407,7 @@ struct AccountApplicationTestSuite {
                 ),
                 identity: MockIdentityRepository(identity: identity),
                 role: MockRoleRepository(),
+                authEmail: MockAuthEmailRepository(),
                 credential: credentialWriter
             )
         )
