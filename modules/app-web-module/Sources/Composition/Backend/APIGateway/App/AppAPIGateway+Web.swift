@@ -16,6 +16,7 @@ extension AppAPIGateway {
                     body: .json(
                         .init(
                             id: detail.id,
+                            title: detail.title,
                             excerpt: detail.excerpt,
                             content: detail.content,
                             imageURL: media?.defaultURL ?? detail.imageURL,

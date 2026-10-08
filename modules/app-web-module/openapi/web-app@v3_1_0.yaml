@@ -303,6 +303,8 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/WebPageIdField'
+        title:
+          $ref: '#/components/schemas/WebPageTitleField'
         excerpt:
           $ref: '#/components/schemas/WebPageExcerptField'
         content:
@@ -315,15 +317,20 @@ components:
           $ref: '#/components/schemas/WebMetadataContentSchema'
       required:
       - id
+      - title
       - excerpt
       - content
       - imageURL
       - metadata
-      minProperties: 5
+      minProperties: 6
     WebPageIdField:
       type: string
       examples:
       - wp_home
+    WebPageTitleField:
+      type: string
+      examples:
+      - Homepage
     WebPageExcerptField:
       type: string
       examples:

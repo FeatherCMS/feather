@@ -38,6 +38,7 @@ public struct NewsArticleSummarySchema: ObjectSchemaRepresentable {
     public var propertyMap: SchemaMap {
         [
             "id": NewsArticleIdField().reference(),
+            "title": WebMetadataTitleField().reference(),
             "excerpt": NewsArticleExcerptField().reference(),
             "imageURL": NewsArticleImageURLField().reference(),
             "media": MediaAssetSchema().reference(required: false),
@@ -52,6 +53,7 @@ public struct NewsArticleDetailSchema: ObjectSchemaRepresentable {
     public var propertyMap: SchemaMap {
         [
             "id": NewsArticleIdField().reference(),
+            "title": WebMetadataTitleField().reference(),
             "excerpt": NewsArticleExcerptField().reference(),
             "content": NewsArticleContentField().reference(),
             "imageURL": NewsArticleImageURLField().reference(),

@@ -2,6 +2,7 @@
 
 - [ ] Proper home page management
 - [ ] Fix redirect 500 handling
+- [ ] https://github.com/yonaskolb/mint -> opeanpi-generator install
 - [ ] https://github.com/hummingbird-project/hummingbird-compression
 - [ ] HTTP2 support (enable HB HTTP2)
 - [ ] API token for public endpoints (API is private for now)
