@@ -14,5 +14,11 @@ public enum WebMarkdownEventHandlers {
         ) { _, _ in
             CellMarkdownBlockRenderer()
         }
+        registry.register(
+            event: WebMarkdownBlockRendererProvider.self,
+            context: WebMarkdownBlockRendererRequest.self
+        ) { _, _ in
+            VideoMarkdownBlockRenderer()
+        }
     }
 }

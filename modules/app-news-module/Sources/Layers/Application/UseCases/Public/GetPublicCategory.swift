@@ -96,7 +96,7 @@ extension GetPublicCategory {
                     size: resolvedPageSize,
                     number: requestedPage
                 ),
-                sort: [.init(field: .createdAt, direction: .desc)]
+                sort: []
             ),
             categoryID: categoryID
         )
@@ -120,7 +120,7 @@ extension GetPublicCategory {
                         size: resolvedPageSize,
                         number: currentPage
                     ),
-                    sort: [.init(field: .createdAt, direction: .desc)]
+                    sort: []
                 ),
                 categoryID: categoryID
             )

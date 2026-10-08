@@ -1,0 +1,26 @@
+# TODO
+
+- [ ] Proper home page management
+- [ ] Fix redirect 500 handling
+- [ ] https://github.com/hummingbird-project/hummingbird-compression
+- [ ] HTTP2 support (enable HB HTTP2)
+- [ ] API token for public endpoints (API is private for now)
+- [ ] Remove buttons display mode?
+- [ ] RCE undo / redo feature
+- [ ] Search & list -> list + reference API
+- [ ] Readrepository & writerepository
+- [ ] Sign in with magic link + flow
+- [ ] Metadata reference permission checks based on content
+- [ ] Row array encoding for tables. use feather database encoder
+- [ ] Full slug vs last slug component -> domain type?
+- [ ] Datepicker date only mode & other improvements
+- [ ] Transport error middleware
+- [ ] Table selection -> checkbox vs row + remove all items (like google drive)
+- [ ] A11Y + outlines everywhere on admin + frontend
+- [ ] Review components and states
+- [ ] Autocomplete reuqests instead of states, like city & country
+- [ ] Duplicate feature
+- [ ] Storage context, database context, worker context unification
+- [ ] Telemetry, CI, auto-deployment
+- [ ] NewAdmin prefix -> Admin only for FeatherAdmin UI
+- [ ] Tag remaining framework packages with 1.0-rc.x

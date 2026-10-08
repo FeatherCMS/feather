@@ -152,7 +152,7 @@ public struct ListPublicArticles {
                         size: resolvedPageSize,
                         number: currentPage
                     ),
-                    sort: [.init(field: .createdAt, direction: .desc)],
+                    sort: [],
                     search: normalizedSearch
                 ),
                 categoryID: nil

@@ -63,12 +63,20 @@ func buildRouter(
     AnalyticsAdminMenuEventHandlers.register(in: &adminEvents)
     BlogAdminMenuEventHandlers.register(in: &adminEvents)
     NewsAdminMenuEventHandlers.register(in: &adminEvents)
+    NewsletterRichContentEditorEventHandlers.register(in: &adminEvents)
+    ContactRichContentEditorEventHandlers.register(in: &adminEvents)
     NewsletterAdminMenuEventHandlers.register(in: &adminEvents)
     ContactAdminMenuEventHandlers.register(in: &adminEvents)
     WebAdminMenuEventHandlers.register(in: &adminEvents)
+    let richContentEditorBlocks =
+        (try? await adminEvents.trigger(
+            event: AdminRichContentEditorBlockProvider(),
+            using: AdminEventContext(path: "", permissions: [])
+        ).compactMap { $0 }) ?? []
     let renderingEngine = DefaultRenderingEngine(
         publicOrigins: environment.publicOrigins,
         adminEvents: adminEvents,
+        richContentEditorBlocks: richContentEditorBlocks,
         adminPageRenderContextProvider: DefaultAdminPageRenderContextProvider(
             events: adminEvents,
             accountAPIBuilder: .init(apiBaseURL: environment.apiBaseURL),

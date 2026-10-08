@@ -9,16 +9,20 @@ public import WebComponents
 public struct DefaultRenderingEngine: RenderingEngine {
     public let publicOrigins: AppPublicOriginConfiguration
     public let adminEvents: any EventPublisher
+    public let richContentEditorBlocks:
+        [AdminRichContentEditorBlockDefinition]
     public let adminPageRenderContextProvider:
         any AdminPageRenderContextProvider
 
     public init(
         publicOrigins: AppPublicOriginConfiguration,
         adminEvents: any EventPublisher,
+        richContentEditorBlocks: [AdminRichContentEditorBlockDefinition] = [],
         adminPageRenderContextProvider: any AdminPageRenderContextProvider
     ) {
         self.publicOrigins = publicOrigins
         self.adminEvents = adminEvents
+        self.richContentEditorBlocks = richContentEditorBlocks
         self.adminPageRenderContextProvider = adminPageRenderContextProvider
     }
 
@@ -137,7 +141,11 @@ public struct DefaultRenderingEngine: RenderingEngine {
         )
         return .init(
             builderContext.build(
-                NewAdminHTML(title: title, body: .init(content: layout))
+                NewAdminHTML(
+                    title: title,
+                    body: .init(content: layout),
+                    richContentEditorBlocks: richContentEditorBlocks
+                )
             )
         )
     }
@@ -161,7 +169,8 @@ public struct DefaultRenderingEngine: RenderingEngine {
                             size: size
                         ),
                         showsFooter: false
-                    )
+                    ),
+                    richContentEditorBlocks: richContentEditorBlocks
                 )
             )
         )
