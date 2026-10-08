@@ -88,10 +88,15 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
                     .defer()
             )
         }
-        children.append(Button("Submit").type(.submit))
+        children.append(
+            Button("Submit")
+                .type(.submit)
+        )
         let formElement = Form { children }
             .method(.post)
             .action(action)
+            .id("contact-form-\(form.key)")
+            .data("contact-form", form.key)
             .setClass("contact-form")
         return Document(root: formElement).render()
     }
