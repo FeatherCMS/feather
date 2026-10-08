@@ -139,7 +139,7 @@ struct AccountInfrastructureTestSuite {
                     idGenerator: TestIDGenerator()
                 )
             )
-            await #expect(throws: Error.self) {
+            await #expect(throws: (any Error).self) {
                 try await repository.create(userId: "account-1")
             }
         }

@@ -13,6 +13,14 @@ public protocol RenderingEngine: Sendable {
         content: T
     ) -> HTMLResponse
 
+    func renderPublicPage<T: Component>(
+        request: Request,
+        title: String,
+        description: String,
+        imagePath: String,
+        content: T
+    ) -> HTMLResponse where T.HTML: FlowContent
+
     func renderNewAdminPage<T: Component>(
         request: Request,
         context: AuthenticatedRequestContext,

@@ -243,6 +243,7 @@ let package = Package(
             name: "AccountApplicationTests",
             dependencies: [
                 .product(name: "FeatherMail", package: "feather-mail"),
+                .product(name: "AuthDomain", package: "app-auth-module"),
                 .target(name: "AccountApplication"),
             ],
             swiftSettings: swiftSettings

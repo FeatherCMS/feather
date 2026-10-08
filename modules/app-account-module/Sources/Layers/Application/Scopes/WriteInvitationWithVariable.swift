@@ -1,3 +1,4 @@
+public import AuthDomain
 public import AccountDomain
 public import FeatherContracts
 public import SystemApplication
@@ -7,6 +8,7 @@ public struct WriteInvitationWithVariable: Scope {
     public let invitation: any InvitationRepository
     public let identity: any IdentityRepository
     public let role: any RoleRepository
+    public let authEmail: any AuthEmailRepository
     public let credential: any InvitationCredentialWriter
     public let variable: any VariableQueries
 
@@ -14,12 +16,14 @@ public struct WriteInvitationWithVariable: Scope {
         invitation: any InvitationRepository,
         identity: any IdentityRepository,
         role: any RoleRepository,
+        authEmail: any AuthEmailRepository,
         credential: any InvitationCredentialWriter,
         variable: any VariableQueries
     ) {
         self.invitation = invitation
         self.identity = identity
         self.role = role
+        self.authEmail = authEmail
         self.credential = credential
         self.variable = variable
     }

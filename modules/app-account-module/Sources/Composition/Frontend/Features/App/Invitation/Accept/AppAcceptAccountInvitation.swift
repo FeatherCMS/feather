@@ -1,4 +1,5 @@
 import AccountAppAPI
+import CSS
 import FeatherAdmin
 import HTML
 import Hummingbird
@@ -23,54 +24,175 @@ struct AppAcceptAccountInvitation {
         let error: String?
         let success: String?
 
-        func html(context: inout BuilderContext) -> Section {
-            Section {
-                H1("Create your account")
-                if let success {
-                    P(success).class("success")
-                    context.build(
-                        NewAdminButton(
-                            "Go to login",
-                            href: "/login/",
-                            style: .ghost(.primary)
+        func rules() -> [any Rule] {
+            NewAdminDesignSystem().rules()
+                + [Media(selectors: selectors())]
+        }
+
+        func selectors() -> [any Selector] {
+            [
+                Custom("body") {
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Secondary.tint)
+                    )
+                },
+                Class("invitation-page") {
+                    Display(.flex)
+                    AlignItems(.center)
+                    JustifyContent(.center)
+                    BoxSizing(.borderBox)
+                    MinHeight(100.vh)
+                    Padding(vertical: 32.px, horizontal: 20.px)
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Secondary.tint)
+                    )
+                },
+                Class("invitation-card") {
+                    Width(100.percent)
+                    MaxWidth(440.px)
+                    BoxSizing(.borderBox)
+                    Padding(32.px)
+                    Border(
+                        1.px,
+                        .solid,
+                        .variable(TokenKey.Colors.Materials.Primary.border)
+                    )
+                    BorderRadius(20.px)
+                    Background(
+                        .variable(TokenKey.Colors.Materials.Primary.tint)
+                    )
+                    BoxShadow(
+                        0.px,
+                        12.px,
+                        blur: 26.px,
+                        spread: 2.px,
+                        color: CSSColor(
+                            stringLiteral:
+                                "var(--\(TokenKey.Colors.BoxShadow.tint.propertyName))"
                         )
                     )
-                }
-                else {
-                    P("Complete your registration using the invitation.")
-                    if let email { P("Invitation for \(email).") }
-                    if let error { P(error).class("error") }
-                    Form {
-                        Input().type(.hidden).name("token").value(token)
-                        context.build(
-                            NewAdminFormFieldInput(
-                                state: .init(
-                                    name: "password",
-                                    label: "Password",
-                                    value: password,
-                                    type: .password
-                                )
+                },
+                Custom(".invitation-card .admin-page-header") {
+                    Margin(bottom: 0.px)
+                },
+                Custom(".invitation-card .new-admin-form") {
+                    MarginTop(24.px)
+                },
+                Custom(".invitation-card .new-admin-form__actions") {
+                    AlignItems(.stretch)
+                },
+                Custom(
+                    ".invitation-card .new-admin-form__actions .button, "
+                        + ".invitation-actions .button"
+                ) {
+                    Width(100.percent)
+                },
+                Class("invitation-actions") {
+                    Display(.flex)
+                    AlignItems(.stretch)
+                    MarginTop(24.px)
+                },
+                Class("invitation-success") {
+                    Margin(top: 24.px)
+                    Padding(vertical: 12.px, horizontal: 14.px)
+                    BorderRadius(8.px)
+                    Border(
+                        1.px,
+                        .solid,
+                        .variable(TokenKey.Colors.Palette.Green.border)
+                    )
+                    Background(
+                        .variable(TokenKey.Colors.Palette.Green.background)
+                    )
+                    Color(.variable(TokenKey.Colors.Palette.Green.text))
+                },
+                Class("invitation-email") {
+                    Color(
+                        .variable(TokenKey.Colors.Materials.Tertiary.text)
+                    )
+                },
+            ]
+        }
+
+        func html(context: inout BuilderContext) -> Main {
+            Main {
+                Div {
+                    context.build(
+                        NewAdminPageHeader(
+                            state: .primary(
+                                title: success == nil
+                                    ? "Create your account" : "Account created",
+                                description: success == nil
+                                    ? "Complete your registration using the invitation."
+                                    : "Your invitation is complete. Sign in to continue to the admin."
                             )
                         )
-                        context.build(
-                            NewAdminFormFieldInput(
-                                state: .init(
-                                    name: "confirmation",
-                                    label: "Confirm password",
-                                    value: confirmation,
-                                    type: .password
+                    )
+
+                    if let success {
+                        P(success).class("invitation-success")
+                        Div {
+                            context.build(
+                                NewAdminButton(
+                                    "Continue to admin",
+                                    href: "/login/?redirect=%2Fadmin%2F",
+                                    style: .primary
                                 )
                             )
-                        )
-                        Button("Create account").type(.submit)
+                        }
+                        .class("invitation-actions")
                     }
-                    .method(.post)
-                    .action("/account/invitation/accept/")
-                    .encType(.urlencoded)
-                    .class("cms-form")
+                    else {
+                        context.build(
+                            NewAdminForm(
+                                action: "/account/invitation/accept/",
+                                hiddenFields: [
+                                    .init(name: "token", value: token)
+                                ]
+                            ) {
+                                if let email {
+                                    P("Invitation for \(email).")
+                                        .class("invitation-email")
+                                }
+                                if let error {
+                                    P(error).class("new-admin-form__error")
+                                }
+                                context.build(
+                                    NewAdminFormFieldInput(
+                                        state: .init(
+                                            name: "password",
+                                            label: "Password",
+                                            value: password,
+                                            type: .password,
+                                            isRequired: true
+                                        )
+                                    )
+                                )
+                                context.build(
+                                    NewAdminFormFieldInput(
+                                        state: .init(
+                                            name: "confirmation",
+                                            label: "Confirm password",
+                                            value: confirmation,
+                                            type: .password,
+                                            isRequired: true
+                                        )
+                                    )
+                                )
+                                Div {
+                                    context.build(
+                                        NewAdminSubmitButton("Create account")
+                                    )
+                                }
+                                .class("new-admin-form__actions")
+                            }
+                        )
+                    }
                 }
+                .class("invitation-card")
             }
-            .class("cms-section")
+            .class("invitation-page")
+            .role("main")
         }
     }
 
@@ -85,7 +207,6 @@ struct AppAcceptAccountInvitation {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        var buildContext = BuilderContext()
         let token = request.uri.queryParameters["token"].map(String.init) ?? ""
         guard !token.isEmpty else {
             return render(
@@ -95,8 +216,7 @@ struct AppAcceptAccountInvitation {
                 password: "",
                 confirmation: "",
                 error: "Invitation token is missing.",
-                success: nil,
-                context: &buildContext
+                success: nil
             )
         }
         do {
@@ -117,8 +237,7 @@ struct AppAcceptAccountInvitation {
                     password: "",
                     confirmation: "",
                     error: nil,
-                    success: nil,
-                    context: &buildContext
+                    success: nil
                 )
             case .undocumented(let statusCode, let response):
                 throw try await apiBuilder.makeAccountApp(context)
@@ -136,8 +255,7 @@ struct AppAcceptAccountInvitation {
                 password: "",
                 confirmation: "",
                 error: error.errorDescription,
-                success: nil,
-                context: &buildContext
+                success: nil
             )
         }
     }
@@ -146,7 +264,6 @@ struct AppAcceptAccountInvitation {
         request: Request,
         context: DefaultRequestContext
     ) async throws -> HTMLResponse {
-        var buildContext = BuilderContext()
         let payload = try await request.decode(
             as: FormInput.self,
             context: context
@@ -154,27 +271,23 @@ struct AppAcceptAccountInvitation {
         guard payload.password.count >= 8 else {
             return render(
                 request: request,
-                token: request.uri.queryParameters["token"].map(String.init)
-                    ?? "",
+                token: payload.token,
                 email: nil,
                 password: payload.password,
                 confirmation: payload.confirmation,
                 error: "Password must contain at least 8 characters.",
-                success: nil,
-                context: &buildContext
+                success: nil
             )
         }
         guard payload.password == payload.confirmation else {
             return render(
                 request: request,
-                token: request.uri.queryParameters["token"].map(String.init)
-                    ?? "",
+                token: payload.token,
                 email: nil,
                 password: payload.password,
                 confirmation: payload.confirmation,
                 error: "Passwords do not match.",
-                success: nil,
-                context: &buildContext
+                success: nil
             )
         }
         do {
@@ -202,8 +315,7 @@ struct AppAcceptAccountInvitation {
                     confirmation: "",
                     error: nil,
                     success:
-                        "Your account was created successfully. You can now sign in.",
-                    context: &buildContext
+                        "Your account was created successfully. You can now sign in."
                 )
             case .undocumented(let statusCode, let response):
                 throw try await apiBuilder.makeAccountApp(context)
@@ -221,8 +333,7 @@ struct AppAcceptAccountInvitation {
                 password: payload.password,
                 confirmation: payload.confirmation,
                 error: error.errorDescription,
-                success: nil,
-                context: &buildContext
+                success: nil
             )
         }
     }
@@ -234,24 +345,22 @@ struct AppAcceptAccountInvitation {
         password: String,
         confirmation: String,
         error: String?,
-        success: String?,
-        context: inout BuilderContext
+        success: String?
     ) -> HTMLResponse {
-
         renderingEngine.renderPublicPage(
             request: request,
-            title: "Create account",
-            description: "Complete your invited account registration.",
+            title: success == nil ? "Create account" : "Account created",
+            description: success == nil
+                ? "Complete your invited account registration."
+                : "Your invitation is complete. Sign in to continue to the admin.",
             imagePath: "images/puppy.png",
-            content: context.build(
-                Page(
-                    token: token,
-                    email: email,
-                    password: password,
-                    confirmation: confirmation,
-                    error: error,
-                    success: success
-                )
+            content: Page(
+                token: token,
+                email: email,
+                password: password,
+                confirmation: confirmation,
+                error: error,
+                success: success
             )
         )
     }

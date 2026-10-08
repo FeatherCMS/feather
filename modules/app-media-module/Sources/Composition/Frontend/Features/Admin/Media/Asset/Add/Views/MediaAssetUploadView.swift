@@ -34,7 +34,7 @@ struct MediaAssetUploadView: Component {
 
     let state: State
 
-    func html(context: inout BuilderContext) -> some BasicTag {
+    func html(context: inout BuilderContext) -> Section {
         Section {
             if !state.form.isPicker && !state.form.isDialog {
                 context.build(
