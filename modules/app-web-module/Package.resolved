@@ -51,8 +51,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-storage",
       "state" : {
-        "revision" : "b76859783b42b2e848e810757e5cb47982d49b9d",
-        "version" : "1.0.0-rc.1"
+        "revision" : "8ec237eadbbe98c36c41b5f26b677fbae441d303",
+        "version" : "1.0.0-rc.2"
       }
     },
     {
@@ -94,7 +94,7 @@
     {
       "identity" : "postgres-nio",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vapor/postgres-nio.git",
+      "location" : "https://github.com/vapor/postgres-nio",
       "state" : {
         "revision" : "39ce38a93408937bcd27f521f3cdf88266136b80",
         "version" : "1.33.1"

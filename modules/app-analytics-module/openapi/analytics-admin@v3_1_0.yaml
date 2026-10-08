@@ -343,8 +343,8 @@ components:
         filters:
           type: object
           examples:
-          - source: web_app
-            method: GET
+          - method: GET
+            source: web_app
             search: /articles/hello-world/
           properties:
             search:

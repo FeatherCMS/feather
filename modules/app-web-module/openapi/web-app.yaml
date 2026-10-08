@@ -266,6 +266,8 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/WebPageIdField'
+        title:
+          $ref: '#/components/schemas/WebPageTitleField'
         excerpt:
           $ref: '#/components/schemas/WebPageExcerptField'
         content:
@@ -278,6 +280,7 @@ components:
           $ref: '#/components/schemas/WebMetadataContentSchema'
       required:
       - id
+      - title
       - excerpt
       - content
       - imageURL
@@ -285,6 +288,9 @@ components:
     WebPageIdField:
       type: string
       example: wp_home
+    WebPageTitleField:
+      type: string
+      example: Homepage
     WebPageExcerptField:
       type: string
       example: Short page summary.
