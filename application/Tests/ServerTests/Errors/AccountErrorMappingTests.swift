@@ -1,6 +1,7 @@
 import AccountApplication
 import FeatherInfrastructure
 import NIOHTTP1
+import RedirectApplication
 import Testing
 
 @testable import Server
@@ -35,5 +36,13 @@ struct AccountErrorMappingTests {
             let mapped = error as! any HTTPErrorRepresentable
             #expect(mapped.status == .notFound)
         }
+    }
+
+    @Test
+    func publicRedirectRuleNotFoundIsMappedToNotFound() {
+        let error = GetPublicRuleBySource.Error.notFound
+        let mapped = error as any HTTPErrorRepresentable
+
+        #expect(mapped.status == .notFound)
     }
 }

@@ -171,6 +171,25 @@ struct RedirectApplicationTestSuite {
     }
 
     @Test
+    func getPublicRuleBySourceNotFound() async throws {
+        let queries = RuleMockQueries(
+            findResult: makeRuleDetail(id: "v-2"),
+            listResult: .init(items: []),
+            countResult: 0
+        )
+        let queryExecutor = MockQueryExecutor(
+            context: ReadRule(rule: queries)
+        )
+        let useCase = GetPublicRuleBySource(query: queryExecutor)
+
+        await #expect(throws: GetPublicRuleBySource.Error.notFound) {
+            _ = try await useCase.execute(source: "/missing/")
+        }
+        #expect(await queries.findBySourceCallCount == 1)
+        #expect(await queries.lastFindSource == "/missing/")
+    }
+
+    @Test
     func editRuleSuccess() async throws {
         let repository = RuleMockRepository(
             result: .success(makeRule(id: "v-3")),
