@@ -301,9 +301,9 @@ components:
         filters:
           type: object
           example:
-            search: /articles/hello-world/
             source: web_app
             method: GET
+            search: /articles/hello-world/
           properties:
             search:
               $ref: '#/components/schemas/AnalyticsLogPathField'

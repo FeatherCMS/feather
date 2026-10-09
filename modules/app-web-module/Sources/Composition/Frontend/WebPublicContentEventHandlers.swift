@@ -180,22 +180,28 @@ public enum WebPublicContentEventHandlers {
         siteBaseURL: String,
         mediaResolver: MediaResolver
     ) -> [String: any Sendable] {
-        let title =
-            page.metadata.title.isEmpty
-            ? siteSettings.title : page.metadata.title
-        let description =
-            page.metadata.excerpt.isEmpty
-            ? siteSettings.excerpt : page.metadata.excerpt
-        let image: String?
-        if let imageURL = page.metadata.imageURL.emptyToNil {
-            image = mediaResolver.resolve(imagePath: imageURL)
+        let title = page.title
+        let description = page.excerpt
+        let contentImage = page.imageURL.emptyToNil.flatMap {
+            mediaResolver.resolve(imagePath: $0)
         }
-        else {
-            image = mediaResolver.resolve(imagePath: siteSettings.metaImage)
+        let metadataImage = page.metadata.imageURL.emptyToNil.flatMap {
+            mediaResolver.resolve(imagePath: $0)
+        }
+        let image = metadataImage
+            ?? contentImage
+            ?? mediaResolver.resolve(imagePath: siteSettings.metaImage)
+        var meta: [String: any Sendable] = [
+            "title": page.metadata.title,
+            "description": page.metadata.excerpt,
+        ]
+        if let metaImage = metadataImage ?? contentImage {
+            meta["image"] = metaImage
         }
         var context: [String: any Sendable] = [
             "title": title,
             "description": description,
+            "meta": meta,
             "permalink": normalizedURL(base: siteBaseURL, slug: slug),
             "noindex": siteSettings.noIndex
                 || page.metadata.noIndex

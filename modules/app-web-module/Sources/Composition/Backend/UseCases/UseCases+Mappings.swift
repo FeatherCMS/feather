@@ -54,15 +54,21 @@ extension UseCases {
         excerpt: String,
         imageURL: String
     ) -> WebAppAPI.Components.Schemas.WebMetadataContentSchema {
-        .init(
+        let resolved = ResolvedMetadata(
+            metadata: metadata,
+            fallbackTitle: title,
+            fallbackExcerpt: excerpt,
+            fallbackImageURL: imageURL
+        )
+        return .init(
             slug: metadata.slug,
             template: metadata.template,
             publicationDate: timestamp(metadata.publicationDate),
             expirationDate: timestamp(metadata.expirationDate),
             status: metadata.status.rawValue,
-            title: title,
-            excerpt: excerpt,
-            imageURL: imageURL,
+            title: resolved.title,
+            excerpt: resolved.excerpt,
+            imageURL: resolved.imageURL ?? "",
             canonicalURL: metadata.canonicalURL,
             noIndex: metadata.noIndex,
             cssCodeInjection: metadata.cssCodeInjection,

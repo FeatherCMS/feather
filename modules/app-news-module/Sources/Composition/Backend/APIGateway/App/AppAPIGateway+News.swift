@@ -54,6 +54,7 @@ extension AppAPIGateway {
     ) -> Components.Schemas.NewsArticleSummarySchema {
         .init(
             id: item.id,
+            title: item.title,
             excerpt: item.excerpt,
             imageURL: item.media?.defaultURL ?? item.imageURL,
             media: mapMedia(item.media),
@@ -71,6 +72,7 @@ extension AppAPIGateway {
     ) -> Components.Schemas.NewsArticleDetailSchema {
         .init(
             id: item.id,
+            title: item.title,
             excerpt: item.excerpt,
             content: item.content,
             imageURL: item.media?.defaultURL ?? item.imageURL,
@@ -90,6 +92,7 @@ extension AppAPIGateway {
     ) -> Components.Schemas.NewsCategorySummarySchema {
         .init(
             id: item.id,
+            title: item.title,
             excerpt: item.excerpt,
             imageURL: item.media?.defaultURL ?? item.imageURL,
             media: mapMedia(item.media),
@@ -107,6 +110,7 @@ extension AppAPIGateway {
     ) -> Components.Schemas.NewsCategoryDetailSchema {
         .init(
             id: item.id,
+            title: item.title,
             excerpt: item.excerpt,
             content: item.content,
             imageURL: item.media?.defaultURL ?? item.imageURL,
@@ -144,15 +148,21 @@ extension AppAPIGateway {
         excerpt: String,
         imageURL: String
     ) -> Components.Schemas.WebMetadataContentSchema {
-        .init(
+        let resolved = ResolvedMetadata(
+            metadata: metadata,
+            fallbackTitle: title,
+            fallbackExcerpt: excerpt,
+            fallbackImageURL: imageURL
+        )
+        return .init(
             slug: metadata.slug,
             template: metadata.template,
             publicationDate: metadata.publicationDate.timeIntervalSince1970,
             expirationDate: metadata.expirationDate?.timeIntervalSince1970,
             status: metadata.status.rawValue,
-            title: metadata.title ?? title,
-            excerpt: metadata.excerpt ?? excerpt,
-            imageURL: metadata.imageURL ?? imageURL,
+            title: resolved.title,
+            excerpt: resolved.excerpt,
+            imageURL: resolved.imageURL ?? "",
             canonicalURL: metadata.canonicalURL ?? "",
             noIndex: metadata.noIndex,
             cssCodeInjection: metadata.cssCodeInjection ?? "",

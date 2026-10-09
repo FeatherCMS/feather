@@ -59,6 +59,8 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/NewsArticleIdField'
+        title:
+          $ref: '#/components/schemas/WebMetadataTitleField'
         excerpt:
           $ref: '#/components/schemas/NewsArticleExcerptField'
         imageURL:
@@ -69,12 +71,16 @@ components:
           $ref: '#/components/schemas/WebMetadataContentSchema'
       required:
       - id
+      - title
       - excerpt
       - imageURL
       - metadata
     NewsArticleIdField:
       type: string
       example: news_1
+    WebMetadataTitleField:
+      type: string
+      example: Hello world
     NewsArticleExcerptField:
       type: string
       example: Short article summary.
@@ -169,9 +175,6 @@ components:
     WebMetadataStatusField:
       type: string
       example: published
-    WebMetadataTitleField:
-      type: string
-      example: Hello world
     WebMetadataExcerptField:
       type: string
       example: Short summary
@@ -192,6 +195,8 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/NewsArticleIdField'
+        title:
+          $ref: '#/components/schemas/WebMetadataTitleField'
         excerpt:
           $ref: '#/components/schemas/NewsArticleExcerptField'
         content:
@@ -206,6 +211,7 @@ components:
           $ref: '#/components/schemas/NewsCategorySummaryListSchema'
       required:
       - id
+      - title
       - excerpt
       - content
       - imageURL
@@ -223,6 +229,8 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/NewsCategoryIdField'
+        title:
+          $ref: '#/components/schemas/WebMetadataTitleField'
         excerpt:
           $ref: '#/components/schemas/NewsCategoryExcerptField'
         imageURL:
@@ -233,6 +241,7 @@ components:
           $ref: '#/components/schemas/WebMetadataContentSchema'
       required:
       - id
+      - title
       - excerpt
       - imageURL
       - metadata
@@ -254,6 +263,8 @@ components:
       properties:
         id:
           $ref: '#/components/schemas/NewsCategoryIdField'
+        title:
+          $ref: '#/components/schemas/WebMetadataTitleField'
         excerpt:
           $ref: '#/components/schemas/NewsCategoryExcerptField'
         content:
@@ -268,6 +279,7 @@ components:
           $ref: '#/components/schemas/NewsArticleSummaryListSchema'
       required:
       - id
+      - title
       - excerpt
       - content
       - imageURL

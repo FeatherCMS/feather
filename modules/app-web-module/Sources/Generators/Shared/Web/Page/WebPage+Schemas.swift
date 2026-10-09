@@ -14,6 +14,12 @@ public struct WebPageContentField: StringSchemaRepresentable {
     public init() {}
 }
 
+public struct WebPageTitleField: StringSchemaRepresentable {
+    public var example: String? = "Homepage"
+
+    public init() {}
+}
+
 public struct WebPageExcerptField: StringSchemaRepresentable {
     public var example: String? = "Short page summary."
 
@@ -30,6 +36,7 @@ public struct WebPageDetailSchema: ObjectSchemaRepresentable {
     public var propertyMap: SchemaMap {
         [
             "id": WebPageIdField().reference(),
+            "title": WebPageTitleField().reference(),
             "excerpt": WebPageExcerptField().reference(),
             "content": WebPageContentField().reference(),
             "imageURL": WebPageImageURLField().reference(),

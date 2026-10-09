@@ -16,7 +16,7 @@ ALL_SERVICES := certificates postgres migrator server worker web-static openapi-
 POSTGRES_VOLUME := feather-cms-postgres-data
 MEDIA_VOLUME := feather-cms-file-storage
 
-.PHONY: up up-build down stop logs ps restart pull config clean reset deps all application application-artifacts application-images application-logs local local-app local-backend test test-all format fix-headers docker-up docker-down docker-clean yaml $(APPLICATION_RUNTIME_SERVICES) $(NON_APPLICATION_SERVICES) $(SERVICE_TARGETS)
+.PHONY: up up-build down stop logs ps restart pull config clean reset deps all application application-artifacts application-images application-logs local local-app local-backend test test-all format fix-headers docker-up docker-down docker-clean yaml yaml-swift $(APPLICATION_RUNTIME_SERVICES) $(NON_APPLICATION_SERVICES) $(SERVICE_TARGETS)
 
 define detect_lan_host
 iface="$$(route -n get default 2>/dev/null | awk '/interface: / { print $$2; exit }')"; \
@@ -128,6 +128,12 @@ yaml:
 	@set -e; \
 	for module in $(OPENAPI_MODULE_DIRS); do \
 		$(MAKE) -C $$module openapi-yaml; \
+	done
+
+yaml-swift:
+	@set -e; \
+	for module in $(OPENAPI_MODULE_DIRS); do \
+		$(MAKE) -C $$module openapi-swift; \
 	done
 
 all:

@@ -5,12 +5,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MODULE_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 WORKSPACE_DIR="$(cd "${MODULE_DIR}/../.." && pwd)"
-OPENAPI_PACKAGE_DIR="${OPENAPI_PACKAGE_DIR:-${WORKSPACE_DIR}/scripts}"
-SWIFT_OPENAPI_GENERATOR_GIT_URL="${SWIFT_OPENAPI_GENERATOR_GIT_URL:-https://github.com/apple/swift-openapi-generator}"
-SWIFT_OPENAPI_GENERATOR_GIT_TAG="${SWIFT_OPENAPI_GENERATOR_GIT_TAG:-1.13.1}"
-SWIFT_OPENAPI_GENERATOR_CLONE_DIR="${SWIFT_OPENAPI_GENERATOR_CLONE_DIR:-${OPENAPI_PACKAGE_DIR}/.swift-openapi-generator}"
-SWIFT_OPENAPI_GENERATOR_BUILD_CONFIGURATION="${SWIFT_OPENAPI_GENERATOR_BUILD_CONFIGURATION:-debug}"
-SWIFT_OPENAPI_GENERATOR_BIN="${SWIFT_OPENAPI_GENERATOR_BIN:-${SWIFT_OPENAPI_GENERATOR_CLONE_DIR}/.build/${SWIFT_OPENAPI_GENERATOR_BUILD_CONFIGURATION}/swift-openapi-generator}"
+SWIFT_OPENAPI_GENERATOR_BIN="${SWIFT_OPENAPI_GENERATOR_BIN:-swift-openapi-generator}"
 OPENAPI_GENERATOR_CONFIG_PATH="${OPENAPI_GENERATOR_CONFIG_PATH:-${SCRIPT_DIR}/openapi-generator-config.yml}"
 
 GENERATOR_TARGETS=("ContactAppOpenAPIGenerator" "ContactAdminOpenAPIGenerator")
@@ -18,21 +13,9 @@ SPECIFICATIONS=("contact-app.yaml" "contact-admin.yaml")
 OUTPUT_DIRECTORIES=("Sources/APIs/App" "Sources/APIs/Admin")
 
 ensure_swift_openapi_generator_bin() {
-    if [[ ! -d "${SWIFT_OPENAPI_GENERATOR_CLONE_DIR}" ]]; then
-        git \
-            -c advice.detachedHead=false \
-            clone \
-            --branch "${SWIFT_OPENAPI_GENERATOR_GIT_TAG}" \
-            --depth 1 \
-            "${SWIFT_OPENAPI_GENERATOR_GIT_URL}" \
-            "${SWIFT_OPENAPI_GENERATOR_CLONE_DIR}"
-    fi
-    if [[ ! -x "${SWIFT_OPENAPI_GENERATOR_BIN}" ]]; then
-        swift \
-            build \
-            --package-path "${SWIFT_OPENAPI_GENERATOR_CLONE_DIR}" \
-            --configuration "${SWIFT_OPENAPI_GENERATOR_BUILD_CONFIGURATION}" \
-            --product swift-openapi-generator
+    if ! command -v "${SWIFT_OPENAPI_GENERATOR_BIN}" >/dev/null 2>&1; then
+        printf 'swift-openapi-generator is required on PATH\n' >&2
+        exit 1
     fi
 }
 
