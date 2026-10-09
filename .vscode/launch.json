@@ -705,6 +705,26 @@
         "target": "NewsAppOpenAPIGenerator",
         "configuration": "release",
         "preLaunchTask": "swift: Build Release NewsAppOpenAPIGenerator (modules/app-news-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-news-module",
+        "name": "Debug NewsAdminOpenAPIGenerator (modules/app-news-module)",
+        "target": "NewsAdminOpenAPIGenerator",
+        "configuration": "debug",
+        "preLaunchTask": "swift: Build Debug NewsAdminOpenAPIGenerator (modules/app-news-module)"
+    },
+    {
+        "type": "swift",
+        "request": "launch",
+        "args": [],
+        "cwd": "${workspaceFolder:feather}/modules/app-news-module",
+        "name": "Release NewsAdminOpenAPIGenerator (modules/app-news-module)",
+        "target": "NewsAdminOpenAPIGenerator",
+        "configuration": "release",
+        "preLaunchTask": "swift: Build Release NewsAdminOpenAPIGenerator (modules/app-news-module)"
     }
 ],
   "compounds": [

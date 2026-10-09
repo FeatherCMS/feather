@@ -8,9 +8,9 @@ WORKSPACE_DIR="$(cd "${MODULE_DIR}/../.." && pwd)"
 SWIFT_OPENAPI_GENERATOR_BIN="${SWIFT_OPENAPI_GENERATOR_BIN:-swift-openapi-generator}"
 OPENAPI_GENERATOR_CONFIG_PATH="${OPENAPI_GENERATOR_CONFIG_PATH:-${SCRIPT_DIR}/openapi-generator-config.yml}"
 
-GENERATOR_TARGETS=("NewsAppOpenAPIGenerator")
-SPECIFICATIONS=("news-app.yaml")
-OUTPUT_DIRECTORIES=("Sources/APIs/App")
+GENERATOR_TARGETS=("NewsAdminOpenAPIGenerator" "NewsAppOpenAPIGenerator")
+SPECIFICATIONS=("news-admin.yaml" "news-app.yaml")
+OUTPUT_DIRECTORIES=("Sources/APIs/Admin" "Sources/APIs/App")
 
 ensure_swift_openapi_generator_bin() {
     if ! command -v "${SWIFT_OPENAPI_GENERATOR_BIN}" >/dev/null 2>&1; then
