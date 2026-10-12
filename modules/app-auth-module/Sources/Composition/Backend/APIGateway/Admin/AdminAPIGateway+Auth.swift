@@ -41,7 +41,7 @@ extension AdminAPIGateway {
         'http://127.0.0.1:8080/api/v1/admin/auth/login' \
         -H 'Accept: application/json' \
         -H 'Content-Type: application/json' \
-        -d '{"email":"mail.tib@gmail.com","password":"root","isPersistent":true}'
+        -d '{"email":"EMAIL","password":"PASS","isPersistent":true}'
     */
     public func authLogin(
         _ input: Operations.AuthLogin.Input

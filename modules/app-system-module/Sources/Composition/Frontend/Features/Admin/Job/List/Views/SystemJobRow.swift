@@ -1,5 +1,6 @@
 import FeatherAdmin
 import FeatherContracts
+import Foundation
 import HTML
 import Hummingbird
 import SystemAdminAPI
@@ -27,7 +28,11 @@ struct SystemJobRow: Component {
         return Tr {
             Td(payload.name)
                 .data("label", "Job")
-            Td(payload.parameterSummary.emptyToNil ?? "—")
+            Td(
+                htmlEscaped(
+                    truncatedParameterSummary(payload.parameterSummary)
+                ).emptyToNil ?? "—"
+            )
                 .data("label", "Parameters")
             Td {
                 context.build(statusChip(job.status))
@@ -53,5 +58,19 @@ struct SystemJobRow: Component {
         case 5: .init(label: "Completed", color: .green)
         default: .init(label: "Unknown (\(status))", color: .gray)
         }
+    }
+
+    private func htmlEscaped(_ value: String) -> String {
+        value
+            .replacingOccurrences(of: "&", with: "&amp;")
+            .replacingOccurrences(of: "<", with: "&lt;")
+            .replacingOccurrences(of: ">", with: "&gt;")
+            .replacingOccurrences(of: "\"", with: "&quot;")
+            .replacingOccurrences(of: "'", with: "&#39;")
+    }
+
+    private func truncatedParameterSummary(_ value: String) -> String {
+        guard value.count > 200 else { return value }
+        return String(value.prefix(199)) + "…"
     }
 }
