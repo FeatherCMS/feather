@@ -1,5 +1,7 @@
+import CSS
 import FeatherAdmin
 import FeatherContracts
+import Foundation
 import HTML
 import Hummingbird
 import SGML
@@ -14,52 +16,68 @@ struct SystemJobDetailsView: Component {
 
     let state: State
 
-    func html(context: inout BuilderContext) -> some BasicTag {
+    func selectors() -> [any CSS.Selector] {
+        [
+            Class("system-job-details-payload") {
+                Margin(0)
+                WhiteSpace(.preWrap)
+                OverflowWrap(.anywhere)
+                OverflowX(.auto)
+            },
+        ]
+    }
+
+    func html(context: inout BuilderContext) -> Section {
         let job = state.job.job
         let payload = SystemJobPayload(job: job)
-        return context.build(
-            NewAdminDetailView(
-                breadcrumb: SystemJobRoutes.breadcrumb,
-                pageHeader: .primary(
-                    title: "Worker job details",
-                    description: "Inspect the selected worker job."
-                ),
-                fields: [
-                    .init(label: "Job", value: payload.name.emptyToNil ?? "—"),
-                    .init(
-                        label: "Queue",
-                        value: job.queueName.emptyToNil ?? "—"
+        return Section {
+            context.build(
+                NewAdminDetailView(
+                    breadcrumb: SystemJobRoutes.breadcrumb,
+                    pageHeader: .primary(
+                        title: "Worker job details",
+                        description: "Inspect the selected worker job."
                     ),
-                    .init(label: "Status", value: statusLabel(job.status)),
-                    .init(
-                        label: "Worker",
-                        value: job.workerId?.emptyToNil ?? "—"
-                    ),
-                    .init(
-                        label: "Last modified",
-                        value: String(describing: job.lastModified)
-                    ),
-                    .init(label: "Queued at", value: payload.queuedAt ?? "—"),
-                    .init(label: "Attempt", value: payload.attempt ?? "—"),
-                    .init(
-                        label: "Next scheduled at",
-                        value: payload.nextScheduledAt ?? "—"
-                    ),
-                    .init(
-                        label: "Trace context",
-                        value: payload.traceContext ?? "—"
-                    ),
-                    .init(label: "From", value: payload.sender ?? "—"),
-                    .init(label: "To", value: payload.recipient ?? "—"),
-                    .init(label: "Subject", value: payload.subject ?? "—"),
-                    .init(label: "Message", value: payload.message ?? "—"),
-                    .init(
-                        label: "Payload",
-                        value: job.payload.emptyToNil ?? "—"
-                    ),
-                ]
+                    fields: [
+                        .init(label: "Job", value: payload.name.emptyToNil ?? "—"),
+                        .init(
+                            label: "Queue",
+                            value: job.queueName.emptyToNil ?? "—"
+                        ),
+                        .init(label: "Status", value: statusLabel(job.status)),
+                        .init(
+                            label: "Worker",
+                            value: job.workerId?.emptyToNil ?? "—"
+                        ),
+                        .init(
+                            label: "Last modified",
+                            value: String(describing: job.lastModified)
+                        ),
+                        .init(label: "Queued at", value: payload.queuedAt ?? "—"),
+                        .init(label: "Attempt", value: payload.attempt ?? "—"),
+                        .init(
+                            label: "Next scheduled at",
+                            value: payload.nextScheduledAt ?? "—"
+                        ),
+                        .init(
+                            label: "Trace context",
+                            value: payload.traceContext ?? "—"
+                        ),
+                        .init(label: "From", value: payload.sender ?? "—"),
+                        .init(label: "To", value: payload.recipient ?? "—"),
+                        .init(label: "Subject", value: payload.subject ?? "—"),
+                        .init(label: "Message", value: payload.message ?? "—"),
+                    ]
+                )
             )
-        )
+            Div {
+                P("Payload").class("admin-detail-view-field-label")
+                Pre(escapedPayload(job.payload.emptyToNil ?? "—"))
+                    .class("system-job-details-payload")
+            }
+            .class("admin-detail-view-field")
+        }
+        .class("cms-section")
     }
 
     private func statusLabel(_ status: Int) -> String {
@@ -71,5 +89,14 @@ struct SystemJobDetailsView: Component {
         case 5: "Completed"
         default: "Unknown (\(status))"
         }
+    }
+
+    private func escapedPayload(_ value: String) -> String {
+        value
+            .replacingOccurrences(of: "&", with: "&amp;")
+            .replacingOccurrences(of: "<", with: "&lt;")
+            .replacingOccurrences(of: ">", with: "&gt;")
+            .replacingOccurrences(of: "\"", with: "&quot;")
+            .replacingOccurrences(of: "'", with: "&#39;")
     }
 }

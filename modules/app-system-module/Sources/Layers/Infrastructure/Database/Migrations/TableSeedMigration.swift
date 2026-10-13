@@ -55,7 +55,12 @@ public struct TableSeedMigration: DatabaseMigration {
             .flatMap { $0 }
 
         let variableRepository = VariableDatabaseRepository(context: context)
-        for variable in variables {
+        let uniqueVariableDefinitions = variables.reduce(
+            into: [String: VariableSeedDefinition]()
+        ) { definitions, variable in
+            definitions[variable.key] = variable
+        }
+        for variable in uniqueVariableDefinitions.values {
             _ = try await variableRepository.insert(
                 try Variable.create(
                     key: variable.key,

@@ -1,7 +1,8 @@
 # TODO
 
+- [ ] Time zone issues, settings management (pagination, etc)
+- [ ] Newsletter unscribscibe link + sending out issues
 - [ ] Proper home page management
-- [ ] Fix redirect 500 handling
 - [ ] https://github.com/yonaskolb/mint -> opeanpi-generator install
 - [ ] https://github.com/hummingbird-project/hummingbird-compression
 - [ ] HTTP2 support (enable HB HTTP2)
@@ -25,3 +26,4 @@
 - [ ] Telemetry, CI, auto-deployment
 - [ ] NewAdmin prefix -> Admin only for FeatherAdmin UI
 - [ ] Tag remaining framework packages with 1.0-rc.x
+- [ ] Template editor for web module
