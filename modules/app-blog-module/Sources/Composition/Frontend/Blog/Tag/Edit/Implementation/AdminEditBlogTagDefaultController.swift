@@ -1,0 +1,173 @@
+import BlogAdminAPI
+import BlogAppAPI
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import MediaFrontend
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+import WebFrontend
+
+struct AdminEditBlogTagDefaultController:
+    AdminEditBlogTagController
+{
+    let buildRuntime:
+        AuthenticatedRuntimeBuilder<
+            any AdminEditBlogTagInteractor,
+            any AdminEditBlogTagPresenter
+        >
+
+    func getEditBlogTag(
+        request: Request,
+        context: AuthenticatedRequestContext
+    ) async throws -> HTMLResponse {
+        let runtime = buildRuntime((request, context))
+        let id = try context.requiredID()
+        let permissions = context.currentUserPermissions
+        do {
+            let page = try await runtime.interactor.load(id: id)
+            return try await runtime.presenter.renderEditPage(
+                id: id,
+                state: formState(
+                    title: page.title,
+                    excerpt: page.excerpt,
+                    content: page.content,
+                    imageAssetId: page.imageAsset?.id,
+                    imageAsset: page.imageAsset,
+                    metadata: page.metadata
+                ),
+                permissions: permissions
+            )
+        }
+        catch let error as OpenAPIRepositoryError {
+            return try await runtime.presenter.renderErrorPage(
+                id: id,
+                info: error.errorTitle,
+                message: error.errorDescription,
+                permissions: permissions
+            )
+        }
+    }
+
+    func postEditBlogTag(
+        request: Request,
+        context: AuthenticatedRequestContext
+    ) async throws -> Response {
+        let runtime = buildRuntime((request, context))
+        let id = try context.requiredID()
+        let permissions = context.currentUserPermissions
+        var lastPayload: BlogTagFormInput?
+
+        do {
+            let payload = try await request.decode(
+                as: BlogTagFormInput.self,
+                context: context
+            )
+            lastPayload = payload
+            try await payload.validate()
+            try await runtime.interactor.update(id: id, input: payload)
+
+            return AdminNotificationFlash.redirect(
+                to: "/admin/blog/tags/\(id)/edit/",
+                notification: .init(
+                    title: "Saved",
+                    message: "Tag edited successfully."
+                )
+            )
+        }
+        catch let error as ValidationError {
+            var errors: [String: String] = [:]
+            for failure in error.failures {
+                errors[failure.key] = failure.message
+            }
+            var state = formState(
+                title: lastPayload?.normalizedTitle ?? "",
+                excerpt: lastPayload?.normalizedExcerpt ?? "",
+                content: lastPayload?.normalizedContent ?? "",
+                imageAssetId: lastPayload?.normalizedImageAssetId,
+            )
+            state.apply(errors: errors)
+            return try await runtime.presenter
+                .renderEditPage(
+                    id: id,
+                    state: state,
+                    permissions: permissions
+                )
+                .response(from: request, context: context)
+        }
+        catch let error as OpenAPIRepositoryError {
+            var state = formState(
+                title: lastPayload?.normalizedTitle ?? "",
+                excerpt: lastPayload?.normalizedExcerpt ?? "",
+                content: lastPayload?.normalizedContent ?? "",
+                imageAssetId: lastPayload?.normalizedImageAssetId,
+            )
+            state.error = error.errorDescription
+            return try await runtime.presenter
+                .renderEditPage(
+                    id: id,
+                    state: state,
+                    permissions: permissions
+                )
+                .response(from: request, context: context)
+        }
+        catch {
+            var state = formState(
+                title: lastPayload?.normalizedTitle ?? "",
+                excerpt: lastPayload?.normalizedExcerpt ?? "",
+                content: lastPayload?.normalizedContent ?? "",
+                imageAssetId: lastPayload?.normalizedImageAssetId,
+            )
+            state.error = error.displayMessage
+            return try await runtime.presenter
+                .renderEditPage(
+                    id: id,
+                    state: state,
+                    permissions: permissions
+                )
+                .response(from: request, context: context)
+        }
+    }
+
+    private func formState(
+        title: String = "",
+        excerpt: String = "",
+        content: String = "",
+        imageAssetId: String? = nil,
+        imageAsset: NewAdminMediaAsset? = nil,
+        metadata: AdminMetadataFormValue? = nil
+    ) -> BlogTagForm.State {
+        .init(
+            title: .init(
+                key: "title",
+                label: "Title",
+                value: title,
+                error: nil
+            ),
+            excerpt: .init(
+                key: "excerpt",
+                label: "Excerpt",
+                value: excerpt,
+                error: nil
+            ),
+            content: .init(
+                key: "content",
+                label: "Content",
+                value: content,
+                error: nil
+            ),
+            imageAssetId: .init(
+                key: "imageAssetId",
+                label: "Tag image",
+                value: imageAssetId,
+                error: nil
+            ),
+            selectedImageAsset: imageAsset,
+            metadata: AdminMetadataFieldStateFactory.make(metadata),
+            error: nil,
+        )
+    }
+}

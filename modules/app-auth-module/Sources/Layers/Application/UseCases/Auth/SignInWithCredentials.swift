@@ -1,0 +1,69 @@
+//
+//  SignInWithCredentials.swift
+//  app-auth-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
+import AuthDomain
+public import FeatherApplication
+public import FeatherContracts
+public import FeatherDomain
+import UserDomain
+
+public struct SignInWithCredentials: SignIn {
+    let transaction: any TransactionExecutor<WriteAuth>
+    let passwordHasher: any PasswordHasher
+
+    public init(
+        transaction: any TransactionExecutor<WriteAuth>,
+        passwordHasher: any PasswordHasher
+    ) {
+        self.transaction = transaction
+        self.passwordHasher = passwordHasher
+    }
+
+    public struct Input: DTO {
+        public let object: AuthCredentials
+
+        public init(object: AuthCredentials) {
+            self.object = object
+        }
+    }
+
+    public typealias Output = AuthDetail
+
+    public func execute(
+        _ input: Input
+    ) async throws -> Output {
+        try await transaction.run { scope in
+            guard
+                let credential = try await scope.credential.findBy(
+                    email: input.object.email
+                ),
+                let authEmail = try await scope.authEmail.findBy(
+                    id: credential.authEmailId
+                ),
+                try await checkPasswordHash(
+                    using: passwordHasher,
+                    original: input.object.password,
+                    hash: credential.passwordHash
+                ),
+                let user = try await scope.identity.findBy(
+                    id: authEmail.identityId
+                ),
+                user.status == .active
+            else {
+                throw UseCaseError.authentication()
+            }
+
+            return try await makeAuthResponse(
+                userIdentityRepository: scope.identity,
+                userSessionRepository: scope.session,
+                user: user,
+                authenticationType: Session.AuthenticationTypes.credential,
+                authenticationReference: credential.id,
+                isPersistent: input.object.isPersistent
+            )
+        }
+    }
+}

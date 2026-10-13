@@ -1,0 +1,94 @@
+import BlogAdminAPI
+import BlogAppAPI
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import MediaFrontend
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+import WebFrontend
+
+struct AdminEditBlogAuthorOpenAPIRepository: AdminEditBlogAuthorRepository {
+    let api: BlogAdminAPIClient
+
+    func load(
+        id: String
+    ) async throws -> BlogAuthorDetailsModel {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response = try await client.blogAuthorGet(
+                path: .init(blogAuthorId: id),
+                headers: .init(accept: [.init(contentType: .json)])
+            )
+            switch response {
+            case .ok(let okResponse):
+                let menu = try okResponse.body.json
+                return .init(
+                    id: menu.id,
+                    name: menu.name,
+                    excerpt: menu.excerpt,
+                    content: menu.content,
+                    profileImageAssetId: menu.profileImageAssetId,
+                    profileImage: try await api.mediaAdminAPI()
+                        .loadImageAsset(assetId: menu.profileImageAssetId),
+                    metadata: AdminMetadataSchemaBuilder.formValue(
+                        from: menu.metadata,
+                        fallbackTitle: menu.name,
+                        fallbackExcerpt: menu.excerpt
+                    ),
+                    items: []
+                )
+            case .notFound:
+                throw OpenAPIRepositoryError.notFound
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+
+    func update(
+        id: String,
+        input: BlogAuthorFormInput
+    ) async throws {
+        try await api.withOpenAPIRepositoryErrorMapping { client in
+            let response = try await client.blogAuthorUpdate(
+                path: .init(blogAuthorId: id),
+                headers: .init(accept: [.init(contentType: .json)]),
+                body: .json(
+                    .init(
+                        name: input.normalizedName,
+                        excerpt: input.normalizedExcerpt,
+                        content: input.normalizedContent,
+                        profileImageAssetId: input
+                            .normalizedProfileImageAssetId,
+                    )
+                )
+            )
+            switch response {
+            case .ok:
+                return
+            case .notFound:
+                throw OpenAPIRepositoryError.notFound
+            case .unauthorized:
+                throw OpenAPIRepositoryError.unauthorized
+            case .forbidden:
+                throw OpenAPIRepositoryError.forbidden
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+    }
+
+}

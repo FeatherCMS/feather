@@ -1,0 +1,19 @@
+import BlogAdminAPI
+import BlogAppAPI
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import MediaFrontend
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+import WebFrontend
+
+struct AdminListBlogAuthorLinkModel: Sendable {
+    let items: [BlogAdminAPI.Components.Schemas.BlogAuthorLinkListItemSchema]
+    let total: Int
+    let page: Int
+    let pageSize: Int
+}

@@ -1,0 +1,272 @@
+::selection {
+    background: var(--selection-color);
+}
+   
+a:hover {
+    text-decoration: none;
+}
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a,
+h1 a:link, h2 a:link, h3 a:link, h4 a:link, h5 a:link, h6 a:link,
+h1 a:visited, h2 a:visited, h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited {
+    color: var(--text-color);
+}
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {
+    color: var(--link-color-hover);
+}
+#site-container {
+    max-width: 960px;
+    margin: 0 auto;
+}
+#page-container {
+    margin: 16px 0;
+    padding: 16px;
+}
+
+img.rounded {
+    border-radius: 50%;
+}
+img.small {
+    width: 32px;
+}
+img.medium {
+    width: 64px;
+}
+img.large {
+    width: 128px;
+}
+
+.grid {
+    margin-top: 32px;
+}
+
+.meta {
+    font-size: 14px;
+    text-transform: uppercase;
+    color: var(--text-color-2);
+}
+
+.card {
+    position: relative;
+/*    border: 1px solid red;*/
+}
+.card h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+}
+.card {
+    border: 3px solid var(--background-color-1);
+    padding: 0 16px;
+}
+.card .featured {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 8px 16px;
+    background: var(--background-color-1);
+    color: var(--link-color);
+    text-transform: uppercase;
+    font-size: 12px;
+    font-weight: bold;
+}
+.card a {
+    color: var(--text-color);
+}
+.card a:hover {
+    color: var(--link-color-hover);
+}
+
+
+.card.author, .card.tag {
+    padding: 32px;
+    text-align: center;
+}
+.card.author img, .card.tag img {
+    margin-bottom: 16px;
+}
+.card p, .card.author p, .card.tag p {
+    margin-bottom: 0;
+}
+
+.author-list, .tag-list {
+    margin: 16px 0;
+}
+.author-list .name {
+    font-size: 16px;
+    margin-left: 4px;
+    line-height: 1rem;
+}
+
+.tag-list a {
+    display: inline-block;
+    padding: 4px 12px;
+    margin: 4px;
+    margin-left: 0;
+    text-transform: uppercase;
+    font-weight: 600;
+    line-height: 1rem;
+    color: var(--text-color-2);
+    background: var(--background-color-1);
+
+}
+.tag-list a:hover {
+    color: var(--white-color);
+    background: var(--link-color-hover);
+}
+
+
+.article-with-toc {
+    position: relative;
+    display: block;
+}
+.article-with-toc > div {
+    position: relative;
+}
+.article-with-toc article {
+    max-width: 600px;
+    margin: 0 auto;
+}
+.article-with-toc aside#toc ul {
+    margin-top: 0;
+    padding: 0;
+    list-style-type: none;
+    font-size: 14px;
+}
+.article-with-toc aside#toc ul ul {
+    margin-left: 16px;
+    margin-bottom: 0;   
+}
+.article-with-toc li.level-3 {
+    margin-left: 16px;
+}
+.article-with-toc aside#toc ul, .article-with-toc aside#toc ul li {
+    margin-bottom: 0;
+}
+.article-with-toc aside#toc ul li.first-level {
+    margin-top: 8px;
+}
+.article-with-toc aside#toc ul li.first-level:first-child {
+    margin-top: 0;
+}
+.book {
+    text-align: center;
+    border: 3px solid #ffaa00;
+    margin: 32px 0;
+    padding: 32px;
+}
+.book img {
+    max-height: 400px;
+}
+.cta {
+    padding: 8px 16px;
+    color: #000 !important;
+    background: #ffaa00;
+    font-weight: bold;
+}
+.cta:hover {
+    background: #ffaa00;
+}
+
+@media screen and (min-width: 900px) {
+    .book {
+        margin-top: 0;
+    }
+    .article-with-toc {
+        display: grid;
+        grid-column-gap: 32px;
+        grid-template-columns: 5fr 3fr;
+    }
+
+    .article-with-toc > div > aside {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 16px;
+        background: var(--background-color-1);
+        padding: 16px 32px;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+    .article-with-toc > div > aside h4 {
+        margin-top: 0px;
+        display: none;
+    }
+    .article-with-toc > div > aside li a {
+        color: var(--text-color-2);
+    }
+    .article-with-toc > div > aside li a:hover {
+        color: var(--text-color-1);
+    }
+}
+
+
+.post span.featured {
+    color: var(--link-color);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+.pagination {
+    margin-top: 64px;
+    display: block;
+    text-align: center;
+}
+.pagination a {
+    font-weight: bold;
+    padding: 8px 16px;
+    border: 3px solid var(--background-color-1);
+}
+.pagination a.current-page {
+    border: 3px solid var(--link-color-hover);
+}
+
+
+
+.tooltips {
+    position: fixed;
+    z-index: 2;
+}
+.tooltips div {
+    position: fixed;
+    display: block;
+    pointer-events: none;
+
+    opacity: 0;
+    margin-top: 0;
+    margin-left: -1rem;
+
+    background-color: var(--background-color-1);
+    border: 3px solid var(--background-color-2);
+
+    padding: 8px;
+    margin-top: 0.25rem;
+    width: 30rem;
+}
+
+.tooltips div pre {
+    margin: 0;
+    padding: 8px;
+}
+
+.tooltips div p {
+    line-height: 1.4em;
+    margin: 1rem 0.5rem 0 0.5rem;
+}
+
+.tooltips .visible {
+    opacity: 1;
+    z-index: 3;
+}
+
+section.group {
+    margin-top: 64px;
+}
+section.group h4 {
+    color: var(--text-color-3);
+    text-transform: uppercase;
+    border-bottom: 3px solid var(--background-color-1);
+}

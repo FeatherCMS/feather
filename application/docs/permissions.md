@@ -1,0 +1,171 @@
+# Backend Permissions
+
+This file documents the backend permission keys and what they allow a user to do.
+
+## Auth
+
+- `auth:admin:access`: Access the admin dashboard and admin application shell.
+
+- `auth:magic-links:create`: Create a magic link.
+- `auth:magic-links:read`: View a single magic link.
+- `auth:magic-links:update`: Edit a magic link.
+- `auth:magic-links:list`: List and search magic links.
+- `auth:magic-links:delete`: Delete a magic link.
+
+- `auth:credential:create`: Create user credentials.
+- `auth:credential:read`: View user credentials.
+- `auth:credential:update`: Update user credentials.
+- `auth:credential:list`: List and search user credentials.
+- `auth:credential:find`: Find user credentials by email or ID.
+- `auth:credential:delete`: Delete user credentials.
+
+- `auth:access-control:create`: Assign a permission to a role.
+- `auth:access-control:read`: View a specific role-permission assignment.
+- `auth:access-control:update`: Update role-permission assignments.
+- `auth:access-control:list`: List and search role-permission assignments.
+- `auth:access-control:delete`: Remove a permission from a role.
+
+- `auth:profile:read`: View the current account profile.
+- `auth:profile:update`: Edit the current account profile.
+
+- `auth:sessions:create`: Create a session.
+- `auth:sessions:read`: View a single session.
+- `auth:sessions:update`: Extend or update a session.
+- `auth:sessions:list`: List sessions.
+- `auth:sessions:delete`: Remove a session.
+
+## Account
+
+- `account:profile:read`: View another user's profile. Viewing your own profile does not require this permission.
+- `account:profile:update`: Edit another user's profile. Editing your own profile does not require this permission.
+- `account:settings:read`: View another user's settings. Viewing your own settings does not require this permission.
+- `account:settings:update`: Edit another user's settings. Editing your own settings does not require this permission.
+
+## User
+
+- `user:accounts:create`: Create a user account.
+- `user:accounts:read`: View a single user account.
+- `user:accounts:update`: Edit a user account.
+- `user:accounts:list`: List and search user accounts.
+- `user:accounts:delete`: Delete a user account.
+- `user:accounts:me`: Treat the current account as self-managed profile/settings access.
+
+- `user:roles:create`: Create a role.
+- `user:roles:read`: View a single role.
+- `user:roles:update`: Edit a role.
+- `user:roles:list`: List and search roles.
+- `user:roles:delete`: Delete a role.
+
+- `user:invitations:create`: Create an invitation.
+- `user:invitations:read`: View a single invitation.
+- `user:invitations:update`: Edit an invitation.
+- `user:invitations:list`: List and search invitations.
+- `user:invitations:delete`: Delete an invitation.
+
+## System
+
+- `system:permissions:create`: Create a system permission entry.
+- `system:permissions:read`: View a single system permission.
+- `system:permissions:update`: Edit a system permission.
+- `system:permissions:list`: List and search system permissions.
+- `system:permissions:delete`: Delete a system permission.
+
+- `system:variables:create`: Create a system variable.
+- `system:variables:read`: View a single system variable.
+- `system:variables:update`: Edit a system variable.
+- `system:variables:list`: List and search system variables.
+- `system:variables:delete`: Delete a system variable.
+
+## Analytics
+
+- `analytics:insights:list`: View analytics overview and insights dashboards.
+- `analytics:logs:list`: List, search, and inspect raw analytics logs.
+
+## Redirect
+
+- `redirect:rules:create`: Create a redirect rule.
+- `redirect:rules:read`: View a single redirect rule.
+- `redirect:rules:update`: Edit a redirect rule.
+- `redirect:rules:list`: List and search redirect rules.
+- `redirect:rules:delete`: Delete a redirect rule.
+
+- `redirect:not-found:list`: View 404 and missing-route reports.
+
+## Blog
+
+- `blog:posts:create`: Create a blog post.
+- `blog:posts:read`: View a single blog post.
+- `blog:posts:update`: Edit a blog post.
+- `blog:posts:list`: List and search blog posts.
+- `blog:posts:delete`: Delete a blog post.
+
+- `blog:authors:create`: Create a blog author.
+- `blog:authors:read`: View a single blog author.
+- `blog:authors:update`: Edit a blog author.
+- `blog:authors:list`: List and search blog authors.
+- `blog:authors:delete`: Delete a blog author.
+
+- `blog:tags:create`: Create a blog tag.
+- `blog:tags:read`: View a single blog tag.
+- `blog:tags:update`: Edit a blog tag.
+- `blog:tags:list`: List and search blog tags.
+- `blog:tags:delete`: Delete a blog tag.
+
+- `blog:author-links:create`: Create an author link.
+- `blog:author-links:read`: View a single author link.
+- `blog:author-links:update`: Edit an author link.
+- `blog:author-links:list`: List and search author links.
+- `blog:author-links:delete`: Delete an author link.
+
+- `blog:settings:read`: View blog settings.
+- `blog:settings:update`: Edit blog settings.
+
+## Web
+
+- `web:pages:create`: Create a page.
+- `web:pages:read`: View a single page.
+- `web:pages:update`: Edit a page.
+- `web:pages:list`: List and search pages.
+- `web:pages:delete`: Delete a page.
+
+- `web:menus:create`: Create a menu.
+- `web:menus:read`: View a single menu.
+- `web:menus:update`: Edit a menu.
+- `web:menus:list`: List and search menus.
+- `web:menus:delete`: Delete a menu.
+
+- `web:menu-items:create`: Create a menu item.
+- `web:menu-items:read`: View a single menu item.
+- `web:menu-items:update`: Edit a menu item.
+- `web:menu-items:list`: List and search menu items.
+- `web:menu-items:delete`: Delete a menu item.
+
+- `web:settings:read`: View web settings.
+- `web:settings:update`: Edit web settings.
+
+## Media
+
+- `media:assets:create`: Create or upload a media asset. Also covers media folder creation.
+- `media:assets:read`: View a single media asset.
+- `media:assets:update`: Edit a media asset. Also covers media folder editing.
+- `media:assets:list`: List and search media assets. Also covers media folder browsing.
+- `media:assets:delete`: Delete a media asset. Also covers media folder deletion.
+
+- `media:variants:create`: Create a media variant.
+- `media:variants:read`: View a single media variant.
+- `media:variants:update`: Edit a media variant.
+- `media:variants:list`: List and search media variants.
+- `media:variants:delete`: Delete a media variant.
+- `media:variant-processors:create`: Create a processor rule inside a variant.
+- `media:variant-processors:read`: View processor rules inside a variant.
+- `media:variant-processors:update`: Edit a processor rule inside a variant.
+- `media:variant-processors:list`: List processor rules inside a variant.
+- `media:variant-processors:delete`: Delete processor rules inside a variant.
+
+## Review Notes
+
+- `auth:admin:access` is the explicit gate for entering the admin dashboard and admin application shell.
+- `root` is still treated as a backend superuser and bypasses granular permission checks in the authorizer.
+- Self-service profile and settings use cases compare the requested user ID with the authenticated subject and intentionally bypass the corresponding account permission for the current user.
+- Permissions are evaluated as assigned; the authorizer does not derive additional permission keys.
+- `auth:sessions:create` and `auth:sessions:update` are potential cleanup candidates. They are declared today, but the current server surface does not appear to expose admin routes that use them directly.

@@ -1,0 +1,28 @@
+import AccountApplication
+import AccountInfrastructure
+import AuthInfrastructure
+import FeatherInfrastructure
+import UserInfrastructure
+
+extension UseCases {
+
+    func makeCompleteInvitationRegistration()
+        -> AccountApplication.CompleteInvitationRegistration
+    {
+        let transaction = DatabaseTransactionExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                WriteInvitation(
+                    invitation: InvitationDatabaseRepository(context: context),
+                    identity: IdentityDatabaseRepository(context: context),
+                    role: RoleDatabaseRepository(context: context),
+                    authEmail: AuthEmailDatabaseRepository(context: context),
+                    credential: credentialWriter
+                )
+            }
+        )
+        return .init(
+            transaction: transaction
+        )
+    }
+}

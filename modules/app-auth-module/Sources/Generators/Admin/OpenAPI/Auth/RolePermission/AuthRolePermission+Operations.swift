@@ -1,0 +1,64 @@
+import AuthSharedOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
+import OpenAPIKit30
+import UserSharedOpenAPIGenerator
+
+public protocol AuthRolePermissionOperation: BearerProtectedOperation {
+}
+
+extension AuthRolePermissionOperation {
+    public var tags: [any TagRepresentable] { [AuthRolePermissionTag()] }
+}
+
+public protocol AuthRolePermissionIdOperation: AuthRolePermissionOperation {
+}
+
+extension AuthRolePermissionIdOperation {
+    public var parameters: [any ParameterRepresentable] {
+        [
+            AuthRolePermissionRoleIdParameter().reference(),
+            AuthRolePermissionPermissionIdParameter().reference(),
+        ]
+    }
+}
+
+struct AuthRolePermissionCreateOperation: AuthRolePermissionOperation {
+    var requestBody: (any RequestBodyRepresentable)? {
+        AuthRolePermissionRequestBody().reference()
+    }
+
+    var responseMap: ResponseMap {
+        [
+            201: AuthRolePermissionDetailResponse().reference()
+        ]
+    }
+}
+
+struct AuthRolePermissionSearchOperation: AuthRolePermissionOperation {
+    var searchQuery: SearchQuerySchema {
+        .init(
+            items: AuthRolePermissionListItemSchema(),
+            sortFieldKeys: [
+                "roleId",
+                "permissionId",
+            ],
+            filters: SearchFilterSchema()
+        )
+    }
+
+    var requestBody: (any RequestBodyRepresentable)? {
+        SearchRequestBody(query: searchQuery)
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: SearchResponse(query: searchQuery).reference()
+        ]
+    }
+}
+
+struct AuthRolePermissionRemoveOperation: AuthRolePermissionOperation,
+    DeleteOperation
+{
+}

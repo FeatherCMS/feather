@@ -1,0 +1,732 @@
+openapi: 3.0.0
+info:
+  title: Admin API
+  version: 0.1.0
+tags:
+- name: Newsletter
+  description: Manage newsletters, issues, and subscribers.
+servers:
+- url: http://127.0.0.1:8080/
+security:
+- bearerAuth: []
+paths:
+  /api/v1/admin/newsletter/campaign:
+    get:
+      tags:
+      - Newsletter
+      operationId: newsletterCampaignList
+      responses:
+        200:
+          $ref: '#/components/responses/NewsletterCampaignListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - Newsletter
+      operationId: newsletterCampaignCreate
+      requestBody:
+        $ref: '#/components/requestBodies/NewsletterCampaignCreateRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/NewsletterCampaignResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Newsletter
+      operationId: newsletterCampaignRemove
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/DeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}:
+    get:
+      tags:
+      - Newsletter
+      operationId: newsletterCampaignGet
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/NewsletterCampaignResponse'
+        404:
+          description: Newsletter not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - Newsletter
+      operationId: newsletterCampaignUpdate
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/NewsletterCampaignPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/NewsletterCampaignResponse'
+        404:
+          description: Newsletter not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues:
+    get:
+      tags:
+      - Newsletter
+      operationId: newsletterIssueList
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/NewsletterIssueListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - Newsletter
+      operationId: newsletterIssueCreate
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/NewsletterIssueCreateRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/NewsletterIssueResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Newsletter
+      operationId: newsletterIssueRemove
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/DeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email:
+    post:
+      tags:
+      - Newsletter
+      operationId: newsletterCampaignTestEmail
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/NewsletterIssueTestEmailRequestBody'
+      responses:
+        204:
+          description: Test email queued
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}:
+    get:
+      tags:
+      - Newsletter
+      operationId: newsletterIssueGet
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterIssueIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/NewsletterIssueResponse'
+        404:
+          description: Newsletter issue not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - Newsletter
+      operationId: newsletterIssueUpdate
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterIssueIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/NewsletterIssuePatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/NewsletterIssueResponse'
+        404:
+          description: Newsletter issue not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/deliveries:
+    get:
+      tags:
+      - Newsletter
+      operationId: newsletterIssueDeliveryList
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterIssueIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/NewsletterDeliveryListResponse'
+        404:
+          description: Newsletter issue not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email:
+    post:
+      tags:
+      - Newsletter
+      operationId: newsletterIssueTestEmail
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterIssueIdParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/NewsletterIssueTestEmailRequestBody'
+      responses:
+        204:
+          description: Test email queued
+        404:
+          description: Newsletter issue not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers:
+    get:
+      tags:
+      - Newsletter
+      operationId: newsletterSubscriberList
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/NewsletterSubscriberListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - Newsletter
+      operationId: newsletterSubscriberCreate
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/NewsletterSubscriberCreateRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/NewsletterSubscriberResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Newsletter
+      operationId: newsletterSubscriberRemove
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/DeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/subscribers/{email}:
+    get:
+      tags:
+      - Newsletter
+      operationId: newsletterSubscriberGet
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterSubscriberEmailParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/NewsletterSubscriberResponse'
+        404:
+          description: Newsletter subscriber not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - Newsletter
+      operationId: newsletterSubscriberUpdate
+      parameters:
+      - $ref: '#/components/parameters/NewsletterCampaignKeyParameter'
+      - $ref: '#/components/parameters/NewsletterSubscriberEmailParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/NewsletterSubscriberPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/NewsletterSubscriberResponse'
+        404:
+          description: Newsletter subscriber not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    NewsletterCampaignListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/NewsletterCampaignSchema'
+    NewsletterCampaignSchema:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        fromEmail:
+          type: string
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - key
+      - name
+      - fromEmail
+      - createdAt
+      - updatedAt
+    NewsletterCampaignCreateSchema:
+      type: object
+      properties:
+        key:
+          type: string
+        name:
+          type: string
+        fromEmail:
+          type: string
+      required:
+      - key
+      - name
+      - fromEmail
+    DeleteRequestSchema:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            example: id1
+        results:
+          type: boolean
+          example: true
+        summary:
+          type: boolean
+          example: true
+      required:
+      - ids
+      - results
+      - summary
+    DeleteResponseSchema:
+      type: object
+      properties:
+        results:
+          $ref: '#/components/schemas/DeleteResultListSchema'
+        summary:
+          $ref: '#/components/schemas/DeleteSummarySchema'
+    DeleteResultListSchema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            example: id1
+          status:
+            type: string
+            enum:
+            - deleted
+            - not_found
+            - forbidden
+            example: deleted
+        required:
+        - id
+        - status
+    DeleteSummarySchema:
+      type: object
+      properties:
+        requested:
+          type: integer
+          example: 1
+        deleted:
+          type: integer
+          example: 1
+        omitted:
+          type: integer
+          example: 1
+      required:
+      - requested
+      - deleted
+      - omitted
+    NewsletterKeyField:
+      type: string
+    NewsletterCampaignPatchSchema:
+      type: object
+      properties:
+        key:
+          $ref: '#/components/schemas/NewsletterKeyField'
+        name:
+          $ref: '#/components/schemas/NewsletterNameField'
+        fromEmail:
+          $ref: '#/components/schemas/NewsletterEmailField'
+    NewsletterNameField:
+      type: string
+    NewsletterEmailField:
+      type: string
+    NewsletterIssueListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/NewsletterIssueSchema'
+    NewsletterIssueSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        campaignKey:
+          type: string
+        subject:
+          type: string
+        content:
+          type: string
+        status:
+          type: string
+        scheduledAt:
+          $ref: '#/components/schemas/NewsletterTimestampField'
+        sentAt:
+          $ref: '#/components/schemas/NewsletterTimestampField'
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - campaignKey
+      - subject
+      - content
+      - status
+      - createdAt
+      - updatedAt
+    NewsletterTimestampField:
+      type: number
+      format: double
+    NewsletterIssueCreateSchema:
+      type: object
+      properties:
+        subject:
+          type: string
+        content:
+          type: string
+        scheduledAt:
+          $ref: '#/components/schemas/NewsletterTimestampField'
+      required:
+      - subject
+      - content
+    NewsletterIssueTestEmailSchema:
+      type: object
+      properties:
+        email:
+          type: string
+        subject:
+          type: string
+        content:
+          type: string
+      required:
+      - email
+      - subject
+      - content
+    NewsletterIdField:
+      type: string
+    NewsletterIssuePatchSchema:
+      type: object
+      properties:
+        subject:
+          $ref: '#/components/schemas/NewsletterSubjectField'
+        content:
+          $ref: '#/components/schemas/NewsletterContentField'
+        scheduledAt:
+          $ref: '#/components/schemas/NewsletterTimestampField'
+    NewsletterSubjectField:
+      type: string
+    NewsletterContentField:
+      type: string
+    NewsletterDeliveryListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/NewsletterDeliverySchema'
+    NewsletterDeliverySchema:
+      type: object
+      properties:
+        subscriberEmail:
+          type: string
+        status:
+          type: string
+        sentAt:
+          $ref: '#/components/schemas/NewsletterTimestampField'
+        failureReason:
+          $ref: '#/components/schemas/NewsletterContentField'
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - subscriberEmail
+      - status
+      - createdAt
+      - updatedAt
+    NewsletterSubscriberListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/NewsletterSubscriberSchema'
+    NewsletterSubscriberSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        campaignKey:
+          type: string
+        email:
+          type: string
+        status:
+          type: string
+        subscriptionDate:
+          type: number
+          format: double
+        unsubscriptionDate:
+          $ref: '#/components/schemas/NewsletterTimestampField'
+        firstName:
+          $ref: '#/components/schemas/NewsletterNameField'
+        lastName:
+          $ref: '#/components/schemas/NewsletterNameField'
+        createdAt:
+          type: number
+          format: double
+        updatedAt:
+          type: number
+          format: double
+      required:
+      - id
+      - campaignKey
+      - email
+      - status
+      - subscriptionDate
+      - createdAt
+      - updatedAt
+    NewsletterSubscriberCreateSchema:
+      type: object
+      properties:
+        email:
+          type: string
+        firstName:
+          $ref: '#/components/schemas/NewsletterNameField'
+        lastName:
+          $ref: '#/components/schemas/NewsletterNameField'
+        status:
+          $ref: '#/components/schemas/NewsletterSubscriberStatusField'
+      required:
+      - email
+    NewsletterSubscriberStatusField:
+      type: string
+    NewsletterSubscriberPatchSchema:
+      type: object
+      properties:
+        firstName:
+          $ref: '#/components/schemas/NewsletterNameField'
+        lastName:
+          $ref: '#/components/schemas/NewsletterNameField'
+        status:
+          type: string
+      required:
+      - status
+  responses:
+    NewsletterCampaignListResponse:
+      description: Newsletter list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterCampaignListSchema'
+    NewsletterCampaignResponse:
+      description: Newsletter response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterCampaignSchema'
+    DeleteResponse:
+      description: Delete response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeleteResponseSchema'
+    NewsletterIssueListResponse:
+      description: Newsletter issue list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterIssueListSchema'
+    NewsletterIssueResponse:
+      description: Newsletter issue response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterIssueSchema'
+    NewsletterDeliveryListResponse:
+      description: Newsletter delivery list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterDeliveryListSchema'
+    NewsletterSubscriberListResponse:
+      description: Newsletter subscriber list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterSubscriberListSchema'
+    NewsletterSubscriberResponse:
+      description: Newsletter subscriber response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterSubscriberSchema'
+  parameters:
+    NewsletterCampaignKeyParameter:
+      name: newsletterCampaignKey
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/NewsletterKeyField'
+    NewsletterIssueIdParameter:
+      name: newsletterIssueId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/NewsletterIdField'
+    NewsletterSubscriberEmailParameter:
+      name: email
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/NewsletterEmailField'
+  requestBodies:
+    NewsletterCampaignCreateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterCampaignCreateSchema'
+      required: true
+    DeleteRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeleteRequestSchema'
+      required: true
+    NewsletterCampaignPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterCampaignPatchSchema'
+      required: true
+    NewsletterIssueCreateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterIssueCreateSchema'
+      required: true
+    NewsletterIssueTestEmailRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterIssueTestEmailSchema'
+      required: true
+    NewsletterIssuePatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterIssuePatchSchema'
+      required: true
+    NewsletterSubscriberCreateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterSubscriberCreateSchema'
+      required: true
+    NewsletterSubscriberPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/NewsletterSubscriberPatchSchema'
+      required: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

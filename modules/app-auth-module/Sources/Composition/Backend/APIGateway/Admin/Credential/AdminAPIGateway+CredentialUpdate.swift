@@ -1,0 +1,34 @@
+public import AuthAdminAPI
+import AuthApplication
+import FeatherContracts
+
+extension AdminAPIGateway {
+
+    public func authCredentialUpdate(
+        _ input: Operations.AuthCredentialUpdate.Input
+    ) async throws -> Operations.AuthCredentialUpdate.Output {
+        let body: Components.Schemas.AuthCredentialCreateSchema
+        switch input.body {
+        case .json(let value):
+            body = value
+        }
+
+        let subject = try await CurrentSubject.require()
+        let useCase = self.useCases.makeEditCredential()
+        let result = try await useCase.execute(
+            subject: subject,
+            input: .init(
+                id: input.path.authCredentialId,
+                userId: body.userId,
+                email: body.email,
+                password: body.password
+            )
+        )
+
+        return .ok(
+            .init(
+                body: .json(map(result))
+            )
+        )
+    }
+}

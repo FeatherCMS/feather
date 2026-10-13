@@ -1,0 +1,28 @@
+import FeatherApplication
+import FeatherContracts
+import FeatherDatabase
+import FeatherDomain
+import FeatherInfrastructure
+import SystemInfrastructure
+import WebAdminAPI
+import WebAppAPI
+import WebApplication
+import WebInfrastructure
+
+extension UseCases {
+
+    func makeRemoveMenu() -> RemoveMenu {
+        let transaction = DatabaseTransactionExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                WriteMenu(
+                    menu: MenuDatabaseRepository(context: context)
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+    }
+}

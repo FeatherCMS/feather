@@ -1,0 +1,36 @@
+import FeatherContracts
+public import MediaAdminAPI
+import MediaApplication
+
+extension AdminAPIGateway {
+    public func mediaFolderList(
+        _ input: Operations.MediaFolderList.Input
+    ) async throws -> Operations.MediaFolderList.Output {
+        let query: Components.Schemas.MediaFolderListItemSearchQuerySchema
+        switch input.body {
+        case .json(let value):
+            query = value
+        }
+
+        let subject = try await CurrentSubject.require()
+        let result = try await self.useCases.makeListFolders()
+            .execute(
+                subject: subject,
+                input: .init(query: map(query))
+            )
+
+        return .ok(
+            .init(
+                body: .json(
+                    .init(
+                        query: query,
+                        data: .init(
+                            items: result.items.map(map),
+                            total: result.items.count
+                        )
+                    )
+                )
+            )
+        )
+    }
+}

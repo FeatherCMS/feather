@@ -1,0 +1,90 @@
+#navigation {
+    margin-top: 16px;
+    overflow: hidden;
+    border-bottom: 3px solid var(--background-color-1);
+}
+#navigation > a {
+    display: block;
+    line-height: 0;
+    padding: 8px;
+    text-align: center;
+}
+#navigation > a img {
+    height: 44px;
+    width: auto;
+}
+#navigation nav svg {
+    width: 24px;
+    height: 24px;
+}
+#navigation #primary-menu-button {
+    display: none;
+}
+#navigation #primary-menu-button + label {
+    position: absolute;
+    top: 22px;
+    left: 0;
+    margin: 0;
+    line-height: 0;
+    padding: 12px;
+}
+#navigation #primary-menu-button + label:hover {
+    cursor: pointer;
+}
+#navigation .menu-items {
+    max-height: 0px;
+    transition: max-height .3s ease-in-out 0s;
+    margin-top: 6px;
+}
+#navigation .menu-items a {
+    display: block;
+    padding: 16px;
+    border-top: 0.5px solid var(--background-color-1);
+    color: var(--text-color);
+}
+#navigation .menu-items a:hover {
+    color: var(--link-color-hover)
+}
+#navigation input:checked ~ .menu-items {
+    max-height: 999px;
+}
+#navigation line {
+    transition: transform .3s ease-in-out 0s;
+    transform-origin: 50% 50%;
+}
+#navigation input:checked ~ label line:nth-child(1) {
+    transform: translateX(-50px);
+}
+#navigation input:checked ~ label line:nth-child(2) {
+    transform: rotate(45deg) translateY(6px);
+}
+#navigation input:checked ~ label line:nth-child(3) {
+    transform: rotate(-45deg) translateY(-6px);
+}
+@media screen and (min-width: 600px) {
+    #navigation {
+        display: grid;
+        grid-template-columns: auto 1fr;
+    }
+    #navigation > a {
+        grid-column: span 1;
+    }
+    #navigation nav {
+        overflow: hidden;
+        grid-column: span 1;
+    }
+    #primary-menu-button ~ label {
+        display: none;
+    }
+    #navigation nav .menu-items {
+        display: block;
+        max-height: none;
+        text-align: right;
+        padding: 8px;
+    }
+    #navigation nav .menu-items a {
+        padding: 8px;
+        display: inline-block;
+        border: none;
+    }
+}

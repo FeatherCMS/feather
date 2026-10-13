@@ -1,0 +1,114 @@
+public import CSS
+public import HTML
+import SGML
+import WebBuilders
+public import WebComponents
+
+public struct NewAdminForm: Component {
+    private let form: Form
+
+    public init(
+        action: String,
+        method: MethodAttributeValue = .post,
+        nonceToken: String? = nil,
+        hiddenFields: [NewAdminFormFieldHiddenValue] = [],
+        @Builder<FlowContent> content: () -> [any FlowContent]
+    ) {
+        self.form = Form {
+            if let nonceToken {
+                Input().type(.hidden).name("_nonce").value(nonceToken)
+            }
+            for field in hiddenFields {
+                Input().type(.hidden).name(field.name).value(field.value)
+            }
+            content()
+        }
+        .encType(.urlencoded)
+        .method(method)
+        .action(action)
+        .class("new-admin-form")
+    }
+
+    public func selectors() -> [any Selector] {
+        [
+            Class("new-admin-form") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(26.px)
+                Width(100.percent)
+                MarginTop(24.px)
+            },
+            Custom(".new-admin-form > .new-admin-form__messages") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(6.px)
+            },
+            Custom(".new-admin-form > .new-admin-form__error") {
+                Margin(0)
+                Padding(vertical: 12.px, horizontal: 14.px)
+                BorderRadius(8.px)
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Palette.Red.border)
+                )
+                Background(.variable(TokenKey.Colors.Palette.Red.background))
+                Color(.variable(TokenKey.Colors.Palette.Red.text))
+            },
+            Class("new-admin-form__actions") {
+                Display(.flex)
+                AlignItems(.center)
+                Gap(10.px)
+                FlexWrap(.wrap)
+                MarginTop(4.px)
+            },
+        ]
+    }
+
+    public func html(context: inout BuilderContext) -> Form {
+        form
+    }
+
+    public func scripts() -> [String] {
+        [
+            #"""
+            (function () {
+                var documentRoot = document.documentElement;
+                if (documentRoot.dataset.newAdminFormErrorScrollBound === "1") {
+                    return;
+                }
+                documentRoot.dataset.newAdminFormErrorScrollBound = "1";
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    requestAnimationFrame(function () {
+                        var error = document.querySelector(
+                            ".new-admin-form .field-error"
+                        );
+                        if (!error) { return; }
+
+                        var field = error.closest(".has-error") || error;
+                        var control = field.querySelector(
+                            "input:not([type='hidden']):not([disabled]), select:not([disabled]), textarea:not([disabled])"
+                        );
+                        control = control || field.querySelector(
+                            "button:not([disabled])"
+                        );
+                        if (control) {
+                            control.focus({ preventScroll: true });
+                        }
+
+                        var behavior = window.matchMedia(
+                            "(prefers-reduced-motion: reduce)"
+                        ).matches ? "auto" : "smooth";
+                        field.scrollIntoView({
+                            behavior: behavior,
+                            block: "center",
+                            inline: "nearest"
+                        });
+                    });
+                });
+            }());
+            """#
+        ]
+    }
+}

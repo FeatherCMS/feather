@@ -1,0 +1,20 @@
+import ContactContracts
+public import FeatherContracts
+import SystemApplication
+
+public enum EventHandlers {
+
+    public static func register(
+        in registry: inout EventRegistry
+    ) {
+        registry.register(
+            event: PermissionSeedProvider.self,
+            context: EventContext.self
+        ) { _, _ in
+            ContactPermissions.allPermissions()
+                .map {
+                    .init(permission: $0)
+                }
+        }
+    }
+}

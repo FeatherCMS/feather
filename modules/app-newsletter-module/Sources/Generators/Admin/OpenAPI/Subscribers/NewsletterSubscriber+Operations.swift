@@ -1,0 +1,56 @@
+import FeatherOpenAPI
+import FeatherOpenAPIGenerator
+import OpenAPIKit30
+
+protocol NewsletterSubscriberOperation: NewsletterCampaignOperation {}
+extension NewsletterSubscriberOperation {
+    var parameters: [any ParameterRepresentable] {
+        [NewsletterCampaignKeyParameter().reference()]
+    }
+}
+protocol NewsletterSubscriberIDOperation: NewsletterSubscriberOperation {}
+extension NewsletterSubscriberIDOperation {
+    var parameters: [any ParameterRepresentable] {
+        [
+            NewsletterCampaignKeyParameter().reference(),
+            NewsletterSubscriberEmailParameter().reference(),
+        ]
+    }
+}
+
+struct NewsletterSubscriberListOperation: NewsletterSubscriberOperation {
+    var responseMap: ResponseMap {
+        [200: NewsletterSubscriberListResponse().reference()]
+    }
+}
+struct NewsletterSubscriberCreateOperation: NewsletterSubscriberOperation {
+    var requestBody: (any RequestBodyRepresentable)? {
+        NewsletterSubscriberCreateRequestBody().reference()
+    }
+    var responseMap: ResponseMap {
+        [201: NewsletterSubscriberResponse().reference()]
+    }
+}
+struct NewsletterSubscriberGetOperation: NewsletterSubscriberIDOperation {
+    var responseMap: ResponseMap {
+        [
+            200: NewsletterSubscriberResponse().reference(),
+            404: CustomResponse(description: "Newsletter subscriber not found"),
+        ]
+    }
+}
+struct NewsletterSubscriberUpdateOperation: NewsletterSubscriberIDOperation {
+    var requestBody: (any RequestBodyRepresentable)? {
+        NewsletterSubscriberPatchRequestBody().reference()
+    }
+    var responseMap: ResponseMap {
+        [
+            200: NewsletterSubscriberResponse().reference(),
+            404: CustomResponse(description: "Newsletter subscriber not found"),
+        ]
+    }
+}
+struct NewsletterSubscriberRemoveOperation: NewsletterSubscriberOperation,
+    DeleteOperation
+{
+}

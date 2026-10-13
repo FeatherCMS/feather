@@ -1,0 +1,28 @@
+import FeatherApplication
+import FeatherContracts
+import FeatherDatabase
+import FeatherDomain
+import FeatherInfrastructure
+import SystemInfrastructure
+import WebAdminAPI
+import WebAppAPI
+import WebApplication
+import WebInfrastructure
+
+extension UseCases {
+
+    func makeAddMetadata() -> AddMetadata {
+        let transaction = DatabaseTransactionExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                WriteMetadata(
+                    metadata: MetadataDatabaseRepository(context: context)
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+    }
+}

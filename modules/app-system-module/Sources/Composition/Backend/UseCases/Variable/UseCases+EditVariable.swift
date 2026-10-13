@@ -1,0 +1,21 @@
+import FeatherInfrastructure
+import SystemApplication
+import SystemInfrastructure
+
+extension UseCases {
+
+    func makeEditVariable() -> EditVariable {
+        let transaction = DatabaseTransactionExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                WriteVariable(
+                    variable: VariableDatabaseRepository(context: context)
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+    }
+}

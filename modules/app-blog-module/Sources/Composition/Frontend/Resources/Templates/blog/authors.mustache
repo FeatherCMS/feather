@@ -1,0 +1,15 @@
+{{& page.contents.html}}
+
+<div id="authors" class="wrapper">
+
+    {{#empty(authors)}}
+    <p>Empty.</p>
+    {{/empty(authors)}}
+    {{^empty(authors)}}
+    <div class="grid grid-221">
+    {{#authors}}
+        {{> partials/blog/author}}
+    {{/authors}}
+    </div>
+    {{/empty(authors)}}
+</div>

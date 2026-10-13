@@ -1,0 +1,101 @@
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
+import OpenAPIKit30
+import UserSharedOpenAPIGenerator
+
+public protocol UserRoleOperation: BearerProtectedOperation {
+}
+
+extension UserRoleOperation {
+    public var tags: [any TagRepresentable] { [UserRoleTag()] }
+}
+
+public protocol UserRoleIDOperation: UserRoleOperation {
+}
+
+extension UserRoleIDOperation {
+    public var parameters: [any ParameterRepresentable] {
+        [
+            UserRoleIdParameter().reference()
+        ]
+    }
+}
+
+struct UserRoleCreateOperation: UserRoleOperation {
+    var requestBody: (any RequestBodyRepresentable)? {
+        UserRoleRequestBody().reference()
+    }
+    var responseMap: ResponseMap {
+        [
+            201: UserRoleDetailResponse().reference()
+        ]
+    }
+}
+
+struct UserRoleListOperation: UserRoleOperation {
+    var responseMap: ResponseMap {
+        [
+            200: UserRoleListResponse().reference()
+        ]
+    }
+}
+
+struct UserRoleSearchOperation: UserRoleOperation {
+    var searchQuery: SearchQuerySchema {
+        .init(
+            items: UserRoleListItemSchema(),
+            sortFieldKeys: [
+                "id",
+                "name",
+                "notes",
+            ],
+            filters: SearchFilterSchema()
+        )
+    }
+
+    var requestBody: (any RequestBodyRepresentable)? {
+        SearchRequestBody(query: searchQuery)
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: SearchResponse(query: searchQuery).reference()
+        ]
+    }
+}
+
+struct UserRoleRemoveOperation: UserRoleOperation, DeleteOperation {
+}
+
+struct UserRoleGetOperation: UserRoleIDOperation {
+    var responseMap: ResponseMap {
+        [
+            200: UserRoleDetailResponse().reference(),
+            404: CustomResponse(description: "UserRole not found"),
+        ]
+    }
+}
+
+struct UserRoleUpdateOperation: UserRoleIDOperation {
+    var requestBody: (any RequestBodyRepresentable)? {
+        UserRoleUpdateRequestBody().reference()
+    }
+    var responseMap: ResponseMap {
+        [
+            200: UserRoleDetailResponse().reference(),
+            404: CustomResponse(description: "UserRole not found"),
+        ]
+    }
+}
+
+struct UserRolePatchOperation: UserRoleIDOperation {
+    var requestBody: (any RequestBodyRepresentable)? {
+        UserRolePatchRequestBody().reference()
+    }
+    var responseMap: ResponseMap {
+        [
+            200: UserRoleDetailResponse().reference(),
+            404: CustomResponse(description: "UserRole not found"),
+        ]
+    }
+}

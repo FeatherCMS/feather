@@ -1,0 +1,19 @@
+public import BlogAdminAPI
+import BlogApplication
+import FeatherContracts
+
+extension AdminAPIGateway {
+
+    public func blogPostGet(
+        _ input: Operations.BlogPostGet.Input
+    ) async throws -> Operations.BlogPostGet.Output {
+        let useCase = self.useCases.makeGetPost()
+        let subject = try await CurrentSubject.require()
+        let result = try await useCase.execute(
+            subject: subject,
+            input: .init(id: input.path.blogPostId)
+        )
+
+        return .ok(.init(body: .json(map(result))))
+    }
+}

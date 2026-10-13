@@ -1,0 +1,15 @@
+{{& page.contents.html}}
+
+<div id="tags" class="wrapper">
+
+    {{#empty(tags)}}
+    <p>Empty.</p>
+    {{/empty(tags)}}
+    {{^empty(tags)}}
+    <div class="grid grid-321">
+    {{#tags}}
+        {{> partials/blog/tag}}
+    {{/tags}}
+    </div>
+    {{/empty(tags)}}
+</div>

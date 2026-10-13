@@ -1,0 +1,8 @@
+openapi: 3.0.0
+info:
+  title: User App API
+  version: 0.1.0
+tags: []
+servers:
+- url: http://127.0.0.1:8080/
+paths: {}

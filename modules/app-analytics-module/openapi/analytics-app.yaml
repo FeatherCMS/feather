@@ -1,0 +1,72 @@
+openapi: 3.0.0
+info:
+  title: App API
+  version: 0.1.0
+tags:
+- name: Analytics
+servers:
+- url: http://127.0.0.1:8080/
+paths:
+  /api/v1/analytics/logs/track:
+    post:
+      tags:
+      - Analytics
+      operationId: analyticsLogTrack
+      requestBody:
+        $ref: '#/components/requestBodies/AnalyticsLogTrackRequestBody'
+      responses:
+        204:
+          description: Analytics log tracked
+components:
+  schemas:
+    AppAnalyticsLogTrackSchema:
+      type: object
+      properties:
+        method:
+          type: string
+          example: GET
+        url:
+          type: string
+          example: /admin/user/accounts/?page=1
+        headers:
+          type: string
+          example: '{"accept":"text/html"}'
+        ip:
+          type: string
+          example: 203.0.113.10
+        path:
+          type: string
+          example: /admin/user/accounts/
+        referer:
+          type: string
+          example: https://example.com/login
+        origin:
+          type: string
+          example: https://example.com
+        acceptLanguage:
+          type: string
+          example: en-US,en;q=0.9
+        userAgent:
+          type: string
+          example: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)
+        responseCode:
+          type: integer
+          example: 200
+      required:
+      - method
+      - url
+      - headers
+      - ip
+      - path
+      - referer
+      - origin
+      - acceptLanguage
+      - userAgent
+      - responseCode
+  requestBodies:
+    AnalyticsLogTrackRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppAnalyticsLogTrackSchema'
+      required: true

@@ -1,0 +1,23 @@
+import BlogAdminAPI
+import BlogAppAPI
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import MediaFrontend
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+import WebFrontend
+
+protocol AdminRemoveBlogAuthorRepository: Sendable {
+
+    func get(
+        id: String
+    ) async throws -> BlogAuthorDetailsModel
+
+    func delete(
+        id: String
+    ) async throws
+}

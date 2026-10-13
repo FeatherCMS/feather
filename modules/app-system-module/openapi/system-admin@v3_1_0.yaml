@@ -1,0 +1,869 @@
+openapi: 3.1.0
+info:
+  title: System Admin API
+  version: 0.1.0
+tags:
+- name: SystemPermissions
+  description: Manage system permissions.
+- name: SystemVariables
+  description: Manage system variables.
+- name: System jobs
+servers:
+- url: http://127.0.0.1:8080/
+security:
+- bearerAuth: []
+paths:
+  /api/v1/admin/system/permissions:
+    post:
+      tags:
+      - SystemPermissions
+      operationId: systemPermissionCreate
+      requestBody:
+        $ref: '#/components/requestBodies/SystemPermissionRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/SystemPermissionDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - SystemPermissions
+      operationId: systemPermissionRemove
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/DeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/system/permissions/:
+    get:
+      tags:
+      - SystemPermissions
+      operationId: systemPermissionList
+      responses:
+        200:
+          $ref: '#/components/responses/SystemPermissionListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/system/permissions/search:
+    post:
+      tags:
+      - SystemPermissions
+      operationId: systemPermissionSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemPermissionListItemSearchQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/SystemPermissionListItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/system/permissions/{systemPermissionId}:
+    get:
+      tags:
+      - SystemPermissions
+      operationId: systemPermissionGet
+      parameters:
+      - $ref: '#/components/parameters/SystemPermissionIDParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/SystemPermissionDetailResponse'
+        404:
+          description: SystemPermission not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - SystemPermissions
+      operationId: systemPermissionUpdate
+      parameters:
+      - $ref: '#/components/parameters/SystemPermissionIDParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/SystemPermissionUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/SystemPermissionDetailResponse'
+        404:
+          description: SystemPermission not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - SystemPermissions
+      operationId: systemPermissionPatch
+      parameters:
+      - $ref: '#/components/parameters/SystemPermissionIDParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/SystemPermissionPatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/SystemPermissionDetailResponse'
+        404:
+          description: SystemPermission not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/system/variables:
+    post:
+      tags:
+      - SystemVariables
+      operationId: systemVariableCreate
+      requestBody:
+        $ref: '#/components/requestBodies/SystemVariableRequestBody'
+      responses:
+        201:
+          $ref: '#/components/responses/SystemVariableDetailResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - SystemVariables
+      operationId: systemVariableRemove
+      requestBody:
+        $ref: '#/components/requestBodies/DeleteRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/DeleteResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/system/variables/:
+    get:
+      tags:
+      - SystemVariables
+      operationId: systemVariableList
+      responses:
+        200:
+          $ref: '#/components/responses/SystemVariableListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/system/variables/search:
+    post:
+      tags:
+      - SystemVariables
+      operationId: systemVariableSearch
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemVariableListItemSearchQuerySchema'
+        required: true
+      responses:
+        200:
+          $ref: '#/components/responses/SystemVariableListItemSearchSchemaSearchResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/system/variables/{systemVariableId}:
+    get:
+      tags:
+      - SystemVariables
+      operationId: systemVariableGet
+      parameters:
+      - $ref: '#/components/parameters/SystemVariableIDParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/SystemVariableDetailResponse'
+        404:
+          description: SystemVariable not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    put:
+      tags:
+      - SystemVariables
+      operationId: systemVariableUpdate
+      parameters:
+      - $ref: '#/components/parameters/SystemVariableIDParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/SystemVariableUpdateRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/SystemVariableDetailResponse'
+        404:
+          description: SystemVariable not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - SystemVariables
+      operationId: systemVariablePatch
+      parameters:
+      - $ref: '#/components/parameters/SystemVariableIDParameter'
+      requestBody:
+        $ref: '#/components/requestBodies/SystemVariablePatchRequestBody'
+      responses:
+        200:
+          $ref: '#/components/responses/SystemVariableDetailResponse'
+        404:
+          description: SystemVariable not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/system/jobs:
+    get:
+      tags:
+      - System jobs
+      operationId: systemJobList
+      responses:
+        200:
+          $ref: '#/components/responses/SystemJobListResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+  /api/v1/admin/system/jobs/{systemJobId}:
+    get:
+      tags:
+      - System jobs
+      operationId: systemJobGet
+      parameters:
+      - $ref: '#/components/parameters/SystemJobIdParameter'
+      responses:
+        200:
+          $ref: '#/components/responses/SystemJobResponse'
+        404:
+          description: Worker job not found
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    SystemPermissionCreateSchema:
+      type: object
+      properties:
+        key:
+          type: string
+          examples:
+          - system.permission:read
+        name:
+          $ref: '#/components/schemas/SystemPermissionNameField'
+        notes:
+          $ref: '#/components/schemas/SystemPermissionNotesField'
+      required:
+      - key
+      minProperties: 1
+    SystemPermissionNameField:
+      type: string
+      examples:
+      - system.permission:read
+    SystemPermissionNotesField:
+      type: string
+      examples:
+      - Read system permissions.
+    SystemPermissionDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/SystemPermissionIDField'
+        key:
+          type: string
+          examples:
+          - system.permission:read
+        name:
+          $ref: '#/components/schemas/SystemPermissionNameField'
+        notes:
+          $ref: '#/components/schemas/SystemPermissionNotesField'
+      required:
+      - id
+      - key
+      minProperties: 2
+    SystemPermissionIDField:
+      type: string
+      examples:
+      - V1StGXR8_Z5jdHi6B-myT
+    DeleteRequestSchema:
+      type: object
+      properties:
+        ids:
+          type: array
+          items:
+            type: string
+            examples:
+            - id1
+          minItems: 0
+          uniqueItems: false
+        results:
+          type: boolean
+          examples:
+          - true
+        summary:
+          type: boolean
+          examples:
+          - true
+      required:
+      - ids
+      - results
+      - summary
+      minProperties: 3
+    DeleteResponseSchema:
+      type: object
+      properties:
+        results:
+          $ref: '#/components/schemas/DeleteResultListSchema'
+        summary:
+          $ref: '#/components/schemas/DeleteSummarySchema'
+      minProperties: 0
+    DeleteResultListSchema:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+            examples:
+            - id1
+          status:
+            type: string
+            enum:
+            - deleted
+            - not_found
+            - forbidden
+            examples:
+            - deleted
+        required:
+        - id
+        - status
+        minProperties: 2
+      minItems: 0
+      uniqueItems: false
+    DeleteSummarySchema:
+      type: object
+      properties:
+        requested:
+          type: integer
+          examples:
+          - 1
+        deleted:
+          type: integer
+          examples:
+          - 1
+        omitted:
+          type: integer
+          examples:
+          - 1
+      required:
+      - requested
+      - deleted
+      - omitted
+      minProperties: 3
+    SystemPermissionListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/SystemPermissionListItemSchema'
+      minItems: 0
+      uniqueItems: false
+    SystemPermissionListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/SystemPermissionIDField'
+        key:
+          $ref: '#/components/schemas/SystemPermissionKeyField'
+        name:
+          $ref: '#/components/schemas/SystemPermissionNameField'
+        notes:
+          $ref: '#/components/schemas/SystemPermissionNotesField'
+      required:
+      - id
+      - key
+      minProperties: 2
+    SystemPermissionKeyField:
+      type: string
+      examples:
+      - system.permission:read
+    SystemPermissionListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - key
+                - name
+                - notes
+                examples:
+                - key
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            ids:
+              type: array
+              items:
+                type: string
+                examples:
+                - V1StGXR8_Z5jdHi6B-myT
+              minItems: 0
+              uniqueItems: false
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    SearchPageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
+      minProperties: 2
+    SearchPageSizeField:
+      type: integer
+      examples:
+      - 20
+    SearchPageNumberField:
+      type: integer
+      examples:
+      - 1
+    SortDirection:
+      type: string
+      enum:
+      - asc
+      - desc
+      examples:
+      - asc
+    SearchStringField:
+      type: string
+      examples:
+      - foo
+    SystemPermissionListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/SystemPermissionListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/SystemPermissionListItemSchema'
+              minItems: 0
+              uniqueItems: false
+            total:
+              type: integer
+              examples:
+              - 123
+          required:
+          - items
+          - total
+          minProperties: 2
+      required:
+      - query
+      - data
+      minProperties: 2
+    SystemPermissionPatchSchema:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/SystemPermissionNameField'
+        notes:
+          $ref: '#/components/schemas/SystemPermissionNotesField'
+      minProperties: 0
+    SystemVariableCreateSchema:
+      type: object
+      properties:
+        key:
+          type: string
+          examples:
+          - sys_variable_timezone
+        value:
+          type: string
+          examples:
+          - UTC
+        name:
+          $ref: '#/components/schemas/SystemVariableNameField'
+        notes:
+          $ref: '#/components/schemas/SystemVariableNotesField'
+      required:
+      - key
+      - value
+      minProperties: 2
+    SystemVariableNameField:
+      type: string
+      examples:
+      - default_timezone
+    SystemVariableNotesField:
+      type: string
+      examples:
+      - Application default timezone.
+    SystemVariableDetailSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/SystemVariableIDField'
+        key:
+          type: string
+          examples:
+          - sys_variable_timezone
+        value:
+          type: string
+          examples:
+          - UTC
+        name:
+          $ref: '#/components/schemas/SystemVariableNameField'
+        notes:
+          $ref: '#/components/schemas/SystemVariableNotesField'
+      required:
+      - id
+      - key
+      - value
+      minProperties: 3
+    SystemVariableIDField:
+      type: string
+      examples:
+      - V1StGXR8_Z5jdHi6B-myT
+    SystemVariableListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/SystemVariableListItemSchema'
+      minItems: 0
+      uniqueItems: false
+    SystemVariableListItemSchema:
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/SystemVariableIDField'
+        key:
+          $ref: '#/components/schemas/SystemVariableKeyField'
+        value:
+          $ref: '#/components/schemas/SystemVariableValueField'
+        name:
+          $ref: '#/components/schemas/SystemVariableNameField'
+        notes:
+          $ref: '#/components/schemas/SystemVariableNotesField'
+      required:
+      - id
+      - key
+      - value
+      minProperties: 3
+    SystemVariableKeyField:
+      type: string
+      examples:
+      - sys_variable_timezone
+    SystemVariableValueField:
+      type: string
+      examples:
+      - UTC
+    SystemVariableListItemSearchQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - key
+                - name
+                - value
+                - notes
+                examples:
+                - key
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            ids:
+              type: array
+              items:
+                type: string
+                examples:
+                - V1StGXR8_Z5jdHi6B-myT
+              minItems: 0
+              uniqueItems: false
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    SystemVariableListItemSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/SystemVariableListItemSearchQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/SystemVariableListItemSchema'
+              minItems: 0
+              uniqueItems: false
+            total:
+              type: integer
+              examples:
+              - 123
+          required:
+          - items
+          - total
+          minProperties: 2
+      required:
+      - query
+      - data
+      minProperties: 2
+    SystemVariablePatchSchema:
+      type: object
+      properties:
+        value:
+          $ref: '#/components/schemas/SystemVariableValueField'
+        name:
+          $ref: '#/components/schemas/SystemVariableNameField'
+        notes:
+          $ref: '#/components/schemas/SystemVariableNotesField'
+      minProperties: 0
+    SystemJobListSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/SystemJobSchema'
+      minItems: 0
+      uniqueItems: false
+    SystemJobSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        queueName:
+          type: string
+        status:
+          type: integer
+        workerId:
+          $ref: '#/components/schemas/SystemJobWorkerIdField'
+        lastModified:
+          type: number
+          format: double
+        payload:
+          type: string
+      required:
+      - id
+      - queueName
+      - status
+      - lastModified
+      - payload
+      minProperties: 5
+    SystemJobWorkerIdField:
+      type: string
+    SystemJobIdField:
+      type: string
+  responses:
+    SystemPermissionDetailResponse:
+      description: SystemPermission response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemPermissionDetailSchema'
+    DeleteResponse:
+      description: Delete response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeleteResponseSchema'
+    SystemPermissionListResponse:
+      description: SystemPermission list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemPermissionListSchema'
+    SystemPermissionListItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemPermissionListItemSearchSchema'
+    SystemVariableDetailResponse:
+      description: SystemVariable response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemVariableDetailSchema'
+    SystemVariableListResponse:
+      description: SystemVariable list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemVariableListSchema'
+    SystemVariableListItemSearchSchemaSearchResponse:
+      description: Search response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemVariableListItemSearchSchema'
+    SystemJobListResponse:
+      description: Worker job list response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemJobListSchema'
+    SystemJobResponse:
+      description: Worker job response
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemJobSchema'
+  parameters:
+    SystemPermissionIDParameter:
+      name: systemPermissionId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/SystemPermissionIDField'
+      description: SystemPermission id
+    SystemVariableIDParameter:
+      name: systemVariableId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/SystemVariableIDField'
+      description: SystemVariable id
+    SystemJobIdParameter:
+      name: systemJobId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/SystemJobIdField'
+      description: Worker job id
+  requestBodies:
+    SystemPermissionRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemPermissionCreateSchema'
+      required: true
+    DeleteRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DeleteRequestSchema'
+      required: true
+    SystemPermissionUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemPermissionCreateSchema'
+      required: true
+    SystemPermissionPatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemPermissionPatchSchema'
+      required: true
+    SystemVariableRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemVariableCreateSchema'
+      required: true
+    SystemVariableUpdateRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemVariableCreateSchema'
+      required: true
+    SystemVariablePatchRequestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SystemVariablePatchSchema'
+      required: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer

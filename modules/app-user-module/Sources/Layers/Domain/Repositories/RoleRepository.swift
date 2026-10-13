@@ -1,0 +1,34 @@
+//
+//  RoleRepository.swift
+//  app-user-module
+//
+//  Created by Binary Birds on 2026. 06. 18.
+
+public import FeatherDomain
+
+public protocol RoleRepository: Repository {
+
+    func findBy(
+        id: String
+    ) async throws -> Role?
+
+    func findBy(
+        name: String
+    ) async throws -> Role?
+
+    func findBy(
+        key: String
+    ) async throws -> Role?
+
+    func insert(
+        _ model: Role.New
+    ) async throws -> Role
+
+    func update(
+        _ model: Role
+    ) async throws -> Role
+
+    func delete(
+        ids: [String]
+    ) async throws -> [String]
+}

@@ -1,0 +1,21 @@
+<div id="tag" class="application-blog-tag-template">
+    <header>
+        {{#page.image}}<img class="medium" src="{{.}}" alt="{{page.title}}">{{/page.image}}
+        <p class="eyebrow">Application template override</p>
+        <h1>{{page.title}}</h1>
+        <p>{{page.description}}</p>
+    </header>
+
+    {{& page.contents.html}}
+
+    {{#page.postCountLabel}}<p>{{.}}</p>{{/page.postCountLabel}}
+
+    <div class="grid grid-321">
+    {{#page.posts}}
+        {{> partials/blog/post}}
+    {{/page.posts}}
+    </div>
+    {{^page.posts}}
+    <p>Empty.</p>
+    {{/page.posts}}
+</div>

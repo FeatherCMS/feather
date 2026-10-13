@@ -1,0 +1,122 @@
+import BlogSharedOpenAPIGenerator
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
+import OpenAPIKit30
+
+public protocol BlogAuthorLinkOperation: BearerProtectedOperation {
+}
+
+extension BlogAuthorLinkOperation {
+    public var tags: [any TagRepresentable] { [BlogAuthorLinkTag()] }
+}
+
+public protocol BlogAuthorLinkMenuOperation: BlogAuthorLinkOperation {
+}
+
+extension BlogAuthorLinkMenuOperation {
+    public var parameters: [any ParameterRepresentable] {
+        [
+            BlogAuthorLinkMenuIdParameter().reference()
+        ]
+    }
+}
+
+public protocol BlogAuthorLinkIDOperation: BlogAuthorLinkMenuOperation {
+}
+
+extension BlogAuthorLinkIDOperation {
+    public var parameters: [any ParameterRepresentable] {
+        [
+            BlogAuthorLinkMenuIdParameter().reference(),
+            BlogAuthorLinkIdParameter().reference(),
+        ]
+    }
+}
+
+struct BlogAuthorLinkCreateOperation: BlogAuthorLinkMenuOperation {
+    var requestBody: (any RequestBodyRepresentable)? {
+        BlogAuthorLinkRequestBody().reference()
+    }
+
+    var responseMap: ResponseMap {
+        [
+            201: BlogAuthorLinkDetailResponse().reference()
+        ]
+    }
+}
+
+struct BlogAuthorLinkListOperation: BlogAuthorLinkMenuOperation {
+    var responseMap: ResponseMap {
+        [
+            200: BlogAuthorLinkListResponse().reference()
+        ]
+    }
+}
+
+struct BlogAuthorLinkSearchOperation: BlogAuthorLinkMenuOperation {
+    var searchQuery: SearchQuerySchema {
+        .init(
+            items: BlogAuthorLinkListItemSchema(),
+            sortFieldKeys: [
+                "id",
+                "label",
+                "url",
+                "priority",
+                "permission",
+                "createdAt",
+                "updatedAt",
+            ],
+            filters: SearchFilterSchema()
+        )
+    }
+
+    var requestBody: (any RequestBodyRepresentable)? {
+        SearchRequestBody(query: searchQuery)
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: SearchResponse(query: searchQuery).reference()
+        ]
+    }
+}
+
+struct BlogAuthorLinkGetOperation: BlogAuthorLinkIDOperation {
+    var responseMap: ResponseMap {
+        [
+            200: BlogAuthorLinkDetailResponse().reference(),
+            404: CustomResponse(description: "BlogAuthorLink not found"),
+        ]
+    }
+}
+
+struct BlogAuthorLinkUpdateOperation: BlogAuthorLinkIDOperation {
+    var requestBody: (any RequestBodyRepresentable)? {
+        BlogAuthorLinkUpdateRequestBody().reference()
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: BlogAuthorLinkDetailResponse().reference(),
+            404: CustomResponse(description: "BlogAuthorLink not found"),
+        ]
+    }
+}
+
+struct BlogAuthorLinkPatchOperation: BlogAuthorLinkIDOperation {
+    var requestBody: (any RequestBodyRepresentable)? {
+        BlogAuthorLinkPatchRequestBody().reference()
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: BlogAuthorLinkDetailResponse().reference(),
+            404: CustomResponse(description: "BlogAuthorLink not found"),
+        ]
+    }
+}
+
+struct BlogAuthorLinkRemoveOperation: BlogAuthorLinkMenuOperation,
+    DeleteOperation
+{
+}

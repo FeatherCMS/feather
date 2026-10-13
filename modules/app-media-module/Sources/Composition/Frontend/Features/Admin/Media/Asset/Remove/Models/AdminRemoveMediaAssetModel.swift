@@ -1,0 +1,14 @@
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import MediaAdminAPI
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+struct AdminRemoveMediaAssetModel: Sendable {
+    let item: NewAdminRemoveItemContext
+    let error: String?
+}

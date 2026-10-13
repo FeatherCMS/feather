@@ -1,0 +1,42 @@
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+
+struct AdminRemoveNewsletterCampaignSubscriberDefaultInteractor:
+    AdminRemoveNewsletterCampaignSubscriberInteractor
+{
+    let repository: AdminRemoveNewsletterCampaignSubscriberOpenAPIRepository
+    func get(newsletterId: String, subscriberId: String) async throws
+        -> AdminNewsletterCampaignSubscriberItem
+    {
+        try await repository.get(
+            newsletterId: newsletterId,
+            subscriberId: subscriberId
+        )
+    }
+    func names(newsletterId: String, subscriberIds: [String]) async throws
+        -> [String]
+    {
+        try await repository.names(
+            newsletterId: newsletterId,
+            subscriberIds: subscriberIds
+        )
+    }
+    func remove(newsletterId: String, subscriberId: String) async throws {
+        try await repository.remove(
+            newsletterId: newsletterId,
+            subscriberId: subscriberId
+        )
+    }
+    func remove(newsletterId: String, subscriberIds: [String]) async throws {
+        try await repository.remove(
+            newsletterId: newsletterId,
+            subscriberIds: subscriberIds
+        )
+    }
+}

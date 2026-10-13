@@ -1,0 +1,15 @@
+{{& page.contents.html}}
+
+<div id="posts" class="wrapper">
+
+    {{#empty(posts)}}
+    <p>Empty.</p>
+    {{/empty(posts)}}
+    {{^empty(posts)}}
+    <div class="grid grid-321">
+    {{#posts}}
+        {{> partials/blog/post}}
+    {{/posts}}
+    </div>
+    {{/empty(posts)}}
+</div>

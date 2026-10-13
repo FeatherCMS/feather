@@ -1,0 +1,28 @@
+import FeatherApplication
+import FeatherContracts
+import FeatherDatabase
+import FeatherDomain
+import FeatherInfrastructure
+import SystemInfrastructure
+import WebAdminAPI
+import WebAppAPI
+import WebApplication
+import WebInfrastructure
+
+extension UseCases {
+
+    func makeMoveMenuItem() -> MoveMenuItem {
+        let transaction = DatabaseTransactionExecutor(
+            databaseContext: databaseContext,
+            scope: { context in
+                WriteMenuItem(
+                    menuItem: MenuItemDatabaseRepository(context: context)
+                )
+            }
+        )
+        return .init(
+            authorizer: authorizer,
+            transaction: transaction
+        )
+    }
+}

@@ -1,0 +1,15 @@
+<div class="article-with-toc">
+    <div>
+        <article class="category">
+            <h1>{{page.title}}</h1>
+            <hr>
+            <p>{{page.description}}</p>
+            <section>{{& page.contents.html}}</section>
+            <div class="grid grid-321">
+            {{#page.news}}
+                <a href="{{permalink}}">{{title}}</a>
+            {{/page.news}}
+            </div>
+        </article>
+    </div>
+</div>

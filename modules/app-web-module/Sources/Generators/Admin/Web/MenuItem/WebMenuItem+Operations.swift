@@ -1,0 +1,122 @@
+public import FeatherOpenAPI
+public import FeatherOpenAPIGenerator
+import OpenAPIKit30
+import WebSharedOpenAPIGenerator
+
+public protocol WebMenuItemOperation: BearerProtectedOperation {
+}
+
+extension WebMenuItemOperation {
+    public var tags: [any TagRepresentable] { [WebMenuItemTag()] }
+}
+
+public protocol WebMenuItemMenuOperation: WebMenuItemOperation {
+}
+
+extension WebMenuItemMenuOperation {
+    public var parameters: [any ParameterRepresentable] {
+        [
+            WebMenuItemMenuIdParameter().reference()
+        ]
+    }
+}
+
+public protocol WebMenuItemIDOperation: WebMenuItemMenuOperation {
+}
+
+extension WebMenuItemIDOperation {
+    public var parameters: [any ParameterRepresentable] {
+        [
+            WebMenuItemMenuIdParameter().reference(),
+            WebMenuItemIdParameter().reference(),
+        ]
+    }
+}
+
+struct WebMenuItemCreateOperation: WebMenuItemMenuOperation {
+    var requestBody: (any RequestBodyRepresentable)? {
+        WebMenuItemRequestBody().reference()
+    }
+
+    var responseMap: ResponseMap {
+        [
+            201: WebMenuItemDetailResponse().reference()
+        ]
+    }
+}
+
+struct WebMenuItemListOperation: WebMenuItemMenuOperation {
+    var responseMap: ResponseMap {
+        [
+            200: WebMenuItemListResponse().reference()
+        ]
+    }
+}
+
+struct WebMenuItemSearchOperation: WebMenuItemMenuOperation {
+    var searchQuery: SearchQuerySchema {
+        .init(
+            items: WebMenuItemListItemSchema(),
+            sortFieldKeys: [
+                "id",
+                "label",
+                "url",
+                "priority",
+                "permission",
+                "createdAt",
+                "updatedAt",
+            ],
+            filters: SearchFilterSchema()
+        )
+    }
+
+    var requestBody: (any RequestBodyRepresentable)? {
+        SearchRequestBody(query: searchQuery)
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: SearchResponse(query: searchQuery).reference()
+        ]
+    }
+}
+
+struct WebMenuItemGetOperation: WebMenuItemIDOperation {
+    var responseMap: ResponseMap {
+        [
+            200: WebMenuItemDetailResponse().reference(),
+            404: CustomResponse(description: "WebMenuItem not found"),
+        ]
+    }
+}
+
+struct WebMenuItemUpdateOperation: WebMenuItemIDOperation {
+    var requestBody: (any RequestBodyRepresentable)? {
+        WebMenuItemUpdateRequestBody().reference()
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: WebMenuItemDetailResponse().reference(),
+            404: CustomResponse(description: "WebMenuItem not found"),
+        ]
+    }
+}
+
+struct WebMenuItemPatchOperation: WebMenuItemIDOperation {
+    var requestBody: (any RequestBodyRepresentable)? {
+        WebMenuItemPatchRequestBody().reference()
+    }
+
+    var responseMap: ResponseMap {
+        [
+            200: WebMenuItemDetailResponse().reference(),
+            404: CustomResponse(description: "WebMenuItem not found"),
+        ]
+    }
+}
+
+struct WebMenuItemRemoveOperation: WebMenuItemMenuOperation,
+    DeleteOperation
+{
+}

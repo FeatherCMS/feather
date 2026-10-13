@@ -1,0 +1,53 @@
+import FeatherAdmin
+import Hummingbird
+
+struct AdminRemoveContactSubmissionsDefaultController:
+    AdminRemoveContactSubmissionsController
+{
+    let buildRuntime:
+        AuthenticatedRuntimeBuilder<
+            any AdminRemoveContactSubmissionsInteractor,
+            any AdminRemoveContactSubmissionsPresenter
+        >
+    func confirm(request: Request, context: AuthenticatedRequestContext)
+        async throws
+        -> HTMLResponse
+    {
+        let (_, presenter) = buildRuntime((request, context))
+        return try await presenter.renderRemovePage(
+            items: request.queryStrings("ids")
+                .map {
+                    .init(id: $0, label: $0)
+                }
+        )
+    }
+    func remove(request: Request, context: AuthenticatedRequestContext)
+        async throws
+        -> Response
+    {
+        let payload = try await request.decode(
+            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            context: context
+        )
+        guard
+            await AdminNonceStore.shared.consume(
+                payload.nonce,
+                sessionToken: context.sessionToken
+            )
+        else { return Response(status: .badRequest) }
+        let (interactor, _) = buildRuntime((request, context))
+        try await interactor.remove(ids: payload.input.normalizedIds)
+        return Response(
+            status: .seeOther,
+            headers: [
+                .location: AdminListRemoveRedirect.location(
+                    path: "/admin/contact/submissions/",
+                    page: payload.input.normalizedPage,
+                    search: payload.input.normalizedSearch,
+                    title: "Removed",
+                    message: "Contact submissions removed successfully."
+                )
+            ]
+        )
+    }
+}

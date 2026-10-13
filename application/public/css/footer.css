@@ -1,0 +1,45 @@
+#site-footer {
+    border-top: 3px solid var(--background-color-1);
+    margin-top: 32px;
+}
+#site-footer .grid {
+    padding: 16px;
+}
+#site-footer img#logo-image {
+    width: 256px;
+}
+#site-footer h4 {
+    margin-top: 8px;
+    margin-bottom: 0;
+    line-height: 1.5rem;
+}
+#site-footer p {
+    margin-top: 0;
+}
+#site-footer ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+#site-footer ul li {
+    margin-bottom: 8px;
+}
+#site-footer ul li a {
+    color: var(--text-color)
+}
+#site-footer ul li a:hover {
+    color: var(--link-color-hover)
+}
+#site-footer section {
+    border-top: 3px solid var(--background-color-1);
+    padding-top: 16px;
+    margin-bottom: 16px;
+}
+#site-footer section small:last-child {
+    text-align: left;
+}
+
+@media screen and (min-width: 600px) {
+    #site-footer section small:last-child {
+        text-align: right;
+    }
+}

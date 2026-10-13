@@ -1,0 +1,51 @@
+import FeatherContracts
+import Foundation
+public import NewsletterAdminAPI
+import NewsletterApplication
+
+extension AdminAPIGateway {
+    public func newsletterIssueCreate(
+        _ input: Operations.NewsletterIssueCreate.Input
+    ) async throws -> Operations.NewsletterIssueCreate.Output {
+        let subject = try await CurrentSubject.require()
+        let body: Components.Schemas.NewsletterIssueCreateSchema
+        switch input.body {
+        case .json(let value): body = value
+        }
+
+        var result = try await self.useCases.makeCreateNewsletterIssue()
+            .execute(
+                subject: subject,
+                input: .init(
+                    campaignKey: input.path.newsletterCampaignKey,
+                    subject: body.subject,
+                    content: body.content
+                )
+            )
+
+        if let scheduledAt = body.scheduledAt {
+            result = try await self.useCases.makeScheduleNewsletterIssue()
+                .execute(
+                    subject: subject,
+                    input: .init(
+                        id: result.id,
+                        scheduledDate: .init(timeIntervalSince1970: scheduledAt)
+                    )
+                )
+        }
+
+        try await useCases.makeSendNewsletterIssueEmails()
+            .execute(
+                subject: subject,
+                input: .init(issue: result)
+            )
+
+        return .created(
+            .init(
+                body: .json(
+                    map(result, campaignKey: input.path.newsletterCampaignKey)
+                )
+            )
+        )
+    }
+}

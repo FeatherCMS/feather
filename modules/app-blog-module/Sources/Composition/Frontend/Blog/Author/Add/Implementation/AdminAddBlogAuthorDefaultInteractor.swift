@@ -1,0 +1,22 @@
+import BlogAdminAPI
+import BlogAppAPI
+import FeatherAdmin
+import FeatherValidation
+import HTML
+import Hummingbird
+import MediaFrontend
+import OpenAPIRuntime
+import SGML
+import WebBuilders
+import WebComponents
+import WebFrontend
+
+struct AdminAddBlogAuthorDefaultInteractor: AdminAddBlogAuthorInteractor {
+    let repository: any AdminAddBlogAuthorRepository
+
+    func execute(
+        input: BlogAuthorFormInput
+    ) async throws {
+        try await repository.create(input: input)
+    }
+}

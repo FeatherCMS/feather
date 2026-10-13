@@ -1,0 +1,53 @@
+import Environment
+
+struct WorkerConfig: Sendable {
+
+    struct QueueConfig: Sendable {
+        let name: String
+        let pollTimeMilliseconds: Int
+    }
+
+    struct ProcessorConfig: Sendable {
+        let workerCount: Int
+        let gracefulShutdownTimeoutSeconds: Int
+    }
+
+    struct SchedulerConfig: Sendable {
+        let name: String
+        let cleanupCompletedJobsMaxAgeSeconds: Int
+        let cleanupHourMinute: Int
+        let cleanupProcessingIntervalMinutes: Int
+        let cleanupProcessingMaxJobs: Int
+        let lockAcquireEverySeconds: Int
+        let lockForSeconds: Int
+    }
+
+    struct MediaConfig: Sendable {
+        let storageRootPath: String
+        let maxConcurrentProcessing: Int
+    }
+
+    struct StorageConfig: Sendable {
+        struct ObjectKeyConfig: Sendable {
+            let depth: Int
+            let segmentLength: Int
+        }
+
+        let objectKey: ObjectKeyConfig
+    }
+
+    struct SESConfig: Sendable {
+        let accessKeyId: String
+        let secretAccessKey: String
+        let region: String
+    }
+
+    let system: SystemConfig
+    let queue: QueueConfig
+    let processor: ProcessorConfig
+    let scheduler: SchedulerConfig
+    let storage: StorageConfig
+    let media: MediaConfig
+    let ses: SESConfig
+    let runMigrations: Bool
+}

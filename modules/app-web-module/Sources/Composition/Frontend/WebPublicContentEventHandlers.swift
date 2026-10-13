@@ -1,0 +1,248 @@
+import FeatherAdmin
+public import FeatherContracts
+import Foundation
+import HummingbirdCore
+import OpenAPIRuntime
+import WebAppAPI
+import WebContracts
+
+public enum WebPublicContentEventHandlers {
+    public static func register(
+        in registry: inout EventRegistry
+    ) {
+        registry.register(
+            event: WebPublicContentProvider.self,
+            context: WebPublicContentEventContext<PublicContentRuntimeContext>
+                .self
+        ) { _, context in
+            try await resolve(context)
+        }
+    }
+
+    private static func resolve(
+        _ context: WebPublicContentEventContext<PublicContentRuntimeContext>
+    ) async throws -> WebPublicContentResult? {
+        let api = WebAppAPIClient(
+            apiBaseURL: context.runtime.apiBaseURL,
+            sessionToken: context.runtime.context.sessionToken
+        )
+        async let siteSettingsTask = api.withOpenAPIRepositoryErrorMapping {
+            client in
+            let response = try await client.webSiteSettings(.init())
+            switch response {
+            case .ok(let value): return try value.body.json
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+        async let menusTask = api.withOpenAPIRepositoryErrorMapping {
+            client in
+            let response = try await client.webMenuList()
+            switch response {
+            case .ok(let value): return try value.body.json
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+        let (siteSettings, menus) = try await (
+            siteSettingsTask,
+            menusTask
+        )
+        let origins = context.runtime.publicOrigins
+        let mediaResolver = context.runtime.mediaResolver
+        var menusContext: [String: any Sendable] = [:]
+        for menu in menus {
+            menusContext[menu.key] = menuContext(menu)
+        }
+        var payload: [String: any Sendable] = [
+            "baseUrl": normalizedURL(
+                base: origins.staticBaseURL,
+                slug: ""
+            ),
+            "siteBaseUrl": origins.siteBaseURL,
+            "staticBaseUrl": origins.staticBaseURL,
+            "site": siteContext(
+                settings: siteSettings,
+                menus: menusContext,
+                mediaResolver: mediaResolver
+            ),
+            "generation": [
+                "year": String(
+                    Calendar.current.component(.year, from: Date())
+                )
+            ],
+        ]
+        if context.baseMetadata.referenceType == "web.page" {
+            guard !context.baseMetadata.referenceId.isEmpty else { return nil }
+            let referenceID = context.baseMetadata.referenceId
+            let response = try await api.withOpenAPIRepositoryErrorMapping {
+                client in
+                try await client.webPageGet(
+                    .init(path: .init(id: referenceID))
+                )
+            }
+            switch response {
+            case .ok(let value):
+                let page = try value.body.json
+                payload["page"] = pageContext(
+                    page: page,
+                    slug: context.baseMetadata.slug,
+                    siteSettings: siteSettings,
+                    siteBaseURL: origins.siteBaseURL,
+                    mediaResolver: mediaResolver
+                )
+            case .notFound:
+                return nil
+            case .undocumented(let statusCode, let response):
+                throw try await api.failure(
+                    statusCode: statusCode,
+                    responseBody: response.body
+                )
+            }
+        }
+        else if context.baseMetadata.template == "not-found" {
+            payload["page"] =
+                [
+                    "title": "Page not found",
+                    "description":
+                        "The page you requested does not exist or is not available.",
+                    "permalink": normalizedURL(
+                        base: origins.siteBaseURL,
+                        slug: context.baseMetadata.slug
+                    ),
+                    "noindex": true,
+                    "css": [String](),
+                    "js": [String](),
+                ] as [String: any Sendable]
+        }
+        return .init(payload: payload)
+    }
+
+    private static func siteContext(
+        settings: WebAppAPI.Components.Schemas.WebSiteSettingsSchema,
+        menus: [String: any Sendable],
+        mediaResolver: MediaResolver
+    ) -> [String: any Sendable] {
+        var context: [String: any Sendable] = [
+            "menus": menus,
+            "noIndex": settings.noIndex,
+        ]
+
+        if let name = settings.title.emptyToNil {
+            context["name"] = name
+        }
+
+        let values = [
+            "language": settings.locale,
+            "description": settings.excerpt,
+            "logo": mediaResolver.resolve(imagePath: settings.logo) ?? "",
+            "logoDark": mediaResolver.resolve(imagePath: settings.logoDark)
+                ?? "",
+            "metaImage": mediaResolver.resolve(imagePath: settings.metaImage)
+                ?? "",
+            "primaryColor": settings.primaryColor,
+            "secondaryColor": settings.secondaryColor,
+            "tertiaryColor": settings.tertiaryColor,
+            "primaryFont": settings.primaryFont,
+            "secondaryFont": settings.secondaryFont,
+            "cssCodeInjection": settings.css,
+            "javascriptCodeInjection": settings.js,
+        ]
+
+        for (key, value) in values {
+            if let value = value.emptyToNil {
+                context[key] = value
+            }
+        }
+
+        return context
+    }
+
+    private static func menuContext(
+        _ menu: WebAppAPI.Components.Schemas.WebMenuSchema
+    ) -> [String: any Sendable] {
+        [
+            "name": menu.name,
+            "items": menu.items.map(menuItemContext),
+        ]
+    }
+
+    private static func pageContext(
+        page: WebAppAPI.Components.Schemas.WebPageDetailSchema,
+        slug: String,
+        siteSettings: WebAppAPI.Components.Schemas.WebSiteSettingsSchema,
+        siteBaseURL: String,
+        mediaResolver: MediaResolver
+    ) -> [String: any Sendable] {
+        let title = page.title
+        let description = page.excerpt
+        let contentImage = page.imageURL.emptyToNil.flatMap {
+            mediaResolver.resolve(imagePath: $0)
+        }
+        let metadataImage = page.metadata.imageURL.emptyToNil.flatMap {
+            mediaResolver.resolve(imagePath: $0)
+        }
+        let image = metadataImage
+            ?? contentImage
+            ?? mediaResolver.resolve(imagePath: siteSettings.metaImage)
+        var meta: [String: any Sendable] = [
+            "title": page.metadata.title,
+            "description": page.metadata.excerpt,
+        ]
+        if let metaImage = metadataImage ?? contentImage {
+            meta["image"] = metaImage
+        }
+        var context: [String: any Sendable] = [
+            "title": title,
+            "description": description,
+            "meta": meta,
+            "permalink": normalizedURL(base: siteBaseURL, slug: slug),
+            "noindex": siteSettings.noIndex
+                || page.metadata.noIndex
+                || page.metadata.status != "published",
+            "contents": ["html": page.content] as [String: any Sendable],
+        ]
+
+        if let image {
+            context["image"] = image
+        }
+        if let css = page.metadata.cssCodeInjection {
+            context["css"] = css
+        }
+        if let js = page.metadata.javascriptCodeInjection {
+            context["js"] = js
+        }
+
+        return context
+    }
+
+    private static func menuItemContext(
+        _ item: WebAppAPI.Components.Schemas.WebMenuItemSchema
+    ) -> [String: any Sendable] {
+        [
+            "label": item.label,
+            "url": item.url,
+            "isBlank": item.isBlank,
+        ]
+    }
+
+    private static func normalizedURL(
+        base: String,
+        slug: String
+    ) -> String {
+        var url = base.hasSuffix("/") ? base : base + "/"
+        let normalizedPath = slug.trimmingCharacters(
+            in: CharacterSet(charactersIn: "/")
+        )
+        if !normalizedPath.isEmpty {
+            url += normalizedPath + "/"
+        }
+        return url
+    }
+}
