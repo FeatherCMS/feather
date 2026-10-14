@@ -26,7 +26,7 @@ struct AdminRemoveContactSubmissionsDefaultController:
         -> Response
     {
         let payload = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard

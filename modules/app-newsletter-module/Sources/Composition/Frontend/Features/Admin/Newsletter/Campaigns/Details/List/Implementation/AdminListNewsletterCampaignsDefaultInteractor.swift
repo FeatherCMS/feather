@@ -10,7 +10,7 @@ struct AdminListNewsletterCampaignsDefaultInteractor:
     func list(
         page: Int,
         search: String?
-    ) async throws -> NewAdminListModel<AdminNewsletterCampaignItem> {
+    ) async throws -> AdminListModel<AdminNewsletterCampaignItem> {
         let query =
             search?.whitespaceTrimmed ?? ""
         let allItems = try await repository.list()

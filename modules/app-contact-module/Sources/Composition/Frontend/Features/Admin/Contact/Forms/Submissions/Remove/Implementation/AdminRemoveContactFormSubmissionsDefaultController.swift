@@ -35,7 +35,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
         let formId = try context.requiredParameter("formKey")
         let submissionId = try context.requiredParameter("submissionId")
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -77,7 +77,7 @@ struct AdminRemoveContactFormSubmissionsDefaultController:
     {
         let formId = try context.requiredParameter("formKey")
         let payload = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard

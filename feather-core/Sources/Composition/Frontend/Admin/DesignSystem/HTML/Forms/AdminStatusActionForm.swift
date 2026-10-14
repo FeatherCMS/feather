@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminStatusActionForm: Component {
+public struct AdminStatusActionForm: Component {
     public let action: String
     public let returnTo: String
     public let status: String
@@ -27,7 +27,7 @@ public struct NewAdminStatusActionForm: Component {
 
     public func selectors() -> [any CSS.Selector] {
         [
-            Class("new-admin-status-action-form") {
+            Class("admin-status-action-form") {
                 Display(.inline)
             }
         ]
@@ -54,6 +54,6 @@ public struct NewAdminStatusActionForm: Component {
         }
         .method(.post)
         .action(action)
-        .class("new-admin-status-action-form")
+        .class("admin-status-action-form")
     }
 }

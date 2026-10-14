@@ -20,7 +20,7 @@ struct AdminViewBlogPostDefaultPresenter: AdminViewBlogPostPresenter {
         rule: BlogPostDetailsModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Blog post details",
@@ -39,7 +39,7 @@ struct AdminViewBlogPostDefaultPresenter: AdminViewBlogPostPresenter {
         message: String,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Blog post details",

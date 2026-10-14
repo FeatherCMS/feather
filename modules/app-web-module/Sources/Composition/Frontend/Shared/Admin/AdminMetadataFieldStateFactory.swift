@@ -59,7 +59,7 @@ public struct AdminMetadataFieldStateFactory {
                 value: metadata?.imageUrl ?? "",
                 error: nil
             ),
-            selectedImageAsset: NewAdminMediaAsset.metadataImageURL(
+            selectedImageAsset: AdminMediaAsset.metadataImageURL(
                 metadata?.imageUrl
             ),
             canonicalUrl: .init(

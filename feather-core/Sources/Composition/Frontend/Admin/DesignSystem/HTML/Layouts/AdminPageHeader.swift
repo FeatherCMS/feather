@@ -5,18 +5,18 @@ import WebBuilders
 public import WebComponents
 
 /// Consistent heading and supporting description for new admin pages.
-public struct NewAdminPageHeader: Component {
+public struct AdminPageHeader: Component {
     public struct State: Sendable {
         public let title: String
         public let description: String
-        public let preview: NewAdminButton.State?
+        public let preview: AdminButton.State?
         public let level: Int
         public let showSeparator: Bool
 
         private init(
             title: String,
             description: String,
-            preview: NewAdminButton.State?,
+            preview: AdminButton.State?,
             level: Int,
             showSeparator: Bool
         ) {
@@ -30,7 +30,7 @@ public struct NewAdminPageHeader: Component {
         public static func primary(
             title: String,
             description: String,
-            preview: NewAdminButton.State? = nil
+            preview: AdminButton.State? = nil
         ) -> Self {
             .init(
                 title: title,

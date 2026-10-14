@@ -18,7 +18,7 @@ struct AdminViewContactFormDefaultPresenter: AdminViewContactFormPresenter {
         error: String?,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Contact form",

@@ -8,12 +8,12 @@ import WebComponents
 
 struct UserIdentityRow: Component {
     let identity: Components.Schemas.UserIdentityListItemSchema
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(UserPermissions.Identities.delete) {
-                context.build(NewAdminListRowCheckbox(id: identity.id))
+                context.build(AdminListRowCheckbox(id: identity.id))
             }
             Td(identity.id).data("label", "ID")
             Td(identity.name).data("label", "Name")
@@ -32,7 +32,7 @@ struct UserIdentityRow: Component {
             )
             .data("label", "Roles")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: [
                         .init(

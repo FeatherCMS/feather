@@ -288,7 +288,7 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
         let id = try context.requiredID()
         do {
             let payload = try await request.decode(
-                as: NonceRequest<NewAdminListRemoveFormInput>.self,
+                as: NonceRequest<AdminListRemoveFormInput>.self,
                 context: context
             )
             guard

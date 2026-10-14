@@ -7,9 +7,9 @@ import WebComponents
 struct LoginForm: Component {
 
     struct State {
-        var email: NewAdminFormFieldInput.State
-        var password: NewAdminFormFieldInput.State
-        var isPersistent: NewAdminFormFieldCheckbox.State
+        var email: AdminFormFieldInput.State
+        var password: AdminFormFieldInput.State
+        var isPersistent: AdminFormFieldCheckbox.State
         var redirectPath: String
         var turnstileSiteKey: String?
 
@@ -29,19 +29,19 @@ struct LoginForm: Component {
             ? "/login/"
             : "/login/?redirect=\(state.redirectPath.queryEncoded())"
 
-        let form = NewAdminForm(
+        let form = AdminForm(
             action: action,
             hiddenFields: [
                 .init(name: "redirect", value: state.redirectPath)
             ]
         ) {
             if let message {
-                P(message).class("new-admin-form__error")
+                P(message).class("admin-form__error")
             }
-            context.build(NewAdminFormFieldInput(state: state.email))
-            context.build(NewAdminFormFieldInput(state: state.password))
+            context.build(AdminFormFieldInput(state: state.email))
+            context.build(AdminFormFieldInput(state: state.password))
             context.build(
-                NewAdminFormFieldCheckbox(state: state.isPersistent)
+                AdminFormFieldCheckbox(state: state.isPersistent)
             )
             if let siteKey = state.turnstileSiteKey, !siteKey.isEmpty {
                 Div {}.class("cf-turnstile").data("sitekey", siteKey)
@@ -53,9 +53,9 @@ struct LoginForm: Component {
                     .defer()
             }
             Div {
-                context.build(NewAdminSubmitButton("Sign in"))
+                context.build(AdminSubmitButton("Sign in"))
             }
-            .class("new-admin-form__actions")
+            .class("admin-form__actions")
         }
         return context.build(form)
     }

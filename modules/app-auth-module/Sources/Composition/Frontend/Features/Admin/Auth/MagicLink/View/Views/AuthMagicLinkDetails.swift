@@ -10,14 +10,14 @@ struct AuthMagicLinkDetails: Component {
     struct State {
         let link: AuthMagicLinkDetailsModel
         let permissions: Set<String>
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout BuilderContext) -> Section {
         context.build(
-            NewAdminDetailView(
+            AdminDetailView(
                 breadcrumb: state.breadcrumb,
                 pageHeader: .primary(
                     title: "User magic link details",
@@ -38,8 +38,8 @@ struct AuthMagicLinkDetails: Component {
         )
     }
 
-    private var actions: [NewAdminDetailView.Action] {
-        var actions: [NewAdminDetailView.Action] = []
+    private var actions: [AdminDetailView.Action] {
+        var actions: [AdminDetailView.Action] = []
         if state.permissions.contains(
             AuthPermissions.MagicLinks.update.rawValue
         ) {

@@ -3,7 +3,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminMetadata: Component {
+public struct AdminMetadata: Component {
     let canonicalUrl: String
     let title: String
     let description: String

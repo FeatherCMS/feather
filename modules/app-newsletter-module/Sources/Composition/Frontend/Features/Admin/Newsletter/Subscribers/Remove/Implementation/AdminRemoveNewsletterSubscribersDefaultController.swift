@@ -54,7 +54,7 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
         guard context.isCurrentUserAllowed(to: Permissions.Subscribers.delete)
         else { return Response(status: .forbidden) }
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -69,7 +69,7 @@ struct AdminRemoveNewsletterSubscribersDefaultController:
             campaignId: payload.campaignId?.emptyToNil
         )
         return AdminNotificationFlash.redirect(
-            to: NewAdminLocation.url(
+            to: AdminLocation.url(
                 path: NewsletterAdminRoutes.subscribers.description,
                 queryItems: payload.campaignId?.emptyToNil
                     .map { [("campaignId", $0)] } ?? []

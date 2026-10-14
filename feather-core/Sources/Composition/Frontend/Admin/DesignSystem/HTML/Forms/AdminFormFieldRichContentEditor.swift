@@ -5,7 +5,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminFormFieldRichContentEditor: Component {
+public struct AdminFormFieldRichContentEditor: Component {
     public struct State: Sendable {
         public let key: String
         public let label: String
@@ -140,9 +140,9 @@ public struct NewAdminFormFieldRichContentEditor: Component {
               if (!modal) {
                 modal = document.createElement('dialog'); modal.id = 'mceEmbedPicker'; modal.className = 'mce-embed-picker';
                 modal.setAttribute('aria-label', 'Choose from list');
-                modal.innerHTML = '<div class="new-admin-dialog__panel mce-embed-picker-dialog"><div class="new-admin-dialog__header mce-embed-picker-header"><h2></h2><button type="button" class="button secondary-ghost new-admin-dialog__close mce-embed-picker-close" aria-label="Close" title="Close" data-embed-picker-close>Close</button></div><div class="mce-embed-picker-search"><input type="search" placeholder="Search…"><button type="button">Search</button></div><div class="mce-embed-picker-list"></div></div>';
+                modal.innerHTML = '<div class="admin-dialog__panel mce-embed-picker-dialog"><div class="admin-dialog__header mce-embed-picker-header"><h2></h2><button type="button" class="button secondary-ghost admin-dialog__close mce-embed-picker-close" aria-label="Close" title="Close" data-embed-picker-close>Close</button></div><div class="mce-embed-picker-search"><input type="search" placeholder="Search…"><button type="button">Search</button></div><div class="mce-embed-picker-list"></div></div>';
                 editorRoot.append(modal);
-                modal.addEventListener('close', () => document.documentElement.classList.remove('new-admin-dialog-open'));
+                modal.addEventListener('close', () => document.documentElement.classList.remove('admin-dialog-open'));
                 modal.addEventListener('click', event => { if (event.target === modal) { if (modal.close) modal.close(); else modal.removeAttribute('open'); } });
                 modal.querySelector('[data-embed-picker-close]').addEventListener('click', () => { if (modal.close) modal.close(); else modal.removeAttribute('open'); });
                 modal.querySelector('.mce-embed-picker-search button').addEventListener('click', () => loadEmbedPicker(modal));
@@ -152,7 +152,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
               modal.querySelector('.mce-embed-picker-header h2').textContent = `Choose ${definition.title.toLowerCase()}`;
               if (!modal.open) {
                 if (modal.showModal) {
-                  document.documentElement.classList.add('new-admin-dialog-open');
+                  document.documentElement.classList.add('admin-dialog-open');
                   modal.showModal();
                 } else {
                   modal.setAttribute('open', '');
@@ -326,7 +326,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
         """#
 
     public func rules() -> [any CSS.Rule] {
-        let root = ".new-admin-rich-content-editor"
+        let root = ".admin-rich-content-editor"
 
         let baseSelectors: [any CSS.Selector] = [
             Custom("\(root)") {
@@ -336,16 +336,16 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 Width(100.percent)
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
             },
-            Custom("\(root) > .new-admin-media-picker > label") {
+            Custom("\(root) > .admin-media-picker > label") {
                 Display(.none)
             },
             Custom(
-                "\(root) > .new-admin-media-picker > [data-media-picker-open]"
+                "\(root) > .admin-media-picker > [data-media-picker-open]"
             ) {
                 Display(.none)
             },
             Custom(
-                "\(root) > .new-admin-media-picker .new-admin-media-picker__actions"
+                "\(root) > .admin-media-picker .admin-media-picker__actions"
             ) {
                 Display(.none)
             },
@@ -868,7 +868,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 BackdropFilter(.blur(12.px))
             },
             Custom(
-                "html.new-admin-dialog-open, html.new-admin-dialog-open body"
+                "html.admin-dialog-open, html.admin-dialog-open body"
             ) {
                 Overflow(.hidden)
             },
@@ -990,7 +990,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
 
     public func html(context: inout BuilderContext) -> Section {
         Section {
-            context.build(NewAdminFormFieldLabel(text: state.label))
+            context.build(AdminFormFieldLabel(text: state.label))
             Div {
                 Div {
                     P("Add component").class("eyebrow")
@@ -1102,7 +1102,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             .class(
                 "workspace",
                 "mce-app",
-                "new-admin-rich-content-editor"
+                "admin-rich-content-editor"
             )
             .data("markdown-image-picker", "markdown-image-url")
             .data("markdown-video-picker", "markdown-video-url")
@@ -1111,7 +1111,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 "/media/"
             )
             context.build(
-                NewAdminFormFieldMediaPicker(
+                AdminFormFieldMediaPicker(
                     state: .init(
                         field: .init(
                             key: "markdown-image-url",
@@ -1131,7 +1131,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldMediaPicker(
+                AdminFormFieldMediaPicker(
                     state: .init(
                         field: .init(
                             key: "markdown-video-url",
@@ -1156,6 +1156,6 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             Script(Self.markdownEditorScript)
         }
         .if(state.error != nil) { $0.class("has-error") }
-        .class("new-admin-rich-content-editor")
+        .class("admin-rich-content-editor")
     }
 }

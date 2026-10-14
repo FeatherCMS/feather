@@ -4,10 +4,10 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminListSearch: Component {
+public struct AdminListSearch: Component {
 
     public func rules() -> [any Rule] {
-        let root = ".table-search-form.new-admin-list-search"
+        let root = ".table-search-form.admin-list-search"
 
         Media {
             Custom(root) {
@@ -199,7 +199,7 @@ public struct NewAdminListSearch: Component {
             }
             .class("table-search-input")
             context.build(
-                NewAdminSubmitButton(
+                AdminSubmitButton(
                     "Search",
                     style: .ghost(.primary),
                     isRowButton: true
@@ -209,7 +209,7 @@ public struct NewAdminListSearch: Component {
         }
         .method(.get)
         .action(state.action)
-        .class("table-search-form", "new-admin-list-search")
+        .class("table-search-form", "admin-list-search")
     }
 
     private func searchScript() -> String {

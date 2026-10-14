@@ -31,7 +31,7 @@ struct AdminRemoveRedirectRuleDefaultController:
         catch let error as AdminRemoveRedirectRuleError {
             return try await presenter.renderErrorPage(
                 error: error,
-                cancel: NewAdminLocation.removeCancel(
+                cancel: AdminLocation.removeCancel(
                     path: RedirectRuleRoutes.list.description,
                     returnTo: request.queryString("returnTo")
                 )
@@ -52,7 +52,7 @@ struct AdminRemoveRedirectRuleDefaultController:
         let id = try context.requiredID()
         do {
             let payload = try await request.decode(
-                as: NonceRequest<NewAdminListRemoveFormInput>.self,
+                as: NonceRequest<AdminListRemoveFormInput>.self,
                 context: context
             )
             guard
@@ -63,7 +63,7 @@ struct AdminRemoveRedirectRuleDefaultController:
             else {
                 return
                     try await presenter.renderInvalidNoncePage(
-                        cancel: NewAdminLocation.removeCancel(
+                        cancel: AdminLocation.removeCancel(
                             path: RedirectRuleRoutes.list.description,
                             returnTo: request.queryString("returnTo")
                         )
@@ -71,7 +71,7 @@ struct AdminRemoveRedirectRuleDefaultController:
                     .response(from: request, context: context)
             }
             try await interactor.delete(ids: [id])
-            let location = NewAdminLocation.removeCancel(
+            let location = AdminLocation.removeCancel(
                 path: RedirectRuleRoutes.list.description,
                 returnTo: payload.input.normalizedReturnTo
             )
@@ -81,7 +81,7 @@ struct AdminRemoveRedirectRuleDefaultController:
             return
                 try await presenter.renderErrorPage(
                     error: error,
-                    cancel: NewAdminLocation.removeCancel(
+                    cancel: AdminLocation.removeCancel(
                         path: RedirectRuleRoutes.list.description,
                         returnTo: request.queryString("returnTo")
                     )
@@ -105,7 +105,7 @@ struct AdminRemoveRedirectRuleDefaultController:
         let search = request.querySearch()
         let returnTo =
             request.queryString("returnTo")
-            ?? NewAdminLocation.url(
+            ?? AdminLocation.url(
                 path: RedirectRuleRoutes.list.description,
                 page: page,
                 search: search
@@ -114,7 +114,7 @@ struct AdminRemoveRedirectRuleDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: NewAdminLocation.removeCancel(
+                    .location: AdminLocation.removeCancel(
                         path: RedirectRuleRoutes.list.description,
                         returnTo: returnTo
                     )
@@ -136,7 +136,7 @@ struct AdminRemoveRedirectRuleDefaultController:
             return
                 try await presenter.renderErrorPage(
                     error: error,
-                    cancel: NewAdminLocation.removeCancel(
+                    cancel: AdminLocation.removeCancel(
                         path: RedirectRuleRoutes.list.description,
                         returnTo: returnTo
                     )
@@ -158,7 +158,7 @@ struct AdminRemoveRedirectRuleDefaultController:
         var returnTo = request.queryString("returnTo")
         do {
             let payload = try await request.decode(
-                as: NonceRequest<NewAdminListRemoveFormInput>.self,
+                as: NonceRequest<AdminListRemoveFormInput>.self,
                 context: context
             )
             returnTo = payload.input.normalizedReturnTo
@@ -170,7 +170,7 @@ struct AdminRemoveRedirectRuleDefaultController:
             else {
                 return
                     try await presenter.renderInvalidNoncePage(
-                        cancel: NewAdminLocation.removeCancel(
+                        cancel: AdminLocation.removeCancel(
                             path: RedirectRuleRoutes.list.description,
                             returnTo: returnTo
                         )
@@ -179,7 +179,7 @@ struct AdminRemoveRedirectRuleDefaultController:
             }
             let ids = payload.input.normalizedIds
             if !ids.isEmpty { try await interactor.delete(ids: ids) }
-            let location = NewAdminLocation.removeCancel(
+            let location = AdminLocation.removeCancel(
                 path: RedirectRuleRoutes.list.description,
                 returnTo: returnTo
             )
@@ -195,7 +195,7 @@ struct AdminRemoveRedirectRuleDefaultController:
             return
                 try await presenter.renderErrorPage(
                     error: error,
-                    cancel: NewAdminLocation.removeCancel(
+                    cancel: AdminLocation.removeCancel(
                         path: RedirectRuleRoutes.list.description,
                         returnTo: returnTo
                     )

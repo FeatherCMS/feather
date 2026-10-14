@@ -57,7 +57,7 @@ struct AdminViewUserOverviewComponent: Component {
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 LineHeight(1.5)
             }
-            Custom(".user-overview-destination .new-admin-button") {
+            Custom(".user-overview-destination .admin-button") {
                 Margin(top: 4.px)
             }
         }
@@ -66,12 +66,12 @@ struct AdminViewUserOverviewComponent: Component {
     func html(context: inout BuilderContext) -> Section {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: [
+                AdminBreadcrumb(links: [
                     .init(label: "Admin", link: "/admin/")
                 ])
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "User",
                         description:
@@ -89,7 +89,7 @@ struct AdminViewUserOverviewComponent: Component {
                         H2(destination.title)
                         P(destination.description)
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 "Open",
                                 href: destination.href,
                                 style: .primary

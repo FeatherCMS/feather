@@ -25,7 +25,7 @@ struct AdminViewAuthMagicLinkDefaultPresenter: AdminViewAuthMagicLinkPresenter {
         link: AuthMagicLinkDetailsModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "User magic link details",
@@ -44,7 +44,7 @@ struct AdminViewAuthMagicLinkDefaultPresenter: AdminViewAuthMagicLinkPresenter {
         error: OpenAPIRepositoryError,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "User magic link details",

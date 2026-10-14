@@ -13,16 +13,16 @@ struct WebMetadataError: Component {
     struct State {
         let info: String
         let message: String
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminStatusView(
+                AdminStatusView(
                     state: .init(title: state.info, message: state.message),
                     icon: FeatherIcons.alertCircle()
                 )

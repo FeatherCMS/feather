@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminFormFieldTextArea: Component {
+public struct AdminFormFieldTextArea: Component {
     public enum Style: Sendable {
         case small
         case medium
@@ -69,17 +69,17 @@ public struct NewAdminFormFieldTextArea: Component {
 
     public func selectors() -> [any Selector] {
         [
-            Custom(".new-admin-form-textarea") {
+            Custom(".admin-form-textarea") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(6.px)
             },
-            Custom(".new-admin-form-textarea label") {
+            Custom(".admin-form-textarea label") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(8.px)
             },
-            Custom(".new-admin-form-textarea textarea") {
+            Custom(".admin-form-textarea textarea") {
                 Width(100.percent)
                 BoxSizing(.borderBox)
                 Padding(vertical: 9.px, horizontal: 11.px)
@@ -95,16 +95,16 @@ public struct NewAdminFormFieldTextArea: Component {
                 Resize(.none)
                 UnsafeRawProperty(name: "overflow-y", value: "hidden")
             },
-            Custom(".new-admin-form-textarea--small textarea") {
+            Custom(".admin-form-textarea--small textarea") {
                 UnsafeRawProperty(name: "min-height", value: "3lh")
             },
-            Custom(".new-admin-form-textarea--medium textarea") {
+            Custom(".admin-form-textarea--medium textarea") {
                 UnsafeRawProperty(name: "min-height", value: "6lh")
             },
-            Custom(".new-admin-form-textarea--large textarea") {
+            Custom(".admin-form-textarea--large textarea") {
                 UnsafeRawProperty(name: "min-height", value: "9lh")
             },
-            Custom(".new-admin-form-textarea textarea:focus") {
+            Custom(".admin-form-textarea textarea:focus") {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Tertiary.border)
                 )
@@ -115,11 +115,11 @@ public struct NewAdminFormFieldTextArea: Component {
                 )
                 OutlineOffset(2.px)
             },
-            Custom(".new-admin-form-textarea .field-error") {
+            Custom(".admin-form-textarea .field-error") {
                 Color(.red)
                 FontSize(0.86.rem)
             },
-            Custom(".new-admin-form-textarea.has-error textarea") {
+            Custom(".admin-form-textarea.has-error textarea") {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Secondary.border)
                 )
@@ -132,7 +132,7 @@ public struct NewAdminFormFieldTextArea: Component {
         return Section {
             Label {
                 context.build(
-                    NewAdminFormFieldLabel(
+                    AdminFormFieldLabel(
                         text: state.label,
                         isRequired: state.isRequired
                     )
@@ -149,7 +149,7 @@ public struct NewAdminFormFieldTextArea: Component {
             }
             .for(state.name)
             if let help = state.help {
-                context.build(NewAdminFormFieldHelp(help))
+                context.build(AdminFormFieldHelp(help))
             }
             if let error = state.error {
                 Span(error).id(errorID).class("field-error")
@@ -158,7 +158,7 @@ public struct NewAdminFormFieldTextArea: Component {
         }
         .if(state.error != nil) { $0.class("has-error") }
         .class(
-            "new-admin-form-textarea new-admin-form-textarea--(state.style.className)"
+            "admin-form-textarea admin-form-textarea--(state.style.className)"
         )
     }
 
@@ -170,15 +170,15 @@ public struct NewAdminFormFieldTextArea: Component {
           }
 
           function resizeAll() {
-            document.querySelectorAll('.new-admin-form-textarea textarea')
+            document.querySelectorAll('.admin-form-textarea textarea')
               .forEach(resize);
           }
 
-          if (!window.__newAdminTextAreaAutosize) {
-            window.__newAdminTextAreaAutosize = true;
+          if (!window.__adminTextAreaAutosize) {
+            window.__adminTextAreaAutosize = true;
             document.addEventListener('input', function(event) {
               var field = event.target.closest && event.target.closest(
-                '.new-admin-form-textarea textarea'
+                '.admin-form-textarea textarea'
               );
               if (field) { resize(field); }
             });

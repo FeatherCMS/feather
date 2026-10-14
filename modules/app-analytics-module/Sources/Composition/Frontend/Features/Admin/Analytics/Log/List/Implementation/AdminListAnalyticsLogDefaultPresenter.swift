@@ -24,7 +24,7 @@ struct AdminListAnalyticsLogDefaultPresenter:
         let canAccess = permissions.contains(
             AnalyticsPermissions.Logs.list.rawValue
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Analytics logs",

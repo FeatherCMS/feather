@@ -32,7 +32,7 @@ struct AdminRemoveMediaVariantDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: NewAdminLocation.url(
+                    .location: AdminLocation.url(
                         path: MediaVariantRoutes.list.description,
                         page: page,
                         search: search
@@ -75,7 +75,7 @@ struct AdminRemoveMediaVariantDefaultController:
         var returnTo = request.queryString("returnTo")
         do {
             let payload = try await request.decode(
-                as: NonceRequest<NewAdminListRemoveFormInput>.self,
+                as: NonceRequest<AdminListRemoveFormInput>.self,
                 context: context
             )
             returnTo = payload.input.normalizedReturnTo
@@ -87,7 +87,7 @@ struct AdminRemoveMediaVariantDefaultController:
             else {
                 return
                     try await presenter.renderInvalidNoncePage(
-                        cancel: NewAdminLocation.removeCancel(
+                        cancel: AdminLocation.removeCancel(
                             path: MediaVariantRoutes.list.description,
                             returnTo: returnTo
                         )
@@ -96,7 +96,7 @@ struct AdminRemoveMediaVariantDefaultController:
             }
             let ids = payload.input.normalizedIds
             if !ids.isEmpty { try await interactor.delete(ids: ids) }
-            let location = NewAdminLocation.url(
+            let location = AdminLocation.url(
                 path: MediaVariantRoutes.list.description,
                 page: payload.input.normalizedPage,
                 search: payload.input.normalizedSearch
@@ -113,7 +113,7 @@ struct AdminRemoveMediaVariantDefaultController:
             return
                 try await presenter.renderErrorPage(
                     error: error,
-                    cancel: NewAdminLocation.removeCancel(
+                    cancel: AdminLocation.removeCancel(
                         path: MediaVariantRoutes.list.description,
                         returnTo: returnTo
                     )

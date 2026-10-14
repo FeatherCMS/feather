@@ -17,7 +17,7 @@ public struct WebMenuItemFormInput: Codable, Sendable, Equatable, Hashable {
     public let label: String
     public let url: String
     public let priority: String
-    public let isBlank: NewAdminFormFieldCheckbox.Input
+    public let isBlank: AdminFormFieldCheckbox.Input
     public let permission: String
     public let authentication: String
     public let notes: String
@@ -26,7 +26,7 @@ public struct WebMenuItemFormInput: Codable, Sendable, Equatable, Hashable {
         label: String,
         url: String,
         priority: String,
-        isBlank: NewAdminFormFieldCheckbox.Input,
+        isBlank: AdminFormFieldCheckbox.Input,
         permission: String,
         authentication: String,
         notes: String
@@ -47,7 +47,7 @@ public struct WebMenuItemFormInput: Codable, Sendable, Equatable, Hashable {
         self.priority = try container.decode(String.self, forKey: .priority)
         self.isBlank =
             try container.decodeIfPresent(
-                NewAdminFormFieldCheckbox.Input.self,
+                AdminFormFieldCheckbox.Input.self,
                 forKey: .isBlank
             ) ?? .init(value: false)
         self.permission = try container.decode(String.self, forKey: .permission)

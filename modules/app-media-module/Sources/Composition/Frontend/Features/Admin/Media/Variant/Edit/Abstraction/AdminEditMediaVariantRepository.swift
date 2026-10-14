@@ -7,7 +7,7 @@ protocol AdminEditMediaVariantRepository: Sendable {
     func loadProcessor(variantId: String, id: String) async throws
         -> MediaAdminAPI.Components.Schemas.MediaVariantProcessorDetailSchema
     func processorNames(variantId: String, ids: [String]) async throws
-        -> [NewAdminRemoveItemContext]
+        -> [AdminRemoveItemContext]
     func update(
         id: String,
         input: MediaAdminAPI.Components.Schemas.MediaVariantCreateSchema

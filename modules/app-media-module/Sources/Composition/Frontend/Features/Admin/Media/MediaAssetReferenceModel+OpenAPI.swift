@@ -9,7 +9,7 @@ import SGML
 import WebBuilders
 import WebComponents
 
-extension NewAdminMediaAsset {
+extension AdminMediaAsset {
     public init(schema: MediaAdminAPI.Components.Schemas.MediaAssetDetailSchema)
     {
         self.init(schema: schema, variants: [])
@@ -17,7 +17,7 @@ extension NewAdminMediaAsset {
 
     public init(
         schema: MediaAdminAPI.Components.Schemas.MediaAssetDetailSchema,
-        variants: [NewAdminMediaAssetVariant]
+        variants: [AdminMediaAssetVariant]
     ) {
         let title = schema.title?.whitespaceTrimmed
         self.init(

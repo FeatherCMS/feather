@@ -12,21 +12,21 @@ import SVG
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminBaseLayout<T: Component>: Component {
+public struct AdminBaseLayout<T: Component>: Component {
 
     public let content: T
 
-    private let topbar: NewAdminTopBar
-    private let sidebar: NewAdminSideBar
+    private let topbar: AdminTopBar
+    private let sidebar: AdminSideBar
 
     public init(
         content: T,
-        menuGroups: [NewAdminSideBar.Group],
-        notification: NewAdminNotification.State? = nil,
-        accountTopBarState: NewAdminTopBar.State = .init()
+        menuGroups: [AdminSideBar.Group],
+        notification: AdminNotification.State? = nil,
+        accountTopBarState: AdminTopBar.State = .init()
     ) {
         self.topbar = .init(
-            notification: notification.map(NewAdminNotification.init),
+            notification: notification.map(AdminNotification.init),
             state: accountTopBarState
         )
         self.sidebar = .init(groups: menuGroups)
@@ -47,7 +47,7 @@ public struct NewAdminBaseLayout<T: Component>: Component {
             }
             .class("menu-container")
 
-            context.build(NewAdminDialogHost())
+            context.build(AdminDialogHost())
         }
     }
 

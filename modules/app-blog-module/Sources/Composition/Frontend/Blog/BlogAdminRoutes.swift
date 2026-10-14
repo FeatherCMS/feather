@@ -8,7 +8,7 @@ enum BlogAdminRoutes {
     static let authors = blog.appendingPath(RouterPath("authors"))
     static let tags = blog.appendingPath(RouterPath("tags"))
 
-    static let breadcrumb: [NewAdminBreadcrumb.Link] = [
+    static let breadcrumb: [AdminBreadcrumb.Link] = [
         .init(label: "Admin", link: "/admin/"),
         .init(label: "Blog", link: blog.description + "/"),
     ]
@@ -64,7 +64,7 @@ enum BlogAdminRoutes {
     static func authorLinks(_ id: RouterPath) -> RouterPath {
         author(id).appendingPath(RouterPath("links"))
     }
-    static func authorLinksBreadcrumb(_ id: RouterPath) -> [NewAdminBreadcrumb
+    static func authorLinksBreadcrumb(_ id: RouterPath) -> [AdminBreadcrumb
         .Link]
     {
         authorsBreadcrumb + [

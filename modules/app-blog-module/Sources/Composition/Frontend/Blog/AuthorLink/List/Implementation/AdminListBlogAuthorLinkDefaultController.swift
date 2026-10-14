@@ -102,7 +102,7 @@ struct AdminListBlogAuthorLinkDefaultController:
         let (interactor, _) = buildRuntime((request, context))
         let menuId = try context.requiredID()
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard

@@ -7,9 +7,9 @@ struct AdminRemoveMediaVariantOpenAPIRepository:
 {
     let api: MediaAdminAPIClient
 
-    func names(ids: [String]) async throws -> [NewAdminRemoveItemContext] {
+    func names(ids: [String]) async throws -> [AdminRemoveItemContext] {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            var items: [NewAdminRemoveItemContext] = []
+            var items: [AdminRemoveItemContext] = []
             for id in ids {
                 let response = try await client.mediaVariantGet(
                     path: .init(mediaVariantId: id),
@@ -19,7 +19,7 @@ struct AdminRemoveMediaVariantOpenAPIRepository:
                 case .ok(let result):
                     let variant = try result.body.json
                     items.append(
-                        NewAdminRemoveItemContext(
+                        AdminRemoveItemContext(
                             id: id,
                             label: "\(variant.name) (\(variant.key))"
                         )

@@ -11,14 +11,14 @@ struct SubmissionMailEdit: Component {
     let formId: String
     let mail: AdminContactFormEmail
     let availableFields: [AdminContactFormFieldOption]
-    let breadcrumb: [NewAdminBreadcrumb.Link]
+    let breadcrumb: [AdminBreadcrumb.Link]
     let error: String?
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(NewAdminBreadcrumb(links: breadcrumb))
+            context.build(AdminBreadcrumb(links: breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Edit contact form email",
                         description:
@@ -30,7 +30,7 @@ struct SubmissionMailEdit: Component {
                 AdminContactFormTabs(formId: formId, active: .emails)
             )
             context.build(
-                NewAdminRelationshipGroup(
+                AdminRelationshipGroup(
                     pageHeader: .secondary(
                         title: "Notification email",
                         description:

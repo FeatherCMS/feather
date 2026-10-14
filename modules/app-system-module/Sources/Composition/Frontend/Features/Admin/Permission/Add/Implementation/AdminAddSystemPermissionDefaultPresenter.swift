@@ -87,7 +87,7 @@ struct AdminAddSystemPermissionDefaultPresenter:
 
     func renderInvalidNoncePage() async throws -> HTMLResponse {
         try await renderPage(
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Form expired",
                     message:
@@ -102,7 +102,7 @@ struct AdminAddSystemPermissionDefaultPresenter:
     private func renderErrorPage(
         error: AdminAddSystemPermissionError
     ) async throws -> HTMLResponse {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         switch error {
         case .unauthorized:
             state = .init(
@@ -126,7 +126,7 @@ struct AdminAddSystemPermissionDefaultPresenter:
             )
         }
         return try await renderPage(
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle()
             ),
@@ -138,7 +138,7 @@ struct AdminAddSystemPermissionDefaultPresenter:
         content: T,
         status: HTTPResponse.Status = .ok
     ) async throws -> HTMLResponse {
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Manage system permissions",

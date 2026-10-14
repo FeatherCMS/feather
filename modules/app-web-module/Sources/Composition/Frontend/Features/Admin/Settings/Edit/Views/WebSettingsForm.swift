@@ -25,7 +25,7 @@ struct WebSettingsForm: Component {
         var key: String
         var label: String
         var value: String?
-        var options: [NewAdminFormFieldSelectAutocomplete.Option]
+        var options: [AdminFormFieldSelectAutocomplete.Option]
         var error: String?
     }
 
@@ -77,16 +77,16 @@ struct WebSettingsForm: Component {
     var submitLabel: String = "Save settings"
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action) {
+        let form = AdminForm(action: action) {
             if let success = state.success {
-                P(success).class("new-admin-form__success")
+                P(success).class("admin-form__success")
             }
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
 
             context.build(
-                NewAdminFormGroup(
+                AdminFormGroup(
                     id: "web-settings-branding",
                     title: "Branding",
                     persistsState: false
@@ -97,13 +97,13 @@ struct WebSettingsForm: Component {
             )
 
             context.build(
-                NewAdminFormGroup(
+                AdminFormGroup(
                     id: "web-settings-seo",
                     title: "SEO",
                     persistsState: false
                 ) {
                     context.build(
-                        NewAdminFormFieldCheckbox(
+                        AdminFormFieldCheckbox(
                             state: .init(
                                 name: state.noIndex.key,
                                 label: "Search engine indexing",
@@ -114,7 +114,7 @@ struct WebSettingsForm: Component {
                         )
                     )
                     context.build(
-                        NewAdminFormFieldInput(
+                        AdminFormFieldInput(
                             state: .init(
                                 name: state.title.key,
                                 label: state.title.label,
@@ -130,14 +130,14 @@ struct WebSettingsForm: Component {
             )
 
             context.build(
-                NewAdminFormGroup(
+                AdminFormGroup(
                     id: "web-settings-site-defaults",
                     title: "Site defaults",
                     persistsState: false
                 ) {
                     homePagePicker(state.homePage, context: &context)
                     context.build(
-                        NewAdminFormFieldLanguage(
+                        AdminFormFieldLanguage(
                             state: .init(
                                 name: state.locale.key,
                                 label: state.locale.label,
@@ -149,7 +149,7 @@ struct WebSettingsForm: Component {
                         )
                     )
                     context.build(
-                        NewAdminFormFieldTimezone(
+                        AdminFormFieldTimezone(
                             state: .init(
                                 name: state.timezone.key,
                                 label: state.timezone.label,
@@ -163,13 +163,13 @@ struct WebSettingsForm: Component {
             )
 
             context.build(
-                NewAdminFormGroup(
+                AdminFormGroup(
                     id: "web-settings-theme",
                     title: "Theme",
                     persistsState: false
                 ) {
                     context.build(
-                        NewAdminFormFieldInput(
+                        AdminFormFieldInput(
                             state: .init(
                                 name: state.primaryColor.key,
                                 label: state.primaryColor.label,
@@ -180,7 +180,7 @@ struct WebSettingsForm: Component {
                         )
                     )
                     context.build(
-                        NewAdminFormFieldInput(
+                        AdminFormFieldInput(
                             state: .init(
                                 name: state.secondaryColor.key,
                                 label: state.secondaryColor.label,
@@ -191,7 +191,7 @@ struct WebSettingsForm: Component {
                         )
                     )
                     context.build(
-                        NewAdminFormFieldInput(
+                        AdminFormFieldInput(
                             state: .init(
                                 name: state.tertiaryColor.key,
                                 label: state.tertiaryColor.label,
@@ -202,7 +202,7 @@ struct WebSettingsForm: Component {
                         )
                     )
                     context.build(
-                        NewAdminFormFieldInput(
+                        AdminFormFieldInput(
                             state: .init(
                                 name: state.primaryFont.key,
                                 label: state.primaryFont.label,
@@ -213,7 +213,7 @@ struct WebSettingsForm: Component {
                         )
                     )
                     context.build(
-                        NewAdminFormFieldInput(
+                        AdminFormFieldInput(
                             state: .init(
                                 name: state.secondaryFont.key,
                                 label: state.secondaryFont.label,
@@ -227,7 +227,7 @@ struct WebSettingsForm: Component {
             )
 
             context.build(
-                NewAdminFormGroup(
+                AdminFormGroup(
                     id: "web-settings-code-injection",
                     title: "Code injection",
                     persistsState: false
@@ -240,9 +240,9 @@ struct WebSettingsForm: Component {
             if state.canEdit {
                 Div {
                     Div {
-                        context.build(NewAdminSubmitButton(submitLabel))
+                        context.build(AdminSubmitButton(submitLabel))
                     }
-                    .class("new-admin-form__actions")
+                    .class("admin-form__actions")
                 }
             }
         }
@@ -255,7 +255,7 @@ struct WebSettingsForm: Component {
     ) -> Section {
 
         context.build(
-            NewAdminFormFieldSelectAutocomplete(
+            AdminFormFieldSelectAutocomplete(
                 state: .init(
                     name: field.key,
                     label: field.label,
@@ -276,7 +276,7 @@ struct WebSettingsForm: Component {
         let browsePath =
             "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=\(AllowedExtensions.images.queryValue)"
         return context.build(
-            NewAdminFormFieldMediaPicker(
+            AdminFormFieldMediaPicker(
                 state: .init(
                     field: .init(
                         key: field.key,
@@ -285,7 +285,7 @@ struct WebSettingsForm: Component {
                         error: field.error
                     ),
                     selectedAsset:
-                        NewAdminMediaAsset.metadataImageURL(
+                        AdminMediaAsset.metadataImageURL(
                             field.value
                         )
                         .map {
@@ -316,8 +316,8 @@ struct WebSettingsForm: Component {
     private func textarea(
         _ field: FieldState,
         rows: Int
-    ) -> NewAdminFormFieldTextArea {
-        NewAdminFormFieldTextArea(
+    ) -> AdminFormFieldTextArea {
+        AdminFormFieldTextArea(
             state: .init(
                 name: field.key,
                 label: field.label,

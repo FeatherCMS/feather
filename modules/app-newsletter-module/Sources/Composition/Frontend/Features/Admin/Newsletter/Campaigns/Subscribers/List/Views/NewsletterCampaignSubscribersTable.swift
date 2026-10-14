@@ -9,9 +9,9 @@ struct NewsletterCampaignSubscribersTable: Component {
     struct State {
         let newsletterId: String
         let items: [AdminNewsletterCampaignSubscriberItem]
-        let pageState: NewAdminListPageState
+        let pageState: AdminListPageState
         let search: String?
-        let permissions: NewAdminListActions
+        let permissions: AdminListActions
     }
 
     let state: State
@@ -19,7 +19,7 @@ struct NewsletterCampaignSubscribersTable: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(
+                AdminBreadcrumb(
                     links: NewsletterAdminRoutes.breadcrumb + [
                         .init(
                             label: "Campaigns",
@@ -29,7 +29,7 @@ struct NewsletterCampaignSubscribersTable: Component {
                 )
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Campaign subscribers",
                         description: "Manage subscribers for this campaign."
@@ -43,7 +43,7 @@ struct NewsletterCampaignSubscribersTable: Component {
                 )
             )
             context.build(
-                NewAdminRelationshipGroup(
+                AdminRelationshipGroup(
                     pageHeader: .secondary(
                         title: "Subscribers",
                         description:

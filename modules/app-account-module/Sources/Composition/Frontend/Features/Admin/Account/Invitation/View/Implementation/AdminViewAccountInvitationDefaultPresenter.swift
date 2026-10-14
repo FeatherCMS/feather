@@ -12,7 +12,7 @@ struct AdminViewAccountInvitationDefaultPresenter:
         invitation: AccountInvitationDetailsModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "User invitation details",
@@ -32,11 +32,11 @@ struct AdminViewAccountInvitationDefaultPresenter:
         message: String,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "User invitation details",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(title: info, message: message),
                 icon: FeatherIcons.alertCircle()
             )

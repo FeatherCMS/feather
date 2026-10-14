@@ -20,15 +20,15 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
 
     func renderRemovePage(
         menuId: String,
-        item: NewAdminRemoveItemContext
+        item: AdminRemoveItemContext
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminDialog(
+        return try await renderingEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
+            title: AdminRemoveConfirmation.dialogTitle,
             content: BlogAuthorLinkConfirmation(
                 state: .init(
                     menuId: menuId,
@@ -50,7 +50,7 @@ struct AdminRemoveBlogAuthorLinkDefaultPresenter:
         info: String,
         message: String
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove blog author link",

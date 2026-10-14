@@ -11,17 +11,17 @@ struct MediaVariantProcessorsPage: Component {
     let variantId: String
     let processors:
         [MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema]
-    let pageState: NewAdminListPageState
+    let pageState: AdminListPageState
     let search: String?
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: MediaVariantRoutes.breadcrumb)
+                AdminBreadcrumb(links: MediaVariantRoutes.breadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Processors",
                         description:
@@ -50,27 +50,27 @@ struct MediaVariantProcessorsTableContent: Component {
     let variantId: String
     let processors:
         [MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema]
-    let pageState: NewAdminListPageState
+    let pageState: AdminListPageState
     let search: String?
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> Div {
         let canDelete = permissions.allows(
             MediaPermissions.VariantProcessors.delete
         )
         let hasActiveQuery = !(search?.isEmpty ?? true)
-        let returnTo = NewAdminLocation.url(
+        let returnTo = AdminLocation.url(
             path: MediaVariantRoutes.processors(RouterPath(variantId))
                 .description,
             page: pageState.page,
             search: search
         )
         return context.build(
-            NewAdminList(
+            AdminList(
                 table: {
                     if pageState.isPageOutOfRange {
                         context.build(
-                            NewAdminListInvalidPageState(
+                            AdminListInvalidPageState(
                                 pageState: pageState,
                                 path:
                                     MediaVariantRoutes.processors(
@@ -83,12 +83,12 @@ struct MediaVariantProcessorsTableContent: Component {
                     else if processors.isEmpty {
                         if hasActiveQuery {
                             context.build(
-                                NewAdminListNoResultsState(
+                                AdminListNoResultsState(
                                     message: "No processors match your search.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         context.build(
-                                            NewAdminButton(
+                                            AdminButton(
                                                 "Reset search",
                                                 href:
                                                     MediaVariantRoutes
@@ -105,7 +105,7 @@ struct MediaVariantProcessorsTableContent: Component {
                         }
                         else {
                             context.build(
-                                NewAdminListEmptyState(
+                                AdminListEmptyState(
                                     message: "No processors configured yet.",
                                     icon: FeatherIcons.inbox()
                                 )
@@ -114,9 +114,9 @@ struct MediaVariantProcessorsTableContent: Component {
                     }
                     else {
                         context.build(
-                            NewAdminListSelectionForm(
+                            AdminListSelectionForm(
                                 state: .init(
-                                    action: NewAdminLocation.remove(
+                                    action: AdminLocation.remove(
                                         path:
                                             MediaVariantRoutes.processorRemove(
                                                 RouterPath(variantId)
@@ -134,7 +134,7 @@ struct MediaVariantProcessorsTableContent: Component {
                                     isEnabled: canDelete
                                 ),
                                 table: context.build(
-                                    NewAdminListShell(
+                                    AdminListShell(
                                         layout: .init(
                                             name: "media-variant-processors",
                                             columns: [
@@ -149,7 +149,7 @@ struct MediaVariantProcessorsTableContent: Component {
                                                 Tr {
                                                     if canDelete {
                                                         context.build(
-                                                            NewAdminListSelectAllCheckbox()
+                                                            AdminListSelectAllCheckbox()
                                                         )
                                                     }
                                                     Th("Name")
@@ -187,7 +187,7 @@ struct MediaVariantProcessorsTableContent: Component {
                 },
                 search: {
                     context.build(
-                        NewAdminListSearch(
+                        AdminListSearch(
                             state: .init(
                                 action:
                                     MediaVariantRoutes.processors(
@@ -205,9 +205,9 @@ struct MediaVariantProcessorsTableContent: Component {
                         MediaPermissions.VariantProcessors.create
                     ) {
                         context.build(
-                            NewAdminListToolbar {
+                            AdminListToolbar {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         "Add new",
                                         href:
                                             MediaVariantRoutes.processorAdd(
@@ -222,7 +222,7 @@ struct MediaVariantProcessorsTableContent: Component {
                 },
                 pagination: {
                     context.build(
-                        NewAdminListPagination(
+                        AdminListPagination(
                             state: .init(
                                 path:
                                     MediaVariantRoutes.processors(
@@ -244,20 +244,20 @@ struct MediaVariantProcessorRow: Component {
     let variantId: String
     let processor:
         MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
     let returnTo: String
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(MediaPermissions.VariantProcessors.delete) {
-                context.build(NewAdminListRowCheckbox(id: processor.id))
+                context.build(AdminListRowCheckbox(id: processor.id))
             }
             Td(processor.name).data("label", "Name")
             Td(processor.matchExtensions).data("label", "Input extensions")
             Td(processor.commandTemplate).data("label", "Command template")
             Td(processor.isActive ? "Yes" : "No").data("label", "Active")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: [
                         .init(
@@ -274,7 +274,7 @@ struct MediaVariantProcessorRow: Component {
                         ),
                         .init(
                             "Remove",
-                            href: NewAdminLocation.remove(
+                            href: AdminLocation.remove(
                                 path:
                                     MediaVariantRoutes.processorRemove(
                                         RouterPath(variantId)

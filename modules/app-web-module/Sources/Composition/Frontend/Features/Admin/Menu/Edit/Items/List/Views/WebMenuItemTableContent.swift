@@ -11,16 +11,16 @@ import WebContracts
 struct WebMenuItemTableContent: Component {
     struct State {
         let menuId: String
-        let permissions: NewAdminListActions
+        let permissions: AdminListActions
         let items: [Components.Schemas.WebMenuItemListItemSchema]
-        let pageState: NewAdminListPageState
+        let pageState: AdminListPageState
         let search: String?
     }
 
     let state: State
 
     private var returnTo: String {
-        NewAdminLocation.url(
+        AdminLocation.url(
             path: WebMenuItemRoutes.list(RouterPath(state.menuId)).description,
             page: state.pageState.page,
             search: state.search
@@ -87,11 +87,11 @@ struct WebMenuItemTableContent: Component {
 
         return Div {
             context.build(
-                NewAdminList(
+                AdminList(
                     table: {
                         if state.pageState.isPageOutOfRange {
                             context.build(
-                                NewAdminListInvalidPageState(
+                                AdminListInvalidPageState(
                                     pageState: state.pageState,
                                     path:
                                         WebMenuItemRoutes.list(
@@ -104,12 +104,12 @@ struct WebMenuItemTableContent: Component {
                         else if state.items.isEmpty {
                             if hasActiveQuery {
                                 context.build(
-                                    NewAdminListNoResultsState(
+                                    AdminListNoResultsState(
                                         message: "No items match your search.",
                                         icon: FeatherIcons.inbox(),
                                         action: {
                                             context.build(
-                                                NewAdminButton(
+                                                AdminButton(
                                                     "Reset search",
                                                     href:
                                                         WebMenuItemRoutes.list(
@@ -127,7 +127,7 @@ struct WebMenuItemTableContent: Component {
                             }
                             else {
                                 context.build(
-                                    NewAdminListEmptyState(
+                                    AdminListEmptyState(
                                         message: "No items yet.",
                                         icon: FeatherIcons.inbox(),
                                         action: {
@@ -135,7 +135,7 @@ struct WebMenuItemTableContent: Component {
                                                 WebPermissions.MenuItems.create
                                             ) {
                                                 context.build(
-                                                    NewAdminButton(
+                                                    AdminButton(
                                                         "Add new",
                                                         href:
                                                             WebMenuItemRoutes
@@ -155,7 +155,7 @@ struct WebMenuItemTableContent: Component {
                         }
                         else {
                             context.build(
-                                NewAdminListSelectionForm(
+                                AdminListSelectionForm(
                                     state: .init(
                                         action:
                                             WebMenuItemRoutes.remove(
@@ -171,7 +171,7 @@ struct WebMenuItemTableContent: Component {
                                         isEnabled: canDelete
                                     ),
                                     table: context.build(
-                                        NewAdminListShell(
+                                        AdminListShell(
                                             layout: .init(
                                                 name: "web-menu-items",
                                                 columns: canReorder
@@ -195,7 +195,7 @@ struct WebMenuItemTableContent: Component {
                                                     Tr {
                                                         if canDelete {
                                                             context.build(
-                                                                NewAdminListSelectAllCheckbox()
+                                                                AdminListSelectAllCheckbox()
                                                             )
                                                         }
                                                         if canReorder {
@@ -238,7 +238,7 @@ struct WebMenuItemTableContent: Component {
                     },
                     search: {
                         context.build(
-                            NewAdminListSearch(
+                            AdminListSearch(
                                 state: .init(
                                     action:
                                         WebMenuItemRoutes.list(
@@ -256,9 +256,9 @@ struct WebMenuItemTableContent: Component {
                             WebPermissions.MenuItems.create
                         ) {
                             context.build(
-                                NewAdminListToolbar {
+                                AdminListToolbar {
                                     context.build(
-                                        NewAdminButton(
+                                        AdminButton(
                                             "Add new",
                                             href:
                                                 WebMenuItemRoutes.add(
@@ -273,7 +273,7 @@ struct WebMenuItemTableContent: Component {
                     },
                     pagination: {
                         context.build(
-                            NewAdminListPagination(
+                            AdminListPagination(
                                 state: .init(
                                     path:
                                         WebMenuItemRoutes.list(

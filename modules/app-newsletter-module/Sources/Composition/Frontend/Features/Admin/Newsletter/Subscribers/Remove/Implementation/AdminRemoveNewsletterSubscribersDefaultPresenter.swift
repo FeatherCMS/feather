@@ -11,7 +11,7 @@ struct AdminRemoveNewsletterSubscribersDefaultPresenter:
     let renderingEngine: any RenderingEngine
 
     func renderRemovePage(
-        items: [NewAdminRemoveItemContext],
+        items: [AdminRemoveItemContext],
         search _: String?,
         campaignId: String?,
         returnTo _: String?
@@ -19,11 +19,11 @@ struct AdminRemoveNewsletterSubscribersDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminDialog(
+        return try await renderingEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: NewAdminRemoveConfirmation(
+            title: AdminRemoveConfirmation.dialogTitle,
+            content: AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove selected subscribers",
                     description: "This action cannot be undone."

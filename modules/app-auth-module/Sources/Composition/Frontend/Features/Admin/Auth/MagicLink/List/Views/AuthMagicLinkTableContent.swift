@@ -12,21 +12,21 @@ struct AuthMagicLinkTableContent: Component {
     let state: AuthMagicLinkTable.State
 
     func html(context: inout BuilderContext) -> Div {
-        let actions = NewAdminListActions(
+        let actions = AdminListActions(
             Set(state.permissions.map(PermissionKey.init))
         )
-        let pageState = NewAdminListPageState(
+        let pageState = AdminListPageState(
             page: state.page,
             pageSize: state.pageSize,
             total: state.total
         )
 
         return context.build(
-            NewAdminList(
+            AdminList(
                 table: {
                     if !state.canAccess {
                         context.build(
-                            NewAdminStatusView(
+                            AdminStatusView(
                                 state: .init(
                                     title: state.deniedInfo,
                                     message: state.deniedMessage
@@ -37,7 +37,7 @@ struct AuthMagicLinkTableContent: Component {
                     }
                     else if state.links.isEmpty {
                         context.build(
-                            NewAdminListEmptyState(
+                            AdminListEmptyState(
                                 message: state.search.isEmpty
                                     ? "No user magic links yet."
                                     : "No magic links match your search.",
@@ -47,7 +47,7 @@ struct AuthMagicLinkTableContent: Component {
                     }
                     else {
                         context.build(
-                            NewAdminListShell(
+                            AdminListShell(
                                 layout: .init(
                                     name: "auth-magic-links",
                                     columns: [
@@ -94,7 +94,7 @@ struct AuthMagicLinkTableContent: Component {
                                                 Td(link.isUsed ? "Yes" : "No")
                                                     .data("label", "Used")
                                                 context.build(
-                                                    NewAdminListRowActions(
+                                                    AdminListRowActions(
                                                         label: "Actions",
                                                         actions: [
                                                             .init(
@@ -147,7 +147,7 @@ struct AuthMagicLinkTableContent: Component {
                 },
                 search: {
                     context.build(
-                        NewAdminListSearch(
+                        AdminListSearch(
                             state: .init(
                                 action: "/admin/auth/magic-links/",
                                 placeholder: "Quick search magic links",
@@ -162,9 +162,9 @@ struct AuthMagicLinkTableContent: Component {
                 toolbar: {
                     if state.canAdd {
                         context.build(
-                            NewAdminListToolbar {
+                            AdminListToolbar {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         "Add new",
                                         href: "/admin/auth/magic-links/add/"
                                     )
@@ -175,7 +175,7 @@ struct AuthMagicLinkTableContent: Component {
                 },
                 pagination: {
                     context.build(
-                        NewAdminListPagination(
+                        AdminListPagination(
                             state: .init(
                                 path: "/admin/auth/magic-links/",
                                 pageState: pageState,

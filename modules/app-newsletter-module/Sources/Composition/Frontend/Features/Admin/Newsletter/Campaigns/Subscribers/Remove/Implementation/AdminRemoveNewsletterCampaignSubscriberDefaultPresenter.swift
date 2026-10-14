@@ -11,13 +11,13 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultPresenter:
 
     func render(
         newsletterId: String,
-        items: [NewAdminRemoveItemContext],
+        items: [AdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        let cancel = NewAdminLocation.removeCancel(
+        let cancel = AdminLocation.removeCancel(
             path:
                 NewsletterAdminRoutes.campaignSubscribers(
                     RouterPath(newsletterId)
@@ -25,11 +25,11 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultPresenter:
                 .description,
             returnTo: returnTo
         )
-        return try await renderingEngine.renderNewAdminDialog(
+        return try await renderingEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: NewAdminRemoveConfirmation(
+            title: AdminRemoveConfirmation.dialogTitle,
+            content: AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove campaign subscriber",
                     description: "This action cannot be undone."

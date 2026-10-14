@@ -27,7 +27,7 @@ protocol AdminListAuthMagicLinkPresenter: Sendable {
     ) async throws -> HTMLResponse
 
     func renderRemovePage(
-        items: [NewAdminRemoveItemContext],
+        items: [AdminRemoveItemContext],
         page: Int,
         search: String?,
         userID: String?

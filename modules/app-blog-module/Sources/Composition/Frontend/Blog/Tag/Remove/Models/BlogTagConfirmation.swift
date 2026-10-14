@@ -16,7 +16,7 @@ struct BlogTagConfirmation: Component {
     struct State {
         let id: String
         let source: String
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
         let nonceToken: String
     }
 
@@ -24,7 +24,7 @@ struct BlogTagConfirmation: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
-            NewAdminRemoveConfirmation(
+            AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove tag",
                     description: "This action cannot be undone."

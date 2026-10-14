@@ -4,7 +4,7 @@ import WebBuilders
 import WebComponents
 
 struct NewsErrorPage: Component {
-    let breadcrumb: [NewAdminBreadcrumb.Link]
+    let breadcrumb: [AdminBreadcrumb.Link]
     let title: String
     let message: String
 
@@ -12,9 +12,9 @@ struct NewsErrorPage: Component {
         context: inout BuilderContext
     ) -> Section {
         Section {
-            context.build(NewAdminBreadcrumb(links: breadcrumb))
+            context.build(AdminBreadcrumb(links: breadcrumb))
             context.build(
-                NewAdminStatusView(
+                AdminStatusView(
                     state: .init(title: title, message: message),
                     icon: FeatherIcons.alertCircle()
                 )

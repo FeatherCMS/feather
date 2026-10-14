@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminFormFieldHelp: Component {
+public struct AdminFormFieldHelp: Component {
     private let text: String
     private let id: String?
 
@@ -18,7 +18,7 @@ public struct NewAdminFormFieldHelp: Component {
 
     public func selectors() -> [any CSS.Selector] {
         [
-            Class("new-admin-form-field-help") {
+            Class("admin-form-field-help") {
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 FontSize(0.8.rem)
                 LineHeight(1.35)
@@ -28,8 +28,8 @@ public struct NewAdminFormFieldHelp: Component {
 
     public func html(context: inout BuilderContext) -> Span {
         if let id {
-            return Span(text).id(id).class("new-admin-form-field-help")
+            return Span(text).id(id).class("admin-form-field-help")
         }
-        return Span(text).class("new-admin-form-field-help")
+        return Span(text).class("admin-form-field-help")
     }
 }

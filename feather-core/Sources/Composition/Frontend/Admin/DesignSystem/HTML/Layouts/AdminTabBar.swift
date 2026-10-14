@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminTabBar: Component {
+public struct AdminTabBar: Component {
     public struct Link: Sendable {
         public let label: String
         public let href: String

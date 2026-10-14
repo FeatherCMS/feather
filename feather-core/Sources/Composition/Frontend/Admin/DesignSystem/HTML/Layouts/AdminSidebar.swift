@@ -14,7 +14,7 @@ public import SVG
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminSideBar: Component {
+public struct AdminSideBar: Component {
 
     public struct Group: Sendable {
         public struct Menu: Sendable {
@@ -277,7 +277,7 @@ public func adminMenuGroups(
     for context: AuthenticatedRequestContext,
     request: Request,
     events: any EventPublisher
-) async throws -> [NewAdminSideBar.Group] {
+) async throws -> [AdminSideBar.Group] {
     let catalog = try await load(events: events)
     let path = request.uri.path
     let permissions = context.currentUserPermissions
@@ -290,7 +290,7 @@ public func adminMenuGroups(
         }
         .sorted { $0.priority < $1.priority }
 
-    var groups: [String: [NewAdminSideBar.Group.Menu]] = [:]
+    var groups: [String: [AdminSideBar.Group.Menu]] = [:]
     for definition in menuDefinitions {
         let parentIcon =
             FeatherIcons.get(named: definition.icon)
@@ -307,7 +307,7 @@ public func adminMenuGroups(
                 let icon =
                     FeatherIcons.get(named: item.icon)
                     ?? FeatherIcons.helpCircle()
-                return NewAdminSideBar.Group.Menu.Item(
+                return AdminSideBar.Group.Menu.Item(
                     icon: icon,
                     label: item.label,
                     link: item.link,
@@ -319,7 +319,7 @@ public func adminMenuGroups(
             continue
         }
 
-        let parent = NewAdminSideBar.Group.Menu.Item(
+        let parent = AdminSideBar.Group.Menu.Item(
             icon: parentIcon,
             label: definition.label,
             link: definition.link,

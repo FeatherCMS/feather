@@ -25,7 +25,7 @@ struct AdminViewAuthEmailDefaultPresenter: AdminViewAuthEmailPresenter {
         link: AuthEmailDetailsModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "User email details",
@@ -44,7 +44,7 @@ struct AdminViewAuthEmailDefaultPresenter: AdminViewAuthEmailPresenter {
         error: OpenAPIRepositoryError,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "User email details",

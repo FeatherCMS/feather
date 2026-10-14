@@ -164,7 +164,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
         var returnTo = request.queryString("returnTo")
         do {
             let payload = try await request.decode(
-                as: NonceRequest<NewAdminListRemoveFormInput>.self,
+                as: NonceRequest<AdminListRemoveFormInput>.self,
                 context: context
             )
             returnTo = payload.input.normalizedReturnTo
@@ -176,7 +176,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
             else {
                 return
                     try await presenter.renderInvalidNoncePage(
-                        cancel: NewAdminLocation.removeCancel(
+                        cancel: AdminLocation.removeCancel(
                             path: MediaAssetRoutes.list.description,
                             returnTo: returnTo
                         )
@@ -188,7 +188,7 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
             if !ids.isEmpty {
                 try await interactor.remove(ids: ids)
             }
-            let location = NewAdminLocation.removeCancel(
+            let location = AdminLocation.removeCancel(
                 path: MediaAssetRoutes.list.description,
                 returnTo: returnTo
             )
@@ -224,7 +224,7 @@ extension AdminListMediaAssetDefaultController {
     fileprivate func redirectLocation(
         request: Request
     ) -> String {
-        NewAdminLocation.removeCancel(
+        AdminLocation.removeCancel(
             path: MediaAssetRoutes.list.description,
             returnTo: request.queryString("returnTo")
         )

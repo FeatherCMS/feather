@@ -27,7 +27,7 @@ struct AdminListAuthMagicLinkDefaultPresenter:
     func renderPage(
         state: AuthMagicLinkTable.State
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Manage user magic links",
@@ -38,7 +38,7 @@ struct AdminListAuthMagicLinkDefaultPresenter:
     func renderError(
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Manage user magic links",
@@ -53,7 +53,7 @@ struct AdminListAuthMagicLinkDefaultPresenter:
     }
 
     func renderRemovePage(
-        items: [NewAdminRemoveItemContext],
+        items: [AdminRemoveItemContext],
         page: Int,
         search: String?,
         userID: String?
@@ -61,11 +61,11 @@ struct AdminListAuthMagicLinkDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminDialog(
+        return try await renderEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: NewAdminRemoveConfirmation(
+            title: AdminRemoveConfirmation.dialogTitle,
+            content: AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove selected magic links",
                     description: "Review the selected links before removal."
@@ -87,11 +87,11 @@ struct AdminListAuthMagicLinkDefaultPresenter:
     }
 
     func renderInvalidNoncePage() async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove selected magic links",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Form expired",
                     message:

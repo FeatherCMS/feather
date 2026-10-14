@@ -11,10 +11,10 @@ struct SubmissionMailForm: Component {
     let error: String?
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action) {
-            if let error { P(error).class("new-admin-form__error") }
+        let form = AdminForm(action: action) {
+            if let error { P(error).class("admin-form__error") }
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: "mailFrom",
                         label: "Mail from",
@@ -24,7 +24,7 @@ struct SubmissionMailForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: "mailTo",
                         label: "Mail to address",
@@ -34,7 +34,7 @@ struct SubmissionMailForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: "subject",
                         label: "Subject",
@@ -44,7 +44,7 @@ struct SubmissionMailForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldMultiInput(
+                AdminFormFieldMultiInput(
                     state: .init(
                         name: "additionalHeaders[]",
                         label: "Additional headers",
@@ -56,7 +56,7 @@ struct SubmissionMailForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldTextArea(
+                AdminFormFieldTextArea(
                     state: .init(
                         name: "messageBody",
                         label: "Message body",
@@ -66,8 +66,8 @@ struct SubmissionMailForm: Component {
                     )
                 )
             )
-            Div { context.build(NewAdminSubmitButton(submitLabel)) }
-                .class("new-admin-form__actions")
+            Div { context.build(AdminSubmitButton(submitLabel)) }
+                .class("admin-form__actions")
         }
         return context.build(form)
     }

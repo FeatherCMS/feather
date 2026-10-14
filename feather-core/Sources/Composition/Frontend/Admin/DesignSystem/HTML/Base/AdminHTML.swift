@@ -12,11 +12,11 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminHTML<T: Component>: Component where T.HTML: FlowContent {
+public struct AdminHTML<T: Component>: Component where T.HTML: FlowContent {
 
     let title: String
     let language: String
-    let body: NewAdminBody<T>
+    let body: AdminBody<T>
     let stylesheetPath: String?
     let richContentEditorBlocks:
         [AdminRichContentEditorBlockDefinition]
@@ -25,7 +25,7 @@ public struct NewAdminHTML<T: Component>: Component where T.HTML: FlowContent {
     public init(
         title: String,
         language: String = "en-US",
-        body: NewAdminBody<T>,
+        body: AdminBody<T>,
         stylesheetPath: String? = "/admin/style.css",
         richContentEditorBlocks: [AdminRichContentEditorBlockDefinition] = []
     ) {
@@ -49,7 +49,7 @@ public struct NewAdminHTML<T: Component>: Component where T.HTML: FlowContent {
         let css = cssRenderer.render(style)
         let scripts = context.scripts()
         let renderedHead: Head = context.build(
-            NewAdminHead(
+            AdminHead(
                 title: title,
                 stylesheet: css,
                 scripts: [richContentEditorConfigurationScript] + scripts,

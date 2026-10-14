@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminBarChart: Component {
+public struct AdminBarChart: Component {
     public struct Item: Sendable {
         public let label: String
         public let value: Int
@@ -33,34 +33,34 @@ public struct NewAdminBarChart: Component {
 
     public func rules() -> [any Rule] {
         Media {
-            Custom(".new-admin-bar-chart") {
+            Custom(".admin-bar-chart") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(12.px)
             }
-            Custom(".new-admin-bar-chart__row") {
+            Custom(".admin-bar-chart__row") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(6.px)
             }
-            Custom(".new-admin-bar-chart__header") {
+            Custom(".admin-bar-chart__header") {
                 Display(.flex)
                 AlignItems(.baseline)
                 JustifyContent(.spaceBetween)
                 Gap(12.px)
             }
-            Custom(".new-admin-bar-chart__label") {
+            Custom(".admin-bar-chart__label") {
                 MinWidth(0.px)
                 Overflow(.hidden)
                 TextOverflow(.ellipsis)
                 WhiteSpace(.nowrap)
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
             }
-            Custom(".new-admin-bar-chart__value") {
+            Custom(".admin-bar-chart__value") {
                 FlexShrink(0)
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
             }
-            Custom(".new-admin-bar-chart__track") {
+            Custom(".admin-bar-chart__track") {
                 Height(10.px)
                 BorderRadius(999.px)
                 Overflow(.hidden)
@@ -68,7 +68,7 @@ public struct NewAdminBarChart: Component {
                     .variable(TokenKey.Colors.Materials.Secondary.border)
                 )
             }
-            Custom(".new-admin-bar-chart__bar") {
+            Custom(".admin-bar-chart__bar") {
                 Height(100.percent)
                 BorderRadius(999.px)
             }
@@ -93,22 +93,22 @@ public struct NewAdminBarChart: Component {
                     )
                     Div {
                         Div {
-                            Span(item.label).class("new-admin-bar-chart__label")
+                            Span(item.label).class("admin-bar-chart__label")
                             Span("\(item.value)")
-                                .class("new-admin-bar-chart__value")
+                                .class("admin-bar-chart__value")
                         }
-                        .class("new-admin-bar-chart__header")
+                        .class("admin-bar-chart__header")
                         Div {
                             Div {}
-                                .class("new-admin-bar-chart__bar")
+                                .class("admin-bar-chart__bar")
                                 .style("width:\(width)%;background:\(color);")
                         }
-                        .class("new-admin-bar-chart__track")
+                        .class("admin-bar-chart__track")
                     }
-                    .class("new-admin-bar-chart__row")
+                    .class("admin-bar-chart__row")
                 }
             }
         }
-        .class("new-admin-bar-chart")
+        .class("admin-bar-chart")
     }
 }

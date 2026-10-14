@@ -5,7 +5,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminStatusSelectField: Component {
+public struct AdminStatusSelectField: Component {
     public let formID: String
     public let selectedStatus: String
     public let options: [String]
@@ -22,7 +22,7 @@ public struct NewAdminStatusSelectField: Component {
 
     public func selectors() -> [any CSS.Selector] {
         [
-            Class("new-admin-status-select") {
+            Class("admin-status-select") {
                 MinHeight(32.px)
                 MinWidth(6.75.rem)
                 Padding(vertical: 7.px, horizontal: 9.px)
@@ -51,7 +51,7 @@ public struct NewAdminStatusSelectField: Component {
                 UnsafeRawProperty(name: "background-size", value: "5px 5px")
                 UnsafeRawProperty(name: "background-repeat", value: "no-repeat")
             },
-            Class("new-admin-status-select:focus-visible") {
+            Class("admin-status-select:focus-visible") {
                 Outline(
                     2.px,
                     .solid,
@@ -73,6 +73,6 @@ public struct NewAdminStatusSelectField: Component {
         .name("status")
         .form(formID)
         .onChange("document.getElementById('\(formID)').requestSubmit();")
-        .class("new-admin-status-select")
+        .class("admin-status-select")
     }
 }

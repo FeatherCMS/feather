@@ -6,7 +6,7 @@ import WebBuilders
 public import WebComponents
 
 /// A page-level message for states where the requested admin content cannot be shown.
-public struct NewAdminStatusView: Component {
+public struct AdminStatusView: Component {
 
     public struct State: Sendable {
         public let title: String
@@ -23,12 +23,12 @@ public struct NewAdminStatusView: Component {
 
     public let state: State
     public let icon: SVG?
-    public let action: NewAdminButton?
+    public let action: AdminButton?
 
     public init(
         state: State,
         icon: SVG? = nil,
-        action: NewAdminButton? = nil
+        action: AdminButton? = nil
     ) {
         self.state = state
         self.icon = icon

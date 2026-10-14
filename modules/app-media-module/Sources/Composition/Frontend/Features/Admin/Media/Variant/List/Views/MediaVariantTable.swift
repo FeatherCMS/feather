@@ -9,10 +9,10 @@ import WebComponents
 
 struct MediaVariantTable: Component {
     struct State {
-        let permissions: NewAdminListActions
+        let permissions: AdminListActions
         let variants:
             [MediaAdminAPI.Components.Schemas.MediaVariantListItemSchema]
-        let pageState: NewAdminListPageState
+        let pageState: AdminListPageState
         let search: String?
     }
 
@@ -21,10 +21,10 @@ struct MediaVariantTable: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: MediaVariantRoutes.breadcrumb)
+                AdminBreadcrumb(links: MediaVariantRoutes.breadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Media variants",
                         description:
@@ -47,12 +47,12 @@ struct MediaVariantTable: Component {
 
 struct MediaVariantTableContent: Component {
     let variants: [MediaAdminAPI.Components.Schemas.MediaVariantListItemSchema]
-    let permissions: NewAdminListActions
-    let pageState: NewAdminListPageState
+    let permissions: AdminListActions
+    let pageState: AdminListPageState
     let search: String?
 
     private var returnTo: String {
-        NewAdminLocation.url(
+        AdminLocation.url(
             path: MediaVariantRoutes.list.description,
             page: pageState.page,
             search: search
@@ -63,11 +63,11 @@ struct MediaVariantTableContent: Component {
         let canDelete = permissions.allows(MediaPermissions.Variants.delete)
         let hasActiveQuery = !(search?.isEmpty ?? true)
         return context.build(
-            NewAdminList(
+            AdminList(
                 table: {
                     if pageState.isPageOutOfRange {
                         context.build(
-                            NewAdminListInvalidPageState(
+                            AdminListInvalidPageState(
                                 pageState: pageState,
                                 path: MediaVariantRoutes.list.description
                             )
@@ -76,13 +76,13 @@ struct MediaVariantTableContent: Component {
                     else if variants.isEmpty {
                         if hasActiveQuery {
                             context.build(
-                                NewAdminListNoResultsState(
+                                AdminListNoResultsState(
                                     message:
                                         "No media variants match your search.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         context.build(
-                                            NewAdminButton(
+                                            AdminButton(
                                                 "Reset search",
                                                 href: MediaVariantRoutes.list
                                                     .description,
@@ -95,7 +95,7 @@ struct MediaVariantTableContent: Component {
                         }
                         else {
                             context.build(
-                                NewAdminListEmptyState(
+                                AdminListEmptyState(
                                     message: "No media variants yet.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
@@ -103,7 +103,7 @@ struct MediaVariantTableContent: Component {
                                             MediaPermissions.Variants.create
                                         ) {
                                             context.build(
-                                                NewAdminButton(
+                                                AdminButton(
                                                     "Add new",
                                                     href: MediaVariantRoutes.add
                                                         .description
@@ -117,9 +117,9 @@ struct MediaVariantTableContent: Component {
                     }
                     else {
                         context.build(
-                            NewAdminListSelectionForm(
+                            AdminListSelectionForm(
                                 state: .init(
-                                    action: NewAdminLocation.remove(
+                                    action: AdminLocation.remove(
                                         path: MediaVariantRoutes.remove
                                             .description,
                                         ids: [],
@@ -134,7 +134,7 @@ struct MediaVariantTableContent: Component {
                                     isEnabled: canDelete
                                 ),
                                 table: context.build(
-                                    NewAdminListShell(
+                                    AdminListShell(
                                         layout: .init(
                                             name: "media-variants",
                                             columns: [
@@ -149,7 +149,7 @@ struct MediaVariantTableContent: Component {
                                                 Tr {
                                                     if canDelete {
                                                         context.build(
-                                                            NewAdminListSelectAllCheckbox()
+                                                            AdminListSelectAllCheckbox()
                                                         )
                                                     }
                                                     Th("Key")
@@ -184,7 +184,7 @@ struct MediaVariantTableContent: Component {
                 },
                 search: {
                     context.build(
-                        NewAdminListSearch(
+                        AdminListSearch(
                             state: .init(
                                 action: MediaVariantRoutes.list.description,
                                 placeholder: "Quick search media variants",
@@ -196,9 +196,9 @@ struct MediaVariantTableContent: Component {
                 toolbar: {
                     if permissions.allows(MediaPermissions.Variants.create) {
                         context.build(
-                            NewAdminListToolbar {
+                            AdminListToolbar {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         "Add new",
                                         href: MediaVariantRoutes.add.description
                                     )
@@ -209,7 +209,7 @@ struct MediaVariantTableContent: Component {
                 },
                 pagination: {
                     context.build(
-                        NewAdminListPagination(
+                        AdminListPagination(
                             state: .init(
                                 path: MediaVariantRoutes.list.description,
                                 pageState: pageState,
@@ -225,20 +225,20 @@ struct MediaVariantTableContent: Component {
 
 struct MediaVariantRow: Component {
     let variant: MediaAdminAPI.Components.Schemas.MediaVariantListItemSchema
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
     let returnTo: String
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(MediaPermissions.Variants.delete) {
-                context.build(NewAdminListRowCheckbox(id: variant.id))
+                context.build(AdminListRowCheckbox(id: variant.id))
             }
             Td(variant.key).data("label", "Key")
             Td(variant.name).data("label", "Name")
             Td(variant.isRequired ? "Yes" : "No").data("label", "Required")
             Td(variant.isActive ? "Yes" : "No").data("label", "Active")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: [
                         .init(
@@ -251,7 +251,7 @@ struct MediaVariantRow: Component {
                         ),
                         .init(
                             "Remove",
-                            href: NewAdminLocation.remove(
+                            href: AdminLocation.remove(
                                 path: MediaVariantRoutes.remove.description,
                                 ids: [variant.id],
                                 returnTo: returnTo

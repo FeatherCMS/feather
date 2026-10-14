@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminChartCard<Chart: Component>: Component {
+public struct AdminChartCard<Chart: Component>: Component {
     public let title: String
     public let chart: Chart
 
@@ -15,7 +15,7 @@ public struct NewAdminChartCard<Chart: Component>: Component {
 
     public func rules() -> [any Rule] {
         Media {
-            Custom(".new-admin-chart-card") {
+            Custom(".admin-chart-card") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(16.px)
@@ -28,7 +28,7 @@ public struct NewAdminChartCard<Chart: Component>: Component {
                 BorderRadius(12.px)
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
             }
-            Custom(".new-admin-chart-card h2, .new-admin-chart-card h3") {
+            Custom(".admin-chart-card h2, .admin-chart-card h3") {
                 Margin(0)
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
             }
@@ -40,6 +40,6 @@ public struct NewAdminChartCard<Chart: Component>: Component {
             H2(title)
             context.build(chart)
         }
-        .class("new-admin-chart-card")
+        .class("admin-chart-card")
     }
 }

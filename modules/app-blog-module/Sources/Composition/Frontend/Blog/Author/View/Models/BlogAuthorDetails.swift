@@ -14,7 +14,7 @@ import WebFrontend
 struct BlogAuthorDetails: Component {
     struct State {
         let author: BlogAuthorDetailsModel
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
         let permissions: Set<String>
     }
     let state: State
@@ -22,7 +22,7 @@ struct BlogAuthorDetails: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminDetailView(
+                AdminDetailView(
                     breadcrumb: state.breadcrumb,
                     pageHeader: .primary(
                         title: "Blog author details",
@@ -54,7 +54,7 @@ struct BlogAuthorDetails: Component {
                 let formID = "blog-author-status-\(state.author.id)"
                 Div {
                     context.build(
-                        NewAdminStatusSelectFormDefinition(
+                        AdminStatusSelectFormDefinition(
                             id: formID,
                             action:
                                 BlogAdminRoutes.authorStatus(
@@ -69,17 +69,17 @@ struct BlogAuthorDetails: Component {
                         )
                     )
                     context.build(
-                        NewAdminStatusSelectField(
+                        AdminStatusSelectField(
                             formID: formID,
                             selectedStatus: state.author.metadata
                                 .normalizedStatus
                         )
                     )
                 }
-                .class("new-admin-detail-actions")
+                .class("admin-detail-actions")
             }
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Author links",
                         description: "Manage links shown for this author."
@@ -90,7 +90,7 @@ struct BlogAuthorDetails: Component {
                 BlogPermissions.AuthorLinks.create.rawValue
             ) {
                 context.build(
-                    NewAdminButton(
+                    AdminButton(
                         "Add link",
                         href:
                             BlogAdminRoutes.authorLinkAdd(
@@ -115,7 +115,7 @@ struct BlogAuthorDetails: Component {
                             total: state.author.items.count
                         ),
                         search: "",
-                        permissions: NewAdminListActions(
+                        permissions: AdminListActions(
                             Set(state.permissions.map(PermissionKey.init))
                         ),
                         breadcrumb: BlogAdminRoutes.authorLinksBreadcrumb(
@@ -129,8 +129,8 @@ struct BlogAuthorDetails: Component {
         .class("cms-section")
     }
 
-    private var actions: [NewAdminDetailView.Action] {
-        var result: [NewAdminDetailView.Action] = []
+    private var actions: [AdminDetailView.Action] {
+        var result: [AdminDetailView.Action] = []
         if state.permissions.contains(BlogPermissions.Authors.update.rawValue) {
             result.append(
                 .init(

@@ -5,7 +5,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminFormFieldMultiInput: Component {
+public struct AdminFormFieldMultiInput: Component {
     public struct State: Sendable {
         public var name: String
         public var label: String
@@ -48,18 +48,18 @@ public struct NewAdminFormFieldMultiInput: Component {
 
     public func selectors() -> [any CSS.Selector] {
         [
-            Class("new-admin-multi-input") {
+            Class("admin-multi-input") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(6.px)
                 Position(.relative)
             },
-            Custom(".new-admin-multi-input > label") {
+            Custom(".admin-multi-input > label") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(8.px)
             },
-            Class("new-admin-multi-input__control") {
+            Class("admin-multi-input__control") {
                 Display(.grid)
                 GridTemplateColumns(.tracks([.fraction(1.fr)]))
                 AlignItems(.center)
@@ -74,7 +74,7 @@ public struct NewAdminFormFieldMultiInput: Component {
                 BorderRadius(9.px)
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
             },
-            Custom(".new-admin-multi-input__control:focus-within") {
+            Custom(".admin-multi-input__control:focus-within") {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Primary.border)
                 )
@@ -85,14 +85,14 @@ public struct NewAdminFormFieldMultiInput: Component {
                 )
                 OutlineOffset(2.px)
             },
-            Class("new-admin-multi-input__input-wrap") {
+            Class("admin-multi-input__input-wrap") {
                 Display(.flex)
                 FlexWrap(.wrap)
                 AlignItems(.center)
                 Gap(4.px)
                 MinWidth(0.px)
             },
-            Class("new-admin-multi-input__input") {
+            Class("admin-multi-input__input") {
                 Width(100.percent)
                 MinWidth(0.px)
                 BoxSizing(.borderBox)
@@ -108,7 +108,7 @@ public struct NewAdminFormFieldMultiInput: Component {
                 UnsafeRawProperty(name: "-webkit-appearance", value: "none")
             },
             Custom(
-                ".new-admin-multi-input__input:focus, .new-admin-multi-input__input:focus-visible"
+                ".admin-multi-input__input:focus, .admin-multi-input__input:focus-visible"
             ) {
                 UnsafeRawProperty(name: "outline", value: "none !important")
                 UnsafeRawProperty(
@@ -118,7 +118,7 @@ public struct NewAdminFormFieldMultiInput: Component {
                 UnsafeRawProperty(name: "-webkit-appearance", value: "none")
                 UnsafeRawProperty(name: "appearance", value: "none")
             },
-            Class("new-admin-multi-input__selected") {
+            Class("admin-multi-input__selected") {
                 Display(.inlineFlex)
                 FlexWrap(.wrap)
                 AlignItems(.center)
@@ -126,10 +126,10 @@ public struct NewAdminFormFieldMultiInput: Component {
                 Width(100.percent)
                 BoxSizing(.borderBox)
             },
-            Custom(".new-admin-multi-input__selected:empty") {
+            Custom(".admin-multi-input__selected:empty") {
                 Display(.none)
             },
-            Class("new-admin-multi-input__chip") {
+            Class("admin-multi-input__chip") {
                 Display(.inlineFlex)
                 AlignItems(.center)
                 Gap(6.px)
@@ -145,7 +145,7 @@ public struct NewAdminFormFieldMultiInput: Component {
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
                 FontSize(0.875.rem)
             },
-            Class("new-admin-multi-input__chip-remove") {
+            Class("admin-multi-input__chip-remove") {
                 Display(.inlineFlex)
                 AlignItems(.center)
                 JustifyContent(.center)
@@ -164,7 +164,7 @@ public struct NewAdminFormFieldMultiInput: Component {
                 FontSize(1.rem)
                 Cursor(.pointer)
             },
-            Custom(".new-admin-multi-input__chip-remove:focus-visible") {
+            Custom(".admin-multi-input__chip-remove:focus-visible") {
                 Outline(
                     2.px,
                     .solid,
@@ -172,18 +172,18 @@ public struct NewAdminFormFieldMultiInput: Component {
                 )
                 OutlineOffset(1.px)
             },
-            Custom(".new-admin-multi-input .field-error") {
+            Custom(".admin-multi-input .field-error") {
                 Color(.red)
                 FontSize(0.86.rem)
             },
             Custom(
-                ".new-admin-multi-input.has-error .new-admin-multi-input__control"
+                ".admin-multi-input.has-error .admin-multi-input__control"
             ) {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Secondary.border)
                 )
             },
-            Class("new-admin-multi-input__status") {
+            Class("admin-multi-input__status") {
                 Position(.absolute)
                 Width(1.px)
                 Height(1.px)
@@ -197,7 +197,7 @@ public struct NewAdminFormFieldMultiInput: Component {
         Section {
             Label {
                 context.build(
-                    NewAdminFormFieldLabel(
+                    AdminFormFieldLabel(
                         text: state.label,
                         isRequired: state.isRequired
                     )
@@ -209,20 +209,20 @@ public struct NewAdminFormFieldMultiInput: Component {
                             Button("×")
                                 .type(.button)
                                 .class(
-                                    "new-admin-multi-input__chip-remove"
+                                    "admin-multi-input__chip-remove"
                                 )
                                 .data("value", value)
                                 .ariaLabel("Remove \(value)")
                         }
-                        .class("new-admin-multi-input__chip")
+                        .class("admin-multi-input__chip")
                     }
                 }
-                .class("new-admin-multi-input__selected")
+                .class("admin-multi-input__selected")
                 Div {
                     Div {
                         Input()
                             .type(.text)
-                            .class("new-admin-multi-input__input")
+                            .class("admin-multi-input__input")
                             .id(inputID)
                             .placeholder(state.placeholder)
                             .autocomplete(.off)
@@ -239,9 +239,9 @@ public struct NewAdminFormFieldMultiInput: Component {
                             }
                             .if(state.isDisabled) { $0.disabled() }
                     }
-                    .class("new-admin-multi-input__input-wrap")
+                    .class("admin-multi-input__input-wrap")
                 }
-                .class("new-admin-multi-input__control")
+                .class("admin-multi-input__control")
             }
             .for(inputID)
             for value in normalizedValues {
@@ -249,15 +249,15 @@ public struct NewAdminFormFieldMultiInput: Component {
                     .type(.hidden)
                     .name(state.name)
                     .value(value)
-                    .class("new-admin-multi-input__value")
+                    .class("admin-multi-input__value")
                     .if(state.isDisabled) { $0.disabled() }
             }
             Div {}
-                .class("new-admin-multi-input__status")
+                .class("admin-multi-input__status")
                 .role("status")
                 .ariaLive(.polite)
             if let help = state.help {
-                context.build(NewAdminFormFieldHelp(help))
+                context.build(AdminFormFieldHelp(help))
             }
             if let error = state.error {
                 Span(error).id(errorID).class("field-error")
@@ -265,7 +265,7 @@ public struct NewAdminFormFieldMultiInput: Component {
         }
         .if(state.error != nil) { $0.class("has-error") }
         .if(state.isDisabled) { $0.class("is-disabled") }
-        .class("new-admin-multi-input", "form-multi-input-field")
+        .class("admin-multi-input", "form-multi-input-field")
         .data("name", state.name)
         .data("required", state.isRequired ? "true" : "false")
         .data("commits-on-comma", state.commitsOnComma ? "true" : "false")
@@ -279,13 +279,13 @@ public struct NewAdminFormFieldMultiInput: Component {
                     if (root.dataset.bound === "1") { return; }
                     root.dataset.bound = "1";
 
-                    var input = root.querySelector(".new-admin-multi-input__input");
-                    var selectedContainer = root.querySelector(".new-admin-multi-input__selected");
-                    var status = root.querySelector(".new-admin-multi-input__status");
+                    var input = root.querySelector(".admin-multi-input__input");
+                    var selectedContainer = root.querySelector(".admin-multi-input__selected");
+                    var status = root.querySelector(".admin-multi-input__status");
                     if (!input || !selectedContainer) { return; }
 
                     var selectedValues = Array.prototype.map.call(
-                        root.querySelectorAll(".new-admin-multi-input__value"),
+                        root.querySelectorAll(".admin-multi-input__value"),
                         function (element) { return element.value; }
                     );
                     var required = root.dataset.required === "true";
@@ -300,7 +300,7 @@ public struct NewAdminFormFieldMultiInput: Component {
                     }
 
                     function syncHiddenInputs() {
-                        root.querySelectorAll(".new-admin-multi-input__value").forEach(function (element) {
+                        root.querySelectorAll(".admin-multi-input__value").forEach(function (element) {
                             element.remove();
                         });
                         selectedValues.forEach(function (value) {
@@ -309,7 +309,7 @@ public struct NewAdminFormFieldMultiInput: Component {
                             hidden.name = root.dataset.name || "";
                             hidden.value = value;
                             hidden.disabled = input.disabled;
-                            hidden.className = "new-admin-multi-input__value";
+                            hidden.className = "admin-multi-input__value";
                             root.appendChild(hidden);
                         });
                     }
@@ -318,12 +318,12 @@ public struct NewAdminFormFieldMultiInput: Component {
                         selectedContainer.innerHTML = "";
                         selectedValues.forEach(function (value) {
                             var chip = document.createElement("span");
-                            chip.className = "new-admin-multi-input__chip";
+                            chip.className = "admin-multi-input__chip";
                             var label = document.createElement("span");
                             label.textContent = value;
                             var remove = document.createElement("button");
                             remove.type = "button";
-                            remove.className = "new-admin-multi-input__chip-remove";
+                            remove.className = "admin-multi-input__chip-remove";
                             remove.dataset.value = value;
                             remove.setAttribute("aria-label", "Remove " + value);
                             remove.textContent = "×";
@@ -389,7 +389,7 @@ public struct NewAdminFormFieldMultiInput: Component {
                     selectedContainer.addEventListener("click", function (event) {
                         var target = event.target;
                         if (!target || !target.closest) { return; }
-                        var remove = target.closest(".new-admin-multi-input__chip-remove");
+                        var remove = target.closest(".admin-multi-input__chip-remove");
                         if (!remove) { return; }
                         event.preventDefault();
                         event.stopPropagation();
@@ -424,7 +424,7 @@ public struct NewAdminFormFieldMultiInput: Component {
                 }
 
                 function initializeAll() {
-                    document.querySelectorAll(".new-admin-multi-input").forEach(initialize);
+                    document.querySelectorAll(".admin-multi-input").forEach(initialize);
                 }
 
                 if (document.readyState === "loading") {

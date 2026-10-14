@@ -67,20 +67,20 @@ struct AnalyticsInsightsView: Component {
                 Gap(18.px)
                 MinWidth(0.px)
             }
-            Custom(".analytics-insights__stats .new-admin-stat-card") {
+            Custom(".analytics-insights__stats .admin-stat-card") {
                 MinHeight(108.px)
                 BoxSizing(.borderBox)
                 JustifyContent(.center)
                 Padding(22.px)
                 BorderRadius(16.px)
             }
-            Custom(".analytics-insights__stats .new-admin-stat-card__label") {
+            Custom(".analytics-insights__stats .admin-stat-card__label") {
                 FontSize(0.78.rem)
                 FontWeight(.number(600))
                 LetterSpacing(0.045.em)
                 TextTransform(.uppercase)
             }
-            Custom(".analytics-insights__stats .new-admin-stat-card__value") {
+            Custom(".analytics-insights__stats .admin-stat-card__value") {
                 FontSize(1.75.rem)
             }
             Custom(".analytics-insights__breakdowns") {
@@ -89,7 +89,7 @@ struct AnalyticsInsightsView: Component {
                 Gap(24.px)
                 MinWidth(0.px)
             }
-            Custom(".analytics-insights .new-admin-chart-card") {
+            Custom(".analytics-insights .admin-chart-card") {
                 Gap(20.px)
                 Padding(24.px)
                 BorderRadius(18.px)
@@ -98,14 +98,14 @@ struct AnalyticsInsightsView: Component {
                 BoxSizing(.borderBox)
             }
             Custom(
-                ".analytics-insights .new-admin-chart-card svg > rect:first-child"
+                ".analytics-insights .admin-chart-card svg > rect:first-child"
             ) {
                 UnsafeRawProperty(
                     name: "fill",
                     value: "var(--material-color-secondary-tint)"
                 )
             }
-            Custom(".analytics-insights .new-admin-chart-card h2") {
+            Custom(".analytics-insights .admin-chart-card h2") {
                 FontSize(1.rem)
                 FontWeight(.number(650))
                 Padding(bottom: 14.px)
@@ -115,19 +115,19 @@ struct AnalyticsInsightsView: Component {
                     .variable(TokenKey.Colors.Materials.Primary.border)
                 )
             }
-            Custom(".analytics-insights .new-admin-bar-chart") {
+            Custom(".analytics-insights .admin-bar-chart") {
                 Gap(14.px)
             }
-            Custom(".analytics-insights .new-admin-bar-chart__row") {
+            Custom(".analytics-insights .admin-bar-chart__row") {
                 Gap(8.px)
             }
-            Custom(".analytics-insights .new-admin-bar-chart__track") {
+            Custom(".analytics-insights .admin-bar-chart__track") {
                 Height(12.px)
             }
             Custom(
                 ".analytics-insights .breadcrumb, "
                     + ".analytics-insights .admin-page-header, "
-                    + ".analytics-insights .new-admin-form"
+                    + ".analytics-insights .admin-form"
             ) {
                 MarginTop(0.px)
                 MarginBottom(0.px)
@@ -147,7 +147,7 @@ struct AnalyticsInsightsView: Component {
             ) {
                 GridTemplateColumns(.fraction(1.fr))
             }
-            Custom(".analytics-insights .new-admin-chart-card") {
+            Custom(".analytics-insights .admin-chart-card") {
                 Padding(18.px)
             }
         }
@@ -156,9 +156,9 @@ struct AnalyticsInsightsView: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             Div {
-                context.build(NewAdminBreadcrumb(links: breadcrumb))
+                context.build(AdminBreadcrumb(links: breadcrumb))
                 context.build(
-                    NewAdminPageHeader(
+                    AdminPageHeader(
                         state: .primary(
                             title: page.source.pageTitle,
                             description: page.source.summary
@@ -186,7 +186,7 @@ struct AnalyticsInsightsView: Component {
                 Div {
                     for item in metrics {
                         context.build(
-                            NewAdminStatCard(label: item.0, value: item.1)
+                            AdminStatCard(label: item.0, value: item.1)
                         )
                     }
                 }
@@ -200,9 +200,9 @@ struct AnalyticsInsightsView: Component {
                     description: "Requests across the selected time range."
                 )
                 context.build(
-                    NewAdminChartCard(
+                    AdminChartCard(
                         title: "Daily traffic",
-                        chart: NewAdminLineChart(
+                        chart: AdminLineChart(
                             points: page.overview.daily.map {
                                 .init(
                                     label: dateLabel(for: $0.bucket),
@@ -239,7 +239,7 @@ struct AnalyticsInsightsView: Component {
         .class("analytics-insights")
     }
 
-    private var breadcrumb: [NewAdminBreadcrumb.Link] {
+    private var breadcrumb: [AdminBreadcrumb.Link] {
         AnalyticsAdminRoutes.breadcrumb
     }
 
@@ -301,7 +301,7 @@ struct AnalyticsInsightsView: Component {
         ]
     }
 
-    private var breakdowns: [NewAdminChartCard<NewAdminBarChart>] {
+    private var breakdowns: [AdminChartCard<AdminBarChart>] {
         let overview = page.overview
         if page.source == .web {
             return [
@@ -327,10 +327,10 @@ struct AnalyticsInsightsView: Component {
         _ title: String,
         _ items: [AnalyticsAdminAPI.Components.Schemas
             .AnalyticsLogOverviewBreakdownItemSchema]
-    ) -> NewAdminChartCard<NewAdminBarChart> {
-        NewAdminChartCard(
+    ) -> AdminChartCard<AdminBarChart> {
+        AdminChartCard(
             title: title,
-            chart: NewAdminBarChart(
+            chart: AdminBarChart(
                 items: items.map {
                     .init(label: $0.label, value: $0.count, share: $0.share)
                 }

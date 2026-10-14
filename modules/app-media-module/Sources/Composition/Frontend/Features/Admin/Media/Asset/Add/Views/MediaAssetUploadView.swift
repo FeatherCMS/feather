@@ -28,7 +28,7 @@ struct MediaAssetUploadView: Component {
         var allowedExtensions: AllowedExtensions = .anything
         var isDialog: Bool = false
         var previewVariant: String? = nil
-        var selectedAsset: NewAdminMediaAsset? = nil
+        var selectedAsset: AdminMediaAsset? = nil
         var selectionMode: MediaAssetSelectionMode = .single
     }
 
@@ -38,10 +38,10 @@ struct MediaAssetUploadView: Component {
         Section {
             if !state.form.isPicker && !state.form.isDialog {
                 context.build(
-                    NewAdminBreadcrumb(links: MediaAssetRoutes.breadcrumb)
+                    AdminBreadcrumb(links: MediaAssetRoutes.breadcrumb)
                 )
                 context.build(
-                    NewAdminPageHeader(
+                    AdminPageHeader(
                         state: .primary(
                             title: "Add media asset",
                             description: "Upload a media asset to the library."
@@ -50,7 +50,7 @@ struct MediaAssetUploadView: Component {
                 )
             }
             if let error = state.form.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
             if let selectedAsset = state.form.selectedAsset {
                 Div {}
@@ -60,13 +60,13 @@ struct MediaAssetUploadView: Component {
                     )
                     .data(
                         "media-picker-selected-url",
-                        NewAdminMediaAsset.mediaURL(path: selectedAsset.url)
+                        AdminMediaAsset.mediaURL(path: selectedAsset.url)
                     )
                     .data(
                         "media-picker-selected-preview-url",
                         selectedPreviewURL(for: selectedAsset)
                             .map {
-                                NewAdminMediaAsset.mediaURL(path: $0)
+                                AdminMediaAsset.mediaURL(path: $0)
                             } ?? ""
                     )
                     .data(
@@ -98,7 +98,7 @@ struct MediaAssetUploadView: Component {
             uploadForm(context: &context)
             Style(
                 """
-                    .new-admin-media-upload__dropzone {
+                    .admin-media-upload__dropzone {
                         position: relative;
                         display: flex;
                         flex-direction: column;
@@ -116,23 +116,23 @@ struct MediaAssetUploadView: Component {
                         margin-bottom: 12px;
                         transition: border-color .15s ease, background .15s ease;
                     }
-                    .new-admin-media-upload__dropzone.is-dragover {
+                    .admin-media-upload__dropzone.is-dragover {
                         border-color: var(--link-color-hover);
                         background: var(--material-color-secondary-tint);
                     }
-                    .new-admin-media-upload__icon {
+                    .admin-media-upload__icon {
                         display: block;
                         flex: 0 0 auto;
                         width: 32px;
                         height: 32px;
                         color: var(--link-color-default);
                     }
-                    .new-admin-media-upload__help {
+                    .admin-media-upload__help {
                         margin: 0;
                         color: var(--material-color-tertiary-text);
                         font-size: .9rem;
                     }
-                    .new-admin-media-upload__input {
+                    .admin-media-upload__input {
                         position: absolute;
                         inset: 0;
                         width: 100%;
@@ -140,7 +140,7 @@ struct MediaAssetUploadView: Component {
                         cursor: pointer;
                         opacity: 0;
                     }
-                    .new-admin-media-upload__queue {
+                    .admin-media-upload__queue {
                         display: flex;
                         flex-direction: column;
                         gap: 6px;
@@ -148,10 +148,10 @@ struct MediaAssetUploadView: Component {
                         padding: 0;
                         list-style: none;
                     }
-                    .new-admin-media-upload > .new-admin-form__error {
+                    .admin-media-upload > .admin-form__error {
                         margin: 0 0 12px;
                     }
-                    .new-admin-media-upload__summary {
+                    .admin-media-upload__summary {
                         display: flex;
                         flex-direction: column;
                         gap: 8px;
@@ -161,48 +161,48 @@ struct MediaAssetUploadView: Component {
                         border-radius: 8px;
                         background: var(--material-color-tertiary-tint);
                     }
-                    .new-admin-media-upload__summary[hidden] {
+                    .admin-media-upload__summary[hidden] {
                         display: none;
                     }
-                    .new-admin-media-upload__summary-header {
+                    .admin-media-upload__summary-header {
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
                         gap: 12px;
                     }
-                    .new-admin-media-upload__summary-total {
+                    .admin-media-upload__summary-total {
                         display: inline-flex;
                         align-items: center;
                         gap: 6px;
                     }
-                    .new-admin-media-upload__summary-label,
-                    .new-admin-media-upload__summary-size,
-                    .new-admin-media-upload__summary-count,
-                    .new-admin-media-upload__summary-progress {
+                    .admin-media-upload__summary-label,
+                    .admin-media-upload__summary-size,
+                    .admin-media-upload__summary-count,
+                    .admin-media-upload__summary-progress {
                         color: var(--material-color-tertiary-text);
                         font-size: .86rem;
                     }
-                    .new-admin-media-upload__summary-label {
+                    .admin-media-upload__summary-label {
                         font-weight: 600;
                     }
-                    .new-admin-media-upload__progress[hidden],
-                    .new-admin-media-upload__summary-progress[hidden] {
+                    .admin-media-upload__progress[hidden],
+                    .admin-media-upload__summary-progress[hidden] {
                         display: none;
                     }
-                    .new-admin-media-upload__progress {
+                    .admin-media-upload__progress {
                         height: 6px;
                         overflow: hidden;
                         border-radius: 999px;
                         background: var(--material-color-tertiary-border);
                     }
-                    .new-admin-media-upload__progress-bar {
+                    .admin-media-upload__progress-bar {
                         width: 0;
                         height: 100%;
                         border-radius: inherit;
                         background: var(--link-color-default);
                         transition: width .15s ease;
                     }
-                    .new-admin-media-upload__item {
+                    .admin-media-upload__item {
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
@@ -213,23 +213,23 @@ struct MediaAssetUploadView: Component {
                         border-radius: 8px;
                         background: var(--material-color-tertiary-tint);
                     }
-                    .new-admin-media-upload__details {
+                    .admin-media-upload__details {
                         display: flex;
                         flex-direction: column;
                         min-width: 0;
                         gap: 3px;
                     }
-                    .new-admin-media-upload__name {
+                    .admin-media-upload__name {
                         min-width: 0;
                         overflow: hidden;
                         text-overflow: ellipsis;
                         white-space: nowrap;
                     }
-                    .new-admin-media-upload__size {
+                    .admin-media-upload__size {
                         color: var(--material-color-tertiary-text);
                         font-size: .82rem;
                     }
-                    .new-admin-media-upload__actions {
+                    .admin-media-upload__actions {
                         display: inline-flex;
                         align-items: center;
                         justify-content: flex-end;
@@ -238,7 +238,7 @@ struct MediaAssetUploadView: Component {
                         min-width: 88px;
                         min-height: 32px;
                     }
-                    .new-admin-media-upload__status {
+                    .admin-media-upload__status {
                         display: inline-flex;
                         align-items: center;
                         justify-content: flex-end;
@@ -248,13 +248,13 @@ struct MediaAssetUploadView: Component {
                         font-size: .86rem;
                         text-align: right;
                     }
-                    .new-admin-media-upload__item.is-uploading .new-admin-media-upload__status {
+                    .admin-media-upload__item.is-uploading .admin-media-upload__status {
                         color: var(--link-color-default);
                     }
-                    .new-admin-media-upload__item.is-success .new-admin-media-upload__status {
+                    .admin-media-upload__item.is-success .admin-media-upload__status {
                         color: var(--color-green-foreground);
                     }
-                    .new-admin-media-upload__item.is-error .new-admin-media-upload__status {
+                    .admin-media-upload__item.is-error .admin-media-upload__status {
                         color: var(--color-red-foreground);
                     }
                 """
@@ -394,24 +394,24 @@ struct MediaAssetUploadView: Component {
                         queueElement.replaceChildren();
                         queue.forEach(function (item, index) {
                             var row = document.createElement("li");
-                            row.className = "new-admin-media-upload__item is-" + item.status;
+                            row.className = "admin-media-upload__item is-" + item.status;
                             var details = document.createElement("span");
-                            details.className = "new-admin-media-upload__details";
+                            details.className = "admin-media-upload__details";
                             var name = document.createElement("span");
-                            name.className = "new-admin-media-upload__name";
+                            name.className = "admin-media-upload__name";
                             name.textContent = item.file.name;
                             details.appendChild(name);
                             var size = document.createElement("span");
-                            size.className = "new-admin-media-upload__size";
+                            size.className = "admin-media-upload__size";
                             size.textContent = formatBytes(item.file.size);
                             details.appendChild(size);
                             row.appendChild(details);
                             var actions = document.createElement("span");
-                            actions.className = "new-admin-media-upload__actions";
+                            actions.className = "admin-media-upload__actions";
                             var label = statusLabel(item);
                             if (label) {
                                 var status = document.createElement("span");
-                                status.className = "new-admin-media-upload__status";
+                                status.className = "admin-media-upload__status";
                                 status.textContent = label;
                                 actions.appendChild(status);
                             }
@@ -496,7 +496,7 @@ struct MediaAssetUploadView: Component {
                     function workerSource() {
                         return `
                             function extractError(body) {
-                                var marker = 'class="new-admin-form__error"';
+                                var marker = 'class="admin-form__error"';
                                 var markerIndex = body.indexOf(marker);
                                 if (markerIndex < 0) { return ""; }
                                 var contentStart = body.indexOf(">", markerIndex);
@@ -719,8 +719,8 @@ struct MediaAssetUploadView: Component {
                             dialogHTML = combinedDialogHTML(dialogHTMLs);
                         }
                         if (isPicker && isDialog && dialogHTML) {
-                            var mounted = window.__newAdminDialog &&
-                                window.__newAdminDialog.mountHTML(dialogHTML);
+                            var mounted = window.__adminDialog &&
+                                window.__adminDialog.mountHTML(dialogHTML);
                             if (mounted) {
                                 var dialog = document.querySelector(
                                     "dialog[data-admin-dialog]"
@@ -741,7 +741,7 @@ struct MediaAssetUploadView: Component {
                                 if (field && markers.length) {
                                     document.dispatchEvent(
                                         new CustomEvent(
-                                            "new-admin-media-picker-selection",
+                                            "admin-media-picker-selection",
                                             {
                                                 detail: {
                                                     field: field,
@@ -902,7 +902,7 @@ struct MediaAssetUploadView: Component {
     }
 
     private func selectedPreviewURL(
-        for asset: NewAdminMediaAsset
+        for asset: AdminMediaAsset
     ) -> String? {
         state.form.previewVariant == "cover"
             ? asset.coverURL ?? asset.previewURL
@@ -912,7 +912,7 @@ struct MediaAssetUploadView: Component {
     func uploadForm(
         context: inout BuilderContext
     ) -> some FlowContent {
-        let form = NewAdminForm(
+        let form = AdminForm(
             action: state.form.action,
             hiddenFields: [
                 .init(name: "parentId", value: state.form.parentId),
@@ -932,9 +932,9 @@ struct MediaAssetUploadView: Component {
                 .value(state.form.extension)
             uploadSummary()
             Div {
-                context.build(NewAdminSubmitButton("Upload"))
+                context.build(AdminSubmitButton("Upload"))
             }
-            .class("new-admin-form__actions")
+            .class("admin-form__actions")
         }
         return context.build(form)
             .id("mediaAssetAddForm")
@@ -950,7 +950,7 @@ struct MediaAssetUploadView: Component {
         Section {
             Div {
                 FeatherIcons.get(named: "plusCircle")!
-                    .class("new-admin-media-upload__icon")
+                    .class("admin-media-upload__icon")
                 Strong(
                     state.form.isPicker && state.form.selectionMode != .multiple
                         ? "Drop a file here or choose a file"
@@ -959,7 +959,7 @@ struct MediaAssetUploadView: Component {
                 if !state.form.isPicker || state.form.selectionMode == .multiple
                 {
                     P("You can upload multiple files at once.")
-                        .class("new-admin-media-upload__help")
+                        .class("admin-media-upload__help")
                 }
                 Input()
                     .type(.file)
@@ -979,20 +979,20 @@ struct MediaAssetUploadView: Component {
                                 .joined(separator: ",")
                         )
                     }
-                    .class("new-admin-media-upload__input")
+                    .class("admin-media-upload__input")
             }
-            .class("new-admin-media-upload__dropzone")
+            .class("admin-media-upload__dropzone")
             .data("media-asset-dropzone", "1")
             Ul {}
                 .id("mediaAssetUploadQueue")
-                .class("new-admin-media-upload__queue")
+                .class("admin-media-upload__queue")
                 .hidden()
             P {}
                 .id("mediaAssetUploadError")
-                .class("new-admin-form__error")
+                .class("admin-form__error")
                 .hidden()
         }
-        .class("new-admin-form-field new-admin-media-upload")
+        .class("admin-form-field admin-media-upload")
     }
 
     func uploadSummary() -> some FlowContent {
@@ -1000,32 +1000,32 @@ struct MediaAssetUploadView: Component {
             Div {
                 Span {}
                     .id("mediaAssetUploadTotalCount")
-                    .class("new-admin-media-upload__summary-count")
+                    .class("admin-media-upload__summary-count")
                 Div {
                     Span("Total")
-                        .class("new-admin-media-upload__summary-label")
+                        .class("admin-media-upload__summary-label")
                     Span {}
                         .id("mediaAssetUploadTotalSize")
-                        .class("new-admin-media-upload__summary-size")
+                        .class("admin-media-upload__summary-size")
                 }
-                .class("new-admin-media-upload__summary-total")
+                .class("admin-media-upload__summary-total")
             }
-            .class("new-admin-media-upload__summary-header")
+            .class("admin-media-upload__summary-header")
             Div {
                 Div {}
                     .id("mediaAssetUploadProgressBar")
-                    .class("new-admin-media-upload__progress-bar")
+                    .class("admin-media-upload__progress-bar")
             }
             .id("mediaAssetUploadProgress")
-            .class("new-admin-media-upload__progress")
+            .class("admin-media-upload__progress")
             .hidden()
             Span {}
                 .id("mediaAssetUploadTotalProgress")
-                .class("new-admin-media-upload__summary-progress")
+                .class("admin-media-upload__summary-progress")
                 .hidden()
         }
         .id("mediaAssetUploadSummary")
-        .class("new-admin-media-upload__summary")
+        .class("admin-media-upload__summary")
         .hidden()
     }
 

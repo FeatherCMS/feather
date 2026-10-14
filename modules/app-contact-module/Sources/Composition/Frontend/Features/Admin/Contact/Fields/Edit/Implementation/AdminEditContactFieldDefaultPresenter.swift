@@ -20,7 +20,7 @@ struct AdminEditContactFieldDefaultPresenter:
         fieldErrors: [String: String],
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit contact form field",
@@ -64,7 +64,7 @@ struct AdminEditContactFieldDefaultPresenter:
     func renderErrorPage(
         error: AdminEditContactFieldError
     ) async throws -> HTMLResponse {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         let status: HTTPResponse.Status
         switch error {
         case .notFound:
@@ -98,11 +98,11 @@ struct AdminEditContactFieldDefaultPresenter:
             )
             status = .serviceUnavailable
         }
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit contact form field",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle()
             )

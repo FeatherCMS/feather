@@ -5,7 +5,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminFormFieldSelectAutocomplete: Component {
+public struct AdminFormFieldSelectAutocomplete: Component {
     public enum SelectionMode: String, Sendable, Equatable {
         case single
         case multiple
@@ -81,18 +81,18 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
 
     public func selectors() -> [any CSS.Selector] {
         [
-            Class("new-admin-autocomplete") {
+            Class("admin-autocomplete") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(6.px)
                 Position(.relative)
             },
-            Custom(".new-admin-autocomplete > label") {
+            Custom(".admin-autocomplete > label") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(8.px)
             },
-            Class("new-admin-autocomplete__control") {
+            Class("admin-autocomplete__control") {
                 Display(.grid)
                 GridTemplateColumns(
                     .tracks([.fraction(1.fr), .length(32.px)])
@@ -109,7 +109,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                 BorderRadius(9.px)
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
             },
-            Custom(".new-admin-autocomplete__control:focus-within") {
+            Custom(".admin-autocomplete__control:focus-within") {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Primary.border)
                 )
@@ -120,7 +120,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                 )
                 OutlineOffset(2.px)
             },
-            Custom(".new-admin-autocomplete__input") {
+            Custom(".admin-autocomplete__input") {
                 Width(100.percent)
                 MinWidth(0.px)
                 BoxSizing(.borderBox)
@@ -136,21 +136,21 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                 UnsafeRawProperty(name: "-webkit-appearance", value: "none")
             },
             Custom(
-                ".new-admin-autocomplete__input:focus, .new-admin-autocomplete__input:focus-visible"
+                ".admin-autocomplete__input:focus, .admin-autocomplete__input:focus-visible"
             ) {
                 UnsafeRawProperty(name: "outline", value: "none !important")
                 UnsafeRawProperty(name: "box-shadow", value: "none !important")
                 UnsafeRawProperty(name: "-webkit-appearance", value: "none")
                 UnsafeRawProperty(name: "appearance", value: "none")
             },
-            Class("new-admin-autocomplete__input-wrap") {
+            Class("admin-autocomplete__input-wrap") {
                 Display(.flex)
                 FlexWrap(.wrap)
                 AlignItems(.center)
                 Gap(4.px)
                 MinWidth(0.px)
             },
-            Class("new-admin-autocomplete__selected") {
+            Class("admin-autocomplete__selected") {
                 Display(.inlineFlex)
                 FlexWrap(.wrap)
                 AlignItems(.center)
@@ -158,10 +158,10 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                 Width(100.percent)
                 BoxSizing(.borderBox)
             },
-            Custom(".new-admin-autocomplete__selected:empty") {
+            Custom(".admin-autocomplete__selected:empty") {
                 Display(.none)
             },
-            Class("new-admin-autocomplete__chip") {
+            Class("admin-autocomplete__chip") {
                 Display(.inlineFlex)
                 AlignItems(.center)
                 Gap(6.px)
@@ -177,7 +177,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
                 FontSize(0.875.rem)
             },
-            Class("new-admin-autocomplete__chip-remove") {
+            Class("admin-autocomplete__chip-remove") {
                 Display(.inlineFlex)
                 AlignItems(.center)
                 JustifyContent(.center)
@@ -196,7 +196,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                 FontSize(1.rem)
                 Cursor(.pointer)
             },
-            Custom(".new-admin-autocomplete__chip-remove:focus-visible") {
+            Custom(".admin-autocomplete__chip-remove:focus-visible") {
                 Outline(
                     2.px,
                     .solid,
@@ -204,7 +204,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                 )
                 OutlineOffset(1.px)
             },
-            Class("new-admin-autocomplete__toggle") {
+            Class("admin-autocomplete__toggle") {
                 Display(.inlineFlex)
                 AlignItems(.center)
                 JustifyContent(.center)
@@ -217,7 +217,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                 Outline(0.px, .none)
                 Cursor(.pointer)
             },
-            Class("new-admin-autocomplete__chevron") {
+            Class("admin-autocomplete__chevron") {
                 Display(.inlineBlock)
                 Width(28.px)
                 Height(28.px)
@@ -242,14 +242,14 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                 )
             },
             Custom(
-                ".new-admin-autocomplete.is-open .new-admin-autocomplete__chevron"
+                ".admin-autocomplete.is-open .admin-autocomplete__chevron"
             ) {
                 UnsafeRawProperty(
                     name: "transform",
                     value: "rotate(180deg)"
                 )
             },
-            Class("new-admin-autocomplete__list") {
+            Class("admin-autocomplete__list") {
                 Position(.absolute)
                 Top(100.percent)
                 Left(0.px)
@@ -270,11 +270,11 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                 ListStyle(.none)
             },
             Custom(
-                ".new-admin-autocomplete.is-open .new-admin-autocomplete__list"
+                ".admin-autocomplete.is-open .admin-autocomplete__list"
             ) {
                 Display(.block)
             },
-            Class("new-admin-autocomplete__option") {
+            Class("admin-autocomplete__option") {
                 Display(.block)
                 Padding(vertical: 8.px, horizontal: 10.px)
                 BorderRadius(6.px)
@@ -282,27 +282,27 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                 Cursor(.pointer)
             },
             Custom(
-                ".new-admin-autocomplete__option:hover, .new-admin-autocomplete__option.is-active"
+                ".admin-autocomplete__option:hover, .admin-autocomplete__option.is-active"
             ) {
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
             },
-            Class("new-admin-autocomplete__empty") {
+            Class("admin-autocomplete__empty") {
                 Display(.block)
                 Padding(vertical: 8.px, horizontal: 10.px)
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
             },
-            Custom(".new-admin-autocomplete .field-error") {
+            Custom(".admin-autocomplete .field-error") {
                 Color(.red)
                 FontSize(0.86.rem)
             },
             Custom(
-                ".new-admin-autocomplete.has-error .new-admin-autocomplete__control"
+                ".admin-autocomplete.has-error .admin-autocomplete__control"
             ) {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Secondary.border)
                 )
             },
-            Class("new-admin-autocomplete__status") {
+            Class("admin-autocomplete__status") {
                 Position(.absolute)
                 Width(1.px)
                 Height(1.px)
@@ -321,7 +321,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
         return Section {
             Label {
                 context.build(
-                    NewAdminFormFieldLabel(
+                    AdminFormFieldLabel(
                         text: state.label,
                         isRequired: state.isRequired
                     )
@@ -334,21 +334,21 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                                 Button("×")
                                     .type(.button)
                                     .class(
-                                        "new-admin-autocomplete__chip-remove"
+                                        "admin-autocomplete__chip-remove"
                                     )
                                     .data("value", option.value)
                                     .ariaLabel("Remove \(option.label)")
                             }
-                            .class("new-admin-autocomplete__chip")
+                            .class("admin-autocomplete__chip")
                         }
                     }
-                    .class("new-admin-autocomplete__selected")
+                    .class("admin-autocomplete__selected")
                 }
                 Div {
                     Div {
                         Input()
                             .type(.text)
-                            .class("new-admin-autocomplete__input")
+                            .class("admin-autocomplete__input")
                             .id(state.name)
                             .placeholder(state.placeholder)
                             .autocomplete(.off)
@@ -370,57 +370,57 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                                     && selected != nil
                             ) { $0.value(selected?.label) }
                     }
-                    .class("new-admin-autocomplete__input-wrap")
+                    .class("admin-autocomplete__input-wrap")
                     Button {
-                        Span {}.class("new-admin-autocomplete__chevron")
+                        Span {}.class("admin-autocomplete__chevron")
                     }
                     .type(.button)
-                    .class("new-admin-autocomplete__toggle")
+                    .class("admin-autocomplete__toggle")
                     .ariaLabel("Show options")
                     .ariaExpanded("false")
                     .ariaControls(listID)
                     .if(state.isDisabled) { $0.disabled() }
                 }
-                .class("new-admin-autocomplete__control")
+                .class("admin-autocomplete__control")
             }
             .for(state.name)
             Ul {
                 for option in state.options {
                     Li(option.label)
-                        .class("new-admin-autocomplete__option")
+                        .class("admin-autocomplete__option")
                         .data("value", option.value)
                         .role("option")
                         .if(option.isSelected) { $0.class("is-selected") }
                 }
             }
             .id(listID)
-            .class("new-admin-autocomplete__list")
+            .class("admin-autocomplete__list")
             .role("listbox")
             .ariaLabel(state.label)
             for selected in selectedOptions {
                 Input()
                     .type(.hidden)
                     .value(selected.value)
-                    .class("new-admin-autocomplete__value")
+                    .class("admin-autocomplete__value")
                     .if(state.submitsValues) { $0.name(state.name) }
             }
             Div {}
-                .class("new-admin-autocomplete__status")
+                .class("admin-autocomplete__status")
                 .role("status")
                 .ariaLive(.polite)
             if let help = state.help {
-                context.build(NewAdminFormFieldHelp(help))
+                context.build(AdminFormFieldHelp(help))
             }
             if let error = state.error {
                 Span(error).id(errorID).class("field-error")
             }
             Script(optionsJSON()).type("application/json")
                 .class(
-                    "new-admin-autocomplete__options"
+                    "admin-autocomplete__options"
                 )
         }
         .if(state.error != nil) { $0.class("has-error") }
-        .class("new-admin-autocomplete")
+        .class("admin-autocomplete")
         .data("name", state.name)
         .data("mode", state.selectionMode.rawValue)
         .data("required", state.isRequired ? "true" : "false")
@@ -443,13 +443,13 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                 function initialize(root) {
                     if (root.dataset.bound === "1") { return; }
                     root.dataset.bound = "1";
-                    var input = root.querySelector(".new-admin-autocomplete__input");
-                    var toggle = root.querySelector(".new-admin-autocomplete__toggle");
-                    var list = root.querySelector(".new-admin-autocomplete__list");
-                    var inputWrap = root.querySelector(".new-admin-autocomplete__input-wrap");
-                    var selectedContainer = root.querySelector(".new-admin-autocomplete__selected");
-                    var status = root.querySelector(".new-admin-autocomplete__status");
-                    var source = root.querySelector(".new-admin-autocomplete__options");
+                    var input = root.querySelector(".admin-autocomplete__input");
+                    var toggle = root.querySelector(".admin-autocomplete__toggle");
+                    var list = root.querySelector(".admin-autocomplete__list");
+                    var inputWrap = root.querySelector(".admin-autocomplete__input-wrap");
+                    var selectedContainer = root.querySelector(".admin-autocomplete__selected");
+                    var status = root.querySelector(".admin-autocomplete__status");
+                    var source = root.querySelector(".admin-autocomplete__options");
                     if (!input || !toggle || !list || !source) { return; }
                     var multiple = root.dataset.mode === "multiple";
                     var required = root.dataset.required === "true";
@@ -462,7 +462,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                     var options = [];
                     try { options = JSON.parse(source.textContent || "[]"); } catch (_) { options = []; }
                     var selectedValues = Array.prototype.map.call(
-                        root.querySelectorAll(".new-admin-autocomplete__value"),
+                        root.querySelectorAll(".admin-autocomplete__value"),
                         function (element) { return element.value; }
                     );
                     var active = -1;
@@ -531,7 +531,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                     }
 
                     function syncHiddenInputs() {
-                        var existing = root.querySelectorAll(".new-admin-autocomplete__value");
+                        var existing = root.querySelectorAll(".admin-autocomplete__value");
                         existing.forEach(function (element) { element.remove(); });
                         selectedValues.forEach(function (value) {
                             var hidden = document.createElement("input");
@@ -540,7 +540,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                                 hidden.name = root.dataset.name || "";
                             }
                             hidden.value = value;
-                            hidden.className = "new-admin-autocomplete__value";
+                            hidden.className = "admin-autocomplete__value";
                             root.appendChild(hidden);
                         });
                     }
@@ -558,12 +558,12 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                         selectedContainer.innerHTML = "";
                         selectedOptions().forEach(function (item) {
                             var chip = document.createElement("span");
-                            chip.className = "new-admin-autocomplete__chip";
+                            chip.className = "admin-autocomplete__chip";
                             var label = document.createElement("span");
                             label.textContent = item.label;
                             var remove = document.createElement("button");
                             remove.type = "button";
-                            remove.className = "new-admin-autocomplete__chip-remove";
+                            remove.className = "admin-autocomplete__chip-remove";
                             remove.dataset.value = item.value;
                             remove.setAttribute("aria-label", "Remove " + item.label);
                             remove.textContent = "×";
@@ -577,7 +577,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                         list.innerHTML = "";
                         if (!matches.length) {
                             var empty = document.createElement("li");
-                            empty.className = "new-admin-autocomplete__empty";
+                            empty.className = "admin-autocomplete__empty";
                             empty.textContent = "No matches";
                             list.appendChild(empty);
                             active = -1;
@@ -586,7 +586,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                         if (active >= matches.length) { active = matches.length - 1; }
                         matches.forEach(function (item, index) {
                             var option = document.createElement("li");
-                            option.className = "new-admin-autocomplete__option" + (index === active ? " is-active" : "");
+                            option.className = "admin-autocomplete__option" + (index === active ? " is-active" : "");
                             option.textContent = item.label;
                             option.dataset.value = item.value;
                             option.setAttribute("role", "option");
@@ -618,7 +618,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                             renderSelected();
                             updateRequired();
                             if (status) { status.textContent = item.label + " selected."; }
-                            root.dispatchEvent(new CustomEvent("new-admin-autocomplete-option-selected", { bubbles: true, detail: item }));
+                            root.dispatchEvent(new CustomEvent("admin-autocomplete-option-selected", { bubbles: true, detail: item }));
                             setOpen(true);
                             return;
                         }
@@ -627,7 +627,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                         syncHiddenInputs();
                         updateRequired();
                         if (status) { status.textContent = item.label + " selected."; }
-                        root.dispatchEvent(new CustomEvent("new-admin-autocomplete-option-selected", { bubbles: true, detail: item }));
+                        root.dispatchEvent(new CustomEvent("admin-autocomplete-option-selected", { bubbles: true, detail: item }));
                         setOpen(false);
                     }
 
@@ -655,7 +655,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                         selectedContainer.addEventListener("click", function (event) {
                             var target = event.target;
                             if (target && target.closest) {
-                                var remove = target.closest(".new-admin-autocomplete__chip-remove");
+                                var remove = target.closest(".admin-autocomplete__chip-remove");
                                 if (remove) {
                                     event.preventDefault();
                                     event.stopPropagation();
@@ -683,7 +683,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                         setOpen(!open);
                         if (open) { input.focus(); }
                     });
-                    root.addEventListener("new-admin-autocomplete-set-values", function (event) {
+                    root.addEventListener("admin-autocomplete-set-values", function (event) {
                         var values = event.detail && Array.isArray(event.detail.values)
                             ? event.detail.values
                             : [];
@@ -711,7 +711,7 @@ public struct NewAdminFormFieldSelectAutocomplete: Component {
                     updateRequired();
                 }
 
-                function initializeAll() { document.querySelectorAll(".new-admin-autocomplete").forEach(initialize); }
+                function initializeAll() { document.querySelectorAll(".admin-autocomplete").forEach(initialize); }
                 if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", initializeAll, { once: true }); }
                 else { initializeAll(); }
             })();

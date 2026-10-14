@@ -26,7 +26,7 @@ struct BlogPostForm: Component {
         var excerpt: FieldState
         var content: FieldState
         var imageAssetId: FieldState
-        var selectedImageAsset: NewAdminMediaAsset?
+        var selectedImageAsset: AdminMediaAsset?
         var metadata: AdminMetadataFields.State
         var authorOptions: [OptionState]
         var tagOptions: [OptionState]
@@ -53,13 +53,13 @@ struct BlogPostForm: Component {
     var removeLabel: String = "Remove"
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action) {
+        let form = AdminForm(action: action) {
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
-            context.build(NewAdminTabBar(links: tabLinks()))
+            context.build(AdminTabBar(links: tabLinks()))
             context.build(
-                NewAdminFormFieldMediaPicker(
+                AdminFormFieldMediaPicker(
                     state: .init(
                         field: .init(
                             key: state.imageAssetId.key,
@@ -91,7 +91,7 @@ struct BlogPostForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: state.title.key,
                         label: state.title.label,
@@ -102,7 +102,7 @@ struct BlogPostForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldTextArea(
+                AdminFormFieldTextArea(
                     state: .init(
                         name: state.excerpt.key,
                         label: state.excerpt.label,
@@ -114,7 +114,7 @@ struct BlogPostForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldTextArea(
+                AdminFormFieldTextArea(
                     state: .init(
                         name: state.content.key,
                         label: state.content.label,
@@ -126,7 +126,7 @@ struct BlogPostForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldSelectAutocomplete(
+                AdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: "authorIds[]",
                         label: "Authors",
@@ -144,7 +144,7 @@ struct BlogPostForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldSelectAutocomplete(
+                AdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: "tagIds[]",
                         label: "Tags",
@@ -163,11 +163,11 @@ struct BlogPostForm: Component {
             )
             Div {
                 context.build(
-                    NewAdminSubmitButton(submitLabel, style: .primary)
+                    AdminSubmitButton(submitLabel, style: .primary)
                 )
                 if let removeHref {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             removeLabel,
                             href: removeHref,
                             style: .destructive
@@ -175,14 +175,14 @@ struct BlogPostForm: Component {
                     )
                 }
             }
-            .class("new-admin-form__actions")
+            .class("admin-form__actions")
         }
         return context.build(form)
     }
 
-    private func tabLinks() -> [NewAdminTabBar.Link] {
+    private func tabLinks() -> [AdminTabBar.Link] {
         var links = [
-            NewAdminTabBar.Link(
+            AdminTabBar.Link(
                 label: "Details",
                 href: action,
                 isCurrent: true

@@ -7,12 +7,12 @@ import WebComponents
 
 struct RedirectRuleDetails: Component {
     let rule: RedirectRuleDetailsModel
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> Section {
         Section {
             context.build(
-                NewAdminDetailView(
+                AdminDetailView(
                     breadcrumb: RedirectRuleRoutes.breadcrumb,
                     pageHeader: .primary(
                         title: "Redirect rule details",
@@ -34,8 +34,8 @@ struct RedirectRuleDetails: Component {
         .class("cms-section")
     }
 
-    private var actions: [NewAdminDetailView.Action] {
-        var result: [NewAdminDetailView.Action] = []
+    private var actions: [AdminDetailView.Action] {
+        var result: [AdminDetailView.Action] = []
         if permissions.allows(RedirectPermissions.Rules.update) {
             result.append(
                 .init(

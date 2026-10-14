@@ -12,14 +12,14 @@ struct AdminListSystemVariableDefaultPresenter:
     let renderingEngine: any RenderingEngine
 
     func renderListPage(
-        model: NewAdminListModel<
+        model: AdminListModel<
             Components.Schemas.SystemVariableListItemSchema
         >,
         permissions: Set<PermissionKey>,
         search: String?
     ) async throws -> HTMLResponse {
-        let actions = NewAdminListActions(permissions)
-        return try await renderingEngine.renderNewAdminPage(
+        let actions = AdminListActions(permissions)
+        return try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Variables",
@@ -38,7 +38,7 @@ struct AdminListSystemVariableDefaultPresenter:
     func renderErrorPage(
         error: AdminListSystemVariableError
     ) async throws -> HTMLResponse {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
 
         switch error {
         case .unauthorized:
@@ -58,11 +58,11 @@ struct AdminListSystemVariableDefaultPresenter:
             )
         }
 
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Variables",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle()
             )

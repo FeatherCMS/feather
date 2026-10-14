@@ -36,7 +36,7 @@ struct AdminAddNewsletterCampaignSubscriberDefaultPresenter:
                 )
             )
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Add campaign subscriber",

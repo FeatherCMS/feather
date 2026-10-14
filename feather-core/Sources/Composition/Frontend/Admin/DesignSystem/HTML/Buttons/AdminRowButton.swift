@@ -3,17 +3,17 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminRowButton: Component {
+public struct AdminRowButton: Component {
 
     public let label: String
     public let href: String?
-    public let style: NewAdminButtonStyle
+    public let style: AdminButtonStyle
     public let dialogURL: String?
 
     public init(
         _ label: String,
         href: String? = nil,
-        style: NewAdminButtonStyle = .primary,
+        style: AdminButtonStyle = .primary,
         dialogURL: String? = nil
     ) {
         self.label = label

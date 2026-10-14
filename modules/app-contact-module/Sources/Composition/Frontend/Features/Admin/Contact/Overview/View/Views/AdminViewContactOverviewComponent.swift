@@ -65,7 +65,7 @@ struct AdminViewContactOverviewComponent: Component {
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 LineHeight(1.5)
             }
-            Custom(".contact-overview-destination .new-admin-button") {
+            Custom(".contact-overview-destination .admin-button") {
                 Margin(top: 4.px)
             }
         }
@@ -74,7 +74,7 @@ struct AdminViewContactOverviewComponent: Component {
     func html(context: inout BuilderContext) -> Section {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: [
+                AdminBreadcrumb(links: [
                     .init(
                         label: "Admin",
                         link: ContactAdminRoutes.admin.description + "/"
@@ -82,7 +82,7 @@ struct AdminViewContactOverviewComponent: Component {
                 ])
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Contact",
                         description:
@@ -100,7 +100,7 @@ struct AdminViewContactOverviewComponent: Component {
                         H2(destination.title)
                         P(destination.description)
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 "Open",
                                 href: destination.href,
                                 style: .primary

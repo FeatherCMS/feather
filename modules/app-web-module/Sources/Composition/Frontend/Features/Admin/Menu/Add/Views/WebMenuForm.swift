@@ -36,16 +36,16 @@ struct WebMenuForm: Component {
     var removeLabel: String = "Remove"
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action) {
+        let form = AdminForm(action: action) {
             if let success = state.success {
-                P(success).class("new-admin-form__success")
+                P(success).class("admin-form__success")
             }
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
 
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: state.key.key,
                         label: state.key.label,
@@ -56,7 +56,7 @@ struct WebMenuForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: state.name.key,
                         label: state.name.label,
@@ -67,7 +67,7 @@ struct WebMenuForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldTextArea(
+                AdminFormFieldTextArea(
                     state: .init(
                         name: state.notes.key,
                         label: state.notes.label,
@@ -80,10 +80,10 @@ struct WebMenuForm: Component {
 
             Div {
                 Div {
-                    context.build(NewAdminSubmitButton(submitLabel))
+                    context.build(AdminSubmitButton(submitLabel))
                     if let removeHref {
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 removeLabel,
                                 href: removeHref,
                                 style: .destructive
@@ -91,7 +91,7 @@ struct WebMenuForm: Component {
                         )
                     }
                 }
-                .class("new-admin-form__actions")
+                .class("admin-form__actions")
             }
         }
         return context.build(form)

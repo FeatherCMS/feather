@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminListToolbar: Component {
+public struct AdminListToolbar: Component {
 
     public func rules() -> [any Rule] {
         Media {

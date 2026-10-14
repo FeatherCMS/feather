@@ -13,12 +13,12 @@ struct AdminEditMediaVariantDefaultPresenter: AdminEditMediaVariantPresenter {
         id: String,
         detail: MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema,
         state: MediaVariantFormView.State,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse {
         let variantNonce = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit media variant",
@@ -34,7 +34,7 @@ struct AdminEditMediaVariantDefaultPresenter: AdminEditMediaVariantPresenter {
                     removeHref: permissions.allows(
                         MediaPermissions.Variants.delete
                     )
-                        ? NewAdminLocation.remove(
+                        ? AdminLocation.remove(
                             path: MediaVariantRoutes.remove.description,
                             ids: [id],
                             returnTo: MediaVariantRoutes.edit(RouterPath(id))
@@ -50,12 +50,12 @@ struct AdminEditMediaVariantDefaultPresenter: AdminEditMediaVariantPresenter {
         variantId: String,
         processor: MediaAdminAPI.Components.Schemas
             .MediaVariantProcessorDetailSchema,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse {
         let processorNonce = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit media variant processor",
@@ -84,22 +84,22 @@ struct AdminEditMediaVariantDefaultPresenter: AdminEditMediaVariantPresenter {
 
     func renderProcessorRemovePage(
         variantId: String,
-        items: [NewAdminRemoveItemContext],
+        items: [AdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse {
         let nonce = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        let cancel = NewAdminLocation.removeCancel(
+        let cancel = AdminLocation.removeCancel(
             path: MediaVariantRoutes.processors(RouterPath(variantId))
                 .description,
             returnTo: returnTo
         )
-        return try await renderingEngine.renderNewAdminDialog(
+        return try await renderingEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: NewAdminRemoveConfirmation(
+            title: AdminRemoveConfirmation.dialogTitle,
+            content: AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove selected processors",
                     description:
@@ -121,7 +121,7 @@ struct AdminEditMediaVariantDefaultPresenter: AdminEditMediaVariantPresenter {
     func renderErrorPage(error: AdminEditMediaVariantError) async throws
         -> HTMLResponse
     {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         switch error {
         case .notFound:
             state = .init(
@@ -149,14 +149,14 @@ struct AdminEditMediaVariantDefaultPresenter: AdminEditMediaVariantPresenter {
                 message: "The request could not be completed. Please try again."
             )
         }
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit media variant",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle(),
-                action: NewAdminButton(
+                action: AdminButton(
                     "Back",
                     href: MediaVariantRoutes.list.description,
                     style: .secondary

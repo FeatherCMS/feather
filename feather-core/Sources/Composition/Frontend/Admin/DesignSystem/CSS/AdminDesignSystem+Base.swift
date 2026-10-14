@@ -8,7 +8,7 @@
 import CSS
 import WebBuilders
 
-extension NewAdminDesignSystem {
+extension AdminDesignSystem {
 
     @Builder<CSS.Rule>
     func base() -> [any Rule] {

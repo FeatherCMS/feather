@@ -9,9 +9,9 @@ import WebBuilders
 import WebComponents
 
 struct UserIdentityTableContent: Component {
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
     let identities: [Components.Schemas.UserIdentityListItemSchema]
-    let pageState: NewAdminListPageState
+    let pageState: AdminListPageState
     let search: String?
     let role: String?
 
@@ -20,11 +20,11 @@ struct UserIdentityTableContent: Component {
             !(search?.isEmpty ?? true) || !(role?.isEmpty ?? true)
 
         return context.build(
-            NewAdminList(
+            AdminList(
                 table: {
                     if pageState.isPageOutOfRange {
                         context.build(
-                            NewAdminListInvalidPageState(
+                            AdminListInvalidPageState(
                                 pageState: pageState,
                                 path: UserIdentityRoutes.list.description
                             )
@@ -33,13 +33,13 @@ struct UserIdentityTableContent: Component {
                     else if identities.isEmpty {
                         if hasActiveQuery {
                             context.build(
-                                NewAdminListNoResultsState(
+                                AdminListNoResultsState(
                                     message:
                                         "No user identities match your search or filters.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         context.build(
-                                            NewAdminButton(
+                                            AdminButton(
                                                 "Reset filters",
                                                 href: UserIdentityRoutes.list
                                                     .description,
@@ -52,7 +52,7 @@ struct UserIdentityTableContent: Component {
                         }
                         else {
                             context.build(
-                                NewAdminListEmptyState(
+                                AdminListEmptyState(
                                     message: "No user identities yet.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
@@ -60,7 +60,7 @@ struct UserIdentityTableContent: Component {
                                             UserPermissions.Identities.create
                                         ) {
                                             context.build(
-                                                NewAdminButton(
+                                                AdminButton(
                                                     "Add new",
                                                     href: UserIdentityRoutes.add
                                                         .description
@@ -77,7 +77,7 @@ struct UserIdentityTableContent: Component {
                             UserPermissions.Identities.delete
                         )
                         context.build(
-                            NewAdminListSelectionForm(
+                            AdminListSelectionForm(
                                 state: .init(
                                     action: UserIdentityRoutes.remove
                                         .description,
@@ -90,7 +90,7 @@ struct UserIdentityTableContent: Component {
                                     isEnabled: canDelete
                                 ),
                                 table: context.build(
-                                    NewAdminListShell(
+                                    AdminListShell(
                                         layout: .init(
                                             name: "user-identities",
                                             columns: [
@@ -108,7 +108,7 @@ struct UserIdentityTableContent: Component {
                                                 Tr {
                                                     if canDelete {
                                                         context.build(
-                                                            NewAdminListSelectAllCheckbox()
+                                                            AdminListSelectAllCheckbox()
                                                         )
                                                     }
                                                     Th("ID")
@@ -142,7 +142,7 @@ struct UserIdentityTableContent: Component {
                 },
                 search: {
                     context.build(
-                        NewAdminListSearch(
+                        AdminListSearch(
                             state: .init(
                                 action: UserIdentityRoutes.list.description,
                                 placeholder: "Quick search user identities",
@@ -154,9 +154,9 @@ struct UserIdentityTableContent: Component {
                 toolbar: {
                     if permissions.allows(UserPermissions.Identities.create) {
                         context.build(
-                            NewAdminListToolbar {
+                            AdminListToolbar {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         "Add new",
                                         href: UserIdentityRoutes.add.description
                                     )
@@ -167,7 +167,7 @@ struct UserIdentityTableContent: Component {
                 },
                 pagination: {
                     context.build(
-                        NewAdminListPagination(
+                        AdminListPagination(
                             state: .init(
                                 path: UserIdentityRoutes.list.description,
                                 pageState: pageState,

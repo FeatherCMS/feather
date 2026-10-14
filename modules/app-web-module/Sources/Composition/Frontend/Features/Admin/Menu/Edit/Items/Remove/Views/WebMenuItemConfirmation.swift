@@ -14,7 +14,7 @@ struct WebMenuItemConfirmation: Component {
         let menuId: String
         let id: String
         let label: String
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
         let nonceToken: String
         let origin: WebMenuItemRoutes.RemoveOrigin
     }
@@ -23,7 +23,7 @@ struct WebMenuItemConfirmation: Component {
 
     func html(context: inout BuilderContext) -> Section {
         context.build(
-            NewAdminRemoveConfirmation(
+            AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove menu item",
                     description: "This action cannot be undone."

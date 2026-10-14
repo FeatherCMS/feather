@@ -12,7 +12,7 @@ struct AdminViewAnalyticsInsightsDefaultPresenter:
         page: AdminAnalyticsInsightsPage,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: page.source.pageTitle,
@@ -26,7 +26,7 @@ struct AdminViewAnalyticsInsightsDefaultPresenter:
         message: String,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: source.pageTitle,
@@ -42,7 +42,7 @@ struct AdminViewAnalyticsInsightsDefaultPresenter:
         source: AdminAnalyticsInsightsPage.Source,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: source.pageTitle,

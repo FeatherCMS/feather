@@ -9,9 +9,9 @@ import WebComponents
 
 struct SystemPermissionTable: Component {
     struct State {
-        let permissions: NewAdminListActions
+        let permissions: AdminListActions
         let permissionsList: [Components.Schemas.SystemPermissionListItemSchema]
-        let pageState: NewAdminListPageState
+        let pageState: AdminListPageState
         let search: String?
     }
 
@@ -20,10 +20,10 @@ struct SystemPermissionTable: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: SystemPermissionRoutes.listBreadcrumb)
+                AdminBreadcrumb(links: SystemPermissionRoutes.listBreadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Permissions",
                         description: "Manage system permissions."

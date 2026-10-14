@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminPathBreadcrumb: Component {
+public struct AdminPathBreadcrumb: Component {
     public struct Item: Sendable {
         public let label: String
         public let href: String?
@@ -29,7 +29,7 @@ public struct NewAdminPathBreadcrumb: Component {
 
     public func rules() -> [any Rule] {
         Media {
-            Class("new-admin-path-breadcrumb") {
+            Class("admin-path-breadcrumb") {
                 Display(.flex)
                 AlignItems(.center)
                 Border(
@@ -43,7 +43,7 @@ public struct NewAdminPathBreadcrumb: Component {
                 MinWidth(0.px)
                 MarginBottom(12.px)
             }
-            Custom(".new-admin-path-breadcrumb ol") {
+            Custom(".admin-path-breadcrumb ol") {
                 ListStyle(.none)
                 Margin(0)
                 Padding(0)
@@ -53,20 +53,20 @@ public struct NewAdminPathBreadcrumb: Component {
                 Gap(2.px)
                 MinWidth(0.px)
             }
-            Custom(".new-admin-path-breadcrumb li") {
+            Custom(".admin-path-breadcrumb li") {
                 Display(.inlineFlex)
                 AlignItems(.center)
                 MinWidth(0.px)
                 FontSize(0.9.rem)
                 LineHeight(1.2)
             }
-            Custom(".new-admin-path-breadcrumb li:not(:last-child)::after") {
+            Custom(".admin-path-breadcrumb li:not(:last-child)::after") {
                 Content(.string("\"›\""))
                 MarginLeft(2.px)
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
             }
             Custom(
-                ".new-admin-path-breadcrumb a, .new-admin-path-breadcrumb span"
+                ".admin-path-breadcrumb a, .admin-path-breadcrumb span"
             ) {
                 Display(.inlineFlex)
                 AlignItems(.center)
@@ -74,15 +74,15 @@ public struct NewAdminPathBreadcrumb: Component {
                 UnsafeRawProperty(name: "overflow-wrap", value: "anywhere")
                 Padding(vertical: 6.px, horizontal: 10.px)
             }
-            Custom(".new-admin-path-breadcrumb a") {
+            Custom(".admin-path-breadcrumb a") {
                 Color(.variable(TokenKey.Colors.Link.default))
                 TextDecoration(.none)
             }
-            Custom(".new-admin-path-breadcrumb a:hover") {
+            Custom(".admin-path-breadcrumb a:hover") {
                 Color(.variable(TokenKey.Colors.Link.hover))
                 TextDecoration(.underline)
             }
-            Custom(".new-admin-path-breadcrumb .is-current") {
+            Custom(".admin-path-breadcrumb .is-current") {
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
                 FontWeight(.number(600))
             }
@@ -108,7 +108,7 @@ public struct NewAdminPathBreadcrumb: Component {
                 }
             }
         }
-        .class("new-admin-path-breadcrumb")
+        .class("admin-path-breadcrumb")
         .ariaLabel("Folder path")
     }
 }

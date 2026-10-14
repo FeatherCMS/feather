@@ -6,18 +6,18 @@ import WebBuilders
 import WebComponents
 
 struct UserRoleTable: Component {
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
     let roles: [Components.Schemas.UserRoleListItemSchema]
-    let pageState: NewAdminListPageState
+    let pageState: AdminListPageState
     let search: String?
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: UserRoleRoutes.listBreadcrumb)
+                AdminBreadcrumb(links: UserRoleRoutes.listBreadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "User roles",
                         description: "Manage roles assigned to user identities."

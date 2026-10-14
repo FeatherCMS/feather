@@ -5,7 +5,7 @@ public import SVG
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminListEmptyState: Component {
+public struct AdminListEmptyState: Component {
 
     public let message: String
     public let icon: SVG?

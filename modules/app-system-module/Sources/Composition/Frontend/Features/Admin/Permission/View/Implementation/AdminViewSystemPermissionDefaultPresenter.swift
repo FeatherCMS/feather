@@ -12,9 +12,9 @@ struct AdminViewSystemPermissionDefaultPresenter:
 
     func renderDetailsPage(
         permission: SystemPermissionDetailsModel,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "System permission details",
@@ -27,7 +27,7 @@ struct AdminViewSystemPermissionDefaultPresenter:
     func renderErrorPage(
         error: AdminViewSystemPermissionError
     ) async throws -> HTMLResponse {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         switch error {
         case .notFound:
             state = .init(
@@ -50,11 +50,11 @@ struct AdminViewSystemPermissionDefaultPresenter:
                 message: "The request could not be completed. Please try again."
             )
         }
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "System permission details",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle()
             )

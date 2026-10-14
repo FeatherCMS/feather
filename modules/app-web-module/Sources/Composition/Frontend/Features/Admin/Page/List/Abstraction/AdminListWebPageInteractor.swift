@@ -11,7 +11,7 @@ protocol AdminListWebPageInteractor: Sendable {
 
     func resolveRemoveItems(
         ids: [String]
-    ) async throws -> [NewAdminRemoveItemContext]
+    ) async throws -> [AdminRemoveItemContext]
 
     func remove(
         ids: [String]

@@ -78,7 +78,7 @@ struct AdminListBlogTagDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: NewAdminLocation.url(
+                    .location: AdminLocation.url(
                         path: BlogAdminRoutes.tags.description + "/",
                         page: page,
                         search: search
@@ -101,7 +101,7 @@ struct AdminListBlogTagDefaultController:
     ) async throws -> Response {
         let (interactor, _) = buildRuntime((request, context))
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -114,7 +114,7 @@ struct AdminListBlogTagDefaultController:
         if !payload.normalizedSelectedIds.isEmpty {
             try await interactor.remove(ids: payload.normalizedSelectedIds)
         }
-        let location = NewAdminLocation.url(
+        let location = AdminLocation.url(
             path: BlogAdminRoutes.tags.description + "/",
             page: payload.normalizedPage,
             search: payload.normalizedSearch
@@ -137,7 +137,7 @@ struct AdminListBlogTagDefaultController:
     ) async throws -> Response {
         let id = try context.requiredID()
         let payload = try await request.decode(
-            as: NewAdminStatusActionFormInput.self,
+            as: AdminStatusActionFormInput.self,
             context: context
         )
         let repository = AdminListBlogTagFormOpenAPIRepository(
@@ -177,7 +177,7 @@ struct AdminListBlogTagDefaultController:
     }
 
     private func resolvedStatus(
-        from payload: NewAdminStatusActionFormInput,
+        from payload: AdminStatusActionFormInput,
         current metadata: AdminMetadataFormValue
     ) -> String {
         let allowedStatuses = Set(["draft", "published", "archived"])

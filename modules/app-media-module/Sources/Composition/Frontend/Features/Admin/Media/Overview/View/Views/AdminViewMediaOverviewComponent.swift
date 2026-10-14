@@ -60,7 +60,7 @@ struct AdminViewMediaOverviewComponent: Component {
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 LineHeight(1.5)
             }
-            Custom(".media-overview-destination .new-admin-button") {
+            Custom(".media-overview-destination .admin-button") {
                 Margin(top: 4.px)
             }
         }
@@ -69,10 +69,10 @@ struct AdminViewMediaOverviewComponent: Component {
     func html(context: inout BuilderContext) -> Section {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: MediaAdminRoutes.breadcrumb)
+                AdminBreadcrumb(links: MediaAdminRoutes.breadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Media",
                         description:
@@ -90,7 +90,7 @@ struct AdminViewMediaOverviewComponent: Component {
                         H2(destination.title)
                         P(destination.description)
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 "Open",
                                 href: destination.href,
                                 style: .primary

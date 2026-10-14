@@ -10,9 +10,9 @@ import WebComponents
 
 struct SystemJobRow: Component {
     let job: Components.Schemas.SystemJobSchema
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
-    private var rowActions: [NewAdminListRowActions.Action] {
+    private var rowActions: [AdminListRowActions.Action] {
         [
             .init(
                 "View",
@@ -39,7 +39,7 @@ struct SystemJobRow: Component {
             }
             .data("label", "Status")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: rowActions,
                     permissions: permissions
@@ -48,7 +48,7 @@ struct SystemJobRow: Component {
         }
     }
 
-    private func statusChip(_ status: Int) -> NewAdminChip {
+    private func statusChip(_ status: Int) -> AdminChip {
         switch status {
         case 0: .init(label: "Pending", color: .blue)
         case 1: .init(label: "Processing", color: .yellow)

@@ -58,7 +58,7 @@ public struct AdminMetadataFields: Component {
         public var title: FieldState
         public var excerpt: FieldState
         public var imageUrl: FieldState
-        public var selectedImageAsset: NewAdminMediaAsset?
+        public var selectedImageAsset: AdminMediaAsset?
         public var canonicalUrl: FieldState
         public var noIndex: CheckboxState
         public var primaryKeyword: FieldState
@@ -76,7 +76,7 @@ public struct AdminMetadataFields: Component {
             title: FieldState,
             excerpt: FieldState,
             imageUrl: FieldState,
-            selectedImageAsset: NewAdminMediaAsset? = nil,
+            selectedImageAsset: AdminMediaAsset? = nil,
             canonicalUrl: FieldState,
             noIndex: CheckboxState,
             primaryKeyword: FieldState,
@@ -125,14 +125,14 @@ public struct AdminMetadataFields: Component {
     public let showTitle: Bool
     public let showTemplate: Bool
     public let titleRequired: Bool
-    public let templateOptions: [NewAdminFormFieldSelect.SelectOption]
+    public let templateOptions: [AdminFormFieldSelect.SelectOption]
 
     public init(
         state: State,
         showTitle: Bool = false,
         showTemplate: Bool = false,
         titleRequired: Bool = false,
-        templateOptions: [NewAdminFormFieldSelect.SelectOption] = []
+        templateOptions: [AdminFormFieldSelect.SelectOption] = []
     ) {
         self.state = state
         self.showTitle = showTitle
@@ -161,13 +161,13 @@ public struct AdminMetadataFields: Component {
     public func html(context: inout BuilderContext) -> Div {
         Div {
             context.build(
-                NewAdminFormGroup(
+                AdminFormGroup(
                     id: "metadata-configuration",
                     title: "Configuration"
                 ) {
                     Div {
                         context.build(
-                            NewAdminFormFieldInput(
+                            AdminFormFieldInput(
                                 state: .init(
                                     name: state.slug.key,
                                     label: state.slug.label,
@@ -180,7 +180,7 @@ public struct AdminMetadataFields: Component {
                         )
                         if showTemplate {
                             context.build(
-                                NewAdminFormFieldSelect(
+                                AdminFormFieldSelect(
                                     state: .init(
                                         name: state.template.key,
                                         label: state.template.label,
@@ -206,13 +206,13 @@ public struct AdminMetadataFields: Component {
             )
 
             context.build(
-                NewAdminFormGroup(
+                AdminFormGroup(
                     id: "metadata-publishing",
                     title: "Publishing"
                 ) {
                     Div {
                         context.build(
-                            NewAdminFormFieldSelect(
+                            AdminFormFieldSelect(
                                 state: .init(
                                     name: state.status.key,
                                     label: state.status.label,
@@ -232,7 +232,7 @@ public struct AdminMetadataFields: Component {
                             )
                         )
                         context.build(
-                            NewAdminFormFieldDatePicker(
+                            AdminFormFieldDatePicker(
                                 state: .init(
                                     name: state.publicationDate.key,
                                     label: state.publicationDate.label,
@@ -243,7 +243,7 @@ public struct AdminMetadataFields: Component {
                             )
                         )
                         context.build(
-                            NewAdminFormFieldDatePicker(
+                            AdminFormFieldDatePicker(
                                 state: .init(
                                     name: state.expirationDate.key,
                                     label: state.expirationDate.label,
@@ -259,7 +259,7 @@ public struct AdminMetadataFields: Component {
             )
 
             context.build(
-                NewAdminFormGroup(
+                AdminFormGroup(
                     id: "metadata-metadata",
                     title: "Meta tags"
                 ) {
@@ -271,7 +271,7 @@ public struct AdminMetadataFields: Component {
                         )
                         if showTitle {
                             context.build(
-                                NewAdminFormFieldInput(
+                                AdminFormFieldInput(
                                     state: .init(
                                         name: state.title.key,
                                         label: state.title.label,
@@ -283,7 +283,7 @@ public struct AdminMetadataFields: Component {
                             )
                         }
                         context.build(
-                            NewAdminFormFieldTextArea(
+                            AdminFormFieldTextArea(
                                 state: .init(
                                     name: state.excerpt.key,
                                     label: state.excerpt.label,
@@ -299,13 +299,13 @@ public struct AdminMetadataFields: Component {
             )
 
             context.build(
-                NewAdminFormGroup(
+                AdminFormGroup(
                     id: "metadata-seo",
                     title: "SEO"
                 ) {
                     Div {
                         context.build(
-                            NewAdminFormFieldInput(
+                            AdminFormFieldInput(
                                 state: .init(
                                     name: state.canonicalUrl.key,
                                     label: state.canonicalUrl.label,
@@ -315,7 +315,7 @@ public struct AdminMetadataFields: Component {
                             )
                         )
                         context.build(
-                            NewAdminFormFieldCheckbox(
+                            AdminFormFieldCheckbox(
                                 state: .init(
                                     name: state.noIndex.key,
                                     label: "Search engine indexing",
@@ -327,7 +327,7 @@ public struct AdminMetadataFields: Component {
                             )
                         )
                         context.build(
-                            NewAdminFormFieldInput(
+                            AdminFormFieldInput(
                                 state: .init(
                                     name: state.primaryKeyword.key,
                                     label: state.primaryKeyword.label,
@@ -342,13 +342,13 @@ public struct AdminMetadataFields: Component {
             )
 
             context.build(
-                NewAdminFormGroup(
+                AdminFormGroup(
                     id: "metadata-advanced",
                     title: "Advanced"
                 ) {
                     Div {
                         context.build(
-                            NewAdminFormFieldTextArea(
+                            AdminFormFieldTextArea(
                                 state: .init(
                                     name: state.cssCodeInjection.key,
                                     label: state.cssCodeInjection.label,
@@ -359,7 +359,7 @@ public struct AdminMetadataFields: Component {
                             )
                         )
                         context.build(
-                            NewAdminFormFieldTextArea(
+                            AdminFormFieldTextArea(
                                 state: .init(
                                     name: state.javascriptCodeInjection.key,
                                     label: state.javascriptCodeInjection.label,
@@ -370,7 +370,7 @@ public struct AdminMetadataFields: Component {
                             )
                         )
                         context.build(
-                            NewAdminFormFieldTextArea(
+                            AdminFormFieldTextArea(
                                 state: .init(
                                     name: state.structuredDataCodeInjection.key,
                                     label: state.structuredDataCodeInjection
@@ -393,13 +393,13 @@ public struct AdminMetadataFields: Component {
 
     private func imagePicker(
         _ field: FieldState,
-        selectedAsset: NewAdminMediaAsset?,
+        selectedAsset: AdminMediaAsset?,
         context: inout BuilderContext
     ) -> Section {
         let browsePath =
             "/admin/media/assets/?picker=1&field=\(field.key.queryEncoded())&extensions=\(AllowedExtensions.images.queryValue)"
         return context.build(
-            NewAdminFormFieldMediaPicker(
+            AdminFormFieldMediaPicker(
                 state: .init(
                     field: .init(
                         key: field.key,

@@ -11,8 +11,8 @@ struct ContactFormEmailsTable: Component {
     struct State {
         let id: String
         let mails: [AdminContactFormEmail]
-        let permissions: NewAdminListActions
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let permissions: AdminListActions
+        let breadcrumb: [AdminBreadcrumb.Link]
         let error: String?
     }
 
@@ -20,9 +20,9 @@ struct ContactFormEmailsTable: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Contact form emails",
                         description:
@@ -34,7 +34,7 @@ struct ContactFormEmailsTable: Component {
                 AdminContactFormTabs(formId: state.id, active: .emails)
             )
             context.build(
-                NewAdminRelationshipGroup(
+                AdminRelationshipGroup(
                     pageHeader: .secondary(
                         title: "Emails",
                         description:
@@ -42,7 +42,7 @@ struct ContactFormEmailsTable: Component {
                     )
                 ) {
                     if let error = state.error {
-                        P(error).class("new-admin-form__error")
+                        P(error).class("admin-form__error")
                     }
                     context.build(
                         ContactFormEmailsTableContent(

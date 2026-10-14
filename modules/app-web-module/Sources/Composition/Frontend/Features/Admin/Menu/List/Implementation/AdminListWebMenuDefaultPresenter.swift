@@ -21,7 +21,7 @@ struct AdminListWebMenuDefaultPresenter:
         search: String?,
         error: String?
     ) async throws -> HTMLResponse {
-        let actions = NewAdminListActions(
+        let actions = AdminListActions(
             Set(
                 WebPermissions.Menus.allPermissions()
                     .filter {
@@ -31,7 +31,7 @@ struct AdminListWebMenuDefaultPresenter:
         )
         let canAccess = actions.allows(WebPermissions.Menus.list)
         if let error {
-            return try await renderEngine.renderNewAdminPage(
+            return try await renderEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Manage menus",
@@ -45,7 +45,7 @@ struct AdminListWebMenuDefaultPresenter:
             )
         }
         guard canAccess else {
-            return try await renderEngine.renderNewAdminPage(
+            return try await renderEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Manage menus",
@@ -58,7 +58,7 @@ struct AdminListWebMenuDefaultPresenter:
                 )
             )
         }
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Manage menus",
@@ -81,16 +81,16 @@ struct AdminListWebMenuDefaultPresenter:
     func renderRemovePage(
         page: Int,
         search: String?,
-        items: [NewAdminRemoveItemContext]
+        items: [AdminRemoveItemContext]
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminDialog(
+        return try await renderEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: NewAdminRemoveConfirmation(
+            title: AdminRemoveConfirmation.dialogTitle,
+            content: AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove selected menus",
                     description: "This action cannot be undone."

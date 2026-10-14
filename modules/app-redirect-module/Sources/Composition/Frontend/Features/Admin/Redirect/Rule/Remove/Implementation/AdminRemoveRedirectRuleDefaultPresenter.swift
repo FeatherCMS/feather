@@ -7,7 +7,7 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
     let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
-    func renderRemovePage(items: [NewAdminRemoveItemContext], returnTo: String?)
+    func renderRemovePage(items: [AdminRemoveItemContext], returnTo: String?)
         async throws -> HTMLResponse
     {
         guard items.count != 1 else {
@@ -15,10 +15,10 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
             let nonceToken = await AdminNonceStore.shared.issue(
                 sessionToken: context.sessionToken
             )
-            return try await renderingEngine.renderNewAdminDialog(
+            return try await renderingEngine.renderAdminDialog(
                 request: request,
                 context: context,
-                title: NewAdminRemoveConfirmation.dialogTitle,
+                title: AdminRemoveConfirmation.dialogTitle,
                 content: RedirectRuleConfirmation(
                     id: item.id,
                     source: item.label,
@@ -32,17 +32,17 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
     }
 
     private func renderBulkRemovePage(
-        items: [NewAdminRemoveItemContext],
+        items: [AdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminDialog(
+        return try await renderingEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: NewAdminRemoveConfirmation(
+            title: AdminRemoveConfirmation.dialogTitle,
+            content: AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove selected redirect rules",
                     description:
@@ -60,7 +60,7 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
     func renderErrorPage(error: AdminRemoveRedirectRuleError, cancel: String)
         async throws -> HTMLResponse
     {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         switch error {
         case .notFound:
             state = .init(
@@ -88,14 +88,14 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
                 message: "The request could not be completed. Please try again."
             )
         }
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove redirect rule",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle(),
-                action: NewAdminButton("Back", href: cancel, style: .secondary)
+                action: AdminButton("Back", href: cancel, style: .secondary)
             )
         )
         return HTMLResponse(content: page.content, status: status(for: error))
@@ -136,14 +136,14 @@ struct AdminRemoveRedirectRuleDefaultPresenter: AdminRemoveRedirectRulePresenter
         status: HTTPResponse.Status,
         cancel: String
     ) async throws -> HTMLResponse {
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove redirect rule",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(title: title, message: message),
                 icon: FeatherIcons.alertCircle(),
-                action: NewAdminButton("Back", href: cancel, style: .secondary)
+                action: AdminButton("Back", href: cancel, style: .secondary)
             )
         )
         return HTMLResponse(content: page.content, status: status)

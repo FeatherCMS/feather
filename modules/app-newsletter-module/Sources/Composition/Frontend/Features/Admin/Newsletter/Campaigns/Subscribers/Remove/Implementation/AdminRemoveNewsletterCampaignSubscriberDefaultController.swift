@@ -80,7 +80,7 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
         guard context.isCurrentUserAllowed(to: Permissions.Subscribers.delete)
         else { return Response(status: .forbidden) }
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -114,7 +114,7 @@ struct AdminRemoveNewsletterCampaignSubscriberDefaultController:
         guard context.isCurrentUserAllowed(to: Permissions.Subscribers.delete)
         else { return Response(status: .forbidden) }
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard

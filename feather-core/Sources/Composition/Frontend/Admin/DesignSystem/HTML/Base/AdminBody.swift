@@ -10,7 +10,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminBody<T: Component>: Component where T.HTML: FlowContent {
+public struct AdminBody<T: Component>: Component where T.HTML: FlowContent {
 
     public let content: T
     public let showsFooter: Bool

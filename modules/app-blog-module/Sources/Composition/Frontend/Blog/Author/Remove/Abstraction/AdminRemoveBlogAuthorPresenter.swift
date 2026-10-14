@@ -14,7 +14,7 @@ import WebFrontend
 protocol AdminRemoveBlogAuthorPresenter: Sendable {
 
     func renderRemovePage(
-        item: NewAdminRemoveItemContext
+        item: AdminRemoveItemContext
     ) async throws -> HTMLResponse
 
     func renderErrorPage(

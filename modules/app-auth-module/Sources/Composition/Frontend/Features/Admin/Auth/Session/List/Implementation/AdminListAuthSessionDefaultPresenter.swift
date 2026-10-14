@@ -16,7 +16,7 @@ struct AdminListAuthSessionDefaultPresenter: AdminListAuthSessionPresenter {
         model: AdminListAuthSessionModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Sessions",
@@ -37,11 +37,11 @@ struct AdminListAuthSessionDefaultPresenter: AdminListAuthSessionPresenter {
         identityID: String,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: error.errorTitle,
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: error.errorTitle,
                     message: error.errorDescription

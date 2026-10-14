@@ -1,6 +1,6 @@
 import Foundation
 
-public struct NewAdminLocation: Sendable {
+public struct AdminLocation: Sendable {
 
     public static func remove(
         path: String,

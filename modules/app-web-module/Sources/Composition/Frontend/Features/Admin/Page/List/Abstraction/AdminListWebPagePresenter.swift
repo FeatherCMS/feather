@@ -14,6 +14,6 @@ protocol AdminListWebPagePresenter: Sendable {
     func renderRemovePage(
         page: Int,
         search: String?,
-        items: [NewAdminRemoveItemContext]
+        items: [AdminRemoveItemContext]
     ) async throws -> HTMLResponse
 }

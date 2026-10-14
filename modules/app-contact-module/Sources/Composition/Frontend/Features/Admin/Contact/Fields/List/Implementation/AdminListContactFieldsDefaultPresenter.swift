@@ -23,7 +23,7 @@ struct AdminListContactFieldsDefaultPresenter:
     ) async throws -> HTMLResponse {
         let page = request.queryPage()
         let pageSize = 20
-        let pageState = NewAdminListPageState(
+        let pageState = AdminListPageState(
             page: page,
             pageSize: pageSize,
             total: fields.count
@@ -31,7 +31,7 @@ struct AdminListContactFieldsDefaultPresenter:
         let start = (page - 1) * pageSize
         let end = min(start + pageSize, fields.count)
         let pageItems = start < fields.count ? Array(fields[start..<end]) : []
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Contact form fields",
@@ -51,11 +51,11 @@ struct AdminListContactFieldsDefaultPresenter:
     }
 
     func renderForbiddenPage() async throws -> HTMLResponse {
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Contact form fields",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Forbidden",
                     message: "Your account cannot access contact form fields."

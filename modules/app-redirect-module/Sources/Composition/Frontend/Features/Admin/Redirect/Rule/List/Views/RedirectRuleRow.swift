@@ -9,11 +9,11 @@ import WebComponents
 struct RedirectRuleRow: Component {
     let rule: RedirectAdminAPI.Components.Schemas.RedirectRuleListItemSchema
     let returnTo: String
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
-    private var statusChip: NewAdminChip {
+    private var statusChip: AdminChip {
         guard let statusCode = StatusCode(rawValue: rule.statusCode) else {
-            return NewAdminChip(
+            return AdminChip(
                 label: String(rule.statusCode),
                 color: .red
             )
@@ -21,20 +21,20 @@ struct RedirectRuleRow: Component {
 
         return switch statusCode {
         case .movedPermanently:
-            NewAdminChip(label: "301 Moved Permanently", color: .green)
+            AdminChip(label: "301 Moved Permanently", color: .green)
         case .found:
-            NewAdminChip(label: "302 Found", color: .blue)
+            AdminChip(label: "302 Found", color: .blue)
         case .temporaryRedirect:
-            NewAdminChip(label: "307 Temporary Redirect", color: .orange)
+            AdminChip(label: "307 Temporary Redirect", color: .orange)
         case .permanentRedirect:
-            NewAdminChip(label: "308 Permanent Redirect", color: .red)
+            AdminChip(label: "308 Permanent Redirect", color: .red)
         }
     }
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(RedirectPermissions.Rules.delete) {
-                context.build(NewAdminListRowCheckbox(id: rule.id))
+                context.build(AdminListRowCheckbox(id: rule.id))
             }
             Td(rule.source).data("label", "Source")
             Td(rule.destination).data("label", "Destination")
@@ -43,7 +43,7 @@ struct RedirectRuleRow: Component {
             }
             .data("label", "Status")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: [
                         .init(
@@ -63,7 +63,7 @@ struct RedirectRuleRow: Component {
                         ),
                         .init(
                             "Remove",
-                            href: NewAdminLocation.remove(
+                            href: AdminLocation.remove(
                                 path: RedirectRuleRoutes.remove.description,
                                 ids: [rule.id],
                                 returnTo: returnTo

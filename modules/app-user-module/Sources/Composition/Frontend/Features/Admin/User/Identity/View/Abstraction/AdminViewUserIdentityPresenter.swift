@@ -5,7 +5,7 @@ import Hummingbird
 protocol AdminViewUserIdentityPresenter: Sendable {
     func renderDetailsPage(
         model: AdminViewUserIdentityModel,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse
     func renderErrorPage(error: AdminViewUserIdentityError) async throws
         -> HTMLResponse

@@ -8,7 +8,7 @@ protocol AdminListRedirectRuleInteractor: Sendable {
         page: Int,
         search: String?,
         statusCode: StatusCode?
-    ) async throws -> NewAdminListModel<
+    ) async throws -> AdminListModel<
         Components.Schemas.RedirectRuleListItemSchema
     >
 

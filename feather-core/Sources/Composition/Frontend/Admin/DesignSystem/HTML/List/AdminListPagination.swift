@@ -5,7 +5,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminListPagination: Component {
+public struct AdminListPagination: Component {
 
     public func rules() -> [any Rule] {
         Media {
@@ -111,13 +111,13 @@ public struct NewAdminListPagination: Component {
 
     public struct State: Sendable {
         public let path: String
-        public let pageState: NewAdminListPageState
+        public let pageState: AdminListPageState
         public let search: String
         public let queryItems: [QueryItem]
 
         public init(
             path: String,
-            pageState: NewAdminListPageState,
+            pageState: AdminListPageState,
             search: String,
             queryItems: [QueryItem] = []
         ) {
@@ -159,7 +159,7 @@ public struct NewAdminListPagination: Component {
             Div {
                 if state.pageState.page > 1 {
                     context.build(
-                        NewAdminRowButton(
+                        AdminRowButton(
                             "First",
                             href: "\(state.path)?page=1\(filterSuffix)",
                             style: .ghost(.secondary)
@@ -167,11 +167,11 @@ public struct NewAdminListPagination: Component {
                     )
                 }
                 else {
-                    context.build(NewAdminRowButton("First", style: .disabled))
+                    context.build(AdminRowButton("First", style: .disabled))
                 }
                 if state.pageState.page > 1 {
                     context.build(
-                        NewAdminRowButton(
+                        AdminRowButton(
                             "Prev",
                             href:
                                 "\(state.path)?page=\(state.pageState.page - 1)\(filterSuffix)",
@@ -180,7 +180,7 @@ public struct NewAdminListPagination: Component {
                     )
                 }
                 else {
-                    context.build(NewAdminRowButton("Prev", style: .disabled))
+                    context.build(AdminRowButton("Prev", style: .disabled))
                 }
 
                 Form {
@@ -221,7 +221,7 @@ public struct NewAdminListPagination: Component {
 
                 if state.pageState.page < totalPages {
                     context.build(
-                        NewAdminRowButton(
+                        AdminRowButton(
                             "Next",
                             href:
                                 "\(state.path)?page=\(state.pageState.page + 1)\(filterSuffix)",
@@ -230,11 +230,11 @@ public struct NewAdminListPagination: Component {
                     )
                 }
                 else {
-                    context.build(NewAdminRowButton("Next", style: .disabled))
+                    context.build(AdminRowButton("Next", style: .disabled))
                 }
                 if state.pageState.page < totalPages {
                     context.build(
-                        NewAdminRowButton(
+                        AdminRowButton(
                             "Last",
                             href:
                                 "\(state.path)?page=\(totalPages)\(filterSuffix)",
@@ -243,7 +243,7 @@ public struct NewAdminListPagination: Component {
                     )
                 }
                 else {
-                    context.build(NewAdminRowButton("Last", style: .disabled))
+                    context.build(AdminRowButton("Last", style: .disabled))
                 }
             }
             .class("page-controls")

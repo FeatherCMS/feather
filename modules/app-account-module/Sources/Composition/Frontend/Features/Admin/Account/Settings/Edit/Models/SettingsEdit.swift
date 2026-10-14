@@ -11,16 +11,16 @@ struct SettingsEdit: Component {
         let userID: String?
         let canEdit: Bool
         var form: SettingsForm.State
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Settings",
                         description:
@@ -31,7 +31,7 @@ struct SettingsEdit: Component {
 
             if let userID = state.userID {
                 context.build(
-                    NewAdminTabBar(links: [
+                    AdminTabBar(links: [
                         .init(
                             label: "Details",
                             href: "/admin/user/identities/\(userID)/",

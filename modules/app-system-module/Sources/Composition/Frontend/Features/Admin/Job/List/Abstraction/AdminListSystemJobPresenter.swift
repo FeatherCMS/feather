@@ -3,7 +3,7 @@ import FeatherAdmin
 protocol AdminListSystemJobPresenter: Sendable {
     func renderListPage(
         model: AdminListSystemJobModel,
-        permissions: NewAdminListActions,
+        permissions: AdminListActions,
         search: String?,
         status: Int?
     ) async throws -> HTMLResponse

@@ -59,7 +59,7 @@ struct AdminRemoveNewsletterCampaignDefaultController:
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.delete)
         else { return Response(status: .forbidden) }
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -87,7 +87,7 @@ struct AdminRemoveNewsletterCampaignDefaultController:
         guard context.isCurrentUserAllowed(to: Permissions.Campaigns.delete)
         else { return Response(status: .forbidden) }
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -99,7 +99,7 @@ struct AdminRemoveNewsletterCampaignDefaultController:
         let payload = nonceRequest.input
         try await interactor.remove(ids: payload.normalizedSelectedIds)
         return AdminNotificationFlash.redirect(
-            to: NewAdminLocation.url(
+            to: AdminLocation.url(
                 path: NewsletterAdminRoutes.campaigns.description,
                 page: payload.normalizedPage,
                 search: payload.normalizedSearch

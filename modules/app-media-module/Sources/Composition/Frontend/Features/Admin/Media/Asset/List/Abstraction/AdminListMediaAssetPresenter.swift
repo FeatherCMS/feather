@@ -14,7 +14,7 @@ protocol AdminListMediaAssetPresenter: Sendable {
     func renderListPage(
         model: AdminListMediaAssetModel,
         search: String?,
-        permissions: NewAdminListActions,
+        permissions: AdminListActions,
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
@@ -23,9 +23,9 @@ protocol AdminListMediaAssetPresenter: Sendable {
     ) async throws -> HTMLResponse
 
     func renderRemovePage(
-        pageState: NewAdminListPageState,
+        pageState: AdminListPageState,
         search: String?,
-        items: [NewAdminRemoveItemContext],
+        items: [AdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse
 

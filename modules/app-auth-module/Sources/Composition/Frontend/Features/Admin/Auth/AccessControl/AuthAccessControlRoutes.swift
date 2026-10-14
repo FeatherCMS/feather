@@ -6,7 +6,7 @@ enum AuthAccessControlRoutes {
         RouterPath("access-control")
     )
 
-    static var breadcrumb: [NewAdminBreadcrumb.Link] {
+    static var breadcrumb: [AdminBreadcrumb.Link] {
         AuthAdminRoutes.breadcrumb + [
             .init(
                 label: "Access Control",

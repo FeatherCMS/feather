@@ -52,7 +52,7 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
         let menuId = try context.requiredID()
         let id = try context.requiredParameter("itemId")
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard

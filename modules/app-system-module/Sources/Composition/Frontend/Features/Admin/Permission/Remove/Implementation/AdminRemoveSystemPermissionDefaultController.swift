@@ -37,7 +37,7 @@ struct AdminRemoveSystemPermissionDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: NewAdminLocation.url(
+                    .location: AdminLocation.url(
                         path: SystemPermissionRoutes.list.description,
                         page: page,
                         search: search
@@ -91,7 +91,7 @@ struct AdminRemoveSystemPermissionDefaultController:
         var returnTo = request.queryString("returnTo")
         do {
             let payload = try await request.decode(
-                as: NonceRequest<NewAdminListRemoveFormInput>.self,
+                as: NonceRequest<AdminListRemoveFormInput>.self,
                 context: context
             )
             returnTo = payload.input.normalizedReturnTo
@@ -104,7 +104,7 @@ struct AdminRemoveSystemPermissionDefaultController:
                 return
                     try await presenter
                     .renderInvalidNoncePage(
-                        cancel: NewAdminLocation.removeCancel(
+                        cancel: AdminLocation.removeCancel(
                             path: SystemPermissionRoutes.list.description,
                             returnTo: returnTo
                         )
@@ -117,7 +117,7 @@ struct AdminRemoveSystemPermissionDefaultController:
                 return Response(
                     status: .seeOther,
                     headers: [
-                        .location: NewAdminLocation.url(
+                        .location: AdminLocation.url(
                             path: SystemPermissionRoutes.list.description,
                             page: payload.input.normalizedPage,
                             search: payload.input.normalizedSearch
@@ -127,7 +127,7 @@ struct AdminRemoveSystemPermissionDefaultController:
             }
             try await interactor.delete(ids: ids)
             return presenter.renderSuccess(
-                location: NewAdminLocation.url(
+                location: AdminLocation.url(
                     path: SystemPermissionRoutes.list.description,
                     page: payload.input.normalizedPage,
                     search: payload.input.normalizedSearch
@@ -140,7 +140,7 @@ struct AdminRemoveSystemPermissionDefaultController:
                 try await presenter
                 .renderErrorPage(
                     error: error,
-                    cancel: NewAdminLocation.removeCancel(
+                    cancel: AdminLocation.removeCancel(
                         path: SystemPermissionRoutes.list.description,
                         returnTo: returnTo
                     )

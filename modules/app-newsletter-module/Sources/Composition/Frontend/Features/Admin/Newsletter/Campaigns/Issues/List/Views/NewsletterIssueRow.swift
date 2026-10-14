@@ -9,7 +9,7 @@ import WebComponents
 struct NewsletterIssueRow: Component {
     let newsletterId: String
     let item: AdminNewsletterIssueItem
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
@@ -18,7 +18,7 @@ struct NewsletterIssueRow: Component {
             Td(item.scheduledAt).data("label", "Scheduled")
             Td(item.createdAt).data("label", "Created")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: [
                         .init(

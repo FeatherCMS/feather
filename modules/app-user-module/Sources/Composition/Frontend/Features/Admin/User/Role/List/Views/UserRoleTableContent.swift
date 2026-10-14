@@ -9,19 +9,19 @@ import WebComponents
 
 struct UserRoleTableContent: Component {
     let roles: [Components.Schemas.UserRoleListItemSchema]
-    let permissions: NewAdminListActions
-    let pageState: NewAdminListPageState
+    let permissions: AdminListActions
+    let pageState: AdminListPageState
     let search: String?
 
     func html(context: inout BuilderContext) -> Div {
         let hasActiveQuery = !(search?.isEmpty ?? true)
 
         return context.build(
-            NewAdminList(
+            AdminList(
                 table: {
                     if pageState.isPageOutOfRange {
                         context.build(
-                            NewAdminListInvalidPageState(
+                            AdminListInvalidPageState(
                                 pageState: pageState,
                                 path: UserRoleRoutes.list.description
                             )
@@ -30,12 +30,12 @@ struct UserRoleTableContent: Component {
                     else if roles.isEmpty {
                         if hasActiveQuery {
                             context.build(
-                                NewAdminListNoResultsState(
+                                AdminListNoResultsState(
                                     message: "No user roles match your search.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         context.build(
-                                            NewAdminButton(
+                                            AdminButton(
                                                 "Reset search",
                                                 href: UserRoleRoutes.list
                                                     .description,
@@ -48,7 +48,7 @@ struct UserRoleTableContent: Component {
                         }
                         else {
                             context.build(
-                                NewAdminListEmptyState(
+                                AdminListEmptyState(
                                     message: "No user roles yet.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
@@ -56,7 +56,7 @@ struct UserRoleTableContent: Component {
                                             UserPermissions.Roles.create
                                         ) {
                                             context.build(
-                                                NewAdminButton(
+                                                AdminButton(
                                                     "Add new",
                                                     href: UserRoleRoutes.add
                                                         .description
@@ -73,7 +73,7 @@ struct UserRoleTableContent: Component {
                             UserPermissions.Roles.delete
                         )
                         context.build(
-                            NewAdminListSelectionForm(
+                            AdminListSelectionForm(
                                 state: .init(
                                     action: UserRoleRoutes.remove.description,
                                     pageState: pageState,
@@ -85,7 +85,7 @@ struct UserRoleTableContent: Component {
                                     isEnabled: canDelete
                                 ),
                                 table: context.build(
-                                    NewAdminListShell(
+                                    AdminListShell(
                                         layout: .init(
                                             name: "user-roles",
                                             columns: [
@@ -99,7 +99,7 @@ struct UserRoleTableContent: Component {
                                                 Tr {
                                                     if canDelete {
                                                         context.build(
-                                                            NewAdminListSelectAllCheckbox()
+                                                            AdminListSelectAllCheckbox()
                                                         )
                                                     }
                                                     Th("Name")
@@ -130,7 +130,7 @@ struct UserRoleTableContent: Component {
                 },
                 search: {
                     context.build(
-                        NewAdminListSearch(
+                        AdminListSearch(
                             state: .init(
                                 action: UserRoleRoutes.list.description,
                                 placeholder: "Quick search user roles",
@@ -142,9 +142,9 @@ struct UserRoleTableContent: Component {
                 toolbar: {
                     if permissions.allows(UserPermissions.Roles.create) {
                         context.build(
-                            NewAdminListToolbar {
+                            AdminListToolbar {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         "Add new",
                                         href: UserRoleRoutes.add.description
                                     )
@@ -155,7 +155,7 @@ struct UserRoleTableContent: Component {
                 },
                 pagination: {
                     context.build(
-                        NewAdminListPagination(
+                        AdminListPagination(
                             state: .init(
                                 path: UserRoleRoutes.list.description,
                                 pageState: pageState,

@@ -3,7 +3,7 @@ import Hummingbird
 
 protocol AdminRemoveUserIdentityPresenter: Sendable {
     func renderRemovePage(
-        items: [NewAdminRemoveItemContext],
+        items: [AdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse
     func renderErrorPage(error: AdminRemoveUserIdentityError, cancel: String)

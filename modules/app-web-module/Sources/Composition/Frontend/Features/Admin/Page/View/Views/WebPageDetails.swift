@@ -11,8 +11,8 @@ import WebContracts
 struct WebPageDetails: Component {
     struct State {
         let rule: WebPageDetailsModel
-        let breadcrumb: [NewAdminBreadcrumb.Link]
-        let permissions: NewAdminListActions
+        let breadcrumb: [AdminBreadcrumb.Link]
+        let permissions: AdminListActions
     }
 
     let state: State
@@ -20,7 +20,7 @@ struct WebPageDetails: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminDetailView(
+                AdminDetailView(
                     breadcrumb: state.breadcrumb,
                     pageHeader: .primary(
                         title: "Web page details",
@@ -49,8 +49,8 @@ struct WebPageDetails: Component {
         .class("cms-section")
     }
 
-    private var actions: [NewAdminDetailView.Action] {
-        var result: [NewAdminDetailView.Action] = []
+    private var actions: [AdminDetailView.Action] {
+        var result: [AdminDetailView.Action] = []
         if state.permissions.allows(WebPermissions.Pages.update) {
             result.append(
                 .init(

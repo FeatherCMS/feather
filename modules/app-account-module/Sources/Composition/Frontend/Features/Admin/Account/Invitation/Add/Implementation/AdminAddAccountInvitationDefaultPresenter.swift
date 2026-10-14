@@ -16,7 +16,7 @@ struct AdminAddAccountInvitationDefaultPresenter:
         form.nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Add user invitation",

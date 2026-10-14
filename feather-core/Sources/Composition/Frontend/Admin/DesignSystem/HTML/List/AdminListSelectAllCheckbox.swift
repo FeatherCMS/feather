@@ -3,7 +3,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminListSelectAllCheckbox: Component {
+public struct AdminListSelectAllCheckbox: Component {
 
     public init() {
     }
@@ -11,7 +11,7 @@ public struct NewAdminListSelectAllCheckbox: Component {
     public func html(context: inout BuilderContext) -> Th {
         Th {
             context.build(
-                NewAdminCheckbox(
+                AdminCheckbox(
                     ariaLabel: "Select all rows",
                     onChange:
                         "this.closest('form').querySelectorAll('input.select-row').forEach(function(input) { input.checked = this.checked; }, this)",

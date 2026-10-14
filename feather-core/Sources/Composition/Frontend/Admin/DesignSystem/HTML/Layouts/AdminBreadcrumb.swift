@@ -10,7 +10,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminBreadcrumb: Component {
+public struct AdminBreadcrumb: Component {
     public struct Link: Sendable {
         public let label: String
         public let link: String

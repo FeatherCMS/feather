@@ -39,7 +39,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
         }
 
         let metadata = context.build(
-            NewAdminMetadata(
+            AdminMetadata(
                 canonicalUrl: normalizedURL(
                     base: publicOrigins.siteBaseURL,
                     path: request.uri.path
@@ -80,7 +80,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
         }
 
         let metadata = context.build(
-            NewAdminMetadata(
+            AdminMetadata(
                 canonicalUrl: normalizedURL(
                     base: publicOrigins.siteBaseURL,
                     path: request.uri.path
@@ -121,7 +121,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
         return .init(html)
     }
 
-    public func renderNewAdminPage<T: Component>(
+    public func renderAdminPage<T: Component>(
         request: Request,
         context: AuthenticatedRequestContext,
         title: String,
@@ -133,7 +133,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
         )
         let notification = AdminNotificationFlash.notification(from: request)
         var builderContext = BuilderContext()
-        let layout = NewAdminBaseLayout(
+        let layout = AdminBaseLayout(
             content: content,
             menuGroups: renderContext.menuGroups,
             notification: notification,
@@ -141,7 +141,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
         )
         return .init(
             builderContext.build(
-                NewAdminHTML(
+                AdminHTML(
                     title: title,
                     body: .init(content: layout),
                     richContentEditorBlocks: richContentEditorBlocks
@@ -150,20 +150,20 @@ public struct DefaultRenderingEngine: RenderingEngine {
         )
     }
 
-    public func renderNewAdminDialog<T: Component>(
+    public func renderAdminDialog<T: Component>(
         request: Request,
         context: AuthenticatedRequestContext,
         title: String,
         content: T,
-        size: NewAdminDialogSize = .small
+        size: AdminDialogSize = .small
     ) async throws -> HTMLResponse {
         var builderContext = BuilderContext()
         return .init(
             builderContext.build(
-                NewAdminHTML(
+                AdminHTML(
                     title: title,
                     body: .init(
-                        content: NewAdminDialog(
+                        content: AdminDialog(
                             title: title,
                             content: content,
                             size: size

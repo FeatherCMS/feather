@@ -5,7 +5,7 @@ import SVG
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminNotification: Component {
+public struct AdminNotification: Component {
     public struct State: Codable, Sendable, Equatable {
         public enum Kind: String, Codable, Sendable {
             case success

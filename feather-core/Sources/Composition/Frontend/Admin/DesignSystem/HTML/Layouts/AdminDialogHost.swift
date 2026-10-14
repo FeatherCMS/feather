@@ -3,22 +3,22 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminDialogHost: Component {
+public struct AdminDialogHost: Component {
     public init() {}
 
     public func html(context _: inout BuilderContext) -> Div {
-        Div {}.id("new-admin-dialog-host")
+        Div {}.id("admin-dialog-host")
     }
 
     public func scripts() -> [String] {
         [
             #"""
             (function () {
-                if (window.__newAdminDialogController) { return; }
-                window.__newAdminDialogController = true;
+                if (window.__adminDialogController) { return; }
+                window.__adminDialogController = true;
 
                 function host() {
-                    return document.getElementById("new-admin-dialog-host");
+                    return document.getElementById("admin-dialog-host");
                 }
 
                 function focusControl(dialog) {
@@ -75,10 +75,10 @@ public struct NewAdminDialogHost: Component {
                     var root = host();
                     if (!root) { return; }
                     root.replaceChildren(dialog);
-                    document.documentElement.classList.add("new-admin-dialog-open");
+                    document.documentElement.classList.add("admin-dialog-open");
                     dialog.addEventListener("close", function () {
                         dialog.remove();
-                        document.documentElement.classList.remove("new-admin-dialog-open");
+                        document.documentElement.classList.remove("admin-dialog-open");
                     }, { once: true });
                     if (dialog.showModal) {
                         dialog.showModal();
@@ -151,7 +151,7 @@ public struct NewAdminDialogHost: Component {
                     });
                 }
 
-                window.__newAdminDialog = {
+                window.__adminDialog = {
                     mountHTML: mountHTML,
                     openURL: function (url, fallback) {
                         open(url, fallback);

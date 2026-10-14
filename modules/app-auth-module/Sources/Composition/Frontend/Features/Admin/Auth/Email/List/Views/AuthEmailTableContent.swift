@@ -12,21 +12,21 @@ struct AuthEmailTableContent: Component {
     let state: AuthEmailTable.State
 
     func html(context: inout BuilderContext) -> Div {
-        let actions = NewAdminListActions(
+        let actions = AdminListActions(
             Set(state.permissions.map(PermissionKey.init))
         )
-        let pageState = NewAdminListPageState(
+        let pageState = AdminListPageState(
             page: state.page,
             pageSize: state.pageSize,
             total: state.total
         )
 
         return context.build(
-            NewAdminList(
+            AdminList(
                 table: {
                     if !state.canAccess {
                         context.build(
-                            NewAdminStatusView(
+                            AdminStatusView(
                                 state: .init(
                                     title: "Forbidden",
                                     message:
@@ -38,7 +38,7 @@ struct AuthEmailTableContent: Component {
                     }
                     else if state.links.isEmpty {
                         context.build(
-                            NewAdminListEmptyState(
+                            AdminListEmptyState(
                                 message: state.search.isEmpty
                                     ? "No user emails yet."
                                     : "No user emails match your search.",
@@ -48,7 +48,7 @@ struct AuthEmailTableContent: Component {
                     }
                     else {
                         context.build(
-                            NewAdminListShell(
+                            AdminListShell(
                                 layout: .init(
                                     name: "auth-emails",
                                     columns: [
@@ -77,7 +77,7 @@ struct AuthEmailTableContent: Component {
                                                 Td(email.email)
                                                     .data("label", "Email")
                                                 context.build(
-                                                    NewAdminListRowActions(
+                                                    AdminListRowActions(
                                                         label: "Actions",
                                                         actions: [
                                                             .init(
@@ -129,7 +129,7 @@ struct AuthEmailTableContent: Component {
                 },
                 search: {
                     context.build(
-                        NewAdminListSearch(
+                        AdminListSearch(
                             state: .init(
                                 action: "/admin/auth/emails/",
                                 placeholder: "Quick search user emails",
@@ -144,9 +144,9 @@ struct AuthEmailTableContent: Component {
                 toolbar: {
                     if state.canAdd {
                         context.build(
-                            NewAdminListToolbar {
+                            AdminListToolbar {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         "Add new",
                                         href: "/admin/auth/emails/add/"
                                     )
@@ -157,7 +157,7 @@ struct AuthEmailTableContent: Component {
                 },
                 pagination: {
                     context.build(
-                        NewAdminListPagination(
+                        AdminListPagination(
                             state: .init(
                                 path: "/admin/auth/emails/",
                                 pageState: pageState,

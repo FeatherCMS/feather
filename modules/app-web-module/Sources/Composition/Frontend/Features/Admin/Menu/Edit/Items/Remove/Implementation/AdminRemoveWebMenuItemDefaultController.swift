@@ -52,7 +52,7 @@ struct AdminRemoveWebMenuItemDefaultController:
             request.queryString("origin")
         )
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard

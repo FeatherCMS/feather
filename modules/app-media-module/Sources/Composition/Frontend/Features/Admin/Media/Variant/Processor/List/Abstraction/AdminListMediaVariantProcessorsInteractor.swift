@@ -6,7 +6,7 @@ protocol AdminListMediaVariantProcessorsInteractor: Sendable {
         variantId: String,
         page: Int,
         search: String?
-    ) async throws -> NewAdminListModel<
+    ) async throws -> AdminListModel<
         MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema
     >
 }

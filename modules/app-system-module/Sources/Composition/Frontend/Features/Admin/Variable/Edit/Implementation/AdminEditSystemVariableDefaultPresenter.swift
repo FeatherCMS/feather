@@ -32,7 +32,7 @@ struct AdminEditSystemVariableDefaultPresenter:
         permissions: Set<PermissionKey>,
         status: HTTPResponse.Status
     ) async throws -> HTMLResponse {
-        let actions = NewAdminListActions(permissions)
+        let actions = AdminListActions(permissions)
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
@@ -47,7 +47,7 @@ struct AdminEditSystemVariableDefaultPresenter:
                     removeHref: actions.allows(
                         SystemPermissions.Variables.delete
                     )
-                        ? NewAdminLocation.remove(
+                        ? AdminLocation.remove(
                             path: SystemVariableRoutes.remove.description,
                             ids: [id],
                             returnTo: SystemVariableRoutes.edit(RouterPath(id))
@@ -116,7 +116,7 @@ struct AdminEditSystemVariableDefaultPresenter:
 
     func renderInvalidNoncePage() async throws -> HTMLResponse {
         try await renderPage(
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Form expired",
                     message:
@@ -141,7 +141,7 @@ struct AdminEditSystemVariableDefaultPresenter:
     func renderErrorPage(
         error: AdminEditSystemVariableError
     ) async throws -> HTMLResponse {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
 
         switch error {
         case .notFound:
@@ -172,7 +172,7 @@ struct AdminEditSystemVariableDefaultPresenter:
         }
 
         return try await renderPage(
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle()
             ),
@@ -184,7 +184,7 @@ struct AdminEditSystemVariableDefaultPresenter:
         content: T,
         status: HTTPResponse.Status = .ok
     ) async throws -> HTMLResponse {
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Manage system variables",

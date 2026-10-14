@@ -15,7 +15,7 @@ import WebFrontend
 struct BlogPostDetails: Component {
     struct State {
         let rule: BlogPostDetailsModel
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
         let permissions: Set<String>
     }
 
@@ -24,7 +24,7 @@ struct BlogPostDetails: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminDetailView(
+                AdminDetailView(
                     breadcrumb: state.breadcrumb,
                     pageHeader: .primary(
                         title: "Blog post details",
@@ -66,7 +66,7 @@ struct BlogPostDetails: Component {
                 let formID = "blog-post-status-\(state.rule.id)"
                 Div {
                     context.build(
-                        NewAdminStatusSelectFormDefinition(
+                        AdminStatusSelectFormDefinition(
                             id: formID,
                             action:
                                 BlogAdminRoutes.postStatus(
@@ -79,20 +79,20 @@ struct BlogPostDetails: Component {
                         )
                     )
                     context.build(
-                        NewAdminStatusSelectField(
+                        AdminStatusSelectField(
                             formID: formID,
                             selectedStatus: state.rule.metadata.normalizedStatus
                         )
                     )
                 }
-                .class("new-admin-detail-actions")
+                .class("admin-detail-actions")
             }
         }
         .class("cms-section")
     }
 
-    private var actions: [NewAdminDetailView.Action] {
-        var result: [NewAdminDetailView.Action] = []
+    private var actions: [AdminDetailView.Action] {
+        var result: [AdminDetailView.Action] = []
         if state.permissions.contains(BlogPermissions.Posts.update.rawValue) {
             result.append(
                 .init(

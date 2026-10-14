@@ -10,7 +10,7 @@ struct AdminListSystemVariableDefaultInteractor:
     func listSystemVariables(
         page: Int,
         search: String?
-    ) async throws -> NewAdminListModel<
+    ) async throws -> AdminListModel<
         Components.Schemas.SystemVariableListItemSchema
     > {
         do {

@@ -3,15 +3,15 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminSubmitButton: Component {
+public struct AdminSubmitButton: Component {
 
     public let label: String
-    public let style: NewAdminButtonStyle
+    public let style: AdminButtonStyle
     public let isRowButton: Bool
 
     public init(
         _ label: String = "Submit",
-        style: NewAdminButtonStyle = .primary,
+        style: AdminButtonStyle = .primary,
         isRowButton: Bool = false
     ) {
         self.label = label
@@ -19,7 +19,7 @@ public struct NewAdminSubmitButton: Component {
         self.isRowButton = isRowButton
     }
 
-    public init(state: NewAdminButton.State, isRowButton: Bool = false) {
+    public init(state: AdminButton.State, isRowButton: Bool = false) {
         self.init(
             state.label,
             style: state.style,

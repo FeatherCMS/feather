@@ -5,7 +5,7 @@ import WebBuilders
 public import WebComponents
 
 /// A select-based form field for the account pagination limit.
-public struct NewAdminFormFieldPaginationLimit: Component {
+public struct AdminFormFieldPaginationLimit: Component {
     public struct State: Sendable {
         public var name: String
         public var label: String
@@ -43,7 +43,7 @@ public struct NewAdminFormFieldPaginationLimit: Component {
 
     public func html(context: inout BuilderContext) -> Section {
         context.build(
-            NewAdminFormFieldSelect(
+            AdminFormFieldSelect(
                 state: .init(
                     name: state.name,
                     label: state.label,
@@ -57,7 +57,7 @@ public struct NewAdminFormFieldPaginationLimit: Component {
         )
     }
 
-    public static let options: [NewAdminFormFieldSelect.SelectOption] = [
+    public static let options: [AdminFormFieldSelect.SelectOption] = [
         .init(label: "10", value: "10"),
         .init(label: "20", value: "20"),
         .init(label: "50", value: "50"),

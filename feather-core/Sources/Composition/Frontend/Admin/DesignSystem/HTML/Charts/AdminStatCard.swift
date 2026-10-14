@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminStatCard: Component {
+public struct AdminStatCard: Component {
     public let label: String
     public let value: String
 
@@ -15,7 +15,7 @@ public struct NewAdminStatCard: Component {
 
     public func rules() -> [any Rule] {
         Media {
-            Custom(".new-admin-stat-card") {
+            Custom(".admin-stat-card") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(6.px)
@@ -28,12 +28,12 @@ public struct NewAdminStatCard: Component {
                 BorderRadius(12.px)
                 Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             }
-            Custom(".new-admin-stat-card__label") {
+            Custom(".admin-stat-card__label") {
                 Margin(0)
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 FontSize(0.86.rem)
             }
-            Custom(".new-admin-stat-card__value") {
+            Custom(".admin-stat-card__value") {
                 Margin(0)
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
                 FontSize(1.4.rem)
@@ -44,9 +44,9 @@ public struct NewAdminStatCard: Component {
 
     public func html(context: inout BuilderContext) -> Div {
         Div {
-            P(label).class("new-admin-stat-card__label")
-            Strong(value).class("new-admin-stat-card__value")
+            P(label).class("admin-stat-card__label")
+            Strong(value).class("admin-stat-card__value")
         }
-        .class("new-admin-stat-card")
+        .class("admin-stat-card")
     }
 }

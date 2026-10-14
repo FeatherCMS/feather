@@ -1,6 +1,6 @@
 import FeatherAdmin
 import SystemAdminAPI
 
-typealias AdminListSystemJobModel = NewAdminListModel<
+typealias AdminListSystemJobModel = AdminListModel<
     Components.Schemas.SystemJobSchema
 >

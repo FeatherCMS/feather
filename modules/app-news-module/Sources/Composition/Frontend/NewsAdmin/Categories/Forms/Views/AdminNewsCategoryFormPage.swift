@@ -7,7 +7,7 @@ import WebFrontend
 
 struct AdminNewsCategoryFormPage: Component {
     let input: AdminNewsCategoryFormInput
-    let selectedImageAsset: NewAdminMediaAsset?
+    let selectedImageAsset: AdminMediaAsset?
     let error: String?
     let title: String
     let action: String
@@ -18,14 +18,14 @@ struct AdminNewsCategoryFormPage: Component {
         context: inout BuilderContext
     ) -> Form {
         context.build(
-            NewAdminForm(action: action) {
+            AdminForm(action: action) {
                 context.build(
-                    NewAdminBreadcrumb(
+                    AdminBreadcrumb(
                         links: NewsAdminRoutes.categoriesBreadcrumb
                     )
                 )
                 context.build(
-                    NewAdminPageHeader(
+                    AdminPageHeader(
                         state: .primary(
                             title: title,
                             description: "Create or update a news category."
@@ -33,10 +33,10 @@ struct AdminNewsCategoryFormPage: Component {
                     )
                 )
                 if let error {
-                    P(error).class("new-admin-form__error")
+                    P(error).class("admin-form__error")
                 }
                 context.build(
-                    NewAdminFormFieldInput(
+                    AdminFormFieldInput(
                         state: .init(
                             name: "title",
                             label: "Title",
@@ -46,7 +46,7 @@ struct AdminNewsCategoryFormPage: Component {
                     )
                 )
                 context.build(
-                    NewAdminFormFieldTextArea(
+                    AdminFormFieldTextArea(
                         state: .init(
                             name: "excerpt",
                             label: "Excerpt",
@@ -57,7 +57,7 @@ struct AdminNewsCategoryFormPage: Component {
                     )
                 )
                 context.build(
-                    NewAdminFormFieldTextArea(
+                    AdminFormFieldTextArea(
                         state: .init(
                             name: "content",
                             label: "Content",
@@ -68,7 +68,7 @@ struct AdminNewsCategoryFormPage: Component {
                     )
                 )
                 context.build(
-                    NewAdminFormFieldMediaPicker(
+                    AdminFormFieldMediaPicker(
                         state: .init(
                             field: .init(
                                 key: "imageAssetId",
@@ -96,11 +96,11 @@ struct AdminNewsCategoryFormPage: Component {
                 )
                 Div {
                     context.build(
-                        NewAdminSubmitButton(submitLabel, style: .primary)
+                        AdminSubmitButton(submitLabel, style: .primary)
                     )
                     if let removeHref {
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 "Remove",
                                 href: removeHref,
                                 style: .destructive
@@ -108,7 +108,7 @@ struct AdminNewsCategoryFormPage: Component {
                         )
                     }
                 }
-                .class("new-admin-form__actions")
+                .class("admin-form__actions")
             }
         )
     }

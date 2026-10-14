@@ -5,7 +5,7 @@ protocol AdminListMediaVariantInteractor: Sendable {
     func listMediaVariants(
         page: Int,
         search: String?
-    ) async throws -> NewAdminListModel<
+    ) async throws -> AdminListModel<
         MediaAdminAPI.Components.Schemas.MediaVariantListItemSchema
     >
 }

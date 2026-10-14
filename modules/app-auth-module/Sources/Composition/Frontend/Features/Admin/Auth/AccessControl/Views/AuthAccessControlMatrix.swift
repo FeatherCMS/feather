@@ -27,13 +27,13 @@ struct AuthAccessControlMatrix: Component {
             [SystemAdminAPI.Components.Schemas.SystemPermissionListItemSchema]
         let selectedPairs: Set<String>
         let search: String
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
         let nonceToken: String?
     }
 
     let state: State
 
-    private var matrixLayout: NewAdminListTableLayout {
+    private var matrixLayout: AdminListTableLayout {
         .init(
             name: "auth-access-control",
             columns: [.fraction(2)] + state.roles.map { _ in .fraction(1) },
@@ -54,9 +54,9 @@ struct AuthAccessControlMatrix: Component {
         )
 
         return Section {
-            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Access control",
                         description: "Rows are permissions, columns are roles."
@@ -73,7 +73,7 @@ struct AuthAccessControlMatrix: Component {
 
             Div {
                 context.build(
-                    NewAdminListSearch(
+                    AdminListSearch(
                         state: .init(
                             action: "/admin/auth/access-control/",
                             placeholder: "Quick search access control",
@@ -93,12 +93,12 @@ struct AuthAccessControlMatrix: Component {
                 P("No permissions match your search.")
             }
             else if state.canEdit {
-                let form = NewAdminForm(
+                let form = AdminForm(
                     action: "/admin/auth/access-control/",
                     nonceToken: state.nonceToken
                 ) {
                     context.build(
-                        NewAdminListShell(
+                        AdminListShell(
                             layout: matrixLayout,
                             table: table
                         )
@@ -106,7 +106,7 @@ struct AuthAccessControlMatrix: Component {
 
                     Div {
                         context.build(
-                            NewAdminSubmitButton(
+                            AdminSubmitButton(
                                 "Save access control",
                                 style: .primary
                             )
@@ -128,7 +128,7 @@ struct AuthAccessControlMatrix: Component {
                     "You can view the access control matrix, but you need update permission to save changes."
                 )
                 context.build(
-                    NewAdminListShell(
+                    AdminListShell(
                         layout: matrixLayout,
                         table: table
                     )
@@ -184,7 +184,7 @@ extension AuthAccessControlMatrix {
 
                             Th {
                                 context.build(
-                                    NewAdminCheckbox(
+                                    AdminCheckbox(
                                         ariaLabel:
                                             "Select all \(group.title) permissions for \(role.name ?? "")",
                                         isChecked: allSelected,
@@ -219,7 +219,7 @@ extension AuthAccessControlMatrix {
 
                                 Td {
                                     context.build(
-                                        NewAdminCheckbox(
+                                        AdminCheckbox(
                                             name: "pairs",
                                             value: pair,
                                             isChecked: state.selectedPairs

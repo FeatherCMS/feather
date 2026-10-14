@@ -15,7 +15,7 @@ struct AdminViewWebMenuDefaultPresenter: AdminViewWebMenuPresenter {
         rule: WebMenuDetailsModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Menu details",
@@ -34,7 +34,7 @@ struct AdminViewWebMenuDefaultPresenter: AdminViewWebMenuPresenter {
         message: String,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Menu details",

@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminFormFieldInput: Component {
+public struct AdminFormFieldInput: Component {
     public struct State: Sendable {
         public var name: String
         public var label: String
@@ -47,17 +47,17 @@ public struct NewAdminFormFieldInput: Component {
 
     public func selectors() -> [any Selector] {
         [
-            Custom(".new-admin-form-field") {
+            Custom(".admin-form-field") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(6.px)
             },
-            Custom(".new-admin-form-field label") {
+            Custom(".admin-form-field label") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(8.px)
             },
-            Custom(".new-admin-form-field input") {
+            Custom(".admin-form-field input") {
                 Width(100.percent)
                 BoxSizing(.borderBox)
                 Padding(vertical: 9.px, horizontal: 11.px)
@@ -71,7 +71,7 @@ public struct NewAdminFormFieldInput: Component {
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
                 FontSize(1.rem)
             },
-            Custom(".new-admin-form-field input:focus") {
+            Custom(".admin-form-field input:focus") {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Tertiary.border)
                 )
@@ -82,11 +82,11 @@ public struct NewAdminFormFieldInput: Component {
                 )
                 OutlineOffset(2.px)
             },
-            Custom(".new-admin-form-field .field-error") {
+            Custom(".admin-form-field .field-error") {
                 Color(.red)
                 FontSize(0.86.rem)
             },
-            Custom(".new-admin-form-field.has-error input") {
+            Custom(".admin-form-field.has-error input") {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Secondary.border)
                 )
@@ -99,7 +99,7 @@ public struct NewAdminFormFieldInput: Component {
         return Section {
             Label {
                 context.build(
-                    NewAdminFormFieldLabel(
+                    AdminFormFieldLabel(
                         text: state.label,
                         isRequired: state.isRequired
                     )
@@ -117,13 +117,13 @@ public struct NewAdminFormFieldInput: Component {
             }
             .for(state.name)
             if let help = state.help {
-                context.build(NewAdminFormFieldHelp(help))
+                context.build(AdminFormFieldHelp(help))
             }
             if let error = state.error {
                 Span(error).id(errorID).class("field-error")
             }
         }
         .if(state.error != nil) { $0.class("has-error") }
-        .class("new-admin-form-field")
+        .class("admin-form-field")
     }
 }

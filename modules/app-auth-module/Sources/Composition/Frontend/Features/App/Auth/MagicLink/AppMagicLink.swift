@@ -26,7 +26,7 @@ struct AppMagicLink {
 
     struct RequestInput: Codable, Sendable {
         let email: String
-        let isPersistent: NewAdminFormFieldCheckbox.Input
+        let isPersistent: AdminFormFieldCheckbox.Input
 
         enum CodingKeys: String, CodingKey {
             case email
@@ -42,7 +42,7 @@ struct AppMagicLink {
         let turnstileSiteKey: String?
 
         func rules() -> [any Rule] {
-            NewAdminDesignSystem().rules()
+            AdminDesignSystem().rules()
                 + [Media(selectors: selectors())]
         }
 
@@ -92,16 +92,16 @@ struct AppMagicLink {
                 Custom(".login-card .admin-page-header") {
                     Margin(bottom: 0.px)
                 },
-                Custom(".login-card .new-admin-form") {
+                Custom(".login-card .admin-form") {
                     MarginTop(24.px)
                 },
-                Custom(".login-card .new-admin-form__actions") {
+                Custom(".login-card .admin-form__actions") {
                     AlignItems(.stretch)
                 },
-                Custom(".login-card .new-admin-form__actions .button") {
+                Custom(".login-card .admin-form__actions .button") {
                     Width(100.percent)
                 },
-                Custom(".login-card .new-admin-form__success") {
+                Custom(".login-card .admin-form__success") {
                     Margin(0)
                     Padding(vertical: 12.px, horizontal: 14.px)
                     BorderRadius(8.px)
@@ -132,7 +132,7 @@ struct AppMagicLink {
             Main {
                 Div {
                     context.build(
-                        NewAdminPageHeader(
+                        AdminPageHeader(
                             state: .primary(
                                 title: "Sign in",
                                 description:
@@ -142,15 +142,15 @@ struct AppMagicLink {
                     )
 
                     context.build(
-                        NewAdminForm(action: "/magic-link/") {
+                        AdminForm(action: "/magic-link/") {
                             if let message {
-                                P(message).class("new-admin-form__success")
+                                P(message).class("admin-form__success")
                             }
                             if let error {
-                                P(error).class("new-admin-form__error")
+                                P(error).class("admin-form__error")
                             }
                             context.build(
-                                NewAdminFormFieldInput(
+                                AdminFormFieldInput(
                                     state: .init(
                                         name: "email",
                                         label: "Email address",
@@ -161,7 +161,7 @@ struct AppMagicLink {
                                 )
                             )
                             context.build(
-                                NewAdminFormFieldCheckbox(
+                                AdminFormFieldCheckbox(
                                     state: .init(
                                         name: "is_persistent",
                                         label: "Session",
@@ -185,23 +185,23 @@ struct AppMagicLink {
                             }
                             Div {
                                 context.build(
-                                    NewAdminSubmitButton("Send magic link")
+                                    AdminSubmitButton("Send magic link")
                                 )
                             }
-                            .class("new-admin-form__actions")
+                            .class("admin-form__actions")
                         }
                     )
 
                     Div {
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 "Sign in with credentials",
                                 href: "/login/",
                                 style: .ghost(.primary)
                             )
                         )
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 "Home",
                                 href: "/",
                                 style: .ghost(.secondary)
@@ -384,7 +384,7 @@ struct AppMagicLink {
         turnstileSiteKey: String?,
         context: inout BuilderContext
     ) -> HTMLResponse {
-        let component = NewAdminHTML(
+        let component = AdminHTML(
             title: "Magic link",
             body: .init(
                 content: Page(

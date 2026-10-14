@@ -8,7 +8,6 @@
 - [ ] HTTP2 support (enable HB HTTP2)
 - [ ] API token for public endpoints (API is private for now)
 - [ ] Remove buttons display mode?
-- [ ] RCE undo / redo feature
 - [ ] Search & list -> list + reference API
 - [ ] Readrepository & writerepository
 - [ ] Sign in with magic link + flow
@@ -21,9 +20,10 @@
 - [ ] A11Y + outlines everywhere on admin + frontend
 - [ ] Review components and states
 - [ ] Autocomplete reuqests instead of states, like city & country
-- [ ] Duplicate feature
 - [ ] Storage context, database context, worker context unification
 - [ ] Telemetry, CI, auto-deployment
-- [ ] NewAdmin prefix -> Admin only for FeatherAdmin UI
 - [ ] Tag remaining framework packages with 1.0-rc.x
 - [ ] Template editor for web module
+
+- [ ] Duplicate feature
+- [ ] RCE undo / redo feature

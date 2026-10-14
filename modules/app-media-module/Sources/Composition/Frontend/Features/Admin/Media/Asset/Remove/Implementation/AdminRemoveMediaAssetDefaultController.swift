@@ -34,7 +34,7 @@ struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
         let (interactor, presenter) = buildRuntime((request, context))
         let id = try context.requiredID()
         let payload = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard

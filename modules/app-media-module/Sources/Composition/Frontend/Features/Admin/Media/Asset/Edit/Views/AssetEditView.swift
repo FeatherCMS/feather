@@ -14,7 +14,7 @@ import WebComponents
 struct AssetEditView: Component {
     struct State {
         let model: AdminEditMediaAssetModel
-        let permissions: NewAdminListActions
+        let permissions: AdminListActions
     }
 
     let state: State
@@ -23,7 +23,7 @@ struct AssetEditView: Component {
         Section {
             if !state.permissions.allows(MediaPermissions.Assets.update) {
                 context.build(
-                    NewAdminStatusView(
+                    AdminStatusView(
                         state: .init(
                             title: "Forbidden",
                             message: "Your account cannot edit media assets."
@@ -34,10 +34,10 @@ struct AssetEditView: Component {
             }
             else {
                 context.build(
-                    NewAdminBreadcrumb(links: MediaAssetRoutes.breadcrumb)
+                    AdminBreadcrumb(links: MediaAssetRoutes.breadcrumb)
                 )
                 context.build(
-                    NewAdminPageHeader(
+                    AdminPageHeader(
                         state: .primary(
                             title: "Edit media asset",
                             description: "Update the metadata for this asset."
@@ -45,9 +45,9 @@ struct AssetEditView: Component {
                     )
                 )
                 if let error = state.model.error {
-                    P(error).class("new-admin-form__error")
+                    P(error).class("admin-form__error")
                 }
-                let form = NewAdminForm(
+                let form = AdminForm(
                     action:
                         MediaAssetRoutes.edit(
                             RouterPath(state.model.id)
@@ -55,7 +55,7 @@ struct AssetEditView: Component {
                         .description
                 ) {
                     context.build(
-                        NewAdminFormFieldInput(
+                        AdminFormFieldInput(
                             state: .init(
                                 name: "title",
                                 label: "Title",
@@ -64,7 +64,7 @@ struct AssetEditView: Component {
                         )
                     )
                     context.build(
-                        NewAdminFormFieldInput(
+                        AdminFormFieldInput(
                             state: .init(
                                 name: "altText",
                                 label: "Alt text",
@@ -73,9 +73,9 @@ struct AssetEditView: Component {
                         )
                     )
                     Div {
-                        context.build(NewAdminSubmitButton("Save changes"))
+                        context.build(AdminSubmitButton("Save changes"))
                     }
-                    .class("new-admin-form__actions")
+                    .class("admin-form__actions")
                 }
                 context.build(form)
             }

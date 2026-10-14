@@ -3,20 +3,20 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminControlButton: Component {
+public struct AdminControlButton: Component {
 
     public let label: String
-    public let style: NewAdminButtonStyle
+    public let style: AdminButtonStyle
 
     public init(
         _ label: String,
-        style: NewAdminButtonStyle = .primary
+        style: AdminButtonStyle = .primary
     ) {
         self.label = label
         self.style = style
     }
 
-    public init(state: NewAdminButton.State) {
+    public init(state: AdminButton.State) {
         self.init(state.label, style: state.style)
     }
 

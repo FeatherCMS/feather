@@ -5,7 +5,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminListRowActions: Component {
+public struct AdminListRowActions: Component {
 
     public func rules() -> [any Rule] {
         Media {
@@ -38,7 +38,7 @@ public struct NewAdminListRowActions: Component {
     public struct Action: Sendable {
         public let title: String
         public let href: String?
-        public let style: NewAdminButtonStyle
+        public let style: AdminButtonStyle
         public let permission: PermissionKey
         public let copyText: String?
         public let dialogURL: String?
@@ -46,7 +46,7 @@ public struct NewAdminListRowActions: Component {
         public init(
             _ title: String,
             href: String? = nil,
-            style: NewAdminButtonStyle = .secondary,
+            style: AdminButtonStyle = .secondary,
             permission: PermissionKey,
             copyText: String? = nil,
             dialogURL: String? = nil
@@ -62,12 +62,12 @@ public struct NewAdminListRowActions: Component {
 
     public let label: String
     public let actions: [Action]
-    public let permissions: NewAdminListActions
+    public let permissions: AdminListActions
 
     public init(
         label: String,
         actions: [Action],
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) {
         self.label = label
         self.actions = actions
@@ -83,7 +83,7 @@ public struct NewAdminListRowActions: Component {
             for action in visibleActions {
                 if let copyText = action.copyText {
                     context.build(
-                        NewAdminControlButton(
+                        AdminControlButton(
                             action.title,
                             style: action.style
                         )
@@ -94,7 +94,7 @@ public struct NewAdminListRowActions: Component {
                 }
                 else {
                     context.build(
-                        NewAdminRowButton(
+                        AdminRowButton(
                             action.title,
                             href: action.href,
                             style: action.style,

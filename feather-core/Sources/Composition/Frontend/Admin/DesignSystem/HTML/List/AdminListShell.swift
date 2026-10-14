@@ -4,10 +4,10 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminListShell<Table: FlowContent>: Component {
+public struct AdminListShell<Table: FlowContent>: Component {
 
     public let table: Table
-    public let layout: NewAdminListTableLayout?
+    public let layout: AdminListTableLayout?
     public let hasSelection: Bool
 
     public func rules() -> [any Rule] {
@@ -187,7 +187,7 @@ public struct NewAdminListShell<Table: FlowContent>: Component {
     }
 
     public init(
-        layout: NewAdminListTableLayout? = nil,
+        layout: AdminListTableLayout? = nil,
         hasSelection: Bool = false,
         table: Table
     ) {

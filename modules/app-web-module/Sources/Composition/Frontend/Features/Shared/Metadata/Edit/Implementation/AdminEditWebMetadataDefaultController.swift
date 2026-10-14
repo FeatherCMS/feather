@@ -311,7 +311,7 @@ struct AdminEditWebMetadataDefaultController:
                 value: imageUrl,
                 error: nil
             ),
-            selectedImageAsset: NewAdminMediaAsset.metadataImageURL(
+            selectedImageAsset: AdminMediaAsset.metadataImageURL(
                 imageUrl
             ),
             canonicalUrl: .init(

@@ -68,7 +68,7 @@ struct AdminListWebMenuDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: NewAdminLocation.url(
+                    .location: AdminLocation.url(
                         path: "/admin/web/menus/",
                         page: page,
                         search: search
@@ -91,7 +91,7 @@ struct AdminListWebMenuDefaultController:
     ) async throws -> Response {
         let (interactor, _) = buildRuntime((request, context))
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -104,7 +104,7 @@ struct AdminListWebMenuDefaultController:
         if !payload.normalizedSelectedIds.isEmpty {
             try await interactor.remove(ids: payload.normalizedSelectedIds)
         }
-        let location = NewAdminLocation.url(
+        let location = AdminLocation.url(
             path: "/admin/web/menus/",
             page: payload.normalizedPage,
             search: payload.normalizedSearch

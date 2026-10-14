@@ -3,7 +3,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminListRowCheckbox: Component {
+public struct AdminListRowCheckbox: Component {
 
     public let id: String
 
@@ -16,7 +16,7 @@ public struct NewAdminListRowCheckbox: Component {
     public func html(context: inout BuilderContext) -> Td {
         Td {
             context.build(
-                NewAdminCheckbox(
+                AdminCheckbox(
                     name: "ids",
                     value: id,
                     ariaLabel: "Select row",

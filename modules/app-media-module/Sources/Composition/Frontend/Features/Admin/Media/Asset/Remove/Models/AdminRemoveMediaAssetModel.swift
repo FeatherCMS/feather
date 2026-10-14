@@ -9,6 +9,6 @@ import WebBuilders
 import WebComponents
 
 struct AdminRemoveMediaAssetModel: Sendable {
-    let item: NewAdminRemoveItemContext
+    let item: AdminRemoveItemContext
     let error: String?
 }

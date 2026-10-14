@@ -11,7 +11,7 @@ struct AdminAddNewsletterSubscriberView: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(
+                AdminBreadcrumb(
                     links: NewsletterAdminRoutes.breadcrumb + [
                         .init(
                             label: "Subscribers",
@@ -21,21 +21,21 @@ struct AdminAddNewsletterSubscriberView: Component {
                 )
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Add subscriber",
                         description: "Create a newsletter subscriber."
                     )
                 )
             )
-            let form = NewAdminForm(
+            let form = AdminForm(
                 action: NewsletterAdminRoutes.subscriberAdd.description
             ) {
                 if let error = model.error {
-                    P(error).class("new-admin-form__error")
+                    P(error).class("admin-form__error")
                 }
                 context.build(
-                    NewAdminFormFieldInput(
+                    AdminFormFieldInput(
                         state: .init(
                             name: "email",
                             label: "Email",
@@ -46,7 +46,7 @@ struct AdminAddNewsletterSubscriberView: Component {
                     )
                 )
                 context.build(
-                    NewAdminFormFieldInput(
+                    AdminFormFieldInput(
                         state: .init(
                             name: "firstName",
                             label: "First name",
@@ -55,7 +55,7 @@ struct AdminAddNewsletterSubscriberView: Component {
                     )
                 )
                 context.build(
-                    NewAdminFormFieldInput(
+                    AdminFormFieldInput(
                         state: .init(
                             name: "lastName",
                             label: "Last name",
@@ -64,7 +64,7 @@ struct AdminAddNewsletterSubscriberView: Component {
                     )
                 )
                 context.build(
-                    NewAdminFormFieldSelectAutocomplete(
+                    AdminFormFieldSelectAutocomplete(
                         state: .init(
                             name: "campaignIds[]",
                             label: "Campaigns",
@@ -83,10 +83,10 @@ struct AdminAddNewsletterSubscriberView: Component {
                 )
                 Div {
                     context.build(
-                        NewAdminSubmitButton("Add subscriber", style: .primary)
+                        AdminSubmitButton("Add subscriber", style: .primary)
                     )
                 }
-                .class("new-admin-form__actions")
+                .class("admin-form__actions")
             }
             context.build(form)
         }

@@ -49,7 +49,7 @@ struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
         let id = try context.requiredID()
         do {
             let payload = try await request.decode(
-                as: NonceRequest<NewAdminListRemoveFormInput>.self,
+                as: NonceRequest<AdminListRemoveFormInput>.self,
                 context: context
             )
             guard
@@ -99,7 +99,7 @@ struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: NewAdminLocation.url(
+                    .location: AdminLocation.url(
                         path: UserRoleRoutes.list.description,
                         page: page,
                         search: search
@@ -122,7 +122,7 @@ struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
             return
                 try await presenter.renderErrorPage(
                     error: error,
-                    cancel: NewAdminLocation.removeCancel(
+                    cancel: AdminLocation.removeCancel(
                         path: UserRoleRoutes.list.description,
                         returnTo: request.queryString("returnTo")
                     )
@@ -146,7 +146,7 @@ struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
         var returnTo = request.queryString("returnTo")
         do {
             let payload = try await request.decode(
-                as: NonceRequest<NewAdminListRemoveFormInput>.self,
+                as: NonceRequest<AdminListRemoveFormInput>.self,
                 context: context
             )
             returnTo = payload.input.normalizedReturnTo
@@ -158,7 +158,7 @@ struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
             else {
                 return
                     try await presenter.renderInvalidNoncePage(
-                        cancel: NewAdminLocation.removeCancel(
+                        cancel: AdminLocation.removeCancel(
                             path: UserRoleRoutes.list.description,
                             returnTo: returnTo
                         )
@@ -168,7 +168,7 @@ struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
             if !payload.input.normalizedIds.isEmpty {
                 try await interactor.delete(ids: payload.input.normalizedIds)
             }
-            let location = NewAdminLocation.url(
+            let location = AdminLocation.url(
                 path: UserRoleRoutes.list.description,
                 page: payload.input.normalizedPage,
                 search: payload.input.normalizedSearch
@@ -188,7 +188,7 @@ struct AdminRemoveUserRoleDefaultController: AdminRemoveUserRoleController {
             return
                 try await presenter.renderErrorPage(
                     error: error,
-                    cancel: NewAdminLocation.removeCancel(
+                    cancel: AdminLocation.removeCancel(
                         path: UserRoleRoutes.list.description,
                         returnTo: returnTo
                     )

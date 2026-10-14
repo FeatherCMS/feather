@@ -13,7 +13,7 @@ struct WebPageConfirmation: Component {
     struct State {
         let id: String
         let source: String
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
         let nonceToken: String
     }
 
@@ -21,7 +21,7 @@ struct WebPageConfirmation: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
-            NewAdminRemoveConfirmation(
+            AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove page",
                     description: "This action cannot be undone."

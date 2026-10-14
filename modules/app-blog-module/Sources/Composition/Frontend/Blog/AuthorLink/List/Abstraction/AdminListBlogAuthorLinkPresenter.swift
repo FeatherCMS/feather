@@ -25,6 +25,6 @@ protocol AdminListBlogAuthorLinkPresenter: Sendable {
         menuId: String,
         page: Int,
         search: String?,
-        items: [NewAdminRemoveItemContext]
+        items: [AdminRemoveItemContext]
     ) async throws -> HTMLResponse
 }

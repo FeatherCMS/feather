@@ -12,7 +12,7 @@ struct AdminViewAnalyticsNotFoundDefaultPresenter:
         model: AdminViewAnalyticsNotFoundModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: model.title,
@@ -23,7 +23,7 @@ struct AdminViewAnalyticsNotFoundDefaultPresenter:
     func renderDenied(
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "404s",
@@ -40,7 +40,7 @@ struct AdminViewAnalyticsNotFoundDefaultPresenter:
         message: String,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "404s",

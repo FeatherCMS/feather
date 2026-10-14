@@ -8,11 +8,11 @@ enum SystemPermissionRoutes {
     static let add = root.appendingPath(RouterPath("add"))
     static let remove = root.appendingPath(RouterPath("remove"))
 
-    static var listBreadcrumb: [NewAdminBreadcrumb.Link] {
+    static var listBreadcrumb: [AdminBreadcrumb.Link] {
         SystemAdminRoutes.breadcrumb
     }
 
-    static var breadcrumb: [NewAdminBreadcrumb.Link] {
+    static var breadcrumb: [AdminBreadcrumb.Link] {
         SystemAdminRoutes.breadcrumb + [
             .init(label: "Permissions", link: list.description)
         ]

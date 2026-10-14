@@ -7,10 +7,10 @@ import WebComponents
 
 struct UserRoleDetails: Component {
     let role: UserRoleDetailsModel
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> Section {
-        var actions: [NewAdminDetailView.Action] = []
+        var actions: [AdminDetailView.Action] = []
         if permissions.allows(UserPermissions.Roles.update) {
             actions.append(
                 .init(
@@ -31,7 +31,7 @@ struct UserRoleDetails: Component {
             )
         }
         return context.build(
-            NewAdminDetailView(
+            AdminDetailView(
                 breadcrumb: UserRoleRoutes.breadcrumb,
                 pageHeader: .primary(
                     title: "User role details",

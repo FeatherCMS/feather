@@ -12,7 +12,7 @@ struct AdminMediaVariantTabs: Component {
     let id: String
     let active: Tab
 
-    var links: [NewAdminTabBar.Link] {
+    var links: [AdminTabBar.Link] {
         [
             .init(
                 label: "Details",
@@ -28,6 +28,6 @@ struct AdminMediaVariantTabs: Component {
     }
 
     func html(context: inout BuilderContext) -> Div {
-        context.build(NewAdminTabBar(links: links))
+        context.build(AdminTabBar(links: links))
     }
 }

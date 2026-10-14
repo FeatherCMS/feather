@@ -1,10 +1,10 @@
 import FeatherContracts
 import Foundation
 
-extension NewAdminMediaAsset {
+extension AdminMediaAsset {
     public static func metadataImageURL(
         _ value: String?
-    ) -> NewAdminMediaAsset? {
+    ) -> AdminMediaAsset? {
         guard
             let rawValue = value?
                 .whitespaceTrimmed,

@@ -7,9 +7,9 @@ import WebComponents
 
 struct UserIdentityAddForm: Component {
     struct State: Sendable {
-        var name: NewAdminFormFieldInput.State
-        var status: NewAdminFormFieldSelect.State
-        var roleOptions: [NewAdminFormFieldCheckboxGroup.Option]
+        var name: AdminFormFieldInput.State
+        var status: AdminFormFieldSelect.State
+        var roleOptions: [AdminFormFieldCheckboxGroup.Option]
         var roleIdsError: String?
         var error: String?
 
@@ -72,7 +72,7 @@ struct UserIdentityAddForm: Component {
             )
         }
 
-        private static var statusOptions: [NewAdminFormFieldSelect.SelectOption]
+        private static var statusOptions: [AdminFormFieldSelect.SelectOption]
         {
             UserAdminAPI.Components.Schemas.UserIdentityStatusField.allCases.map
             {
@@ -89,15 +89,15 @@ struct UserIdentityAddForm: Component {
     let nonceToken: String?
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action, nonceToken: nonceToken) {
+        let form = AdminForm(action: action, nonceToken: nonceToken) {
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
-            context.build(NewAdminFormFieldInput(state: state.name))
-            context.build(NewAdminFormFieldSelect(state: state.status))
+            context.build(AdminFormFieldInput(state: state.name))
+            context.build(AdminFormFieldSelect(state: state.status))
             if !state.roleOptions.isEmpty {
                 context.build(
-                    NewAdminFormFieldCheckboxGroup(
+                    AdminFormFieldCheckboxGroup(
                         name: "roleIds[]",
                         label: "Roles",
                         options: state.roleOptions,
@@ -107,11 +107,11 @@ struct UserIdentityAddForm: Component {
             }
             Div {
                 context.build(
-                    NewAdminSubmitButton(submitLabel, style: .primary)
+                    AdminSubmitButton(submitLabel, style: .primary)
                 )
                 if let viewHref {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "View",
                             href: viewHref,
                             style: .secondary
@@ -120,7 +120,7 @@ struct UserIdentityAddForm: Component {
                 }
                 if let removeHref {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "Remove",
                             href: removeHref,
                             style: .destructive
@@ -128,7 +128,7 @@ struct UserIdentityAddForm: Component {
                     )
                 }
             }
-            .class("new-admin-form__actions")
+            .class("admin-form__actions")
         }
         return context.build(form)
     }

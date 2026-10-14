@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminFormFieldCheckbox: Component {
+public struct AdminFormFieldCheckbox: Component {
     public struct Input: Codable, Sendable, Equatable, Hashable {
         public let value: Bool
 
@@ -70,19 +70,19 @@ public struct NewAdminFormFieldCheckbox: Component {
 
     public func selectors() -> [any Selector] {
         [
-            Class("new-admin-form-checkbox") {
+            Class("admin-form-checkbox") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(8.px)
             },
-            Class("new-admin-form-checkbox__label") {
+            Class("admin-form-checkbox__label") {
                 Display(.flex)
                 AlignItems(.center)
                 Gap(8.px)
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 Cursor(.pointer)
             },
-            Custom(".new-admin-form-checkbox .field-error") {
+            Custom(".admin-form-checkbox .field-error") {
                 Color(.red)
                 FontSize(0.86.rem)
             },
@@ -93,11 +93,11 @@ public struct NewAdminFormFieldCheckbox: Component {
         let errorID = "\(state.name)-error"
         return Section {
             if let label = state.label {
-                context.build(NewAdminFormFieldLabel(text: label))
+                context.build(AdminFormFieldLabel(text: label))
             }
             Label {
                 context.build(
-                    NewAdminCheckbox(
+                    AdminCheckbox(
                         name: state.name,
                         value: "true",
                         id: state.name,
@@ -109,16 +109,16 @@ public struct NewAdminFormFieldCheckbox: Component {
                 )
                 Span(state.checkboxLabel)
             }
-            .class("new-admin-form-checkbox__label")
+            .class("admin-form-checkbox__label")
             .for(state.name)
             if let help = state.help {
-                context.build(NewAdminFormFieldHelp(help))
+                context.build(AdminFormFieldHelp(help))
             }
             if let error = state.error {
                 Span(error).id(errorID).class("field-error")
             }
         }
         .if(state.error != nil) { $0.class("has-error") }
-        .class("new-admin-form-checkbox")
+        .class("admin-form-checkbox")
     }
 }

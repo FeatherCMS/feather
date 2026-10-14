@@ -9,14 +9,14 @@ import WebComponents
 
 struct AuthCredentialRow: Component {
     let credential: AuthAdminAPI.Components.Schemas.AuthCredentialListItemSchema
-    let actions: NewAdminListActions
+    let actions: AdminListActions
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
             Td(credential.identityName).data("label", "User")
             Td(credential.email.emptyToNil ?? "—").data("label", "Email")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: [
                         .init(

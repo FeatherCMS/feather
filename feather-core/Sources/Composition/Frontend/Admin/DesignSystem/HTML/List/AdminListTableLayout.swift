@@ -1,6 +1,6 @@
 import CSS
 
-public struct NewAdminListTableLayout: Sendable, Equatable {
+public struct AdminListTableLayout: Sendable, Equatable {
 
     public enum Column: Sendable, Equatable {
         case fixed(Int)

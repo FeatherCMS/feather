@@ -1,4 +1,4 @@
-public struct NewAdminRemoveItemContext: Sendable {
+public struct AdminRemoveItemContext: Sendable {
     public let id: String
     public let label: String
 

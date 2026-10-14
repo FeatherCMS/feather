@@ -8,7 +8,7 @@ enum AdminBlogMetadataRoutes {
         let path: String
         let referenceType: String
         let title: String
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
         let editPath: @Sendable (RouterPath) -> RouterPath
     }
 

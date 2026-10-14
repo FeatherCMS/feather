@@ -10,7 +10,7 @@ struct AdminViewUserOverviewDefaultPresenter: AdminViewUserOverviewPresenter {
     func renderPage(model: AdminViewUserOverviewModel) async throws
         -> HTMLResponse
     {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: model.title,

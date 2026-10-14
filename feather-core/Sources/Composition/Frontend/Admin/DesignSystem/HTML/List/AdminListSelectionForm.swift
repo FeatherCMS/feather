@@ -3,20 +3,20 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminListSelectionForm<Table: FlowContent>: Component {
+public struct AdminListSelectionForm<Table: FlowContent>: Component {
 
     public struct State: Sendable {
         public let action: String
-        public let pageState: NewAdminListPageState
+        public let pageState: AdminListPageState
         public let search: String
-        public let button: NewAdminSubmitButton
+        public let button: AdminSubmitButton
         public let isEnabled: Bool
 
         public init(
             action: String,
-            pageState: NewAdminListPageState,
+            pageState: AdminListPageState,
             search: String,
-            button: NewAdminSubmitButton,
+            button: AdminSubmitButton,
             isEnabled: Bool = true
         ) {
             self.action = action

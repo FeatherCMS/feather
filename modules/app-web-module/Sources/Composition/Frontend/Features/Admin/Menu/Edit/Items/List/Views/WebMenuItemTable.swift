@@ -8,20 +8,20 @@ import WebComponents
 struct WebMenuItemTable: Component {
     struct State {
         let menuId: String
-        let permissions: NewAdminListActions
+        let permissions: AdminListActions
         let items: [Components.Schemas.WebMenuItemListItemSchema]
-        let pageState: NewAdminListPageState
+        let pageState: AdminListPageState
         let search: String?
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Edit menu",
                         description:
@@ -33,7 +33,7 @@ struct WebMenuItemTable: Component {
                 AdminWebMenuTabs(menuID: state.menuId, active: .items)
             )
             context.build(
-                NewAdminRelationshipGroup(
+                AdminRelationshipGroup(
                     pageHeader: .secondary(
                         title: "Menu items",
                         description:

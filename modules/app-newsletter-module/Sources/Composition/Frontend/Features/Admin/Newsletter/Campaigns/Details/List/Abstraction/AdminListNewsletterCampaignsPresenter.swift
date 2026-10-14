@@ -2,10 +2,10 @@ import FeatherAdmin
 
 protocol AdminListNewsletterCampaignsPresenter: Sendable {
     func render(
-        model: NewAdminListModel<AdminNewsletterCampaignItem>,
+        model: AdminListModel<AdminNewsletterCampaignItem>,
         isPicker: Bool,
         error: String?,
-        permissions: NewAdminListActions,
+        permissions: AdminListActions,
         search: String?
     ) async throws -> HTMLResponse
 }

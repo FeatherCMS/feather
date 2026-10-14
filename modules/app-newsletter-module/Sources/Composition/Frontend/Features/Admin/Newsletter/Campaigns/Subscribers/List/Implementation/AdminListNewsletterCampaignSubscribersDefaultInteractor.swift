@@ -12,7 +12,7 @@ struct AdminListNewsletterCampaignSubscribersDefaultInteractor:
 {
     let repository: AdminListNewsletterCampaignSubscribersOpenAPIRepository
     func list(newsletterId: String, search: String?, page: Int) async throws
-        -> NewAdminListModel<AdminNewsletterCampaignSubscriberItem>
+        -> AdminListModel<AdminNewsletterCampaignSubscriberItem>
     {
         let items = try await repository.list(newsletterId: newsletterId)
         let query = search?.lowercased() ?? ""

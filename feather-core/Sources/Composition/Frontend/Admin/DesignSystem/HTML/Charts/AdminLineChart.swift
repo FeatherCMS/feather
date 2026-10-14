@@ -5,7 +5,7 @@ import SVG
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminLineChart: Component {
+public struct AdminLineChart: Component {
     public struct Point: Sendable {
         public let label: String
         public let value: Int
@@ -41,15 +41,15 @@ public struct NewAdminLineChart: Component {
 
     public func rules() -> [any Rule] {
         Media {
-            Custom(".new-admin-line-chart") {
+            Custom(".admin-line-chart") {
                 Display(.grid)
                 Gap(8.px)
             }
-            Custom(".new-admin-line-chart__labels") {
+            Custom(".admin-line-chart__labels") {
                 Position(.relative)
                 Height(1.2.rem)
             }
-            Custom(".new-admin-line-chart__label") {
+            Custom(".admin-line-chart__label") {
                 Position(.absolute)
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 FontSize(0.72.rem)
@@ -159,7 +159,7 @@ public struct NewAdminLineChart: Component {
                             ? "transform:translateX(-100%);"
                             : "transform:translateX(-50%);"
                     Span(points[index].label)
-                        .class("new-admin-line-chart__label")
+                        .class("admin-line-chart__label")
                         .setAttribute(
                             name: "style",
                             value:
@@ -167,10 +167,10 @@ public struct NewAdminLineChart: Component {
                         )
                 }
             }
-            .class("new-admin-line-chart__labels")
+            .class("admin-line-chart__labels")
             .setAttribute(name: "style", value: "position:relative;")
         }
-        .class("new-admin-line-chart")
+        .class("admin-line-chart")
     }
 
     private func xAxisLabelIndices(_ count: Int) -> [Int] {

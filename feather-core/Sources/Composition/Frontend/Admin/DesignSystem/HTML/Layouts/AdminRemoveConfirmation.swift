@@ -4,31 +4,31 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminRemoveConfirmation: Component {
+public struct AdminRemoveConfirmation: Component {
     public static let dialogTitle = "Are you sure?"
 
     public let selectedItems: [String]
     public let action: String
-    public let submit: NewAdminButton.State
-    public let cancel: NewAdminButton.State
+    public let submit: AdminButton.State
+    public let cancel: AdminButton.State
     public let nonceToken: String?
-    public let hiddenFields: [NewAdminFormFieldHiddenValue]
-    public let header: NewAdminPageHeader.State
+    public let hiddenFields: [AdminFormFieldHiddenValue]
+    public let header: AdminPageHeader.State
 
     public init(
-        header: NewAdminPageHeader.State,
+        header: AdminPageHeader.State,
         selectedItems: [String] = [],
         action: String,
-        submit: NewAdminButton.State = .init(
+        submit: AdminButton.State = .init(
             label: "Remove",
             style: .destructive
         ),
-        cancel: NewAdminButton.State = .init(
+        cancel: AdminButton.State = .init(
             label: "Cancel",
             style: .ghost(.primary)
         ),
         nonceToken: String? = nil,
-        hiddenFields: [NewAdminFormFieldHiddenValue] = []
+        hiddenFields: [AdminFormFieldHiddenValue] = []
     ) {
         self.selectedItems = selectedItems
         self.action = action
@@ -88,17 +88,17 @@ public struct NewAdminRemoveConfirmation: Component {
                         .value(field.value)
                 }
                 if submit.href != nil {
-                    context.build(NewAdminButton(state: submit))
+                    context.build(AdminButton(state: submit))
                 }
                 else {
-                    context.build(NewAdminSubmitButton(state: submit))
+                    context.build(AdminSubmitButton(state: submit))
                 }
                 if cancel.href != nil {
-                    context.build(NewAdminButton(state: cancel))
+                    context.build(AdminButton(state: cancel))
                 }
                 else {
                     context.build(
-                        NewAdminControlButton(state: cancel)
+                        AdminControlButton(state: cancel)
                     )
                     .data("admin-dialog-close", "")
                 }
@@ -110,7 +110,7 @@ public struct NewAdminRemoveConfirmation: Component {
 
         return Section {
             context.build(
-                NewAdminRelationshipGroup(
+                AdminRelationshipGroup(
                     pageHeader: header
                 ) {
                     content

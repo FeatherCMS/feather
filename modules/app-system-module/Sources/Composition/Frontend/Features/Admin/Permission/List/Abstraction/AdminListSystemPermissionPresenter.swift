@@ -5,7 +5,7 @@ protocol AdminListSystemPermissionPresenter: Sendable {
 
     func renderListPage(
         model: AdminListSystemPermissionModel,
-        permissions: NewAdminListActions,
+        permissions: AdminListActions,
         search: String?
     ) async throws -> HTMLResponse
 

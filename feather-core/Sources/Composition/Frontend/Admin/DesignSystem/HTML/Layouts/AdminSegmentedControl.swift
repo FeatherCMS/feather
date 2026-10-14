@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminSegmentedControl: Component {
+public struct AdminSegmentedControl: Component {
     public struct Link: Sendable {
         public let label: String
         public let href: String
@@ -29,7 +29,7 @@ public struct NewAdminSegmentedControl: Component {
 
     public func rules() -> [any Rule] {
         Media {
-            Class("new-admin-segmented-control") {
+            Class("admin-segmented-control") {
                 Display(.inlineFlex)
                 AlignItems(.center)
                 Border(
@@ -42,13 +42,13 @@ public struct NewAdminSegmentedControl: Component {
                 Padding(3.px)
                 MaxWidth(100.percent)
             }
-            Custom(".new-admin-segmented-control__track") {
+            Custom(".admin-segmented-control__track") {
                 Display(.flex)
                 AlignItems(.center)
                 Gap(2.px)
                 MaxWidth(100.percent)
             }
-            Custom(".new-admin-segmented-control__track a") {
+            Custom(".admin-segmented-control__track a") {
                 Border(0)
                 BorderRadius(7.px)
                 BackgroundColor(.transparent)
@@ -62,12 +62,12 @@ public struct NewAdminSegmentedControl: Component {
                 WhiteSpace(.nowrap)
             }
             Custom(
-                ".new-admin-segmented-control__track a:hover:not(.is-current)"
+                ".admin-segmented-control__track a:hover:not(.is-current)"
             ) {
                 Color(.variable(TokenKey.Colors.Link.hover))
                 TextDecoration(.underline)
             }
-            Custom(".new-admin-segmented-control__track a.is-current") {
+            Custom(".admin-segmented-control__track a.is-current") {
                 Background(.variable(TokenKey.Colors.Accents.Primary.tint))
                 Color(.variable(TokenKey.Colors.Accents.Primary.text))
             }
@@ -85,8 +85,8 @@ public struct NewAdminSegmentedControl: Component {
                         }
                 }
             }
-            .class("new-admin-segmented-control__track")
+            .class("admin-segmented-control__track")
         }
-        .class("new-admin-segmented-control")
+        .class("admin-segmented-control")
     }
 }

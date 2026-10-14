@@ -64,20 +64,20 @@ struct AdminViewDashboardComponent: Component {
                 GridTemplateColumns(.repeat(5, .fraction(1.fr)))
                 Gap(18.px)
             }
-            Custom(".admin-dashboard__stats .new-admin-stat-card") {
+            Custom(".admin-dashboard__stats .admin-stat-card") {
                 MinHeight(108.px)
                 BoxSizing(.borderBox)
                 JustifyContent(.center)
                 Padding(22.px)
                 BorderRadius(16.px)
             }
-            Custom(".admin-dashboard__stats .new-admin-stat-card__label") {
+            Custom(".admin-dashboard__stats .admin-stat-card__label") {
                 FontSize(0.78.rem)
                 FontWeight(.number(600))
                 LetterSpacing(0.045.em)
                 TextTransform(.uppercase)
             }
-            Custom(".admin-dashboard__stats .new-admin-stat-card__value") {
+            Custom(".admin-dashboard__stats .admin-stat-card__value") {
                 FontSize(1.75.rem)
             }
             Custom(".admin-dashboard__primary-grid") {
@@ -91,21 +91,21 @@ struct AdminViewDashboardComponent: Component {
                 GridTemplateColumns(.repeat(3, .fraction(1.fr)))
                 Gap(24.px)
             }
-            Custom(".admin-dashboard .new-admin-chart-card") {
+            Custom(".admin-dashboard .admin-chart-card") {
                 Gap(20.px)
                 Padding(24.px)
                 BorderRadius(18.px)
                 Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             }
             Custom(
-                ".admin-dashboard .new-admin-chart-card svg > rect:first-child"
+                ".admin-dashboard .admin-chart-card svg > rect:first-child"
             ) {
                 UnsafeRawProperty(
                     name: "fill",
                     value: "var(--material-color-secondary-tint)"
                 )
             }
-            Custom(".admin-dashboard .new-admin-chart-card h2") {
+            Custom(".admin-dashboard .admin-chart-card h2") {
                 FontSize(1.rem)
                 FontWeight(.number(650))
                 Padding(bottom: 14.px)
@@ -115,16 +115,16 @@ struct AdminViewDashboardComponent: Component {
                     .variable(TokenKey.Colors.Materials.Primary.border)
                 )
             }
-            Custom(".admin-dashboard .new-admin-bar-chart") {
+            Custom(".admin-dashboard .admin-bar-chart") {
                 Gap(14.px)
             }
-            Custom(".admin-dashboard .new-admin-bar-chart__row") {
+            Custom(".admin-dashboard .admin-bar-chart__row") {
                 Gap(8.px)
             }
-            Custom(".admin-dashboard .new-admin-bar-chart__track") {
+            Custom(".admin-dashboard .admin-bar-chart__track") {
                 Height(12.px)
             }
-            Custom(".admin-dashboard__traffic .new-admin-chart-card") {
+            Custom(".admin-dashboard__traffic .admin-chart-card") {
                 Height(100.percent)
                 BoxSizing(.borderBox)
             }
@@ -165,12 +165,12 @@ struct AdminViewDashboardComponent: Component {
         Section {
             Div {
                 context.build(
-                    NewAdminBreadcrumb(
+                    AdminBreadcrumb(
                         links: [.init(label: "Admin", link: "/admin/")]
                     )
                 )
                 context.build(
-                    NewAdminPageHeader(
+                    AdminPageHeader(
                         state: .primary(
                             title: "Dashboard",
                             description: model.summary
@@ -198,7 +198,7 @@ struct AdminViewDashboardComponent: Component {
                     Div {
                         for item in model.contentStats {
                             context.build(
-                                NewAdminStatCard(
+                                AdminStatCard(
                                     label: item.label,
                                     value: item.value
                                 )
@@ -227,9 +227,9 @@ struct AdminViewDashboardComponent: Component {
                         if let dailyTraffic = model.dailyTraffic {
                             Div {
                                 context.build(
-                                    NewAdminChartCard(
+                                    AdminChartCard(
                                         title: "Daily traffic",
-                                        chart: NewAdminLineChart(
+                                        chart: AdminLineChart(
                                             points: dailyTraffic.map {
                                                 .init(
                                                     label: dateLabel(
@@ -276,9 +276,9 @@ struct AdminViewDashboardComponent: Component {
                             !topPages.isEmpty
                         {
                             context.build(
-                                NewAdminChartCard(
+                                AdminChartCard(
                                     title: "Top pages",
-                                    chart: NewAdminBarChart(
+                                    chart: AdminBarChart(
                                         items: topPages.map {
                                             .init(
                                                 label: $0.label,
@@ -293,9 +293,9 @@ struct AdminViewDashboardComponent: Component {
                         }
                         for card in model.webInsightCards {
                             context.build(
-                                NewAdminChartCard(
+                                AdminChartCard(
                                     title: card.title,
-                                    chart: NewAdminBarChart(
+                                    chart: AdminBarChart(
                                         items: card.items.map {
                                             .init(
                                                 label: $0.label,

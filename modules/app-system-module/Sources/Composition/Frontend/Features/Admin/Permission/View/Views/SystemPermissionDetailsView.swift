@@ -10,14 +10,14 @@ import WebComponents
 struct SystemPermissionDetailsView: Component {
     struct State {
         let permission: SystemPermissionDetailsModel
-        let permissions: NewAdminListActions
+        let permissions: AdminListActions
     }
 
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
-            NewAdminDetailView(
+            AdminDetailView(
                 breadcrumb: SystemPermissionRoutes.breadcrumb,
                 pageHeader: .primary(
                     title: "Permission details",
@@ -39,8 +39,8 @@ struct SystemPermissionDetailsView: Component {
         )
     }
 
-    private var actions: [NewAdminDetailView.Action] {
-        var result: [NewAdminDetailView.Action] = []
+    private var actions: [AdminDetailView.Action] {
+        var result: [AdminDetailView.Action] = []
         if state.permissions.allows(SystemPermissions.Permissions.update) {
             result.append(
                 .init(
@@ -58,7 +58,7 @@ struct SystemPermissionDetailsView: Component {
             result.append(
                 .init(
                     label: "Remove",
-                    href: NewAdminLocation.remove(
+                    href: AdminLocation.remove(
                         path: SystemPermissionRoutes.remove.description,
                         ids: [state.permission.id],
                         returnTo:

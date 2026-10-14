@@ -4,12 +4,12 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminRelationshipGroup: Component {
-    public let pageHeader: NewAdminPageHeader.State
+public struct AdminRelationshipGroup: Component {
+    public let pageHeader: AdminPageHeader.State
     public let content: [any FlowContent]
 
     public init(
-        pageHeader: NewAdminPageHeader.State,
+        pageHeader: AdminPageHeader.State,
         @Builder<FlowContent> content: () -> [any FlowContent]
     ) {
         self.pageHeader = pageHeader
@@ -18,7 +18,7 @@ public struct NewAdminRelationshipGroup: Component {
 
     public static func groupSelectors() -> [any Selector] {
         [
-            Class("new-admin-relationship-group") {
+            Class("admin-relationship-group") {
                 Width(100.percent)
                 BoxSizing(.borderBox)
                 Padding(16.px)
@@ -38,11 +38,11 @@ public struct NewAdminRelationshipGroup: Component {
 
     public func html(context: inout BuilderContext) -> Div {
         Div {
-            context.build(NewAdminPageHeader(state: pageHeader))
+            context.build(AdminPageHeader(state: pageHeader))
             for item in content {
                 item
             }
         }
-        .class("new-admin-relationship-group")
+        .class("admin-relationship-group")
     }
 }

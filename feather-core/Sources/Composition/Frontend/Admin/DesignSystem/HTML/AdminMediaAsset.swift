@@ -1,4 +1,4 @@
-public struct NewAdminMediaAssetVariant: Sendable, Equatable, Codable, Hashable
+public struct AdminMediaAssetVariant: Sendable, Equatable, Codable, Hashable
 {
     public let key: String
     public let name: String
@@ -18,7 +18,7 @@ public struct NewAdminMediaAssetVariant: Sendable, Equatable, Codable, Hashable
     }
 }
 
-public struct NewAdminMediaAsset: Sendable, Equatable, Codable, Hashable {
+public struct AdminMediaAsset: Sendable, Equatable, Codable, Hashable {
     public let id: String
     public let name: String
     public let slugPath: String
@@ -26,7 +26,7 @@ public struct NewAdminMediaAsset: Sendable, Equatable, Codable, Hashable {
     public let `extension`: String
     public let contentType: String
     public let sizeBytes: Int64
-    public let variants: [NewAdminMediaAssetVariant]
+    public let variants: [AdminMediaAssetVariant]
     public let title: String?
     public let altText: String?
     public let status: String
@@ -39,7 +39,7 @@ public struct NewAdminMediaAsset: Sendable, Equatable, Codable, Hashable {
         `extension`: String,
         contentType: String,
         sizeBytes: Int64,
-        variants: [NewAdminMediaAssetVariant] = [],
+        variants: [AdminMediaAssetVariant] = [],
         title: String?,
         altText: String?,
         status: String

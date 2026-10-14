@@ -15,7 +15,7 @@ protocol AdminRemoveBlogAuthorLinkPresenter: Sendable {
 
     func renderRemovePage(
         menuId: String,
-        item: NewAdminRemoveItemContext
+        item: AdminRemoveItemContext
     ) async throws -> HTMLResponse
 
     func renderErrorPage(

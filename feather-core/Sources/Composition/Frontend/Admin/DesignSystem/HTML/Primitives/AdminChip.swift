@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminChip: Component {
+public struct AdminChip: Component {
 
     public enum ColorName: String, Sendable {
         case red
@@ -29,7 +29,7 @@ public struct NewAdminChip: Component {
 
     public func selectors() -> [any Selector] {
         [
-            Class("new-admin-chip") {
+            Class("admin-chip") {
                 Display(.inlineFlex)
                 AlignItems(.center)
                 BoxSizing(.borderBox)
@@ -41,49 +41,49 @@ public struct NewAdminChip: Component {
                 LineHeight(1.2)
                 WhiteSpace(.nowrap)
             },
-            Class("new-admin-chip-red") {
+            Class("admin-chip-red") {
                 Background(
                     .variable(TokenKey.Colors.Palette.Red.background)
                 )
                 BorderColor(.variable(TokenKey.Colors.Palette.Red.border))
                 Color(.variable(TokenKey.Colors.Palette.Red.text))
             },
-            Class("new-admin-chip-blue") {
+            Class("admin-chip-blue") {
                 Background(
                     .variable(TokenKey.Colors.Palette.Blue.background)
                 )
                 BorderColor(.variable(TokenKey.Colors.Palette.Blue.border))
                 Color(.variable(TokenKey.Colors.Palette.Blue.text))
             },
-            Class("new-admin-chip-green") {
+            Class("admin-chip-green") {
                 Background(
                     .variable(TokenKey.Colors.Palette.Green.background)
                 )
                 BorderColor(.variable(TokenKey.Colors.Palette.Green.border))
                 Color(.variable(TokenKey.Colors.Palette.Green.text))
             },
-            Class("new-admin-chip-yellow") {
+            Class("admin-chip-yellow") {
                 Background(
                     .variable(TokenKey.Colors.Palette.Yellow.background)
                 )
                 BorderColor(.variable(TokenKey.Colors.Palette.Yellow.border))
                 Color(.variable(TokenKey.Colors.Palette.Yellow.text))
             },
-            Class("new-admin-chip-orange") {
+            Class("admin-chip-orange") {
                 Background(
                     .variable(TokenKey.Colors.Palette.Orange.background)
                 )
                 BorderColor(.variable(TokenKey.Colors.Palette.Orange.border))
                 Color(.variable(TokenKey.Colors.Palette.Orange.text))
             },
-            Class("new-admin-chip-purple") {
+            Class("admin-chip-purple") {
                 Background(
                     .variable(TokenKey.Colors.Palette.Purple.background)
                 )
                 BorderColor(.variable(TokenKey.Colors.Palette.Purple.border))
                 Color(.variable(TokenKey.Colors.Palette.Purple.text))
             },
-            Class("new-admin-chip-gray") {
+            Class("admin-chip-gray") {
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Tertiary.border)
@@ -94,6 +94,6 @@ public struct NewAdminChip: Component {
     }
 
     public func html(context: inout BuilderContext) -> Span {
-        Span(label).class("new-admin-chip", "new-admin-chip-\(color.rawValue)")
+        Span(label).class("admin-chip", "admin-chip-\(color.rawValue)")
     }
 }

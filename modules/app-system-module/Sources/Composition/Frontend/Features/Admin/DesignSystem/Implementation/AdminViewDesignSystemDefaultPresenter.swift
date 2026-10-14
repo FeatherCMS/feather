@@ -19,11 +19,11 @@ struct AdminViewDesignSystemDefaultPresenter: AdminViewDesignSystemPresenter {
             request: request,
             events: events
         )
-        let layout = NewAdminBaseLayout(
+        let layout = AdminBaseLayout(
             content: AdminViewDesignSystemComponent(),
             menuGroups: menuGroups
         )
-        let component = NewAdminHTML(
+        let component = AdminHTML(
             title: model.title,
             body: .init(content: layout)
         )

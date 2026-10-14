@@ -3,7 +3,7 @@ import FeatherAdmin
 protocol AdminRemoveAccountInvitationPresenter: Sendable {
 
     func renderRemovePage(
-        item: NewAdminRemoveItemContext
+        item: AdminRemoveItemContext
     ) async throws -> HTMLResponse
 
     func renderErrorPage(

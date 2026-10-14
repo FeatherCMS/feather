@@ -54,9 +54,9 @@ struct AdminEditMediaVariantOpenAPIRepository: AdminEditMediaVariantRepository {
     }
 
     func processorNames(variantId: String, ids: [String]) async throws
-        -> [NewAdminRemoveItemContext]
+        -> [AdminRemoveItemContext]
     {
-        var items: [NewAdminRemoveItemContext] = []
+        var items: [AdminRemoveItemContext] = []
         for id in ids {
             let processor = try await loadProcessor(
                 variantId: variantId,

@@ -9,12 +9,12 @@ import WebBuilders
 import WebComponents
 
 struct AssetRemoveView: Component {
-    let item: NewAdminRemoveItemContext
+    let item: AdminRemoveItemContext
     let nonceToken: String
 
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
-            NewAdminRemoveConfirmation(
+            AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove media item",
                     description: "Confirm removal of this media item."

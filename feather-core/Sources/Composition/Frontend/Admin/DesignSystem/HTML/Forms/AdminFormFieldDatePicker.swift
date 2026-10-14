@@ -7,7 +7,7 @@ public import WebComponents
 
 public import struct HTML.Button
 
-public struct NewAdminFormFieldDatePicker: Component {
+public struct AdminFormFieldDatePicker: Component {
     public struct State: Sendable {
         public var name: String
         public var label: String
@@ -49,7 +49,7 @@ public struct NewAdminFormFieldDatePicker: Component {
     }
 
     public func selectors() -> [any CSS.Selector] {
-        let root = ".new-admin-date-picker"
+        let root = ".admin-date-picker"
 
         return [
             Custom(root) {
@@ -63,7 +63,7 @@ public struct NewAdminFormFieldDatePicker: Component {
                 FlexDirection(.column)
                 Gap(8.px)
             },
-            Custom("\(root) .new-admin-date-picker__display") {
+            Custom("\(root) .admin-date-picker__display") {
                 Width(100.percent)
                 BoxSizing(.borderBox)
                 Padding(vertical: 9.px, horizontal: 11.px)
@@ -77,7 +77,7 @@ public struct NewAdminFormFieldDatePicker: Component {
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
                 Cursor(.pointer)
             },
-            Custom("\(root) .new-admin-date-picker__display:focus") {
+            Custom("\(root) .admin-date-picker__display:focus") {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Tertiary.border)
                 )
@@ -88,7 +88,7 @@ public struct NewAdminFormFieldDatePicker: Component {
                 )
                 OutlineOffset(2.px)
             },
-            Custom("\(root) .new-admin-date-picker__picker") {
+            Custom("\(root) .admin-date-picker__picker") {
                 Position(.absolute)
                 Top(100.percent)
                 Left(0.px)
@@ -105,18 +105,18 @@ public struct NewAdminFormFieldDatePicker: Component {
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
                 ZIndex(.number(20))
             },
-            Custom("\(root) .new-admin-date-picker__header") {
+            Custom("\(root) .admin-date-picker__header") {
                 Display(.flex)
                 AlignItems(.center)
                 JustifyContent(.spaceBetween)
                 Gap(8.px)
             },
-            Custom("\(root) .new-admin-date-picker__header strong") {
+            Custom("\(root) .admin-date-picker__header strong") {
                 FontSize(0.95.rem)
                 FontWeight(.number(600))
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
             },
-            Custom("\(root) .new-admin-date-picker__header button") {
+            Custom("\(root) .admin-date-picker__header button") {
                 Width(32.px)
                 Height(32.px)
                 Padding(0.px)
@@ -130,19 +130,19 @@ public struct NewAdminFormFieldDatePicker: Component {
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
                 Cursor(.pointer)
             },
-            Custom("\(root) .new-admin-date-picker__header button:hover") {
+            Custom("\(root) .admin-date-picker__header button:hover") {
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.hover))
             },
-            Custom("\(root) .new-admin-date-picker__calendar") {
+            Custom("\(root) .admin-date-picker__calendar") {
                 Display(.grid)
                 GridTemplateColumns(.repeat(7, .fraction(1.fr)))
                 Gap(6.px)
                 MarginTop(12.px)
             },
-            Custom("\(root) .new-admin-date-picker__calendar span") {
+            Custom("\(root) .admin-date-picker__calendar span") {
                 Height(32.px)
             },
-            Custom("\(root) .new-admin-date-picker__calendar button") {
+            Custom("\(root) .admin-date-picker__calendar button") {
                 Width(100.percent)
                 Height(32.px)
                 Padding(0.px)
@@ -156,29 +156,29 @@ public struct NewAdminFormFieldDatePicker: Component {
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
                 Cursor(.pointer)
             },
-            Custom("\(root) .new-admin-date-picker__calendar button:hover") {
+            Custom("\(root) .admin-date-picker__calendar button:hover") {
                 BorderColor(.variable(TokenKey.Colors.Link.default))
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.hover))
             },
             Custom(
-                "\(root) .new-admin-date-picker__calendar button[aria-selected=\"true\"]"
+                "\(root) .admin-date-picker__calendar button[aria-selected=\"true\"]"
             ) {
                 BorderColor(.variable(TokenKey.Colors.Link.default))
                 Background(.variable(TokenKey.Colors.Link.default))
                 Color(.variable(TokenKey.Colors.Selection.text))
                 FontWeight(.number(600))
             },
-            Custom("\(root) .new-admin-date-picker__time") {
+            Custom("\(root) .admin-date-picker__time") {
                 Display(.flex)
                 AlignItems(.center)
                 Gap(8.px)
                 MarginTop(16.px)
             },
-            Custom("\(root) .new-admin-date-picker__time-label") {
+            Custom("\(root) .admin-date-picker__time-label") {
                 FontSize(0.95.rem)
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
             },
-            Custom("\(root) .new-admin-date-picker__time input") {
+            Custom("\(root) .admin-date-picker__time input") {
                 Width(68.px)
                 Height(40.px)
                 BoxSizing(.borderBox)
@@ -195,7 +195,7 @@ public struct NewAdminFormFieldDatePicker: Component {
                 LineHeight(1.2)
                 TextAlign(.center)
             },
-            Custom("\(root) .new-admin-date-picker__time input:focus") {
+            Custom("\(root) .admin-date-picker__time input:focus") {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Tertiary.border)
                 )
@@ -206,18 +206,18 @@ public struct NewAdminFormFieldDatePicker: Component {
                 )
                 OutlineOffset(2.px)
             },
-            Custom("\(root) .new-admin-date-picker__actions") {
+            Custom("\(root) .admin-date-picker__actions") {
                 Display(.flex)
                 JustifyContent(.flexEnd)
                 Gap(8.px)
                 MarginTop(16.px)
             },
-            Custom("\(root) .new-admin-date-picker__actions button") {
+            Custom("\(root) .admin-date-picker__actions button") {
                 Padding(vertical: 8.px, horizontal: 12.px)
                 BorderRadius(8.px)
                 Cursor(.pointer)
             },
-            Custom("\(root) .new-admin-date-picker__today") {
+            Custom("\(root) .admin-date-picker__today") {
                 MarginRight(.auto)
                 Border(
                     1.px,
@@ -227,7 +227,7 @@ public struct NewAdminFormFieldDatePicker: Component {
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
                 Color(.variable(TokenKey.Colors.Link.default))
             },
-            Custom("\(root) .new-admin-date-picker__cancel") {
+            Custom("\(root) .admin-date-picker__cancel") {
                 Border(
                     1.px,
                     .solid,
@@ -236,7 +236,7 @@ public struct NewAdminFormFieldDatePicker: Component {
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
             },
-            Custom("\(root) .new-admin-date-picker__apply") {
+            Custom("\(root) .admin-date-picker__apply") {
                 Border(
                     1.px,
                     .solid,
@@ -256,7 +256,7 @@ public struct NewAdminFormFieldDatePicker: Component {
         Section {
             Label {
                 context.build(
-                    NewAdminFormFieldLabel(
+                    AdminFormFieldLabel(
                         text: state.label,
                         isRequired: state.isRequired
                     )
@@ -274,7 +274,7 @@ public struct NewAdminFormFieldDatePicker: Component {
             Script(script())
 
             if let help = state.help {
-                context.build(NewAdminFormFieldHelp(help, id: helpID))
+                context.build(AdminFormFieldHelp(help, id: helpID))
             }
             if let error = state.error {
                 Span(error)
@@ -283,7 +283,7 @@ public struct NewAdminFormFieldDatePicker: Component {
             }
         }
         .if(state.error != nil) { $0.class("has-error") }
-        .class("new-admin-date-picker")
+        .class("admin-date-picker")
     }
 
     private func displayInput() -> Input {
@@ -311,7 +311,7 @@ public struct NewAdminFormFieldDatePicker: Component {
         if state.isDisabled {
             input = input.disabled()
         }
-        return input.class("new-admin-date-picker__display")
+        return input.class("admin-date-picker__display")
     }
 
     private func picker() -> some FlowContent {
@@ -320,19 +320,19 @@ public struct NewAdminFormFieldDatePicker: Component {
                 Button("‹")
                     .type(.button)
                     .ariaLabel("Previous month")
-                    .class("new-admin-date-picker__previous")
+                    .class("admin-date-picker__previous")
                 Strong("Select date and time")
                 Button("›")
                     .type(.button)
                     .ariaLabel("Next month")
-                    .class("new-admin-date-picker__next")
+                    .class("admin-date-picker__next")
             }
-            .class("new-admin-date-picker__header")
+            .class("admin-date-picker__header")
             Div {}
-                .class("new-admin-date-picker__calendar")
+                .class("admin-date-picker__calendar")
                 .role("grid")
             Div {
-                Span("Time:").class("new-admin-date-picker__time-label")
+                Span("Time:").class("admin-date-picker__time-label")
                 Input()
                     .type(.number)
                     .id("\(state.id)-hour")
@@ -341,7 +341,7 @@ public struct NewAdminFormFieldDatePicker: Component {
                     .max(23)
                     .setAttribute(name: "step", value: "1")
                 Span(":")
-                    .class("new-admin-date-picker__time-separator")
+                    .class("admin-date-picker__time-separator")
                     .ariaHidden("true")
                 Input()
                     .type(.number)
@@ -351,22 +351,22 @@ public struct NewAdminFormFieldDatePicker: Component {
                     .max(59)
                     .setAttribute(name: "step", value: "1")
             }
-            .class("new-admin-date-picker__time")
+            .class("admin-date-picker__time")
             Div {
                 Button("Today")
                     .type(.button)
-                    .class("new-admin-date-picker__today")
+                    .class("admin-date-picker__today")
                 Button("Cancel")
                     .type(.button)
-                    .class("new-admin-date-picker__cancel")
+                    .class("admin-date-picker__cancel")
                 Button("Apply")
                     .type(.button)
-                    .class("new-admin-date-picker__apply")
+                    .class("admin-date-picker__apply")
             }
-            .class("new-admin-date-picker__actions")
+            .class("admin-date-picker__actions")
         }
         .id(pickerID)
-        .class("new-admin-date-picker__picker")
+        .class("admin-date-picker__picker")
         .role("dialog")
         .hidden()
     }
@@ -385,15 +385,15 @@ public struct NewAdminFormFieldDatePicker: Component {
     private func script() -> String {
         #"""
         (function () {
-            const root = document.getElementById('\#(state.id)')?.closest('.new-admin-date-picker');
+            const root = document.getElementById('\#(state.id)')?.closest('.admin-date-picker');
             if (!root || root.dataset.initialized === 'true') return;
             root.dataset.initialized = 'true';
 
             const display = root.querySelector('#\#(displayID)');
             const value = root.querySelector('#\#(state.id)');
             const picker = root.querySelector('#\#(pickerID)');
-            const calendar = root.querySelector('.new-admin-date-picker__calendar');
-            const header = root.querySelector('.new-admin-date-picker__header strong');
+            const calendar = root.querySelector('.admin-date-picker__calendar');
+            const header = root.querySelector('.admin-date-picker__header strong');
             const hour = root.querySelector('#\#(state.id)-hour');
             const minute = root.querySelector('#\#(state.id)-minute');
             let draft = value.value ? new Date(value.value) : new Date();
@@ -461,23 +461,23 @@ public struct NewAdminFormFieldDatePicker: Component {
             }
 
             display.addEventListener('click', open);
-            root.querySelector('.new-admin-date-picker__previous').addEventListener('click', function () {
+            root.querySelector('.admin-date-picker__previous').addEventListener('click', function () {
                 month.setMonth(month.getMonth() - 1); render();
             });
-            root.querySelector('.new-admin-date-picker__next').addEventListener('click', function () {
+            root.querySelector('.admin-date-picker__next').addEventListener('click', function () {
                 month.setMonth(month.getMonth() + 1); render();
             });
-            root.querySelector('.new-admin-date-picker__today').addEventListener('click', function () {
+            root.querySelector('.admin-date-picker__today').addEventListener('click', function () {
                 draft = new Date();
                 month = new Date(draft.getFullYear(), draft.getMonth(), 1);
                 render();
             });
-            root.querySelector('.new-admin-date-picker__cancel').addEventListener('click', function () {
+            root.querySelector('.admin-date-picker__cancel').addEventListener('click', function () {
                 draft = committed ? new Date(committed) : new Date();
                 month = new Date(draft.getFullYear(), draft.getMonth(), 1);
                 close();
             });
-            root.querySelector('.new-admin-date-picker__apply').addEventListener('click', function () {
+            root.querySelector('.admin-date-picker__apply').addEventListener('click', function () {
                 const hourValue = Number(hour.value);
                 const minuteValue = Number(minute.value);
                 const validHour = Number.isInteger(hourValue) && hourValue >= 0 && hourValue <= 23;

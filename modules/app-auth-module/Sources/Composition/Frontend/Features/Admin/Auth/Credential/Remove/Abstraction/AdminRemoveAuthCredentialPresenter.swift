@@ -18,13 +18,13 @@ import WebComponents
 
 protocol AdminRemoveAuthCredentialPresenter: Sendable {
     func renderPage(
-        item: NewAdminRemoveItemContext,
+        item: AdminRemoveItemContext,
         model: AuthCredentialDetailsModel
     )
         async throws -> HTMLResponse
     func renderInvalidNoncePage() async throws -> HTMLResponse
     func renderError(
-        item: NewAdminRemoveItemContext,
+        item: AdminRemoveItemContext,
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse
 }

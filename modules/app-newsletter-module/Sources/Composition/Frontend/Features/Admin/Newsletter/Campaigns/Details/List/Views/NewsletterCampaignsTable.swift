@@ -7,9 +7,9 @@ import WebComponents
 struct NewsletterCampaignsTable: Component {
     struct State {
         let items: [AdminNewsletterCampaignItem]
-        let pageState: NewAdminListPageState
+        let pageState: AdminListPageState
         let search: String?
-        let actions: NewAdminListActions
+        let actions: AdminListActions
         let isPicker: Bool
     }
 
@@ -18,10 +18,10 @@ struct NewsletterCampaignsTable: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: NewsletterAdminRoutes.breadcrumb)
+                AdminBreadcrumb(links: NewsletterAdminRoutes.breadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: state.isPicker
                             ? "Select newsletter campaign" : "Campaigns",

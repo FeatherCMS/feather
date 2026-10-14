@@ -8,6 +8,6 @@ import WebBuilders
 import WebComponents
 
 protocol AdminRemoveNewsletterIssuePresenter: Sendable {
-    func render(newsletterId: String, item: NewAdminRemoveItemContext)
+    func render(newsletterId: String, item: AdminRemoveItemContext)
         async throws -> HTMLResponse
 }

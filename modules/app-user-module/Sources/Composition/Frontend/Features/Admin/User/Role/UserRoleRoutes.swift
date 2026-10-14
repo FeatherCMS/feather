@@ -8,11 +8,11 @@ enum UserRoleRoutes {
     static let add = list.appendingPath(RouterPath("add"))
     static let remove = list.appendingPath(RouterPath("remove"))
 
-    static var listBreadcrumb: [NewAdminBreadcrumb.Link] {
+    static var listBreadcrumb: [AdminBreadcrumb.Link] {
         UserAdminRoutes.breadcrumb
     }
 
-    static var breadcrumb: [NewAdminBreadcrumb.Link] {
+    static var breadcrumb: [AdminBreadcrumb.Link] {
         UserAdminRoutes.breadcrumb + [
             .init(label: "Roles", link: list.description)
         ]

@@ -8,16 +8,16 @@ import WebComponents
 
 struct UserRoleRow: Component {
     let role: Components.Schemas.UserRoleListItemSchema
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(UserPermissions.Roles.delete) {
-                context.build(NewAdminListRowCheckbox(id: role.id))
+                context.build(AdminListRowCheckbox(id: role.id))
             }
             Td(role.name ?? "—").data("label", "Name")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: [
                         .init(

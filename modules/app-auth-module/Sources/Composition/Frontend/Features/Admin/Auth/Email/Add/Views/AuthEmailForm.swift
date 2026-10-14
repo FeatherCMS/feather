@@ -27,7 +27,7 @@ struct AuthEmailForm: Component {
 
     struct State: FeatherAdmin.Object {
         var identityId: FieldState
-        var identityOptions: [NewAdminFormFieldSelectAutocomplete.Option]
+        var identityOptions: [AdminFormFieldSelectAutocomplete.Option]
         var email: FieldState
         var error: String?
         var success: String?
@@ -35,7 +35,7 @@ struct AuthEmailForm: Component {
 
         init(
             identityId: FieldState,
-            identityOptions: [NewAdminFormFieldSelectAutocomplete.Option] = [],
+            identityOptions: [AdminFormFieldSelectAutocomplete.Option] = [],
             email: FieldState = .init(
                 key: "email",
                 label: "Email address",
@@ -67,7 +67,7 @@ struct AuthEmailForm: Component {
     var removeLabel: String = "Remove"
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action, nonceToken: state.nonceToken) {
+        let form = AdminForm(action: action, nonceToken: state.nonceToken) {
             if let success = state.success {
                 P(success).class("success")
             }
@@ -76,7 +76,7 @@ struct AuthEmailForm: Component {
             }
 
             context.build(
-                NewAdminFormFieldSelectAutocomplete(
+                AdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: state.identityId.key,
                         label: state.identityId.label,
@@ -89,7 +89,7 @@ struct AuthEmailForm: Component {
             )
 
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: state.email.key,
                         label: state.email.label,
@@ -103,10 +103,10 @@ struct AuthEmailForm: Component {
 
             Section {
                 Div {
-                    context.build(NewAdminSubmitButton(submitLabel))
+                    context.build(AdminSubmitButton(submitLabel))
                     if let removeHref {
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 removeLabel,
                                 href: removeHref,
                                 style: .destructive
@@ -114,7 +114,7 @@ struct AuthEmailForm: Component {
                         )
                     }
                 }
-                .class("new-admin-form__actions")
+                .class("admin-form__actions")
             }
         }
         return context.build(form)

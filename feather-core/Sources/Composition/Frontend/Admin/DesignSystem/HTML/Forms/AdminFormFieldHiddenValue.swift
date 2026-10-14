@@ -1,4 +1,4 @@
-public struct NewAdminFormFieldHiddenValue: Sendable, Equatable {
+public struct AdminFormFieldHiddenValue: Sendable, Equatable {
     public let name: String
     public let value: String
 

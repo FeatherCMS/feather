@@ -12,5 +12,5 @@ protocol AdminListNewsletterIssuesInteractor: Sendable {
         newsletterId: String,
         page: Int,
         search: String?
-    ) async throws -> NewAdminListModel<AdminNewsletterIssueItem>
+    ) async throws -> AdminListModel<AdminNewsletterIssueItem>
 }

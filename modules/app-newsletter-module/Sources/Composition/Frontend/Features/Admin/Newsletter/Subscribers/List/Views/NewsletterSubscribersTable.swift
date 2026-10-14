@@ -7,12 +7,12 @@ import WebComponents
 
 struct NewsletterSubscribersTable: Component {
     let model: AdminNewsletterSubscribersListModel
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(
+                AdminBreadcrumb(
                     links: NewsletterAdminRoutes.breadcrumb + [
                         .init(
                             label: "Subscribers",
@@ -22,7 +22,7 @@ struct NewsletterSubscribersTable: Component {
                 )
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Subscribers",
                         description: "Manage newsletter subscribers."

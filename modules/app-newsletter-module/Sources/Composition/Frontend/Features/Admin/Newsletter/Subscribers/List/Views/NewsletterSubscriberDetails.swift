@@ -9,10 +9,10 @@ import WebComponents
 
 struct NewsletterSubscriberDetails: Component {
     let item: AdminNewsletterSubscriberListItem
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> Section {
-        var actions: [NewAdminDetailView.Action] = []
+        var actions: [AdminDetailView.Action] = []
         if permissions.allows(Permissions.Subscribers.update) {
             for campaign in item.newsletters {
                 actions.append(
@@ -33,7 +33,7 @@ struct NewsletterSubscriberDetails: Component {
             actions.append(
                 .init(
                     label: "Remove",
-                    href: NewAdminLocation.remove(
+                    href: AdminLocation.remove(
                         path: NewsletterAdminRoutes.subscriberRemove
                             .description,
                         ids: [item.id],
@@ -48,7 +48,7 @@ struct NewsletterSubscriberDetails: Component {
             )
         }
         return context.build(
-            NewAdminDetailView(
+            AdminDetailView(
                 breadcrumb: NewsletterAdminRoutes.breadcrumb + [
                     .init(
                         label: "Subscribers",

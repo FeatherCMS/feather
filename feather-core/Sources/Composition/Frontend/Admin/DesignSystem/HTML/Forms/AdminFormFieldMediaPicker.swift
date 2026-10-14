@@ -6,7 +6,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminFormFieldMediaPicker: Component {
+public struct AdminFormFieldMediaPicker: Component {
     public enum PreviewStyle: String, Sendable {
         case square
         case wide
@@ -43,7 +43,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
 
     public struct State: Sendable {
         public let field: FieldState
-        public let selectedAsset: NewAdminMediaAsset?
+        public let selectedAsset: AdminMediaAsset?
         public let browsePath: String
         public let defaultFolderPath: String?
         public let allowedExtensions: AllowedExtensions
@@ -53,7 +53,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
 
         public init(
             field: FieldState,
-            selectedAsset: NewAdminMediaAsset?,
+            selectedAsset: AdminMediaAsset?,
             browsePath: String,
             defaultFolderPath: String? = nil,
             allowedExtensions: AllowedExtensions,
@@ -79,7 +79,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
     }
 
     public func rules() -> [any Rule] {
-        let root = ".new-admin-media-picker"
+        let root = ".admin-media-picker"
 
         return [
             Media {
@@ -182,7 +182,7 @@ public struct NewAdminFormFieldMediaPicker: Component {
         Section {
             Label {
                 context.build(
-                    NewAdminFormFieldLabel(
+                    AdminFormFieldLabel(
                         text: state.field.label,
                         isRequired: state.field.isRequired
                     )
@@ -206,13 +206,13 @@ public struct NewAdminFormFieldMediaPicker: Component {
             Script(pickerScript())
         }
         .if(state.field.error != nil) { $0.class("has-error") }
-        .class("new-admin-media-picker")
+        .class("admin-media-picker")
         .data("media-picker-field", state.field.key)
         .data("media-picker-output", state.outputMode.rawValue)
     }
 }
 
-extension NewAdminFormFieldMediaPicker {
+extension AdminFormFieldMediaPicker {
     fileprivate func currentCard(context: inout BuilderContext)
         -> some FlowContent
     {
@@ -228,20 +228,20 @@ extension NewAdminFormFieldMediaPicker {
                 Div {
                     pickerActions(context: &context)
                     context.build(
-                        NewAdminControlButton(
+                        AdminControlButton(
                             "Clear",
                             style: hasSelectedAsset ? .destructive : .disabled
                         )
                     )
-                    .class("new-admin-media-picker__clear", "row-button")
+                    .class("admin-media-picker__clear", "row-button")
                     .data("media-picker-clear", state.field.key)
                 }
-                .class("new-admin-media-picker__actions")
+                .class("admin-media-picker__actions")
             }
         }
         .class(
-            "new-admin-media-picker__current",
-            "new-admin-media-picker__current--\(state.previewStyle.rawValue)"
+            "admin-media-picker__current",
+            "admin-media-picker__current--\(state.previewStyle.rawValue)"
         )
     }
 
@@ -257,7 +257,7 @@ extension NewAdminFormFieldMediaPicker {
                     field: state.field.key
                 )
             )
-            .class("new-admin-media-picker__choose", "row-button")
+            .class("admin-media-picker__choose", "row-button")
             context.build(
                 MediaPickerDialogButton(
                     label: "Upload",
@@ -266,9 +266,9 @@ extension NewAdminFormFieldMediaPicker {
                     field: state.field.key
                 )
             )
-            .class("new-admin-media-picker__upload", "row-button")
+            .class("admin-media-picker__upload", "row-button")
         }
-        .class("new-admin-media-picker__actions")
+        .class("admin-media-picker__actions")
     }
 
     fileprivate func previewBlock() -> some FlowContent {
@@ -285,9 +285,9 @@ extension NewAdminFormFieldMediaPicker {
                 FeatherIcons.image()
             }
         }
-        .class("new-admin-media-picker__preview")
+        .class("admin-media-picker__preview")
         .class(
-            "new-admin-media-picker__preview--\(state.previewStyle.rawValue)"
+            "admin-media-picker__preview--\(state.previewStyle.rawValue)"
         )
         .data("media-picker-preview", state.field.key)
     }
@@ -394,8 +394,8 @@ extension NewAdminFormFieldMediaPicker {
             close(dialog);
           }
 
-          if (!window.__newAdminMediaPickerController) {
-            window.__newAdminMediaPickerController = {
+          if (!window.__adminMediaPickerController) {
+            window.__adminMediaPickerController = {
               applyMarker: applyMarker
             };
             document.addEventListener("click", function(event) {
@@ -415,7 +415,7 @@ extension NewAdminFormFieldMediaPicker {
               }
             });
             document.addEventListener(
-              "new-admin-media-picker-selection",
+              "admin-media-picker-selection",
               function(event) {
                 var detail = event.detail || {};
                 var assets = Array.isArray(detail.assets) ? detail.assets : [];
@@ -431,7 +431,7 @@ extension NewAdminFormFieldMediaPicker {
             );
 
             function observeDialogHost() {
-              var host = document.getElementById("new-admin-dialog-host");
+              var host = document.getElementById("admin-dialog-host");
               if (
                 !host ||
                 !window.MutationObserver ||
@@ -456,12 +456,12 @@ extension NewAdminFormFieldMediaPicker {
         """#
     }
 
-    fileprivate func displayTitle(_ asset: NewAdminMediaAsset) -> String {
+    fileprivate func displayTitle(_ asset: AdminMediaAsset) -> String {
         let title = asset.title?.whitespaceTrimmed
         return title?.isEmpty == false ? title! : asset.name
     }
 
-    fileprivate func previewURL(for asset: NewAdminMediaAsset) -> String? {
+    fileprivate func previewURL(for asset: AdminMediaAsset) -> String? {
         let path =
             state.previewStyle == .wide
             ? asset.coverURL ?? asset.previewURL
@@ -469,7 +469,7 @@ extension NewAdminFormFieldMediaPicker {
         let fallbackPath = path ?? asset.url
         return fallbackPath.isEmpty
             ? nil
-            : NewAdminMediaAsset.mediaURL(path: fallbackPath)
+            : AdminMediaAsset.mediaURL(path: fallbackPath)
     }
 
     fileprivate func previewVariant() -> String {
@@ -525,13 +525,13 @@ extension NewAdminFormFieldMediaPicker {
 
 private struct MediaPickerDialogButton: Component {
     let label: String
-    let style: NewAdminButtonStyle
+    let style: AdminButtonStyle
     let url: String
     let field: String
 
     func html(context: inout BuilderContext) -> Button {
         var button = context.build(
-            NewAdminControlButton(label, style: style)
+            AdminControlButton(label, style: style)
         )
         button = button.data("admin-dialog-url", url)
         button = button.data("media-picker-open", field)

@@ -16,7 +16,7 @@ struct NewsletterCampaignSubscriberFormView: Component {
         let isEdit: Bool
         let error: String?
         let editAction: String?
-        let pageHeader: NewAdminPageHeader.State
+        let pageHeader: AdminPageHeader.State
     }
     let state: State
 
@@ -35,7 +35,7 @@ struct NewsletterCampaignSubscriberFormView: Component {
                 .description)
         return Section {
             context.build(
-                NewAdminBreadcrumb(
+                AdminBreadcrumb(
                     links: NewsletterAdminRoutes.breadcrumb + [
                         .init(
                             label: "Campaign subscribers",
@@ -52,19 +52,19 @@ struct NewsletterCampaignSubscriberFormView: Component {
                     ]
                 )
             )
-            context.build(NewAdminPageHeader(state: state.pageHeader))
+            context.build(AdminPageHeader(state: state.pageHeader))
             context.build(
                 NewsletterCampaignTabs(
                     id: state.newsletterId,
                     active: .subscribers
                 )
             )
-            let form = NewAdminForm(action: action) {
+            let form = AdminForm(action: action) {
                 if let error = state.error {
-                    P(error).class("new-admin-form__error")
+                    P(error).class("admin-form__error")
                 }
                 context.build(
-                    NewAdminFormFieldInput(
+                    AdminFormFieldInput(
                         state: .init(
                             name: "email",
                             label: "Email",
@@ -76,7 +76,7 @@ struct NewsletterCampaignSubscriberFormView: Component {
                     )
                 )
                 context.build(
-                    NewAdminFormFieldInput(
+                    AdminFormFieldInput(
                         state: .init(
                             name: "firstName",
                             label: "First name",
@@ -85,7 +85,7 @@ struct NewsletterCampaignSubscriberFormView: Component {
                     )
                 )
                 context.build(
-                    NewAdminFormFieldInput(
+                    AdminFormFieldInput(
                         state: .init(
                             name: "lastName",
                             label: "Last name",
@@ -94,7 +94,7 @@ struct NewsletterCampaignSubscriberFormView: Component {
                     )
                 )
                 context.build(
-                    NewAdminFormFieldSelect(
+                    AdminFormFieldSelect(
                         state: .init(
                             name: "status",
                             label: "Status",
@@ -112,16 +112,16 @@ struct NewsletterCampaignSubscriberFormView: Component {
                 )
                 Div {
                     context.build(
-                        NewAdminSubmitButton(
+                        AdminSubmitButton(
                             state.isEdit ? "Save subscriber" : "Add subscriber",
                             style: .primary
                         )
                     )
                 }
-                .class("new-admin-form__actions")
+                .class("admin-form__actions")
             }
             context.build(
-                NewAdminRelationshipGroup(
+                AdminRelationshipGroup(
                     pageHeader: .secondary(
                         title: "Subscriber details",
                         description:

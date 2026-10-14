@@ -80,7 +80,7 @@ struct AdminRemoveAuthCredentialDefaultController:
                 .response(from: request, context: context)
         }
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard

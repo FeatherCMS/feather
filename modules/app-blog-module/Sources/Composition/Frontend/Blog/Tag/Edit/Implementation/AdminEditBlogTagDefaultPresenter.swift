@@ -21,7 +21,7 @@ struct AdminEditBlogTagDefaultPresenter: AdminEditBlogTagPresenter {
         state: BlogTagForm.State,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit tag",
@@ -41,7 +41,7 @@ struct AdminEditBlogTagDefaultPresenter: AdminEditBlogTagPresenter {
         message: String,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit tag",

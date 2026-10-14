@@ -9,13 +9,13 @@ import WebComponents
 
 struct AdminNewsCategoryDetailsPage: Component {
     let item: Components.Schemas.NewsCategoryDetailSchema
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(
         context: inout BuilderContext
     ) -> some BasicTag {
         context.build(
-            NewAdminDetailView(
+            AdminDetailView(
                 breadcrumb: NewsAdminRoutes.categoriesBreadcrumb,
                 pageHeader: .primary(
                     title: item.title,
@@ -33,8 +33,8 @@ struct AdminNewsCategoryDetailsPage: Component {
         )
     }
 
-    private var actions: [NewAdminDetailView.Action] {
-        var result: [NewAdminDetailView.Action] = []
+    private var actions: [AdminDetailView.Action] {
+        var result: [AdminDetailView.Action] = []
         if permissions.allows(NewsPermissions.Categories.update) {
             result.append(
                 .init(

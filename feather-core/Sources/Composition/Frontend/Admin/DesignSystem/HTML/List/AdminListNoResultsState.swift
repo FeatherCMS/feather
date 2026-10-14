@@ -4,7 +4,7 @@ public import SVG
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminListNoResultsState: Component {
+public struct AdminListNoResultsState: Component {
 
     public let message: String
     public let icon: SVG?
@@ -22,7 +22,7 @@ public struct NewAdminListNoResultsState: Component {
 
     public func html(context: inout BuilderContext) -> Div {
         context.build(
-            NewAdminListEmptyState(
+            AdminListEmptyState(
                 message: message,
                 icon: icon,
                 action: { action }

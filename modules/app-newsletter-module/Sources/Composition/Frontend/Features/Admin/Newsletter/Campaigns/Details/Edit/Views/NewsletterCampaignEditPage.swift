@@ -11,8 +11,8 @@ struct NewsletterCampaignEditPage: Component {
         let id: String
         let form: NewsletterCampaignForm.State
         let isDetails: Bool
-        let permissions: NewAdminListActions
-        let pageHeader: NewAdminPageHeader.State
+        let permissions: AdminListActions
+        let pageHeader: AdminPageHeader.State
     }
     let state: State
 
@@ -21,7 +21,7 @@ struct NewsletterCampaignEditPage: Component {
             .description
         return Section {
             context.build(
-                NewAdminBreadcrumb(
+                AdminBreadcrumb(
                     links: NewsletterAdminRoutes.breadcrumb + [
                         .init(
                             label: "Campaigns",
@@ -30,13 +30,13 @@ struct NewsletterCampaignEditPage: Component {
                     ]
                 )
             )
-            context.build(NewAdminPageHeader(state: state.pageHeader))
+            context.build(AdminPageHeader(state: state.pageHeader))
             context.build(
                 NewsletterCampaignTabs(id: state.id, active: .details)
             )
             if state.isDetails {
                 context.build(
-                    NewAdminRelationshipGroup(
+                    AdminRelationshipGroup(
                         pageHeader: .secondary(
                             title: "Campaign details",
                             description: "Review the campaign configuration."
@@ -44,19 +44,19 @@ struct NewsletterCampaignEditPage: Component {
                     ) {
                         Div {
                             context.build(
-                                NewAdminDetailField(
+                                AdminDetailField(
                                     label: "Key",
                                     value: state.form.key
                                 )
                             )
                             context.build(
-                                NewAdminDetailField(
+                                AdminDetailField(
                                     label: "Name",
                                     value: state.form.name
                                 )
                             )
                             context.build(
-                                NewAdminDetailField(
+                                AdminDetailField(
                                     label: "From email",
                                     value: state.form.fromEmail
                                 )
@@ -69,7 +69,7 @@ struct NewsletterCampaignEditPage: Component {
                                 Permissions.Campaigns.update
                             ) {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         "Edit",
                                         href: editPath,
                                         style: .primary
@@ -80,9 +80,9 @@ struct NewsletterCampaignEditPage: Component {
                                 Permissions.Campaigns.delete
                             ) {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         "Remove",
-                                        href: NewAdminLocation.remove(
+                                        href: AdminLocation.remove(
                                             path: NewsletterAdminRoutes
                                                 .campaignRemove
                                                 .description,
@@ -99,7 +99,7 @@ struct NewsletterCampaignEditPage: Component {
                                 )
                             }
                         }
-                        .class("new-admin-detail-actions")
+                        .class("admin-detail-actions")
                         .style(
                             "display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;"
                         )
@@ -108,7 +108,7 @@ struct NewsletterCampaignEditPage: Component {
             }
             else {
                 context.build(
-                    NewAdminRelationshipGroup(
+                    AdminRelationshipGroup(
                         pageHeader: .secondary(
                             title: "Campaign configuration",
                             description:

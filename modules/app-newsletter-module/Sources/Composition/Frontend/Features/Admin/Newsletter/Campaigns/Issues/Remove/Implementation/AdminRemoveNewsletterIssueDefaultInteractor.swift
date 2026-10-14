@@ -12,7 +12,7 @@ struct AdminRemoveNewsletterIssueDefaultInteractor:
 {
     let repository: AdminRemoveNewsletterIssueOpenAPIRepository
     func get(newsletterId: String, issueId: String) async throws
-        -> NewAdminRemoveItemContext
+        -> AdminRemoveItemContext
     {
         let issue = try await repository.get(
             newsletterId: newsletterId,

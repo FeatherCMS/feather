@@ -1,6 +1,6 @@
 import FeatherContracts
 
-public struct NewAdminStatusActionFormInput: Codable, Sendable, Equatable,
+public struct AdminStatusActionFormInput: Codable, Sendable, Equatable,
     Hashable
 {
     public let returnTo: String?

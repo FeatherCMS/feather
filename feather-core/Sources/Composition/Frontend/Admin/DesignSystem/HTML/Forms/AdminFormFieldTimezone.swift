@@ -5,7 +5,7 @@ import WebBuilders
 public import WebComponents
 
 /// A select-based form field containing IANA timezone identifiers.
-public struct NewAdminFormFieldTimezone: Component {
+public struct AdminFormFieldTimezone: Component {
     public struct State: Sendable {
         public var name: String
         public var label: String
@@ -43,7 +43,7 @@ public struct NewAdminFormFieldTimezone: Component {
 
     public func html(context: inout BuilderContext) -> Section {
         context.build(
-            NewAdminFormFieldSelect(
+            AdminFormFieldSelect(
                 state: .init(
                     name: state.name,
                     label: state.label,
@@ -57,7 +57,7 @@ public struct NewAdminFormFieldTimezone: Component {
         )
     }
 
-    public static var options: [NewAdminFormFieldSelect.SelectOption] {
+    public static var options: [AdminFormFieldSelect.SelectOption] {
         identifiers.map {
             .init(label: $0, value: $0)
         }

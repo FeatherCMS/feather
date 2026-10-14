@@ -14,7 +14,7 @@ struct AdminEditWebSettingsDefaultPresenter:
         state: WebSettingsEdit.State,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Settings",
@@ -27,11 +27,11 @@ struct AdminEditWebSettingsDefaultPresenter:
         message: String,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "No permission",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(title: info, message: message),
                 icon: FeatherIcons.lock()
             )

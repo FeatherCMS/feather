@@ -4,7 +4,7 @@ import Hummingbird
 protocol AdminRemoveSystemPermissionPresenter: Sendable {
 
     func renderRemovePage(
-        items: [NewAdminRemoveItemContext],
+        items: [AdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse
 

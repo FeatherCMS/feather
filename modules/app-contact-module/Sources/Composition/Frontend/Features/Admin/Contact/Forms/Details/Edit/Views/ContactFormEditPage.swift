@@ -10,16 +10,16 @@ struct ContactFormEditPage: Component {
         let key: String
         let isReadOnly: Bool
         let form: ContactFormForm.State
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: state.isReadOnly
                             ? "Contact form" : "Edit contact form",
@@ -33,7 +33,7 @@ struct ContactFormEditPage: Component {
                 AdminContactFormTabs(formId: state.key, active: .details)
             )
             context.build(
-                NewAdminRelationshipGroup(
+                AdminRelationshipGroup(
                     pageHeader: .secondary(
                         title: "Form configuration",
                         description:

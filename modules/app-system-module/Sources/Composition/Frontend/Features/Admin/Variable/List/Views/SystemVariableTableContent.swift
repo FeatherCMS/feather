@@ -9,8 +9,8 @@ import WebComponents
 
 struct SystemVariableTableContent: Component {
     let variables: [Components.Schemas.SystemVariableListItemSchema]
-    let permissions: NewAdminListActions
-    let pageState: NewAdminListPageState
+    let permissions: AdminListActions
+    let pageState: AdminListPageState
     let search: String?
 
     private var searchValue: String {
@@ -18,7 +18,7 @@ struct SystemVariableTableContent: Component {
     }
 
     private var returnTo: String {
-        NewAdminLocation.url(
+        AdminLocation.url(
             path: SystemVariableRoutes.list.description,
             page: pageState.page,
             search: search
@@ -30,11 +30,11 @@ struct SystemVariableTableContent: Component {
         let hasActiveQuery = !(search?.isEmpty ?? true)
 
         return context.build(
-            NewAdminList(
+            AdminList(
                 table: {
                     if pageState.isPageOutOfRange {
                         context.build(
-                            NewAdminListInvalidPageState(
+                            AdminListInvalidPageState(
                                 pageState: pageState,
                                 path: SystemVariableRoutes.list.description
                             )
@@ -43,13 +43,13 @@ struct SystemVariableTableContent: Component {
                     else if variables.isEmpty {
                         if hasActiveQuery {
                             context.build(
-                                NewAdminListNoResultsState(
+                                AdminListNoResultsState(
                                     message:
                                         "No system variables match your search.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         context.build(
-                                            NewAdminButton(
+                                            AdminButton(
                                                 "Reset search",
                                                 href: SystemVariableRoutes.list
                                                     .description,
@@ -62,7 +62,7 @@ struct SystemVariableTableContent: Component {
                         }
                         else {
                             context.build(
-                                NewAdminListEmptyState(
+                                AdminListEmptyState(
                                     message: "No system variables yet.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
@@ -70,7 +70,7 @@ struct SystemVariableTableContent: Component {
                                             SystemPermissions.Variables.create
                                         ) {
                                             context.build(
-                                                NewAdminButton(
+                                                AdminButton(
                                                     "Add new",
                                                     href: SystemVariableRoutes
                                                         .add
@@ -85,9 +85,9 @@ struct SystemVariableTableContent: Component {
                     }
                     else {
                         context.build(
-                            NewAdminListSelectionForm(
+                            AdminListSelectionForm(
                                 state: .init(
-                                    action: NewAdminLocation.remove(
+                                    action: AdminLocation.remove(
                                         path: SystemVariableRoutes.remove
                                             .description,
                                         ids: [],
@@ -102,7 +102,7 @@ struct SystemVariableTableContent: Component {
                                     isEnabled: canDelete
                                 ),
                                 table: context.build(
-                                    NewAdminListShell(
+                                    AdminListShell(
                                         layout: .init(
                                             name: "system-variables",
                                             columns: [
@@ -117,7 +117,7 @@ struct SystemVariableTableContent: Component {
                                                 Tr {
                                                     if canDelete {
                                                         context.build(
-                                                            NewAdminListSelectAllCheckbox()
+                                                            AdminListSelectAllCheckbox()
                                                         )
                                                     }
                                                     Th("Key")
@@ -154,7 +154,7 @@ struct SystemVariableTableContent: Component {
                 },
                 search: {
                     context.build(
-                        NewAdminListSearch(
+                        AdminListSearch(
                             state: .init(
                                 action: SystemVariableRoutes.list.description,
                                 placeholder: "Quick search system variables",
@@ -166,9 +166,9 @@ struct SystemVariableTableContent: Component {
                 toolbar: {
                     if permissions.allows(SystemPermissions.Variables.create) {
                         context.build(
-                            NewAdminListToolbar {
+                            AdminListToolbar {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         "Add new",
                                         href: SystemVariableRoutes.add
                                             .description
@@ -180,7 +180,7 @@ struct SystemVariableTableContent: Component {
                 },
                 pagination: {
                     context.build(
-                        NewAdminListPagination(
+                        AdminListPagination(
                             state: .init(
                                 path: SystemVariableRoutes.list.description,
                                 pageState: pageState,

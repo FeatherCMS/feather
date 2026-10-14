@@ -18,7 +18,7 @@ struct AdminViewStyle: Sendable {
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> CSSResponse {
-        let designSystem = NewAdminDesignSystem()
+        let designSystem = AdminDesignSystem()
         let stylesheet = Stylesheet(designSystem.rules())
         return CSSResponse(stylesheet)
     }

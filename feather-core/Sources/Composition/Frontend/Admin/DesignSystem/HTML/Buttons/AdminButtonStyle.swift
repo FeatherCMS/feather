@@ -1,4 +1,4 @@
-public enum NewAdminButtonStyle: Sendable, Equatable {
+public enum AdminButtonStyle: Sendable, Equatable {
     case primary
     case secondary
     case ghost(Accent)

@@ -46,7 +46,7 @@ struct AdminRemoveContactFieldDefaultController:
                 .response(from: request, context: context)
         }
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -92,7 +92,7 @@ struct AdminRemoveContactFieldDefaultController:
         -> Response
     {
         let payload = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         let (interactor, presenter) = buildRuntime((request, context))

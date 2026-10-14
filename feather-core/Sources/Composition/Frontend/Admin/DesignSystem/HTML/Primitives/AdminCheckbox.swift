@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminCheckbox: Component {
+public struct AdminCheckbox: Component {
     public let name: String?
     public let value: String?
     public let id: String?
@@ -42,7 +42,7 @@ public struct NewAdminCheckbox: Component {
 
     public func selectors() -> [any Selector] {
         [
-            Class("new-admin-checkbox") {
+            Class("admin-checkbox") {
                 Width(18.px)
                 Height(18.px)
                 Margin(0.px)
@@ -58,11 +58,11 @@ public struct NewAdminCheckbox: Component {
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
                 Cursor(.pointer)
             },
-            Custom(".new-admin-checkbox:checked") {
+            Custom(".admin-checkbox:checked") {
                 Background(.variable(TokenKey.Colors.Link.default))
                 BorderColor(.variable(TokenKey.Colors.Link.default))
             },
-            Custom(".new-admin-checkbox:focus-visible") {
+            Custom(".admin-checkbox:focus-visible") {
                 Outline(
                     2.px,
                     .solid,
@@ -70,7 +70,7 @@ public struct NewAdminCheckbox: Component {
                 )
                 OutlineOffset(2.px)
             },
-            Custom(".new-admin-checkbox:checked::after") {
+            Custom(".admin-checkbox:checked::after") {
                 Content(.string("\"\""))
                 Display(.block)
                 Position(.absolute)
@@ -90,7 +90,7 @@ public struct NewAdminCheckbox: Component {
             .type(.checkbox)
             .class(
                 ([
-                    "new-admin-checkbox"
+                    "admin-checkbox"
                 ] + classes)
                 .joined(separator: " ")
             )

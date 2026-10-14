@@ -11,7 +11,7 @@ struct AdminEditRedirectRuleDefaultPresenter: AdminEditRedirectRulePresenter {
     func renderEditPage(
         id: String,
         state: RedirectRuleEditForm.State,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
@@ -135,7 +135,7 @@ struct AdminEditRedirectRuleDefaultPresenter: AdminEditRedirectRulePresenter {
         status: HTTPResponse.Status
     ) async throws -> HTMLResponse {
         try await renderPage(
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(title: title, message: message),
                 icon: FeatherIcons.alertCircle()
             ),
@@ -147,7 +147,7 @@ struct AdminEditRedirectRuleDefaultPresenter: AdminEditRedirectRulePresenter {
         content: T,
         status: HTTPResponse.Status
     ) async throws -> HTMLResponse {
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Manage redirect rules",

@@ -59,7 +59,7 @@ struct AdminViewRedirectOverviewComponent: Component {
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 LineHeight(1.5)
             }
-            Custom(".redirect-overview-destination .new-admin-button") {
+            Custom(".redirect-overview-destination .admin-button") {
                 Margin(top: 4.px)
             }
         }
@@ -68,10 +68,10 @@ struct AdminViewRedirectOverviewComponent: Component {
     func html(context: inout BuilderContext) -> Section {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: RedirectRuleRoutes.redirectBreadcrumb)
+                AdminBreadcrumb(links: RedirectRuleRoutes.redirectBreadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Redirect",
                         description:
@@ -89,7 +89,7 @@ struct AdminViewRedirectOverviewComponent: Component {
                         H2(destination.title)
                         P(destination.description)
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 "Open",
                                 href: destination.href,
                                 style: .primary

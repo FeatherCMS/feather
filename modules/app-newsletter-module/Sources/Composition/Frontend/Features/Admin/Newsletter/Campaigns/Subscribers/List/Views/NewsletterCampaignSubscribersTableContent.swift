@@ -9,9 +9,9 @@ import WebComponents
 struct NewsletterCampaignSubscribersTableContent: Component {
     let newsletterId: String
     let items: [AdminNewsletterCampaignSubscriberItem]
-    let pageState: NewAdminListPageState
+    let pageState: AdminListPageState
     let search: String?
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     private var path: String {
         NewsletterAdminRoutes.campaignSubscribers(RouterPath(newsletterId))
@@ -21,7 +21,7 @@ struct NewsletterCampaignSubscribersTableContent: Component {
     private var searchValue: String { search ?? "" }
 
     private var returnTo: String {
-        NewAdminLocation.url(path: path, page: pageState.page, search: search)
+        AdminLocation.url(path: path, page: pageState.page, search: search)
     }
 
     func html(context: inout BuilderContext) -> Div {
@@ -30,11 +30,11 @@ struct NewsletterCampaignSubscribersTableContent: Component {
         let hasActiveQuery = !searchValue.isEmpty
 
         return context.build(
-            NewAdminList(
+            AdminList(
                 table: {
                     if pageState.isPageOutOfRange {
                         context.build(
-                            NewAdminListInvalidPageState(
+                            AdminListInvalidPageState(
                                 pageState: pageState,
                                 path: path
                             )
@@ -43,13 +43,13 @@ struct NewsletterCampaignSubscribersTableContent: Component {
                     else if items.isEmpty {
                         if hasActiveQuery {
                             context.build(
-                                NewAdminListNoResultsState(
+                                AdminListNoResultsState(
                                     message:
                                         "No subscribers match your search.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         context.build(
-                                            NewAdminButton(
+                                            AdminButton(
                                                 "Reset search",
                                                 href: path,
                                                 style: .secondary
@@ -61,13 +61,13 @@ struct NewsletterCampaignSubscribersTableContent: Component {
                         }
                         else {
                             context.build(
-                                NewAdminListEmptyState(
+                                AdminListEmptyState(
                                     message: "No subscribers yet.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         if canCreate {
                                             context.build(
-                                                NewAdminButton(
+                                                AdminButton(
                                                     "Add new",
                                                     href:
                                                         NewsletterAdminRoutes
@@ -87,9 +87,9 @@ struct NewsletterCampaignSubscribersTableContent: Component {
                     }
                     else {
                         context.build(
-                            NewAdminListSelectionForm(
+                            AdminListSelectionForm(
                                 state: .init(
-                                    action: NewAdminLocation.remove(
+                                    action: AdminLocation.remove(
                                         path:
                                             NewsletterAdminRoutes
                                             .campaignSubscriberRemoveSelected(
@@ -108,7 +108,7 @@ struct NewsletterCampaignSubscribersTableContent: Component {
                                     isEnabled: canDelete
                                 ),
                                 table: context.build(
-                                    NewAdminListShell(
+                                    AdminListShell(
                                         layout: .init(
                                             name:
                                                 "newsletter-campaign-subscribers",
@@ -123,7 +123,7 @@ struct NewsletterCampaignSubscribersTableContent: Component {
                                                 Tr {
                                                     if canDelete {
                                                         context.build(
-                                                            NewAdminListSelectAllCheckbox()
+                                                            AdminListSelectAllCheckbox()
                                                         )
                                                     }
                                                     Th("Email")
@@ -158,7 +158,7 @@ struct NewsletterCampaignSubscribersTableContent: Component {
                 },
                 search: {
                     context.build(
-                        NewAdminListSearch(
+                        AdminListSearch(
                             state: .init(
                                 action: path,
                                 placeholder: "Quick search subscribers",
@@ -170,9 +170,9 @@ struct NewsletterCampaignSubscribersTableContent: Component {
                 toolbar: {
                     if canCreate {
                         context.build(
-                            NewAdminListToolbar {
+                            AdminListToolbar {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         "Add new",
                                         href:
                                             NewsletterAdminRoutes
@@ -188,7 +188,7 @@ struct NewsletterCampaignSubscribersTableContent: Component {
                 },
                 pagination: {
                     context.build(
-                        NewAdminListPagination(
+                        AdminListPagination(
                             state: .init(
                                 path: path,
                                 pageState: pageState,

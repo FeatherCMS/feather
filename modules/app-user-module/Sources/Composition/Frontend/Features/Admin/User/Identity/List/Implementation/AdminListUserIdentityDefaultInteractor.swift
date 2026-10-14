@@ -9,7 +9,7 @@ struct AdminListUserIdentityDefaultInteractor: AdminListUserIdentityInteractor {
         size: Int,
         search: String?,
         role: String?
-    ) async throws -> NewAdminListModel<
+    ) async throws -> AdminListModel<
         Components.Schemas.UserIdentityListItemSchema
     > {
         do {

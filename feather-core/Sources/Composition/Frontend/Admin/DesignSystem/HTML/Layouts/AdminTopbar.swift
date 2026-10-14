@@ -11,7 +11,7 @@ import SVG
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminTopBar: Component {
+public struct AdminTopBar: Component {
 
     public struct State: Sendable, Equatable {
 
@@ -22,11 +22,11 @@ public struct NewAdminTopBar: Component {
         }
     }
 
-    private let notification: NewAdminNotification?
+    private let notification: AdminNotification?
     private let state: State
 
     public init(
-        notification: NewAdminNotification? = nil,
+        notification: AdminNotification? = nil,
         state: State = .init()
     ) {
         self.notification = notification

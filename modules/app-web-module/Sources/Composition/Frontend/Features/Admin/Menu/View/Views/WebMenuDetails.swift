@@ -10,7 +10,7 @@ import WebComponents
 struct WebMenuDetails: Component {
     struct State {
         let menu: WebMenuDetailsModel
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
         let permissions: Set<String>
     }
 
@@ -19,7 +19,7 @@ struct WebMenuDetails: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminDetailView(
+                AdminDetailView(
                     breadcrumb: state.breadcrumb,
                     pageHeader: .primary(
                         title: "Menu details",

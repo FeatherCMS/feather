@@ -8,8 +8,8 @@ import WebComponents
 struct SystemJobTable: Component {
     struct State {
         let jobs: [Components.Schemas.SystemJobSchema]
-        let permissions: NewAdminListActions
-        let pageState: NewAdminListPageState
+        let permissions: AdminListActions
+        let pageState: AdminListPageState
         let search: String?
         let status: Int?
     }
@@ -19,10 +19,10 @@ struct SystemJobTable: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: SystemJobRoutes.listBreadcrumb)
+                AdminBreadcrumb(links: SystemJobRoutes.listBreadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Worker jobs",
                         description: "Inspect jobs processed by the workers."

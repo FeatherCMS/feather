@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminMonthPicker: Component {
+public struct AdminMonthPicker: Component {
     public struct State: Sendable {
         public var name: String
         public var label: String
@@ -37,7 +37,7 @@ public struct NewAdminMonthPicker: Component {
     }
 
     public func selectors() -> [any Selector] {
-        NewAdminFormFieldSelect(
+        AdminFormFieldSelect(
             state: .init(
                 name: state.name,
                 label: state.label,
@@ -53,7 +53,7 @@ public struct NewAdminMonthPicker: Component {
 
     public func html(context: inout BuilderContext) -> Section {
         context.build(
-            NewAdminFormFieldSelect(
+            AdminFormFieldSelect(
                 state: .init(
                     name: state.name,
                     label: state.label,
@@ -68,21 +68,21 @@ public struct NewAdminMonthPicker: Component {
     }
 
     private static let options = [
-        NewAdminFormFieldSelect.SelectOption(
+        AdminFormFieldSelect.SelectOption(
             label: "Select month",
             value: ""
         ),
-        NewAdminFormFieldSelect.SelectOption(label: "January", value: "1"),
-        NewAdminFormFieldSelect.SelectOption(label: "February", value: "2"),
-        NewAdminFormFieldSelect.SelectOption(label: "March", value: "3"),
-        NewAdminFormFieldSelect.SelectOption(label: "April", value: "4"),
-        NewAdminFormFieldSelect.SelectOption(label: "May", value: "5"),
-        NewAdminFormFieldSelect.SelectOption(label: "June", value: "6"),
-        NewAdminFormFieldSelect.SelectOption(label: "July", value: "7"),
-        NewAdminFormFieldSelect.SelectOption(label: "August", value: "8"),
-        NewAdminFormFieldSelect.SelectOption(label: "September", value: "9"),
-        NewAdminFormFieldSelect.SelectOption(label: "October", value: "10"),
-        NewAdminFormFieldSelect.SelectOption(label: "November", value: "11"),
-        NewAdminFormFieldSelect.SelectOption(label: "December", value: "12"),
+        AdminFormFieldSelect.SelectOption(label: "January", value: "1"),
+        AdminFormFieldSelect.SelectOption(label: "February", value: "2"),
+        AdminFormFieldSelect.SelectOption(label: "March", value: "3"),
+        AdminFormFieldSelect.SelectOption(label: "April", value: "4"),
+        AdminFormFieldSelect.SelectOption(label: "May", value: "5"),
+        AdminFormFieldSelect.SelectOption(label: "June", value: "6"),
+        AdminFormFieldSelect.SelectOption(label: "July", value: "7"),
+        AdminFormFieldSelect.SelectOption(label: "August", value: "8"),
+        AdminFormFieldSelect.SelectOption(label: "September", value: "9"),
+        AdminFormFieldSelect.SelectOption(label: "October", value: "10"),
+        AdminFormFieldSelect.SelectOption(label: "November", value: "11"),
+        AdminFormFieldSelect.SelectOption(label: "December", value: "12"),
     ]
 }

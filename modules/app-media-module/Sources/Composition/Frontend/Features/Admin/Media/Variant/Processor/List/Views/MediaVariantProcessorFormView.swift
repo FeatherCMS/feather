@@ -17,10 +17,10 @@ struct MediaVariantProcessorFormView: Component {
 
     func html(context: inout BuilderContext) -> Form {
         let isNew = processor == nil
-        let form = NewAdminForm(action: action, nonceToken: nonceToken) {
+        let form = AdminForm(action: action, nonceToken: nonceToken) {
             H3(isNew ? "Add processor" : "Edit \(processor?.name ?? "")")
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: "name",
                         label: "Processor",
@@ -30,7 +30,7 @@ struct MediaVariantProcessorFormView: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: "matchExtensions",
                         label: "Input extensions",
@@ -40,7 +40,7 @@ struct MediaVariantProcessorFormView: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldTextArea(
+                AdminFormFieldTextArea(
                     state: .init(
                         name: "commandTemplate",
                         label: "Command template",
@@ -51,7 +51,7 @@ struct MediaVariantProcessorFormView: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldCheckbox(
+                AdminFormFieldCheckbox(
                     state: .init(
                         name: "isActive",
                         label: "Status",
@@ -61,7 +61,7 @@ struct MediaVariantProcessorFormView: Component {
                 )
             )
             context.build(
-                NewAdminSubmitButton(
+                AdminSubmitButton(
                     isNew ? "Add processor" : "Save processor",
                     style: .primary
                 )

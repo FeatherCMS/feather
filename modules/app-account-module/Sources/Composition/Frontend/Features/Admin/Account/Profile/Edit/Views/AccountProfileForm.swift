@@ -17,7 +17,7 @@ struct AccountProfileForm: Component {
         var firstName: FieldState
         var lastName: FieldState
         var profileImageAssetId: FieldState
-        var selectedImageAsset: NewAdminMediaAsset?
+        var selectedImageAsset: AdminMediaAsset?
         var error: String?
         var success: String?
         var nonceToken: String? = nil
@@ -36,7 +36,7 @@ struct AccountProfileForm: Component {
     var submitLabel: String = "Save changes"
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action, nonceToken: state.nonceToken) {
+        let form = AdminForm(action: action, nonceToken: state.nonceToken) {
             if let success = state.success {
                 P(success).class("success")
             }
@@ -45,7 +45,7 @@ struct AccountProfileForm: Component {
             }
 
             context.build(
-                NewAdminFormFieldMediaPicker(
+                AdminFormFieldMediaPicker(
                     state: .init(
                         field: .init(
                             key: state.profileImageAssetId.key,
@@ -78,7 +78,7 @@ struct AccountProfileForm: Component {
             )
 
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: state.firstName.key,
                         label: state.firstName.label,
@@ -88,7 +88,7 @@ struct AccountProfileForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: state.lastName.key,
                         label: state.lastName.label,
@@ -100,16 +100,16 @@ struct AccountProfileForm: Component {
 
             Section {
                 Div {
-                    context.build(NewAdminSubmitButton(submitLabel))
+                    context.build(AdminSubmitButton(submitLabel))
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "View profile",
                             href: AccountAdminRoutes.profile.description,
                             style: .secondary
                         )
                     )
                 }
-                .class("new-admin-form__actions")
+                .class("admin-form__actions")
             }
         }
         return context.build(form)

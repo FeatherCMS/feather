@@ -3,13 +3,13 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminListInvalidPageState: Component {
+public struct AdminListInvalidPageState: Component {
 
-    public let pageState: NewAdminListPageState
+    public let pageState: AdminListPageState
     public let path: String
 
     public init(
-        pageState: NewAdminListPageState,
+        pageState: AdminListPageState,
         path: String
     ) {
         self.pageState = pageState
@@ -18,12 +18,12 @@ public struct NewAdminListInvalidPageState: Component {
 
     public func html(context: inout BuilderContext) -> Div {
         context.build(
-            NewAdminListEmptyState(
+            AdminListEmptyState(
                 message: "Page \(pageState.page) does not exist.",
                 icon: FeatherIcons.alertCircle(),
                 action: {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "Back to list",
                             href: path,
                             style: .secondary

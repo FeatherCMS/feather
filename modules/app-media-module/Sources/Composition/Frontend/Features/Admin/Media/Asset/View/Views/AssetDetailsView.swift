@@ -14,21 +14,21 @@ import WebComponents
 struct AssetDetailsView: Component {
     let item: Components.Schemas.MediaAssetDetailSchema
     let variants: [Components.Schemas.MediaAssetVariantListItemSchema]
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     private func previewLink(
         for url: String
     ) -> String {
-        NewAdminMediaAsset.mediaURL(path: url)
+        AdminMediaAsset.mediaURL(path: url)
     }
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: MediaAssetRoutes.breadcrumb)
+                AdminBreadcrumb(links: MediaAssetRoutes.breadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Media asset details",
                         description:
@@ -37,35 +37,35 @@ struct AssetDetailsView: Component {
                 )
             )
             context.build(
-                NewAdminDetailField(
+                AdminDetailField(
                     label: "URL",
                     value: item.url
                 )
             )
             context.build(
-                NewAdminDetailField(label: "Extension", value: item._extension)
+                AdminDetailField(label: "Extension", value: item._extension)
             )
             context.build(
-                NewAdminDetailField(label: "Status", value: item.status)
+                AdminDetailField(label: "Status", value: item.status)
             )
             context.build(
-                NewAdminDetailField(
+                AdminDetailField(
                     label: "Size bytes",
                     value: "\(item.sizeBytes)"
                 )
             )
             if let title = item.title {
                 context.build(
-                    NewAdminDetailField(label: "Title", value: title)
+                    AdminDetailField(label: "Title", value: title)
                 )
             }
             if let altText = item.altText {
                 context.build(
-                    NewAdminDetailField(label: "Alt text", value: altText)
+                    AdminDetailField(label: "Alt text", value: altText)
                 )
             }
             context.build(
-                NewAdminButton(
+                AdminButton(
                     "Open original",
                     href: previewLink(for: item.url),
                     style: .secondary
@@ -77,7 +77,7 @@ struct AssetDetailsView: Component {
             else {
                 H2("Associated variants")
                 context.build(
-                    NewAdminListShell(
+                    AdminListShell(
                         layout: .init(
                             name: "media-asset-variants",
                             columns: [
@@ -105,7 +105,7 @@ struct AssetDetailsView: Component {
                                         Td(variant.url)
                                         Td {
                                             context.build(
-                                                NewAdminRowButton(
+                                                AdminRowButton(
                                                     "Preview",
                                                     href: previewLink(
                                                         for: variant.url
@@ -126,7 +126,7 @@ struct AssetDetailsView: Component {
             Div {
                 if permissions.allows(MediaPermissions.Assets.update) {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "Edit",
                             href:
                                 MediaAssetRoutes.edit(
@@ -138,7 +138,7 @@ struct AssetDetailsView: Component {
                 }
                 if permissions.allows(MediaPermissions.Assets.delete) {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "Remove",
                             href:
                                 MediaAssetRoutes.remove(

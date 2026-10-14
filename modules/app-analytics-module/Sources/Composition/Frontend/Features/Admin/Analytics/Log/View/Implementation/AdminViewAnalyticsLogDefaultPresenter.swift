@@ -10,7 +10,7 @@ struct AdminViewAnalyticsLogDefaultPresenter: AdminViewAnalyticsLogPresenter {
         model: AdminViewAnalyticsLogModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Analytics log details",
@@ -26,7 +26,7 @@ struct AdminViewAnalyticsLogDefaultPresenter: AdminViewAnalyticsLogPresenter {
         error: OpenAPIRepositoryError,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Analytics log details",

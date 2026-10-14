@@ -8,7 +8,7 @@
 public import CSS
 import WebBuilders
 
-public struct NewAdminDesignSystem {
+public struct AdminDesignSystem {
 
     public init() {}
 

@@ -4,20 +4,20 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public enum NewAdminDialogSize: Sendable {
+public enum AdminDialogSize: Sendable {
     case small
     case large
 }
 
-public struct NewAdminDialog<Content: Component>: Component {
+public struct AdminDialog<Content: Component>: Component {
     public let title: String
     public let content: Content
-    public let size: NewAdminDialogSize
+    public let size: AdminDialogSize
 
     public init(
         title: String,
         content: Content,
-        size: NewAdminDialogSize = .small
+        size: AdminDialogSize = .small
     ) {
         self.title = title
         self.content = content
@@ -26,7 +26,7 @@ public struct NewAdminDialog<Content: Component>: Component {
 
     public func rules() -> [any Rule] {
         Media {
-            Custom("dialog.new-admin-dialog") {
+            Custom("dialog.admin-dialog") {
                 Position(.fixed)
                 UnsafeRawProperty(name: "inset", value: "0")
                 Margin(.auto)
@@ -41,7 +41,7 @@ public struct NewAdminDialog<Content: Component>: Component {
                 Background(color: .transparent)
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
             }
-            Custom("dialog.new-admin-dialog::backdrop") {
+            Custom("dialog.admin-dialog::backdrop") {
                 Background(
                     color: .color(
                         CSSColor(stringLiteral: "rgba(128, 128, 128, 0.46)")
@@ -49,13 +49,13 @@ public struct NewAdminDialog<Content: Component>: Component {
                 )
                 BackdropFilter(.blur(12.px))
             }
-            Custom("dialog.new-admin-dialog.new-admin-dialog--large") {
+            Custom("dialog.admin-dialog.admin-dialog--large") {
                 Width(80.percent)
                 MaxWidth(1400.px)
             }
         }
         Media(.prefersColorScheme(.dark)) {
-            Custom("dialog.new-admin-dialog::backdrop") {
+            Custom("dialog.admin-dialog::backdrop") {
                 Background(
                     color: .color(
                         CSSColor(stringLiteral: "rgba(0, 0, 0, 0.68)")
@@ -64,7 +64,7 @@ public struct NewAdminDialog<Content: Component>: Component {
             }
         }
         Media {
-            Class("new-admin-dialog__panel") {
+            Class("admin-dialog__panel") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(18.px)
@@ -87,33 +87,33 @@ public struct NewAdminDialog<Content: Component>: Component {
                 )
             }
             Custom(
-                "html.new-admin-dialog-open, html.new-admin-dialog-open body"
+                "html.admin-dialog-open, html.admin-dialog-open body"
             ) {
                 Overflow(.hidden)
             }
-            Class("new-admin-dialog__header") {
+            Class("admin-dialog__header") {
                 Display(.flex)
                 AlignItems(.center)
                 JustifyContent(.spaceBetween)
                 Gap(16.px)
             }
-            Custom(".new-admin-dialog__header h2") {
+            Custom(".admin-dialog__header h2") {
                 Margin(0.px)
                 FontSize(1.35.rem)
                 LineHeight(1.2)
             }
-            Class("new-admin-dialog__close") {
+            Class("admin-dialog__close") {
                 FlexShrink(0)
             }
-            Custom(".new-admin-dialog__panel .cms-section") {
+            Custom(".admin-dialog__panel .cms-section") {
                 Padding(0.px)
             }
-            Custom(".new-admin-dialog__panel .new-admin-form") {
+            Custom(".admin-dialog__panel .admin-form") {
                 MarginTop(0.px)
             }
         }
         Media(.prefersColorScheme(.dark)) {
-            Custom(".new-admin-dialog__panel") {
+            Custom(".admin-dialog__panel") {
                 Background(.variable(TokenKey.Colors.Materials.Primary.tint))
             }
         }
@@ -125,22 +125,22 @@ public struct NewAdminDialog<Content: Component>: Component {
                 Div {
                     H2(title)
                     context.build(
-                        NewAdminControlButton(
+                        AdminControlButton(
                             "Close",
                             style: .ghost(.secondary)
                         )
                     )
-                    .class("new-admin-dialog__close")
+                    .class("admin-dialog__close")
                     .data("admin-dialog-close", "")
                 }
-                .class("new-admin-dialog__header")
+                .class("admin-dialog__header")
 
                 context.build(content)
             }
-            .class("new-admin-dialog__panel")
+            .class("admin-dialog__panel")
         }
-        .class("new-admin-dialog")
-        .if(size == .large) { $0.class("new-admin-dialog--large") }
+        .class("admin-dialog")
+        .if(size == .large) { $0.class("admin-dialog--large") }
         .data("admin-dialog", "")
         .ariaLabel(title)
     }

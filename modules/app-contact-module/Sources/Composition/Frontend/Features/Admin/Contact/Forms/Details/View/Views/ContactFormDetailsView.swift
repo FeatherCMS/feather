@@ -9,15 +9,15 @@ import WebComponents
 
 struct ContactFormDetailsView: Component {
     let item: AdminContactFormDetailsItem
-    let permissions: NewAdminListActions
-    let breadcrumb: [NewAdminBreadcrumb.Link]
+    let permissions: AdminListActions
+    let breadcrumb: [AdminBreadcrumb.Link]
     let error: String?
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(NewAdminBreadcrumb(links: breadcrumb))
+            context.build(AdminBreadcrumb(links: breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Contact form details",
                         description: "Review the contact form configuration."
@@ -28,7 +28,7 @@ struct ContactFormDetailsView: Component {
                 AdminContactFormTabs(formId: item.key, active: .details)
             )
             context.build(
-                NewAdminRelationshipGroup(
+                AdminRelationshipGroup(
                     pageHeader: .secondary(
                         title: "Form configuration",
                         description:
@@ -36,41 +36,41 @@ struct ContactFormDetailsView: Component {
                     )
                 ) {
                     if let error {
-                        P(error).class("new-admin-form__error")
+                        P(error).class("admin-form__error")
                     }
                     Div {
                         context.build(
-                            NewAdminDetailField(label: "Key", value: item.key)
+                            AdminDetailField(label: "Key", value: item.key)
                         )
                         context.build(
-                            NewAdminDetailField(label: "Name", value: item.name)
+                            AdminDetailField(label: "Name", value: item.name)
                         )
                         context.build(
-                            NewAdminDetailField(
+                            AdminDetailField(
                                 label: "Success message",
                                 value: item.successMessage.emptyToNil ?? "—"
                             )
                         )
                         context.build(
-                            NewAdminDetailField(
+                            AdminDetailField(
                                 label: "Failure message",
                                 value: item.failureMessage.emptyToNil ?? "—"
                             )
                         )
                         context.build(
-                            NewAdminDetailField(
+                            AdminDetailField(
                                 label: "Redirect URL",
                                 value: item.redirectUrl?.emptyToNil ?? "—"
                             )
                         )
                         context.build(
-                            NewAdminDetailField(
+                            AdminDetailField(
                                 label: "Fields",
                                 value: selectedFieldLabels
                             )
                         )
                         context.build(
-                            NewAdminDetailField(
+                            AdminDetailField(
                                 label: "Email definitions",
                                 value: "\(item.mails.count)"
                             )
@@ -82,7 +82,7 @@ struct ContactFormDetailsView: Component {
                         Div {
                             for action in actions {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         action.label,
                                         href: action.href,
                                         style: action.style
@@ -90,7 +90,7 @@ struct ContactFormDetailsView: Component {
                                 )
                             }
                         }
-                        .class("new-admin-detail-actions")
+                        .class("admin-detail-actions")
                         .style(
                             "display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;"
                         )
@@ -109,8 +109,8 @@ struct ContactFormDetailsView: Component {
         return selected.isEmpty ? "—" : selected.joined(separator: ", ")
     }
 
-    private var actions: [NewAdminDetailView.Action] {
-        var result: [NewAdminDetailView.Action] = []
+    private var actions: [AdminDetailView.Action] {
+        var result: [AdminDetailView.Action] = []
         if permissions.allows(ContactPermissions.Forms.update) {
             result.append(
                 .init(
@@ -125,7 +125,7 @@ struct ContactFormDetailsView: Component {
             result.append(
                 .init(
                     label: "Remove",
-                    href: NewAdminLocation.remove(
+                    href: AdminLocation.remove(
                         path: ContactAdminRoutes.formRemove.description,
                         ids: [item.key],
                         returnTo:

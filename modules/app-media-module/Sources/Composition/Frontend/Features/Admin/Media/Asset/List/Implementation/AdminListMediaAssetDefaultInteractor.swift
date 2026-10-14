@@ -73,14 +73,14 @@ struct AdminListMediaAssetDefaultInteractor: AdminListMediaAssetInteractor {
 
     func resolveRemoveItems(
         ids: [String]
-    ) async throws -> [NewAdminRemoveItemContext] {
+    ) async throws -> [AdminRemoveItemContext] {
         let assets = try await repository.resolveAssets(ids: ids)
         let assetsByID = assets.reduce(
             into: [String: Components.Schemas.MediaAssetResolveItemSchema]()
         ) { result, asset in
             result[asset.id] = asset
         }
-        var result: [NewAdminRemoveItemContext] = []
+        var result: [AdminRemoveItemContext] = []
         result.reserveCapacity(ids.count)
         for id in ids {
             if let asset = assetsByID[id] {

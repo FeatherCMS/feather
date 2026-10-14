@@ -15,7 +15,7 @@ struct AdminListMediaVariantProcessorsDefaultPresenter:
         let nonce = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Add media variant processor",
@@ -34,13 +34,13 @@ struct AdminListMediaVariantProcessorsDefaultPresenter:
 
     func renderListPage(
         variantId: String,
-        model: NewAdminListModel<
+        model: AdminListModel<
             MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema
         >,
-        permissions: NewAdminListActions,
+        permissions: AdminListActions,
         search: String?
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Media variant processors",
@@ -57,7 +57,7 @@ struct AdminListMediaVariantProcessorsDefaultPresenter:
     func renderErrorPage(error: AdminListMediaVariantProcessorsError)
         async throws -> HTMLResponse
     {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         switch error {
         case .notFound:
             state = .init(
@@ -80,14 +80,14 @@ struct AdminListMediaVariantProcessorsDefaultPresenter:
                 message: "The request could not be completed. Please try again."
             )
         }
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Media variant processors",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle(),
-                action: NewAdminButton(
+                action: AdminButton(
                     "Back",
                     href: MediaVariantRoutes.list.description,
                     style: .secondary

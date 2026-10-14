@@ -8,11 +8,11 @@ enum SystemJobRoutes {
         RouterPath("jobs")
     )
 
-    static var listBreadcrumb: [NewAdminBreadcrumb.Link] {
+    static var listBreadcrumb: [AdminBreadcrumb.Link] {
         SystemAdminRoutes.breadcrumb
     }
 
-    static var breadcrumb: [NewAdminBreadcrumb.Link] {
+    static var breadcrumb: [AdminBreadcrumb.Link] {
         SystemAdminRoutes.breadcrumb + [
             .init(label: "Worker jobs", link: list.description)
         ]

@@ -27,7 +27,7 @@ struct AdminListAuthEmailDefaultPresenter:
     func renderPage(
         state: AuthEmailTable.State
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Manage user emails",
@@ -38,7 +38,7 @@ struct AdminListAuthEmailDefaultPresenter:
     func renderError(
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Manage user emails",
@@ -53,7 +53,7 @@ struct AdminListAuthEmailDefaultPresenter:
     }
 
     func renderRemovePage(
-        items: [NewAdminRemoveItemContext],
+        items: [AdminRemoveItemContext],
         page: Int,
         search: String?,
         userID: String?
@@ -61,11 +61,11 @@ struct AdminListAuthEmailDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminDialog(
+        return try await renderEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: NewAdminRemoveConfirmation(
+            title: AdminRemoveConfirmation.dialogTitle,
+            content: AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove selected emails",
                     description:
@@ -88,11 +88,11 @@ struct AdminListAuthEmailDefaultPresenter:
     }
 
     func renderInvalidNoncePage() async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove selected emails",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Form expired",
                     message:

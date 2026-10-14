@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminFormGroup: Component {
+public struct AdminFormGroup: Component {
     public let id: String
     public let title: String
     public let isOpen: Bool
@@ -27,7 +27,7 @@ public struct NewAdminFormGroup: Component {
 
     public func selectors() -> [any Selector] {
         [
-            Class("new-admin-form-group") {
+            Class("admin-form-group") {
                 Width(100.percent)
                 BoxSizing(.borderBox)
                 Padding(16.px)
@@ -38,7 +38,7 @@ public struct NewAdminFormGroup: Component {
                 )
                 BorderRadius(8.px)
             },
-            Custom(".new-admin-form-group > summary") {
+            Custom(".admin-form-group > summary") {
                 Display(.flex)
                 AlignItems(.center)
                 JustifyContent(.spaceBetween)
@@ -47,15 +47,15 @@ public struct NewAdminFormGroup: Component {
                 ListStyleType(.none)
             },
             Custom(
-                ".new-admin-form-group > summary::-webkit-details-marker"
+                ".admin-form-group > summary::-webkit-details-marker"
             ) {
                 Display(.none)
             },
-            Custom(".new-admin-form-group > summary h2") {
+            Custom(".admin-form-group > summary h2") {
                 Margin(0.px)
                 FontSize(18.px)
             },
-            Custom(".new-admin-form-group > summary::after") {
+            Custom(".admin-form-group > summary::after") {
                 Content(.string("\"\""))
                 Width(10.px)
                 Height(10.px)
@@ -78,7 +78,7 @@ public struct NewAdminFormGroup: Component {
                 )
             },
             Custom(
-                ".new-admin-form-group[open] > summary::after"
+                ".admin-form-group[open] > summary::after"
             ) {
                 UnsafeRawProperty(
                     name: "transform",
@@ -86,11 +86,11 @@ public struct NewAdminFormGroup: Component {
                 )
             },
             Custom(
-                ".new-admin-form-group[open] > summary + .new-admin-form-group__content"
+                ".admin-form-group[open] > summary + .admin-form-group__content"
             ) {
                 MarginTop(24.px)
             },
-            Custom(".new-admin-form-group__content") {
+            Custom(".admin-form-group__content") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(18.px)
@@ -108,25 +108,25 @@ public struct NewAdminFormGroup: Component {
                     item
                 }
             }
-            .class("new-admin-form-group__content")
+            .class("admin-form-group__content")
             if persistsState {
                 Script(script())
             }
         }
         .if(isOpen) { $0.open() }
-        .class("new-admin-form-group")
+        .class("admin-form-group")
         .if(persistsState) {
-            $0.data("new-admin-form-group", id)
+            $0.data("admin-form-group", id)
         }
     }
 
     private func script() -> String {
         #"""
         (function() {
-          if (window.__newAdminFormGroupInit) { return; }
-          window.__newAdminFormGroupInit = true;
+          if (window.__adminFormGroupInit) { return; }
+          window.__adminFormGroupInit = true;
 
-          var cookieName = "new_admin_collapsible_sections";
+          var cookieName = "admin_collapsible_sections";
           var cookiePath = "; Max-Age=31536000; Path=/admin; SameSite=Lax";
 
           function readState() {
@@ -151,8 +151,8 @@ public struct NewAdminFormGroup: Component {
 
           function initialize() {
             var state = readState();
-            document.querySelectorAll("[data-new-admin-form-group]").forEach(function(section) {
-              var key = section.getAttribute("data-new-admin-form-group");
+            document.querySelectorAll("[data-admin-form-group]").forEach(function(section) {
+              var key = section.getAttribute("data-admin-form-group");
               if (!key) { return; }
 
               if (Object.prototype.hasOwnProperty.call(state, key)) {

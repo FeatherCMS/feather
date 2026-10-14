@@ -10,20 +10,20 @@ import WebComponents
 struct ContactFormTable: Component {
     struct State {
         let items: [AdminContactFormDetailsItem]
-        let pageState: NewAdminListPageState
+        let pageState: AdminListPageState
         let search: String
-        let permissions: NewAdminListActions
+        let permissions: AdminListActions
         let isPicker: Bool
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: state.isPicker
                             ? "Select contact form" : "Contact forms",

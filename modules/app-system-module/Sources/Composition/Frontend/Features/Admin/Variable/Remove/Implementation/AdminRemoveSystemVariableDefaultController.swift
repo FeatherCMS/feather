@@ -35,7 +35,7 @@ struct AdminRemoveSystemVariableDefaultController:
             return Response(
                 status: .seeOther,
                 headers: [
-                    .location: NewAdminLocation.url(
+                    .location: AdminLocation.url(
                         path: SystemVariableRoutes.list.description,
                         page: page,
                         search: search
@@ -83,7 +83,7 @@ struct AdminRemoveSystemVariableDefaultController:
         var returnTo = request.queryString("returnTo")
         do {
             let payload = try await request.decode(
-                as: NonceRequest<NewAdminListRemoveFormInput>.self,
+                as: NonceRequest<AdminListRemoveFormInput>.self,
                 context: context
             )
             returnTo = payload.input.normalizedReturnTo
@@ -96,7 +96,7 @@ struct AdminRemoveSystemVariableDefaultController:
                 return
                     try await presenter
                     .renderInvalidNoncePage(
-                        cancel: NewAdminLocation.removeCancel(
+                        cancel: AdminLocation.removeCancel(
                             path: SystemVariableRoutes.list.description,
                             returnTo: returnTo
                         )
@@ -106,7 +106,7 @@ struct AdminRemoveSystemVariableDefaultController:
             if !payload.input.normalizedIds.isEmpty {
                 try await interactor.delete(ids: payload.input.normalizedIds)
             }
-            let location = NewAdminLocation.url(
+            let location = AdminLocation.url(
                 path: SystemVariableRoutes.list.description,
                 page: payload.input.normalizedPage,
                 search: payload.input.normalizedSearch
@@ -126,7 +126,7 @@ struct AdminRemoveSystemVariableDefaultController:
             return
                 try await presenter.renderErrorPage(
                     error: error,
-                    cancel: NewAdminLocation.removeCancel(
+                    cancel: AdminLocation.removeCancel(
                         path: SystemVariableRoutes.list.description,
                         returnTo: returnTo
                     )

@@ -5,7 +5,7 @@ import UserAdminAPI
 
 protocol AdminListUserRolePresenter: Sendable {
     func renderListPage(
-        model: NewAdminListModel<Components.Schemas.UserRoleListItemSchema>,
+        model: AdminListModel<Components.Schemas.UserRoleListItemSchema>,
         permissions: Set<PermissionKey>,
         search: String?
     ) async throws -> HTMLResponse

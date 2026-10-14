@@ -8,11 +8,11 @@ import WebComponents
 
 struct UserIdentityDetails: Component {
     let identity: AdminViewUserIdentityModel
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> Section {
         let statusChip = UserIdentityStatusChip.make(status: identity.status)
-        var actions: [NewAdminDetailView.Action] = []
+        var actions: [AdminDetailView.Action] = []
         if permissions.allows(UserPermissions.Identities.update) {
             actions.append(
                 .init(
@@ -34,7 +34,7 @@ struct UserIdentityDetails: Component {
             )
         }
         return context.build(
-            NewAdminDetailView(
+            AdminDetailView(
                 breadcrumb: UserIdentityRoutes.breadcrumb,
                 pageHeader: .primary(
                     title: "User identity details",

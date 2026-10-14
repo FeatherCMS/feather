@@ -4,14 +4,14 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminForm: Component {
+public struct AdminForm: Component {
     private let form: Form
 
     public init(
         action: String,
         method: MethodAttributeValue = .post,
         nonceToken: String? = nil,
-        hiddenFields: [NewAdminFormFieldHiddenValue] = [],
+        hiddenFields: [AdminFormFieldHiddenValue] = [],
         @Builder<FlowContent> content: () -> [any FlowContent]
     ) {
         self.form = Form {
@@ -26,24 +26,24 @@ public struct NewAdminForm: Component {
         .encType(.urlencoded)
         .method(method)
         .action(action)
-        .class("new-admin-form")
+        .class("admin-form")
     }
 
     public func selectors() -> [any Selector] {
         [
-            Class("new-admin-form") {
+            Class("admin-form") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(26.px)
                 Width(100.percent)
                 MarginTop(24.px)
             },
-            Custom(".new-admin-form > .new-admin-form__messages") {
+            Custom(".admin-form > .admin-form__messages") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(6.px)
             },
-            Custom(".new-admin-form > .new-admin-form__error") {
+            Custom(".admin-form > .admin-form__error") {
                 Margin(0)
                 Padding(vertical: 12.px, horizontal: 14.px)
                 BorderRadius(8.px)
@@ -55,7 +55,7 @@ public struct NewAdminForm: Component {
                 Background(.variable(TokenKey.Colors.Palette.Red.background))
                 Color(.variable(TokenKey.Colors.Palette.Red.text))
             },
-            Class("new-admin-form__actions") {
+            Class("admin-form__actions") {
                 Display(.flex)
                 AlignItems(.center)
                 Gap(10.px)
@@ -74,15 +74,15 @@ public struct NewAdminForm: Component {
             #"""
             (function () {
                 var documentRoot = document.documentElement;
-                if (documentRoot.dataset.newAdminFormErrorScrollBound === "1") {
+                if (documentRoot.dataset.adminFormErrorScrollBound === "1") {
                     return;
                 }
-                documentRoot.dataset.newAdminFormErrorScrollBound = "1";
+                documentRoot.dataset.adminFormErrorScrollBound = "1";
 
                 document.addEventListener("DOMContentLoaded", function () {
                     requestAnimationFrame(function () {
                         var error = document.querySelector(
-                            ".new-admin-form .field-error"
+                            ".admin-form .field-error"
                         );
                         if (!error) { return; }
 

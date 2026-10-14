@@ -4,13 +4,13 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminDetailView: Component {
+public struct AdminDetailView: Component {
     public struct Field: Sendable {
         public struct Chip: Sendable {
             public let label: String
-            public let color: NewAdminChip.ColorName
+            public let color: AdminChip.ColorName
 
-            public init(label: String, color: NewAdminChip.ColorName) {
+            public init(label: String, color: AdminChip.ColorName) {
                 self.label = label
                 self.color = color
             }
@@ -57,20 +57,20 @@ public struct NewAdminDetailView: Component {
     public struct Action: Sendable {
         public let label: String
         public let href: String
-        public let style: NewAdminButtonStyle
-        public init(label: String, href: String, style: NewAdminButtonStyle) {
+        public let style: AdminButtonStyle
+        public init(label: String, href: String, style: AdminButtonStyle) {
             self.label = label
             self.href = href
             self.style = style
         }
     }
-    public let breadcrumb: [NewAdminBreadcrumb.Link]
-    public let pageHeader: NewAdminPageHeader.State
+    public let breadcrumb: [AdminBreadcrumb.Link]
+    public let pageHeader: AdminPageHeader.State
     public let fields: [Field]
     public let actions: [Action]
     public init(
-        breadcrumb: [NewAdminBreadcrumb.Link],
-        pageHeader: NewAdminPageHeader.State,
+        breadcrumb: [AdminBreadcrumb.Link],
+        pageHeader: AdminPageHeader.State,
         fields: [Field],
         actions: [Action] = []
     ) {
@@ -81,8 +81,8 @@ public struct NewAdminDetailView: Component {
     }
     public func html(context: inout BuilderContext) -> Section {
         Section {
-            context.build(NewAdminBreadcrumb(links: breadcrumb))
-            context.build(NewAdminPageHeader(state: pageHeader))
+            context.build(AdminBreadcrumb(links: breadcrumb))
+            context.build(AdminPageHeader(state: pageHeader))
             Div {
                 for field in fields {
                     Div {
@@ -97,7 +97,7 @@ public struct NewAdminDetailView: Component {
                             Div {
                                 for chip in chips {
                                     context.build(
-                                        NewAdminChip(
+                                        AdminChip(
                                             label: chip.label,
                                             color: chip.color
                                         )
@@ -108,7 +108,7 @@ public struct NewAdminDetailView: Component {
                         }
                         else if let chip = field.chip {
                             context.build(
-                                NewAdminChip(
+                                AdminChip(
                                     label: chip.label,
                                     color: chip.color
                                 )
@@ -129,7 +129,7 @@ public struct NewAdminDetailView: Component {
                 Div {
                     for action in actions {
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 action.label,
                                 href: action.href,
                                 style: action.style
@@ -137,7 +137,7 @@ public struct NewAdminDetailView: Component {
                         )
                     }
                 }
-                .class("new-admin-detail-actions")
+                .class("admin-detail-actions")
             }
         }
         .class("cms-section")
@@ -183,7 +183,7 @@ public struct NewAdminDetailView: Component {
                 BorderRadius(50.percent)
                 Margin(top: 6.px)
             }
-            Custom(".new-admin-detail-actions") {
+            Custom(".admin-detail-actions") {
                 Display(.flex)
                 FlexWrap(.wrap)
                 Gap(12.px)

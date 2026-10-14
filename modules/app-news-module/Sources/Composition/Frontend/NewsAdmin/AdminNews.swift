@@ -36,7 +36,7 @@ public struct AdminNews: Sendable {
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "News",

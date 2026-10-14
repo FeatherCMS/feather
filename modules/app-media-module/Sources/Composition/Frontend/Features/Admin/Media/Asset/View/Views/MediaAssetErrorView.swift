@@ -14,7 +14,7 @@ struct MediaAssetErrorView: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
-            NewAdminStatusView(
+            AdminStatusView(
                 state: .init(title: info, message: message),
                 icon: FeatherIcons.alertCircle()
             )

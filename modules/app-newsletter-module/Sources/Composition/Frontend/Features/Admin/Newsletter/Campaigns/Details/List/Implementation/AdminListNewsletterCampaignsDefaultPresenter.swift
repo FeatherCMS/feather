@@ -9,18 +9,18 @@ struct AdminListNewsletterCampaignsDefaultPresenter:
     let renderingEngine: any RenderingEngine
 
     func render(
-        model: NewAdminListModel<AdminNewsletterCampaignItem>,
+        model: AdminListModel<AdminNewsletterCampaignItem>,
         isPicker: Bool,
         error: String?,
-        permissions: NewAdminListActions,
+        permissions: AdminListActions,
         search: String?
     ) async throws -> HTMLResponse {
         if let error {
-            return try await renderingEngine.renderNewAdminPage(
+            return try await renderingEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Campaigns",
-                content: NewAdminStatusView(
+                content: AdminStatusView(
                     state: .init(
                         title: "Campaigns unavailable",
                         message: error
@@ -29,7 +29,7 @@ struct AdminListNewsletterCampaignsDefaultPresenter:
                 )
             )
         }
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: isPicker ? "Select newsletter campaign" : "Campaigns",

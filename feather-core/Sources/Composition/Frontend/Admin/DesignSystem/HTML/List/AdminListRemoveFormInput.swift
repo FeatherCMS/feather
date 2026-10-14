@@ -1,6 +1,6 @@
 import FeatherContracts
 
-public struct NewAdminListRemoveFormInput: Decodable, Sendable {
+public struct AdminListRemoveFormInput: Decodable, Sendable {
     public var ids: [String]?
     public var selectedIds: [String]?
     public var page: Int?

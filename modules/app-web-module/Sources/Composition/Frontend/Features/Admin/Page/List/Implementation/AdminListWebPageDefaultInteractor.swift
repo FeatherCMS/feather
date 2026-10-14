@@ -16,8 +16,8 @@ struct AdminListWebPageDefaultInteractor:
 
     func resolveRemoveItems(
         ids: [String]
-    ) async throws -> [NewAdminRemoveItemContext] {
-        var items: [NewAdminRemoveItemContext] = []
+    ) async throws -> [AdminRemoveItemContext] {
+        var items: [AdminRemoveItemContext] = []
         items.reserveCapacity(ids.count)
         for id in ids {
             let title: String

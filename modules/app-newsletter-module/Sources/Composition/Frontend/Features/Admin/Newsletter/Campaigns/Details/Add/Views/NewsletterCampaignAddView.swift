@@ -18,7 +18,7 @@ struct NewsletterCampaignAddView: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(
+                AdminBreadcrumb(
                     links: NewsletterAdminRoutes.breadcrumb + [
                         .init(
                             label: "Campaigns",
@@ -32,7 +32,7 @@ struct NewsletterCampaignAddView: Component {
                 )
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Add campaign",
                         description: "Create a newsletter campaign."

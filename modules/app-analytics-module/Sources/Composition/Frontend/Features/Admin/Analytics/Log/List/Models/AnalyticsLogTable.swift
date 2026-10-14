@@ -11,9 +11,9 @@ import WebComponents
 struct AnalyticsLogTable: Component {
     struct State {
         let canAccess: Bool
-        let permissions: NewAdminListActions
+        let permissions: AdminListActions
         let logs: [Components.Schemas.AnalyticsLogListItemSchema]
-        let pageState: NewAdminListPageState
+        let pageState: AdminListPageState
         let search: String
         let source: String
         let method: String
@@ -62,14 +62,14 @@ struct AnalyticsLogTable: Component {
                 MinWidth(0.px)
             }
             Custom(
-                ".analytics-logs__date-range .new-admin-date-picker"
+                ".analytics-logs__date-range .admin-date-picker"
             ) {
                 Width(50.percent)
                 MinWidth(0.px)
                 Flex(1, .number(1), .auto)
             }
             Custom(
-                ".analytics-logs__date-range .new-admin-form-field-label"
+                ".analytics-logs__date-range .admin-form-field-label"
             ) {
                 Display(.none)
             }
@@ -186,7 +186,7 @@ struct AnalyticsLogTable: Component {
                 FlexWrap(.wrap)
             }
             Custom(
-                ".analytics-logs__date-range .new-admin-date-picker, "
+                ".analytics-logs__date-range .admin-date-picker, "
                     + ".analytics-logs__filters-row select"
             ) {
                 UnsafeRawProperty(name: "flex", value: "1 1 180px")
@@ -201,10 +201,10 @@ struct AnalyticsLogTable: Component {
         Section {
             if !state.canAccess {
                 context.build(
-                    NewAdminBreadcrumb(links: AnalyticsAdminRoutes.breadcrumb)
+                    AdminBreadcrumb(links: AnalyticsAdminRoutes.breadcrumb)
                 )
                 context.build(
-                    NewAdminStatusView(
+                    AdminStatusView(
                         state: .init(
                             title: "Forbidden",
                             message:
@@ -217,12 +217,12 @@ struct AnalyticsLogTable: Component {
             else {
                 Div {
                     context.build(
-                        NewAdminBreadcrumb(
+                        AdminBreadcrumb(
                             links: AnalyticsAdminRoutes.breadcrumb
                         )
                     )
                     context.build(
-                        NewAdminPageHeader(
+                        AdminPageHeader(
                             state: .primary(
                                 title: "Analytics logs",
                                 description:
@@ -233,7 +233,7 @@ struct AnalyticsLogTable: Component {
                 }
                 .class("analytics-logs__intro")
                 if let error = state.error {
-                    P(error).class("new-admin-form__error")
+                    P(error).class("admin-form__error")
                 }
                 context.build(content(context: &context))
             }
@@ -241,17 +241,17 @@ struct AnalyticsLogTable: Component {
         .class("cms-section", "analytics-logs")
     }
 
-    private func content(context: inout BuilderContext) -> NewAdminList {
+    private func content(context: inout BuilderContext) -> AdminList {
         let filters = filterForm(context: &context)
         let hasActiveQuery =
             !state.search.isEmpty || !state.source.isEmpty
             || !state.method.isEmpty || !state.responseCode.isEmpty
             || !state.from.isEmpty || !state.to.isEmpty
-        return NewAdminList(
+        return AdminList(
             table: {
                 if state.pageState.isPageOutOfRange {
                     context.build(
-                        NewAdminListInvalidPageState(
+                        AdminListInvalidPageState(
                             pageState: state.pageState,
                             path: AnalyticsAdminRoutes.logs.description
                         )
@@ -259,7 +259,7 @@ struct AnalyticsLogTable: Component {
                 }
                 else if state.logs.isEmpty {
                     context.build(
-                        NewAdminListNoResultsState(
+                        AdminListNoResultsState(
                             message: hasActiveQuery
                                 ? "No analytics logs match your search."
                                 : "No analytics logs yet.",
@@ -267,7 +267,7 @@ struct AnalyticsLogTable: Component {
                             action: {
                                 if hasActiveQuery {
                                     context.build(
-                                        NewAdminButton(
+                                        AdminButton(
                                             "Reset search",
                                             href: AnalyticsAdminRoutes.logs
                                                 .description,
@@ -281,7 +281,7 @@ struct AnalyticsLogTable: Component {
                 }
                 else {
                     context.build(
-                        NewAdminListShell(
+                        AdminListShell(
                             layout: .init(
                                 name: "analytics-logs",
                                 columns: [
@@ -305,7 +305,7 @@ struct AnalyticsLogTable: Component {
                                         Tr {
                                             Td {
                                                 context.build(
-                                                    NewAdminChip(
+                                                    AdminChip(
                                                         label: log.method,
                                                         color: .blue
                                                     )
@@ -333,7 +333,7 @@ struct AnalyticsLogTable: Component {
                                             )
                                             .data("label", "Created")
                                             context.build(
-                                                NewAdminListRowActions(
+                                                AdminListRowActions(
                                                     label: "Actions",
                                                     actions: [
                                                         .init(
@@ -372,7 +372,7 @@ struct AnalyticsLogTable: Component {
             },
             pagination: {
                 context.build(
-                    NewAdminListPagination(
+                    AdminListPagination(
                         state: .init(
                             path: AnalyticsAdminRoutes.logs.description,
                             pageState: state.pageState,
@@ -400,7 +400,7 @@ struct AnalyticsLogTable: Component {
         Form {
             Div {
                 context.build(
-                    NewAdminFormFieldDatePicker(
+                    AdminFormFieldDatePicker(
                         state: .init(
                             name: "from",
                             label: "From",
@@ -410,7 +410,7 @@ struct AnalyticsLogTable: Component {
                     )
                 )
                 context.build(
-                    NewAdminFormFieldDatePicker(
+                    AdminFormFieldDatePicker(
                         state: .init(
                             name: "to",
                             label: "To",
@@ -474,7 +474,7 @@ struct AnalyticsLogTable: Component {
                 }
                 .class("table-search-input")
                 context.build(
-                    NewAdminSubmitButton(
+                    AdminSubmitButton(
                         "Search",
                         style: .ghost(.primary),
                         isRowButton: true
@@ -488,15 +488,15 @@ struct AnalyticsLogTable: Component {
         .class("analytics-logs__filter-form")
     }
 
-    private func statusChip(_ status: Int) -> NewAdminChip {
-        let color: NewAdminChip.ColorName =
+    private func statusChip(_ status: Int) -> AdminChip {
+        let color: AdminChip.ColorName =
             status >= 500
             ? .red
             : (status >= 400 ? .orange : (status >= 300 ? .yellow : .green))
         return .init(label: "\(status)", color: color)
     }
 
-    private func sourceChip(_ source: String) -> NewAdminChip {
+    private func sourceChip(_ source: String) -> AdminChip {
         .init(
             label: source == "web_app" ? "Web app" : "Backend API",
             color: source == "web_app" ? .purple : .blue

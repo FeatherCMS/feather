@@ -9,10 +9,10 @@ import WebComponents
 
 struct SystemPermissionRow: Component {
     let permission: Components.Schemas.SystemPermissionListItemSchema
-    let actions: NewAdminListActions
+    let actions: AdminListActions
     let returnTo: String
 
-    private var rowActions: [NewAdminListRowActions.Action] {
+    private var rowActions: [AdminListRowActions.Action] {
         [
             .init(
                 "View",
@@ -30,7 +30,7 @@ struct SystemPermissionRow: Component {
             ),
             .init(
                 "Remove",
-                href: NewAdminLocation.remove(
+                href: AdminLocation.remove(
                     path: SystemPermissionRoutes.remove.description,
                     ids: [permission.id],
                     returnTo: returnTo
@@ -44,14 +44,14 @@ struct SystemPermissionRow: Component {
     func html(context: inout BuilderContext) -> Tr {
         Tr {
             if actions.allows(SystemPermissions.Permissions.delete) {
-                context.build(NewAdminListRowCheckbox(id: permission.id))
+                context.build(AdminListRowCheckbox(id: permission.id))
             }
             Td(permission.key)
                 .data("label", "Key")
             Td(permission.name?.emptyToNil ?? "—")
                 .data("label", "Name")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: rowActions,
                     permissions: actions

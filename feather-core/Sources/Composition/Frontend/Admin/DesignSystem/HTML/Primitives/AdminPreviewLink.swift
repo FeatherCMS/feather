@@ -5,7 +5,7 @@ import SVG
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminPreviewLink: Component {
+public struct AdminPreviewLink: Component {
     public let href: String
     public let label: String
 
@@ -19,7 +19,7 @@ public struct NewAdminPreviewLink: Component {
 
     public func selectors() -> [any CSS.Selector] {
         [
-            Class("new-admin-preview-link") {
+            Class("admin-preview-link") {
                 Display(.inlineFlex)
                 AlignItems(.center)
                 JustifyContent(.center)
@@ -40,6 +40,6 @@ public struct NewAdminPreviewLink: Component {
         .href(href)
         .target(.blank)
         .ariaLabel(label)
-        .class("new-admin-preview-link")
+        .class("admin-preview-link")
     }
 }

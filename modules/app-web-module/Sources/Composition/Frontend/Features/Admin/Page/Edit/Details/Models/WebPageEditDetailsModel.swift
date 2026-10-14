@@ -6,6 +6,6 @@ struct WebPageEditDetailsModel: Sendable {
     let title: String
     let excerpt: String
     let content: String
-    let imageAsset: NewAdminMediaAsset?
+    let imageAsset: AdminMediaAsset?
     let metadata: AdminMetadataFormValue
 }

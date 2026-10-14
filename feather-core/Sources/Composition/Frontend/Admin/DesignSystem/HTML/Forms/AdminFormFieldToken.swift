@@ -5,7 +5,7 @@ import WebBuilders
 public import WebComponents
 
 /// A form field for entering a list of free-form values as removable tokens.
-public struct NewAdminFormFieldToken: Component {
+public struct AdminFormFieldToken: Component {
     public struct State: Sendable {
         public let name: String
         public let label: String
@@ -42,18 +42,18 @@ public struct NewAdminFormFieldToken: Component {
 
     public func selectors() -> [any CSS.Selector] {
         [
-            Class("new-admin-token-field") {
+            Class("admin-token-field") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(6.px)
                 Position(.relative)
             },
-            Custom(".new-admin-token-field > label") {
+            Custom(".admin-token-field > label") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(8.px)
             },
-            Class("new-admin-token-field__control") {
+            Class("admin-token-field__control") {
                 Display(.flex)
                 FlexWrap(.wrap)
                 AlignItems(.center)
@@ -69,7 +69,7 @@ public struct NewAdminFormFieldToken: Component {
                 BorderRadius(9.px)
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
             },
-            Custom(".new-admin-token-field__control:focus-within") {
+            Custom(".admin-token-field__control:focus-within") {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Primary.border)
                 )
@@ -80,7 +80,7 @@ public struct NewAdminFormFieldToken: Component {
                 )
                 OutlineOffset(2.px)
             },
-            Class("new-admin-token-field__input") {
+            Class("admin-token-field__input") {
                 Flex(1)
                 MinWidth(120.px)
                 BoxSizing(.borderBox)
@@ -92,7 +92,7 @@ public struct NewAdminFormFieldToken: Component {
                 LineHeight(1.2)
                 Outline(0.px, .none)
             },
-            Class("new-admin-token-field__token") {
+            Class("admin-token-field__token") {
                 Display(.inlineFlex)
                 AlignItems(.center)
                 Gap(6.px)
@@ -108,7 +108,7 @@ public struct NewAdminFormFieldToken: Component {
                 Color(.variable(TokenKey.Colors.Materials.Primary.text))
                 FontSize(0.875.rem)
             },
-            Class("new-admin-token-field__remove") {
+            Class("admin-token-field__remove") {
                 Display(.inlineFlex)
                 AlignItems(.center)
                 JustifyContent(.center)
@@ -127,7 +127,7 @@ public struct NewAdminFormFieldToken: Component {
                 FontSize(1.rem)
                 Cursor(.pointer)
             },
-            Custom(".new-admin-token-field__remove:focus-visible") {
+            Custom(".admin-token-field__remove:focus-visible") {
                 Outline(
                     2.px,
                     .solid,
@@ -135,12 +135,12 @@ public struct NewAdminFormFieldToken: Component {
                 )
                 OutlineOffset(1.px)
             },
-            Custom(".new-admin-token-field .field-error") {
+            Custom(".admin-token-field .field-error") {
                 Color(.red)
                 FontSize(0.86.rem)
             },
             Custom(
-                ".new-admin-token-field.has-error .new-admin-token-field__control"
+                ".admin-token-field.has-error .admin-token-field__control"
             ) {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Secondary.border)
@@ -155,7 +155,7 @@ public struct NewAdminFormFieldToken: Component {
         return Section {
             Label {
                 context.build(
-                    NewAdminFormFieldLabel(
+                    AdminFormFieldLabel(
                         text: state.label,
                         isRequired: state.isRequired
                     )
@@ -163,18 +163,18 @@ public struct NewAdminFormFieldToken: Component {
                 Div {
                     for token in state.tokens {
                         Span {
-                            Span(token).class("new-admin-token-field__value")
+                            Span(token).class("admin-token-field__value")
                             Button("×")
                                 .type(.button)
-                                .class("new-admin-token-field__remove")
+                                .class("admin-token-field__remove")
                                 .data("value", token)
                                 .ariaLabel("Remove \(token)")
                         }
-                        .class("new-admin-token-field__token")
+                        .class("admin-token-field__token")
                     }
                     Input()
                         .type(.text)
-                        .class("new-admin-token-field__input")
+                        .class("admin-token-field__input")
                         .id(state.name)
                         .placeholder(state.placeholder)
                         .autocomplete(.off)
@@ -184,7 +184,7 @@ public struct NewAdminFormFieldToken: Component {
                         }
                         .if(state.isDisabled) { $0.disabled() }
                 }
-                .class("new-admin-token-field__control")
+                .class("admin-token-field__control")
             }
             .for(state.name)
             for token in state.tokens {
@@ -192,10 +192,10 @@ public struct NewAdminFormFieldToken: Component {
                     .type(.hidden)
                     .name(state.name)
                     .value(token)
-                    .class("new-admin-token-field__value-input")
+                    .class("admin-token-field__value-input")
             }
             Div {}
-                .class("new-admin-token-field__status")
+                .class("admin-token-field__status")
                 .role("status")
                 .ariaLive(.polite)
             if let error = state.error {
@@ -203,7 +203,7 @@ public struct NewAdminFormFieldToken: Component {
             }
         }
         .if(state.error != nil) { $0.class("has-error") }
-        .class("new-admin-token-field")
+        .class("admin-token-field")
         .data("name", state.name)
     }
 
@@ -214,13 +214,13 @@ public struct NewAdminFormFieldToken: Component {
                 function initialize(root) {
                     if (root.dataset.bound === "1") { return; }
                     root.dataset.bound = "1";
-                    var input = root.querySelector(".new-admin-token-field__input");
-                    var control = root.querySelector(".new-admin-token-field__control");
-                    var status = root.querySelector(".new-admin-token-field__status");
+                    var input = root.querySelector(".admin-token-field__input");
+                    var control = root.querySelector(".admin-token-field__control");
+                    var status = root.querySelector(".admin-token-field__status");
                     if (!input || !control) { return; }
 
                     function hiddenInputs() {
-                        return root.querySelectorAll(".new-admin-token-field__value-input");
+                        return root.querySelectorAll(".admin-token-field__value-input");
                     }
 
                     function values() {
@@ -231,18 +231,18 @@ public struct NewAdminFormFieldToken: Component {
 
                     function render() {
                         var current = values();
-                        root.querySelectorAll(".new-admin-token-field__token").forEach(function (token) {
+                        root.querySelectorAll(".admin-token-field__token").forEach(function (token) {
                             token.remove();
                         });
                         current.forEach(function (value) {
                             var token = document.createElement("span");
-                            token.className = "new-admin-token-field__token";
+                            token.className = "admin-token-field__token";
                             var label = document.createElement("span");
-                            label.className = "new-admin-token-field__value";
+                            label.className = "admin-token-field__value";
                             label.textContent = value;
                             var remove = document.createElement("button");
                             remove.type = "button";
-                            remove.className = "new-admin-token-field__remove";
+                            remove.className = "admin-token-field__remove";
                             remove.dataset.value = value;
                             remove.setAttribute("aria-label", "Remove " + value);
                             remove.textContent = "×";
@@ -258,7 +258,7 @@ public struct NewAdminFormFieldToken: Component {
                         hidden.type = "hidden";
                         hidden.name = root.dataset.name || "";
                         hidden.value = value;
-                        hidden.className = "new-admin-token-field__value-input";
+                        hidden.className = "admin-token-field__value-input";
                         root.appendChild(hidden);
                         input.value = "";
                         render();
@@ -285,7 +285,7 @@ public struct NewAdminFormFieldToken: Component {
                     input.addEventListener("blur", function () { add(input.value); });
                     control.addEventListener("click", function (event) {
                         var target = event.target;
-                        var button = target && target.closest ? target.closest(".new-admin-token-field__remove") : null;
+                        var button = target && target.closest ? target.closest(".admin-token-field__remove") : null;
                         if (button) {
                             event.preventDefault();
                             event.stopPropagation();
@@ -300,7 +300,7 @@ public struct NewAdminFormFieldToken: Component {
                 }
 
                 function initializeAll() {
-                    document.querySelectorAll(".new-admin-token-field").forEach(initialize);
+                    document.querySelectorAll(".admin-token-field").forEach(initialize);
                 }
                 if (document.readyState === "loading") {
                     document.addEventListener("DOMContentLoaded", initializeAll, { once: true });

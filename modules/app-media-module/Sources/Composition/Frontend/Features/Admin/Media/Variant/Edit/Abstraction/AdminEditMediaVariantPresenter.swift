@@ -7,17 +7,17 @@ protocol AdminEditMediaVariantPresenter: Sendable {
         id: String,
         detail: MediaAdminAPI.Components.Schemas.MediaVariantDetailSchema,
         state: MediaVariantFormView.State,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse
     func renderProcessorEditPage(
         variantId: String,
         processor: MediaAdminAPI.Components.Schemas
             .MediaVariantProcessorDetailSchema,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse
     func renderProcessorRemovePage(
         variantId: String,
-        items: [NewAdminRemoveItemContext],
+        items: [AdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse
     func renderErrorPage(error: AdminEditMediaVariantError) async throws

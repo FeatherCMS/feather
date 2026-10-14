@@ -14,7 +14,7 @@ struct AdminRemoveContactFieldDefaultPresenter:
     let request: Request
     let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
-    func renderRemovePage(items: [NewAdminRemoveItemContext])
+    func renderRemovePage(items: [AdminRemoveItemContext])
         async throws -> HTMLResponse
     {
         guard items.count == 1, let item = items.first else {
@@ -23,11 +23,11 @@ struct AdminRemoveContactFieldDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminDialog(
+        return try await renderingEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: NewAdminRemoveConfirmation(
+            title: AdminRemoveConfirmation.dialogTitle,
+            content: AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove contact form field",
                     description: "This action cannot be undone."
@@ -44,16 +44,16 @@ struct AdminRemoveContactFieldDefaultPresenter:
     }
 
     private func renderBulkRemovePage(
-        items: [NewAdminRemoveItemContext]
+        items: [AdminRemoveItemContext]
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminDialog(
+        return try await renderingEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: NewAdminRemoveConfirmation(
+            title: AdminRemoveConfirmation.dialogTitle,
+            content: AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove contact fields",
                     description: "This action cannot be undone."
@@ -70,11 +70,11 @@ struct AdminRemoveContactFieldDefaultPresenter:
     }
 
     func renderForbiddenPage() async throws -> HTMLResponse {
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove contact form field",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Forbidden",
                     message: "Your account cannot remove contact form fields."

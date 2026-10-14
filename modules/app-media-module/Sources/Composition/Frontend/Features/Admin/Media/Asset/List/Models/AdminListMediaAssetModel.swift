@@ -55,7 +55,7 @@ struct AdminListMediaAssetModel: Sendable {
     }
 
     let entries: [EntryItem]
-    let pageState: NewAdminListPageState
+    let pageState: AdminListPageState
     let parentId: String?
     let currentFolder: Components.Schemas.MediaFolderDetailSchema?
     let ancestors: [Components.Schemas.MediaFolderDetailSchema]

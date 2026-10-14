@@ -11,7 +11,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminHead: Component {
+public struct AdminHead: Component {
 
     let title: String
     let stylesheet: String

@@ -5,7 +5,7 @@ import OpenAPIRuntime
 protocol AdminRemoveWebMenuPresenter: Sendable {
 
     func renderRemovePage(
-        item: NewAdminRemoveItemContext
+        item: AdminRemoveItemContext
     ) async throws -> HTMLResponse
 
     func renderErrorPage(

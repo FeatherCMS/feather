@@ -11,21 +11,21 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
     let renderingEngine: any RenderingEngine
 
     func renderRemovePage(
-        items: [NewAdminRemoveItemContext],
+        items: [AdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        let cancel = NewAdminLocation.removeCancel(
+        let cancel = AdminLocation.removeCancel(
             path: SystemPermissionRoutes.list.description,
             returnTo: returnTo
         )
-        return try await renderingEngine.renderNewAdminDialog(
+        return try await renderingEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: NewAdminRemoveConfirmation(
+            title: AdminRemoveConfirmation.dialogTitle,
+            content: AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove selected permissions",
                     description:
@@ -47,7 +47,7 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
         error: AdminRemoveSystemPermissionError,
         cancel: String
     ) async throws -> HTMLResponse {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         switch error {
         case .notFound:
             state = .init(
@@ -76,32 +76,32 @@ struct AdminRemoveSystemPermissionDefaultPresenter:
                 message: "The request could not be completed. Please try again."
             )
         }
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Manage system permissions",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle(),
-                action: NewAdminButton("Back", href: cancel, style: .secondary)
+                action: AdminButton("Back", href: cancel, style: .secondary)
             )
         )
         return HTMLResponse(content: page.content, status: status(for: error))
     }
 
     func renderInvalidNoncePage(cancel: String) async throws -> HTMLResponse {
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Manage system permissions",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Confirmation expired",
                     message:
                         "This confirmation is no longer valid. Please try again."
                 ),
                 icon: FeatherIcons.alertCircle(),
-                action: NewAdminButton("Back", href: cancel, style: .secondary)
+                action: AdminButton("Back", href: cancel, style: .secondary)
             )
         )
         return HTMLResponse(content: page.content, status: .badRequest)

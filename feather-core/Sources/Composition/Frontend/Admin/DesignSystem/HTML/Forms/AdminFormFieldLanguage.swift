@@ -5,10 +5,10 @@ import WebBuilders
 public import WebComponents
 
 /// An autocomplete form field containing language codes and display names.
-public struct NewAdminFormFieldLanguage: Component {
-    public typealias Option = NewAdminFormFieldSelectAutocomplete.Option
+public struct AdminFormFieldLanguage: Component {
+    public typealias Option = AdminFormFieldSelectAutocomplete.Option
     public typealias SelectionMode =
-        NewAdminFormFieldSelectAutocomplete.SelectionMode
+        AdminFormFieldSelectAutocomplete.SelectionMode
 
     public struct State: Sendable {
         public var name: String
@@ -76,7 +76,7 @@ public struct NewAdminFormFieldLanguage: Component {
                 )
             }
         return context.build(
-            NewAdminFormFieldSelectAutocomplete(
+            AdminFormFieldSelectAutocomplete(
                 state: .init(
                     name: state.name,
                     label: state.label,

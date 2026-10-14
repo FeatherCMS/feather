@@ -8,12 +8,12 @@ struct AdminListRedirectRuleDefaultPresenter: AdminListRedirectRulePresenter {
     let renderingEngine: any RenderingEngine
 
     func renderListPage(
-        model: NewAdminListModel<Components.Schemas.RedirectRuleListItemSchema>,
-        permissions: NewAdminListActions,
+        model: AdminListModel<Components.Schemas.RedirectRuleListItemSchema>,
+        permissions: AdminListActions,
         search: String?,
         statusCode: String?
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Redirect rules",
@@ -32,7 +32,7 @@ struct AdminListRedirectRuleDefaultPresenter: AdminListRedirectRulePresenter {
     func renderErrorPage(error: AdminListRedirectRuleError) async throws
         -> HTMLResponse
     {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         switch error {
         case .unauthorized:
             state = .init(
@@ -50,11 +50,11 @@ struct AdminListRedirectRuleDefaultPresenter: AdminListRedirectRulePresenter {
                 message: "The request could not be completed. Please try again."
             )
         }
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Redirect rules",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle()
             )

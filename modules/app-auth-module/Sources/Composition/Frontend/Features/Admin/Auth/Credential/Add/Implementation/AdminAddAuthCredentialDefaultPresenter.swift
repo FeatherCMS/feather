@@ -29,7 +29,7 @@ struct AdminAddAuthCredentialDefaultPresenter: AdminAddAuthCredentialPresenter {
         form.nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Add credential",
@@ -43,11 +43,11 @@ struct AdminAddAuthCredentialDefaultPresenter: AdminAddAuthCredentialPresenter {
     }
 
     func renderForbiddenPage() async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Add credential",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Forbidden",
                     message: "Your account cannot add user credentials."

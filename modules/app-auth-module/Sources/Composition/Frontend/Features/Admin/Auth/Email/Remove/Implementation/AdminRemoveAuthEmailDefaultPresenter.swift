@@ -24,16 +24,16 @@ struct AdminRemoveAuthEmailDefaultPresenter:
     let renderEngine: any RenderingEngine
 
     func renderPage(
-        item: NewAdminRemoveItemContext,
+        item: AdminRemoveItemContext,
         identityId: String
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminDialog(
+        return try await renderEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
+            title: AdminRemoveConfirmation.dialogTitle,
             content: AuthEmailConfirmation(
                 state: .init(
                     item: item,
@@ -47,11 +47,11 @@ struct AdminRemoveAuthEmailDefaultPresenter:
     }
 
     func renderInvalidNoncePage() async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove user email",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Form expired",
                     message:
@@ -63,10 +63,10 @@ struct AdminRemoveAuthEmailDefaultPresenter:
     }
 
     func renderError(
-        item: NewAdminRemoveItemContext,
+        item: AdminRemoveItemContext,
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove user email",

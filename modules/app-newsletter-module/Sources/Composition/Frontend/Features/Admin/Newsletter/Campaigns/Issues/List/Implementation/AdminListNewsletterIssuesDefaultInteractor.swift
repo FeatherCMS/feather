@@ -11,7 +11,7 @@ struct AdminListNewsletterIssuesDefaultInteractor:
         newsletterId: String,
         page: Int,
         search: String?
-    ) async throws -> NewAdminListModel<AdminNewsletterIssueItem> {
+    ) async throws -> AdminListModel<AdminNewsletterIssueItem> {
         let query =
             search?.whitespaceTrimmed ?? ""
         let allItems = try await repository.list(newsletterId: newsletterId)

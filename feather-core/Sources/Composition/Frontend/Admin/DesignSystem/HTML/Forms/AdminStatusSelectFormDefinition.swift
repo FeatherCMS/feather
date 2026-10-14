@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminStatusSelectFormDefinition: Component {
+public struct AdminStatusSelectFormDefinition: Component {
     public let id: String
     public let action: String
     public let returnTo: String
@@ -17,7 +17,7 @@ public struct NewAdminStatusSelectFormDefinition: Component {
 
     public func selectors() -> [any CSS.Selector] {
         [
-            Class("new-admin-status-select-form-definition") {
+            Class("admin-status-select-form-definition") {
                 Display(.none)
             }
         ]
@@ -33,6 +33,6 @@ public struct NewAdminStatusSelectFormDefinition: Component {
         .id(id)
         .method(.post)
         .action(action)
-        .class("new-admin-status-select-form-definition")
+        .class("admin-status-select-form-definition")
     }
 }

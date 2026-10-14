@@ -34,7 +34,7 @@ struct AnalyticsDateRangeFilter: Component {
             }
             Custom(
                 ".analytics-date-range-filter__fields "
-                    + ".new-admin-date-picker .new-admin-form-field-label"
+                    + ".admin-date-picker .admin-form-field-label"
             ) {
                 Display(.none)
             }
@@ -47,7 +47,7 @@ struct AnalyticsDateRangeFilter: Component {
     }
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(
+        let form = AdminForm(
             action: state.action,
             method: .get,
             hiddenFields: state.queryItems.map {
@@ -56,7 +56,7 @@ struct AnalyticsDateRangeFilter: Component {
         ) {
             Div {
                 context.build(
-                    NewAdminFormFieldDatePicker(
+                    AdminFormFieldDatePicker(
                         state: .init(
                             name: "from",
                             label: "From",
@@ -66,7 +66,7 @@ struct AnalyticsDateRangeFilter: Component {
                     )
                 )
                 context.build(
-                    NewAdminFormFieldDatePicker(
+                    AdminFormFieldDatePicker(
                         state: .init(
                             name: "to",
                             label: "To",
@@ -76,7 +76,7 @@ struct AnalyticsDateRangeFilter: Component {
                     )
                 )
                 context.build(
-                    NewAdminSubmitButton(
+                    AdminSubmitButton(
                         "Apply",
                         style: .ghost(.primary),
                         isRowButton: true

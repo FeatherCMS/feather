@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminFormFieldCheckboxGroup: Component {
+public struct AdminFormFieldCheckboxGroup: Component {
     public struct Option: Sendable {
         public let label: String
         public let value: String
@@ -36,17 +36,17 @@ public struct NewAdminFormFieldCheckboxGroup: Component {
 
     public func selectors() -> [any Selector] {
         [
-            Custom(".new-admin-form-checkbox-group") {
+            Custom(".admin-form-checkbox-group") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(8.px)
             },
-            Custom(".new-admin-form-checkbox-group__options") {
+            Custom(".admin-form-checkbox-group__options") {
                 Display(.flex)
                 FlexDirection(.column)
                 Gap(8.px)
             },
-            Custom(".new-admin-form-checkbox-group__option") {
+            Custom(".admin-form-checkbox-group__option") {
                 Display(.flex)
                 AlignItems(.center)
                 Gap(8.px)
@@ -54,12 +54,12 @@ public struct NewAdminFormFieldCheckboxGroup: Component {
                 Cursor(.pointer)
                 LineHeight(1.35)
             },
-            Custom(".new-admin-form-checkbox-group.has-error input") {
+            Custom(".admin-form-checkbox-group.has-error input") {
                 BorderColor(
                     .variable(TokenKey.Colors.Materials.Secondary.border)
                 )
             },
-            Custom(".new-admin-form-checkbox-group .field-error") {
+            Custom(".admin-form-checkbox-group .field-error") {
                 Color(.red)
                 FontSize(0.86.rem)
             },
@@ -69,12 +69,12 @@ public struct NewAdminFormFieldCheckboxGroup: Component {
     public func html(context: inout BuilderContext) -> Section {
         let errorID = "\(name)-error"
         return Section {
-            context.build(NewAdminFormFieldLabel(text: label))
+            context.build(AdminFormFieldLabel(text: label))
             Div {
                 for option in options {
                     Label {
                         context.build(
-                            NewAdminCheckbox(
+                            AdminCheckbox(
                                 name: name,
                                 value: option.value,
                                 ariaLabel: option.label,
@@ -85,15 +85,15 @@ public struct NewAdminFormFieldCheckboxGroup: Component {
                         )
                         Span(option.label)
                     }
-                    .class("new-admin-form-checkbox-group__option")
+                    .class("admin-form-checkbox-group__option")
                 }
             }
-            .class("new-admin-form-checkbox-group__options")
+            .class("admin-form-checkbox-group__options")
             if let error {
                 Span(error).id(errorID).class("field-error")
             }
         }
         .if(error != nil) { $0.class("has-error") }
-        .class("new-admin-form-checkbox-group")
+        .class("admin-form-checkbox-group")
     }
 }

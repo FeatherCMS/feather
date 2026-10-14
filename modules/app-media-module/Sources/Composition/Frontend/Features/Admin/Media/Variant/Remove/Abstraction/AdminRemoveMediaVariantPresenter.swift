@@ -2,7 +2,7 @@ import FeatherAdmin
 import Hummingbird
 
 protocol AdminRemoveMediaVariantPresenter: Sendable {
-    func renderRemovePage(items: [NewAdminRemoveItemContext], returnTo: String?)
+    func renderRemovePage(items: [AdminRemoveItemContext], returnTo: String?)
         async throws -> HTMLResponse
     func renderErrorPage(error: AdminRemoveMediaVariantError, cancel: String)
         async throws -> HTMLResponse

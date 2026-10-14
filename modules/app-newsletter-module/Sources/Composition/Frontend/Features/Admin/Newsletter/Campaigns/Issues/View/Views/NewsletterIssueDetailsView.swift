@@ -12,10 +12,10 @@ struct NewsletterIssueDetailsView: Component {
     let newsletterId: String
     let issueId: String
     let model: AdminAddNewsletterIssueModel
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> Section {
-        var actions: [NewAdminDetailView.Action] = []
+        var actions: [AdminDetailView.Action] = []
         if permissions.allows(Permissions.Issues.update) {
             actions.append(
                 .init(
@@ -46,7 +46,7 @@ struct NewsletterIssueDetailsView: Component {
         }
         return Section {
             context.build(
-                NewAdminBreadcrumb(
+                AdminBreadcrumb(
                     links: NewsletterAdminRoutes.breadcrumb + [
                         .init(
                             label: "Issues",
@@ -60,7 +60,7 @@ struct NewsletterIssueDetailsView: Component {
                 )
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Campaign issue details",
                         description:
@@ -72,7 +72,7 @@ struct NewsletterIssueDetailsView: Component {
                 NewsletterCampaignTabs(id: newsletterId, active: .issues)
             )
             context.build(
-                NewAdminRelationshipGroup(
+                AdminRelationshipGroup(
                     pageHeader: .secondary(
                         title: "Issue content",
                         description:
@@ -81,19 +81,19 @@ struct NewsletterIssueDetailsView: Component {
                 ) {
                     Div {
                         context.build(
-                            NewAdminDetailField(
+                            AdminDetailField(
                                 label: "Subject",
                                 value: model.subject
                             )
                         )
                         context.build(
-                            NewAdminDetailField(
+                            AdminDetailField(
                                 label: "Content",
                                 value: model.content
                             )
                         )
                         context.build(
-                            NewAdminDetailField(
+                            AdminDetailField(
                                 label: "Scheduled",
                                 value: formattedScheduledAt
                             )
@@ -105,7 +105,7 @@ struct NewsletterIssueDetailsView: Component {
                         Div {
                             for action in actions {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         action.label,
                                         href: action.href,
                                         style: action.style
@@ -113,7 +113,7 @@ struct NewsletterIssueDetailsView: Component {
                                 )
                             }
                         }
-                        .class("new-admin-detail-actions")
+                        .class("admin-detail-actions")
                         .style(
                             "display:flex;flex-wrap:wrap;gap:12px;margin-top:24px;"
                         )

@@ -5,7 +5,7 @@ import WebBuilders
 public import WebComponents
 
 /// A fixed-size image cell for admin lists and tables.
-public struct NewAdminImageCell: Component {
+public struct AdminImageCell: Component {
 
     public enum Size: Sendable {
         case square
@@ -15,11 +15,11 @@ public struct NewAdminImageCell: Component {
         fileprivate var className: String {
             switch self {
             case .square:
-                "new-admin-image-cell--square"
+                "admin-image-cell--square"
             case .cover:
-                "new-admin-image-cell--cover"
+                "admin-image-cell--cover"
             case .circular:
-                "new-admin-image-cell--circular"
+                "admin-image-cell--circular"
             }
         }
     }
@@ -40,7 +40,7 @@ public struct NewAdminImageCell: Component {
 
     public func selectors() -> [any CSS.Selector] {
         [
-            Class("new-admin-image-cell") {
+            Class("admin-image-cell") {
                 Display(.grid)
                 UnsafeRawProperty(name: "place-items", value: "center")
                 FlexShrink(0)
@@ -57,27 +57,27 @@ public struct NewAdminImageCell: Component {
                 )
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
             },
-            Class("new-admin-image-cell--square") {
+            Class("admin-image-cell--square") {
                 Width(56.px)
                 Height(56.px)
             },
-            Class("new-admin-image-cell--cover") {
+            Class("admin-image-cell--cover") {
                 Width(100.px)
                 Height(56.px)
             },
-            Class("new-admin-image-cell--circular") {
+            Class("admin-image-cell--circular") {
                 Width(56.px)
                 Height(56.px)
                 BorderRadius(50.percent)
             },
-            Custom(".new-admin-image-cell img") {
+            Custom(".admin-image-cell img") {
                 Display(.block)
                 Width(100.percent)
                 Height(100.percent)
                 ObjectFit(.cover)
                 Margin(0)
             },
-            Custom(".new-admin-image-cell > span") {
+            Custom(".admin-image-cell > span") {
                 FontSize(0.9.rem)
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
             },
@@ -93,6 +93,6 @@ public struct NewAdminImageCell: Component {
                 Span("-").ariaHidden("true")
             }
         }
-        .class("new-admin-image-cell", size.className)
+        .class("admin-image-cell", size.className)
     }
 }

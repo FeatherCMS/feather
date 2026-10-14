@@ -17,7 +17,7 @@ struct BlogAuthorDetailsModel: Sendable {
     let excerpt: String
     let content: String
     let profileImageAssetId: String?
-    let profileImage: NewAdminMediaAsset?
+    let profileImage: AdminMediaAsset?
     let metadata: AdminMetadataFormValue
     let items: [BlogAdminAPI.Components.Schemas.BlogAuthorLinkListItemSchema]
 }

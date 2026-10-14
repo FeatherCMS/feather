@@ -11,20 +11,20 @@ struct ContactFormSubmissionsTable: Component {
     struct State {
         let formId: String
         let items: [AdminContactFormSubmissionItem]
-        let pageState: NewAdminListPageState
+        let pageState: AdminListPageState
         let search: String
         let error: String?
-        let breadcrumb: [NewAdminBreadcrumb.Link]
-        let permissions: NewAdminListActions
+        let breadcrumb: [AdminBreadcrumb.Link]
+        let permissions: AdminListActions
     }
 
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Contact form submissions",
                         description: "Review submissions for this contact form."
@@ -38,7 +38,7 @@ struct ContactFormSubmissionsTable: Component {
                 )
             )
             context.build(
-                NewAdminRelationshipGroup(
+                AdminRelationshipGroup(
                     pageHeader: .secondary(
                         title: "Submissions",
                         description:
@@ -46,7 +46,7 @@ struct ContactFormSubmissionsTable: Component {
                     )
                 ) {
                     if let error = state.error {
-                        P(error).class("new-admin-form__error")
+                        P(error).class("admin-form__error")
                     }
                     context.build(
                         ContactFormSubmissionsTableContent(

@@ -1,7 +1,7 @@
 import CSS
 import WebBuilders
 
-extension NewAdminDesignSystem {
+extension AdminDesignSystem {
 
     @Builder<CSS.Rule>
     func layouts() -> [any Rule] {

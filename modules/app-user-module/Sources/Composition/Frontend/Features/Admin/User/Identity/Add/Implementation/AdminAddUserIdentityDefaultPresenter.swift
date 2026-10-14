@@ -118,7 +118,7 @@ struct AdminAddUserIdentityDefaultPresenter: AdminAddUserIdentityPresenter {
         content: T,
         status: HTTPResponse.Status = .ok
     ) async throws -> HTMLResponse {
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Manage user identities",
@@ -155,7 +155,7 @@ struct AdminAddUserIdentityDefaultPresenter: AdminAddUserIdentityPresenter {
         status: HTTPResponse.Status
     ) async throws -> HTMLResponse {
         try await renderPage(
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(title: title, message: message),
                 icon: FeatherIcons.alertCircle()
             ),

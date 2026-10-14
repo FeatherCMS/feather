@@ -4,7 +4,7 @@ import SGML
 import WebBuilders
 public import WebComponents
 
-public struct NewAdminDetailField: Component {
+public struct AdminDetailField: Component {
     public let label: String
     public let value: String
 
@@ -15,10 +15,10 @@ public struct NewAdminDetailField: Component {
 
     public func selectors() -> [any CSS.Selector] {
         [
-            Class("new-admin-detail-field") {
+            Class("admin-detail-field") {
                 Padding(vertical: 12.px)
             },
-            Class("new-admin-detail-field__label") {
+            Class("admin-detail-field__label") {
                 Margin(0)
                 Padding(bottom: 8.px)
                 BorderBottom(
@@ -29,7 +29,7 @@ public struct NewAdminDetailField: Component {
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 Opacity(0.8)
             },
-            Class("new-admin-detail-field__value") {
+            Class("admin-detail-field__value") {
                 Margin(top: 6.px)
                 Color(.variable(TokenKey.Colors.Materials.Secondary.text))
                 OverflowWrap(.anywhere)
@@ -39,9 +39,9 @@ public struct NewAdminDetailField: Component {
 
     public func html(context: inout BuilderContext) -> Div {
         Div {
-            P(label).class("new-admin-detail-field__label")
-            P(value).class("new-admin-detail-field__value")
+            P(label).class("admin-detail-field__label")
+            P(value).class("admin-detail-field__value")
         }
-        .class("new-admin-detail-field")
+        .class("admin-detail-field")
     }
 }

@@ -19,5 +19,5 @@ struct AdminAddMediaAssetModel: Sendable {
     let view: String
     let action: String
     let isPicker: Bool
-    let selectedAsset: NewAdminMediaAsset?
+    let selectedAsset: AdminMediaAsset?
 }

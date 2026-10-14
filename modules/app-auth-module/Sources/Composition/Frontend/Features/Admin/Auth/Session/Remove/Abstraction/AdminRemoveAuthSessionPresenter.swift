@@ -3,13 +3,13 @@ import FeatherAdmin
 protocol AdminRemoveAuthSessionPresenter: Sendable {
 
     func renderPage(
-        item: NewAdminRemoveItemContext,
+        item: AdminRemoveItemContext,
         identityId: String
     ) async throws -> HTMLResponse
     func renderInvalidNoncePage() async throws -> HTMLResponse
 
     func errorPage(
-        item: NewAdminRemoveItemContext,
+        item: AdminRemoveItemContext,
         identityId: String,
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse

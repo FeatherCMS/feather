@@ -6,7 +6,7 @@ protocol AdminRemoveWebMenuItemPresenter: Sendable {
 
     func renderRemovePage(
         menuId: String,
-        item: NewAdminRemoveItemContext,
+        item: AdminRemoveItemContext,
         origin: WebMenuItemRoutes.RemoveOrigin
     ) async throws -> HTMLResponse
 
