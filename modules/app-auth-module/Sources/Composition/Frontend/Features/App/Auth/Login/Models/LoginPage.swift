@@ -14,7 +14,7 @@ struct LoginPage: Component {
     var state: State
 
     func rules() -> [any Rule] {
-        NewAdminDesignSystem().rules()
+        AdminDesignSystem().rules()
             + [Media(selectors: selectors())]
     }
 
@@ -62,13 +62,13 @@ struct LoginPage: Component {
             Custom(".login-card .admin-page-header") {
                 Margin(bottom: 0.px)
             },
-            Custom(".login-card .new-admin-form") {
+            Custom(".login-card .admin-form") {
                 MarginTop(24.px)
             },
-            Custom(".login-card .new-admin-form__actions") {
+            Custom(".login-card .admin-form__actions") {
                 AlignItems(.stretch)
             },
-            Custom(".login-card .new-admin-form__actions .button") {
+            Custom(".login-card .admin-form__actions .button") {
                 Width(100.percent)
             },
             Class("login-actions") {
@@ -88,7 +88,7 @@ struct LoginPage: Component {
         Main {
             Div {
                 context.build(
-                    NewAdminPageHeader(
+                    AdminPageHeader(
                         state: .primary(
                             title: "Sign in",
                             description: "Use your user account to continue."
@@ -105,14 +105,14 @@ struct LoginPage: Component {
 
                 Div {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "Sign in with a magic link",
                             href: "/magic-link/",
                             style: .ghost(.primary)
                         )
                     )
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "Home",
                             href: "/",
                             style: .ghost(.secondary)

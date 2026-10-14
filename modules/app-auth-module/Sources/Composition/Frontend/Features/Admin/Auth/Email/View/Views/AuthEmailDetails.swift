@@ -10,14 +10,14 @@ struct AuthEmailDetails: Component {
     struct State {
         let link: AuthEmailDetailsModel
         let permissions: Set<String>
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout BuilderContext) -> Section {
         context.build(
-            NewAdminDetailView(
+            AdminDetailView(
                 breadcrumb: state.breadcrumb,
                 pageHeader: .primary(
                     title: "User email details",
@@ -31,8 +31,8 @@ struct AuthEmailDetails: Component {
         )
     }
 
-    private var actions: [NewAdminDetailView.Action] {
-        var actions: [NewAdminDetailView.Action] = []
+    private var actions: [AdminDetailView.Action] {
+        var actions: [AdminDetailView.Action] = []
         if state.permissions.contains(AuthPermissions.Emails.update.rawValue) {
             actions.append(
                 .init(

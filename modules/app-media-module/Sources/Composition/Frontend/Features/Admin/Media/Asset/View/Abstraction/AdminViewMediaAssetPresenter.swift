@@ -14,7 +14,7 @@ protocol AdminViewMediaAssetPresenter: Sendable {
     func renderDetailsPage(
         model: AdminViewMediaAssetModel?,
         id: String,
-        permissions: NewAdminListActions,
+        permissions: AdminListActions,
         error: String?
     ) async throws -> HTMLResponse
 }

@@ -16,7 +16,7 @@ struct AdminEditWebMenuDefaultPresenter: AdminEditWebMenuPresenter {
         state: WebMenuForm.State,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit menu",
@@ -36,7 +36,7 @@ struct AdminEditWebMenuDefaultPresenter: AdminEditWebMenuPresenter {
         message: String,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit menu",

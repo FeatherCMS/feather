@@ -23,15 +23,6 @@ protocol AdminListAuthEmailController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
-    func getAuthEmailsRemoveConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
-
-    func postAuthEmailsRemove(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
 }
 
 extension AdminListAuthEmailController {
@@ -42,14 +33,6 @@ extension AdminListAuthEmailController {
         router.get(
             AuthEmailRoutes.list,
             use: getAuthEmails
-        )
-        router.get(
-            AuthEmailRoutes.remove,
-            use: getAuthEmailsRemoveConfirmation
-        )
-        router.post(
-            AuthEmailRoutes.remove,
-            use: postAuthEmailsRemove
         )
     }
 }

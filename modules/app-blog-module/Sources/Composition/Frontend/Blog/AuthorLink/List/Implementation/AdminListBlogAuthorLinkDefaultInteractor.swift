@@ -28,12 +28,4 @@ struct AdminListBlogAuthorLinkDefaultInteractor:
         )
     }
 
-    func remove(
-        menuId: String,
-        ids: [String]
-    ) async throws {
-        for id in ids {
-            try await repository.delete(menuId: menuId, id: id)
-        }
-    }
 }

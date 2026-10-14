@@ -11,7 +11,7 @@ struct UserRoleConfirmation: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
-            NewAdminRemoveConfirmation(
+            AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove user role",
                     description: "This action cannot be undone."

@@ -7,7 +7,7 @@ enum NewsAdminRoutes {
     static let articles = news.appendingPath(RouterPath("articles"))
     static let categories = news.appendingPath(RouterPath("categories"))
 
-    static let breadcrumb: [NewAdminBreadcrumb.Link] = [
+    static let breadcrumb: [AdminBreadcrumb.Link] = [
         .init(label: "Admin", link: "/admin/"),
         .init(label: "News", link: news.description + "/"),
     ]

@@ -8,8 +8,8 @@ import WebComponents
 
 struct SystemJobTableContent: Component {
     let jobs: [Components.Schemas.SystemJobSchema]
-    let permissions: NewAdminListActions
-    let pageState: NewAdminListPageState
+    let permissions: AdminListActions
+    let pageState: AdminListPageState
     let search: String?
     let status: Int?
 
@@ -21,11 +21,11 @@ struct SystemJobTableContent: Component {
         let hasActiveQuery = !(search?.isEmpty ?? true) || status != nil
 
         return context.build(
-            NewAdminList(
+            AdminList(
                 table: {
                     if pageState.isPageOutOfRange {
                         context.build(
-                            NewAdminListInvalidPageState(
+                            AdminListInvalidPageState(
                                 pageState: pageState,
                                 path: SystemJobRoutes.list.description
                             )
@@ -34,13 +34,13 @@ struct SystemJobTableContent: Component {
                     else if jobs.isEmpty {
                         if hasActiveQuery {
                             context.build(
-                                NewAdminListNoResultsState(
+                                AdminListNoResultsState(
                                     message:
                                         "No worker jobs match your filters.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         context.build(
-                                            NewAdminButton(
+                                            AdminButton(
                                                 "Reset filters",
                                                 href: SystemJobRoutes.list
                                                     .description,
@@ -53,7 +53,7 @@ struct SystemJobTableContent: Component {
                         }
                         else {
                             context.build(
-                                NewAdminListEmptyState(
+                                AdminListEmptyState(
                                     message: "No worker jobs yet.",
                                     icon: FeatherIcons.inbox()
                                 )
@@ -62,7 +62,7 @@ struct SystemJobTableContent: Component {
                     }
                     else {
                         context.build(
-                            NewAdminListShell(
+                            AdminListShell(
                                 layout: .init(
                                     name: "system-jobs",
                                     columns: [
@@ -99,7 +99,7 @@ struct SystemJobTableContent: Component {
                 },
                 search: {
                     context.build(
-                        NewAdminListSearch(
+                        AdminListSearch(
                             state: .init(
                                 action: SystemJobRoutes.list.description,
                                 placeholder: "Quick search worker jobs",
@@ -127,7 +127,7 @@ struct SystemJobTableContent: Component {
                 },
                 pagination: {
                     context.build(
-                        NewAdminListPagination(
+                        AdminListPagination(
                             state: .init(
                                 path: SystemJobRoutes.list.description,
                                 pageState: pageState,

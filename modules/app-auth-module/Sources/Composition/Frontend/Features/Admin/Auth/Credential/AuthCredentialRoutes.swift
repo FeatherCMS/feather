@@ -7,11 +7,11 @@ enum AuthCredentialRoutes {
     )
     static let add = list.appendingPath(RouterPath("add"))
 
-    static var listBreadcrumb: [NewAdminBreadcrumb.Link] {
+    static var listBreadcrumb: [AdminBreadcrumb.Link] {
         AuthAdminRoutes.breadcrumb
     }
 
-    static var breadcrumb: [NewAdminBreadcrumb.Link] {
+    static var breadcrumb: [AdminBreadcrumb.Link] {
         AuthAdminRoutes.breadcrumb + [
             .init(label: "Credentials", link: list.description)
         ]
@@ -19,7 +19,7 @@ enum AuthCredentialRoutes {
 
     static func detailsBreadcrumb(
         _ id: RouterPath
-    ) -> [NewAdminBreadcrumb.Link] {
+    ) -> [AdminBreadcrumb.Link] {
         breadcrumb + [
             .init(label: "User", link: details(id).description)
         ]
@@ -27,7 +27,7 @@ enum AuthCredentialRoutes {
 
     static func removeBreadcrumb(
         _ id: RouterPath
-    ) -> [NewAdminBreadcrumb.Link] {
+    ) -> [AdminBreadcrumb.Link] {
         detailsBreadcrumb(id) + [
             .init(label: "Remove", link: remove(id).description)
         ]

@@ -11,7 +11,7 @@ struct AdminNewsArticleListPage: Component {
     let model: AdminNewsArticleListModel
     let search: String
     let error: String?
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
     let canAccess: Bool
 
     func html(
@@ -20,11 +20,11 @@ struct AdminNewsArticleListPage: Component {
         let path = NewsAdminRoutes.articles.description + "/"
         return Section {
             context.build(
-                NewAdminBreadcrumb(links: NewsAdminRoutes.articlesBreadcrumb)
+                AdminBreadcrumb(links: NewsAdminRoutes.articlesBreadcrumb)
             )
             if canAccess {
                 context.build(
-                    NewAdminPageHeader(
+                    AdminPageHeader(
                         state: .primary(
                             title: "News articles",
                             description: "Manage news articles."
@@ -32,14 +32,14 @@ struct AdminNewsArticleListPage: Component {
                     )
                 )
                 if let error {
-                    P(error).class("new-admin-form__error")
+                    P(error).class("admin-form__error")
                 }
                 context.build(
-                    NewAdminList(
+                    AdminList(
                         table: {
                             if model.items.isEmpty {
                                 context.build(
-                                    NewAdminListEmptyState(
+                                    AdminListEmptyState(
                                         message: search.isEmpty
                                             ? "No news articles yet."
                                             : "No news articles match your search.",
@@ -49,7 +49,7 @@ struct AdminNewsArticleListPage: Component {
                             }
                             else {
                                 context.build(
-                                    NewAdminListShell(
+                                    AdminListShell(
                                         layout: .init(
                                             name: "news-articles",
                                             columns: [
@@ -73,13 +73,17 @@ struct AdminNewsArticleListPage: Component {
                                                                 "label",
                                                                 "Title"
                                                             )
+                                                            .data(
+                                                                "remove-label",
+                                                                "true"
+                                                            )
                                                         Td(item.excerpt)
                                                             .data(
                                                                 "label",
                                                                 "Excerpt"
                                                             )
                                                         context.build(
-                                                            NewAdminListRowActions(
+                                                            AdminListRowActions(
                                                                 label:
                                                                     "Actions",
                                                                 actions: [
@@ -125,25 +129,6 @@ struct AdminNewsArticleListPage: Component {
                                                                             .Articles
                                                                             .update
                                                                     ),
-                                                                    .init(
-                                                                        "Remove",
-                                                                        href:
-                                                                            NewsAdminRoutes
-                                                                            .articleRemove(
-                                                                                RouterPath(
-                                                                                    item
-                                                                                        .id
-                                                                                )
-                                                                            )
-                                                                            .description
-                                                                            + "/",
-                                                                        style:
-                                                                            .destructive,
-                                                                        permission:
-                                                                            NewsPermissions
-                                                                            .Articles
-                                                                            .delete
-                                                                    ),
                                                                 ],
                                                                 permissions:
                                                                     permissions
@@ -160,7 +145,7 @@ struct AdminNewsArticleListPage: Component {
                         },
                         search: {
                             context.build(
-                                NewAdminListSearch(
+                                AdminListSearch(
                                     state: .init(
                                         action: path,
                                         placeholder: "Search news articles...",
@@ -174,9 +159,9 @@ struct AdminNewsArticleListPage: Component {
                                 NewsPermissions.Articles.create
                             ) {
                                 context.build(
-                                    NewAdminListToolbar {
+                                    AdminListToolbar {
                                         context.build(
-                                            NewAdminButton(
+                                            AdminButton(
                                                 "Add article",
                                                 href:
                                                     NewsAdminRoutes.articleAdd()
@@ -189,7 +174,7 @@ struct AdminNewsArticleListPage: Component {
                         },
                         pagination: {
                             context.build(
-                                NewAdminListPagination(
+                                AdminListPagination(
                                     state: .init(
                                         path: path,
                                         pageState: .init(
@@ -207,7 +192,7 @@ struct AdminNewsArticleListPage: Component {
             }
             else {
                 context.build(
-                    NewAdminStatusView(
+                    AdminStatusView(
                         state: .init(
                             title: "Forbidden",
                             message: "Your account cannot access news articles."

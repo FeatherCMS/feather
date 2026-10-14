@@ -38,15 +38,6 @@ struct AdminRemoveUserRoleOpenAPIRepository: AdminRemoveUserRoleRepository {
         }
     }
 
-    func names(
-        ids: [String]
-    ) async throws -> [String] {
-        var names: [String] = []
-        for id in ids {
-            names.append(try await name(id: id))
-        }
-        return names
-    }
 
     func delete(
         ids: [String]

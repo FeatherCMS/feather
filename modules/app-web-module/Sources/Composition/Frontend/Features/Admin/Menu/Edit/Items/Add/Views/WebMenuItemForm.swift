@@ -52,16 +52,16 @@ struct WebMenuItemForm: Component {
     var removeLabel: String = "Remove"
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action) {
+        let form = AdminForm(action: action) {
             if let success = state.success {
-                P(success).class("new-admin-form__success")
+                P(success).class("admin-form__success")
             }
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
 
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: state.label.key,
                         label: state.label.label,
@@ -72,7 +72,7 @@ struct WebMenuItemForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: state.url.key,
                         label: state.url.label,
@@ -83,7 +83,7 @@ struct WebMenuItemForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: state.priority.key,
                         label: state.priority.label,
@@ -95,7 +95,7 @@ struct WebMenuItemForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldCheckbox(
+                AdminFormFieldCheckbox(
                     state: .init(
                         name: state.isBlank.key,
                         label: "Link target",
@@ -106,7 +106,7 @@ struct WebMenuItemForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldSelectAutocomplete(
+                AdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: state.permission.key,
                         label: state.permission.label,
@@ -117,7 +117,7 @@ struct WebMenuItemForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldSelect(
+                AdminFormFieldSelect(
                     state: .init(
                         name: state.authentication.key,
                         label: state.authentication.label,
@@ -136,7 +136,7 @@ struct WebMenuItemForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldTextArea(
+                AdminFormFieldTextArea(
                     state: .init(
                         name: state.notes.key,
                         label: state.notes.label,
@@ -149,10 +149,10 @@ struct WebMenuItemForm: Component {
 
             Div {
                 Div {
-                    context.build(NewAdminSubmitButton(submitLabel))
+                    context.build(AdminSubmitButton(submitLabel))
                     if let removeHref {
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 removeLabel,
                                 href: removeHref,
                                 style: .destructive
@@ -160,17 +160,17 @@ struct WebMenuItemForm: Component {
                         )
                     }
                 }
-                .class("new-admin-form__actions")
+                .class("admin-form__actions")
             }
         }
         return context.build(form)
     }
 
-    private var permissionOptions: [NewAdminFormFieldSelectAutocomplete.Option]
+    private var permissionOptions: [AdminFormFieldSelectAutocomplete.Option]
     {
         let selectedValue = state.permission.value ?? ""
         var options = [
-            NewAdminFormFieldSelectAutocomplete.Option(
+            AdminFormFieldSelectAutocomplete.Option(
                 label: "No permission",
                 value: "",
                 isSelected: selectedValue.isEmpty

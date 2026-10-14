@@ -17,21 +17,6 @@ struct AdminRemoveContactFieldDefaultController:
             any AdminRemoveContactFieldPresenter
         >
 
-    func confirm(request: Request, context: AuthenticatedRequestContext)
-        async throws
-        -> HTMLResponse
-    {
-        let (interactor, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.delete)
-        else {
-            return try await presenter.renderForbiddenPage()
-        }
-        let id = try context.requiredParameter("fieldId")
-        let field = try? await interactor.get(id: id)
-        return try await presenter.renderRemovePage(
-            items: [.init(id: id, label: field?.label ?? id)]
-        )
-    }
 
     func remove(request: Request, context: AuthenticatedRequestContext)
         async throws
@@ -46,7 +31,7 @@ struct AdminRemoveContactFieldDefaultController:
                 .response(from: request, context: context)
         }
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -70,29 +55,13 @@ struct AdminRemoveContactFieldDefaultController:
         )
     }
 
-    func confirmSelected(request: Request, context: AuthenticatedRequestContext)
-        async throws
-        -> HTMLResponse
-    {
-        let (_, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: ContactPermissions.Fields.delete)
-        else {
-            return try await presenter.renderForbiddenPage()
-        }
-        return try await presenter.renderRemovePage(
-            items: request.queryStrings("ids")
-                .map {
-                    .init(id: $0, label: $0)
-                }
-        )
-    }
 
     func removeSelected(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> Response
     {
         let payload = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         let (interactor, presenter) = buildRuntime((request, context))

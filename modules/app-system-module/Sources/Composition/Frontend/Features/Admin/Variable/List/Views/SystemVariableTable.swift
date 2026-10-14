@@ -9,9 +9,9 @@ import WebComponents
 
 struct SystemVariableTable: Component {
     struct State {
-        let permissions: NewAdminListActions
+        let permissions: AdminListActions
         let variables: [Components.Schemas.SystemVariableListItemSchema]
-        let pageState: NewAdminListPageState
+        let pageState: AdminListPageState
         let search: String?
     }
 
@@ -20,10 +20,10 @@ struct SystemVariableTable: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: SystemVariableRoutes.listBreadcrumb)
+                AdminBreadcrumb(links: SystemVariableRoutes.listBreadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Variables",
                         description:

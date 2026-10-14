@@ -94,7 +94,7 @@ struct AdminAddSystemVariableDefaultPresenter:
 
     func renderUnauthorizedPage() async throws -> HTMLResponse {
         try await renderPage(
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Session expired",
                     message: "Please sign in again to create system variables."
@@ -107,7 +107,7 @@ struct AdminAddSystemVariableDefaultPresenter:
 
     func renderForbiddenPage() async throws -> HTMLResponse {
         try await renderPage(
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Forbidden",
                     message: "Your account cannot create system variables."
@@ -120,7 +120,7 @@ struct AdminAddSystemVariableDefaultPresenter:
 
     func renderInvalidNoncePage() async throws -> HTMLResponse {
         try await renderPage(
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Form expired",
                     message:
@@ -136,7 +136,7 @@ struct AdminAddSystemVariableDefaultPresenter:
         content: T,
         status: HTTPResponse.Status = .ok
     ) async throws -> HTMLResponse {
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Manage system variables",

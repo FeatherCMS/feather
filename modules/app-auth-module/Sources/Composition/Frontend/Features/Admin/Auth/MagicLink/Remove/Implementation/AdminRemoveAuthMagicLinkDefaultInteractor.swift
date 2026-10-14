@@ -21,15 +21,7 @@ struct AdminRemoveAuthMagicLinkDefaultInteractor:
 {
     let repository: any AdminRemoveAuthMagicLinkRepository
 
-    func get(
-        id: String
-    ) async throws -> AuthMagicLinkDetailsModel {
-        try await repository.get(id: id)
-    }
-
-    func execute(
-        entity: AdminRemoveAuthMagicLinkModel
-    ) async throws {
-        try await repository.delete(id: entity.id)
+    func remove(ids: [String]) async throws {
+        try await repository.delete(ids: ids)
     }
 }

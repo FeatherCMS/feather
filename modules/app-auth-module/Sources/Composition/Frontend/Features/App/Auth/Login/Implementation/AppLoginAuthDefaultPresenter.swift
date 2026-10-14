@@ -8,7 +8,7 @@ struct AppLoginAuthDefaultPresenter: AppLoginAuthPresenter {
         message: String?
     ) -> HTMLResponse {
         var buildContext = BuilderContext()
-        let component = NewAdminHTML(
+        let component = AdminHTML(
             title: "Login",
             body: .init(
                 content: LoginPage(

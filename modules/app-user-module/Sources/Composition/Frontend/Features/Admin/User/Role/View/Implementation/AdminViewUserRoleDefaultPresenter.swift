@@ -8,9 +8,9 @@ struct AdminViewUserRoleDefaultPresenter: AdminViewUserRolePresenter {
 
     func renderDetailsPage(
         role: UserRoleDetailsModel,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "User role details",
@@ -21,7 +21,7 @@ struct AdminViewUserRoleDefaultPresenter: AdminViewUserRolePresenter {
     func renderErrorPage(error: AdminViewUserRoleError) async throws
         -> HTMLResponse
     {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         switch error {
         case .notFound:
             state = .init(
@@ -44,11 +44,11 @@ struct AdminViewUserRoleDefaultPresenter: AdminViewUserRolePresenter {
                 message: "The request could not be completed. Please try again."
             )
         }
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "User role details",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle()
             )

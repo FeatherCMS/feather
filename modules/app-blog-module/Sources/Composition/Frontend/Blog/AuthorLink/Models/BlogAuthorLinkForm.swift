@@ -41,12 +41,12 @@ struct BlogAuthorLinkForm: Component {
     var removeLabel: String = "Remove"
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action) {
+        let form = AdminForm(action: action) {
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: state.label.key,
                         label: state.label.label,
@@ -57,7 +57,7 @@ struct BlogAuthorLinkForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: state.url.key,
                         label: state.url.label,
@@ -68,7 +68,7 @@ struct BlogAuthorLinkForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: state.priority.key,
                         label: state.priority.label,
@@ -80,7 +80,7 @@ struct BlogAuthorLinkForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldCheckbox(
+                AdminFormFieldCheckbox(
                     state: .init(
                         name: state.isBlank.key,
                         label: "Link target",
@@ -91,7 +91,7 @@ struct BlogAuthorLinkForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: state.permission.key,
                         label: state.permission.label,
@@ -101,7 +101,7 @@ struct BlogAuthorLinkForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldTextArea(
+                AdminFormFieldTextArea(
                     state: .init(
                         name: state.notes.key,
                         label: state.notes.label,
@@ -113,11 +113,11 @@ struct BlogAuthorLinkForm: Component {
             )
             Div {
                 context.build(
-                    NewAdminSubmitButton(submitLabel, style: .primary)
+                    AdminSubmitButton(submitLabel, style: .primary)
                 )
                 if let removeHref {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             removeLabel,
                             href: removeHref,
                             style: .destructive
@@ -125,7 +125,7 @@ struct BlogAuthorLinkForm: Component {
                     )
                 }
             }
-            .class("new-admin-form__actions")
+            .class("admin-form__actions")
         }
         return context.build(form)
     }

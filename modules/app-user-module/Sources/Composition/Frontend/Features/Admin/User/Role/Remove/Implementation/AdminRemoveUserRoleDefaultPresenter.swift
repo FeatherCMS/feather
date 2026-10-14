@@ -7,7 +7,7 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
     let renderingEngine: any RenderingEngine
 
     func renderRemovePage(
-        items: [NewAdminRemoveItemContext],
+        items: [AdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse {
         guard items.count == 1 else {
@@ -19,10 +19,10 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminDialog(
+        return try await renderingEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
+            title: AdminRemoveConfirmation.dialogTitle,
             content: UserRoleConfirmation(
                 id: items[0].id,
                 name: items[0].label,
@@ -33,21 +33,21 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
     }
 
     private func renderBulkRemovePage(
-        items: [NewAdminRemoveItemContext],
+        items: [AdminRemoveItemContext],
         returnTo: String?
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        let cancel = NewAdminLocation.removeCancel(
+        let cancel = AdminLocation.removeCancel(
             path: UserRoleRoutes.list.description,
             returnTo: returnTo
         )
-        return try await renderingEngine.renderNewAdminDialog(
+        return try await renderingEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: NewAdminRemoveConfirmation(
+            title: AdminRemoveConfirmation.dialogTitle,
+            content: AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove selected user roles",
                     description: "This action cannot be undone."
@@ -66,7 +66,7 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
     func renderErrorPage(error: AdminRemoveUserRoleError, cancel: String)
         async throws -> HTMLResponse
     {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         switch error {
         case .notFound:
             state = .init(
@@ -94,14 +94,14 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
                 message: "The request could not be completed. Please try again."
             )
         }
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove user role",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle(),
-                action: NewAdminButton("Back", href: cancel, style: .secondary)
+                action: AdminButton("Back", href: cancel, style: .secondary)
             )
         )
         return HTMLResponse(content: page.content, status: status(for: error))
@@ -148,14 +148,14 @@ struct AdminRemoveUserRoleDefaultPresenter: AdminRemoveUserRolePresenter {
         status: HTTPResponse.Status,
         cancel: String = UserRoleRoutes.list.description
     ) async throws -> HTMLResponse {
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove user role",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(title: title, message: message),
                 icon: FeatherIcons.alertCircle(),
-                action: NewAdminButton("Back", href: cancel, style: .secondary)
+                action: AdminButton("Back", href: cancel, style: .secondary)
             )
         )
         return HTMLResponse(content: page.content, status: status)

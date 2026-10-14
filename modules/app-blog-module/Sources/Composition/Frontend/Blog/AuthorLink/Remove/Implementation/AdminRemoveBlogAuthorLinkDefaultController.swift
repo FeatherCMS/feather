@@ -20,39 +20,14 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
             any AdminRemoveBlogAuthorLinkPresenter
         >
 
-    func getRemoveBlogAuthorLink(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse {
-        let runtime = buildRuntime((request, context))
-        let menuId = try context.requiredID()
-        let id = try context.requiredParameter("itemId")
-        do {
-            let rule = try await runtime.interactor.get(menuId: menuId, id: id)
-            return try await runtime.presenter.renderRemovePage(
-                menuId: menuId,
-                item: .init(id: id, label: rule.label)
-            )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return try await runtime.presenter.renderErrorPage(
-                menuId: menuId,
-                id: id,
-                info: error.errorTitle,
-                message: error.errorDescription
-            )
-        }
-    }
-
     func postRemoveBlogAuthorLink(
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
-        let id = try context.requiredParameter("itemId")
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -61,13 +36,24 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
                 sessionToken: context.sessionToken
             )
         else { return Response(status: .badRequest) }
+        let ids = nonceRequest.input.normalizedSelectedIds
+        let location = AdminLocation.url(
+            path: BlogAdminRoutes.author(RouterPath(menuId)).description,
+            page: nonceRequest.input.normalizedPage,
+            search: nonceRequest.input.normalizedSearch
+        )
+        guard !ids.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
         do {
-            try await runtime.interactor.delete(menuId: menuId, id: id)
+            try await runtime.interactor.delete(menuId: menuId, ids: ids)
             return AdminNotificationFlash.redirect(
-                to: "/admin/blog/authors/\(menuId)/",
+                to: location,
                 notification: .init(
                     title: "Removed",
-                    message: "Link removed successfully."
+                    message: ids.count == 1
+                        ? "Link removed successfully."
+                        : "Links removed successfully."
                 )
             )
         }
@@ -75,7 +61,7 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
             return try await runtime.presenter
                 .renderErrorPage(
                     menuId: menuId,
-                    id: id,
+                    id: ids[0],
                     info: error.errorTitle,
                     message: error.errorDescription
                 )

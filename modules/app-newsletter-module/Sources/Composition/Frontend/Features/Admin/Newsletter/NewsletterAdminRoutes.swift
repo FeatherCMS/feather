@@ -16,7 +16,7 @@ enum NewsletterAdminRoutes {
         RouterPath("remove")
     )
 
-    static let breadcrumb: [NewAdminBreadcrumb.Link] = [
+    static let breadcrumb: [AdminBreadcrumb.Link] = [
         .init(label: "Admin", link: "/admin/"),
         .init(label: "Newsletter", link: newsletter.description + "/"),
     ]

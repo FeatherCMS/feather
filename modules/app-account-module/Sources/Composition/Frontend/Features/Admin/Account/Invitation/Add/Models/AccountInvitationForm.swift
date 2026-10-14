@@ -41,16 +41,16 @@ struct AccountInvitationForm: Component {
     var removeLabel: String = "Remove"
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action, nonceToken: state.nonceToken) {
+        let form = AdminForm(action: action, nonceToken: state.nonceToken) {
             if let success = state.success {
                 P(success).class("success")
             }
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
 
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: state.email.key,
                         label: state.email.label,
@@ -65,7 +65,7 @@ struct AccountInvitationForm: Component {
             }
             else {
                 context.build(
-                    NewAdminFormFieldCheckboxGroup(
+                    AdminFormFieldCheckboxGroup(
                         name: "roleIds[]",
                         label: "Roles",
                         options: state.roleOptions.map {
@@ -82,10 +82,10 @@ struct AccountInvitationForm: Component {
 
             Section {
                 Div {
-                    context.build(NewAdminSubmitButton(submitLabel))
+                    context.build(AdminSubmitButton(submitLabel))
                     if let removeHref {
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 removeLabel,
                                 href: removeHref,
                                 style: .destructive
@@ -93,7 +93,7 @@ struct AccountInvitationForm: Component {
                         )
                     }
                 }
-                .class("new-admin-form__actions")
+                .class("admin-form__actions")
             }
         }
         return context.build(form)

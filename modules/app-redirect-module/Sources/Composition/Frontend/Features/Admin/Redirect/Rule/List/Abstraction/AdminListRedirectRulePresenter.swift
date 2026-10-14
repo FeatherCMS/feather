@@ -4,8 +4,8 @@ import RedirectAdminAPI
 protocol AdminListRedirectRulePresenter: Sendable {
 
     func renderListPage(
-        model: NewAdminListModel<Components.Schemas.RedirectRuleListItemSchema>,
-        permissions: NewAdminListActions,
+        model: AdminListModel<Components.Schemas.RedirectRuleListItemSchema>,
+        permissions: AdminListActions,
         search: String?,
         statusCode: String?
     ) async throws -> HTMLResponse

@@ -19,13 +19,13 @@ import WebComponents
 protocol AdminRemoveAuthEmailPresenter: Sendable {
 
     func renderPage(
-        item: NewAdminRemoveItemContext,
+        item: AdminRemoveItemContext,
         identityId: String,
     ) async throws -> HTMLResponse
     func renderInvalidNoncePage() async throws -> HTMLResponse
 
     func renderError(
-        item: NewAdminRemoveItemContext,
+        item: AdminRemoveItemContext,
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse
 }

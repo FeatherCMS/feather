@@ -18,10 +18,10 @@ struct SystemPermissionEditPage: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: SystemPermissionRoutes.breadcrumb)
+                AdminBreadcrumb(links: SystemPermissionRoutes.breadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Edit system permission",
                         description: "Update this system permission."
@@ -37,7 +37,7 @@ struct SystemPermissionEditPage: Component {
                     viewHref:
                         SystemPermissionRoutes.details(RouterPath(state.id))
                         .description,
-                    removeHref: NewAdminLocation.remove(
+                    removeHref: AdminLocation.remove(
                         path: SystemPermissionRoutes.remove.description,
                         ids: [state.id],
                         returnTo:

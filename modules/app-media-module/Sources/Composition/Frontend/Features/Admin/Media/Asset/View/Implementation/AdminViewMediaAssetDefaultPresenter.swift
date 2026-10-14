@@ -18,11 +18,11 @@ struct AdminViewMediaAssetDefaultPresenter: AdminViewMediaAssetPresenter {
     func renderDetailsPage(
         model: AdminViewMediaAssetModel?,
         id: String,
-        permissions: NewAdminListActions,
+        permissions: AdminListActions,
         error: String?
     ) async throws -> HTMLResponse {
         if let model {
-            return try await renderEngine.renderNewAdminPage(
+            return try await renderEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Media asset details",
@@ -33,7 +33,7 @@ struct AdminViewMediaAssetDefaultPresenter: AdminViewMediaAssetPresenter {
                 )
             )
         }
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Media asset details",

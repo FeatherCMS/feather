@@ -8,9 +8,9 @@ import WebComponents
 
 struct ContactSubmissionsTableContent: Component {
     let items: [AdminContactSubmissionDirectoryItem]
-    let pageState: NewAdminListPageState
+    let pageState: AdminListPageState
     let search: String
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     private var hasEmailColumn: Bool {
         items.contains { !($0.email?.isEmpty ?? true) }
@@ -18,17 +18,12 @@ struct ContactSubmissionsTableContent: Component {
 
     func html(context: inout BuilderContext) -> Div {
         let path = ContactAdminRoutes.submissions.description
-        let returnTo = NewAdminLocation.url(
-            path: path,
-            page: pageState.page,
-            search: search
-        )
         return context.build(
-            NewAdminList(
+            AdminList(
                 table: {
                     if pageState.isPageOutOfRange {
                         context.build(
-                            NewAdminListInvalidPageState(
+                            AdminListInvalidPageState(
                                 pageState: pageState,
                                 path: path
                             )
@@ -36,7 +31,7 @@ struct ContactSubmissionsTableContent: Component {
                     }
                     else if items.isEmpty {
                         context.build(
-                            NewAdminListEmptyState(
+                            AdminListEmptyState(
                                 message: search.isEmpty
                                     ? "No submissions yet."
                                     : "No submissions match your search.",
@@ -44,7 +39,7 @@ struct ContactSubmissionsTableContent: Component {
                                 action: {
                                     if !search.isEmpty {
                                         context.build(
-                                            NewAdminButton(
+                                            AdminButton(
                                                 "Reset search",
                                                 href: path,
                                                 style: .secondary
@@ -60,7 +55,7 @@ struct ContactSubmissionsTableContent: Component {
                             ContactPermissions.Submissions.delete
                         )
                         context.build(
-                            NewAdminListSelectionForm(
+                            AdminListSelectionForm(
                                 state: .init(
                                     action: ContactAdminRoutes.submissionRemove
                                         .description,
@@ -73,7 +68,7 @@ struct ContactSubmissionsTableContent: Component {
                                     isEnabled: canDelete
                                 ),
                                 table: context.build(
-                                    NewAdminListShell(
+                                    AdminListShell(
                                         layout: .init(
                                             name: "contact-submissions",
                                             columns: [
@@ -88,7 +83,7 @@ struct ContactSubmissionsTableContent: Component {
                                                 Tr {
                                                     if canDelete {
                                                         context.build(
-                                                            NewAdminListSelectAllCheckbox()
+                                                            AdminListSelectAllCheckbox()
                                                         )
                                                     }
                                                     Th("Form")
@@ -105,7 +100,7 @@ struct ContactSubmissionsTableContent: Component {
                                                     Tr {
                                                         if canDelete {
                                                             context.build(
-                                                                NewAdminListRowCheckbox(
+                                                                AdminListRowCheckbox(
                                                                     id:
                                                                         "\(item.formId):\(item.id)"
                                                                 )
@@ -137,7 +132,7 @@ struct ContactSubmissionsTableContent: Component {
                                                                 "Status"
                                                             )
                                                         context.build(
-                                                            NewAdminListRowActions(
+                                                            AdminListRowActions(
                                                                 label:
                                                                     "Actions",
                                                                 actions: [
@@ -167,40 +162,6 @@ struct ContactSubmissionsTableContent: Component {
                                                                             .Submissions
                                                                             .read
                                                                     ),
-                                                                    .init(
-                                                                        "Remove",
-                                                                        href:
-                                                                            NewAdminLocation
-                                                                            .remove(
-                                                                                path:
-                                                                                    ContactAdminRoutes
-                                                                                    .formSubmissionRemove(
-                                                                                        formID:
-                                                                                            RouterPath(
-                                                                                                item
-                                                                                                    .formId
-                                                                                            ),
-                                                                                        submissionID:
-                                                                                            RouterPath(
-                                                                                                item
-                                                                                                    .id
-                                                                                            )
-                                                                                    )
-                                                                                    .description,
-                                                                                ids: [
-                                                                                    item
-                                                                                        .id
-                                                                                ],
-                                                                                returnTo:
-                                                                                    returnTo
-                                                                            ),
-                                                                        style:
-                                                                            .destructive,
-                                                                        permission:
-                                                                            ContactPermissions
-                                                                            .Submissions
-                                                                            .delete
-                                                                    ),
                                                                 ],
                                                                 permissions:
                                                                     permissions
@@ -222,7 +183,7 @@ struct ContactSubmissionsTableContent: Component {
                 },
                 search: {
                     context.build(
-                        NewAdminListSearch(
+                        AdminListSearch(
                             state: .init(
                                 action: path,
                                 placeholder: "Quick search contact submissions",
@@ -233,7 +194,7 @@ struct ContactSubmissionsTableContent: Component {
                 },
                 pagination: {
                     context.build(
-                        NewAdminListPagination(
+                        AdminListPagination(
                             state: .init(
                                 path: path,
                                 pageState: pageState,

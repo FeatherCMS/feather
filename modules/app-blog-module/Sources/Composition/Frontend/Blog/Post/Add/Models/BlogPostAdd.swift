@@ -15,16 +15,16 @@ struct BlogPostAdd: Component {
 
     struct State {
         let form: BlogPostForm.State
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Add post",
                         description: "Create a new blog post."

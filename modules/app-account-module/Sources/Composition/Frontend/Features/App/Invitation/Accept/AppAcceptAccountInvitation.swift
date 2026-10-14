@@ -25,7 +25,7 @@ struct AppAcceptAccountInvitation {
         let success: String?
 
         func rules() -> [any Rule] {
-            NewAdminDesignSystem().rules()
+            AdminDesignSystem().rules()
                 + [Media(selectors: selectors())]
         }
 
@@ -75,14 +75,14 @@ struct AppAcceptAccountInvitation {
                 Custom(".invitation-card .admin-page-header") {
                     Margin(bottom: 0.px)
                 },
-                Custom(".invitation-card .new-admin-form") {
+                Custom(".invitation-card .admin-form") {
                     MarginTop(24.px)
                 },
-                Custom(".invitation-card .new-admin-form__actions") {
+                Custom(".invitation-card .admin-form__actions") {
                     AlignItems(.stretch)
                 },
                 Custom(
-                    ".invitation-card .new-admin-form__actions .button, "
+                    ".invitation-card .admin-form__actions .button, "
                         + ".invitation-actions .button"
                 ) {
                     Width(100.percent)
@@ -118,7 +118,7 @@ struct AppAcceptAccountInvitation {
             Main {
                 Div {
                     context.build(
-                        NewAdminPageHeader(
+                        AdminPageHeader(
                             state: .primary(
                                 title: success == nil
                                     ? "Create your account" : "Account created",
@@ -133,7 +133,7 @@ struct AppAcceptAccountInvitation {
                         P(success).class("invitation-success")
                         Div {
                             context.build(
-                                NewAdminButton(
+                                AdminButton(
                                     "Continue to admin",
                                     href: "/login/?redirect=%2Fadmin%2F",
                                     style: .primary
@@ -144,7 +144,7 @@ struct AppAcceptAccountInvitation {
                     }
                     else {
                         context.build(
-                            NewAdminForm(
+                            AdminForm(
                                 action: "/account/invitation/accept/",
                                 hiddenFields: [
                                     .init(name: "token", value: token)
@@ -155,10 +155,10 @@ struct AppAcceptAccountInvitation {
                                         .class("invitation-email")
                                 }
                                 if let error {
-                                    P(error).class("new-admin-form__error")
+                                    P(error).class("admin-form__error")
                                 }
                                 context.build(
-                                    NewAdminFormFieldInput(
+                                    AdminFormFieldInput(
                                         state: .init(
                                             name: "password",
                                             label: "Password",
@@ -169,7 +169,7 @@ struct AppAcceptAccountInvitation {
                                     )
                                 )
                                 context.build(
-                                    NewAdminFormFieldInput(
+                                    AdminFormFieldInput(
                                         state: .init(
                                             name: "confirmation",
                                             label: "Confirm password",
@@ -181,10 +181,10 @@ struct AppAcceptAccountInvitation {
                                 )
                                 Div {
                                     context.build(
-                                        NewAdminSubmitButton("Create account")
+                                        AdminSubmitButton("Create account")
                                     )
                                 }
-                                .class("new-admin-form__actions")
+                                .class("admin-form__actions")
                             }
                         )
                     }

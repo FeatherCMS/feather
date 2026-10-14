@@ -18,12 +18,7 @@ import WebComponents
 
 protocol AdminRemoveAuthEmailController: Sendable {
 
-    func getRemoveAuthEmail(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse
-
-    func postRemoveAuthEmail(
+    func postAuthEmailsRemove(
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response
@@ -34,13 +29,6 @@ extension AdminRemoveAuthEmailController {
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        router.get(
-            AuthEmailRoutes.remove(RouterPath("{id}")),
-            use: getRemoveAuthEmail
-        )
-        router.post(
-            AuthEmailRoutes.remove(RouterPath("{id}")),
-            use: postRemoveAuthEmail
-        )
+        router.post(AuthEmailRoutes.remove, use: postAuthEmailsRemove)
     }
 }

@@ -155,7 +155,7 @@ struct AdminEditBlogPostDefaultController:
         excerpt: String = "",
         content: String = "",
         imageAssetId: String? = nil,
-        imageAsset: NewAdminMediaAsset? = nil,
+        imageAsset: AdminMediaAsset? = nil,
         metadata: AdminMetadataFormValue? = nil,
         selectedAuthorIds: [String] = [],
         selectedTagIds: [String] = [],

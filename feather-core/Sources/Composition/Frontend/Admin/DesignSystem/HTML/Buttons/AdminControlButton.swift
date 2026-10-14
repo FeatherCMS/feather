@@ -1,0 +1,32 @@
+public import HTML
+import SGML
+import WebBuilders
+public import WebComponents
+
+public struct AdminControlButton: Component {
+
+    public let label: String
+    public let style: AdminButtonStyle
+
+    public init(
+        _ label: String,
+        style: AdminButtonStyle = .primary
+    ) {
+        self.label = label
+        self.style = style
+    }
+
+    public init(state: AdminButton.State) {
+        self.init(state.label, style: state.style)
+    }
+
+    public func html(context: inout BuilderContext) -> Button {
+        var button = Button(label)
+            .type(.button)
+            .class("button", style.className)
+        if style == .disabled {
+            button = button.disabled()
+        }
+        return button
+    }
+}

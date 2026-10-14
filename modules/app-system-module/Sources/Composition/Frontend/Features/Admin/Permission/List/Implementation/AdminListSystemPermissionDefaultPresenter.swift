@@ -15,10 +15,10 @@ struct AdminListSystemPermissionDefaultPresenter:
 
     func renderListPage(
         model: AdminListSystemPermissionModel,
-        permissions: NewAdminListActions,
+        permissions: AdminListActions,
         search: String?
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Permissions",
@@ -40,7 +40,7 @@ struct AdminListSystemPermissionDefaultPresenter:
     func renderErrorPage(
         error: AdminListSystemPermissionError
     ) async throws -> HTMLResponse {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         switch error {
         case .unauthorized:
             state = .init(
@@ -58,11 +58,11 @@ struct AdminListSystemPermissionDefaultPresenter:
                 message: "The request could not be completed. Please try again."
             )
         }
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Permissions",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle()
             )

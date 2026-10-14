@@ -11,24 +11,9 @@ import WebComponents
 struct AdminRemoveMediaAssetDefaultInteractor: AdminRemoveMediaAssetInteractor {
     let repository: AdminRemoveMediaAssetOpenAPIRepository
 
-    func getRemoveMediaAsset(
-        id: String
-    ) async throws -> AdminRemoveMediaAssetModel {
-        .init(item: .init(id: id, label: id), error: nil)
-    }
-
-    func postRemoveMediaAsset(
-        id: String
-    ) async throws -> AdminRemoveMediaAssetModel {
-        do {
+    func remove(ids: [String]) async throws {
+        for id in ids {
             try await repository.deleteAsset(id: id)
         }
-        catch let error as OpenAPIRepositoryError {
-            return .init(
-                item: .init(id: id, label: id),
-                error: "Remove failed: \(error.errorDescription)"
-            )
-        }
-        return .init(item: .init(id: id, label: id), error: nil)
     }
 }

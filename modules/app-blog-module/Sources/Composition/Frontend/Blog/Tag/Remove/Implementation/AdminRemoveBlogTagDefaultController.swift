@@ -20,35 +20,13 @@ struct AdminRemoveBlogTagDefaultController:
             any AdminRemoveBlogTagPresenter
         >
 
-    func getRemoveBlogTag(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse {
-        let runtime = buildRuntime((request, context))
-        let id = try context.requiredID()
-        do {
-            let page = try await runtime.interactor.get(id: id)
-            return try await runtime.presenter.renderRemovePage(
-                item: .init(id: id, label: page.title)
-            )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return try await runtime.presenter.renderErrorPage(
-                id: id,
-                info: error.errorTitle,
-                message: error.errorDescription
-            )
-        }
-    }
-
     func postRemoveBlogTag(
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
-        let id = try context.requiredID()
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -57,20 +35,31 @@ struct AdminRemoveBlogTagDefaultController:
                 sessionToken: context.sessionToken
             )
         else { return Response(status: .badRequest) }
+        let ids = nonceRequest.input.normalizedSelectedIds
+        let location = AdminLocation.url(
+            path: BlogAdminRoutes.tags.description + "/",
+            page: nonceRequest.input.normalizedPage,
+            search: nonceRequest.input.normalizedSearch
+        )
+        guard !ids.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
         do {
-            try await runtime.interactor.delete(id: id)
+            try await runtime.interactor.delete(ids: ids)
             return AdminNotificationFlash.redirect(
-                to: "/admin/blog/tags/",
+                to: location,
                 notification: .init(
                     title: "Removed",
-                    message: "Blog tag removed successfully."
+                    message: ids.count == 1
+                        ? "Blog tag removed successfully."
+                        : "Blog tags removed successfully."
                 )
             )
         }
         catch let error as OpenAPIRepositoryError {
             return try await runtime.presenter
                 .renderErrorPage(
-                    id: id,
+                    id: ids[0],
                     info: error.errorTitle,
                     message: error.errorDescription
                 )

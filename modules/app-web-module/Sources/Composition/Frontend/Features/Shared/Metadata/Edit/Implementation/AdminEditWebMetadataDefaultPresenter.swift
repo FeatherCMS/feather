@@ -17,11 +17,11 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
         id: String,
         state: WebMetadataForm.State,
         permissions: Set<String>,
-        navigationTabs: [NewAdminTabBar.Link],
+        navigationTabs: [AdminTabBar.Link],
         configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> HTMLResponse {
         let title = configuration?.title ?? "Edit web metadata"
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "\(title)",
@@ -54,7 +54,7 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
         configuration: AdminWebMetadataEditConfiguration?
     ) async throws -> HTMLResponse {
         let title = configuration?.title ?? "Edit web metadata"
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "\(title)",
@@ -70,7 +70,7 @@ struct AdminEditWebMetadataDefaultPresenter: AdminEditWebMetadataPresenter {
 
     private func breadcrumb(
         for configuration: AdminWebMetadataEditConfiguration?
-    ) -> [NewAdminBreadcrumb.Link] {
+    ) -> [AdminBreadcrumb.Link] {
         if let breadcrumb = configuration?.breadcrumb {
             return breadcrumb
         }

@@ -21,18 +21,18 @@ public protocol RenderingEngine: Sendable {
         content: T
     ) -> HTMLResponse where T.HTML: FlowContent
 
-    func renderNewAdminPage<T: Component>(
+    func renderAdminPage<T: Component>(
         request: Request,
         context: AuthenticatedRequestContext,
         title: String,
         content: T
     ) async throws -> HTMLResponse
 
-    func renderNewAdminDialog<T: Component>(
+    func renderAdminDialog<T: Component>(
         request: Request,
         context: AuthenticatedRequestContext,
         title: String,
         content: T,
-        size: NewAdminDialogSize
+        size: AdminDialogSize
     ) async throws -> HTMLResponse
 }

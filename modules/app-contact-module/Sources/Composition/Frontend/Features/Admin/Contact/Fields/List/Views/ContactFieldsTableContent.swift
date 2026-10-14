@@ -10,22 +10,22 @@ import WebComponents
 
 struct ContactFieldsTableContent: Component {
     let fields: [AdminContactFieldRow]
-    let pageState: NewAdminListPageState
+    let pageState: AdminListPageState
     let search: String
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> Div {
-        let returnTo = NewAdminLocation.url(
+        let returnTo = AdminLocation.url(
             path: ContactAdminRoutes.fields.description,
             page: pageState.page,
             search: search
         )
         return context.build(
-            NewAdminList(
+            AdminList(
                 table: {
                     if pageState.isPageOutOfRange {
                         context.build(
-                            NewAdminListInvalidPageState(
+                            AdminListInvalidPageState(
                                 pageState: pageState,
                                 path: ContactAdminRoutes.fields.description
                             )
@@ -33,7 +33,7 @@ struct ContactFieldsTableContent: Component {
                     }
                     else if fields.isEmpty {
                         context.build(
-                            NewAdminListEmptyState(
+                            AdminListEmptyState(
                                 message: search.isEmpty
                                     ? "No contact form fields yet."
                                     : "No contact form fields match your search.",
@@ -44,7 +44,7 @@ struct ContactFieldsTableContent: Component {
                                             ContactPermissions.Fields.create
                                         ) {
                                             context.build(
-                                                NewAdminButton(
+                                                AdminButton(
                                                     "Add field",
                                                     href: ContactAdminRoutes
                                                         .fieldAdd.description
@@ -54,7 +54,7 @@ struct ContactFieldsTableContent: Component {
                                     }
                                     else {
                                         context.build(
-                                            NewAdminButton(
+                                            AdminButton(
                                                 "Reset search",
                                                 href: ContactAdminRoutes.fields
                                                     .description,
@@ -71,9 +71,9 @@ struct ContactFieldsTableContent: Component {
                             ContactPermissions.Fields.delete
                         )
                         context.build(
-                            NewAdminListSelectionForm(
+                            AdminListSelectionForm(
                                 state: .init(
-                                    action: NewAdminLocation.remove(
+                                    action: AdminLocation.remove(
                                         path: ContactAdminRoutes.fieldRemove
                                             .description,
                                         ids: [],
@@ -88,7 +88,7 @@ struct ContactFieldsTableContent: Component {
                                     isEnabled: canDelete
                                 ),
                                 table: context.build(
-                                    NewAdminListShell(
+                                    AdminListShell(
                                         layout: .init(
                                             name: "contact-fields",
                                             columns: [
@@ -103,7 +103,7 @@ struct ContactFieldsTableContent: Component {
                                                 Tr {
                                                     if canDelete {
                                                         context.build(
-                                                            NewAdminListSelectAllCheckbox()
+                                                            AdminListSelectAllCheckbox()
                                                         )
                                                     }
                                                     Th("Key")
@@ -118,7 +118,7 @@ struct ContactFieldsTableContent: Component {
                                                     Tr {
                                                         if canDelete {
                                                             context.build(
-                                                                NewAdminListRowCheckbox(
+                                                                AdminListRowCheckbox(
                                                                     id: field.id
                                                                 )
                                                             )
@@ -150,7 +150,7 @@ struct ContactFieldsTableContent: Component {
                                                             "Required"
                                                         )
                                                         context.build(
-                                                            NewAdminListRowActions(
+                                                            AdminListRowActions(
                                                                 label:
                                                                     "Actions",
                                                                 actions: [
@@ -180,29 +180,6 @@ struct ContactFieldsTableContent: Component {
                                                                             .Fields
                                                                             .update
                                                                     ),
-                                                                    .init(
-                                                                        "Remove",
-                                                                        href:
-                                                                            NewAdminLocation
-                                                                            .remove(
-                                                                                path:
-                                                                                    ContactAdminRoutes
-                                                                                    .fieldRemove
-                                                                                    .description,
-                                                                                ids: [
-                                                                                    field
-                                                                                        .id
-                                                                                ],
-                                                                                returnTo:
-                                                                                    returnTo
-                                                                            ),
-                                                                        style:
-                                                                            .destructive,
-                                                                        permission:
-                                                                            ContactPermissions
-                                                                            .Fields
-                                                                            .delete
-                                                                    ),
                                                                 ],
                                                                 permissions:
                                                                     permissions
@@ -224,7 +201,7 @@ struct ContactFieldsTableContent: Component {
                 },
                 search: {
                     context.build(
-                        NewAdminListSearch(
+                        AdminListSearch(
                             state: .init(
                                 action: ContactAdminRoutes.fields.description,
                                 placeholder: "Quick search contact fields",
@@ -236,9 +213,9 @@ struct ContactFieldsTableContent: Component {
                 toolbar: {
                     if permissions.allows(ContactPermissions.Fields.create) {
                         context.build(
-                            NewAdminListToolbar {
+                            AdminListToolbar {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         "Add field",
                                         href: ContactAdminRoutes.fieldAdd
                                             .description
@@ -250,7 +227,7 @@ struct ContactFieldsTableContent: Component {
                 },
                 pagination: {
                     context.build(
-                        NewAdminListPagination(
+                        AdminListPagination(
                             state: .init(
                                 path: ContactAdminRoutes.fields.description,
                                 pageState: pageState,
@@ -263,8 +240,8 @@ struct ContactFieldsTableContent: Component {
         )
     }
 
-    private func typeChip(_ type: String) -> NewAdminChip {
-        let color: NewAdminChip.ColorName
+    private func typeChip(_ type: String) -> AdminChip {
+        let color: AdminChip.ColorName
         switch type.lowercased() {
         case "textarea": color = .purple
         case "select": color = .green

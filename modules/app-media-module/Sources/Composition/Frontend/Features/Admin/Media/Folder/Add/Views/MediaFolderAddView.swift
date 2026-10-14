@@ -27,10 +27,10 @@ struct MediaFolderAddView: Component {
         Section {
             if !state.isDialog {
                 context.build(
-                    NewAdminBreadcrumb(links: MediaFolderRoutes.breadcrumb)
+                    AdminBreadcrumb(links: MediaFolderRoutes.breadcrumb)
                 )
                 context.build(
-                    NewAdminPageHeader(
+                    AdminPageHeader(
                         state: .primary(
                             title: "Add media folder",
                             description:
@@ -40,9 +40,9 @@ struct MediaFolderAddView: Component {
                 )
             }
             if let error = state.form.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
-            let form = NewAdminForm(
+            let form = AdminForm(
                 action: formAction(),
                 hiddenFields: [
                     .init(name: "parentId", value: state.form.parentId),
@@ -50,7 +50,7 @@ struct MediaFolderAddView: Component {
                 ]
             ) {
                 context.build(
-                    NewAdminFormFieldInput(
+                    AdminFormFieldInput(
                         state: .init(
                             name: "name",
                             label: "Folder name",
@@ -60,9 +60,9 @@ struct MediaFolderAddView: Component {
                     )
                 )
                 Div {
-                    context.build(NewAdminSubmitButton("Add folder"))
+                    context.build(AdminSubmitButton("Add folder"))
                 }
-                .class("new-admin-form__actions")
+                .class("admin-form__actions")
             }
             context.build(form)
         }

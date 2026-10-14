@@ -7,7 +7,7 @@ struct MediaVariantProcessorFormInput: Decodable, Sendable, Equatable, Hashable
     let name: String
     let matchExtensions: String
     let commandTemplate: String
-    let isActive: NewAdminFormFieldCheckbox.Input
+    let isActive: AdminFormFieldCheckbox.Input
 
     var normalizedName: String {
         name.whitespaceTrimmed

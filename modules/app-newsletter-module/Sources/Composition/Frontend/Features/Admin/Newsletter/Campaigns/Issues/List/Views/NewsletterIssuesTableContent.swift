@@ -8,8 +8,8 @@ import WebComponents
 struct NewsletterIssuesTableContent: Component {
     let newsletterId: String
     let items: [AdminNewsletterIssueItem]
-    let pageState: NewAdminListPageState
-    let permissions: NewAdminListActions
+    let pageState: AdminListPageState
+    let permissions: AdminListActions
     let search: String?
 
     private var path: String {
@@ -24,11 +24,11 @@ struct NewsletterIssuesTableContent: Component {
         let hasActiveQuery = !searchValue.isEmpty
 
         return context.build(
-            NewAdminList(
+            AdminList(
                 table: {
                     if pageState.isPageOutOfRange {
                         context.build(
-                            NewAdminListInvalidPageState(
+                            AdminListInvalidPageState(
                                 pageState: pageState,
                                 path: path
                             )
@@ -37,12 +37,12 @@ struct NewsletterIssuesTableContent: Component {
                     else if items.isEmpty {
                         if hasActiveQuery {
                             context.build(
-                                NewAdminListNoResultsState(
+                                AdminListNoResultsState(
                                     message: "No issues match your search.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         context.build(
-                                            NewAdminButton(
+                                            AdminButton(
                                                 "Reset search",
                                                 href: path,
                                                 style: .secondary
@@ -54,13 +54,13 @@ struct NewsletterIssuesTableContent: Component {
                         }
                         else {
                             context.build(
-                                NewAdminListEmptyState(
+                                AdminListEmptyState(
                                     message: "No issues yet.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         if canCreate {
                                             context.build(
-                                                NewAdminButton(
+                                                AdminButton(
                                                     "Add new",
                                                     href:
                                                         NewsletterAdminRoutes
@@ -80,7 +80,7 @@ struct NewsletterIssuesTableContent: Component {
                     }
                     else {
                         context.build(
-                            NewAdminListShell(
+                            AdminListShell(
                                 layout: .init(
                                     name: "newsletter-issues",
                                     columns: [
@@ -118,7 +118,7 @@ struct NewsletterIssuesTableContent: Component {
                 },
                 search: {
                     context.build(
-                        NewAdminListSearch(
+                        AdminListSearch(
                             state: .init(
                                 action: path,
                                 placeholder: "Quick search issues",
@@ -130,9 +130,9 @@ struct NewsletterIssuesTableContent: Component {
                 toolbar: {
                     if canCreate {
                         context.build(
-                            NewAdminListToolbar {
+                            AdminListToolbar {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         "Add new",
                                         href:
                                             NewsletterAdminRoutes.issueAdd(
@@ -147,7 +147,7 @@ struct NewsletterIssuesTableContent: Component {
                 },
                 pagination: {
                     context.build(
-                        NewAdminListPagination(
+                        AdminListPagination(
                             state: .init(
                                 path: path,
                                 pageState: pageState,

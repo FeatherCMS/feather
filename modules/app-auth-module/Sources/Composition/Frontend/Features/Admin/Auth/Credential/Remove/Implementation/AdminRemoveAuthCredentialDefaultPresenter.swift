@@ -24,7 +24,7 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
     let renderEngine: any RenderingEngine
 
     func renderPage(
-        item: NewAdminRemoveItemContext,
+        item: AdminRemoveItemContext,
         model: AuthCredentialDetailsModel
     )
         async throws -> HTMLResponse
@@ -32,10 +32,10 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminDialog(
+        return try await renderEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
+            title: AdminRemoveConfirmation.dialogTitle,
             content: AuthCredentialConfirmation(
                 state: .init(
                     item: item,
@@ -51,11 +51,11 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
     }
 
     func renderInvalidNoncePage() async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove credential",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Form expired",
                     message:
@@ -67,10 +67,10 @@ struct AdminRemoveAuthCredentialDefaultPresenter:
     }
 
     func renderError(
-        item: NewAdminRemoveItemContext,
+        item: AdminRemoveItemContext,
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove credential",

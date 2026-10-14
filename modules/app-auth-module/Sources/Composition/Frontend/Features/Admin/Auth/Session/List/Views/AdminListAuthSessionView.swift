@@ -18,7 +18,7 @@ struct AdminListAuthSessionView: Component {
     func html(context: inout BuilderContext) -> Section {
         Section {
             context.build(
-                NewAdminBreadcrumb(
+                AdminBreadcrumb(
                     links: [
                         .init(label: "Admin", link: "/admin/"),
                         .init(label: "User", link: "/admin/user/"),
@@ -30,7 +30,7 @@ struct AdminListAuthSessionView: Component {
                 )
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Sessions",
                         description: "Manage active sessions for this identity."
@@ -38,7 +38,7 @@ struct AdminListAuthSessionView: Component {
                 )
             )
             context.build(
-                NewAdminTabBar(links: [
+                AdminTabBar(links: [
                     .init(
                         label: "Sessions",
                         href:
@@ -55,7 +55,7 @@ struct AdminListAuthSessionView: Component {
             )
             if state.items.isEmpty {
                 context.build(
-                    NewAdminListEmptyState(
+                    AdminListEmptyState(
                         message: "No active sessions.",
                         icon: FeatherIcons.inbox()
                     )
@@ -63,7 +63,7 @@ struct AdminListAuthSessionView: Component {
             }
             else {
                 context.build(
-                    NewAdminListShell(
+                    AdminListShell(
                         layout: .init(
                             name: "auth-sessions",
                             columns: [
@@ -86,18 +86,7 @@ struct AdminListAuthSessionView: Component {
                                         Td(item.authenticationType)
                                         Td("\(item.expiresAt)")
                                         Td(item.isPersistent ? "Yes" : "No")
-                                        Td {
-                                            if state.canRemove {
-                                                context.build(
-                                                    NewAdminRowButton(
-                                                        "Remove",
-                                                        href:
-                                                            "/admin/user/identities/\(state.identityID)/sessions/\(item.id)/remove/",
-                                                        style: .destructive
-                                                    )
-                                                )
-                                            }
-                                        }
+                                        Td("")
                                     }
                                 }
                             }

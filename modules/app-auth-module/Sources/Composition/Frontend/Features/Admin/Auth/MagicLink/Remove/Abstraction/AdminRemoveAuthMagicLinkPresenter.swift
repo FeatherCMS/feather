@@ -19,13 +19,13 @@ import WebComponents
 protocol AdminRemoveAuthMagicLinkPresenter: Sendable {
 
     func renderPage(
-        item: NewAdminRemoveItemContext,
+        item: AdminRemoveItemContext,
         credentialId: String,
     ) async throws -> HTMLResponse
     func renderInvalidNoncePage() async throws -> HTMLResponse
 
     func renderError(
-        item: NewAdminRemoveItemContext,
+        item: AdminRemoveItemContext,
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse
 }

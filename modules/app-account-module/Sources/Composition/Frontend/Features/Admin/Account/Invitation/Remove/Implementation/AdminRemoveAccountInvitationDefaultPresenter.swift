@@ -9,15 +9,15 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
     let renderEngine: any RenderingEngine
 
     func renderRemovePage(
-        item: NewAdminRemoveItemContext
+        item: AdminRemoveItemContext
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminDialog(
+        return try await renderEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
+            title: AdminRemoveConfirmation.dialogTitle,
             content: AccountInvitationConfirmation(
                 state: .init(
                     id: item.id,
@@ -37,11 +37,11 @@ struct AdminRemoveAccountInvitationDefaultPresenter:
         info: String,
         message: String
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove user invitation",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(title: info, message: message),
                 icon: FeatherIcons.alertCircle()
             )

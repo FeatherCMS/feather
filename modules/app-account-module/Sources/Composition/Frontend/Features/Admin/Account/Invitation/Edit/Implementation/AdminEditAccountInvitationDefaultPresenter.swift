@@ -18,7 +18,7 @@ struct AdminEditAccountInvitationDefaultPresenter:
         state.nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit user invitation",
@@ -41,11 +41,11 @@ struct AdminEditAccountInvitationDefaultPresenter:
         message: String,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit user invitation",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(title: info, message: message),
                 icon: FeatherIcons.alertCircle()
             )

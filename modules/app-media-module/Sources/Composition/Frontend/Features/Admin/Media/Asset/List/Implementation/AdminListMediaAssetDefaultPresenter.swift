@@ -18,7 +18,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
     func renderListPage(
         model: AdminListMediaAssetModel,
         search: String?,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse {
         let isDialog =
             request.queryString("presentation") == "dialog"
@@ -28,7 +28,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 field: model.picker.field,
                 selectionMode: model.picker.selectionMode
             )
-            return try await renderEngine.renderNewAdminDialog(
+            return try await renderEngine.renderAdminDialog(
                 request: request,
                 context: context,
                 title: model.picker.selectionMode == .multiple
@@ -53,7 +53,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
             )
         }
         if model.picker.isEnabled {
-            return try await renderEngine.renderNewAdminPage(
+            return try await renderEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: model.picker.selectionMode == .multiple
@@ -86,7 +86,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 permissions: permissions
             )
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Media assets",
@@ -107,7 +107,7 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 message: message
             )
             if isDialog {
-                return try await renderEngine.renderNewAdminDialog(
+                return try await renderEngine.renderAdminDialog(
                     request: request,
                     context: context,
                     title: "Select media asset",
@@ -118,14 +118,14 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                     size: .large
                 )
             }
-            return try await renderEngine.renderNewAdminPage(
+            return try await renderEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Select media asset",
                 content: errorContent
             )
         }
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Media assets",
@@ -144,61 +144,21 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 : .single
         )
     }
-
-    func renderRemovePage(
-        pageState: NewAdminListPageState,
-        search: String?,
-        items: [NewAdminRemoveItemContext],
-        returnTo: String?
-    ) async throws -> HTMLResponse {
-        let nonceToken = await AdminNonceStore.shared.issue(
-            sessionToken: context.sessionToken
-        )
-        let cancel = NewAdminLocation.removeCancel(
-            path: MediaAssetRoutes.list.description,
-            returnTo: returnTo
-        )
-        let confirmation = NewAdminRemoveConfirmation(
-            header: .primary(
-                title: "Remove media asset",
-                description: "Confirm removal of the selected media assets."
-            ),
-            selectedItems: items.map(\.label),
-            action: MediaAssetRoutes.remove.description,
-            submit: .init(label: "Remove selected", style: .destructive),
-            nonceToken: nonceToken,
-            hiddenFields: items.map {
-                .init(name: "ids", value: $0.id)
-            } + [
-                .init(name: "page", value: String(pageState.page)),
-                .init(name: "search", value: search ?? ""),
-                .init(name: "returnTo", value: cancel),
-            ],
-        )
-        return try await renderEngine.renderNewAdminDialog(
-            request: request,
-            context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: confirmation,
-            size: .small
-        )
-    }
-
     func renderInvalidNoncePage(
         cancel: String
     ) async throws -> HTMLResponse {
-        let page = try await renderEngine.renderNewAdminPage(
+        let page = try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove media assets",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Confirmation expired",
                     message:
                         "This confirmation is no longer valid. Please try again."
                 ),
                 icon: FeatherIcons.alertCircle(),
-                action: NewAdminButton("Back", href: cancel, style: .secondary)
+                action: AdminButton("Back", href: cancel, style: .secondary)
             )
         )
         return HTMLResponse(content: page.content, status: .badRequest)

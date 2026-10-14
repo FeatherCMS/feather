@@ -13,11 +13,6 @@ import WebFrontend
 
 protocol AdminRemoveBlogTagController: Sendable {
 
-    func getRemoveBlogTag(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse
-
     func postRemoveBlogTag(
         request: Request,
         context: AuthenticatedRequestContext
@@ -29,13 +24,6 @@ extension AdminRemoveBlogTagController {
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        router.get(
-            "/admin/blog/tags/{id}/remove/",
-            use: getRemoveBlogTag
-        )
-        router.post(
-            "/admin/blog/tags/{id}/remove/",
-            use: postRemoveBlogTag
-        )
+        router.post("/admin/blog/tags/remove/", use: postRemoveBlogTag)
     }
 }

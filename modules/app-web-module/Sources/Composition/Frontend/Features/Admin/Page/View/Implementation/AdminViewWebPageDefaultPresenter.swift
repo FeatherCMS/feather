@@ -13,9 +13,9 @@ struct AdminViewWebPageDefaultPresenter: AdminViewWebPagePresenter {
 
     func renderDetailsPage(
         rule: WebPageDetailsModel,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Web page details",
@@ -32,9 +32,9 @@ struct AdminViewWebPageDefaultPresenter: AdminViewWebPagePresenter {
     func renderErrorPage(
         info: String,
         message: String,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Web page details",

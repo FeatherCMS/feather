@@ -41,7 +41,7 @@ enum MediaVariantRoutes {
         processors(id).appendingPath(RouterPath("remove"))
     }
 
-    static var breadcrumb: [NewAdminBreadcrumb.Link] {
+    static var breadcrumb: [AdminBreadcrumb.Link] {
         MediaAdminRoutes.breadcrumb + [
             .init(label: "Variants", link: list.description)
         ]

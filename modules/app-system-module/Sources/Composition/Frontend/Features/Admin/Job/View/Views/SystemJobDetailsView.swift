@@ -32,7 +32,7 @@ struct SystemJobDetailsView: Component {
         let payload = SystemJobPayload(job: job)
         return Section {
             context.build(
-                NewAdminDetailView(
+                AdminDetailView(
                     breadcrumb: SystemJobRoutes.breadcrumb,
                     pageHeader: .primary(
                         title: "Worker job details",

@@ -16,7 +16,7 @@ struct AdminEditWebPageDefaultPresenter: AdminEditWebPagePresenter {
         state: WebPageForm.State,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit page",
@@ -36,7 +36,7 @@ struct AdminEditWebPageDefaultPresenter: AdminEditWebPagePresenter {
         message: String,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit page",

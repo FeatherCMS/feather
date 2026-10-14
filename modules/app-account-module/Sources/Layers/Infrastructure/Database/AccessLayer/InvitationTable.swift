@@ -42,8 +42,9 @@ extension InvitationTable.Row {
     }
 }
 
-struct InvitationTable {
-
+struct InvitationTable: DatabaseTableWithBulkDelete {
+    static let name = "account_invitation"
+    static let primaryKey = "id"
     struct Row {
         struct Create {
             let id: String
@@ -217,26 +218,4 @@ struct InvitationTable {
         }
     }
 
-    func delete(
-        ids: [String]
-    ) async throws -> [String] {
-        guard !ids.isEmpty else { return [] }
-        let values =
-            ids.map {
-                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
-            }
-            .joined(separator: ", ")
-        return try await connection.run(
-            query: #"""
-                DELETE FROM account_invitation
-                WHERE id IN (\#(unescaped: values))
-                RETURNING id;
-                """#
-        ) { sequence in
-            try await sequence.collect()
-                .map {
-                    try $0.decode(column: "id", as: String.self)
-                }
-        }
-    }
 }

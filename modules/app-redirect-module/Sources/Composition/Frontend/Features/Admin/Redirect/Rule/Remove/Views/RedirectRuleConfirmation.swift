@@ -11,7 +11,7 @@ struct RedirectRuleConfirmation: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
-            NewAdminRemoveConfirmation(
+            AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove redirect rule",
                     description: "This action cannot be undone."

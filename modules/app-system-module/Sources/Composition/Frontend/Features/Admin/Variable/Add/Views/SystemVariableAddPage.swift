@@ -10,10 +10,10 @@ struct SystemVariableAddPage: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: SystemVariableRoutes.breadcrumb)
+                AdminBreadcrumb(links: SystemVariableRoutes.breadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Add system variable",
                         description:

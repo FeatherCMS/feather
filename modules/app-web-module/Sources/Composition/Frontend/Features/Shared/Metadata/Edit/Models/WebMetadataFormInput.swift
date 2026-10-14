@@ -13,7 +13,7 @@ public struct WebMetadataFormInput: Codable, Sendable, Equatable, Hashable {
     public let excerpt: String
     public let imageUrl: String
     public let canonicalUrl: String
-    public let noIndex: NewAdminFormFieldCheckbox.Input
+    public let noIndex: AdminFormFieldCheckbox.Input
     public let primaryKeyword: String
     public let cssCodeInjection: String
     public let javascriptCodeInjection: String
@@ -62,7 +62,7 @@ public struct WebMetadataFormInput: Codable, Sendable, Equatable, Hashable {
         )
         self.noIndex =
             try container.decodeIfPresent(
-                NewAdminFormFieldCheckbox.Input.self,
+                AdminFormFieldCheckbox.Input.self,
                 forKey: .noIndex
             )
             ?? .init(value: false)

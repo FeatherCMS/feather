@@ -12,7 +12,7 @@ struct AdminRemoveContactFormDefaultPresenter: AdminRemoveContactFormPresenter {
     let context: AuthenticatedRequestContext
     let renderingEngine: any RenderingEngine
 
-    func renderRemovePage(items: [NewAdminRemoveItemContext])
+    func renderRemovePage(items: [AdminRemoveItemContext])
         async throws
         -> HTMLResponse
     {
@@ -22,11 +22,11 @@ struct AdminRemoveContactFormDefaultPresenter: AdminRemoveContactFormPresenter {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminDialog(
+        return try await renderingEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: NewAdminRemoveConfirmation(
+            title: AdminRemoveConfirmation.dialogTitle,
+            content: AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove contact form",
                     description: "This action cannot be undone."
@@ -42,16 +42,16 @@ struct AdminRemoveContactFormDefaultPresenter: AdminRemoveContactFormPresenter {
     }
 
     private func renderBulkRemovePage(
-        items: [NewAdminRemoveItemContext]
+        items: [AdminRemoveItemContext]
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminDialog(
+        return try await renderingEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: NewAdminRemoveConfirmation(
+            title: AdminRemoveConfirmation.dialogTitle,
+            content: AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove contact forms",
                     description: "This action cannot be undone."

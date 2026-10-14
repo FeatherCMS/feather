@@ -18,12 +18,4 @@ protocol AdminListMediaAssetInteractor: Sendable {
         picker: AdminListMediaAssetModel.PickerState
     ) async throws -> AdminListMediaAssetModel
 
-    func remove(
-        ids: [String]
-    ) async throws
-
-    func resolveRemoveItems(
-        ids: [String]
-    ) async throws -> [NewAdminRemoveItemContext]
-
 }

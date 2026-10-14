@@ -8,9 +8,9 @@ struct AdminViewRedirectRuleDefaultPresenter: AdminViewRedirectRulePresenter {
 
     func renderDetailsPage(
         rule: RedirectRuleDetailsModel,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Redirect rule details",
@@ -21,7 +21,7 @@ struct AdminViewRedirectRuleDefaultPresenter: AdminViewRedirectRulePresenter {
     func renderErrorPage(error: AdminViewRedirectRuleError) async throws
         -> HTMLResponse
     {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         switch error {
         case .notFound:
             state = .init(
@@ -44,11 +44,11 @@ struct AdminViewRedirectRuleDefaultPresenter: AdminViewRedirectRulePresenter {
                 message: "The request could not be completed. Please try again."
             )
         }
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Redirect rule details",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle()
             )

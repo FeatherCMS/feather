@@ -13,14 +13,14 @@ The media picker and uploader should remain generic. Domain features such as sho
 
 ### Feather core
 
-- `feather/feather-core/Sources/Composition/Frontend/Admin/DesignSystem/HTML/Forms/NewAdminFormFieldMediaPicker.swift`
+- `feather/feather-core/Sources/Composition/Frontend/Admin/DesignSystem/HTML/Forms/AdminFormFieldMediaPicker.swift`
   - Form-field integration.
   - Displays one current asset.
   - Writes one asset ID, original URL, or relative URL into a hidden input.
   - Provides Choose asset, Upload, and Clear actions.
   - Must remain single-selection and single-upload only.
 
-- `feather/feather-core/Sources/Composition/Frontend/Admin/DesignSystem/HTML/Layouts/NewAdminDialogHost.swift`
+- `feather/feather-core/Sources/Composition/Frontend/Admin/DesignSystem/HTML/Layouts/AdminDialogHost.swift`
   - Generic dialog loading and mounting.
   - Adds authentication-preserving same-origin requests and dialog presentation.
   - Must not contain media-specific selection or upload behavior.
@@ -111,7 +111,7 @@ The controls should centrally generate the query parameters for:
 Both the picker and uploader should publish one canonical browser event:
 
 ```js
-new-admin-media-picker-selection
+admin-media-picker-selection
 ```
 
 with this payload:
@@ -140,7 +140,7 @@ The event is a browser integration contract, not a domain API. Domain screens de
 
 ## Consumer A: form value assignment
 
-`NewAdminFormFieldMediaPicker` should remain the standard form-field component.
+`AdminFormFieldMediaPicker` should remain the standard form-field component.
 
 Expected behavior:
 
@@ -214,14 +214,14 @@ The same pattern can then be reused for showcase galleries, member galleries, se
 2. Refactor `MediaAssetPickerView` and `MediaAssetUploadView` to consume that configuration.
 3. Make both single and multiple picker/upload flows publish the same result event.
 4. Add reusable picker and uploader popup controls.
-5. Keep `NewAdminFormFieldMediaPicker` single-item only and migrate its internal buttons to the shared route contract where practical.
+5. Keep `AdminFormFieldMediaPicker` single-item only and migrate its internal buttons to the shared route contract where practical.
 6. Add the reusable selection bridge for one hidden value versus repeated relationship IDs.
 7. Replace the custom gallery picker JavaScript in `ShowcaseGalleryAssetActions` with the generic controls and bridge.
 8. Keep showcase gallery association, connected-list rendering, ordering, remove, and bulk-remove logic in the Example feature.
 9. Audit every current media picker caller and classify it explicitly as either:
    - form value assignment; or
    - relationship management.
-10. Remove obsolete multiple-selection code from Feather core and avoid adding media-specific behavior to `NewAdminDialogHost` or `NewAdminFormFieldMediaPicker`.
+10. Remove obsolete multiple-selection code from Feather core and avoid adding media-specific behavior to `AdminDialogHost` or `AdminFormFieldMediaPicker`.
 
 ## Acceptance matrix
 
@@ -255,7 +255,7 @@ The implementation now follows this plan: form fields remain single-asset consum
 
 ### 1. Assign one asset to a form value
 
-Use `NewAdminFormFieldMediaPicker` when the domain model has one asset value,
+Use `AdminFormFieldMediaPicker` when the domain model has one asset value,
 such as `profileImageID`, `logoAssetID`, `heroImageID`, or `videoAssetID`.
 
 The field owns the value that will be submitted. The media module only returns
@@ -456,12 +456,12 @@ generic media controls.
 ┌───────────────────────────────────────────────────────────┐
 │ Feather core                                               │
 │                                                           │
-│ NewAdminFormFieldMediaPicker                              │
+│ AdminFormFieldMediaPicker                              │
 │ - one value                                                │
 │ - one preview                                               │
 │ - single choose/upload                                      │
 │                                                           │
-│ NewAdminDialogHost                                         │
+│ AdminDialogHost                                         │
 │ - fetch and mount dialogs                                  │
 │ - no media-specific behavior                              │
 └───────────────────────────────┬───────────────────────────┘
@@ -503,7 +503,7 @@ choose flow:  picker dialog ────────┐
 upload flow:  upload dialog ────────┘
                                       │
                                       ▼
-                         new-admin-media-picker-selection
+                         admin-media-picker-selection
                                       │
               ┌───────────────────────┴──────────────────────┐
               │                                              │
@@ -520,7 +520,7 @@ upload flow:  upload dialog ────────┘
 ```text
 Does the screen store one asset value directly?
         │
-       yes ──> NewAdminFormFieldMediaPicker
+       yes ──> AdminFormFieldMediaPicker
         │
        no
         ▼

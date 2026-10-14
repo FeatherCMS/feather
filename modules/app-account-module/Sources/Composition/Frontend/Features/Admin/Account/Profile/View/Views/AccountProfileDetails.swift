@@ -8,13 +8,13 @@ struct AccountProfileDetails: Component {
     struct State {
         let profile: AdminViewAccountProfileModel
         let canEdit: Bool
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout BuilderContext) -> Section {
-        var actions: [NewAdminDetailView.Action] = []
+        var actions: [AdminDetailView.Action] = []
         if state.canEdit {
             actions.append(
                 .init(
@@ -25,7 +25,7 @@ struct AccountProfileDetails: Component {
             )
         }
         return context.build(
-            NewAdminDetailView(
+            AdminDetailView(
                 breadcrumb: state.breadcrumb,
                 pageHeader: .primary(
                     title: "Profile",
@@ -37,7 +37,7 @@ struct AccountProfileDetails: Component {
                             ? nil
                             : .init(
                                 label: "Profile image",
-                                imageURL: NewAdminMediaAsset.mediaURL(
+                                imageURL: AdminMediaAsset.mediaURL(
                                     path: asset.previewURL ?? asset.originalURL
                                 )
                             )

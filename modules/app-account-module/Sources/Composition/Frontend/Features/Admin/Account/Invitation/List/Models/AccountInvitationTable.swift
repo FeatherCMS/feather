@@ -13,9 +13,9 @@ struct AccountInvitationTable: Component {
         let isEdited: Bool
         let isRemoved: Bool
         let canAccess: Bool
-        let permissions: NewAdminListActions
+        let permissions: AdminListActions
         let invitations: [Components.Schemas.AccountInvitationListItemSchema]
-        let pageState: NewAdminListPageState
+        let pageState: AdminListPageState
         let search: String
     }
 
@@ -28,12 +28,12 @@ struct AccountInvitationTable: Component {
 
         return Div {
             context.build(
-                NewAdminBreadcrumb(
+                AdminBreadcrumb(
                     links: AccountAdminRoutes.invitationBreadcrumb
                 )
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "User invitations",
                         description:
@@ -42,11 +42,11 @@ struct AccountInvitationTable: Component {
                 )
             )
             context.build(
-                NewAdminList(
+                AdminList(
                     table: {
                         if !state.canAccess {
                             context.build(
-                                NewAdminStatusView(
+                                AdminStatusView(
                                     state: .init(
                                         title: "Forbidden",
                                         message:
@@ -58,7 +58,7 @@ struct AccountInvitationTable: Component {
                         }
                         else if state.pageState.isPageOutOfRange {
                             context.build(
-                                NewAdminListInvalidPageState(
+                                AdminListInvalidPageState(
                                     pageState: state.pageState,
                                     path: AccountAdminRoutes.invitations
                                         .description
@@ -67,7 +67,7 @@ struct AccountInvitationTable: Component {
                         }
                         else if state.invitations.isEmpty {
                             context.build(
-                                NewAdminListEmptyState(
+                                AdminListEmptyState(
                                     message: state.search.isEmpty
                                         ? "No user invitations yet."
                                         : "No invitations match your search.",
@@ -75,7 +75,7 @@ struct AccountInvitationTable: Component {
                                     action: {
                                         if !state.search.isEmpty {
                                             context.build(
-                                                NewAdminButton(
+                                                AdminButton(
                                                     "Reset search",
                                                     href: AccountAdminRoutes
                                                         .invitations
@@ -89,7 +89,7 @@ struct AccountInvitationTable: Component {
                                                 .create
                                         ) {
                                             context.build(
-                                                NewAdminButton(
+                                                AdminButton(
                                                     "Add new",
                                                     href: AccountAdminRoutes
                                                         .invitationAdd
@@ -103,7 +103,7 @@ struct AccountInvitationTable: Component {
                         }
                         else {
                             context.build(
-                                NewAdminListSelectionForm(
+                                AdminListSelectionForm(
                                     state: .init(
                                         action: AccountAdminRoutes
                                             .invitationRemoveBulk.description,
@@ -116,7 +116,7 @@ struct AccountInvitationTable: Component {
                                         isEnabled: canDelete
                                     ),
                                     table: context.build(
-                                        NewAdminListShell(
+                                        AdminListShell(
                                             layout: .init(
                                                 name: "account-invitations",
                                                 columns: [
@@ -131,7 +131,7 @@ struct AccountInvitationTable: Component {
                                                     Tr {
                                                         if canDelete {
                                                             context.build(
-                                                                NewAdminListSelectAllCheckbox()
+                                                                AdminListSelectAllCheckbox()
                                                             )
                                                         }
                                                         Th("Email")
@@ -146,7 +146,7 @@ struct AccountInvitationTable: Component {
                                                         Tr {
                                                             if canDelete {
                                                                 context.build(
-                                                                    NewAdminListRowCheckbox(
+                                                                    AdminListRowCheckbox(
                                                                         id:
                                                                             invitation
                                                                             .id
@@ -170,7 +170,7 @@ struct AccountInvitationTable: Component {
                                                                 "Expires at"
                                                             )
                                                             context.build(
-                                                                NewAdminListRowActions(
+                                                                AdminListRowActions(
                                                                     label:
                                                                         "Actions",
                                                                     actions: [
@@ -214,24 +214,6 @@ struct AccountInvitationTable: Component {
                                                                                 .Invitations
                                                                                 .update
                                                                         ),
-                                                                        .init(
-                                                                            "Remove",
-                                                                            href:
-                                                                                AccountAdminRoutes
-                                                                                .invitationRemove(
-                                                                                    RouterPath(
-                                                                                        invitation
-                                                                                            .id
-                                                                                    )
-                                                                                )
-                                                                                .description,
-                                                                            style:
-                                                                                .destructive,
-                                                                            permission:
-                                                                                AccountPermissions
-                                                                                .Invitations
-                                                                                .delete
-                                                                        ),
                                                                     ],
                                                                     permissions:
                                                                         state
@@ -254,7 +236,7 @@ struct AccountInvitationTable: Component {
                     },
                     search: {
                         context.build(
-                            NewAdminListSearch(
+                            AdminListSearch(
                                 state: .init(
                                     action: AccountAdminRoutes.invitations
                                         .description,
@@ -269,9 +251,9 @@ struct AccountInvitationTable: Component {
                             AccountPermissions.Invitations.create
                         ) {
                             context.build(
-                                NewAdminListToolbar {
+                                AdminListToolbar {
                                     context.build(
-                                        NewAdminButton(
+                                        AdminButton(
                                             "Add new",
                                             href: AccountAdminRoutes
                                                 .invitationAdd.description
@@ -283,7 +265,7 @@ struct AccountInvitationTable: Component {
                     },
                     pagination: {
                         context.build(
-                            NewAdminListPagination(
+                            AdminListPagination(
                                 state: .init(
                                     path: AccountAdminRoutes.invitations
                                         .description,

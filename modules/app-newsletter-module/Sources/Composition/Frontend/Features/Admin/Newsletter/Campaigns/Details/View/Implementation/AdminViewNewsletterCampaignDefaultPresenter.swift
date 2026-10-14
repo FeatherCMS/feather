@@ -19,7 +19,7 @@ struct AdminViewNewsletterCampaignDefaultPresenter:
         error: String?,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Campaign details",
@@ -34,7 +34,7 @@ struct AdminViewNewsletterCampaignDefaultPresenter:
                         success: nil
                     ),
                     isDetails: true,
-                    permissions: NewAdminListActions(
+                    permissions: AdminListActions(
                         Set(permissions.map(PermissionKey.init))
                     ),
                     pageHeader: .primary(

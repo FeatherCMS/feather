@@ -20,11 +20,11 @@ struct AdminListAccountInvitationDefaultPresenter:
         error: String?
     ) async throws -> HTMLResponse {
         if let error {
-            let page = try await renderEngine.renderNewAdminPage(
+            let page = try await renderEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "User invitations",
-                content: NewAdminStatusView(
+                content: AdminStatusView(
                     state: .init(
                         title: "Unable to load user invitations",
                         message: error
@@ -38,10 +38,10 @@ struct AdminListAccountInvitationDefaultPresenter:
             )
         }
 
-        let granted = NewAdminListActions(
+        let granted = AdminListActions(
             Set(permissions.map { PermissionKey($0) })
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "User invitations",
@@ -65,42 +65,4 @@ struct AdminListAccountInvitationDefaultPresenter:
             )
         )
     }
-
-    func renderRemovePage(
-        page: Int,
-        search: String?,
-        items: [NewAdminRemoveItemContext]
-    ) async throws -> HTMLResponse {
-        let hiddenFields =
-            items.map {
-                NewAdminFormFieldHiddenValue(
-                    name: "ids",
-                    value: $0.id
-                )
-            } + [
-                .init(name: "page", value: "\(page)"),
-                .init(name: "search", value: search ?? ""),
-            ]
-        let nonceToken = await AdminNonceStore.shared.issue(
-            sessionToken: context.sessionToken
-        )
-        return try await renderEngine.renderNewAdminDialog(
-            request: request,
-            context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: NewAdminRemoveConfirmation(
-                header: .primary(
-                    title: "Remove selected invitations",
-                    description: "This action cannot be undone."
-                ),
-                selectedItems: items.map(\.label),
-                action: AccountAdminRoutes.invitationRemoveBulk.description,
-                submit: .init(label: "Remove invitations", style: .destructive),
-                nonceToken: nonceToken,
-                hiddenFields: hiddenFields
-            ),
-            size: .small
-        )
-    }
-
 }

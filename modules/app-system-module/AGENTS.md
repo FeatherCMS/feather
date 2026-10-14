@@ -35,11 +35,11 @@ Use dedicated page, form, table, row, and details components where the view
 has a distinct responsibility. Keep permission decisions and API calls out of
 views; pass already-prepared state and action permissions into them.
 
-Use the existing `NewAdmin` design-system components for admin UI, including
+Use the existing `Admin` design-system components for admin UI, including
 breadcrumbs, page headers, forms, fields, buttons, tables, list actions,
 pagination, empty states, status pages, confirmations, and notifications.
 Do not invent or duplicate UI components, styles, or markup when an existing
-`NewAdmin` component provides the required behavior. Create a new component
+`Admin` component provides the required behavior. Create a new component
 only when the feature explicitly requires UI that the existing components
 cannot represent.
 
@@ -110,7 +110,7 @@ Use `context.isCurrentUserAllowed(to:)` for individual gates. Use
 Do not manually convert `Set<String>` permission values in feature code.
 
 Permission denial for an HTML page should render a presenter-provided
-`NewAdminStatusView`. Invalid nonces are request-level failures and should be
+`AdminStatusView`. Invalid nonces are request-level failures and should be
 rendered as a dedicated bad-request page. List, details, edit, and remove views
 must not display actions the current user cannot execute.
 
@@ -148,7 +148,7 @@ error markup.
 The list operation should pass page and search state through the repository,
 interactor, presenter, table, pagination, remove form, and redirects.
 
-Use `NewAdminListActions` for list row actions, toolbar actions, selection, and
+Use `AdminListActions` for list row actions, toolbar actions, selection, and
 detail-page actions. Build actions conditionally rather than filtering by
 button labels.
 
@@ -173,7 +173,7 @@ fallback. A missing optional name does not mean the entity is missing.
 ## Status and error handling
 
 Present user-facing API failures with the operation presenter and
-`NewAdminStatusView`. Include a useful title, message, and cancel destination
+`AdminStatusView`. Include a useful title, message, and cancel destination
 for destructive flows. Handle documented OpenAPI statuses explicitly, including
 unauthorized, forbidden, not found, and conflict/undocumented responses.
 

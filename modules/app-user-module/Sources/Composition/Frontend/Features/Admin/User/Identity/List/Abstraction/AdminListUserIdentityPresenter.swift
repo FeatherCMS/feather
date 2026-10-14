@@ -4,7 +4,7 @@ import UserAdminAPI
 
 protocol AdminListUserIdentityPresenter: Sendable {
     func renderListPage(
-        model: NewAdminListModel<Components.Schemas.UserIdentityListItemSchema>,
+        model: AdminListModel<Components.Schemas.UserIdentityListItemSchema>,
         permissions: Set<PermissionKey>,
         search: String?,
         role: String?

@@ -5,10 +5,6 @@ struct AdminRemoveMediaVariantDefaultInteractor:
 {
     let repository: any AdminRemoveMediaVariantRepository
 
-    func names(ids: [String]) async throws -> [NewAdminRemoveItemContext] {
-        do { return try await repository.names(ids: ids) }
-        catch let error as OpenAPIRepositoryError { throw map(error) }
-    }
 
     func delete(ids: [String]) async throws {
         do { try await repository.delete(ids: ids) }

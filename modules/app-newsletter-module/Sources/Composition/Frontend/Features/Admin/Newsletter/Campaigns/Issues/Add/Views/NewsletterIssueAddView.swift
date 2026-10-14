@@ -13,7 +13,7 @@ struct NewsletterIssueAddView: Component {
         let newsletterId: String
         let issueId: String?
         let error: String?
-        let pageHeader: NewAdminPageHeader.State
+        let pageHeader: AdminPageHeader.State
     }
     let state: State
 
@@ -30,7 +30,7 @@ struct NewsletterIssueAddView: Component {
             .description
         return Section {
             context.build(
-                NewAdminBreadcrumb(
+                AdminBreadcrumb(
                     links: NewsletterAdminRoutes.breadcrumb + [
                         .init(
                             label: "Campaign issues",
@@ -47,19 +47,19 @@ struct NewsletterIssueAddView: Component {
                     ]
                 )
             )
-            context.build(NewAdminPageHeader(state: state.pageHeader))
+            context.build(AdminPageHeader(state: state.pageHeader))
             context.build(
                 NewsletterCampaignTabs(
                     id: state.newsletterId,
                     active: .issues
                 )
             )
-            let form = NewAdminForm(action: action) {
+            let form = AdminForm(action: action) {
                 if let error = state.error {
-                    P(error).class("new-admin-form__error")
+                    P(error).class("admin-form__error")
                 }
                 context.build(
-                    NewAdminFormFieldInput(
+                    AdminFormFieldInput(
                         state: .init(
                             name: "subject",
                             label: "Subject",
@@ -69,7 +69,7 @@ struct NewsletterIssueAddView: Component {
                     )
                 )
                 context.build(
-                    NewAdminFormFieldTextArea(
+                    AdminFormFieldTextArea(
                         state: .init(
                             name: "content",
                             label: "Content",
@@ -80,7 +80,7 @@ struct NewsletterIssueAddView: Component {
                     )
                 )
                 context.build(
-                    NewAdminFormFieldDatePicker(
+                    AdminFormFieldDatePicker(
                         state: .init(
                             name: "scheduledAt",
                             label: "Schedule",
@@ -90,13 +90,13 @@ struct NewsletterIssueAddView: Component {
                 )
                 Div {
                     context.build(
-                        NewAdminSubmitButton(
+                        AdminSubmitButton(
                             state.issueId == nil ? "Add issue" : "Save issue",
                             style: .primary
                         )
                     )
                     context.build(
-                        NewAdminControlButton(
+                        AdminControlButton(
                             "Send test email",
                             style: .secondary
                         )
@@ -106,10 +106,10 @@ struct NewsletterIssueAddView: Component {
                         "newsletterTestEmailModal"
                     )
                 }
-                .class("new-admin-form__actions")
+                .class("admin-form__actions")
             }
             context.build(
-                NewAdminRelationshipGroup(
+                AdminRelationshipGroup(
                     pageHeader: .secondary(
                         title: "Issue content",
                         description:
@@ -124,7 +124,7 @@ struct NewsletterIssueAddView: Component {
                     Div {
                         H3("Send test email")
                         context.build(
-                            NewAdminControlButton(
+                            AdminControlButton(
                                 "Close",
                                 style: .ghost(.primary)
                             )
@@ -136,7 +136,7 @@ struct NewsletterIssueAddView: Component {
                     }
                     .class("newsletter-test-email-lightbox-header")
                     context.build(
-                        NewAdminForm(
+                        AdminForm(
                             action: state.issueId.map {
                                 NewsletterAdminRoutes.issueTestEmail(
                                     newsletterID: RouterPath(
@@ -158,7 +158,7 @@ struct NewsletterIssueAddView: Component {
                             ]
                         ) {
                             context.build(
-                                NewAdminFormFieldInput(
+                                AdminFormFieldInput(
                                     state: .init(
                                         name: "email",
                                         label: "Test email address",
@@ -169,13 +169,13 @@ struct NewsletterIssueAddView: Component {
                             )
                             Div {
                                 context.build(
-                                    NewAdminSubmitButton(
+                                    AdminSubmitButton(
                                         "Send",
                                         style: .primary
                                     )
                                 )
                             }
-                            .class("new-admin-form__actions")
+                            .class("admin-form__actions")
                         }
                     )
                 }
@@ -193,7 +193,7 @@ struct NewsletterIssueAddView: Component {
             )
             Script(
                 """
-                    (function() { var modal = document.getElementById('newsletterTestEmailModal'); if (!modal) return; document.querySelectorAll('[data-newsletter-test-email-open="newsletterTestEmailModal"]').forEach(function(button) { button.addEventListener('click', function() { var issueForm = document.querySelector('.new-admin-form'); if (issueForm) { var subject = issueForm.querySelector('[name="subject"]'); var content = issueForm.querySelector('[name="content"]'); var testSubject = modal.querySelector('input[type="hidden"][name="subject"]'); var testContent = modal.querySelector('input[type="hidden"][name="content"]'); if (subject && testSubject) testSubject.value = subject.value; if (content && testContent) testContent.value = content.value; } modal.classList.add('is-visible'); modal.querySelector('input[name="email"]').focus(); }); }); document.querySelectorAll('[data-newsletter-test-email-close="newsletterTestEmailModal"]').forEach(function(button) { button.addEventListener('click', function() { modal.classList.remove('is-visible'); }); }); modal.addEventListener('click', function(event) { if (event.target === modal) modal.classList.remove('is-visible'); }); }());
+                    (function() { var modal = document.getElementById('newsletterTestEmailModal'); if (!modal) return; document.querySelectorAll('[data-newsletter-test-email-open="newsletterTestEmailModal"]').forEach(function(button) { button.addEventListener('click', function() { var issueForm = document.querySelector('.admin-form'); if (issueForm) { var subject = issueForm.querySelector('[name="subject"]'); var content = issueForm.querySelector('[name="content"]'); var testSubject = modal.querySelector('input[type="hidden"][name="subject"]'); var testContent = modal.querySelector('input[type="hidden"][name="content"]'); if (subject && testSubject) testSubject.value = subject.value; if (content && testContent) testContent.value = content.value; } modal.classList.add('is-visible'); modal.querySelector('input[name="email"]').focus(); }); }); document.querySelectorAll('[data-newsletter-test-email-close="newsletterTestEmailModal"]').forEach(function(button) { button.addEventListener('click', function() { modal.classList.remove('is-visible'); }); }); modal.addEventListener('click', function(event) { if (event.target === modal) modal.classList.remove('is-visible'); }); }());
                 """
             )
         }

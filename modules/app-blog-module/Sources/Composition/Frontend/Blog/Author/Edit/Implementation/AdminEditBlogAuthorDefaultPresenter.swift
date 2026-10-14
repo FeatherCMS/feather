@@ -21,7 +21,7 @@ struct AdminEditBlogAuthorDefaultPresenter: AdminEditBlogAuthorPresenter {
         state: BlogAuthorForm.State,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit author",
@@ -41,7 +41,7 @@ struct AdminEditBlogAuthorDefaultPresenter: AdminEditBlogAuthorPresenter {
         message: String,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit author",

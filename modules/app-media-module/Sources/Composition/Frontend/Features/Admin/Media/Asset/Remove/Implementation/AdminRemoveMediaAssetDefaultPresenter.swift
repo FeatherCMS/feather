@@ -19,10 +19,10 @@ struct AdminRemoveMediaAssetDefaultPresenter: AdminRemoveMediaAssetPresenter {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminDialog(
+        return try await renderEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
+            title: AdminRemoveConfirmation.dialogTitle,
             content: AssetRemoveView(
                 item: model.item,
                 nonceToken: nonceToken

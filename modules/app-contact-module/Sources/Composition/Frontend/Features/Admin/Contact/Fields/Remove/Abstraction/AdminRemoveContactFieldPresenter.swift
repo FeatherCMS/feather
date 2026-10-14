@@ -8,7 +8,7 @@ import WebBuilders
 import WebComponents
 
 protocol AdminRemoveContactFieldPresenter: Sendable {
-    func renderRemovePage(items: [NewAdminRemoveItemContext])
+    func renderRemovePage(items: [AdminRemoveItemContext])
         async throws -> HTMLResponse
 
     func renderForbiddenPage() async throws -> HTMLResponse

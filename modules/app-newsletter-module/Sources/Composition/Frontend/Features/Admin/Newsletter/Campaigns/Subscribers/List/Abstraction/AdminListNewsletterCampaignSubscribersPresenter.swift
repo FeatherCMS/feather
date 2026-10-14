@@ -10,9 +10,9 @@ import WebComponents
 protocol AdminListNewsletterCampaignSubscribersPresenter: Sendable {
     func render(
         newsletterId: String,
-        model: NewAdminListModel<AdminNewsletterCampaignSubscriberItem>,
+        model: AdminListModel<AdminNewsletterCampaignSubscriberItem>,
         search: String?,
         error: String?,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse
 }

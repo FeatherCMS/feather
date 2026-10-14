@@ -16,39 +16,13 @@ struct AdminRemoveContactFormEmailDefaultController:
             any AdminRemoveContactFormEmailPresenter
         >
 
-    func confirm(request: Request, context: AuthenticatedRequestContext)
-        async throws
-        -> HTMLResponse
-    {
-        let (interactor, presenter) = buildRuntime((request, context))
-        let formId = try context.requiredParameter("formKey")
-        let ids = request.queryStrings("ids")
-        if ids.count == 1, let mailId = ids.first {
-            let form = try await interactor.get(id: formId)
-            guard let mail = form.mails.first(where: { $0.id == mailId }) else {
-                throw HTTPError(.notFound)
-            }
-            return try await presenter.renderRemovePage(
-                formId: formId,
-                items: [.init(id: mail.id, label: mail.subject)]
-            )
-        }
-        return try await presenter.renderRemovePage(
-            formId: formId,
-            items:
-                ids
-                .map {
-                    .init(id: $0, label: $0)
-                }
-        )
-    }
 
     func remove(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> Response
     {
         let payload = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         let (interactor, _) = buildRuntime((request, context))

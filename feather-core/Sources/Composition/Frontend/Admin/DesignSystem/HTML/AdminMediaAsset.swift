@@ -1,0 +1,69 @@
+public struct AdminMediaAssetVariant: Sendable, Equatable, Codable, Hashable
+{
+    public let key: String
+    public let name: String
+    public let url: String
+    public let `extension`: String
+
+    public init(
+        key: String,
+        name: String,
+        url: String,
+        `extension`: String
+    ) {
+        self.key = key
+        self.name = name
+        self.url = url
+        self.extension = `extension`
+    }
+}
+
+public struct AdminMediaAsset: Sendable, Equatable, Codable, Hashable {
+    public let id: String
+    public let name: String
+    public let slugPath: String
+    public let url: String
+    public let `extension`: String
+    public let contentType: String
+    public let sizeBytes: Int64
+    public let variants: [AdminMediaAssetVariant]
+    public let title: String?
+    public let altText: String?
+    public let status: String
+
+    public init(
+        id: String,
+        name: String,
+        slugPath: String,
+        url: String,
+        `extension`: String,
+        contentType: String,
+        sizeBytes: Int64,
+        variants: [AdminMediaAssetVariant] = [],
+        title: String?,
+        altText: String?,
+        status: String
+    ) {
+        self.id = id
+        self.name = name
+        self.slugPath = slugPath
+        self.url = url
+        self.extension = `extension`
+        self.contentType = contentType
+        self.sizeBytes = sizeBytes
+        self.variants = variants
+        self.title = title
+        self.altText = altText
+        self.status = status
+    }
+
+    public var originalURL: String { url }
+
+    public var previewURL: String? {
+        variants.first { $0.key == "preview" }?.url
+    }
+
+    public var coverURL: String? {
+        variants.first { $0.key == "cover" }?.url
+    }
+}

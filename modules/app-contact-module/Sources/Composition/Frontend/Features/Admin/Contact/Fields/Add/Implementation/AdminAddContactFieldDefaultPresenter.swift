@@ -17,7 +17,7 @@ struct AdminAddContactFieldDefaultPresenter:
         model: AdminAddContactFieldModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Add contact form field",
@@ -104,11 +104,11 @@ struct AdminAddContactFieldDefaultPresenter:
         message: String,
         status: HTTPResponse.Status
     ) async throws -> HTMLResponse {
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Add contact form field",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(title: title, message: message),
                 icon: FeatherIcons.alertCircle()
             )

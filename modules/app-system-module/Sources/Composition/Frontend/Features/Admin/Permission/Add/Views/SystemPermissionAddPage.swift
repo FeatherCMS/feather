@@ -16,10 +16,10 @@ struct SystemPermissionAddPage: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: SystemPermissionRoutes.breadcrumb)
+                AdminBreadcrumb(links: SystemPermissionRoutes.breadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Add system permission",
                         description: "Create a system permission."

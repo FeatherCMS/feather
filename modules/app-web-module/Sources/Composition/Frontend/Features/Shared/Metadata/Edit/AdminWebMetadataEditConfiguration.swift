@@ -5,15 +5,15 @@ public struct AdminWebMetadataEditConfiguration: Sendable {
 
     public let title: String
     public let description: String
-    public let breadcrumb: [NewAdminBreadcrumb.Link]
-    public let navigationTabs: [NewAdminTabBar.Link]
+    public let breadcrumb: [AdminBreadcrumb.Link]
+    public let navigationTabs: [AdminTabBar.Link]
 
     public init(
         referenceType: String,
         title: String,
         description: String = "Edit the web metadata for the content.",
-        breadcrumb: [NewAdminBreadcrumb.Link],
-        navigationTabs: [NewAdminTabBar.Link]
+        breadcrumb: [AdminBreadcrumb.Link],
+        navigationTabs: [AdminTabBar.Link]
     ) {
         self.referenceType = referenceType
         self.title = title

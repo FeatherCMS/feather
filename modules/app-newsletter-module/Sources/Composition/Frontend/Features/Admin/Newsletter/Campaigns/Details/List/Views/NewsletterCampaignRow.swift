@@ -7,7 +7,7 @@ import WebComponents
 
 struct NewsletterCampaignRow: Component {
     let item: AdminNewsletterCampaignItem
-    let actions: NewAdminListActions
+    let actions: AdminListActions
     let returnTo: String
     let isPicker: Bool
 
@@ -16,7 +16,7 @@ struct NewsletterCampaignRow: Component {
 
         return Tr {
             if canDelete {
-                context.build(NewAdminListRowCheckbox(id: item.id))
+                context.build(AdminListRowCheckbox(id: item.id))
             }
             identifierCell()
             if isPicker {
@@ -29,10 +29,12 @@ struct NewsletterCampaignRow: Component {
                 .data("label", "Name")
             }
             else {
-                Td(item.name).data("label", "Name")
+                Td(item.name)
+                    .data("label", "Name")
+                    .data("remove-label", "true")
             }
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: [
                         .init(
@@ -54,17 +56,6 @@ struct NewsletterCampaignRow: Component {
                                 .description,
                             style: .ghost(.secondary),
                             permission: Permissions.Campaigns.update
-                        ),
-                        .init(
-                            "Remove",
-                            href: NewAdminLocation.remove(
-                                path: NewsletterAdminRoutes.campaignRemove
-                                    .description,
-                                ids: [item.id],
-                                returnTo: returnTo
-                            ),
-                            style: .destructive,
-                            permission: Permissions.Campaigns.delete
                         ),
                     ],
                     permissions: actions

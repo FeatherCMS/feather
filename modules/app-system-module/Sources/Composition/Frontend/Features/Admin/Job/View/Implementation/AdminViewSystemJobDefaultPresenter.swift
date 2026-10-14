@@ -10,7 +10,7 @@ struct AdminViewSystemJobDefaultPresenter: AdminViewSystemJobPresenter {
     func renderDetailsPage(
         job: SystemJobDetailsModel
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Worker job details",
@@ -23,7 +23,7 @@ struct AdminViewSystemJobDefaultPresenter: AdminViewSystemJobPresenter {
     func renderErrorPage(
         error: AdminViewSystemJobError
     ) async throws -> HTMLResponse {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         switch error {
         case .notFound:
             state = .init(
@@ -46,11 +46,11 @@ struct AdminViewSystemJobDefaultPresenter: AdminViewSystemJobPresenter {
                 message: "The request could not be completed. Please try again."
             )
         }
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Worker job details",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle()
             )

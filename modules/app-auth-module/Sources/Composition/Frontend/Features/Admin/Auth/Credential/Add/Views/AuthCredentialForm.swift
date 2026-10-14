@@ -26,9 +26,9 @@ struct AuthCredentialForm: Component {
 
     struct State: Sendable {
         var identity: FieldState
-        var identityOptions: [NewAdminFormFieldSelectAutocomplete.Option]
-        var email: NewAdminFormFieldInput.State
-        var password: NewAdminFormFieldInput.State
+        var identityOptions: [AdminFormFieldSelectAutocomplete.Option]
+        var email: AdminFormFieldInput.State
+        var password: AdminFormFieldInput.State
         var passwordRequired: Bool
         var nonceToken: String? = nil
         var error: String?
@@ -51,17 +51,17 @@ struct AuthCredentialForm: Component {
         password.isRequired = state.passwordRequired
         password.type = .password
 
-        let form = NewAdminForm(action: action, nonceToken: state.nonceToken) {
+        let form = AdminForm(action: action, nonceToken: state.nonceToken) {
             if let success = state.success { P(success).class("success") }
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
             Input()
                 .type(.hidden)
                 .name("userId")
                 .value(state.identity.value)
             context.build(
-                NewAdminFormFieldSelectAutocomplete(
+                AdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: state.email.name,
                         label: "Auth email",
@@ -72,15 +72,15 @@ struct AuthCredentialForm: Component {
                     )
                 )
             )
-            context.build(NewAdminFormFieldInput(state: password))
+            context.build(AdminFormFieldInput(state: password))
             Div {
                 Div {
                     context.build(
-                        NewAdminSubmitButton(submitLabel, style: .primary)
+                        AdminSubmitButton(submitLabel, style: .primary)
                     )
                     if let removeHref {
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 "Remove credential",
                                 href: removeHref,
                                 style: .destructive
@@ -88,7 +88,7 @@ struct AuthCredentialForm: Component {
                         )
                     }
                 }
-                .class("new-admin-form__actions")
+                .class("admin-form__actions")
             }
         }
         return context.build(form)

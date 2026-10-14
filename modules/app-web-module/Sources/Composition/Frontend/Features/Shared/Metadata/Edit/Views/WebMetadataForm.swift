@@ -34,7 +34,7 @@ struct WebMetadataForm: Component {
         var title: FieldState
         var excerpt: FieldState
         var imageUrl: FieldState
-        var selectedImageAsset: NewAdminMediaAsset?
+        var selectedImageAsset: AdminMediaAsset?
         var canonicalUrl: FieldState
         var noIndex: CheckboxState
         var primaryKeyword: FieldState
@@ -72,12 +72,12 @@ struct WebMetadataForm: Component {
     var removeLabel: String = "Remove"
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action) {
+        let form = AdminForm(action: action) {
             if let success = state.success {
-                P(success).class("new-admin-form__success")
+                P(success).class("admin-form__success")
             }
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
 
             context.build(
@@ -179,10 +179,10 @@ struct WebMetadataForm: Component {
 
             Section {
                 Div {
-                    context.build(NewAdminSubmitButton(submitLabel))
+                    context.build(AdminSubmitButton(submitLabel))
                     if let removeHref {
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 removeLabel,
                                 href: removeHref,
                                 style: .destructive
@@ -190,7 +190,7 @@ struct WebMetadataForm: Component {
                         )
                     }
                 }
-                .class("new-admin-form__actions")
+                .class("admin-form__actions")
             }
         }
         return context.build(form)

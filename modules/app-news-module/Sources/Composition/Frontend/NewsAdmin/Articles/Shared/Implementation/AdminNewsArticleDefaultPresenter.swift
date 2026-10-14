@@ -16,7 +16,7 @@ struct AdminNewsArticleDefaultPresenter: AdminNewsArticlePresenter {
         search: String,
         error: String?
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "News articles",
@@ -44,7 +44,7 @@ struct AdminNewsArticleDefaultPresenter: AdminNewsArticlePresenter {
         let selectedImageAsset = try? await mediaAPI.loadImageAsset(
             assetId: input.imageAssetId
         )
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: title,
@@ -64,7 +64,7 @@ struct AdminNewsArticleDefaultPresenter: AdminNewsArticlePresenter {
     func renderDetails(
         item: Components.Schemas.NewsArticleDetailSchema
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: item.title,
@@ -78,7 +78,7 @@ struct AdminNewsArticleDefaultPresenter: AdminNewsArticlePresenter {
     func renderError(
         _ message: String
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "News article",
@@ -97,11 +97,11 @@ struct AdminNewsArticleDefaultPresenter: AdminNewsArticlePresenter {
             sessionToken: context.sessionToken
         )
         return
-            try await renderingEngine.renderNewAdminDialog(
+            try await renderingEngine.renderAdminDialog(
                 request: request,
                 context: context,
-                title: NewAdminRemoveConfirmation.dialogTitle,
-                content: NewAdminRemoveConfirmation(
+                title: AdminRemoveConfirmation.dialogTitle,
+                content: AdminRemoveConfirmation(
                     header: .primary(
                         title: "Remove news article",
                         description: "This action cannot be undone."

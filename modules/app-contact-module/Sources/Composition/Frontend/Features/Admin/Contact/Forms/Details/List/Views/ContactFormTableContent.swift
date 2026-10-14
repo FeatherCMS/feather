@@ -9,23 +9,23 @@ import WebComponents
 
 struct ContactFormTableContent: Component {
     let items: [AdminContactFormDetailsItem]
-    let pageState: NewAdminListPageState
+    let pageState: AdminListPageState
     let search: String
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
     let isPicker: Bool
 
     func html(context: inout BuilderContext) -> Div {
-        let returnTo = NewAdminLocation.url(
+        let returnTo = AdminLocation.url(
             path: ContactAdminRoutes.forms.description,
             page: pageState.page,
             search: search
         )
         return context.build(
-            NewAdminList(
+            AdminList(
                 table: {
                     if pageState.isPageOutOfRange {
                         context.build(
-                            NewAdminListInvalidPageState(
+                            AdminListInvalidPageState(
                                 pageState: pageState,
                                 path: ContactAdminRoutes.forms.description
                             )
@@ -33,7 +33,7 @@ struct ContactFormTableContent: Component {
                     }
                     else if items.isEmpty {
                         context.build(
-                            NewAdminListEmptyState(
+                            AdminListEmptyState(
                                 message: search.isEmpty
                                     ? "No contact forms yet."
                                     : "No contact forms match your search.",
@@ -44,7 +44,7 @@ struct ContactFormTableContent: Component {
                                             ContactPermissions.Forms.create
                                         ) {
                                             context.build(
-                                                NewAdminButton(
+                                                AdminButton(
                                                     "Add form",
                                                     href: ContactAdminRoutes
                                                         .formAdd.description
@@ -54,7 +54,7 @@ struct ContactFormTableContent: Component {
                                     }
                                     else {
                                         context.build(
-                                            NewAdminButton(
+                                            AdminButton(
                                                 "Reset search",
                                                 href: ContactAdminRoutes.forms
                                                     .description,
@@ -71,9 +71,9 @@ struct ContactFormTableContent: Component {
                             ContactPermissions.Forms.delete
                         )
                         context.build(
-                            NewAdminListSelectionForm(
+                            AdminListSelectionForm(
                                 state: .init(
-                                    action: NewAdminLocation.remove(
+                                    action: AdminLocation.remove(
                                         path: ContactAdminRoutes.formRemove
                                             .description,
                                         ids: [],
@@ -88,7 +88,7 @@ struct ContactFormTableContent: Component {
                                     isEnabled: canDelete
                                 ),
                                 table: context.build(
-                                    NewAdminListShell(
+                                    AdminListShell(
                                         layout: .init(
                                             name: "contact-forms",
                                             columns: [
@@ -102,7 +102,7 @@ struct ContactFormTableContent: Component {
                                                 Tr {
                                                     if canDelete {
                                                         context.build(
-                                                            NewAdminListSelectAllCheckbox()
+                                                            AdminListSelectAllCheckbox()
                                                         )
                                                     }
                                                     Th("Key")
@@ -115,7 +115,7 @@ struct ContactFormTableContent: Component {
                                                     Tr {
                                                         if canDelete {
                                                             context.build(
-                                                                NewAdminListRowCheckbox(
+                                                                AdminListRowCheckbox(
                                                                     id: item.key
                                                                 )
                                                             )
@@ -155,7 +155,7 @@ struct ContactFormTableContent: Component {
                                                                 )
                                                         }
                                                         context.build(
-                                                            NewAdminListRowActions(
+                                                            AdminListRowActions(
                                                                 label:
                                                                     "Actions",
                                                                 actions: [
@@ -199,29 +199,6 @@ struct ContactFormTableContent: Component {
                                                                             .Forms
                                                                             .update
                                                                     ),
-                                                                    .init(
-                                                                        "Remove",
-                                                                        href:
-                                                                            NewAdminLocation
-                                                                            .remove(
-                                                                                path:
-                                                                                    ContactAdminRoutes
-                                                                                    .formRemove
-                                                                                    .description,
-                                                                                ids: [
-                                                                                    item
-                                                                                        .key
-                                                                                ],
-                                                                                returnTo:
-                                                                                    returnTo
-                                                                            ),
-                                                                        style:
-                                                                            .destructive,
-                                                                        permission:
-                                                                            ContactPermissions
-                                                                            .Forms
-                                                                            .delete
-                                                                    ),
                                                                 ],
                                                                 permissions:
                                                                     permissions
@@ -243,7 +220,7 @@ struct ContactFormTableContent: Component {
                 },
                 search: {
                     context.build(
-                        NewAdminListSearch(
+                        AdminListSearch(
                             state: .init(
                                 action: ContactAdminRoutes.forms.description,
                                 placeholder: "Quick search contact forms",
@@ -255,9 +232,9 @@ struct ContactFormTableContent: Component {
                 toolbar: {
                     if permissions.allows(ContactPermissions.Forms.create) {
                         context.build(
-                            NewAdminListToolbar {
+                            AdminListToolbar {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         "Add form",
                                         href: ContactAdminRoutes.formAdd
                                             .description
@@ -269,7 +246,7 @@ struct ContactFormTableContent: Component {
                 },
                 pagination: {
                     context.build(
-                        NewAdminListPagination(
+                        AdminListPagination(
                             state: .init(
                                 path: ContactAdminRoutes.forms.description,
                                 pageState: pageState,

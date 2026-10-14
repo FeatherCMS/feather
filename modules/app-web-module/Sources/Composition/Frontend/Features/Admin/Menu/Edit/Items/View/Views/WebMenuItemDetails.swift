@@ -10,7 +10,7 @@ import WebComponents
 struct WebMenuItemDetails: Component {
     struct State {
         let item: WebMenuItemDetailsModel
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
     }
 
     let state: State
@@ -51,9 +51,9 @@ struct WebMenuItemDetails: Component {
 
     func html(context: inout BuilderContext) -> Section {
         Section {
-            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Edit menu",
                         description:
@@ -68,7 +68,7 @@ struct WebMenuItemDetails: Component {
                 )
             )
             context.build(
-                NewAdminRelationshipGroup(
+                AdminRelationshipGroup(
                     pageHeader: .secondary(
                         title: "View item",
                         description: "Review the navigation menu link."
@@ -101,7 +101,7 @@ struct WebMenuItemDetails: Component {
                     .class("web-menu-item-details-fields")
                     Div {
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 "Edit item",
                                 href:
                                     WebMenuItemRoutes.edit(
@@ -113,7 +113,7 @@ struct WebMenuItemDetails: Component {
                             )
                         )
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 "Remove item",
                                 href: WebMenuItemRoutes.itemRemove(
                                     RouterPath(state.item.menuId),

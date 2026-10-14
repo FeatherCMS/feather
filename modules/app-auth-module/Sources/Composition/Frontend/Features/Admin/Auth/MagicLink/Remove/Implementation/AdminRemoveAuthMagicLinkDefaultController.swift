@@ -5,6 +5,7 @@ import CSS
 import FeatherAdmin
 import FeatherValidation
 import FeatherValidationFoundation
+import Foundation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -26,53 +27,24 @@ struct AdminRemoveAuthMagicLinkDefaultController:
             any AdminRemoveAuthMagicLinkPresenter
         >
 
-    func getRemoveAuthMagicLink(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime((request, context))
-        let id = try context.requiredID()
-        guard
-            context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.delete)
-        else {
-            return try await presenter.renderError(
-                item: .init(id: id, label: id),
-                error: .forbidden
-            )
-        }
-        do {
-            let link = try await interactor.get(id: id)
-            return try await presenter.renderPage(
-                item: .init(id: id, label: link.credentialId),
-                credentialId: link.credentialId,
-            )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return try await presenter.renderError(
-                item: .init(id: id, label: id),
-                error: error
-            )
-        }
-    }
 
-    func postRemoveAuthMagicLink(
+    func postAuthMagicLinksRemove(
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
-        let id = try context.requiredID()
         guard
             context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.delete)
         else {
             return
                 try await presenter.renderError(
-                    item: .init(id: id, label: id),
+                    item: .init(id: "", label: ""),
                     error: .forbidden
                 )
                 .response(from: request, context: context)
         }
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListAuthMagicLinkRemoveInput>.self,
             context: context
         )
         guard
@@ -84,12 +56,20 @@ struct AdminRemoveAuthMagicLinkDefaultController:
             return try await presenter.renderInvalidNoncePage()
                 .response(from: request, context: context)
         }
+        let payload = nonceRequest.input
+        let ids = payload.normalizedSelectedIds
+        let location = listLocation(
+            page: payload.normalizedPage,
+            search: payload.normalizedSearch,
+            userID: payload.normalizedUserID
+        )
+        guard !ids.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
         do {
-            try await interactor.execute(
-                entity: .init(id: id)
-            )
+            try await interactor.remove(ids: ids)
             return AdminNotificationFlash.redirect(
-                to: "/admin/auth/magic-links/",
+                to: location,
                 notification: .init(
                     title: "Removed",
                     message: "User magic link removed successfully."
@@ -99,10 +79,23 @@ struct AdminRemoveAuthMagicLinkDefaultController:
         catch let error as OpenAPIRepositoryError {
             return
                 try await presenter.renderError(
-                    item: .init(id: id, label: id),
+                    item: .init(id: ids.joined(separator: ", "), label: ""),
                     error: error
                 )
                 .response(from: request, context: context)
         }
+    }
+
+    private func listLocation(page: Int, search: String?, userID: String?)
+        -> String
+    {
+        var components = URLComponents(string: "/admin/auth/magic-links/")!
+        components.queryItems = [
+            .init(name: "page", value: "\(page)"),
+            .init(name: "search", value: search),
+            .init(name: "userId", value: userID),
+        ]
+        .compactMap { $0.value == nil || $0.value!.isEmpty ? nil : $0 }
+        return components.string ?? "/admin/auth/magic-links/"
     }
 }

@@ -3,6 +3,7 @@ import FeatherValidation
 import HTML
 import Hummingbird
 import MediaAdminAPI
+import MediaContracts
 import OpenAPIRuntime
 import SGML
 import WebBuilders
@@ -15,26 +16,15 @@ struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
             any AdminRemoveMediaAssetPresenter
         >
 
-    func getRemoveMediaAsset(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime((request, context))
-        let id = try context.requiredID()
-        let model = try await interactor.getRemoveMediaAsset(id: id)
-        return try await presenter.renderRemovePage(
-            model: model
-        )
-    }
-
-    func postRemoveMediaAsset(
+    func remove(
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime((request, context))
-        let id = try context.requiredID()
+        let (interactor, _) = buildRuntime((request, context))
+        guard context.isCurrentUserAllowed(to: MediaPermissions.Assets.delete)
+        else { return Response(status: .forbidden) }
         let payload = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -45,20 +35,34 @@ struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
         else {
             return Response(status: .badRequest)
         }
-        let model = try await interactor.postRemoveMediaAsset(id: id)
-        if model.error == nil {
+        let ids = payload.input.normalizedIds
+        let location = AdminLocation.removeCancel(
+            path: MediaAssetRoutes.list.description,
+            returnTo: payload.input.normalizedReturnTo
+        )
+        guard !ids.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
+        do {
+            try await interactor.remove(ids: ids)
             return AdminNotificationFlash.redirect(
-                to: MediaAssetRoutes.list.description,
+                to: location,
                 notification: .init(
                     title: "Removed",
-                    message: "Media item removed successfully."
+                    message: ids.count == 1
+                        ? "Media item removed successfully."
+                        : "Media items removed successfully."
                 )
             )
         }
-        return
-            try await presenter.renderRemovePage(
-                model: model
+        catch {
+            return AdminNotificationFlash.redirect(
+                to: location,
+                notification: .init(
+                    title: "Remove failed",
+                    message: error.displayMessage
+                )
             )
-            .response(from: request, context: context)
+        }
     }
 }

@@ -13,7 +13,7 @@ struct WebMenuItemBulkConfirmation: Component {
         let menuId: String
         let page: Int
         let search: String?
-        let items: [NewAdminRemoveItemContext]
+        let items: [AdminRemoveItemContext]
         let nonceToken: String
     }
 
@@ -21,7 +21,7 @@ struct WebMenuItemBulkConfirmation: Component {
 
     func html(context: inout BuilderContext) -> Section {
         context.build(
-            NewAdminRemoveConfirmation(
+            AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove selected menu items",
                     description: "This action cannot be undone."

@@ -14,4 +14,10 @@ struct AdminRemoveAccountInvitationDefaultInteractor:
     ) async throws {
         try await repository.delete(id: entity.id)
     }
+
+    func execute(ids: [String]) async throws {
+        for id in ids {
+            try await repository.delete(id: id)
+        }
+    }
 }

@@ -11,14 +11,14 @@ import WebContracts
 struct WebMenuItemRow: Component {
     let menuId: String
     let item: Components.Schemas.WebMenuItemListItemSchema
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
     let canReorder: Bool
     let returnTo: String
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(WebPermissions.MenuItems.delete) {
-                context.build(NewAdminListRowCheckbox(id: item.id))
+                context.build(AdminListRowCheckbox(id: item.id))
             }
             if canReorder {
                 Td {
@@ -51,7 +51,7 @@ struct WebMenuItemRow: Component {
             Td(item.url).data("label", "URL")
             Td {
                 context.build(
-                    NewAdminChip(
+                    AdminChip(
                         label: item.isBlank ? "New tab" : "Same tab",
                         color: item.isBlank ? .green : .blue
                     )
@@ -59,7 +59,7 @@ struct WebMenuItemRow: Component {
             }
             .data("label", "Target")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: [
                         .init(
@@ -83,18 +83,6 @@ struct WebMenuItemRow: Component {
                                 .description,
                             style: .ghost(.secondary),
                             permission: WebPermissions.MenuItems.update
-                        ),
-                        .init(
-                            "Remove",
-                            href: NewAdminLocation.remove(
-                                path:
-                                    WebMenuItemRoutes.remove(RouterPath(menuId))
-                                    .description,
-                                ids: [item.id],
-                                returnTo: returnTo
-                            ),
-                            style: .destructive,
-                            permission: WebPermissions.MenuItems.delete
                         ),
                     ],
                     permissions: permissions

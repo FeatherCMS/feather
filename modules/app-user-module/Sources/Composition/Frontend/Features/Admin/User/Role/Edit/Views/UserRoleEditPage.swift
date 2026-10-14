@@ -8,14 +8,14 @@ import WebComponents
 struct UserRoleEditPage: Component {
     let id: String
     let form: UserRoleEditForm.State
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
     let nonceToken: String?
 
     func html(context: inout BuilderContext) -> Section {
         Section {
-            context.build(NewAdminBreadcrumb(links: UserRoleRoutes.breadcrumb))
+            context.build(AdminBreadcrumb(links: UserRoleRoutes.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Edit user role",
                         description: "Update this user role."

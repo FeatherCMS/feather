@@ -62,7 +62,7 @@ struct AnalyticsNotFoundView: Component {
                 Opacity(0.78)
                 FontSize(0.92.rem)
             }
-            Custom(".analytics-not-found .new-admin-chart-card") {
+            Custom(".analytics-not-found .admin-chart-card") {
                 Gap(20.px)
                 Padding(24.px)
                 BorderRadius(18.px)
@@ -71,14 +71,14 @@ struct AnalyticsNotFoundView: Component {
                 BoxSizing(.borderBox)
             }
             Custom(
-                ".analytics-not-found .new-admin-chart-card svg > rect:first-child"
+                ".analytics-not-found .admin-chart-card svg > rect:first-child"
             ) {
                 UnsafeRawProperty(
                     name: "fill",
                     value: "var(--material-color-secondary-tint)"
                 )
             }
-            Custom(".analytics-not-found .new-admin-chart-card h2") {
+            Custom(".analytics-not-found .admin-chart-card h2") {
                 FontSize(1.rem)
                 FontWeight(.number(650))
                 Padding(bottom: 14.px)
@@ -88,26 +88,26 @@ struct AnalyticsNotFoundView: Component {
                     .variable(TokenKey.Colors.Materials.Primary.border)
                 )
             }
-            Custom(".analytics-not-found .new-admin-bar-chart") {
+            Custom(".analytics-not-found .admin-bar-chart") {
                 Gap(14.px)
             }
-            Custom(".analytics-not-found .new-admin-bar-chart__row") {
+            Custom(".analytics-not-found .admin-bar-chart__row") {
                 Gap(8.px)
             }
-            Custom(".analytics-not-found .new-admin-bar-chart__track") {
+            Custom(".analytics-not-found .admin-bar-chart__track") {
                 Height(12.px)
             }
             Custom(
                 ".analytics-not-found .breadcrumb, "
                     + ".analytics-not-found .admin-page-header, "
-                    + ".analytics-not-found .new-admin-form"
+                    + ".analytics-not-found .admin-form"
             ) {
                 MarginTop(0.px)
                 MarginBottom(0.px)
             }
         }
         Media(.maxWidth(600.px)) {
-            Custom(".analytics-not-found .new-admin-chart-card") {
+            Custom(".analytics-not-found .admin-chart-card") {
                 Padding(18.px)
             }
         }
@@ -117,10 +117,10 @@ struct AnalyticsNotFoundView: Component {
         Section {
             Div {
                 context.build(
-                    NewAdminBreadcrumb(links: AnalyticsAdminRoutes.breadcrumb)
+                    AdminBreadcrumb(links: AnalyticsAdminRoutes.breadcrumb)
                 )
                 context.build(
-                    NewAdminPageHeader(
+                    AdminPageHeader(
                         state: .primary(
                             title: model.title,
                             description: model.description
@@ -146,9 +146,9 @@ struct AnalyticsNotFoundView: Component {
                     description: "404 requests across the selected time range."
                 )
                 context.build(
-                    NewAdminChartCard(
+                    AdminChartCard(
                         title: "Daily 404s",
-                        chart: NewAdminLineChart(
+                        chart: AdminLineChart(
                             points: model.overview.daily.map {
                                 .init(
                                     label: dateLabel(for: $0.bucket),
@@ -171,9 +171,9 @@ struct AnalyticsNotFoundView: Component {
                     description: "Routes visitors could not find in this range."
                 )
                 context.build(
-                    NewAdminChartCard(
+                    AdminChartCard(
                         title: "404 pages",
-                        chart: NewAdminBarChart(
+                        chart: AdminBarChart(
                             items: model.overview.notFoundPaths.map {
                                 .init(
                                     label: $0.label,

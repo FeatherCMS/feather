@@ -8,9 +8,9 @@ import WebComponents
 
 struct AuthCredentialConfirmation: Component {
     struct State {
-        let item: NewAdminRemoveItemContext
+        let item: AdminRemoveItemContext
         let identityId: String
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
         let nonceToken: String?
     }
 
@@ -18,7 +18,7 @@ struct AuthCredentialConfirmation: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
-            NewAdminRemoveConfirmation(
+            AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove user credential",
                     description: "This action cannot be undone."

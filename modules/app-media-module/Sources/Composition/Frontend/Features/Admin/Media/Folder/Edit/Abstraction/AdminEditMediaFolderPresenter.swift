@@ -13,13 +13,13 @@ protocol AdminEditMediaFolderPresenter: Sendable {
 
     func renderEditPage(
         model: AdminEditMediaFolderModel,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
         id: String,
         info: String,
         message: String,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse
 }

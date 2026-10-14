@@ -19,7 +19,7 @@ struct WebPageForm: Component {
         var excerpt: FieldState
         var content: FieldState
         var imageAssetId: FieldState
-        var selectedImageAsset: NewAdminMediaAsset?
+        var selectedImageAsset: AdminMediaAsset?
         var metadata: AdminMetadataFields.State
         var error: String?
         var success: String?
@@ -42,8 +42,8 @@ struct WebPageForm: Component {
     var removeHref: String? = nil
     var removeLabel: String = "Remove"
 
-    private func metadataTabLinks() -> [NewAdminTabBar.Link] {
-        var links: [NewAdminTabBar.Link] = [
+    private func metadataTabLinks() -> [AdminTabBar.Link] {
+        var links: [AdminTabBar.Link] = [
             .init(
                 label: "Details",
                 href: action,
@@ -59,18 +59,18 @@ struct WebPageForm: Component {
     }
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action) {
+        let form = AdminForm(action: action) {
             if let success = state.success {
-                P(success).class("new-admin-form__success")
+                P(success).class("admin-form__success")
             }
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
 
-            context.build(NewAdminTabBar(links: metadataTabLinks()))
+            context.build(AdminTabBar(links: metadataTabLinks()))
 
             context.build(
-                NewAdminFormFieldMediaPicker(
+                AdminFormFieldMediaPicker(
                     state: .init(
                         field: .init(
                             key: state.imageAssetId.key,
@@ -102,7 +102,7 @@ struct WebPageForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: state.title.key,
                         label: state.title.label,
@@ -114,7 +114,7 @@ struct WebPageForm: Component {
             )
             context.build(textarea(state.excerpt, rows: 4))
             context.build(
-                NewAdminFormFieldRichContentEditor(
+                AdminFormFieldRichContentEditor(
                     state: .init(
                         key: state.content.key,
                         label: state.content.label,
@@ -125,10 +125,10 @@ struct WebPageForm: Component {
                 )
             )
             Div {
-                context.build(NewAdminSubmitButton(submitLabel))
+                context.build(AdminSubmitButton(submitLabel))
                 if let removeHref {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             removeLabel,
                             href: removeHref,
                             style: .destructive
@@ -136,7 +136,7 @@ struct WebPageForm: Component {
                     )
                 }
             }
-            .class("new-admin-form__actions")
+            .class("admin-form__actions")
         }
         return context.build(form)
     }
@@ -145,8 +145,8 @@ struct WebPageForm: Component {
         _ field: FieldState,
         required: Bool = true,
         rows: Int = 12
-    ) -> NewAdminFormFieldTextArea {
-        NewAdminFormFieldTextArea(
+    ) -> AdminFormFieldTextArea {
+        AdminFormFieldTextArea(
             state: .init(
                 name: field.key,
                 label: field.label,

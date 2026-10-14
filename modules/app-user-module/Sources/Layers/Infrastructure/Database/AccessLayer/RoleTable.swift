@@ -29,8 +29,9 @@ extension RoleTable.Row {
     }
 }
 
-struct RoleTable {
-
+struct RoleTable: DatabaseTableWithBulkDelete {
+    static let name = "user_role"
+    static let primaryKey = "id"
     struct Row {
         let id: String
         let key: String
@@ -200,26 +201,4 @@ struct RoleTable {
         }
     }
 
-    func delete(
-        ids: [String]
-    ) async throws -> [String] {
-        guard !ids.isEmpty else { return [] }
-        let values =
-            ids.map {
-                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
-            }
-            .joined(separator: ", ")
-        return try await connection.run(
-            query: #"""
-                DELETE FROM user_role
-                WHERE id IN (\#(unescaped: values))
-                RETURNING id;
-                """#
-        ) { sequence in
-            try await sequence.collect()
-                .map {
-                    try $0.decode(column: "id", as: String.self)
-                }
-        }
-    }
 }

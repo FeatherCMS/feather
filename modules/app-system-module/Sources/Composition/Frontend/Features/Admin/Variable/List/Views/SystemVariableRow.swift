@@ -13,7 +13,7 @@ struct SystemVariableRow: Component {
         let id: String
         let key: String
         let value: String
-        let actions: [NewAdminListRowActions.Action]
+        let actions: [AdminListRowActions.Action]
 
         init(
             variable: Components.Schemas.SystemVariableListItemSchema,
@@ -37,33 +37,25 @@ struct SystemVariableRow: Component {
                     style: .ghost(.secondary),
                     permission: SystemPermissions.Variables.update
                 ),
-                .init(
-                    "Remove",
-                    href: NewAdminLocation.remove(
-                        path: SystemVariableRoutes.remove.description,
-                        ids: [variable.id],
-                        returnTo: returnTo
-                    ),
-                    style: .destructive,
-                    permission: SystemPermissions.Variables.delete
-                ),
             ]
         }
     }
 
     let state: State
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(SystemPermissions.Variables.delete) {
-                context.build(NewAdminListRowCheckbox(id: state.id))
+                context.build(AdminListRowCheckbox(id: state.id))
             }
-            Td(state.key).data("label", "Key")
+            Td(state.key)
+                .data("label", "Key")
+                .data("remove-label", "true")
             Td(state.value.emptyToNil == nil ? "—" : state.value)
                 .data("label", "Value")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: state.actions,
                     permissions: permissions

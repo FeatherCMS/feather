@@ -9,9 +9,9 @@ import WebComponents
 protocol AdminListNewsletterIssuesPresenter: Sendable {
     func render(
         newsletterId: String,
-        model: NewAdminListModel<AdminNewsletterIssueItem>,
+        model: AdminListModel<AdminNewsletterIssueItem>,
         error: String?,
-        permissions: NewAdminListActions,
+        permissions: AdminListActions,
         search: String?
     ) async throws -> HTMLResponse
 }

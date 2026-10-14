@@ -6,13 +6,13 @@ enum WebPageRoutes {
     static let add = list.appendingPath(RouterPath("add"))
     static let remove = list.appendingPath(RouterPath("remove"))
 
-    static var breadcrumb: [NewAdminBreadcrumb.Link] {
+    static var breadcrumb: [AdminBreadcrumb.Link] {
         WebAdminRoutes.breadcrumb + [
             .init(label: "Pages", link: list.description)
         ]
     }
 
-    static var listBreadcrumb: [NewAdminBreadcrumb.Link] {
+    static var listBreadcrumb: [AdminBreadcrumb.Link] {
         WebAdminRoutes.breadcrumb
     }
 

@@ -25,7 +25,7 @@ enum WebMenuItemRoutes {
         _ itemID: RouterPath,
         origin: RemoveOrigin
     ) -> String {
-        NewAdminLocation.url(
+        AdminLocation.url(
             path: details(menuID, itemID)
                 .appendingPath(RouterPath("remove")).description,
             queryItems: [("origin", origin.rawValue)]
@@ -63,7 +63,7 @@ enum WebMenuItemRoutes {
         details(menuID, id).appendingPath(RouterPath("move"))
     }
 
-    static func breadcrumb(_ menuID: RouterPath) -> [NewAdminBreadcrumb.Link] {
+    static func breadcrumb(_ menuID: RouterPath) -> [AdminBreadcrumb.Link] {
         menuBreadcrumb(menuID) + [
             .init(
                 label: "Items",
@@ -74,7 +74,7 @@ enum WebMenuItemRoutes {
 
     static func menuBreadcrumb(
         _ menuID: RouterPath
-    ) -> [NewAdminBreadcrumb.Link] {
+    ) -> [AdminBreadcrumb.Link] {
         WebAdminRoutes.breadcrumb + [
             .init(
                 label: "Menus",

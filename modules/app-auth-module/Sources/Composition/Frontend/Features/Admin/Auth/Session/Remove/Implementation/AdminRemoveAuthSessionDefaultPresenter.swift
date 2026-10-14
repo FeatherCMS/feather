@@ -11,16 +11,16 @@ struct AdminRemoveAuthSessionDefaultPresenter:
     let renderingEngine: any RenderingEngine
 
     func renderPage(
-        item: NewAdminRemoveItemContext,
+        item: AdminRemoveItemContext,
         identityId: String
     ) async throws -> HTMLResponse {
         let nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderingEngine.renderNewAdminDialog(
+        return try await renderingEngine.renderAdminDialog(
             request: request,
             context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
+            title: AdminRemoveConfirmation.dialogTitle,
             content: AuthSessionRemoveConfirmation(
                 state: .init(
                     item: item,
@@ -36,11 +36,11 @@ struct AdminRemoveAuthSessionDefaultPresenter:
     }
 
     func renderInvalidNoncePage() async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove session",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Form expired",
                     message:
@@ -52,11 +52,11 @@ struct AdminRemoveAuthSessionDefaultPresenter:
     }
 
     func errorPage(
-        item: NewAdminRemoveItemContext,
+        item: AdminRemoveItemContext,
         identityId: String,
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Remove session",

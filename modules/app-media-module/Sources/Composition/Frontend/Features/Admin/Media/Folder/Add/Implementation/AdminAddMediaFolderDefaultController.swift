@@ -47,7 +47,7 @@ struct AdminAddMediaFolderDefaultController: AdminAddMediaFolderController {
         )
         let model = try await interactor.postAddMediaFolder(payload: payload)
         if model.error == nil {
-            let notification = NewAdminNotification.State(
+            let notification = AdminNotification.State(
                 title: "Added",
                 message: "Media folder added successfully."
             )

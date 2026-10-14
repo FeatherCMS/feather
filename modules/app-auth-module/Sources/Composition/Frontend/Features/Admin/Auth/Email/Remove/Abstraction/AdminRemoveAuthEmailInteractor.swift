@@ -25,4 +25,8 @@ protocol AdminRemoveAuthEmailInteractor: Sendable {
     func execute(
         entity: AdminRemoveAuthEmailModel
     ) async throws
+
+    func remove(
+        ids: [String]
+    ) async throws
 }

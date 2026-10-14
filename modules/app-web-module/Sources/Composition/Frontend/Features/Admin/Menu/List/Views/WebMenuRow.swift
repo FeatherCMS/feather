@@ -13,7 +13,7 @@ struct WebMenuRow: Component {
         let id: String
         let key: String
         let name: String
-        let actions: [NewAdminListRowActions.Action]
+        let actions: [AdminListRowActions.Action]
 
         init(menu: Components.Schemas.WebMenuListItemSchema, returnTo: String) {
             self.id = menu.id
@@ -33,26 +33,16 @@ struct WebMenuRow: Component {
                     style: .ghost(.secondary),
                     permission: WebPermissions.Menus.update
                 ),
-                .init(
-                    "Remove",
-                    href: NewAdminLocation.remove(
-                        path: WebMenuRoutes.remove.description,
-                        ids: [menu.id],
-                        returnTo: returnTo
-                    ),
-                    style: .destructive,
-                    permission: WebPermissions.Menus.delete
-                ),
             ]
         }
     }
 
     let state: State
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     init(
         menu: Components.Schemas.WebMenuListItemSchema,
-        permissions: NewAdminListActions,
+        permissions: AdminListActions,
         returnTo: String
     ) {
         self.state = .init(menu: menu, returnTo: returnTo)
@@ -62,12 +52,12 @@ struct WebMenuRow: Component {
     func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(WebPermissions.Menus.delete) {
-                context.build(NewAdminListRowCheckbox(id: state.id))
+                context.build(AdminListRowCheckbox(id: state.id))
             }
             Td(state.key).data("label", "Key")
             Td(state.name).data("label", "Name")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: state.actions,
                     permissions: permissions

@@ -15,7 +15,7 @@ enum ContactAdminRoutes {
         RouterPath("remove")
     )
 
-    static let breadcrumb: [NewAdminBreadcrumb.Link] = [
+    static let breadcrumb: [AdminBreadcrumb.Link] = [
         .init(label: "Admin", link: "/admin/"),
         .init(label: "Contact", link: contact.description + "/"),
     ]
@@ -34,7 +34,7 @@ enum ContactAdminRoutes {
         ]
 
     static func formEmailsBreadcrumb(_ id: RouterPath)
-        -> [NewAdminBreadcrumb.Link]
+        -> [AdminBreadcrumb.Link]
     {
         formsBreadcrumb + [
             .init(label: "Emails", link: formEmails(id).description + "/")
@@ -42,7 +42,7 @@ enum ContactAdminRoutes {
     }
 
     static func formSubmissionsBreadcrumb(_ id: RouterPath)
-        -> [NewAdminBreadcrumb.Link]
+        -> [AdminBreadcrumb.Link]
     {
         formsBreadcrumb + [
             .init(

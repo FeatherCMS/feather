@@ -12,40 +12,6 @@ struct AdminRemoveAuthSessionDefaultController:
             any AdminRemoveAuthSessionPresenter
         >
 
-    func getRemoveAuthSession(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime((request, context))
-        let identityId = try context.requiredID()
-        let sessionId = try context.requiredParameter("sessionId")
-        guard context.isCurrentUserAllowed(to: AuthPermissions.Sessions.delete)
-        else {
-            return try await presenter.errorPage(
-                item: .init(id: sessionId, label: sessionId),
-                identityId: identityId,
-                error: .forbidden
-            )
-        }
-
-        do {
-            let session = try await interactor.get(
-                identityId: identityId,
-                sessionId: sessionId
-            )
-            return try await presenter.renderPage(
-                item: .init(id: sessionId, label: session.identityEmail),
-                identityId: identityId
-            )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return try await presenter.errorPage(
-                item: .init(id: sessionId, label: sessionId),
-                identityId: identityId,
-                error: error
-            )
-        }
-    }
 
     func postRemoveAuthSession(
         request: Request,
@@ -65,7 +31,7 @@ struct AdminRemoveAuthSessionDefaultController:
                 .response(from: request, context: context)
         }
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard

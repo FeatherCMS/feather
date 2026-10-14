@@ -7,10 +7,10 @@ import WebComponents
 
 struct MediaVariantFormView: Component {
     struct State: Sendable {
-        var key: NewAdminFormFieldInput.State
-        var name: NewAdminFormFieldInput.State
-        var isRequired: NewAdminFormFieldCheckbox.State
-        var isActive: NewAdminFormFieldCheckbox.State
+        var key: AdminFormFieldInput.State
+        var name: AdminFormFieldInput.State
+        var isRequired: AdminFormFieldCheckbox.State
+        var isActive: AdminFormFieldCheckbox.State
         var error: String?
 
         static func empty() -> Self {
@@ -138,21 +138,21 @@ struct MediaVariantFormView: Component {
     }
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action, nonceToken: nonceToken) {
+        let form = AdminForm(action: action, nonceToken: nonceToken) {
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
-            context.build(NewAdminFormFieldInput(state: state.key))
-            context.build(NewAdminFormFieldInput(state: state.name))
-            context.build(NewAdminFormFieldCheckbox(state: state.isRequired))
-            context.build(NewAdminFormFieldCheckbox(state: state.isActive))
+            context.build(AdminFormFieldInput(state: state.key))
+            context.build(AdminFormFieldInput(state: state.name))
+            context.build(AdminFormFieldCheckbox(state: state.isRequired))
+            context.build(AdminFormFieldCheckbox(state: state.isActive))
             Div {
                 context.build(
-                    NewAdminSubmitButton(submitLabel, style: .primary)
+                    AdminSubmitButton(submitLabel, style: .primary)
                 )
                 if let viewHref {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "View",
                             href: viewHref,
                             style: .secondary
@@ -161,7 +161,7 @@ struct MediaVariantFormView: Component {
                 }
                 if let removeHref {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "Remove",
                             href: removeHref,
                             style: .destructive
@@ -169,7 +169,7 @@ struct MediaVariantFormView: Component {
                     )
                 }
             }
-            .class("new-admin-form__actions")
+            .class("admin-form__actions")
         }
         return context.build(form)
     }

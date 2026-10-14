@@ -11,8 +11,8 @@ struct ContactFormSubmissionDetailsView: Component {
         let formId: String
         let item: AdminContactFormSubmissionItem
         let error: String?
-        let breadcrumb: [NewAdminBreadcrumb.Link]
-        let permissions: NewAdminListActions
+        let breadcrumb: [AdminBreadcrumb.Link]
+        let permissions: AdminListActions
     }
     let state: State
 
@@ -21,9 +21,9 @@ struct ContactFormSubmissionDetailsView: Component {
             ContactPermissions.Submissions.update
         )
         return Section {
-            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Contact form submission",
                         description:
@@ -38,10 +38,10 @@ struct ContactFormSubmissionDetailsView: Component {
                 )
             )
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
             context.build(
-                NewAdminRelationshipGroup(
+                AdminRelationshipGroup(
                     pageHeader: .secondary(
                         title: "Submission details",
                         description:
@@ -49,14 +49,14 @@ struct ContactFormSubmissionDetailsView: Component {
                     )
                 ) {
                     context.build(
-                        NewAdminDetailField(
+                        AdminDetailField(
                             label: "Submitted",
                             value: state.item.createdAt.isEmpty
                                 ? "—" : state.item.createdAt
                         )
                     )
                     context.build(
-                        NewAdminDetailField(
+                        AdminDetailField(
                             label: "Email",
                             value: state.item.email ?? "—"
                         )
@@ -64,7 +64,7 @@ struct ContactFormSubmissionDetailsView: Component {
                     H2("Values")
                     if state.item.values.isEmpty {
                         context.build(
-                            NewAdminListEmptyState(
+                            AdminListEmptyState(
                                 message: "No values recorded.",
                                 icon: FeatherIcons.inbox()
                             )
@@ -75,12 +75,12 @@ struct ContactFormSubmissionDetailsView: Component {
                             $0.key < $1.key
                         }) {
                             context.build(
-                                NewAdminDetailField(label: key, value: value)
+                                AdminDetailField(label: key, value: value)
                             )
                         }
                     }
                     if canUpdate {
-                        let form = NewAdminForm(
+                        let form = AdminForm(
                             action:
                                 ContactAdminRoutes.formSubmissionDetails(
                                     formID: RouterPath(state.formId),
@@ -89,7 +89,7 @@ struct ContactFormSubmissionDetailsView: Component {
                                 .description
                         ) {
                             context.build(
-                                NewAdminFormFieldSelect(
+                                AdminFormFieldSelect(
                                     state: .init(
                                         name: "status",
                                         label: "Status",
@@ -115,10 +115,10 @@ struct ContactFormSubmissionDetailsView: Component {
                             )
                             Div {
                                 context.build(
-                                    NewAdminSubmitButton("Save status")
+                                    AdminSubmitButton("Save status")
                                 )
                             }
-                            .class("new-admin-form__actions")
+                            .class("admin-form__actions")
                         }
                         context.build(form)
                     }

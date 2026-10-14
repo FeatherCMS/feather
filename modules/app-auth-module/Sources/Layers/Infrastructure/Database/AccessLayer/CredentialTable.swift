@@ -1,10 +1,11 @@
 public import FeatherDatabase
-import FeatherInfrastructure
+public import FeatherInfrastructure
 
 public import struct Foundation.Date
 
-public struct CredentialTable {
-
+public struct CredentialTable: DatabaseTableWithBulkDelete {
+    public static let name = "auth_email_credential"
+    public static let primaryKey = "id"
     public struct Row: Sendable {
 
         public let id: String
@@ -51,7 +52,7 @@ public struct CredentialTable {
         }
     }
 
-    fileprivate let connection: any DatabaseConnection
+    public let connection: any DatabaseConnection
 
     public init(
         connection: any DatabaseConnection
@@ -314,28 +315,6 @@ public struct CredentialTable {
         }
     }
 
-    public func delete(
-        ids: [String]
-    ) async throws -> [String] {
-        guard !ids.isEmpty else { return [] }
-        let values =
-            ids.map {
-                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
-            }
-            .joined(separator: ", ")
-        return try await connection.run(
-            query: #"""
-                DELETE FROM auth_email_credential
-                WHERE id IN (\#(unescaped: values))
-                RETURNING id;
-                """#
-        ) { sequence in
-            try await sequence.collect()
-                .map {
-                    try $0.decode(column: "id", as: String.self)
-                }
-        }
-    }
 }
 
 extension CredentialTable.Row {

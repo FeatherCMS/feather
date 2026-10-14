@@ -9,7 +9,7 @@ import WebComponents
 
 protocol AdminRemoveNewsletterSubscribersPresenter: Sendable {
     func renderRemovePage(
-        items: [NewAdminRemoveItemContext],
+        items: [AdminRemoveItemContext],
         search: String?,
         campaignId: String?,
         returnTo: String?

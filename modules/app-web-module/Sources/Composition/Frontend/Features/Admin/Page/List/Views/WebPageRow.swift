@@ -9,14 +9,14 @@ import WebContracts
 
 struct WebPageRow: Component {
     let page: AdminListWebPageItemModel
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
     let canEdit: Bool
     let returnTo: String
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(WebPermissions.Pages.delete) {
-                context.build(NewAdminListRowCheckbox(id: page.id))
+                context.build(AdminListRowCheckbox(id: page.id))
             }
             titleCell(context: &context)
             statusCell(context: &context)
@@ -28,7 +28,7 @@ struct WebPageRow: Component {
             .data("label", "Publication")
             Td {
                 context.build(
-                    NewAdminChip(
+                    AdminChip(
                         label: page.availability.label,
                         color: page.availability.color
                     )
@@ -36,7 +36,7 @@ struct WebPageRow: Component {
             }
             .data("label", "Availability")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: [
                         .init(
@@ -53,16 +53,6 @@ struct WebPageRow: Component {
                             style: .ghost(.secondary),
                             permission: WebPermissions.Pages.update
                         ),
-                        .init(
-                            "Remove",
-                            href: NewAdminLocation.remove(
-                                path: WebPageRoutes.remove.description,
-                                ids: [page.id],
-                                returnTo: returnTo
-                            ),
-                            style: .destructive,
-                            permission: WebPermissions.Pages.delete
-                        ),
                     ],
                     permissions: permissions
                 )
@@ -76,7 +66,7 @@ struct WebPageRow: Component {
                 Span(page.title)
                 if let previewPath = previewPath {
                     context.build(
-                        NewAdminPreviewLink(
+                        AdminPreviewLink(
                             href: previewPath,
                             label: "Preview \(page.title)"
                         )
@@ -85,13 +75,14 @@ struct WebPageRow: Component {
             }
         }
         .data("label", "Title")
+        .data("remove-label", "true")
     }
 
     private func statusCell(context: inout BuilderContext) -> Td {
         Td {
             if canEdit {
                 context.build(
-                    NewAdminStatusSelectField(
+                    AdminStatusSelectField(
                         formID: "web-page-status-\(page.id)",
                         selectedStatus: page.metadata.normalizedStatus
                     )

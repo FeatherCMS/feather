@@ -14,7 +14,7 @@ enum AuthSessionRoutes {
 
     static func detailsBreadcrumb(
         _ identityID: RouterPath
-    ) -> [NewAdminBreadcrumb.Link] {
+    ) -> [AdminBreadcrumb.Link] {
         [
             .init(label: "Admin", link: "/admin/"),
             .init(label: "User", link: "/admin/user/"),

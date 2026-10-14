@@ -6,10 +6,10 @@ import WebComponents
 
 struct RedirectRuleEditForm: Component {
     struct State: Sendable {
-        var source: NewAdminFormFieldInput.State
-        var destination: NewAdminFormFieldInput.State
-        var statusCode: NewAdminFormFieldSelect.State
-        var notes: NewAdminFormFieldTextArea.State
+        var source: AdminFormFieldInput.State
+        var destination: AdminFormFieldInput.State
+        var statusCode: AdminFormFieldSelect.State
+        var notes: AdminFormFieldTextArea.State
         var error: String?
 
         mutating func apply(errors: [String: String]) {
@@ -62,19 +62,19 @@ struct RedirectRuleEditForm: Component {
         }
 
         private static let statusOptions = [
-            NewAdminFormFieldSelect.SelectOption(
+            AdminFormFieldSelect.SelectOption(
                 label: "301 Moved Permanently",
                 value: "301"
             ),
-            NewAdminFormFieldSelect.SelectOption(
+            AdminFormFieldSelect.SelectOption(
                 label: "302 Found",
                 value: "302"
             ),
-            NewAdminFormFieldSelect.SelectOption(
+            AdminFormFieldSelect.SelectOption(
                 label: "307 Temporary Redirect",
                 value: "307"
             ),
-            NewAdminFormFieldSelect.SelectOption(
+            AdminFormFieldSelect.SelectOption(
                 label: "308 Permanent Redirect",
                 value: "308"
             ),
@@ -88,21 +88,21 @@ struct RedirectRuleEditForm: Component {
     let nonceToken: String?
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action, nonceToken: nonceToken) {
+        let form = AdminForm(action: action, nonceToken: nonceToken) {
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
-            context.build(NewAdminFormFieldInput(state: state.source))
-            context.build(NewAdminFormFieldInput(state: state.destination))
-            context.build(NewAdminFormFieldSelect(state: state.statusCode))
-            context.build(NewAdminFormFieldTextArea(state: state.notes))
+            context.build(AdminFormFieldInput(state: state.source))
+            context.build(AdminFormFieldInput(state: state.destination))
+            context.build(AdminFormFieldSelect(state: state.statusCode))
+            context.build(AdminFormFieldTextArea(state: state.notes))
             Div {
                 context.build(
-                    NewAdminSubmitButton("Save changes", style: .primary)
+                    AdminSubmitButton("Save changes", style: .primary)
                 )
                 if let viewHref {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "View",
                             href: viewHref,
                             style: .secondary
@@ -111,7 +111,7 @@ struct RedirectRuleEditForm: Component {
                 }
                 if let removeHref {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "Remove",
                             href: removeHref,
                             style: .destructive
@@ -119,7 +119,7 @@ struct RedirectRuleEditForm: Component {
                     )
                 }
             }
-            .class("new-admin-form__actions")
+            .class("admin-form__actions")
         }
         return context.build(form)
     }

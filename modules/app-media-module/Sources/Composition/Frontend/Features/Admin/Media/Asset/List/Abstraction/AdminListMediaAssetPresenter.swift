@@ -14,19 +14,12 @@ protocol AdminListMediaAssetPresenter: Sendable {
     func renderListPage(
         model: AdminListMediaAssetModel,
         search: String?,
-        permissions: NewAdminListActions,
+        permissions: AdminListActions,
     ) async throws -> HTMLResponse
 
     func renderErrorPage(
         message: String,
         picker: Bool
-    ) async throws -> HTMLResponse
-
-    func renderRemovePage(
-        pageState: NewAdminListPageState,
-        search: String?,
-        items: [NewAdminRemoveItemContext],
-        returnTo: String?
     ) async throws -> HTMLResponse
 
     func renderInvalidNoncePage(

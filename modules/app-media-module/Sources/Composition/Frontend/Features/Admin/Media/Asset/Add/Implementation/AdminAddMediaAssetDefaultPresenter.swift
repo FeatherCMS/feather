@@ -48,7 +48,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
             )
         )
         if isDialog {
-            return try await renderEngine.renderNewAdminDialog(
+            return try await renderEngine.renderAdminDialog(
                 request: request,
                 context: context,
                 title: model.isPicker
@@ -66,7 +66,7 @@ struct AdminAddMediaAssetDefaultPresenter: AdminAddMediaAssetPresenter {
                 content: content
             )
         }
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Add media asset",

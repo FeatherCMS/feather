@@ -15,29 +15,13 @@ struct AdminRemoveContactFormDefaultController: AdminRemoveContactFormController
             any AdminRemoveContactFormPresenter
         >
 
-    func confirm(request: Request, context: AuthenticatedRequestContext)
-        async throws
-        -> HTMLResponse
-    {
-        let (interactor, presenter) = buildRuntime((request, context))
-        let keys = request.queryStrings("ids")
-        guard keys.count == 1, let formKey = keys.first else {
-            return try await presenter.renderRemovePage(
-                items: keys.map { .init(id: $0, label: $0) }
-            )
-        }
-        let item = try await interactor.get(key: formKey)
-        return try await presenter.renderRemovePage(
-            items: [.init(id: formKey, label: item.name)]
-        )
-    }
 
     func remove(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> Response
     {
         let payload = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard

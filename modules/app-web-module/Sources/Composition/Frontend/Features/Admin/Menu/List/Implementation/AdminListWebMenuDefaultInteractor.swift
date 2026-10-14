@@ -14,11 +14,4 @@ struct AdminListWebMenuDefaultInteractor:
         try await repository.listWebMenus(page: page, search: search)
     }
 
-    func remove(
-        ids: [String]
-    ) async throws {
-        for id in ids {
-            try await repository.delete(id: id)
-        }
-    }
 }

@@ -107,15 +107,15 @@ struct ContactFormForm: Component {
     }
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action) {
+        let form = AdminForm(action: action) {
             if let success = state.success {
-                P(success).class("new-admin-form__success")
+                P(success).class("admin-form__success")
             }
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: "key",
                         label: "Key",
@@ -126,7 +126,7 @@ struct ContactFormForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: "name",
                         label: "Name",
@@ -137,7 +137,7 @@ struct ContactFormForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: "successMessage",
                         label: "Success message",
@@ -148,7 +148,7 @@ struct ContactFormForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: "failureMessage",
                         label: "Failure message",
@@ -159,7 +159,7 @@ struct ContactFormForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: "redirectUrl",
                         label: "Redirect URL",
@@ -218,8 +218,8 @@ struct ContactFormForm: Component {
                 }
             }
             if !isReadOnly {
-                Div { context.build(NewAdminSubmitButton(submitLabel)) }
-                    .class("new-admin-form__actions")
+                Div { context.build(AdminSubmitButton(submitLabel)) }
+                    .class("admin-form__actions")
                 Script(reorderScript())
             }
         }
@@ -270,7 +270,7 @@ struct ContactFormForm: Component {
     private func fieldCheckbox(
         field: AdminContactFormFieldOption,
         isSelected: Bool
-    ) -> NewAdminCheckbox {
+    ) -> AdminCheckbox {
         .init(
             name: "fieldIds[]",
             value: field.id,

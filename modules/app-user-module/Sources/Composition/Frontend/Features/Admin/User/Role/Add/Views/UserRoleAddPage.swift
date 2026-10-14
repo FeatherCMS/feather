@@ -10,9 +10,9 @@ struct UserRoleAddPage: Component {
 
     func html(context: inout BuilderContext) -> Section {
         Section {
-            context.build(NewAdminBreadcrumb(links: UserRoleRoutes.breadcrumb))
+            context.build(AdminBreadcrumb(links: UserRoleRoutes.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Add user role",
                         description: "Create a user role."

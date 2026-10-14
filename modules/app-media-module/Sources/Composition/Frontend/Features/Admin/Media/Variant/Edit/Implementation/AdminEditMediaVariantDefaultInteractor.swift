@@ -24,7 +24,7 @@ struct AdminEditMediaVariantDefaultInteractor: AdminEditMediaVariantInteractor {
     }
 
     func processorNames(variantId: String, ids: [String]) async throws
-        -> [NewAdminRemoveItemContext]
+        -> [AdminRemoveItemContext]
     {
         do {
             return try await repository.processorNames(

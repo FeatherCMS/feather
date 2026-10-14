@@ -16,7 +16,7 @@ struct AdminViewMediaOverviewDefaultPresenter: AdminViewMediaOverviewPresenter {
     func renderOverview(
         model: AdminViewMediaOverviewModel
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: model.title,

@@ -73,7 +73,7 @@ struct AdminViewAnalyticsOverviewComponent: Component {
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 LineHeight(1.5)
             }
-            Custom(".analytics-overview-destination .new-admin-button") {
+            Custom(".analytics-overview-destination .admin-button") {
                 Margin(top: 4.px)
             }
         }
@@ -82,10 +82,10 @@ struct AdminViewAnalyticsOverviewComponent: Component {
     func html(context: inout BuilderContext) -> Section {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: AnalyticsAdminRoutes.adminBreadcrumb)
+                AdminBreadcrumb(links: AnalyticsAdminRoutes.adminBreadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Analytics",
                         description:
@@ -103,7 +103,7 @@ struct AdminViewAnalyticsOverviewComponent: Component {
                         H2(destination.title)
                         P(destination.description)
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 "Open",
                                 href: destination.href,
                                 style: .primary

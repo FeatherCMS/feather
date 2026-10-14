@@ -9,16 +9,6 @@ protocol AdminListWebMenuItemController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
-    func getWebMenuItemsRemoveConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
-
-    func postWebMenuItemsRemove(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
-
     func postWebMenuItemMove(
         request: Request,
         context: AuthenticatedRequestContext
@@ -33,14 +23,6 @@ extension AdminListWebMenuItemController {
         router.get(
             "/admin/web/menus/{id}/items/",
             use: getWebMenuItems
-        )
-        router.get(
-            "/admin/web/menus/{id}/items/remove/",
-            use: getWebMenuItemsRemoveConfirmation
-        )
-        router.post(
-            "/admin/web/menus/{id}/items/remove/",
-            use: postWebMenuItemsRemove
         )
         router.post(
             "/admin/web/menus/{id}/items/{itemId}/move/",

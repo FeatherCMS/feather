@@ -5,6 +5,7 @@ import CSS
 import FeatherAdmin
 import FeatherValidation
 import FeatherValidationFoundation
+import Foundation
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -26,51 +27,23 @@ struct AdminRemoveAuthEmailDefaultController:
             any AdminRemoveAuthEmailPresenter
         >
 
-    func getRemoveAuthEmail(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime((request, context))
-        let id = try context.requiredID()
-        guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.delete)
-        else {
-            return try await presenter.renderError(
-                item: .init(id: id, label: id),
-                error: .forbidden
-            )
-        }
-        do {
-            let link = try await interactor.get(id: id)
-            return try await presenter.renderPage(
-                item: .init(id: id, label: link.identityId),
-                identityId: link.identityId,
-            )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return try await presenter.renderError(
-                item: .init(id: id, label: id),
-                error: error
-            )
-        }
-    }
 
-    func postRemoveAuthEmail(
+    func postAuthEmailsRemove(
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
-        let id = try context.requiredID()
         guard context.isCurrentUserAllowed(to: AuthPermissions.Emails.delete)
         else {
             return
                 try await presenter.renderError(
-                    item: .init(id: id, label: id),
+                    item: .init(id: "", label: ""),
                     error: .forbidden
                 )
                 .response(from: request, context: context)
         }
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -82,25 +55,46 @@ struct AdminRemoveAuthEmailDefaultController:
             return try await presenter.renderInvalidNoncePage()
                 .response(from: request, context: context)
         }
+        let payload = nonceRequest.input
+        let ids = payload.normalizedIds
+        let location = listLocation(
+            page: payload.normalizedPage,
+            search: payload.normalizedSearch,
+            userID: request.uri.queryParameters["userId"].map(String.init)
+        )
+        guard !ids.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
         do {
-            try await interactor.execute(
-                entity: .init(id: id)
-            )
+            try await interactor.remove(ids: ids)
             return AdminNotificationFlash.redirect(
-                to: "/admin/auth/emails/",
+                to: location,
                 notification: .init(
                     title: "Removed",
-                    message: "User email removed successfully."
+                    message: "User emails removed successfully."
                 )
             )
         }
         catch let error as OpenAPIRepositoryError {
             return
                 try await presenter.renderError(
-                    item: .init(id: id, label: id),
+                    item: .init(id: ids.joined(separator: ", "), label: ""),
                     error: error
                 )
                 .response(from: request, context: context)
         }
+    }
+
+    private func listLocation(page: Int, search: String?, userID: String?)
+        -> String
+    {
+        var components = URLComponents(string: "/admin/auth/emails/")!
+        components.queryItems = [
+            .init(name: "page", value: "\(page)"),
+            .init(name: "search", value: search),
+            .init(name: "userId", value: userID),
+        ]
+        .compactMap { $0.value == nil || $0.value!.isEmpty ? nil : $0 }
+        return components.string ?? "/admin/auth/emails/"
     }
 }

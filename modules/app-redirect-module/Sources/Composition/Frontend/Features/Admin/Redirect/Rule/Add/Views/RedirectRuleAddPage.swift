@@ -11,10 +11,10 @@ struct RedirectRuleAddPage: Component {
     func html(context: inout BuilderContext) -> Section {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: RedirectRuleRoutes.breadcrumb)
+                AdminBreadcrumb(links: RedirectRuleRoutes.breadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Add redirect rule",
                         description:

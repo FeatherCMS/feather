@@ -20,7 +20,7 @@ struct AdminViewBlogTagDefaultPresenter: AdminViewBlogTagPresenter {
         rule: BlogTagDetailsModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Blog tag details",
@@ -39,7 +39,7 @@ struct AdminViewBlogTagDefaultPresenter: AdminViewBlogTagPresenter {
         message: String,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Blog tag details",

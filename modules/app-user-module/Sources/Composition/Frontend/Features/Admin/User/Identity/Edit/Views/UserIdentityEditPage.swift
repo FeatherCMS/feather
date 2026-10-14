@@ -8,16 +8,16 @@ import WebComponents
 struct UserIdentityEditPage: Component {
     let id: String
     let form: UserIdentityEditForm.State
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
     let nonceToken: String?
 
     func html(context: inout BuilderContext) -> Section {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: UserIdentityRoutes.breadcrumb)
+                AdminBreadcrumb(links: UserIdentityRoutes.breadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Edit user identity",
                         description: "Update this user identity."

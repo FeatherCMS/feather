@@ -8,15 +8,17 @@ import WebComponents
 
 struct UserIdentityRow: Component {
     let identity: Components.Schemas.UserIdentityListItemSchema
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
             if permissions.allows(UserPermissions.Identities.delete) {
-                context.build(NewAdminListRowCheckbox(id: identity.id))
+                context.build(AdminListRowCheckbox(id: identity.id))
             }
             Td(identity.id).data("label", "ID")
-            Td(identity.name).data("label", "Name")
+            Td(identity.name)
+                .data("label", "Name")
+                .data("remove-label", "true")
             Td {
                 context.build(
                     UserIdentityStatusChip.make(
@@ -32,7 +34,7 @@ struct UserIdentityRow: Component {
             )
             .data("label", "Roles")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: [
                         .init(
@@ -52,16 +54,6 @@ struct UserIdentityRow: Component {
                                 .description,
                             style: .ghost(.secondary),
                             permission: UserPermissions.Identities.update
-                        ),
-                        .init(
-                            "Remove",
-                            href:
-                                UserIdentityRoutes.remove(
-                                    RouterPath(identity.id)
-                                )
-                                .description,
-                            style: .destructive,
-                            permission: UserPermissions.Identities.delete
                         ),
                     ],
                     permissions: permissions

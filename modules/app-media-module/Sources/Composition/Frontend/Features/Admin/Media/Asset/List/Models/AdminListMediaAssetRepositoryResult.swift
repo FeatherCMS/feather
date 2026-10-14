@@ -3,5 +3,5 @@ import MediaAdminAPI
 
 struct AdminListMediaAssetRepositoryResult: Sendable {
     let items: [Components.Schemas.MediaAssetNodeSearchItemSchema]
-    let pageState: NewAdminListPageState
+    let pageState: AdminListPageState
 }

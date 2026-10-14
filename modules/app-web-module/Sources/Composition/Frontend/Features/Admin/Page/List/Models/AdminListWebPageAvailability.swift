@@ -12,7 +12,7 @@ enum AdminListWebPageAvailability: String, Sendable {
         rawValue.capitalized
     }
 
-    var color: NewAdminChip.ColorName {
+    var color: AdminChip.ColorName {
         switch self {
         case .draft:
             return .yellow

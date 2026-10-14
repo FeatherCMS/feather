@@ -25,7 +25,7 @@ struct AdminListAuthCredentialDefaultPresenter: AdminListAuthCredentialPresenter
     func renderPage(
         state: AuthCredentialTable.State
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "User credentials",
@@ -36,7 +36,7 @@ struct AdminListAuthCredentialDefaultPresenter: AdminListAuthCredentialPresenter
     func renderError(
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "User credentials",

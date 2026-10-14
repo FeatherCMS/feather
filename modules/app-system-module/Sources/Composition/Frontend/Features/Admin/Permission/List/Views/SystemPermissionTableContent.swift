@@ -10,8 +10,8 @@ import WebComponents
 
 struct SystemPermissionTableContent: Component {
     let permissions: [Components.Schemas.SystemPermissionListItemSchema]
-    let actions: NewAdminListActions
-    let pageState: NewAdminListPageState
+    let actions: AdminListActions
+    let pageState: AdminListPageState
     let search: String?
 
     private var searchValue: String {
@@ -19,7 +19,7 @@ struct SystemPermissionTableContent: Component {
     }
 
     private var returnTo: String {
-        NewAdminLocation.url(
+        AdminLocation.url(
             path: SystemPermissionRoutes.list.description,
             page: pageState.page,
             search: search
@@ -31,11 +31,11 @@ struct SystemPermissionTableContent: Component {
         let hasActiveQuery = !(search?.isEmpty ?? true)
 
         return context.build(
-            NewAdminList(
+            AdminList(
                 table: {
                     if pageState.isPageOutOfRange {
                         context.build(
-                            NewAdminListInvalidPageState(
+                            AdminListInvalidPageState(
                                 pageState: pageState,
                                 path: SystemPermissionRoutes.list.description
                             )
@@ -44,13 +44,13 @@ struct SystemPermissionTableContent: Component {
                     else if permissions.isEmpty {
                         if hasActiveQuery {
                             context.build(
-                                NewAdminListNoResultsState(
+                                AdminListNoResultsState(
                                     message:
                                         "No system permissions match your search.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         context.build(
-                                            NewAdminButton(
+                                            AdminButton(
                                                 "Reset search",
                                                 href: SystemPermissionRoutes
                                                     .list
@@ -64,7 +64,7 @@ struct SystemPermissionTableContent: Component {
                         }
                         else {
                             context.build(
-                                NewAdminListEmptyState(
+                                AdminListEmptyState(
                                     message: "No system permissions yet.",
                                     icon: FeatherIcons.inbox(),
                                     action: {
@@ -72,7 +72,7 @@ struct SystemPermissionTableContent: Component {
                                             SystemPermissions.Permissions.create
                                         ) {
                                             context.build(
-                                                NewAdminButton(
+                                                AdminButton(
                                                     "Add new",
                                                     href: SystemPermissionRoutes
                                                         .add.description
@@ -86,9 +86,9 @@ struct SystemPermissionTableContent: Component {
                     }
                     else {
                         context.build(
-                            NewAdminListSelectionForm(
+                            AdminListSelectionForm(
                                 state: .init(
-                                    action: NewAdminLocation.remove(
+                                    action: AdminLocation.remove(
                                         path: SystemPermissionRoutes.remove
                                             .description,
                                         ids: [],
@@ -103,7 +103,7 @@ struct SystemPermissionTableContent: Component {
                                     isEnabled: canDelete
                                 ),
                                 table: context.build(
-                                    NewAdminListShell(
+                                    AdminListShell(
                                         layout: .init(
                                             name: "system-permissions",
                                             columns: [
@@ -118,7 +118,7 @@ struct SystemPermissionTableContent: Component {
                                                 Tr {
                                                     if canDelete {
                                                         context.build(
-                                                            NewAdminListSelectAllCheckbox()
+                                                            AdminListSelectAllCheckbox()
                                                         )
                                                     }
                                                     Th("Key")
@@ -151,7 +151,7 @@ struct SystemPermissionTableContent: Component {
                 },
                 search: {
                     context.build(
-                        NewAdminListSearch(
+                        AdminListSearch(
                             state: .init(
                                 action: SystemPermissionRoutes.list.description,
                                 placeholder: "Quick search system permissions",
@@ -163,9 +163,9 @@ struct SystemPermissionTableContent: Component {
                 toolbar: {
                     if actions.allows(SystemPermissions.Permissions.create) {
                         context.build(
-                            NewAdminListToolbar {
+                            AdminListToolbar {
                                 context.build(
-                                    NewAdminButton(
+                                    AdminButton(
                                         "Add new",
                                         href: SystemPermissionRoutes.add
                                             .description
@@ -177,7 +177,7 @@ struct SystemPermissionTableContent: Component {
                 },
                 pagination: {
                     context.build(
-                        NewAdminListPagination(
+                        AdminListPagination(
                             state: .init(
                                 path: SystemPermissionRoutes.list.description,
                                 pageState: pageState,

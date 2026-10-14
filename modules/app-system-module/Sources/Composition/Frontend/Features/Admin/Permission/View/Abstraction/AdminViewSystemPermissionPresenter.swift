@@ -4,7 +4,7 @@ protocol AdminViewSystemPermissionPresenter: Sendable {
 
     func renderDetailsPage(
         permission: SystemPermissionDetailsModel,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse
 
     func renderErrorPage(

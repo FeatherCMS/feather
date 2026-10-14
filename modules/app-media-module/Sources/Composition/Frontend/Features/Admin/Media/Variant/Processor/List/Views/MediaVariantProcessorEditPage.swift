@@ -15,10 +15,10 @@ struct MediaVariantProcessorEditPage: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: MediaVariantRoutes.breadcrumb)
+                AdminBreadcrumb(links: MediaVariantRoutes.breadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Edit \(processor.name)",
                         description:

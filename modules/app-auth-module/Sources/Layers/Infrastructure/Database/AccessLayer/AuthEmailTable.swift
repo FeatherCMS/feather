@@ -3,8 +3,9 @@ import FeatherInfrastructure
 
 import struct Foundation.Date
 
-struct AuthEmailTable {
-
+struct AuthEmailTable: DatabaseTableWithBulkDelete {
+    static let name = "auth_email"
+    static let primaryKey = "id"
     struct Row {
         let id: String
         let identityId: String
@@ -117,21 +118,6 @@ struct AuthEmailTable {
                 return nil
             }
             return try decode(row)
-        }
-    }
-
-    func delete(ids: [String]) async throws -> [String] {
-        guard !ids.isEmpty else { return [] }
-        let values =
-            ids.map { "'\($0.replacingOccurrences(of: "'", with: "''"))'" }
-            .joined(separator: ", ")
-        return try await connection.run(
-            query: #"""
-                DELETE FROM auth_email WHERE id IN (\#(unescaped: values)) RETURNING id;
-                """#
-        ) { sequence in
-            try await sequence.collect()
-                .map { try $0.decode(column: "id", as: String.self) }
         }
     }
 

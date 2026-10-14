@@ -32,7 +32,7 @@ struct AdminListBlogPostDefaultPresenter:
         let canEdit = permissions.contains(
             BlogPermissions.Posts.update.rawValue
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Manage blog posts",
@@ -59,33 +59,4 @@ struct AdminListBlogPostDefaultPresenter:
             )
         )
     }
-
-    func renderRemovePage(
-        page: Int,
-        search: String?,
-        items: [NewAdminRemoveItemContext]
-    ) async throws -> HTMLResponse {
-        let nonceToken = await AdminNonceStore.shared.issue(
-            sessionToken: context.sessionToken
-        )
-        return try await renderEngine.renderNewAdminDialog(
-            request: request,
-            context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: NewAdminRemoveConfirmation(
-                header: .primary(
-                    title: "Remove blog posts",
-                    description: "This action cannot be undone."
-                ),
-                selectedItems: items.map(\.label),
-                action: BlogAdminRoutes.postRemove().description,
-                nonceToken: nonceToken,
-                hiddenFields: items.map {
-                    .init(name: "ids", value: $0.id)
-                }
-            ),
-            size: .small
-        )
-    }
-
 }

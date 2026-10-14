@@ -29,7 +29,7 @@ struct AdminAddMediaFolderDefaultPresenter: AdminAddMediaFolderPresenter {
             )
         )
         if isDialog {
-            return try await renderEngine.renderNewAdminDialog(
+            return try await renderEngine.renderAdminDialog(
                 request: request,
                 context: context,
                 title: "Add media folder",
@@ -37,7 +37,7 @@ struct AdminAddMediaFolderDefaultPresenter: AdminAddMediaFolderPresenter {
                 size: .small
             )
         }
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Add media folder",

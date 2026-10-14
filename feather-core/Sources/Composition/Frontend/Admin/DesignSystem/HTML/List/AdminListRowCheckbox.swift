@@ -1,0 +1,30 @@
+public import HTML
+import SGML
+import WebBuilders
+public import WebComponents
+
+public struct AdminListRowCheckbox: Component {
+
+    public let id: String
+
+    public init(
+        id: String
+    ) {
+        self.id = id
+    }
+
+    public func html(context: inout BuilderContext) -> Td {
+        Td {
+            context.build(
+                AdminCheckbox(
+                    name: "ids",
+                    value: id,
+                    ariaLabel: "Select row",
+                    classes: ["select-row"]
+                )
+            )
+        }
+        .data("label", "Select")
+        .class("select-cell")
+    }
+}

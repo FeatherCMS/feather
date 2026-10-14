@@ -35,7 +35,7 @@ public struct AuthenticatedRequestContext:
         account.permissionSet
     }
 
-    public var currentUserAdminListActions: NewAdminListActions {
+    public var currentUserAdminListActions: AdminListActions {
         .init(Set(currentUserPermissions.map(PermissionKey.init)))
     }
 

@@ -3,7 +3,9 @@ import FeatherInfrastructure
 
 import struct Foundation.Date
 
-struct MediaAssetNodeTable {
+struct MediaAssetNodeTable: DatabaseTableWithBulkDelete {
+    static let name = "media_asset_node"
+    static let primaryKey = "id"
     struct Row {
         struct Create {
             let id: String
@@ -174,21 +176,6 @@ struct MediaAssetNodeTable {
                 return nil
             }
             return try Row(from: row)
-        }
-    }
-
-    func delete(ids: [String]) async throws -> [String] {
-        guard !ids.isEmpty else { return [] }
-        let values = mediaAssetNodeSQLValues(ids)
-        return try await connection.run(
-            query: #"""
-                DELETE FROM media_asset_node
-                WHERE id IN (\#(unescaped: values))
-                RETURNING id;
-                """#
-        ) { sequence in
-            try await sequence.collect()
-                .map { try $0.decode(column: "id", as: String.self) }
         }
     }
 

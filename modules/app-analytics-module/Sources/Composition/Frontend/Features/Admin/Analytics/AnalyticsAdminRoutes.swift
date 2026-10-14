@@ -13,11 +13,11 @@ enum AnalyticsAdminRoutes {
         logs.appendingPath(id)
     }
 
-    static let adminBreadcrumb: [NewAdminBreadcrumb.Link] = [
+    static let adminBreadcrumb: [AdminBreadcrumb.Link] = [
         .init(label: "Admin", link: "/admin/")
     ]
 
-    static let breadcrumb: [NewAdminBreadcrumb.Link] = [
+    static let breadcrumb: [AdminBreadcrumb.Link] = [
         adminBreadcrumb[0],
         .init(label: "Analytics", link: "/admin/analytics/"),
     ]

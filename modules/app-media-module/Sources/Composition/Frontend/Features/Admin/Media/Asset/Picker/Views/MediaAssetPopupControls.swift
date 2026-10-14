@@ -84,12 +84,12 @@ public struct MediaAssetPopupConfiguration: Sendable {
 
 public struct AdminMediaAssetPickerButton: Component {
     public let label: String
-    public let style: NewAdminButtonStyle
+    public let style: AdminButtonStyle
     public let configuration: MediaAssetPopupConfiguration
 
     public init(
         _ label: String = "Choose asset",
-        style: NewAdminButtonStyle = .ghost(.primary),
+        style: AdminButtonStyle = .ghost(.primary),
         configuration: MediaAssetPopupConfiguration
     ) {
         self.label = label
@@ -99,7 +99,7 @@ public struct AdminMediaAssetPickerButton: Component {
 
     public func html(context: inout BuilderContext) -> Button {
         var button = context.build(
-            NewAdminControlButton(label, style: style)
+            AdminControlButton(label, style: style)
         )
         button =
             button
@@ -118,12 +118,12 @@ public struct AdminMediaAssetPickerButton: Component {
 
 public struct AdminMediaAssetUploadButton: Component {
     public let label: String
-    public let style: NewAdminButtonStyle
+    public let style: AdminButtonStyle
     public let configuration: MediaAssetPopupConfiguration
 
     public init(
         _ label: String = "Upload asset",
-        style: NewAdminButtonStyle = .ghost(.primary),
+        style: AdminButtonStyle = .ghost(.primary),
         configuration: MediaAssetPopupConfiguration
     ) {
         self.label = label
@@ -133,7 +133,7 @@ public struct AdminMediaAssetUploadButton: Component {
 
     public func html(context: inout BuilderContext) -> Button {
         var button = context.build(
-            NewAdminControlButton(label, style: style)
+            AdminControlButton(label, style: style)
         )
         button =
             button
@@ -216,10 +216,10 @@ extension AdminMediaAssetSelectionBridge {
             (function() {
               var field = \(field);
               var formID = \(formID);
-              var marker = "new-admin-media-selection-bridge:" + field;
+              var marker = "admin-media-selection-bridge:" + field;
               if (document.documentElement.hasAttribute(marker)) { return; }
               document.documentElement.setAttribute(marker, "true");
-              document.addEventListener("new-admin-media-picker-selection", function(event) {
+              document.addEventListener("admin-media-picker-selection", function(event) {
                 var detail = event.detail || {};
                 if (String(detail.field || "") !== field) { return; }
                 var assets = Array.isArray(detail.assets) ? detail.assets : [];

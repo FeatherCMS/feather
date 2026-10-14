@@ -5,11 +5,6 @@ import OpenAPIRuntime
 
 protocol AdminRemoveWebMenuItemController: Sendable {
 
-    func getRemoveWebMenuItem(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse
-
     func postRemoveWebMenuItem(
         request: Request,
         context: AuthenticatedRequestContext
@@ -21,12 +16,8 @@ extension AdminRemoveWebMenuItemController {
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        router.get(
-            "/admin/web/menus/{id}/items/{itemId}/remove/",
-            use: getRemoveWebMenuItem
-        )
         router.post(
-            "/admin/web/menus/{id}/items/{itemId}/remove/",
+            "/admin/web/menus/{id}/items/remove/",
             use: postRemoveWebMenuItem
         )
     }

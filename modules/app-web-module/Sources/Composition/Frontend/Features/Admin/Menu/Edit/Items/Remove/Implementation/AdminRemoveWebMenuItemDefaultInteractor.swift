@@ -19,4 +19,10 @@ struct AdminRemoveWebMenuItemDefaultInteractor:
     ) async throws {
         try await repository.delete(menuId: menuId, id: id)
     }
+
+    func delete(menuId: String, ids: [String]) async throws {
+        for id in ids {
+            try await repository.delete(menuId: menuId, id: id)
+        }
+    }
 }

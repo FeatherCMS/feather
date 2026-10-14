@@ -6,7 +6,7 @@ protocol AdminAddRedirectRulePresenter: Sendable {
 
     func renderAddPage(
         state: RedirectRuleAddForm.State,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse
 
     func renderValidationError(

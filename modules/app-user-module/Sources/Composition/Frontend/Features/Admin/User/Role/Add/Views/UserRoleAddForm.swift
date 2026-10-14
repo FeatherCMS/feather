@@ -5,9 +5,9 @@ import WebComponents
 
 struct UserRoleAddForm: Component {
     struct State: Sendable {
-        var key: NewAdminFormFieldInput.State
-        var name: NewAdminFormFieldInput.State
-        var notes: NewAdminFormFieldTextArea.State
+        var key: AdminFormFieldInput.State
+        var name: AdminFormFieldInput.State
+        var notes: AdminFormFieldTextArea.State
         var error: String?
 
         mutating func apply(errors: [String: String]) {
@@ -59,20 +59,20 @@ struct UserRoleAddForm: Component {
     let nonceToken: String?
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action, nonceToken: nonceToken) {
+        let form = AdminForm(action: action, nonceToken: nonceToken) {
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
-            context.build(NewAdminFormFieldInput(state: state.key))
-            context.build(NewAdminFormFieldInput(state: state.name))
-            context.build(NewAdminFormFieldTextArea(state: state.notes))
+            context.build(AdminFormFieldInput(state: state.key))
+            context.build(AdminFormFieldInput(state: state.name))
+            context.build(AdminFormFieldTextArea(state: state.notes))
             Div {
                 context.build(
-                    NewAdminSubmitButton(submitLabel, style: .primary)
+                    AdminSubmitButton(submitLabel, style: .primary)
                 )
                 if let viewHref {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "View",
                             href: viewHref,
                             style: .secondary
@@ -81,7 +81,7 @@ struct UserRoleAddForm: Component {
                 }
                 if let removeHref {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "Remove",
                             href: removeHref,
                             style: .destructive
@@ -89,7 +89,7 @@ struct UserRoleAddForm: Component {
                     )
                 }
             }
-            .class("new-admin-form__actions")
+            .class("admin-form__actions")
         }
         return context.build(form)
     }

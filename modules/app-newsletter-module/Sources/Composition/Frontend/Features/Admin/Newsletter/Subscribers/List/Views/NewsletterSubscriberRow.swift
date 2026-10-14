@@ -8,11 +8,11 @@ import WebComponents
 
 struct NewsletterSubscriberRow: Component {
     let item: AdminNewsletterSubscriberListItem
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
     let returnTo: String
 
     func html(context: inout BuilderContext) -> Tr {
-        var actions: [NewAdminListRowActions.Action] = [
+        var actions: [AdminListRowActions.Action] = [
             .init(
                 "View",
                 href:
@@ -39,23 +39,13 @@ struct NewsletterSubscriberRow: Component {
                 )
             )
         }
-        actions.append(
-            .init(
-                "Remove",
-                href: NewAdminLocation.remove(
-                    path: NewsletterAdminRoutes.subscriberRemove.description,
-                    ids: [item.id],
-                    returnTo: returnTo
-                ),
-                style: .destructive,
-                permission: Permissions.Subscribers.delete
-            )
-        )
         return Tr {
             if permissions.allows(Permissions.Subscribers.delete) {
-                context.build(NewAdminListRowCheckbox(id: item.id))
+                context.build(AdminListRowCheckbox(id: item.id))
             }
-            Td(item.email).data("label", "Email")
+            Td(item.email)
+                .data("label", "Email")
+                .data("remove-label", "true")
             Td(item.name).data("label", "Name")
             Td {
                 for campaign in item.newsletters {
@@ -71,7 +61,7 @@ struct NewsletterSubscriberRow: Component {
             }
             .data("label", "Campaigns")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: actions,
                     permissions: permissions

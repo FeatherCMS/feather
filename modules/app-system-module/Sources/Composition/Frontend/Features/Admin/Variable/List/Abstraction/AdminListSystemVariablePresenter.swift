@@ -6,7 +6,7 @@ import SystemAdminAPI
 protocol AdminListSystemVariablePresenter: Sendable {
 
     func renderListPage(
-        model: NewAdminListModel<
+        model: AdminListModel<
             Components.Schemas.SystemVariableListItemSchema
         >,
         permissions: Set<PermissionKey>,

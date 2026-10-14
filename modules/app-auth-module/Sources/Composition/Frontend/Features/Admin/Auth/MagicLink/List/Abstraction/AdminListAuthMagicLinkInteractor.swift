@@ -31,7 +31,4 @@ protocol AdminListAuthMagicLinkInteractor: Sendable {
         size: Int
     )
 
-    func remove(
-        ids: [String]
-    ) async throws
 }

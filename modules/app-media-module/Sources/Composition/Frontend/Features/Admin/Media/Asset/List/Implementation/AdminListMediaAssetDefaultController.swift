@@ -106,125 +106,13 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
             )
         }
     }
-
-    func removeConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime((request, context))
-        guard
-            context.isCurrentUserAllowed(to: MediaPermissions.Assets.delete)
-        else {
-            return
-                try await presenter.renderErrorPage(
-                    message: "Your account cannot remove media assets.",
-                    picker: false
-                )
-                .response(from: request, context: context)
-        }
-        let selectedIds = request.queryStrings("ids")
-        let page = request.queryPage()
-        let search = request.querySearch()
-        guard !selectedIds.isEmpty else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: redirectLocation(
-                        request: request
-                    )
-                ]
-            )
-        }
-        let items = try await interactor.resolveRemoveItems(ids: selectedIds)
-        return
-            try await presenter.renderRemovePage(
-                pageState: .init(page: page, pageSize: 20, total: 0),
-                search: search,
-                items: items,
-                returnTo: request.queryString("returnTo")
-            )
-            .response(from: request, context: context)
-    }
-
-    func remove(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime((request, context))
-        guard
-            context.isCurrentUserAllowed(to: MediaPermissions.Assets.delete)
-        else {
-            return
-                try await presenter.renderErrorPage(
-                    message: "Your account cannot remove media assets.",
-                    picker: false
-                )
-                .response(from: request, context: context)
-        }
-        var returnTo = request.queryString("returnTo")
-        do {
-            let payload = try await request.decode(
-                as: NonceRequest<NewAdminListRemoveFormInput>.self,
-                context: context
-            )
-            returnTo = payload.input.normalizedReturnTo
-            guard
-                await AdminNonceStore.shared.consume(
-                    payload.nonce,
-                    sessionToken: context.sessionToken
-                )
-            else {
-                return
-                    try await presenter.renderInvalidNoncePage(
-                        cancel: NewAdminLocation.removeCancel(
-                            path: MediaAssetRoutes.list.description,
-                            returnTo: returnTo
-                        )
-                    )
-                    .response(from: request, context: context)
-            }
-
-            let ids = payload.input.normalizedIds
-            if !ids.isEmpty {
-                try await interactor.remove(ids: ids)
-            }
-            let location = NewAdminLocation.removeCancel(
-                path: MediaAssetRoutes.list.description,
-                returnTo: returnTo
-            )
-            guard !ids.isEmpty else {
-                return Response(
-                    status: .seeOther,
-                    headers: [.location: location]
-                )
-            }
-            return AdminNotificationFlash.redirect(
-                to: location,
-                notification: .init(
-                    title: "Removed",
-                    message: ids.count == 1
-                        ? "Media item removed successfully."
-                        : "Media items removed successfully."
-                )
-            )
-        }
-        catch {
-            return
-                try await presenter.renderErrorPage(
-                    message: error.displayMessage,
-                    picker: false
-                )
-                .response(from: request, context: context)
-        }
-    }
-
 }
 
 extension AdminListMediaAssetDefaultController {
     fileprivate func redirectLocation(
         request: Request
     ) -> String {
-        NewAdminLocation.removeCancel(
+        AdminLocation.removeCancel(
             path: MediaAssetRoutes.list.description,
             returnTo: request.queryString("returnTo")
         )

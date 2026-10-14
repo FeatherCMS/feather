@@ -11,7 +11,7 @@ import WebComponents
 struct BlogAuthorLinkDetails: Component {
     struct State {
         let rule: BlogAuthorLinkDetailsModel
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
         let permissions: Set<String>
     }
     let state: State
@@ -19,7 +19,7 @@ struct BlogAuthorLinkDetails: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminDetailView(
+                AdminDetailView(
                     breadcrumb: state.breadcrumb,
                     pageHeader: .primary(
                         title: "Blog author link details",
@@ -49,8 +49,8 @@ struct BlogAuthorLinkDetails: Component {
         .class("cms-section")
     }
 
-    private var actions: [NewAdminDetailView.Action] {
-        var result: [NewAdminDetailView.Action] = []
+    private var actions: [AdminDetailView.Action] {
+        var result: [AdminDetailView.Action] = []
         if state.permissions.contains(
             BlogPermissions.AuthorLinks.update.rawValue
         ) {
@@ -73,7 +73,7 @@ struct BlogAuthorLinkDetails: Component {
             result.append(
                 .init(
                     label: "Remove link",
-                    href: NewAdminLocation.remove(
+                    href: AdminLocation.remove(
                         path:
                             BlogAdminRoutes.authorLinkRemove(
                                 RouterPath(state.rule.menuId)

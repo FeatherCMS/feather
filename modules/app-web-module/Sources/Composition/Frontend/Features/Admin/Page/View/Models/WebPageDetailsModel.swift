@@ -6,5 +6,5 @@ struct WebPageDetailsModel: Sendable {
     let title: String
     let excerpt: String
     let content: String
-    let imageAsset: NewAdminMediaAsset?
+    let imageAsset: AdminMediaAsset?
 }

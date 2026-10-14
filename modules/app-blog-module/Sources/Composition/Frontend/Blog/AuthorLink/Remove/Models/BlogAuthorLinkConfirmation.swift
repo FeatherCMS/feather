@@ -17,7 +17,7 @@ struct BlogAuthorLinkConfirmation: Component {
         let menuId: String
         let id: String
         let label: String
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
         let nonceToken: String
     }
 
@@ -25,7 +25,7 @@ struct BlogAuthorLinkConfirmation: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
-            NewAdminRemoveConfirmation(
+            AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove blog author link",
                     description: "This action cannot be undone."

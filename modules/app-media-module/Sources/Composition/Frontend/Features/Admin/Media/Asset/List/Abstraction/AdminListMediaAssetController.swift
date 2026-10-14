@@ -15,16 +15,6 @@ protocol AdminListMediaAssetController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
-    func removeConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
-
-    func remove(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
-
 }
 
 extension AdminListMediaAssetController {
@@ -35,14 +25,6 @@ extension AdminListMediaAssetController {
         router.get(
             "/admin/media/assets/",
             use: getListMediaAssets
-        )
-        router.get(
-            "/admin/media/assets/remove/",
-            use: removeConfirmation
-        )
-        router.post(
-            "/admin/media/assets/remove/",
-            use: remove
         )
     }
 }

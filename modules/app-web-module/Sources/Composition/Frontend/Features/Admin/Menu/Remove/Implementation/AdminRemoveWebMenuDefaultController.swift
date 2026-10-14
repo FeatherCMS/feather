@@ -12,35 +12,13 @@ struct AdminRemoveWebMenuDefaultController:
             any AdminRemoveWebMenuPresenter
         >
 
-    func getRemoveWebMenu(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse {
-        let runtime = buildRuntime((request, context))
-        let id = try context.requiredID()
-        do {
-            let menu = try await runtime.interactor.get(id: id)
-            return try await runtime.presenter.renderRemovePage(
-                item: .init(id: id, label: menu.name)
-            )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return try await runtime.presenter.renderErrorPage(
-                id: id,
-                info: error.errorTitle,
-                message: error.errorDescription
-            )
-        }
-    }
-
     func postRemoveWebMenu(
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
-        let id = try context.requiredID()
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard
@@ -49,20 +27,31 @@ struct AdminRemoveWebMenuDefaultController:
                 sessionToken: context.sessionToken
             )
         else { return Response(status: .badRequest) }
+        let ids = nonceRequest.input.normalizedIds
+        let location = AdminLocation.url(
+            path: "/admin/web/menus/",
+            page: nonceRequest.input.normalizedPage,
+            search: nonceRequest.input.normalizedSearch
+        )
+        guard !ids.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
         do {
-            try await runtime.interactor.delete(id: id)
+            try await runtime.interactor.delete(ids: ids)
             return AdminNotificationFlash.redirect(
-                to: "/admin/web/menus/",
+                to: location,
                 notification: .init(
                     title: "Removed",
-                    message: "Menu removed successfully."
+                    message: ids.count == 1
+                        ? "Menu removed successfully."
+                        : "Menus removed successfully."
                 )
             )
         }
         catch let error as OpenAPIRepositoryError {
             return try await runtime.presenter
                 .renderErrorPage(
-                    id: id,
+                    id: ids[0],
                     info: error.errorTitle,
                     message: error.errorDescription
                 )

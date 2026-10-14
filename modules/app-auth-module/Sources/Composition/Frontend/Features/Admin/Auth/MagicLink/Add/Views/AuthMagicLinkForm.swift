@@ -34,7 +34,7 @@ struct AuthMagicLinkForm: Component {
 
     struct State: FeatherAdmin.Object {
         var credentialId: FieldState
-        var emailOptions: [NewAdminFormFieldSelectAutocomplete.Option]
+        var emailOptions: [AdminFormFieldSelectAutocomplete.Option]
         var isPersistent: CheckboxState
         var error: String?
         var success: String?
@@ -42,7 +42,7 @@ struct AuthMagicLinkForm: Component {
 
         init(
             credentialId: FieldState,
-            emailOptions: [NewAdminFormFieldSelectAutocomplete.Option] = [],
+            emailOptions: [AdminFormFieldSelectAutocomplete.Option] = [],
             isPersistent: CheckboxState,
             error: String? = nil,
             success: String? = nil
@@ -69,7 +69,7 @@ struct AuthMagicLinkForm: Component {
     var removeLabel: String = "Remove"
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action, nonceToken: state.nonceToken) {
+        let form = AdminForm(action: action, nonceToken: state.nonceToken) {
             if let success = state.success {
                 P(success).class("success")
             }
@@ -78,7 +78,7 @@ struct AuthMagicLinkForm: Component {
             }
 
             context.build(
-                NewAdminFormFieldSelectAutocomplete(
+                AdminFormFieldSelectAutocomplete(
                     state: .init(
                         name: state.credentialId.key,
                         label: "Email",
@@ -91,7 +91,7 @@ struct AuthMagicLinkForm: Component {
             )
 
             context.build(
-                NewAdminFormFieldCheckbox(
+                AdminFormFieldCheckbox(
                     state: .init(
                         name: state.isPersistent.key,
                         label: "Session persistence",
@@ -104,10 +104,10 @@ struct AuthMagicLinkForm: Component {
 
             Section {
                 Div {
-                    context.build(NewAdminSubmitButton(submitLabel))
+                    context.build(AdminSubmitButton(submitLabel))
                     if let removeHref {
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 removeLabel,
                                 href: removeHref,
                                 style: .destructive
@@ -115,7 +115,7 @@ struct AuthMagicLinkForm: Component {
                         )
                     }
                 }
-                .class("new-admin-form__actions")
+                .class("admin-form__actions")
             }
         }
         return context.build(form)

@@ -18,12 +18,7 @@ import WebComponents
 
 protocol AdminRemoveAuthMagicLinkController: Sendable {
 
-    func getRemoveAuthMagicLink(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse
-
-    func postRemoveAuthMagicLink(
+    func postAuthMagicLinksRemove(
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response
@@ -34,13 +29,6 @@ extension AdminRemoveAuthMagicLinkController {
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        router.get(
-            AuthMagicLinkRoutes.remove(RouterPath("{id}")),
-            use: getRemoveAuthMagicLink
-        )
-        router.post(
-            AuthMagicLinkRoutes.remove(RouterPath("{id}")),
-            use: postRemoveAuthMagicLink
-        )
+        router.post(AuthMagicLinkRoutes.remove, use: postAuthMagicLinksRemove)
     }
 }

@@ -12,12 +12,12 @@ struct ContactFieldForm: Component {
     let fieldErrors: [String: String]
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action) {
+        let form = AdminForm(action: action) {
             if let error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
             context.build(
-                NewAdminFormFieldSelect(
+                AdminFormFieldSelect(
                     state: .init(
                         name: "type",
                         label: "Type",
@@ -35,7 +35,7 @@ struct ContactFieldForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: "key",
                         label: "Key",
@@ -45,7 +45,7 @@ struct ContactFieldForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldInput(
+                AdminFormFieldInput(
                     state: .init(
                         name: "label",
                         label: "Label",
@@ -55,7 +55,7 @@ struct ContactFieldForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldMultiInput(
+                AdminFormFieldMultiInput(
                     state: .init(
                         name: "allowedValues[]",
                         label: "Allowed values",
@@ -67,7 +67,7 @@ struct ContactFieldForm: Component {
                 )
             )
             context.build(
-                NewAdminFormFieldCheckbox(
+                AdminFormFieldCheckbox(
                     state: .init(
                         name: "isRequired",
                         label: "Field validation",
@@ -76,8 +76,8 @@ struct ContactFieldForm: Component {
                     )
                 )
             )
-            Div { context.build(NewAdminSubmitButton(submitLabel)) }
-                .class("new-admin-form__actions")
+            Div { context.build(AdminSubmitButton(submitLabel)) }
+                .class("admin-form__actions")
         }
         return context.build(form)
     }

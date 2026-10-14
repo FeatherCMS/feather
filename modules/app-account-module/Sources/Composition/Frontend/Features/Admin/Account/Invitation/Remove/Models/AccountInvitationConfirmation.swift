@@ -7,7 +7,7 @@ struct AccountInvitationConfirmation: Component {
     struct State {
         let id: String
         let email: String
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
         let nonceToken: String?
     }
 
@@ -15,7 +15,7 @@ struct AccountInvitationConfirmation: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
-            NewAdminRemoveConfirmation(
+            AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove user invitation",
                     description: "This action cannot be undone."

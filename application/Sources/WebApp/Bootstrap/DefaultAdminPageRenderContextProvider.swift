@@ -23,7 +23,7 @@ struct DefaultAdminPageRenderContextProvider:
             events: events
         )
 
-        var topBarState = NewAdminTopBar.State()
+        var topBarState = AdminTopBar.State()
         do {
             let accountAPI = accountAPIBuilder.makeAccountApp(context)
             let profileID =

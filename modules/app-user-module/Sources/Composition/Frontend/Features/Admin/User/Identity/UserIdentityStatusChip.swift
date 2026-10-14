@@ -1,20 +1,20 @@
 import FeatherAdmin
 
 enum UserIdentityStatusChip {
-    static func make(status: String) -> NewAdminChip {
+    static func make(status: String) -> AdminChip {
         switch status {
         case "invited":
-            NewAdminChip(label: "Invited", color: .blue)
+            AdminChip(label: "Invited", color: .blue)
         case "active":
-            NewAdminChip(label: "Active", color: .green)
+            AdminChip(label: "Active", color: .green)
         case "suspended":
-            NewAdminChip(label: "Suspended", color: .orange)
+            AdminChip(label: "Suspended", color: .orange)
         case "deactivated":
-            NewAdminChip(label: "Deactivated", color: .red)
+            AdminChip(label: "Deactivated", color: .red)
         case "anonymized":
-            NewAdminChip(label: "Anonymized", color: .purple)
+            AdminChip(label: "Anonymized", color: .purple)
         default:
-            NewAdminChip(label: status, color: .blue)
+            AdminChip(label: status, color: .blue)
         }
     }
 }

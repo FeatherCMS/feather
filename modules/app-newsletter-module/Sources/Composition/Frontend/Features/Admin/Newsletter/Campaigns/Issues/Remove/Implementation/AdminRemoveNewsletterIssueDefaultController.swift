@@ -16,22 +16,6 @@ struct AdminRemoveNewsletterIssueDefaultController:
             any AdminRemoveNewsletterIssueInteractor,
             any AdminRemoveNewsletterIssuePresenter
         >
-    func confirm(request: Request, context: AuthenticatedRequestContext)
-        async throws
-        -> HTMLResponse
-    {
-        let (interactor, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: Permissions.Issues.delete)
-        else { return HTMLResponse(content: "Forbidden", status: .forbidden) }
-        let issueId = try context.requiredParameter("issueId")
-        return try await presenter.render(
-            newsletterId: try context.requiredParameter("newsletterId"),
-            item: try await interactor.get(
-                newsletterId: try context.requiredParameter("newsletterId"),
-                issueId: issueId
-            )
-        )
-    }
     func remove(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> Response
@@ -41,7 +25,7 @@ struct AdminRemoveNewsletterIssueDefaultController:
         guard context.isCurrentUserAllowed(to: Permissions.Issues.delete)
         else { return Response(status: .forbidden) }
         let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
+            as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
         )
         guard

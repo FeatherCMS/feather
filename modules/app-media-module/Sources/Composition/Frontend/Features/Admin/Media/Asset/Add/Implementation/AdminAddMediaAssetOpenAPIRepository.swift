@@ -70,7 +70,7 @@ struct AdminAddMediaAssetOpenAPIRepository {
     func createAsset(
         payload: AssetAddUpload,
         variants: [String]? = nil
-    ) async throws -> NewAdminMediaAsset {
+    ) async throws -> AdminMediaAsset {
         let asset: Components.Schemas.MediaAssetDetailSchema =
             try await api
             .withOpenAPIRepositoryErrorMapping { client in
@@ -107,7 +107,7 @@ struct AdminAddMediaAssetOpenAPIRepository {
                 }
             }
 
-        let resolvedVariants: [NewAdminMediaAssetVariant]
+        let resolvedVariants: [AdminMediaAssetVariant]
         if let variants, !variants.isEmpty {
             let resolved = try await api.resolveAssets(
                 ids: [asset.id],
@@ -118,7 +118,7 @@ struct AdminAddMediaAssetOpenAPIRepository {
                 .first(where: { $0.id == asset.id })?
                 .variants
                 .map {
-                    NewAdminMediaAssetVariant(
+                    AdminMediaAssetVariant(
                         key: $0.key,
                         name: $0.name,
                         url: $0.url,
@@ -130,7 +130,7 @@ struct AdminAddMediaAssetOpenAPIRepository {
             resolvedVariants = []
         }
 
-        return NewAdminMediaAsset(
+        return AdminMediaAsset(
             schema: asset,
             variants: resolvedVariants
         )

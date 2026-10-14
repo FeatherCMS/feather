@@ -5,7 +5,7 @@ enum MediaAdminRoutes {
     static let admin = RouterPath("admin")
     static let media = admin.appendingPath(RouterPath("media"))
 
-    static let breadcrumb: [NewAdminBreadcrumb.Link] = [
+    static let breadcrumb: [AdminBreadcrumb.Link] = [
         .init(label: "Admin", link: "/admin/"),
         .init(label: "Media", link: "/admin/media/"),
     ]
@@ -18,11 +18,11 @@ enum MediaAssetRoutes {
     static let add = list.appendingPath(RouterPath("add"))
     static let remove = list.appendingPath(RouterPath("remove"))
 
-    static var listBreadcrumb: [NewAdminBreadcrumb.Link] {
+    static var listBreadcrumb: [AdminBreadcrumb.Link] {
         MediaAdminRoutes.breadcrumb
     }
 
-    static var breadcrumb: [NewAdminBreadcrumb.Link] {
+    static var breadcrumb: [AdminBreadcrumb.Link] {
         MediaAdminRoutes.breadcrumb + [
             .init(label: "Assets", link: list.description)
         ]
@@ -47,7 +47,7 @@ enum MediaFolderRoutes {
         .appendingPath(RouterPath("folders"))
         .appendingPath(RouterPath("add"))
 
-    static var breadcrumb: [NewAdminBreadcrumb.Link] {
+    static var breadcrumb: [AdminBreadcrumb.Link] {
         MediaAdminRoutes.breadcrumb + [
             .init(label: "Assets", link: list.description)
         ]

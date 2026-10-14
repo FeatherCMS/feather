@@ -8,13 +8,13 @@ enum RedirectRuleRoutes {
     static let add = list.appendingPath(RouterPath("add"))
     static let remove = list.appendingPath(RouterPath("remove"))
 
-    static var breadcrumb: [NewAdminBreadcrumb.Link] {
+    static var breadcrumb: [AdminBreadcrumb.Link] {
         RedirectAdminRoutes.breadcrumb + [
             .init(label: "Rules", link: list.description)
         ]
     }
 
-    static var redirectBreadcrumb: [NewAdminBreadcrumb.Link] {
+    static var redirectBreadcrumb: [AdminBreadcrumb.Link] {
         RedirectAdminRoutes.breadcrumb
     }
 

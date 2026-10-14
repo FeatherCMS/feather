@@ -13,7 +13,7 @@ struct AdminViewSystemOverviewDefaultPresenter: AdminViewSystemOverviewPresenter
         model: AdminViewSystemOverviewModel,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: model.title,

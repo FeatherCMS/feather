@@ -10,20 +10,20 @@ import WebComponents
 struct ContactFieldsTable: Component {
     struct State {
         let fields: [AdminContactFieldRow]
-        let pageState: NewAdminListPageState
+        let pageState: AdminListPageState
         let search: String
         let error: String?
-        let permissions: NewAdminListActions
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let permissions: AdminListActions
+        let breadcrumb: [AdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Contact form fields",
                         description: "Manage reusable contact form fields."
@@ -31,7 +31,7 @@ struct ContactFieldsTable: Component {
                 )
             )
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
             context.build(
                 ContactFieldsTableContent(

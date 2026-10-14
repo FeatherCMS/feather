@@ -18,14 +18,14 @@ import struct Foundation.CharacterSet
 struct AssetListView: Component {
     struct State {
         let entries: [AdminListMediaAssetModel.EntryItem]
-        let pageState: NewAdminListPageState
+        let pageState: AdminListPageState
         let search: String
         let parentId: String?
         let currentFolder: Components.Schemas.MediaFolderDetailSchema?
         let ancestors: [Components.Schemas.MediaFolderDetailSchema]
         let view: AdminListMediaAssetModel.ViewMode
         let picker: AdminListMediaAssetModel.PickerState
-        let permissions: NewAdminListActions
+        let permissions: AdminListActions
     }
 
     let state: State
@@ -180,7 +180,7 @@ struct AssetListView: Component {
     }
 
     func rules() -> [any CSS.Rule] {
-        NewAdminListSearch(
+        AdminListSearch(
             state: .init(
                 action: "",
                 placeholder: "",
@@ -194,7 +194,7 @@ struct AssetListView: Component {
         Section {
             if !state.permissions.allows(MediaPermissions.Assets.list) {
                 context.build(
-                    NewAdminStatusView(
+                    AdminStatusView(
                         state: .init(
                             title: "Forbidden",
                             message: "Your account cannot access media assets."
@@ -206,12 +206,12 @@ struct AssetListView: Component {
             else {
                 if !state.picker.isEnabled {
                     context.build(
-                        NewAdminBreadcrumb(
+                        AdminBreadcrumb(
                             links: MediaAssetRoutes.listBreadcrumb
                         )
                     )
                     context.build(
-                        NewAdminPageHeader(
+                        AdminPageHeader(
                             state: .primary(
                                 title: "Media assets",
                                 description:
@@ -222,11 +222,11 @@ struct AssetListView: Component {
                 }
 
                 context.build(
-                    NewAdminList(
+                    AdminList(
                         table: {
                             if state.pageState.isPageOutOfRange {
                                 context.build(
-                                    NewAdminListInvalidPageState(
+                                    AdminListInvalidPageState(
                                         pageState: state.pageState,
                                         path: MediaAssetRoutes.list.description
                                     )
@@ -252,7 +252,7 @@ struct AssetListView: Component {
                         },
                         pagination: {
                             context.build(
-                                NewAdminListPagination(
+                                AdminListPagination(
                                     state: .init(
                                         path: MediaAssetRoutes.list.description,
                                         pageState: state.pageState,
@@ -275,7 +275,7 @@ extension AssetListView {
         !state.entries.isEmpty || state.currentFolder != nil
     }
 
-    fileprivate func queryItems() -> [NewAdminListPagination.QueryItem] {
+    fileprivate func queryItems() -> [AdminListPagination.QueryItem] {
         queryItems(
             parentId: state.parentId,
             view: state.view,
@@ -290,8 +290,8 @@ extension AssetListView {
         search: String?,
         page: Int?,
         includeView: Bool = false
-    ) -> [NewAdminListPagination.QueryItem] {
-        var items: [NewAdminListPagination.QueryItem] = []
+    ) -> [AdminListPagination.QueryItem] {
+        var items: [AdminListPagination.QueryItem] = []
         if let parentId {
             items.append(.init(name: "parent_id", value: parentId))
         }
@@ -465,7 +465,7 @@ extension AssetListView {
     fileprivate func previewLink(
         for url: String
     ) -> String {
-        NewAdminMediaAsset.mediaURL(path: url)
+        AdminMediaAsset.mediaURL(path: url)
     }
 
     fileprivate func assetOriginalLink(
@@ -507,7 +507,7 @@ extension AssetListView {
                     && !state.picker.isEnabled
                 {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "Upload assets",
                             href: addAssetPath(),
                             style: .primary
@@ -522,7 +522,7 @@ extension AssetListView {
                     && !state.picker.isEnabled
                 {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "Add folder",
                             href: addFolderPath(),
                             style: .ghost(.primary)
@@ -537,7 +537,7 @@ extension AssetListView {
             .class("button-row", "media-assets-toolbar-actions")
 
             context.build(
-                NewAdminSegmentedControl(
+                AdminSegmentedControl(
                     links: [
                         .init(
                             label: "Grid",
@@ -575,14 +575,14 @@ extension AssetListView {
     ) -> some FlowContent {
         Div {
             context.build(
-                NewAdminPathBreadcrumb(items: folderPathItems())
+                AdminPathBreadcrumb(items: folderPathItems())
             )
             if state.picker.isEnabled {
                 pickerSearchControls(context: &context)
             }
             else {
                 context.build(
-                    NewAdminListSearch(
+                    AdminListSearch(
                         state: .init(
                             action: MediaAssetRoutes.list.description,
                             placeholder: "Quick search assets",
@@ -600,8 +600,8 @@ extension AssetListView {
         .class("media-assets-search-row")
     }
 
-    fileprivate func folderPathItems() -> [NewAdminPathBreadcrumb.Item] {
-        var items: [NewAdminPathBreadcrumb.Item] = [
+    fileprivate func folderPathItems() -> [AdminPathBreadcrumb.Item] {
+        var items: [AdminPathBreadcrumb.Item] = [
             .init(
                 label: "My assets",
                 href: browsePath(parentId: nil),
@@ -633,7 +633,7 @@ extension AssetListView {
     ) -> some FlowContent {
         Div {
             context.build(
-                NewAdminListSearch(
+                AdminListSearch(
                     state: .init(
                         action: browsePath(parentId: state.parentId),
                         placeholder: "Quick search assets",
@@ -658,8 +658,8 @@ extension AssetListView {
                     form.dataset.dialogSearchReady = "true";
                     form.addEventListener("submit", function(event) {
                       if (!form.closest("dialog[data-admin-dialog]")) { return; }
-                      if (!window.__newAdminDialog ||
-                          !window.__newAdminDialog.openURL) { return; }
+                      if (!window.__adminDialog ||
+                          !window.__adminDialog.openURL) { return; }
                       event.preventDefault();
                       event.stopImmediatePropagation();
                       var url = new URL(form.action, window.location.href);
@@ -668,7 +668,7 @@ extension AssetListView {
                           url.searchParams.set(key, value);
                         }
                       });
-                      window.__newAdminDialog.openURL(url.href, form.action);
+                      window.__adminDialog.openURL(url.href, form.action);
                     }, true);
                   });
                 }());
@@ -682,7 +682,7 @@ extension AssetListView {
     ) -> some FlowContent {
         if state.search.isEmpty {
             return context.build(
-                NewAdminListEmptyState(
+                AdminListEmptyState(
                     message: "No media assets or folders yet.",
                     icon: FeatherIcons.image(),
                     action: {
@@ -690,7 +690,7 @@ extension AssetListView {
                             MediaPermissions.Assets.create
                         ) && !state.picker.isEnabled {
                             context.build(
-                                NewAdminButton(
+                                AdminButton(
                                     "Add asset",
                                     href: addAssetPath()
                                 )
@@ -701,12 +701,12 @@ extension AssetListView {
             )
         }
         return context.build(
-            NewAdminListNoResultsState(
+            AdminListNoResultsState(
                 message: "No media assets or folders match your search.",
                 icon: FeatherIcons.image(),
                 action: {
                     context.build(
-                        NewAdminButton(
+                        AdminButton(
                             "Reset search",
                             href: browsePath(parentId: state.parentId),
                             style: .secondary
@@ -753,9 +753,9 @@ extension AssetListView {
             page: state.pageState.page
         )
         return context.build(
-            NewAdminListSelectionForm(
+            AdminListSelectionForm(
                 state: .init(
-                    action: NewAdminLocation.remove(
+                    action: AdminLocation.remove(
                         path: MediaAssetRoutes.remove.description,
                         ids: [],
                         returnTo: returnTo
@@ -766,7 +766,7 @@ extension AssetListView {
                     isEnabled: canRemove
                 ),
                 table: context.build(
-                    NewAdminListShell(
+                    AdminListShell(
                         layout: .init(
                             name: "media-assets",
                             columns: [
@@ -783,7 +783,7 @@ extension AssetListView {
                                 Tr {
                                     if canRemove {
                                         context.build(
-                                            NewAdminListSelectAllCheckbox()
+                                            AdminListSelectAllCheckbox()
                                         )
                                     }
                                     Th("Preview")
@@ -851,7 +851,7 @@ extension AssetListView {
 
             Div {
                 context.build(
-                    NewAdminRowButton(
+                    AdminRowButton(
                         "View",
                         href: browsePath(parentId: parentId),
                         style: .ghost(.primary)
@@ -887,7 +887,7 @@ extension AssetListView {
 
             Div {
                 context.build(
-                    NewAdminRowButton(
+                    AdminRowButton(
                         "View",
                         href: browsePath(parentId: folder.id),
                         style: .ghost(.primary)
@@ -897,7 +897,7 @@ extension AssetListView {
                     && !state.picker.isEnabled
                 {
                     context.build(
-                        NewAdminRowButton(
+                        AdminRowButton(
                             "Edit",
                             href: folderEditPath(folder),
                             style: .ghost(.secondary)
@@ -907,19 +907,6 @@ extension AssetListView {
                 if state.permissions.allows(MediaPermissions.Assets.delete)
                     && !state.picker.isEnabled
                 {
-                    let removePath = NewAdminLocation.remove(
-                        path: MediaAssetRoutes.remove.description,
-                        ids: [folder.id],
-                        returnTo: returnTo
-                    )
-                    context.build(
-                        NewAdminRowButton(
-                            "Remove",
-                            href: removePath,
-                            style: .destructive
-                        )
-                    )
-                    .data("admin-dialog-url", removePath)
                 }
             }
             .class("media-assets-card-actions")
@@ -1008,7 +995,7 @@ extension AssetListView {
             Div {
                 if state.picker.isEnabled, let field = state.picker.field {
                     context.build(
-                        NewAdminRowButton(
+                        AdminRowButton(
                             "Select",
                             style: .ghost(.primary)
                         )
@@ -1031,7 +1018,7 @@ extension AssetListView {
                 }
                 else if state.permissions.allows(MediaPermissions.Assets.read) {
                     context.build(
-                        NewAdminRowButton(
+                        AdminRowButton(
                             "View",
                             href: detailsURL,
                             style: .ghost(.primary)
@@ -1042,7 +1029,7 @@ extension AssetListView {
                     && !state.picker.isEnabled
                 {
                     context.build(
-                        NewAdminRowButton(
+                        AdminRowButton(
                             "Edit",
                             href:
                                 "\(MediaAssetRoutes.edit(RouterPath(item.asset.id)).description)\(actionSuffix)",
@@ -1053,19 +1040,6 @@ extension AssetListView {
                 if state.permissions.allows(MediaPermissions.Assets.delete)
                     && !state.picker.isEnabled
                 {
-                    let removePath = NewAdminLocation.remove(
-                        path: MediaAssetRoutes.remove.description,
-                        ids: [item.asset.id],
-                        returnTo: returnTo
-                    )
-                    context.build(
-                        NewAdminRowButton(
-                            "Remove",
-                            href: removePath,
-                            style: .destructive
-                        )
-                    )
-                    .data("admin-dialog-url", removePath)
                 }
             }
             .class("media-assets-card-actions")
@@ -1094,7 +1068,7 @@ extension AssetListView {
                 .data("label", "Size")
             Td {
                 context.build(
-                    NewAdminRowButton(
+                    AdminRowButton(
                         "View",
                         href: browsePath(parentId: parentId),
                         style: .ghost(.primary)
@@ -1113,12 +1087,7 @@ extension AssetListView {
         context: inout BuilderContext
     ) -> some BasicTag {
         Tr {
-            let removePath = NewAdminLocation.remove(
-                path: MediaAssetRoutes.remove.description,
-                ids: [folder.id],
-                returnTo: returnTo
-            )
-            let actions: [NewAdminListRowActions.Action] =
+            let actions: [AdminListRowActions.Action] =
                 state.picker.isEnabled
                 ? [
                     .init(
@@ -1141,17 +1110,10 @@ extension AssetListView {
                         style: .ghost(.secondary),
                         permission: MediaPermissions.Assets.update
                     ),
-                    .init(
-                        "Remove",
-                        href: removePath,
-                        style: .destructive,
-                        permission: MediaPermissions.Assets.delete,
-                        dialogURL: removePath
-                    ),
                 ]
             if canRemove {
                 context.build(
-                    NewAdminListRowCheckbox(id: folder.id)
+                    AdminListRowCheckbox(id: folder.id)
                 )
             }
             folderPreviewCell(
@@ -1165,7 +1127,7 @@ extension AssetListView {
             Td(folderItemCountLabel(for: folder))
                 .data("label", "Size")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: actions,
                     permissions: state.permissions
@@ -1185,15 +1147,10 @@ extension AssetListView {
             for: item.preview?.url ?? item.asset.url
         )
         let originalURL = assetOriginalLink(for: item.asset)
-        let removePath = NewAdminLocation.remove(
-            path: MediaAssetRoutes.remove.description,
-            ids: [item.asset.id],
-            returnTo: returnTo
-        )
         return Tr {
             if canRemove {
                 context.build(
-                    NewAdminListRowCheckbox(id: item.asset.id)
+                    AdminListRowCheckbox(id: item.asset.id)
                 )
             }
             assetPreviewCell(
@@ -1214,7 +1171,7 @@ extension AssetListView {
             if state.picker.isEnabled, let field = state.picker.field {
                 Td {
                     context.build(
-                        NewAdminRowButton(
+                        AdminRowButton(
                             "Select",
                             style: .ghost(.primary)
                         )
@@ -1258,7 +1215,7 @@ extension AssetListView {
             }
             else {
                 context.build(
-                    NewAdminListRowActions(
+                    AdminListRowActions(
                         label: "Actions",
                         actions: [
                             .init(
@@ -1274,13 +1231,6 @@ extension AssetListView {
                                     "\(MediaAssetRoutes.edit(RouterPath(item.asset.id)).description)\(assetActionSuffix())",
                                 style: .ghost(.secondary),
                                 permission: MediaPermissions.Assets.update
-                            ),
-                            .init(
-                                "Remove",
-                                href: removePath,
-                                style: .destructive,
-                                permission: MediaPermissions.Assets.delete,
-                                dialogURL: removePath
                             ),
                         ],
                         permissions: state.permissions
@@ -1354,7 +1304,7 @@ extension AssetListView {
             A {
                 if item.preview != nil {
                     context.build(
-                        NewAdminImageCell(
+                        AdminImageCell(
                             imageURL: previewURL,
                             alt: displayTitle(for: item.asset),
                             size: .square
@@ -1381,6 +1331,7 @@ extension AssetListView {
     ) -> some BasicTag {
         Td(folder.name)
             .data("label", "Name")
+            .data("remove-label", "true")
     }
 
     fileprivate func assetTitleCell(
@@ -1393,7 +1344,7 @@ extension AssetListView {
             Span {
                 Span(fileName(for: item.asset))
                 context.build(
-                    NewAdminPreviewLink(
+                    AdminPreviewLink(
                         href: originalURL,
                         label: "Preview \(displayTitle(for: item.asset))"
                     )
@@ -1404,5 +1355,6 @@ extension AssetListView {
             )
         }
         .data("label", "Name")
+        .data("remove-label", "true")
     }
 }

@@ -8,6 +8,6 @@ import WebBuilders
 import WebComponents
 
 protocol AdminRemoveContactFormPresenter: Sendable {
-    func renderRemovePage(items: [NewAdminRemoveItemContext])
+    func renderRemovePage(items: [AdminRemoveItemContext])
         async throws -> HTMLResponse
 }

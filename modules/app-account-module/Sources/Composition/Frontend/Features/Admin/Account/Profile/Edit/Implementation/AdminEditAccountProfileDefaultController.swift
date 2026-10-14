@@ -146,7 +146,7 @@ struct AdminEditAccountProfileDefaultController:
         firstName: String?,
         lastName: String?,
         profileImageAssetId: String?,
-        selectedImageAsset: NewAdminMediaAsset? = nil
+        selectedImageAsset: AdminMediaAsset? = nil
     ) -> AccountProfileForm.State {
         .init(
             firstName: .init(

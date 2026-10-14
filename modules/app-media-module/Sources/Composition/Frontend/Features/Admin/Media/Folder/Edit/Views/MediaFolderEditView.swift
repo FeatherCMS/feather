@@ -16,7 +16,7 @@ import class Foundation.ByteCountFormatter
 struct MediaFolderEditView: Component {
     struct State {
         let model: AdminEditMediaFolderModel
-        let permissions: NewAdminListActions
+        let permissions: AdminListActions
     }
 
     let state: State
@@ -25,7 +25,7 @@ struct MediaFolderEditView: Component {
         Section {
             if !state.permissions.allows(MediaPermissions.Assets.update) {
                 context.build(
-                    NewAdminStatusView(
+                    AdminStatusView(
                         state: .init(
                             title: "Forbidden",
                             message: "Your account cannot edit media folders."
@@ -36,10 +36,10 @@ struct MediaFolderEditView: Component {
             }
             else {
                 context.build(
-                    NewAdminBreadcrumb(links: MediaFolderRoutes.breadcrumb)
+                    AdminBreadcrumb(links: MediaFolderRoutes.breadcrumb)
                 )
                 context.build(
-                    NewAdminPageHeader(
+                    AdminPageHeader(
                         state: .primary(
                             title: "Edit media folder",
                             description: "Update this media folder."
@@ -47,17 +47,17 @@ struct MediaFolderEditView: Component {
                     )
                 )
                 if let error = state.model.error {
-                    P(error).class("new-admin-form__error")
+                    P(error).class("admin-form__error")
                 }
 
                 context.build(
-                    NewAdminDetailField(
+                    AdminDetailField(
                         label: "Slug path",
                         value: state.model.slugPath
                     )
                 )
                 context.build(
-                    NewAdminDetailField(
+                    AdminDetailField(
                         label: "Items",
                         value: state.model.assetCount == 1
                             ? "1 item"
@@ -65,7 +65,7 @@ struct MediaFolderEditView: Component {
                     )
                 )
                 context.build(
-                    NewAdminDetailField(
+                    AdminDetailField(
                         label: "Total size",
                         value: ByteCountFormatter.string(
                             fromByteCount: state.model.totalSizeBytes,
@@ -74,7 +74,7 @@ struct MediaFolderEditView: Component {
                     )
                 )
 
-                let form = NewAdminForm(
+                let form = AdminForm(
                     action:
                         MediaFolderRoutes.edit(
                             RouterPath(state.model.id)
@@ -82,7 +82,7 @@ struct MediaFolderEditView: Component {
                         .description
                 ) {
                     context.build(
-                        NewAdminFormFieldInput(
+                        AdminFormFieldInput(
                             state: .init(
                                 name: "name",
                                 label: "Folder name",
@@ -92,9 +92,9 @@ struct MediaFolderEditView: Component {
                         )
                     )
                     Div {
-                        context.build(NewAdminSubmitButton("Save changes"))
+                        context.build(AdminSubmitButton("Save changes"))
                     }
-                    .class("new-admin-form__actions")
+                    .class("admin-form__actions")
                 }
                 context.build(form)
             }

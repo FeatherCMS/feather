@@ -9,19 +9,19 @@ import WebBuilders
 import WebComponents
 
 struct UserIdentityTable: Component {
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
     let identities: [Components.Schemas.UserIdentityListItemSchema]
-    let pageState: NewAdminListPageState
+    let pageState: AdminListPageState
     let search: String?
     let role: String?
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: UserIdentityRoutes.listBreadcrumb)
+                AdminBreadcrumb(links: UserIdentityRoutes.listBreadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "User identities",
                         description:

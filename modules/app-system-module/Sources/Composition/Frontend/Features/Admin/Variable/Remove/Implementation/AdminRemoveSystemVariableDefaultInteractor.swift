@@ -16,14 +16,6 @@ struct AdminRemoveSystemVariableDefaultInteractor:
         }
     }
 
-    func names(ids: [String]) async throws -> [String] {
-        do {
-            return try await repository.names(ids: ids)
-        }
-        catch let error as OpenAPIRepositoryError {
-            throw map(error)
-        }
-    }
 
     private func map(
         _ error: OpenAPIRepositoryError

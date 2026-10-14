@@ -56,80 +56,13 @@ struct AdminListWebPageDefaultController:
             error: error
         )
     }
-
-    func getWebPagesRemoveConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime((request, context))
-        let selectedIds = request.queryStrings("ids")
-        let page = request.queryPage()
-        let search = request.querySearch()
-        guard !selectedIds.isEmpty else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: NewAdminLocation.url(
-                        path: "/admin/web/pages/",
-                        page: page,
-                        search: search
-                    )
-                ]
-            )
-        }
-        let items = try await interactor.resolveRemoveItems(ids: selectedIds)
-        return
-            try await presenter.renderRemovePage(
-                page: page,
-                search: search,
-                items: items
-            )
-            .response(from: request, context: context)
-    }
-
-    func postWebPagesRemove(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let (interactor, _) = buildRuntime((request, context))
-        let nonceRequest = try await request.decode(
-            as: NonceRequest<NewAdminListRemoveFormInput>.self,
-            context: context
-        )
-        guard
-            await AdminNonceStore.shared.consume(
-                nonceRequest.nonce,
-                sessionToken: context.sessionToken
-            )
-        else { return Response(status: .badRequest) }
-        let payload = nonceRequest.input
-        if !payload.normalizedSelectedIds.isEmpty {
-            try await interactor.remove(ids: payload.normalizedSelectedIds)
-        }
-        let location = NewAdminLocation.url(
-            path: "/admin/web/pages/",
-            page: payload.normalizedPage,
-            search: payload.normalizedSearch
-        )
-        guard !payload.normalizedSelectedIds.isEmpty else {
-            return Response(status: .seeOther, headers: [.location: location])
-        }
-        return AdminNotificationFlash.redirect(
-            to: location,
-            notification: .init(
-                title: "Removed",
-                message: "Web page removed successfully."
-            )
-        )
-    }
-
     func postWebPageStatus(
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let id = try context.requiredID()
         let payload = try await request.decode(
-            as: NewAdminStatusActionFormInput.self,
+            as: AdminStatusActionFormInput.self,
             context: context
         )
         let repository = AdminListWebPageFormOpenAPIRepository(
@@ -155,7 +88,7 @@ struct AdminListWebPageDefaultController:
     }
 
     private func resolvedStatus(
-        from payload: NewAdminStatusActionFormInput,
+        from payload: AdminStatusActionFormInput,
         current metadata: AdminMetadataFormValue
     ) -> String {
         let allowedStatuses = Set(["draft", "published", "archived"])
@@ -167,7 +100,7 @@ struct AdminListWebPageDefaultController:
 
     private func statusNotification(
         for status: String
-    ) -> NewAdminNotification.State {
+    ) -> AdminNotification.State {
         switch status {
         case "published":
             return .init(

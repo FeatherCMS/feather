@@ -9,7 +9,7 @@ import WebComponents
 struct NewsletterIssueRow: Component {
     let newsletterId: String
     let item: AdminNewsletterIssueItem
-    let permissions: NewAdminListActions
+    let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
@@ -18,7 +18,7 @@ struct NewsletterIssueRow: Component {
             Td(item.scheduledAt).data("label", "Scheduled")
             Td(item.createdAt).data("label", "Created")
             context.build(
-                NewAdminListRowActions(
+                AdminListRowActions(
                     label: "Actions",
                     actions: [
                         .init(
@@ -42,17 +42,6 @@ struct NewsletterIssueRow: Component {
                                 .description,
                             style: .ghost(.secondary),
                             permission: Permissions.Issues.update
-                        ),
-                        .init(
-                            "Remove",
-                            href:
-                                NewsletterAdminRoutes.issueRemove(
-                                    newsletterID: RouterPath(newsletterId),
-                                    issueID: RouterPath(item.id)
-                                )
-                                .description,
-                            style: .destructive,
-                            permission: Permissions.Issues.delete
                         ),
                     ],
                     permissions: permissions

@@ -61,7 +61,7 @@ struct AdminEditAuthEmailDefaultPresenter: AdminEditAuthEmailPresenter {
         form.nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit user email",
@@ -81,7 +81,7 @@ struct AdminEditAuthEmailDefaultPresenter: AdminEditAuthEmailPresenter {
         error: OpenAPIRepositoryError,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit user email",

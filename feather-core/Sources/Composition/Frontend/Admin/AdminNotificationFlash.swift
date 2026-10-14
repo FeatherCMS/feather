@@ -7,17 +7,17 @@ public enum AdminNotificationFlash {
 
     public static func notification(
         from request: Request
-    ) -> NewAdminNotification.State? {
+    ) -> AdminNotification.State? {
         guard
             let value = request.cookies[cookieName]?.value,
             let data = Data(base64Encoded: value)
         else { return nil }
         return try? JSONDecoder()
-            .decode(NewAdminNotification.State.self, from: data)
+            .decode(AdminNotification.State.self, from: data)
     }
 
     public static func cookie(
-        for notification: NewAdminNotification.State
+        for notification: AdminNotification.State
     ) -> Cookie {
         let data = (try? JSONEncoder().encode(notification)) ?? Data()
         return Cookie(
@@ -43,7 +43,7 @@ public enum AdminNotificationFlash {
 
     public static func redirect(
         to location: String,
-        notification: NewAdminNotification.State
+        notification: AdminNotification.State
     ) -> Response {
         var headers: HTTPFields = [.location: location]
         headers[values: .setCookie]

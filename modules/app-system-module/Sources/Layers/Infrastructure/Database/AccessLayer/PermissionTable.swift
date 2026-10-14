@@ -27,8 +27,9 @@ extension PermissionTable.Row {
     }
 }
 
-struct PermissionTable {
-
+struct PermissionTable: DatabaseTableWithBulkDelete {
+    static let name = "system_permission"
+    static let primaryKey = "id"
     struct Row {
 
         struct Create {
@@ -200,26 +201,4 @@ struct PermissionTable {
         }
     }
 
-    func delete(
-        ids: [String]
-    ) async throws -> [String] {
-        guard !ids.isEmpty else { return [] }
-        let values =
-            ids.map {
-                "'\($0.replacingOccurrences(of: "'", with: "''"))'"
-            }
-            .joined(separator: ", ")
-        return try await connection.run(
-            query: #"""
-                DELETE FROM system_permission
-                WHERE id IN (\#(unescaped: values))
-                RETURNING id;
-                """#
-        ) { sequence in
-            try await sequence.collect()
-                .map {
-                    try $0.decode(column: "id", as: String.self)
-                }
-        }
-    }
 }

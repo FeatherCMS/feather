@@ -29,7 +29,7 @@ struct AdminAddAuthEmailDefaultPresenter: AdminAddAuthEmailPresenter {
         form.nonceToken = await AdminNonceStore.shared.issue(
             sessionToken: context.sessionToken
         )
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Add user email",
@@ -43,11 +43,11 @@ struct AdminAddAuthEmailDefaultPresenter: AdminAddAuthEmailPresenter {
     }
 
     func renderForbiddenPage() async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Add email",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Forbidden",
                     message: "Your account cannot add user emails."

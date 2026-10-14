@@ -7,9 +7,9 @@ import WebComponents
 
 struct AuthSessionRemoveConfirmation: Component {
     struct State {
-        let item: NewAdminRemoveItemContext
+        let item: AdminRemoveItemContext
         let identityId: String
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
         let nonceToken: String?
     }
 
@@ -17,7 +17,7 @@ struct AuthSessionRemoveConfirmation: Component {
 
     func html(context: inout BuilderContext) -> some BasicTag {
         context.build(
-            NewAdminRemoveConfirmation(
+            AdminRemoveConfirmation(
                 header: .primary(
                     title: "Remove session",
                     description: "The session will be signed out immediately."

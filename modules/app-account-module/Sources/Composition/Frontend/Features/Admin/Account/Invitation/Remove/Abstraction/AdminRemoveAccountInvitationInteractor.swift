@@ -7,4 +7,6 @@ protocol AdminRemoveAccountInvitationInteractor: Sendable {
     func execute(
         entity: AdminRemoveAccountInvitationModel
     ) async throws
+
+    func execute(ids: [String]) async throws
 }

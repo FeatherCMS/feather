@@ -130,7 +130,7 @@ struct AdminEditWebPageDefaultController:
         excerpt: String = "",
         content: String = "",
         imageAssetId: String? = nil,
-        imageAsset: NewAdminMediaAsset? = nil,
+        imageAsset: AdminMediaAsset? = nil,
         metadata: AdminMetadataFormValue? = nil
     ) -> WebPageForm.State {
         .init(

@@ -9,7 +9,7 @@ struct AdminViewDashboardDefaultPresenter: AdminViewDashboardPresenter {
     func renderPage(
         model: AdminViewDashboardModel
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: model.title,

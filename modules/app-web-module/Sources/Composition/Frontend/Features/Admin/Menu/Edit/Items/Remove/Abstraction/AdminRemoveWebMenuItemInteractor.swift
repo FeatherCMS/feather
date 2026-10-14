@@ -12,4 +12,9 @@ protocol AdminRemoveWebMenuItemInteractor: Sendable {
         menuId: String,
         id: String
     ) async throws
+
+    func delete(
+        menuId: String,
+        ids: [String]
+    ) async throws
 }

@@ -9,13 +9,13 @@ struct AdminListMediaVariantDefaultPresenter: AdminListMediaVariantPresenter {
     let renderingEngine: any RenderingEngine
 
     func renderListPage(
-        model: NewAdminListModel<
+        model: AdminListModel<
             MediaAdminAPI.Components.Schemas.MediaVariantListItemSchema
         >,
-        permissions: NewAdminListActions,
+        permissions: AdminListActions,
         search: String?
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Media variants",
@@ -33,7 +33,7 @@ struct AdminListMediaVariantDefaultPresenter: AdminListMediaVariantPresenter {
     func renderErrorPage(error: AdminListMediaVariantError) async throws
         -> HTMLResponse
     {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         switch error {
         case .unauthorized:
             state = .init(
@@ -51,11 +51,11 @@ struct AdminListMediaVariantDefaultPresenter: AdminListMediaVariantPresenter {
                 message: "The request could not be completed. Please try again."
             )
         }
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Media variants",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle()
             )

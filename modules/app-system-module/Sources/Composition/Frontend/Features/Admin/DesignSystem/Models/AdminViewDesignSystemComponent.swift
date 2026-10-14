@@ -6,59 +6,59 @@ import WebComponents
 
 struct AdminViewDesignSystemComponent: Component {
 
-    let breadcrumb: NewAdminBreadcrumb
-    let primaryLink = NewAdminButton(
+    let breadcrumb: AdminBreadcrumb
+    let primaryLink = AdminButton(
         "Primary",
         href: "#primary",
         style: .primary
     )
-    let secondaryLink = NewAdminButton(
+    let secondaryLink = AdminButton(
         "Secondary",
         href: "#secondary",
         style: .secondary
     )
-    let ghostPrimaryLink = NewAdminButton(
+    let ghostPrimaryLink = AdminButton(
         "Primary ghost",
         href: "#ghost-primary",
         style: .ghost(.primary)
     )
-    let ghostSecondaryLink = NewAdminButton(
+    let ghostSecondaryLink = AdminButton(
         "Secondary ghost",
         href: "#ghost-secondary",
         style: .ghost(.secondary)
     )
-    let destructiveLink = NewAdminButton(
+    let destructiveLink = AdminButton(
         "Destructive",
         href: "#destructive",
         style: .destructive
     )
-    let disabledLink = NewAdminButton("Disabled", style: .disabled)
-    let primaryRowLink = NewAdminRowButton(
+    let disabledLink = AdminButton("Disabled", style: .disabled)
+    let primaryRowLink = AdminRowButton(
         "Primary",
         href: "#primary-action",
         style: .primary
     )
-    let secondaryRowLink = NewAdminRowButton(
+    let secondaryRowLink = AdminRowButton(
         "Secondary",
         href: "#secondary-action",
         style: .secondary
     )
-    let ghostPrimaryRowLink = NewAdminRowButton(
+    let ghostPrimaryRowLink = AdminRowButton(
         "Primary ghost",
         href: "#ghost-primary-action",
         style: .ghost(.primary)
     )
-    let ghostSecondaryRowLink = NewAdminRowButton(
+    let ghostSecondaryRowLink = AdminRowButton(
         "Secondary ghost",
         href: "#ghost-secondary-action",
         style: .ghost(.secondary)
     )
-    let destructiveRowLink = NewAdminRowButton(
+    let destructiveRowLink = AdminRowButton(
         "Destructive",
         href: "#destructive-action",
         style: .destructive
     )
-    let disabledRowLink = NewAdminRowButton("Disabled", style: .disabled)
+    let disabledRowLink = AdminRowButton("Disabled", style: .disabled)
 
     init() {
         self.breadcrumb = .init(

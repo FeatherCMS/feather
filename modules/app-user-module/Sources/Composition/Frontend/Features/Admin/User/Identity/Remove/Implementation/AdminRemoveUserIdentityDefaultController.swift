@@ -13,32 +13,6 @@ struct AdminRemoveUserIdentityDefaultController:
             any AdminRemoveUserIdentityPresenter
         >
 
-    func getRemoveUserIdentity(
-        request: Request,
-        context: AuthenticatedRequestContext
-    )
-        async throws -> HTMLResponse
-    {
-        let (interactor, presenter) = buildRuntime((request, context))
-        guard
-            context.isCurrentUserAllowed(to: UserPermissions.Identities.delete)
-        else { return try await presenter.renderForbiddenPage() }
-        let id = try context.requiredID()
-        do {
-            let names = try await interactor.names(ids: [id])
-            return try await presenter.renderRemovePage(
-                items: [.init(id: id, label: names.first ?? id)],
-                returnTo: request.queryString("returnTo")
-            )
-        }
-        catch let error as AdminRemoveUserIdentityError {
-            return try await presenter.renderErrorPage(
-                error: error,
-                cancel: UserIdentityRoutes.list.description
-            )
-        }
-    }
-
     func postRemoveUserIdentity(
         request: Request,
         context: AuthenticatedRequestContext
@@ -53,7 +27,7 @@ struct AdminRemoveUserIdentityDefaultController:
         let id = try context.requiredID()
         do {
             let payload = try await request.decode(
-                as: NonceRequest<NewAdminListRemoveFormInput>.self,
+                as: NonceRequest<AdminListRemoveFormInput>.self,
                 context: context
             )
             guard
@@ -84,56 +58,6 @@ struct AdminRemoveUserIdentityDefaultController:
         }
     }
 
-    func getRemoveUserIdentities(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime((request, context))
-        guard
-            context.isCurrentUserAllowed(to: UserPermissions.Identities.delete)
-        else {
-            return try await presenter.renderForbiddenPage()
-                .response(from: request, context: context)
-        }
-        let ids = request.queryStrings("ids")
-        let page = request.queryPage()
-        let search = request.querySearch()
-        guard !ids.isEmpty else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: NewAdminLocation.url(
-                        path: UserIdentityRoutes.list.description,
-                        page: page,
-                        search: search
-                    )
-                ]
-            )
-        }
-        do {
-            return
-                try await presenter.renderRemovePage(
-                    items: zip(ids, try await interactor.names(ids: ids))
-                        .map {
-                            .init(id: $0.0, label: $0.1)
-                        },
-                    returnTo: request.queryString("returnTo")
-                )
-                .response(from: request, context: context)
-        }
-        catch let error as AdminRemoveUserIdentityError {
-            return
-                try await presenter.renderErrorPage(
-                    error: error,
-                    cancel: NewAdminLocation.removeCancel(
-                        path: UserIdentityRoutes.list.description,
-                        returnTo: request.queryString("returnTo")
-                    )
-                )
-                .response(from: request, context: context)
-        }
-    }
-
     func postRemoveUserIdentities(
         request: Request,
         context: AuthenticatedRequestContext
@@ -148,7 +72,7 @@ struct AdminRemoveUserIdentityDefaultController:
         var returnTo = request.queryString("returnTo")
         do {
             let payload = try await request.decode(
-                as: NonceRequest<NewAdminListRemoveFormInput>.self,
+                as: NonceRequest<AdminListRemoveFormInput>.self,
                 context: context
             )
             returnTo = payload.input.normalizedReturnTo
@@ -160,7 +84,7 @@ struct AdminRemoveUserIdentityDefaultController:
             else {
                 return
                     try await presenter.renderInvalidNoncePage(
-                        cancel: NewAdminLocation.removeCancel(
+                        cancel: AdminLocation.removeCancel(
                             path: UserIdentityRoutes.list.description,
                             returnTo: returnTo
                         )
@@ -172,7 +96,7 @@ struct AdminRemoveUserIdentityDefaultController:
                     ids: payload.input.normalizedIds
                 )
             }
-            let location = NewAdminLocation.url(
+            let location = AdminLocation.url(
                 path: UserIdentityRoutes.list.description,
                 page: payload.input.normalizedPage,
                 search: payload.input.normalizedSearch
@@ -192,7 +116,7 @@ struct AdminRemoveUserIdentityDefaultController:
             return
                 try await presenter.renderErrorPage(
                     error: error,
-                    cancel: NewAdminLocation.removeCancel(
+                    cancel: AdminLocation.removeCancel(
                         path: UserIdentityRoutes.list.description,
                         returnTo: returnTo
                     )

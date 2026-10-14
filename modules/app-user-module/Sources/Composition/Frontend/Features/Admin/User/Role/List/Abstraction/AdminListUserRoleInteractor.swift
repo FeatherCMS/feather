@@ -7,7 +7,7 @@ protocol AdminListUserRoleInteractor: Sendable {
         page: Int,
         size: Int,
         search: String?
-    ) async throws -> NewAdminListModel<
+    ) async throws -> AdminListModel<
         Components.Schemas.UserRoleListItemSchema
     >
 }

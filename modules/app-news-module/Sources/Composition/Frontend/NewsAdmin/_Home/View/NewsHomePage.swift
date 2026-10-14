@@ -43,7 +43,7 @@ struct NewsHomePage: Component {
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 LineHeight(1.5)
             }
-            Custom(".news-overview-destination .new-admin-button") {
+            Custom(".news-overview-destination .admin-button") {
                 Margin(top: 4.px)
             }
         }
@@ -53,9 +53,9 @@ struct NewsHomePage: Component {
         context: inout BuilderContext
     ) -> Section {
         Section {
-            context.build(NewAdminBreadcrumb(links: NewsAdminRoutes.breadcrumb))
+            context.build(AdminBreadcrumb(links: NewsAdminRoutes.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "News",
                         description: "Manage articles and categories."
@@ -72,7 +72,7 @@ struct NewsHomePage: Component {
                             H2("Articles")
                             P("Create and manage news articles.")
                             context.build(
-                                NewAdminButton(
+                                AdminButton(
                                     "Open",
                                     href: NewsAdminRoutes.articles.description
                                         + "/",
@@ -90,7 +90,7 @@ struct NewsHomePage: Component {
                             H2("Categories")
                             P("Organize news articles into categories.")
                             context.build(
-                                NewAdminButton(
+                                AdminButton(
                                     "Open",
                                     href: NewsAdminRoutes.categories.description
                                         + "/",
@@ -105,7 +105,7 @@ struct NewsHomePage: Component {
             }
             else {
                 context.build(
-                    NewAdminStatusView(
+                    AdminStatusView(
                         state: .init(
                             title: "Forbidden",
                             message: "Your account cannot access news."

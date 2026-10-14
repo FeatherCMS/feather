@@ -14,15 +14,15 @@ struct AdminListNewsletterSubscribersDefaultPresenter:
         error: String?,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        let actions = NewAdminListActions(
+        let actions = AdminListActions(
             Set(permissions.map(PermissionKey.init))
         )
         if let error {
-            return try await renderingEngine.renderNewAdminPage(
+            return try await renderingEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Subscribers",
-                content: NewAdminStatusView(
+                content: AdminStatusView(
                     state: .init(
                         title: "Subscribers unavailable",
                         message: error
@@ -31,7 +31,7 @@ struct AdminListNewsletterSubscribersDefaultPresenter:
                 )
             )
         }
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Subscribers",
@@ -46,13 +46,13 @@ struct AdminListNewsletterSubscribersDefaultPresenter:
         item: AdminNewsletterSubscriberListItem,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Subscriber details",
             content: NewsletterSubscriberDetails(
                 item: item,
-                permissions: NewAdminListActions(
+                permissions: AdminListActions(
                     Set(permissions.map(PermissionKey.init))
                 )
             )
@@ -63,11 +63,11 @@ struct AdminListNewsletterSubscribersDefaultPresenter:
         message: String,
         status: HTTPResponse.Status
     ) async throws -> HTMLResponse {
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Subscriber details",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(
                     title: "Subscriber unavailable",
                     message: message

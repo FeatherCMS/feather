@@ -17,9 +17,9 @@ struct AdminEditMediaAssetDefaultPresenter: AdminEditMediaAssetPresenter {
 
     func renderEditPage(
         model: AdminEditMediaAssetModel,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit media asset",
@@ -36,9 +36,9 @@ struct AdminEditMediaAssetDefaultPresenter: AdminEditMediaAssetPresenter {
         id: String,
         info: String,
         message: String,
-        permissions: NewAdminListActions
+        permissions: AdminListActions
     ) async throws -> HTMLResponse {
-        try await renderEngine.renderNewAdminPage(
+        try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit media asset",

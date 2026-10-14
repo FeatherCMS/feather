@@ -9,15 +9,15 @@ struct BlogSettingsEdit: Component {
     struct State {
         let canEdit: Bool
         let form: BlogSettingsForm.State
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
     }
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Blog settings",
                         description:
@@ -27,7 +27,7 @@ struct BlogSettingsEdit: Component {
             )
             if !state.canEdit {
                 context.build(
-                    NewAdminStatusView(
+                    AdminStatusView(
                         state: .init(
                             title: "Read-only",
                             message:

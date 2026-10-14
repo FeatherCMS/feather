@@ -145,11 +145,11 @@ struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
         message: String,
         status: HTTPResponse.Status
     ) async throws -> HTMLResponse {
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Manage user identities",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: .init(title: title, message: message),
                 icon: FeatherIcons.alertCircle()
             )
@@ -160,7 +160,7 @@ struct AdminEditUserIdentityDefaultPresenter: AdminEditUserIdentityPresenter {
     private func renderPage<T: Component>(content: T) async throws
         -> HTMLResponse
     {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Manage user identities",

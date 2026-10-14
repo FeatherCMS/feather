@@ -7,10 +7,10 @@ import WebComponents
 
 struct RedirectRuleTable: Component {
     struct State {
-        let permissions: NewAdminListActions
+        let permissions: AdminListActions
         let rules:
             [RedirectAdminAPI.Components.Schemas.RedirectRuleListItemSchema]
-        let pageState: NewAdminListPageState
+        let pageState: AdminListPageState
         let search: String?
         let statusCode: String?
     }
@@ -20,10 +20,10 @@ struct RedirectRuleTable: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: RedirectRuleRoutes.redirectBreadcrumb)
+                AdminBreadcrumb(links: RedirectRuleRoutes.redirectBreadcrumb)
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Redirect rules",
                         description:

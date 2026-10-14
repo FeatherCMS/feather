@@ -27,16 +27,16 @@ struct SettingsForm: Component {
     var submitLabel: String = "Save settings"
 
     func html(context: inout BuilderContext) -> Form {
-        let form = NewAdminForm(action: action, nonceToken: state.nonceToken) {
+        let form = AdminForm(action: action, nonceToken: state.nonceToken) {
             if let success = state.success {
                 P(success).class("success")
             }
             if let error = state.error {
-                P(error).class("new-admin-form__error")
+                P(error).class("admin-form__error")
             }
 
             context.build(
-                NewAdminFormFieldLanguage(
+                AdminFormFieldLanguage(
                     state: .init(
                         name: state.language.key,
                         label: state.language.label,
@@ -50,7 +50,7 @@ struct SettingsForm: Component {
             )
 
             context.build(
-                NewAdminFormFieldTimezone(
+                AdminFormFieldTimezone(
                     state: .init(
                         name: state.timezone.key,
                         label: state.timezone.label,
@@ -63,7 +63,7 @@ struct SettingsForm: Component {
             )
 
             context.build(
-                NewAdminFormFieldPaginationLimit(
+                AdminFormFieldPaginationLimit(
                     state: .init(
                         name: state.pageSize.key,
                         label: state.pageSize.label,
@@ -78,9 +78,9 @@ struct SettingsForm: Component {
             if state.canEdit {
                 Section {
                     Div {
-                        context.build(NewAdminSubmitButton(submitLabel))
+                        context.build(AdminSubmitButton(submitLabel))
                     }
-                    .class("new-admin-form__actions")
+                    .class("admin-form__actions")
                 }
             }
         }

@@ -7,12 +7,12 @@ import WebComponents
 
 struct AnalyticsLogDetails: Component {
     let log: Components.Schemas.AnalyticsLogDetailSchema
-    let breadcrumb: [NewAdminBreadcrumb.Link]
+    let breadcrumb: [AdminBreadcrumb.Link]
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminDetailView(
+                AdminDetailView(
                     breadcrumb: breadcrumb,
                     pageHeader: .primary(
                         title: "Analytics log details",

@@ -12,9 +12,6 @@ struct AdminRemoveNewsletterSubscribersDefaultInteractor:
 {
     let repository: AdminRemoveNewsletterSubscribersOpenAPIRepository
 
-    func names(ids: [String]) async throws -> [String] {
-        try await repository.names(ids: ids)
-    }
 
     func remove(ids: [String], campaignId: String?) async throws {
         try await repository.remove(ids: ids, campaignId: campaignId)

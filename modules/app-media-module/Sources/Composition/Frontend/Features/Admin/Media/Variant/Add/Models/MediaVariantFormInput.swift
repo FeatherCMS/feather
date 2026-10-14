@@ -5,8 +5,8 @@ import FeatherValidation
 struct MediaVariantFormInput: Decodable, Sendable, Equatable, Hashable {
     let key: String
     let name: String
-    let isRequired: NewAdminFormFieldCheckbox.Input
-    let isActive: NewAdminFormFieldCheckbox.Input
+    let isRequired: AdminFormFieldCheckbox.Input
+    let isActive: AdminFormFieldCheckbox.Input
 
     var normalizedKey: String {
         key.whitespaceTrimmed
@@ -18,8 +18,8 @@ struct MediaVariantFormInput: Decodable, Sendable, Equatable, Hashable {
     init(
         key: String,
         name: String,
-        isRequired: NewAdminFormFieldCheckbox.Input = .init(value: false),
-        isActive: NewAdminFormFieldCheckbox.Input = .init(value: true)
+        isRequired: AdminFormFieldCheckbox.Input = .init(value: false),
+        isActive: AdminFormFieldCheckbox.Input = .init(value: true)
     ) {
         self.key = key
         self.name = name

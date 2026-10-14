@@ -14,16 +14,16 @@ struct WebMenuItemEdit: Component {
         let menuId: String
         let id: String
         let form: WebMenuItemForm.State
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
     }
 
     let state: State
 
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
-            context.build(NewAdminBreadcrumb(links: state.breadcrumb))
+            context.build(AdminBreadcrumb(links: state.breadcrumb))
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Edit menu",
                         description: "Update the navigation menu configuration."
@@ -34,7 +34,7 @@ struct WebMenuItemEdit: Component {
                 AdminWebMenuTabs(menuID: state.menuId, active: .items)
             )
             context.build(
-                NewAdminRelationshipGroup(
+                AdminRelationshipGroup(
                     pageHeader: .secondary(
                         title: "Edit item",
                         description: "Update the navigation menu link."

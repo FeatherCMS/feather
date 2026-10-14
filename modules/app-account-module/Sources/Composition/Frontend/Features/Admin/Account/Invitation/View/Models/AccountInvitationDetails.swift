@@ -7,7 +7,7 @@ import WebComponents
 struct AccountInvitationDetails: Component {
     struct State {
         let invitation: AccountInvitationDetailsModel
-        let breadcrumb: [NewAdminBreadcrumb.Link]
+        let breadcrumb: [AdminBreadcrumb.Link]
     }
 
     let state: State
@@ -15,7 +15,7 @@ struct AccountInvitationDetails: Component {
     func html(context: inout BuilderContext) -> some BasicTag {
         Section {
             context.build(
-                NewAdminDetailView(
+                AdminDetailView(
                     breadcrumb: state.breadcrumb,
                     pageHeader: .primary(
                         title: "User invitation details",

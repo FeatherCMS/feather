@@ -5,7 +5,7 @@ struct AdminEditAccountProfileModel: Sendable {
     let firstName: String?
     let lastName: String?
     let profileImageAssetId: String?
-    let profileImageAsset: NewAdminMediaAsset?
+    let profileImageAsset: AdminMediaAsset?
 
     var accountProfile: AdminAccountProfileModel {
         .init(

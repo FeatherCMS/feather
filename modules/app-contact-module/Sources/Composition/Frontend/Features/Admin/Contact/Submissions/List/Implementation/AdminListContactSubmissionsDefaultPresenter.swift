@@ -16,7 +16,7 @@ struct AdminListContactSubmissionsDefaultPresenter:
     ) async throws -> HTMLResponse {
         let page = request.queryPage()
         let pageSize = 20
-        let pageState = NewAdminListPageState(
+        let pageState = AdminListPageState(
             page: page,
             pageSize: pageSize,
             total: items.count
@@ -24,7 +24,7 @@ struct AdminListContactSubmissionsDefaultPresenter:
         let start = (page - 1) * pageSize
         let end = min(start + pageSize, items.count)
         let pageItems = start < items.count ? Array(items[start..<end]) : []
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Contact submissions",

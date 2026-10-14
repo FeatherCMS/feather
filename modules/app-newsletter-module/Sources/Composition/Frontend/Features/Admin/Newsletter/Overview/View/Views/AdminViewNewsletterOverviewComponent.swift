@@ -59,7 +59,7 @@ struct AdminViewNewsletterOverviewComponent: Component {
                 Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
                 LineHeight(1.5)
             }
-            Custom(".newsletter-overview-destination .new-admin-button") {
+            Custom(".newsletter-overview-destination .admin-button") {
                 Margin(top: 4.px)
             }
         }
@@ -68,7 +68,7 @@ struct AdminViewNewsletterOverviewComponent: Component {
     func html(context: inout BuilderContext) -> Section {
         Section {
             context.build(
-                NewAdminBreadcrumb(links: [
+                AdminBreadcrumb(links: [
                     .init(
                         label: "Admin",
                         link: NewsletterAdminRoutes.admin.description + "/"
@@ -76,7 +76,7 @@ struct AdminViewNewsletterOverviewComponent: Component {
                 ])
             )
             context.build(
-                NewAdminPageHeader(
+                AdminPageHeader(
                     state: .primary(
                         title: "Newsletter",
                         description:
@@ -94,7 +94,7 @@ struct AdminViewNewsletterOverviewComponent: Component {
                         H2(destination.title)
                         P(destination.description)
                         context.build(
-                            NewAdminButton(
+                            AdminButton(
                                 "Open",
                                 href: destination.href,
                                 style: .primary

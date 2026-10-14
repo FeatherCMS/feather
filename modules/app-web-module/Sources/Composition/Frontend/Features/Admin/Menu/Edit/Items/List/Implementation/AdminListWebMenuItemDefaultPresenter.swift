@@ -22,7 +22,7 @@ struct AdminListWebMenuItemDefaultPresenter:
         search: String?,
         error: String?
     ) async throws -> HTMLResponse {
-        let actions = NewAdminListActions(
+        let actions = AdminListActions(
             Set(
                 WebPermissions.MenuItems.allPermissions()
                     .filter {
@@ -31,7 +31,7 @@ struct AdminListWebMenuItemDefaultPresenter:
             )
         )
         if let error {
-            return try await renderEngine.renderNewAdminPage(
+            return try await renderEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Edit menu",
@@ -45,7 +45,7 @@ struct AdminListWebMenuItemDefaultPresenter:
             )
         }
         guard actions.allows(WebPermissions.MenuItems.list) else {
-            return try await renderEngine.renderNewAdminPage(
+            return try await renderEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Edit menu",
@@ -58,7 +58,7 @@ struct AdminListWebMenuItemDefaultPresenter:
                 )
             )
         }
-        return try await renderEngine.renderNewAdminPage(
+        return try await renderEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit menu",
@@ -78,31 +78,4 @@ struct AdminListWebMenuItemDefaultPresenter:
             )
         )
     }
-
-    func renderRemovePage(
-        menuId: String,
-        page: Int,
-        search: String?,
-        items: [NewAdminRemoveItemContext]
-    ) async throws -> HTMLResponse {
-        let nonceToken = await AdminNonceStore.shared.issue(
-            sessionToken: context.sessionToken
-        )
-        return try await renderEngine.renderNewAdminDialog(
-            request: request,
-            context: context,
-            title: NewAdminRemoveConfirmation.dialogTitle,
-            content: WebMenuItemBulkConfirmation(
-                state: .init(
-                    menuId: menuId,
-                    page: page,
-                    search: search,
-                    items: items,
-                    nonceToken: nonceToken
-                )
-            ),
-            size: .small
-        )
-    }
-
 }

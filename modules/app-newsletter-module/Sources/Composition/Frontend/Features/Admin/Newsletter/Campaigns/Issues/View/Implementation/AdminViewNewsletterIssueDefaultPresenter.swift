@@ -19,7 +19,7 @@ struct AdminViewNewsletterIssueDefaultPresenter:
         issueId: String,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Campaign issue details",
@@ -27,7 +27,7 @@ struct AdminViewNewsletterIssueDefaultPresenter:
                 newsletterId: model.newsletterId,
                 issueId: issueId,
                 model: model,
-                permissions: NewAdminListActions(
+                permissions: AdminListActions(
                     Set(permissions.map(PermissionKey.init))
                 )
             )

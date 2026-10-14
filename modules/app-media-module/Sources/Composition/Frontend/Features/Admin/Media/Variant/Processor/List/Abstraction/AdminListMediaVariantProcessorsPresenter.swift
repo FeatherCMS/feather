@@ -5,10 +5,10 @@ import MediaAdminAPI
 protocol AdminListMediaVariantProcessorsPresenter: Sendable {
     func renderListPage(
         variantId: String,
-        model: NewAdminListModel<
+        model: AdminListModel<
             MediaAdminAPI.Components.Schemas.MediaVariantProcessorListItemSchema
         >,
-        permissions: NewAdminListActions,
+        permissions: AdminListActions,
         search: String?
     ) async throws -> HTMLResponse
 

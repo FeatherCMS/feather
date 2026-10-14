@@ -10,17 +10,17 @@ struct AdminListNewsletterIssuesDefaultPresenter:
 
     func render(
         newsletterId: String,
-        model: NewAdminListModel<AdminNewsletterIssueItem>,
+        model: AdminListModel<AdminNewsletterIssueItem>,
         error: String?,
-        permissions: NewAdminListActions,
+        permissions: AdminListActions,
         search: String?
     ) async throws -> HTMLResponse {
         if let error {
-            return try await renderingEngine.renderNewAdminPage(
+            return try await renderingEngine.renderAdminPage(
                 request: request,
                 context: context,
                 title: "Campaign issues",
-                content: NewAdminStatusView(
+                content: AdminStatusView(
                     state: .init(
                         title: "Campaign issues unavailable",
                         message: error
@@ -29,7 +29,7 @@ struct AdminListNewsletterIssuesDefaultPresenter:
                 )
             )
         }
-        return try await renderingEngine.renderNewAdminPage(
+        return try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Campaign issues",

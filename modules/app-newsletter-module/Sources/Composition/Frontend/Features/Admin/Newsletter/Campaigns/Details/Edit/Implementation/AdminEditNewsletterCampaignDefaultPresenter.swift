@@ -29,7 +29,7 @@ struct AdminEditNewsletterCampaignDefaultPresenter:
         error: String?,
         permissions: Set<String>
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit campaign",
@@ -44,7 +44,7 @@ struct AdminEditNewsletterCampaignDefaultPresenter:
                         success: nil
                     ),
                     isDetails: false,
-                    permissions: NewAdminListActions(
+                    permissions: AdminListActions(
                         Set(permissions.map(PermissionKey.init))
                     ),
                     pageHeader: .primary(
@@ -88,7 +88,7 @@ struct AdminEditNewsletterCampaignDefaultPresenter:
     func renderErrorPage(
         error: AdminEditNewsletterCampaignError
     ) async throws -> HTMLResponse {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         let status: HTTPResponse.Status
         switch error {
         case .notFound:
@@ -122,11 +122,11 @@ struct AdminEditNewsletterCampaignDefaultPresenter:
             )
             status = .serviceUnavailable
         }
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "Edit campaign",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle()
             )

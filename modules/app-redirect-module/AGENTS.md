@@ -17,9 +17,9 @@ The request flow is Router → Controller → Interactor → OpenAPI Repository 
 API client. Controllers own route parameters, permissions, request decoding,
 nonce consumption, validation, and error branching. Interactors translate
 `OpenAPIRepositoryError` into operation-specific errors. Presenters own
-user-facing wording, NewAdmin HTML, response status codes, and redirects.
+user-facing wording, admin HTML, response status codes, and redirects.
 
-Use NewAdmin components only. Form inputs contain feature fields only and are
+Use Admin components only. Form inputs contain feature fields only and are
 wrapped in `NonceRequest<Input>` at the controller boundary. List and remove
 flows preserve pagination, search, and filter state; bulk removal belongs to
 the Remove operation and is a single repository call.

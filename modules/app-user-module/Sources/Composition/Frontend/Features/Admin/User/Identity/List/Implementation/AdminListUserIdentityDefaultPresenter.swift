@@ -11,17 +11,17 @@ struct AdminListUserIdentityDefaultPresenter: AdminListUserIdentityPresenter {
     let renderingEngine: any RenderingEngine
 
     func renderListPage(
-        model: NewAdminListModel<Components.Schemas.UserIdentityListItemSchema>,
+        model: AdminListModel<Components.Schemas.UserIdentityListItemSchema>,
         permissions: Set<PermissionKey>,
         search: String?,
         role: String?
     ) async throws -> HTMLResponse {
-        try await renderingEngine.renderNewAdminPage(
+        try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "User identities",
             content: UserIdentityTable(
-                permissions: NewAdminListActions(permissions),
+                permissions: AdminListActions(permissions),
                 identities: model.items,
                 pageState: model.pageState,
                 search: search,
@@ -33,7 +33,7 @@ struct AdminListUserIdentityDefaultPresenter: AdminListUserIdentityPresenter {
     func renderErrorPage(error: AdminListUserIdentityError) async throws
         -> HTMLResponse
     {
-        let state: NewAdminStatusView.State
+        let state: AdminStatusView.State
         switch error {
         case .unauthorized:
             state = .init(
@@ -51,11 +51,11 @@ struct AdminListUserIdentityDefaultPresenter: AdminListUserIdentityPresenter {
                 message: "The request could not be completed. Please try again."
             )
         }
-        let page = try await renderingEngine.renderNewAdminPage(
+        let page = try await renderingEngine.renderAdminPage(
             request: request,
             context: context,
             title: "User identities",
-            content: NewAdminStatusView(
+            content: AdminStatusView(
                 state: state,
                 icon: FeatherIcons.alertCircle()
             )
