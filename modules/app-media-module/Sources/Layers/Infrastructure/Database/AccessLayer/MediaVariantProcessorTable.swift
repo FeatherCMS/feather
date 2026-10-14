@@ -22,7 +22,9 @@ extension MediaVariantProcessorTable.Row {
     }
 }
 
-struct MediaVariantProcessorTable {
+struct MediaVariantProcessorTable: DatabaseTableWithBulkDelete {
+    static let name = "media_variant_processor"
+    static let primaryKey = "id"
     struct Row {
         let id: String
         let variantId: String
@@ -108,17 +110,4 @@ struct MediaVariantProcessorTable {
         }
     }
 
-    func delete(ids: [String]) async throws -> [String] {
-        guard !ids.isEmpty else { return [] }
-        let values =
-            ids.map { "'\($0.replacingOccurrences(of: "'", with: "''"))'" }
-            .joined(separator: ", ")
-        return try await connection.run(
-            query:
-                #"DELETE FROM media_variant_processor WHERE id IN (\#(unescaped: values)) RETURNING id;"#
-        ) { sequence in
-            try await sequence.collect()
-                .map { try $0.decode(column: "id", as: String.self) }
-        }
-    }
 }

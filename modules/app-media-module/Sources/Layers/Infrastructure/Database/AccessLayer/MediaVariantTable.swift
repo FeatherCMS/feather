@@ -15,7 +15,9 @@ extension MediaVariantTable.Row {
     }
 }
 
-struct MediaVariantTable {
+struct MediaVariantTable: DatabaseTableWithBulkDelete {
+    static let name = "media_variant"
+    static let primaryKey = "id"
     struct Row {
         let id: String
         let key: String
@@ -97,17 +99,4 @@ struct MediaVariantTable {
         }
     }
 
-    func delete(ids: [String]) async throws -> [String] {
-        guard !ids.isEmpty else { return [] }
-        let values =
-            ids.map { "'\($0.replacingOccurrences(of: "'", with: "''"))'" }
-            .joined(separator: ", ")
-        return try await connection.run(
-            query:
-                #"DELETE FROM media_variant WHERE id IN (\#(unescaped: values)) RETURNING id;"#
-        ) { sequence in
-            try await sequence.collect()
-                .map { try $0.decode(column: "id", as: String.self) }
-        }
-    }
 }
