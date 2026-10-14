@@ -26,13 +26,6 @@ struct AuthCredentialRow: Component {
                             style: .ghost(.secondary),
                             permission: AuthPermissions.Credential.update
                         ),
-                        .init(
-                            "Remove",
-                            href:
-                                "/admin/auth/credentials/\(credential.id)/remove/",
-                            style: .destructive,
-                            permission: AuthPermissions.Credential.delete
-                        ),
                     ],
                     permissions: actions
                 )

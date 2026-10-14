@@ -15,11 +15,6 @@ protocol AdminEditMediaVariantPresenter: Sendable {
             .MediaVariantProcessorDetailSchema,
         permissions: AdminListActions
     ) async throws -> HTMLResponse
-    func renderProcessorRemovePage(
-        variantId: String,
-        items: [AdminRemoveItemContext],
-        returnTo: String?
-    ) async throws -> HTMLResponse
     func renderErrorPage(error: AdminEditMediaVariantError) async throws
         -> HTMLResponse
     func renderSuccess(id: String) -> Response

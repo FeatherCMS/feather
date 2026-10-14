@@ -53,16 +53,6 @@ struct UserIdentityRow: Component {
                             style: .ghost(.secondary),
                             permission: UserPermissions.Identities.update
                         ),
-                        .init(
-                            "Remove",
-                            href:
-                                UserIdentityRoutes.remove(
-                                    RouterPath(identity.id)
-                                )
-                                .description,
-                            style: .destructive,
-                            permission: UserPermissions.Identities.delete
-                        ),
                     ],
                     permissions: permissions
                 )

@@ -18,14 +18,6 @@ protocol AdminRemoveNewsletterCampaignSubscriberController: Sendable {
 
 extension AdminRemoveNewsletterCampaignSubscriberController {
     func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-        router.get(
-            NewsletterAdminRoutes.campaignSubscriberRemoveSelectedRoute,
-            use: confirmSelected
-        )
-        router.get(
-            NewsletterAdminRoutes.campaignSubscriberRemoveRoute,
-            use: confirm
-        )
         router.post(
             NewsletterAdminRoutes.campaignSubscriberRemoveRoute,
             use: remove

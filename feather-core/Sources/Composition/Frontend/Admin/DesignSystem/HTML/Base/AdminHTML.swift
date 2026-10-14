@@ -18,6 +18,7 @@ public struct AdminHTML<T: Component>: Component where T.HTML: FlowContent {
     let language: String
     let body: AdminBody<T>
     let stylesheetPath: String?
+    let adminRemoveNonce: String?
     let richContentEditorBlocks:
         [AdminRichContentEditorBlockDefinition]
 
@@ -27,12 +28,14 @@ public struct AdminHTML<T: Component>: Component where T.HTML: FlowContent {
         language: String = "en-US",
         body: AdminBody<T>,
         stylesheetPath: String? = "/admin/style.css",
+        adminRemoveNonce: String? = nil,
         richContentEditorBlocks: [AdminRichContentEditorBlockDefinition] = []
     ) {
         self.title = title
         self.language = language
         self.body = body
         self.stylesheetPath = stylesheetPath
+        self.adminRemoveNonce = adminRemoveNonce
         self.richContentEditorBlocks = richContentEditorBlocks
 
         #if DEBUG
@@ -53,7 +56,8 @@ public struct AdminHTML<T: Component>: Component where T.HTML: FlowContent {
                 title: title,
                 stylesheet: css,
                 scripts: [richContentEditorConfigurationScript] + scripts,
-                stylesheetPath: stylesheetPath
+                stylesheetPath: stylesheetPath,
+                adminRemoveNonce: adminRemoveNonce
             )
         )
 

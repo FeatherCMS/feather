@@ -121,17 +121,6 @@ struct AuthMagicLinkTableContent: Component {
                                                                     .MagicLinks
                                                                     .update
                                                             ),
-                                                            .init(
-                                                                "Remove",
-                                                                href:
-                                                                    "/admin/auth/magic-links/\(link.id)/remove/",
-                                                                style:
-                                                                    .destructive,
-                                                                permission:
-                                                                    AuthPermissions
-                                                                    .MagicLinks
-                                                                    .delete
-                                                            ),
                                                         ],
                                                         permissions: actions
                                                     )

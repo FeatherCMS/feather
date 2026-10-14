@@ -34,17 +34,6 @@ struct NewsletterCampaignSubscriberRow: Component {
                             style: .ghost(.secondary),
                             permission: Permissions.Subscribers.update
                         ),
-                        .init(
-                            "Remove",
-                            href:
-                                NewsletterAdminRoutes.campaignSubscriberRemove(
-                                    newsletterID: RouterPath(newsletterId),
-                                    subscriberID: RouterPath(item.id)
-                                )
-                                .description,
-                            style: .destructive,
-                            permission: Permissions.Subscribers.delete
-                        ),
                     ],
                     permissions: permissions
                 )

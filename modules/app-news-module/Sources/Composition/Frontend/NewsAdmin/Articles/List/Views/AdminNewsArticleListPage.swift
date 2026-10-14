@@ -125,25 +125,6 @@ struct AdminNewsArticleListPage: Component {
                                                                             .Articles
                                                                             .update
                                                                     ),
-                                                                    .init(
-                                                                        "Remove",
-                                                                        href:
-                                                                            NewsAdminRoutes
-                                                                            .articleRemove(
-                                                                                RouterPath(
-                                                                                    item
-                                                                                        .id
-                                                                                )
-                                                                            )
-                                                                            .description
-                                                                            + "/",
-                                                                        style:
-                                                                            .destructive,
-                                                                        permission:
-                                                                            NewsPermissions
-                                                                            .Articles
-                                                                            .delete
-                                                                    ),
                                                                 ],
                                                                 permissions:
                                                                     permissions

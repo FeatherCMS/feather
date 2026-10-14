@@ -86,18 +86,7 @@ struct AdminListAuthSessionView: Component {
                                         Td(item.authenticationType)
                                         Td("\(item.expiresAt)")
                                         Td(item.isPersistent ? "Yes" : "No")
-                                        Td {
-                                            if state.canRemove {
-                                                context.build(
-                                                    AdminRowButton(
-                                                        "Remove",
-                                                        href:
-                                                            "/admin/user/identities/\(state.identityID)/sessions/\(item.id)/remove/",
-                                                        style: .destructive
-                                                    )
-                                                )
-                                            }
-                                        }
+                                        Td("")
                                     }
                                 }
                             }

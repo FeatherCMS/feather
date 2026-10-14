@@ -37,12 +37,4 @@ struct AdminListAuthEmailDefaultInteractor: AdminListAuthEmailInteractor {
             userID: userID
         )
     }
-
-    func remove(
-        ids: [String]
-    ) async throws {
-        for id in ids {
-            try await repository.delete(id: id)
-        }
-    }
 }

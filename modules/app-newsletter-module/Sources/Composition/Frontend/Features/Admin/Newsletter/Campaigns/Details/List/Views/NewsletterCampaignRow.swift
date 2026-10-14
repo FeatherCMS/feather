@@ -55,17 +55,6 @@ struct NewsletterCampaignRow: Component {
                             style: .ghost(.secondary),
                             permission: Permissions.Campaigns.update
                         ),
-                        .init(
-                            "Remove",
-                            href: AdminLocation.remove(
-                                path: NewsletterAdminRoutes.campaignRemove
-                                    .description,
-                                ids: [item.id],
-                                returnTo: returnTo
-                            ),
-                            style: .destructive,
-                            permission: Permissions.Campaigns.delete
-                        ),
                     ],
                     permissions: actions
                 )

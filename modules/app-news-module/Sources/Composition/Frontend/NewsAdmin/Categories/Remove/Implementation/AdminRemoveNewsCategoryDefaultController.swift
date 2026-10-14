@@ -7,26 +7,6 @@ struct AdminRemoveNewsCategoryDefaultController:
 {
     let buildRuntime: AdminNewsCategoryRuntimeBuilder
 
-    func getRemoveNewsCategoryConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
-        do {
-            let item = try await runtime.interactor.get(
-                id: context.requiredID()
-            )
-            return try await runtime.presenter.renderRemoveConfirmation(
-                item: item
-            )
-        }
-        catch {
-            return try await runtime.presenter
-                .renderError(error.displayMessage)
-                .response(from: request, context: context)
-        }
-    }
-
     func postRemoveNewsCategory(
         request: Request,
         context: AuthenticatedRequestContext

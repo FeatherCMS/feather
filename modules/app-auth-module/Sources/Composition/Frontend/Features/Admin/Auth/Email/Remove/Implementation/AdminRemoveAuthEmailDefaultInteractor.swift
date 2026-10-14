@@ -32,4 +32,12 @@ struct AdminRemoveAuthEmailDefaultInteractor:
     ) async throws {
         try await repository.delete(id: entity.id)
     }
+
+    func remove(
+        ids: [String]
+    ) async throws {
+        for id in ids {
+            try await repository.delete(id: id)
+        }
+    }
 }

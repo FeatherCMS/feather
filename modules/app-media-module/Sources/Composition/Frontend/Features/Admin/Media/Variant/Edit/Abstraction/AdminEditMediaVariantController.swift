@@ -11,10 +11,6 @@ protocol AdminEditMediaVariantController: Sendable {
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response
-    func getRemoveMediaVariantProcessors(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
     func postEditMediaVariant(
         request: Request,
         context: AuthenticatedRequestContext
@@ -40,10 +36,6 @@ extension AdminEditMediaVariantController {
         router.get(
             MediaVariantRoutes.processorEditRoute,
             use: getEditMediaVariantProcessor
-        )
-        router.get(
-            MediaVariantRoutes.processorRemoveRoute,
-            use: getRemoveMediaVariantProcessors
         )
         router.post(MediaVariantRoutes.editRoute, use: postEditMediaVariant)
         router.post(

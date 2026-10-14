@@ -28,16 +28,6 @@ struct SystemPermissionRow: Component {
                 style: .ghost(.secondary),
                 permission: SystemPermissions.Permissions.update
             ),
-            .init(
-                "Remove",
-                href: AdminLocation.remove(
-                    path: SystemPermissionRoutes.remove.description,
-                    ids: [permission.id],
-                    returnTo: returnTo
-                ),
-                style: .destructive,
-                permission: SystemPermissions.Permissions.delete
-            ),
         ]
     }
 

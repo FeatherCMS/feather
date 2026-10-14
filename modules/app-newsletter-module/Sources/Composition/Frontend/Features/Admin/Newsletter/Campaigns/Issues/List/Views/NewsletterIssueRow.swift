@@ -43,17 +43,6 @@ struct NewsletterIssueRow: Component {
                             style: .ghost(.secondary),
                             permission: Permissions.Issues.update
                         ),
-                        .init(
-                            "Remove",
-                            href:
-                                NewsletterAdminRoutes.issueRemove(
-                                    newsletterID: RouterPath(newsletterId),
-                                    issueID: RouterPath(item.id)
-                                )
-                                .description,
-                            style: .destructive,
-                            permission: Permissions.Issues.delete
-                        ),
                     ],
                     permissions: permissions
                 )

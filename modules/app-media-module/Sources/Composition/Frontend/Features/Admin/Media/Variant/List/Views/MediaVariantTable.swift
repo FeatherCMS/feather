@@ -249,16 +249,6 @@ struct MediaVariantRow: Component {
                             style: .ghost(.primary),
                             permission: MediaPermissions.Variants.update
                         ),
-                        .init(
-                            "Remove",
-                            href: AdminLocation.remove(
-                                path: MediaVariantRoutes.remove.description,
-                                ids: [variant.id],
-                                returnTo: returnTo
-                            ),
-                            style: .destructive,
-                            permission: MediaPermissions.Variants.delete
-                        ),
                     ],
                     permissions: permissions
                 )

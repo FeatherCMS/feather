@@ -18,11 +18,6 @@ struct ContactSubmissionsTableContent: Component {
 
     func html(context: inout BuilderContext) -> Div {
         let path = ContactAdminRoutes.submissions.description
-        let returnTo = AdminLocation.url(
-            path: path,
-            page: pageState.page,
-            search: search
-        )
         return context.build(
             AdminList(
                 table: {
@@ -166,40 +161,6 @@ struct ContactSubmissionsTableContent: Component {
                                                                             ContactPermissions
                                                                             .Submissions
                                                                             .read
-                                                                    ),
-                                                                    .init(
-                                                                        "Remove",
-                                                                        href:
-                                                                            AdminLocation
-                                                                            .remove(
-                                                                                path:
-                                                                                    ContactAdminRoutes
-                                                                                    .formSubmissionRemove(
-                                                                                        formID:
-                                                                                            RouterPath(
-                                                                                                item
-                                                                                                    .formId
-                                                                                            ),
-                                                                                        submissionID:
-                                                                                            RouterPath(
-                                                                                                item
-                                                                                                    .id
-                                                                                            )
-                                                                                    )
-                                                                                    .description,
-                                                                                ids: [
-                                                                                    item
-                                                                                        .id
-                                                                                ],
-                                                                                returnTo:
-                                                                                    returnTo
-                                                                            ),
-                                                                        style:
-                                                                            .destructive,
-                                                                        permission:
-                                                                            ContactPermissions
-                                                                            .Submissions
-                                                                            .delete
                                                                     ),
                                                                 ],
                                                                 permissions:

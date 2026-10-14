@@ -34,13 +34,6 @@ struct UserRoleRow: Component {
                             style: .ghost(.secondary),
                             permission: UserPermissions.Roles.update
                         ),
-                        .init(
-                            "Remove",
-                            href: UserRoleRoutes.remove(RouterPath(role.id))
-                                .description,
-                            style: .destructive,
-                            permission: UserPermissions.Roles.delete
-                        ),
                     ],
                     permissions: permissions
                 )

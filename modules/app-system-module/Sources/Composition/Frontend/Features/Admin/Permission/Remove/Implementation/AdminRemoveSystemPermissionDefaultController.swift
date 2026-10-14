@@ -11,64 +11,6 @@ struct AdminRemoveSystemPermissionDefaultController:
             any AdminRemoveSystemPermissionPresenter
         >
 
-    func getRemoveSystemPermissions(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime((request, context))
-        guard
-            context.isCurrentUserAllowed(
-                to: SystemPermissions.Permissions.delete
-            )
-        else {
-            return
-                try await presenter
-                .renderErrorPage(
-                    error: .forbidden,
-                    cancel: SystemPermissionRoutes.list.description
-                )
-                .response(from: request, context: context)
-        }
-
-        let ids = request.queryStrings("ids")
-        let page = request.queryPage()
-        let search = request.querySearch()
-        guard !ids.isEmpty else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminLocation.url(
-                        path: SystemPermissionRoutes.list.description,
-                        page: page,
-                        search: search
-                    )
-                ]
-            )
-        }
-
-        do {
-            return
-                try await presenter
-                .renderRemovePage(
-                    items: zip(ids, try await interactor.names(ids: ids))
-                        .map {
-                            .init(id: $0.0, label: $0.1)
-                        },
-                    returnTo: request.queryString("returnTo")
-                )
-                .response(from: request, context: context)
-        }
-        catch let error as AdminRemoveSystemPermissionError {
-            return
-                try await presenter
-                .renderErrorPage(
-                    error: error,
-                    cancel: SystemPermissionRoutes.list.description
-                )
-                .response(from: request, context: context)
-        }
-    }
-
     func postRemoveSystemPermissions(
         request: Request,
         context: AuthenticatedRequestContext

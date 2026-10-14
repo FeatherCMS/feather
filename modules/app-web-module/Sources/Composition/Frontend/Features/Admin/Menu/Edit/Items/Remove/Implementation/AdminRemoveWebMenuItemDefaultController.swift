@@ -12,35 +12,6 @@ struct AdminRemoveWebMenuItemDefaultController:
             any AdminRemoveWebMenuItemPresenter
         >
 
-    func getRemoveWebMenuItem(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse {
-        let runtime = buildRuntime((request, context))
-        let menuId = try context.requiredID()
-        let id = try context.requiredParameter("itemId")
-        let origin = WebMenuItemRoutes.removeOrigin(
-            request.queryString("origin")
-        )
-        do {
-            let rule = try await runtime.interactor.get(menuId: menuId, id: id)
-            return try await runtime.presenter.renderRemovePage(
-                menuId: menuId,
-                item: .init(id: id, label: rule.label),
-                origin: origin
-            )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return try await runtime.presenter.renderErrorPage(
-                menuId: menuId,
-                id: id,
-                info: error.errorTitle,
-                message: error.errorDescription,
-                origin: origin
-            )
-        }
-    }
-
     func postRemoveWebMenuItem(
         request: Request,
         context: AuthenticatedRequestContext

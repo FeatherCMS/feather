@@ -12,27 +12,6 @@ struct AdminRemoveWebMenuDefaultController:
             any AdminRemoveWebMenuPresenter
         >
 
-    func getRemoveWebMenu(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse {
-        let runtime = buildRuntime((request, context))
-        let id = try context.requiredID()
-        do {
-            let menu = try await runtime.interactor.get(id: id)
-            return try await runtime.presenter.renderRemovePage(
-                item: .init(id: id, label: menu.name)
-            )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return try await runtime.presenter.renderErrorPage(
-                id: id,
-                info: error.errorTitle,
-                message: error.errorDescription
-            )
-        }
-    }
-
     func postRemoveWebMenu(
         request: Request,
         context: AuthenticatedRequestContext

@@ -180,29 +180,6 @@ struct ContactFieldsTableContent: Component {
                                                                             .Fields
                                                                             .update
                                                                     ),
-                                                                    .init(
-                                                                        "Remove",
-                                                                        href:
-                                                                            AdminLocation
-                                                                            .remove(
-                                                                                path:
-                                                                                    ContactAdminRoutes
-                                                                                    .fieldRemove
-                                                                                    .description,
-                                                                                ids: [
-                                                                                    field
-                                                                                        .id
-                                                                                ],
-                                                                                returnTo:
-                                                                                    returnTo
-                                                                            ),
-                                                                        style:
-                                                                            .destructive,
-                                                                        permission:
-                                                                            ContactPermissions
-                                                                            .Fields
-                                                                            .delete
-                                                                    ),
                                                                 ],
                                                                 permissions:
                                                                     permissions

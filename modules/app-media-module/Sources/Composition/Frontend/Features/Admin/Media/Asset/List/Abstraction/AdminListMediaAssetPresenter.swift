@@ -22,13 +22,6 @@ protocol AdminListMediaAssetPresenter: Sendable {
         picker: Bool
     ) async throws -> HTMLResponse
 
-    func renderRemovePage(
-        pageState: AdminListPageState,
-        search: String?,
-        items: [AdminRemoveItemContext],
-        returnTo: String?
-    ) async throws -> HTMLResponse
-
     func renderInvalidNoncePage(
         cancel: String
     ) async throws -> HTMLResponse

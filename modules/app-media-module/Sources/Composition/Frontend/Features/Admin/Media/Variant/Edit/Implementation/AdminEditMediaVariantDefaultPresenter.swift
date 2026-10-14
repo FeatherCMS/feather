@@ -82,42 +82,6 @@ struct AdminEditMediaVariantDefaultPresenter: AdminEditMediaVariantPresenter {
         )
     }
 
-    func renderProcessorRemovePage(
-        variantId: String,
-        items: [AdminRemoveItemContext],
-        returnTo: String?
-    ) async throws -> HTMLResponse {
-        let nonce = await AdminNonceStore.shared.issue(
-            sessionToken: context.sessionToken
-        )
-        let cancel = AdminLocation.removeCancel(
-            path: MediaVariantRoutes.processors(RouterPath(variantId))
-                .description,
-            returnTo: returnTo
-        )
-        return try await renderingEngine.renderAdminDialog(
-            request: request,
-            context: context,
-            title: AdminRemoveConfirmation.dialogTitle,
-            content: AdminRemoveConfirmation(
-                header: .primary(
-                    title: "Remove selected processors",
-                    description:
-                        "You’re about to permanently remove the selected processors. This action cannot be undone."
-                ),
-                selectedItems: items.map(\.label),
-                action:
-                    MediaVariantRoutes.processorRemove(RouterPath(variantId))
-                    .description,
-                hiddenFields: items.map { .init(name: "ids", value: $0.id) } + [
-                    .init(name: "_nonce", value: nonce),
-                    .init(name: "returnTo", value: cancel),
-                ]
-            ),
-            size: .small
-        )
-    }
-
     func renderErrorPage(error: AdminEditMediaVariantError) async throws
         -> HTMLResponse
     {

@@ -145,50 +145,6 @@ struct AdminEditMediaVariantDefaultController: AdminEditMediaVariantController {
         }
     }
 
-    func getRemoveMediaVariantProcessors(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let runtime = buildRuntime((request, context))
-        guard
-            context.isCurrentUserAllowed(
-                to: MediaPermissions.VariantProcessors.delete
-            )
-        else {
-            return try await runtime.presenter
-                .renderErrorPage(error: .forbidden)
-                .response(from: request, context: context)
-        }
-        let variantId = try context.requiredID()
-        let ids = request.queryStrings("ids")
-        guard !ids.isEmpty else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location:
-                        MediaVariantRoutes.processors(RouterPath(variantId))
-                        .description
-                ]
-            )
-        }
-        do {
-            return try await runtime.presenter
-                .renderProcessorRemovePage(
-                    variantId: variantId,
-                    items: try await runtime.interactor.processorNames(
-                        variantId: variantId,
-                        ids: ids
-                    ),
-                    returnTo: request.queryString("returnTo")
-                )
-                .response(from: request, context: context)
-        }
-        catch let error as AdminEditMediaVariantError {
-            return try await runtime.presenter.renderErrorPage(error: error)
-                .response(from: request, context: context)
-        }
-    }
-
     func postAddMediaVariantProcessor(
         request: Request,
         context: AuthenticatedRequestContext

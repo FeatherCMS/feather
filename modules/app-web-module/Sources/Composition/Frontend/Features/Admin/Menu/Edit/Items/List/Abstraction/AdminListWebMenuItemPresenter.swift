@@ -11,11 +11,4 @@ protocol AdminListWebMenuItemPresenter: Sendable {
         search: String?,
         error: String?
     ) async throws -> HTMLResponse
-
-    func renderRemovePage(
-        menuId: String,
-        page: Int,
-        search: String?,
-        items: [AdminRemoveItemContext]
-    ) async throws -> HTMLResponse
 }

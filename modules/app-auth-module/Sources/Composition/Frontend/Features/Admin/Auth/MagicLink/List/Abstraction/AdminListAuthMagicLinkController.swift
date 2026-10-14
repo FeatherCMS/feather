@@ -23,11 +23,6 @@ protocol AdminListAuthMagicLinkController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
-    func getAuthMagicLinksRemoveConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
-
     func postAuthMagicLinksRemove(
         request: Request,
         context: AuthenticatedRequestContext
@@ -42,10 +37,6 @@ extension AdminListAuthMagicLinkController {
         router.get(
             AuthMagicLinkRoutes.list,
             use: getAuthMagicLinks
-        )
-        router.get(
-            AuthMagicLinkRoutes.remove,
-            use: getAuthMagicLinksRemoveConfirmation
         )
         router.post(
             AuthMagicLinkRoutes.remove,

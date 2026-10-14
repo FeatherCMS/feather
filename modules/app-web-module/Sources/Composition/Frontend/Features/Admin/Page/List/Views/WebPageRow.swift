@@ -53,16 +53,6 @@ struct WebPageRow: Component {
                             style: .ghost(.secondary),
                             permission: WebPermissions.Pages.update
                         ),
-                        .init(
-                            "Remove",
-                            href: AdminLocation.remove(
-                                path: WebPageRoutes.remove.description,
-                                ids: [page.id],
-                                returnTo: returnTo
-                            ),
-                            style: .destructive,
-                            permission: WebPermissions.Pages.delete
-                        ),
                     ],
                     permissions: permissions
                 )

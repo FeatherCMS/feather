@@ -214,24 +214,6 @@ struct AccountInvitationTable: Component {
                                                                                 .Invitations
                                                                                 .update
                                                                         ),
-                                                                        .init(
-                                                                            "Remove",
-                                                                            href:
-                                                                                AccountAdminRoutes
-                                                                                .invitationRemove(
-                                                                                    RouterPath(
-                                                                                        invitation
-                                                                                            .id
-                                                                                    )
-                                                                                )
-                                                                                .description,
-                                                                            style:
-                                                                                .destructive,
-                                                                            permission:
-                                                                                AccountPermissions
-                                                                                .Invitations
-                                                                                .delete
-                                                                        ),
                                                                     ],
                                                                     permissions:
                                                                         state

@@ -56,37 +56,6 @@ struct AdminListWebPageDefaultController:
             error: error
         )
     }
-
-    func getWebPagesRemoveConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime((request, context))
-        let selectedIds = request.queryStrings("ids")
-        let page = request.queryPage()
-        let search = request.querySearch()
-        guard !selectedIds.isEmpty else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminLocation.url(
-                        path: "/admin/web/pages/",
-                        page: page,
-                        search: search
-                    )
-                ]
-            )
-        }
-        let items = try await interactor.resolveRemoveItems(ids: selectedIds)
-        return
-            try await presenter.renderRemovePage(
-                page: page,
-                search: search,
-                items: items
-            )
-            .response(from: request, context: context)
-    }
-
     func postWebPagesRemove(
         request: Request,
         context: AuthenticatedRequestContext

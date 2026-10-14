@@ -11,12 +11,6 @@ import WebComponents
 struct AdminRemoveMediaAssetDefaultInteractor: AdminRemoveMediaAssetInteractor {
     let repository: AdminRemoveMediaAssetOpenAPIRepository
 
-    func getRemoveMediaAsset(
-        id: String
-    ) async throws -> AdminRemoveMediaAssetModel {
-        .init(item: .init(id: id, label: id), error: nil)
-    }
-
     func postRemoveMediaAsset(
         id: String
     ) async throws -> AdminRemoveMediaAssetModel {

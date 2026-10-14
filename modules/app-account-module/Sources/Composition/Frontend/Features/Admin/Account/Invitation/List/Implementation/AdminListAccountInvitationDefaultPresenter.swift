@@ -65,42 +65,4 @@ struct AdminListAccountInvitationDefaultPresenter:
             )
         )
     }
-
-    func renderRemovePage(
-        page: Int,
-        search: String?,
-        items: [AdminRemoveItemContext]
-    ) async throws -> HTMLResponse {
-        let hiddenFields =
-            items.map {
-                AdminFormFieldHiddenValue(
-                    name: "ids",
-                    value: $0.id
-                )
-            } + [
-                .init(name: "page", value: "\(page)"),
-                .init(name: "search", value: search ?? ""),
-            ]
-        let nonceToken = await AdminNonceStore.shared.issue(
-            sessionToken: context.sessionToken
-        )
-        return try await renderEngine.renderAdminDialog(
-            request: request,
-            context: context,
-            title: AdminRemoveConfirmation.dialogTitle,
-            content: AdminRemoveConfirmation(
-                header: .primary(
-                    title: "Remove selected invitations",
-                    description: "This action cannot be undone."
-                ),
-                selectedItems: items.map(\.label),
-                action: AccountAdminRoutes.invitationRemoveBulk.description,
-                submit: .init(label: "Remove invitations", style: .destructive),
-                nonceToken: nonceToken,
-                hiddenFields: hiddenFields
-            ),
-            size: .small
-        )
-    }
-
 }

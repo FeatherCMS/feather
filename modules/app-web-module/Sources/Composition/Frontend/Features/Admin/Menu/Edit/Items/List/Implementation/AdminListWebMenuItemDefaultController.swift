@@ -59,60 +59,6 @@ struct AdminListWebMenuItemDefaultController:
             error: error
         )
     }
-
-    func getWebMenuItemsRemoveConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime((request, context))
-        let menuId = try context.requiredID()
-        let selectedIds = request.queryStrings("ids")
-        let page = request.queryPage()
-        let search = request.querySearch()
-        guard !selectedIds.isEmpty else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminLocation.url(
-                        path:
-                            WebMenuItemRoutes.list(
-                                RouterPath(menuId)
-                            )
-                            .description,
-                        page: page,
-                        search: search
-                    )
-                ]
-            )
-        }
-        let labels: [String: String]
-        do {
-            let model = try await interactor.listWebMenuItems(
-                menuId: menuId,
-                page: page,
-                search: search
-            )
-            labels = Dictionary(
-                uniqueKeysWithValues: model.items.map {
-                    ($0.id, $0.label)
-                }
-            )
-        }
-        catch {
-            labels = [:]
-        }
-        return
-            try await presenter.renderRemovePage(
-                menuId: menuId,
-                page: page,
-                search: search,
-                items: selectedIds.map {
-                    .init(id: $0, label: labels[$0] ?? $0)
-                }
-            )
-            .response(from: request, context: context)
-    }
-
     func postWebMenuItemsRemove(
         request: Request,
         context: AuthenticatedRequestContext

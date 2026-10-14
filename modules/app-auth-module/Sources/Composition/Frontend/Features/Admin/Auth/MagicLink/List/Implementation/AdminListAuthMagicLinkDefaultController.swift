@@ -90,44 +90,6 @@ struct AdminListAuthMagicLinkDefaultController: AdminListAuthMagicLinkController
             return try await presenter.renderError(error: error)
         }
     }
-
-    func getAuthMagicLinksRemoveConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let (_, presenter) = buildRuntime((request, context))
-        let selectedIds = request.queryStrings("selectedIds")
-        let page = request.queryPage()
-        let search = request.querySearch()
-        let userID = request.uri.queryParameters["userId"].map(String.init)
-        guard
-            context.isCurrentUserAllowed(to: AuthPermissions.MagicLinks.delete)
-        else {
-            return try await presenter.renderError(error: .forbidden)
-                .response(from: request, context: context)
-        }
-        guard !selectedIds.isEmpty else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: listLocation(
-                        page: page,
-                        search: search,
-                        userID: userID
-                    )
-                ]
-            )
-        }
-        return
-            try await presenter.renderRemovePage(
-                items: selectedIds.map { .init(id: $0, label: $0) },
-                page: page,
-                search: search,
-                userID: userID
-            )
-            .response(from: request, context: context)
-    }
-
     func postAuthMagicLinksRemove(
         request: Request,
         context: AuthenticatedRequestContext

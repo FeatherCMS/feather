@@ -39,18 +39,6 @@ struct NewsletterSubscriberRow: Component {
                 )
             )
         }
-        actions.append(
-            .init(
-                "Remove",
-                href: AdminLocation.remove(
-                    path: NewsletterAdminRoutes.subscriberRemove.description,
-                    ids: [item.id],
-                    returnTo: returnTo
-                ),
-                style: .destructive,
-                permission: Permissions.Subscribers.delete
-            )
-        )
         return Tr {
             if permissions.allows(Permissions.Subscribers.delete) {
                 context.build(AdminListRowCheckbox(id: item.id))

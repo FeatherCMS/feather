@@ -19,10 +19,3 @@ protocol AdminListBlogAuthorPresenter: Sendable {
         search: String?,
         error: String?
     ) async throws -> HTMLResponse
-
-    func renderRemovePage(
-        page: Int,
-        search: String?,
-        items: [AdminRemoveItemContext]
-    ) async throws -> HTMLResponse
-}

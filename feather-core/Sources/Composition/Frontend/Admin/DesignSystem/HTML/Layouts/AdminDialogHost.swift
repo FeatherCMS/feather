@@ -97,6 +97,97 @@ public struct AdminDialogHost: Component {
                     }
                 }
 
+                function rowLabel(row, fallback) {
+                    if (!row) { return fallback; }
+                    var cells = row.querySelectorAll("td");
+                    for (var index = 0; index < cells.length; index += 1) {
+                        var cell = cells[index];
+                        if (cell.classList.contains("select-cell") ||
+                            cell.classList.contains("action-cell")) {
+                            continue;
+                        }
+                        var label = (cell.innerText || cell.textContent || "")
+                            .trim().replace(/\s+/g, " ");
+                        if (label) { return label; }
+                    }
+                    return fallback;
+                }
+
+                function makeButton(label, classes, action) {
+                    var button = document.createElement("button");
+                    button.type = "button";
+                    button.className = "button " + classes;
+                    button.textContent = label;
+                    button.addEventListener("click", action);
+                    return button;
+                }
+
+                function showRemoveConfirmation(items, onConfirm, message) {
+                    var dialog = document.createElement("dialog");
+                    dialog.className = "admin-dialog";
+                    dialog.setAttribute("data-admin-dialog", "");
+                    dialog.setAttribute("aria-label", "Are you sure?");
+
+                    var panel = document.createElement("div");
+                    panel.className = "admin-dialog__panel";
+                    var header = document.createElement("div");
+                    header.className = "admin-dialog__header";
+                    var title = document.createElement("h2");
+                    title.textContent = "Are you sure?";
+                    var closeButton = makeButton(
+                        "Close",
+                        "secondary-ghost admin-dialog__close",
+                        function () { close(dialog); }
+                    );
+                    header.append(title, closeButton);
+                    panel.appendChild(header);
+
+                    var description = document.createElement("p");
+                    description.textContent = message ||
+                        "This action cannot be undone. Do you want to remove " +
+                        (items.length === 1 ? "this item" : "these items") + "?";
+                    panel.appendChild(description);
+
+                    if (items.length > 0) {
+                        var itemBox = document.createElement("div");
+                        itemBox.className = "admin-confirmation-items";
+                        var list = document.createElement("ul");
+                        items.slice(0, 20).forEach(function (item) {
+                            var entry = document.createElement("li");
+                            entry.textContent = item;
+                            list.appendChild(entry);
+                        });
+                        if (items.length > 20) {
+                            var more = document.createElement("li");
+                            more.textContent = "And " + (items.length - 20) + " more.";
+                            list.appendChild(more);
+                        }
+                        itemBox.appendChild(list);
+                        panel.appendChild(itemBox);
+                    }
+
+                    var buttons = document.createElement("div");
+                    buttons.className = "button-row";
+                    if (typeof onConfirm === "function") {
+                        buttons.appendChild(makeButton(
+                            "Remove",
+                            "destructive",
+                            function () {
+                                close(dialog);
+                                onConfirm();
+                            }
+                        ));
+                    }
+                    buttons.appendChild(makeButton(
+                        "Cancel",
+                        "primary-ghost",
+                        function () { close(dialog); }
+                    ));
+                    panel.appendChild(buttons);
+                    dialog.appendChild(panel);
+                    mount({ dialog: dialog });
+                }
+
                 function dialogURL(url) {
                     var resolved = new URL(url, window.location.href);
                     if (resolved.origin === window.location.origin) {
@@ -169,6 +260,43 @@ public struct AdminDialogHost: Component {
                     var target = event.target;
                     if (!target || !target.closest) { return; }
 
+                    var removeTrigger = target.closest(
+                        "[data-admin-remove-confirm='true']"
+                    );
+                    if (removeTrigger) {
+                        event.preventDefault();
+                        var nonceMeta = document.querySelector(
+                            "meta[name='admin-remove-nonce']"
+                        );
+                        var nonce = nonceMeta && nonceMeta.content;
+                        if (!nonce) {
+                            showRemoveConfirmation(
+                                [],
+                                null,
+                                "Unable to remove this item. Please reload the page."
+                            );
+                            return;
+                        }
+                        var removeURL = removeTrigger.getAttribute(
+                            "data-admin-dialog-url"
+                        );
+                        var removeRow = removeTrigger.closest("tr");
+                        var removeLabel = rowLabel(removeRow, "Selected item");
+                        showRemoveConfirmation([removeLabel], function () {
+                            var form = document.createElement("form");
+                            form.method = "POST";
+                            form.action = removeURL;
+                            var nonceInput = document.createElement("input");
+                            nonceInput.type = "hidden";
+                            nonceInput.name = "_nonce";
+                            nonceInput.value = nonce;
+                            form.appendChild(nonceInput);
+                            document.body.appendChild(form);
+                            HTMLFormElement.prototype.submit.call(form);
+                        });
+                        return;
+                    }
+
                     var trigger = target.closest("[data-admin-dialog-url]");
                     if (trigger) {
                         event.preventDefault();
@@ -220,6 +348,47 @@ public struct AdminDialogHost: Component {
                 });
 
                 document.addEventListener("submit", function (event) {
+                    var selectionForm = event.target;
+                    if (
+                        selectionForm &&
+                        selectionForm.matches &&
+                        selectionForm.matches("form.table-remove-form")
+                    ) {
+                        event.preventDefault();
+                        var selected = Array.prototype.slice.call(
+                            selectionForm.querySelectorAll("input.select-row:checked")
+                        );
+                        if (selected.length === 0) { return; }
+                        var labels = selected.map(function (input) {
+                            return rowLabel(input.closest("tr"), input.value);
+                        });
+                        var nonceMeta = document.querySelector(
+                            "meta[name='admin-remove-nonce']"
+                        );
+                        var nonce = nonceMeta && nonceMeta.content;
+                        if (!nonce) {
+                            showRemoveConfirmation(
+                                labels,
+                                null,
+                                "Unable to remove the selected items. Please reload the page."
+                            );
+                            return;
+                        }
+                        showRemoveConfirmation(labels, function () {
+                            var nonceInput = selectionForm.querySelector(
+                                "input[name='_nonce']"
+                            );
+                            if (!nonceInput) {
+                                nonceInput = document.createElement("input");
+                                nonceInput.type = "hidden";
+                                nonceInput.name = "_nonce";
+                                selectionForm.appendChild(nonceInput);
+                            }
+                            nonceInput.value = nonce;
+                            HTMLFormElement.prototype.submit.call(selectionForm);
+                        });
+                        return;
+                    }
                     if (event.defaultPrevented) { return; }
                     var form = event.target;
                     if (!form || !form.closest) { return; }

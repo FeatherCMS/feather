@@ -11,53 +11,6 @@ struct AdminRemoveMediaVariantDefaultController:
             any AdminRemoveMediaVariantPresenter
         >
 
-    func getRemoveMediaVariants(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: MediaPermissions.Variants.delete)
-        else {
-            return
-                try await presenter.renderErrorPage(
-                    error: .forbidden,
-                    cancel: MediaVariantRoutes.list.description
-                )
-                .response(from: request, context: context)
-        }
-        let ids = request.queryStrings("ids")
-        let page = request.queryPage()
-        let search = request.querySearch()
-        guard !ids.isEmpty else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminLocation.url(
-                        path: MediaVariantRoutes.list.description,
-                        page: page,
-                        search: search
-                    )
-                ]
-            )
-        }
-        do {
-            return
-                try await presenter.renderRemovePage(
-                    items: try await interactor.names(ids: ids),
-                    returnTo: request.queryString("returnTo")
-                )
-                .response(from: request, context: context)
-        }
-        catch let error as AdminRemoveMediaVariantError {
-            return
-                try await presenter.renderErrorPage(
-                    error: error,
-                    cancel: MediaVariantRoutes.list.description
-                )
-                .response(from: request, context: context)
-        }
-    }
-
     func postRemoveMediaVariants(
         request: Request,
         context: AuthenticatedRequestContext

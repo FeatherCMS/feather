@@ -6,26 +6,6 @@ struct AdminRemoveNewsArticleDefaultController: AdminRemoveNewsArticleController
 {
     let buildRuntime: AdminNewsArticleRuntimeBuilder
 
-    func getRemoveNewsArticleConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let runtime = buildRuntime(request, context)
-        do {
-            let item = try await runtime.interactor.get(
-                id: context.requiredID()
-            )
-            return try await runtime.presenter.renderRemoveConfirmation(
-                item: item
-            )
-        }
-        catch {
-            return try await runtime.presenter
-                .renderError(error.displayMessage)
-                .response(from: request, context: context)
-        }
-    }
-
     func postRemoveNewsArticle(
         request: Request,
         context: AuthenticatedRequestContext

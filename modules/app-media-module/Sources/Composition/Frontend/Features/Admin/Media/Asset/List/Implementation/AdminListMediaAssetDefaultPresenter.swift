@@ -144,46 +144,6 @@ struct AdminListMediaAssetDefaultPresenter: AdminListMediaAssetPresenter {
                 : .single
         )
     }
-
-    func renderRemovePage(
-        pageState: AdminListPageState,
-        search: String?,
-        items: [AdminRemoveItemContext],
-        returnTo: String?
-    ) async throws -> HTMLResponse {
-        let nonceToken = await AdminNonceStore.shared.issue(
-            sessionToken: context.sessionToken
-        )
-        let cancel = AdminLocation.removeCancel(
-            path: MediaAssetRoutes.list.description,
-            returnTo: returnTo
-        )
-        let confirmation = AdminRemoveConfirmation(
-            header: .primary(
-                title: "Remove media asset",
-                description: "Confirm removal of the selected media assets."
-            ),
-            selectedItems: items.map(\.label),
-            action: MediaAssetRoutes.remove.description,
-            submit: .init(label: "Remove selected", style: .destructive),
-            nonceToken: nonceToken,
-            hiddenFields: items.map {
-                .init(name: "ids", value: $0.id)
-            } + [
-                .init(name: "page", value: String(pageState.page)),
-                .init(name: "search", value: search ?? ""),
-                .init(name: "returnTo", value: cancel),
-            ],
-        )
-        return try await renderEngine.renderAdminDialog(
-            request: request,
-            context: context,
-            title: AdminRemoveConfirmation.dialogTitle,
-            content: confirmation,
-            size: .small
-        )
-    }
-
     func renderInvalidNoncePage(
         cancel: String
     ) async throws -> HTMLResponse {

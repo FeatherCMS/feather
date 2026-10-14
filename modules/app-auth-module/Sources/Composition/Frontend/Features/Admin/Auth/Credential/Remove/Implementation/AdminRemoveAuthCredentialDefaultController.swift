@@ -27,39 +27,6 @@ struct AdminRemoveAuthCredentialDefaultController:
             any AdminRemoveAuthCredentialPresenter
         >
 
-    func getRemoveCredential(
-        request: Request,
-        context: AuthenticatedRequestContext
-    )
-        async throws -> HTMLResponse
-    {
-        let id = try context.requiredID()
-        let (interactor, presenter) = buildRuntime((request, context))
-        guard
-            context.isCurrentUserAllowed(to: AuthPermissions.Credential.delete)
-        else {
-            return try await presenter.renderError(
-                item: .init(id: id, label: id),
-                error: .forbidden
-            )
-        }
-        do {
-            let model = try await interactor.get(id: id)
-            return try await presenter.renderPage(
-                item: .init(
-                    id: id,
-                    label: model.email.emptyToNil ?? model.userId
-                ),
-                model: model
-            )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return try await presenter.renderError(
-                item: .init(id: id, label: id),
-                error: error
-            )
-        }
-    }
 
     func postRemoveCredential(
         request: Request,

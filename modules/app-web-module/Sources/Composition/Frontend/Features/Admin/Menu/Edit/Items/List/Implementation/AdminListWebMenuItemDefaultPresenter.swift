@@ -78,31 +78,4 @@ struct AdminListWebMenuItemDefaultPresenter:
             )
         )
     }
-
-    func renderRemovePage(
-        menuId: String,
-        page: Int,
-        search: String?,
-        items: [AdminRemoveItemContext]
-    ) async throws -> HTMLResponse {
-        let nonceToken = await AdminNonceStore.shared.issue(
-            sessionToken: context.sessionToken
-        )
-        return try await renderEngine.renderAdminDialog(
-            request: request,
-            context: context,
-            title: AdminRemoveConfirmation.dialogTitle,
-            content: WebMenuItemBulkConfirmation(
-                state: .init(
-                    menuId: menuId,
-                    page: page,
-                    search: search,
-                    items: items,
-                    nonceToken: nonceToken
-                )
-            ),
-            size: .small
-        )
-    }
-
 }

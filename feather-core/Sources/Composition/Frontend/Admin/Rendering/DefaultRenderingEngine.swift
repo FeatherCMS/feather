@@ -132,6 +132,9 @@ public struct DefaultRenderingEngine: RenderingEngine {
             context: context
         )
         let notification = AdminNotificationFlash.notification(from: request)
+        let adminRemoveNonce = await AdminNonceStore.shared.issue(
+            sessionToken: context.sessionToken
+        )
         var builderContext = BuilderContext()
         let layout = AdminBaseLayout(
             content: content,
@@ -144,6 +147,7 @@ public struct DefaultRenderingEngine: RenderingEngine {
                 AdminHTML(
                     title: title,
                     body: .init(content: layout),
+                    adminRemoveNonce: adminRemoveNonce,
                     richContentEditorBlocks: richContentEditorBlocks
                 )
             )

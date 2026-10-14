@@ -13,58 +13,6 @@ struct AdminRemoveSystemVariableDefaultController:
             any AdminRemoveSystemVariablePresenter
         >
 
-    func getRemoveSystemVariables(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime((request, context))
-        guard
-            context.isCurrentUserAllowed(to: SystemPermissions.Variables.delete)
-        else {
-            return
-                try await presenter.renderErrorPage(
-                    error: .forbidden,
-                    cancel: SystemVariableRoutes.list.description
-                )
-                .response(from: request, context: context)
-        }
-        let ids = request.queryStrings("ids")
-        let page = request.queryPage()
-        let search = request.querySearch()
-        guard !ids.isEmpty else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminLocation.url(
-                        path: SystemVariableRoutes.list.description,
-                        page: page,
-                        search: search
-                    )
-                ]
-            )
-        }
-        do {
-            return
-                try await presenter.renderRemovePage(
-                    items: zip(ids, try await interactor.names(ids: ids))
-                        .map {
-                            .init(id: $0.0, label: $0.1)
-                        },
-                    returnTo: request.queryString("returnTo")
-                )
-                .response(from: request, context: context)
-        }
-        catch let error as AdminRemoveSystemVariableError {
-            return
-                try await presenter
-                .renderErrorPage(
-                    error: error,
-                    cancel: SystemVariableRoutes.list.description
-                )
-                .response(from: request, context: context)
-        }
-    }
-
     func postRemoveSystemVariables(
         request: Request,
         context: AuthenticatedRequestContext

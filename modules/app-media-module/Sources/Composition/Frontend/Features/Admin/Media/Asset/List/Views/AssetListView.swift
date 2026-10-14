@@ -907,19 +907,6 @@ extension AssetListView {
                 if state.permissions.allows(MediaPermissions.Assets.delete)
                     && !state.picker.isEnabled
                 {
-                    let removePath = AdminLocation.remove(
-                        path: MediaAssetRoutes.remove.description,
-                        ids: [folder.id],
-                        returnTo: returnTo
-                    )
-                    context.build(
-                        AdminRowButton(
-                            "Remove",
-                            href: removePath,
-                            style: .destructive
-                        )
-                    )
-                    .data("admin-dialog-url", removePath)
                 }
             }
             .class("media-assets-card-actions")
@@ -1053,19 +1040,6 @@ extension AssetListView {
                 if state.permissions.allows(MediaPermissions.Assets.delete)
                     && !state.picker.isEnabled
                 {
-                    let removePath = AdminLocation.remove(
-                        path: MediaAssetRoutes.remove.description,
-                        ids: [item.asset.id],
-                        returnTo: returnTo
-                    )
-                    context.build(
-                        AdminRowButton(
-                            "Remove",
-                            href: removePath,
-                            style: .destructive
-                        )
-                    )
-                    .data("admin-dialog-url", removePath)
                 }
             }
             .class("media-assets-card-actions")
@@ -1113,11 +1087,6 @@ extension AssetListView {
         context: inout BuilderContext
     ) -> some BasicTag {
         Tr {
-            let removePath = AdminLocation.remove(
-                path: MediaAssetRoutes.remove.description,
-                ids: [folder.id],
-                returnTo: returnTo
-            )
             let actions: [AdminListRowActions.Action] =
                 state.picker.isEnabled
                 ? [
@@ -1140,13 +1109,6 @@ extension AssetListView {
                         href: folderEditPath(folder),
                         style: .ghost(.secondary),
                         permission: MediaPermissions.Assets.update
-                    ),
-                    .init(
-                        "Remove",
-                        href: removePath,
-                        style: .destructive,
-                        permission: MediaPermissions.Assets.delete,
-                        dialogURL: removePath
                     ),
                 ]
             if canRemove {
@@ -1185,11 +1147,6 @@ extension AssetListView {
             for: item.preview?.url ?? item.asset.url
         )
         let originalURL = assetOriginalLink(for: item.asset)
-        let removePath = AdminLocation.remove(
-            path: MediaAssetRoutes.remove.description,
-            ids: [item.asset.id],
-            returnTo: returnTo
-        )
         return Tr {
             if canRemove {
                 context.build(
@@ -1274,13 +1231,6 @@ extension AssetListView {
                                     "\(MediaAssetRoutes.edit(RouterPath(item.asset.id)).description)\(assetActionSuffix())",
                                 style: .ghost(.secondary),
                                 permission: MediaPermissions.Assets.update
-                            ),
-                            .init(
-                                "Remove",
-                                href: removePath,
-                                style: .destructive,
-                                permission: MediaPermissions.Assets.delete,
-                                dialogURL: removePath
                             ),
                         ],
                         permissions: state.permissions

@@ -106,46 +106,6 @@ struct AdminListMediaAssetDefaultController: AdminListMediaAssetController {
             )
         }
     }
-
-    func removeConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime((request, context))
-        guard
-            context.isCurrentUserAllowed(to: MediaPermissions.Assets.delete)
-        else {
-            return
-                try await presenter.renderErrorPage(
-                    message: "Your account cannot remove media assets.",
-                    picker: false
-                )
-                .response(from: request, context: context)
-        }
-        let selectedIds = request.queryStrings("ids")
-        let page = request.queryPage()
-        let search = request.querySearch()
-        guard !selectedIds.isEmpty else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: redirectLocation(
-                        request: request
-                    )
-                ]
-            )
-        }
-        let items = try await interactor.resolveRemoveItems(ids: selectedIds)
-        return
-            try await presenter.renderRemovePage(
-                pageState: .init(page: page, pageSize: 20, total: 0),
-                search: search,
-                items: items,
-                returnTo: request.queryString("returnTo")
-            )
-            .response(from: request, context: context)
-    }
-
     func remove(
         request: Request,
         context: AuthenticatedRequestContext

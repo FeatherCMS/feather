@@ -11,34 +11,6 @@ struct AdminRemoveRedirectRuleDefaultController:
             any AdminRemoveRedirectRulePresenter
         >
 
-    func getRemoveRedirectRule(
-        request: Request,
-        context: AuthenticatedRequestContext
-    )
-        async throws -> HTMLResponse
-    {
-        let (interactor, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.delete)
-        else { return try await presenter.renderForbiddenPage() }
-        let id = try context.requiredID()
-        do {
-            let names = try await interactor.names(ids: [id])
-            return try await presenter.renderRemovePage(
-                items: [.init(id: id, label: names.first ?? id)],
-                returnTo: request.queryString("returnTo")
-            )
-        }
-        catch let error as AdminRemoveRedirectRuleError {
-            return try await presenter.renderErrorPage(
-                error: error,
-                cancel: AdminLocation.removeCancel(
-                    path: RedirectRuleRoutes.list.description,
-                    returnTo: request.queryString("returnTo")
-                )
-            )
-        }
-    }
-
     func postRemoveRedirectRule(
         request: Request,
         context: AuthenticatedRequestContext
@@ -84,61 +56,6 @@ struct AdminRemoveRedirectRuleDefaultController:
                     cancel: AdminLocation.removeCancel(
                         path: RedirectRuleRoutes.list.description,
                         returnTo: request.queryString("returnTo")
-                    )
-                )
-                .response(from: request, context: context)
-        }
-    }
-
-    func getRemoveRedirectRules(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let (interactor, presenter) = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: RedirectPermissions.Rules.delete)
-        else {
-            return try await presenter.renderForbiddenPage()
-                .response(from: request, context: context)
-        }
-        let ids = request.queryStrings("ids")
-        let page = request.queryPage()
-        let search = request.querySearch()
-        let returnTo =
-            request.queryString("returnTo")
-            ?? AdminLocation.url(
-                path: RedirectRuleRoutes.list.description,
-                page: page,
-                search: search
-            )
-        guard !ids.isEmpty else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminLocation.removeCancel(
-                        path: RedirectRuleRoutes.list.description,
-                        returnTo: returnTo
-                    )
-                ]
-            )
-        }
-        do {
-            return
-                try await presenter.renderRemovePage(
-                    items: zip(ids, try await interactor.names(ids: ids))
-                        .map {
-                            .init(id: $0.0, label: $0.1)
-                        },
-                    returnTo: returnTo
-                )
-                .response(from: request, context: context)
-        }
-        catch let error as AdminRemoveRedirectRuleError {
-            return
-                try await presenter.renderErrorPage(
-                    error: error,
-                    cancel: AdminLocation.removeCancel(
-                        path: RedirectRuleRoutes.list.description,
-                        returnTo: returnTo
                     )
                 )
                 .response(from: request, context: context)

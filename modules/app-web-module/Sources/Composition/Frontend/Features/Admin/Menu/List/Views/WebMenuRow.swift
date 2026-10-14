@@ -33,16 +33,6 @@ struct WebMenuRow: Component {
                     style: .ghost(.secondary),
                     permission: WebPermissions.Menus.update
                 ),
-                .init(
-                    "Remove",
-                    href: AdminLocation.remove(
-                        path: WebMenuRoutes.remove.description,
-                        ids: [menu.id],
-                        returnTo: returnTo
-                    ),
-                    style: .destructive,
-                    permission: WebPermissions.Menus.delete
-                ),
             ]
         }
     }

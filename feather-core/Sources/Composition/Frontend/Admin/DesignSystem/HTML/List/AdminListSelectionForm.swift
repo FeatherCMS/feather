@@ -62,10 +62,9 @@ public struct AdminListSelectionForm<Table: FlowContent>: Component {
 
                     Script(script())
                 }
-                .method(.get)
+                .method(.post)
                 .action(state.action)
                 .class("table-remove-form")
-                .data("admin-dialog-form", "true")
             }
             else {
                 table

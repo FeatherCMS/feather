@@ -13,7 +13,6 @@ struct ContactFormEmailsTableContent: Component {
     let permissions: AdminListActions
 
     func html(context: inout BuilderContext) -> Div {
-        let path = ContactAdminRoutes.formEmails(RouterPath(id)).description
         let pageState = AdminListPageState(
             page: 1,
             pageSize: max(mails.count, 1),
@@ -142,33 +141,6 @@ struct ContactFormEmailsTableContent: Component {
                                                                             ContactPermissions
                                                                             .Mails
                                                                             .update
-                                                                    ),
-                                                                    .init(
-                                                                        "Remove",
-                                                                        href:
-                                                                            AdminLocation
-                                                                            .remove(
-                                                                                path:
-                                                                                    ContactAdminRoutes
-                                                                                    .formEmailRemove(
-                                                                                        RouterPath(
-                                                                                            id
-                                                                                        )
-                                                                                    )
-                                                                                    .description,
-                                                                                ids: [
-                                                                                    mail
-                                                                                        .id
-                                                                                ],
-                                                                                returnTo:
-                                                                                    path
-                                                                            ),
-                                                                        style:
-                                                                            .destructive,
-                                                                        permission:
-                                                                            ContactPermissions
-                                                                            .Mails
-                                                                            .delete
                                                                     ),
                                                                 ],
                                                                 permissions:

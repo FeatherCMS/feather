@@ -12,27 +12,6 @@ struct AdminRemoveWebPageDefaultController:
             any AdminRemoveWebPagePresenter
         >
 
-    func getRemoveWebPage(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse {
-        let runtime = buildRuntime((request, context))
-        let id = try context.requiredID()
-        do {
-            let page = try await runtime.interactor.get(id: id)
-            return try await runtime.presenter.renderRemovePage(
-                item: .init(id: id, label: page.title)
-            )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return try await runtime.presenter.renderErrorPage(
-                id: id,
-                info: error.errorTitle,
-                message: error.errorDescription
-            )
-        }
-    }
-
     func postRemoveWebPage(
         request: Request,
         context: AuthenticatedRequestContext

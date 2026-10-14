@@ -207,35 +207,6 @@ struct BlogAuthorLinkTableContent: Component {
                                                                             .AuthorLinks
                                                                             .update
                                                                     ),
-                                                                    .init(
-                                                                        "Remove",
-                                                                        href:
-                                                                            AdminLocation
-                                                                            .remove(
-                                                                                path:
-                                                                                    BlogAdminRoutes
-                                                                                    .authorLinkRemove(
-                                                                                        RouterPath(
-                                                                                            state
-                                                                                                .authorId
-                                                                                        )
-                                                                                    )
-                                                                                    .description,
-                                                                                ids: [
-                                                                                    item
-                                                                                        .id
-                                                                                ],
-                                                                                returnTo:
-                                                                                    links
-                                                                                    .description
-                                                                            ),
-                                                                        style:
-                                                                            .destructive,
-                                                                        permission:
-                                                                            BlogPermissions
-                                                                            .AuthorLinks
-                                                                            .delete
-                                                                    ),
                                                                 ],
                                                                 permissions:
                                                                     state

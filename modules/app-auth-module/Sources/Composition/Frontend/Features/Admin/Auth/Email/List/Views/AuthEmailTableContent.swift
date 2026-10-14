@@ -47,7 +47,10 @@ struct AuthEmailTableContent: Component {
                         )
                     }
                     else {
-                        context.build(
+                        let canDelete = actions.allows(
+                            AuthPermissions.Emails.delete
+                        )
+                        let table = context.build(
                             AdminListShell(
                                 layout: .init(
                                     name: "auth-emails",
@@ -57,9 +60,15 @@ struct AuthEmailTableContent: Component {
                                         .fixed(220),
                                     ]
                                 ),
+                                hasSelection: canDelete,
                                 table: Table {
                                     Thead {
                                         Tr {
+                                            if canDelete {
+                                                context.build(
+                                                    AdminListSelectAllCheckbox()
+                                                )
+                                            }
                                             Th("Identity")
                                             Th("Email")
                                             Th("Actions")
@@ -68,6 +77,13 @@ struct AuthEmailTableContent: Component {
                                     Tbody {
                                         for email in state.links {
                                             Tr {
+                                                if canDelete {
+                                                    context.build(
+                                                        AdminListRowCheckbox(
+                                                            id: email.id
+                                                        )
+                                                    )
+                                                }
                                                 Td(
                                                     state.identityNames[
                                                         email.identityId
@@ -103,17 +119,6 @@ struct AuthEmailTableContent: Component {
                                                                     .Emails
                                                                     .update
                                                             ),
-                                                            .init(
-                                                                "Remove",
-                                                                href:
-                                                                    "/admin/auth/emails/\(email.id)/remove/",
-                                                                style:
-                                                                    .destructive,
-                                                                permission:
-                                                                    AuthPermissions
-                                                                    .Emails
-                                                                    .delete
-                                                            ),
                                                         ],
                                                         permissions: actions
                                                     )
@@ -125,6 +130,31 @@ struct AuthEmailTableContent: Component {
                                 .class("cms-table", "action-table")
                             )
                         )
+                        if canDelete {
+                            context.build(
+                                AdminListSelectionForm(
+                                    state: .init(
+                                        action: AdminLocation.url(
+                                            path: AuthEmailRoutes.remove
+                                                .description,
+                                            queryItems: state.userID.map {
+                                                [("userId", $0)]
+                                            } ?? []
+                                        ),
+                                        pageState: pageState,
+                                        search: state.search,
+                                        button: .init(
+                                            "Remove selected",
+                                            style: .destructive
+                                        )
+                                    ),
+                                    table: table
+                                )
+                            )
+                        }
+                        else {
+                            table
+                        }
                     }
                 },
                 search: {

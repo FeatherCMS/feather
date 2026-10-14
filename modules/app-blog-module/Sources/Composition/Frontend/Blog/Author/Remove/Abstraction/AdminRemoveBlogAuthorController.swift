@@ -13,11 +13,6 @@ import WebFrontend
 
 protocol AdminRemoveBlogAuthorController: Sendable {
 
-    func getRemoveBlogAuthor(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse
-
     func postRemoveBlogAuthor(
         request: Request,
         context: AuthenticatedRequestContext
@@ -29,10 +24,6 @@ extension AdminRemoveBlogAuthorController {
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        router.get(
-            "/admin/blog/authors/{id}/remove/",
-            use: getRemoveBlogAuthor
-        )
         router.post(
             "/admin/blog/authors/{id}/remove/",
             use: postRemoveBlogAuthor

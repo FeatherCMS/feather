@@ -199,29 +199,6 @@ struct ContactFormTableContent: Component {
                                                                             .Forms
                                                                             .update
                                                                     ),
-                                                                    .init(
-                                                                        "Remove",
-                                                                        href:
-                                                                            AdminLocation
-                                                                            .remove(
-                                                                                path:
-                                                                                    ContactAdminRoutes
-                                                                                    .formRemove
-                                                                                    .description,
-                                                                                ids: [
-                                                                                    item
-                                                                                        .key
-                                                                                ],
-                                                                                returnTo:
-                                                                                    returnTo
-                                                                            ),
-                                                                        style:
-                                                                            .destructive,
-                                                                        permission:
-                                                                            ContactPermissions
-                                                                            .Forms
-                                                                            .delete
-                                                                    ),
                                                                 ],
                                                                 permissions:
                                                                     permissions

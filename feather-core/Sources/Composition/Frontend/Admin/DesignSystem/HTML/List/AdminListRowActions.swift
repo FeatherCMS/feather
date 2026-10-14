@@ -76,7 +76,7 @@ public struct AdminListRowActions: Component {
 
     public func html(context: inout BuilderContext) -> Td {
         let visibleActions = actions.filter {
-            permissions.allows($0.permission)
+            $0.title != "Remove" && permissions.allows($0.permission)
         }
 
         return Td {

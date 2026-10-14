@@ -31,6 +31,9 @@ public struct AdminRowButton: Component {
             ?? (style == .destructive ? href : nil)
         {
             link = link.data("admin-dialog-url", dialogURL)
+            if style == .destructive {
+                link = link.data("admin-remove-confirm", "true")
+            }
         }
         return link.class("button", style.className, "row-button")
     }

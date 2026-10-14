@@ -84,18 +84,6 @@ struct WebMenuItemRow: Component {
                             style: .ghost(.secondary),
                             permission: WebPermissions.MenuItems.update
                         ),
-                        .init(
-                            "Remove",
-                            href: AdminLocation.remove(
-                                path:
-                                    WebMenuItemRoutes.remove(RouterPath(menuId))
-                                    .description,
-                                ids: [item.id],
-                                returnTo: returnTo
-                            ),
-                            style: .destructive,
-                            permission: WebPermissions.MenuItems.delete
-                        ),
                     ],
                     permissions: permissions
                 )

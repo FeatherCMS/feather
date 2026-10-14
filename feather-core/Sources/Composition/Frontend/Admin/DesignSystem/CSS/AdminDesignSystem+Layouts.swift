@@ -93,5 +93,98 @@ extension AdminDesignSystem {
                 )
             }
         }
+        Media {
+            Custom("dialog.admin-dialog") {
+                Position(.fixed)
+                UnsafeRawProperty(name: "inset", value: "0")
+                Margin(.auto)
+                Width(92.percent)
+                MaxWidth(640.px)
+                MaxHeight(90.vh)
+                Padding(0.px)
+                Border(0)
+                BorderRadius(18.px)
+                Overflow(.hidden)
+                OverflowY(.auto)
+                Background(color: .transparent)
+                Color(.variable(TokenKey.Colors.Materials.Primary.text))
+            }
+            Custom("dialog.admin-dialog::backdrop") {
+                Background(
+                    color: .color(
+                        CSSColor(stringLiteral: "rgba(128, 128, 128, 0.46)")
+                    )
+                )
+                BackdropFilter(.blur(12.px))
+            }
+            Custom(".admin-dialog__panel") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(18.px)
+                Padding(24.px)
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Secondary.border)
+                )
+                BorderRadius(18.px)
+                Background(color: .color(CSSColor(stringLiteral: "#ffffff")))
+                BoxShadow(
+                    0.px,
+                    18.px,
+                    blur: 48.px,
+                    spread: 0.px,
+                    color: CSSColor(stringLiteral: "rgba(0, 0, 0, 0.24)")
+                )
+            }
+            Custom(
+                "html.admin-dialog-open, html.admin-dialog-open body"
+            ) {
+                Overflow(.hidden)
+            }
+            Custom(".admin-dialog__header") {
+                Display(.flex)
+                AlignItems(.center)
+                JustifyContent(.spaceBetween)
+                Gap(16.px)
+            }
+            Custom(".admin-dialog__header h2") {
+                Margin(0.px)
+                FontSize(1.35.rem)
+                LineHeight(1.2)
+            }
+            Custom(".admin-dialog__close") { FlexShrink(0) }
+            Custom(".admin-confirmation-items") {
+                Margin(vertical: 20.px, horizontal: 0.px)
+                Padding(vertical: 16.px, horizontal: 20.px)
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
+                Border(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
+                BorderRadius(8.px)
+            }
+            Custom(".admin-confirmation-items p") { Margin(0) }
+            Custom(".admin-confirmation-items ul") {
+                Margin(vertical: 12.px, horizontal: 0.px)
+                Padding(left: 20.px)
+            }
+            Custom(".admin-confirmation-items li") {
+                Margin(vertical: 8.px, horizontal: 0.px)
+            }
+        }
+        Media(.prefersColorScheme(.dark)) {
+            Custom("dialog.admin-dialog::backdrop") {
+                Background(
+                    color: .color(
+                        CSSColor(stringLiteral: "rgba(0, 0, 0, 0.68)")
+                    )
+                )
+            }
+            Custom(".admin-dialog__panel") {
+                Background(.variable(TokenKey.Colors.Materials.Primary.tint))
+            }
+        }
     }
 }

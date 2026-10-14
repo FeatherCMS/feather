@@ -9,11 +9,6 @@ protocol AdminListWebPageController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
-    func getWebPagesRemoveConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
-
     func postWebPagesRemove(
         request: Request,
         context: AuthenticatedRequestContext
@@ -33,10 +28,6 @@ extension AdminListWebPageController {
         router.get(
             "/admin/web/pages",
             use: getWebPages
-        )
-        router.get(
-            "/admin/web/pages/remove/",
-            use: getWebPagesRemoveConfirmation
         )
         router.post(
             "/admin/web/pages/remove/",

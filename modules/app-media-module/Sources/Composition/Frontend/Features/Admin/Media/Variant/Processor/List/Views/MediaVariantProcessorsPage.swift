@@ -272,21 +272,6 @@ struct MediaVariantProcessorRow: Component {
                             permission: MediaPermissions.VariantProcessors
                                 .update
                         ),
-                        .init(
-                            "Remove",
-                            href: AdminLocation.remove(
-                                path:
-                                    MediaVariantRoutes.processorRemove(
-                                        RouterPath(variantId)
-                                    )
-                                    .description,
-                                ids: [processor.id],
-                                returnTo: returnTo
-                            ),
-                            style: .destructive,
-                            permission: MediaPermissions.VariantProcessors
-                                .delete
-                        ),
                     ],
                     permissions: permissions
                 )

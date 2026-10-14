@@ -20,30 +20,6 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
             any AdminRemoveBlogAuthorLinkPresenter
         >
 
-    func getRemoveBlogAuthorLink(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse {
-        let runtime = buildRuntime((request, context))
-        let menuId = try context.requiredID()
-        let id = try context.requiredParameter("itemId")
-        do {
-            let rule = try await runtime.interactor.get(menuId: menuId, id: id)
-            return try await runtime.presenter.renderRemovePage(
-                menuId: menuId,
-                item: .init(id: id, label: rule.label)
-            )
-        }
-        catch let error as OpenAPIRepositoryError {
-            return try await runtime.presenter.renderErrorPage(
-                menuId: menuId,
-                id: id,
-                info: error.errorTitle,
-                message: error.errorDescription
-            )
-        }
-    }
-
     func postRemoveBlogAuthorLink(
         request: Request,
         context: AuthenticatedRequestContext

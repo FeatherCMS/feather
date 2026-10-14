@@ -70,38 +70,6 @@ struct AdminListAccountInvitationDefaultController:
             )
         }
     }
-
-    func getAccountInvitationsRemoveConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let runtime = buildRuntime((request, context))
-        let selectedIds = request.queryStrings("ids")
-        let page = request.queryPage()
-        let search = request.querySearch()
-        guard !selectedIds.isEmpty else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminListRemoveRedirect.location(
-                        path: "/admin/account/invitations/",
-                        page: page,
-                        search: search,
-                        title: nil,
-                        message: nil
-                    )
-                ]
-            )
-        }
-        return try await runtime.presenter
-            .renderRemovePage(
-                page: page,
-                search: search,
-                items: selectedIds.map { .init(id: $0, label: $0) }
-            )
-            .response(from: request, context: context)
-    }
-
     func postAccountInvitationsRemove(
         request: Request,
         context: AuthenticatedRequestContext

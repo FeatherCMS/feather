@@ -15,18 +15,6 @@ struct AdminRemoveMediaAssetDefaultController: AdminRemoveMediaAssetController {
             any AdminRemoveMediaAssetPresenter
         >
 
-    func getRemoveMediaAsset(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> HTMLResponse {
-        let (interactor, presenter) = buildRuntime((request, context))
-        let id = try context.requiredID()
-        let model = try await interactor.getRemoveMediaAsset(id: id)
-        return try await presenter.renderRemovePage(
-            model: model
-        )
-    }
-
     func postRemoveMediaAsset(
         request: Request,
         context: AuthenticatedRequestContext

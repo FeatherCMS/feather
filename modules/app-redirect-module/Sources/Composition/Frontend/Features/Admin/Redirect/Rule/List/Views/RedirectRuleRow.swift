@@ -61,16 +61,6 @@ struct RedirectRuleRow: Component {
                             style: .ghost(.secondary),
                             permission: RedirectPermissions.Rules.update
                         ),
-                        .init(
-                            "Remove",
-                            href: AdminLocation.remove(
-                                path: RedirectRuleRoutes.remove.description,
-                                ids: [rule.id],
-                                returnTo: returnTo
-                            ),
-                            style: .destructive,
-                            permission: RedirectPermissions.Rules.delete
-                        ),
                     ],
                     permissions: permissions
                 )

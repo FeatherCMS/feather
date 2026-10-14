@@ -67,34 +67,6 @@ struct AdminListBlogAuthorLinkDefaultController:
             error: error
         )
     }
-
-    func getBlogAuthorLinksRemoveConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let (_, presenter) = buildRuntime((request, context))
-        let menuId = try context.requiredID()
-        let selectedIds = request.queryStrings("selectedIds")
-        let page = request.queryPage()
-        let search = request.querySearch()
-        guard !selectedIds.isEmpty else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: "/admin/blog/authors/\(menuId)/"
-                ]
-            )
-        }
-        return
-            try await presenter.renderRemovePage(
-                menuId: menuId,
-                page: page,
-                search: search,
-                items: selectedIds.map { .init(id: $0, label: $0) }
-            )
-            .response(from: request, context: context)
-    }
-
     func postBlogAuthorLinksRemove(
         request: Request,
         context: AuthenticatedRequestContext

@@ -65,36 +65,6 @@ struct AdminListBlogTagDefaultController:
             error: error
         )
     }
-
-    func getBlogTagsRemoveConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response {
-        let (_, presenter) = buildRuntime((request, context))
-        let ids = request.queryStrings("ids")
-        let page = request.queryPage()
-        let search = request.querySearch()
-        guard !ids.isEmpty else {
-            return Response(
-                status: .seeOther,
-                headers: [
-                    .location: AdminLocation.url(
-                        path: BlogAdminRoutes.tags.description + "/",
-                        page: page,
-                        search: search
-                    )
-                ]
-            )
-        }
-        return
-            try await presenter.renderRemovePage(
-                page: page,
-                search: search,
-                items: ids.map { .init(id: $0, label: $0) }
-            )
-            .response(from: request, context: context)
-    }
-
     func postBlogTagsRemove(
         request: Request,
         context: AuthenticatedRequestContext

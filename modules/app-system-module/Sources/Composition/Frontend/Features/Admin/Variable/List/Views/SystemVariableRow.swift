@@ -37,16 +37,6 @@ struct SystemVariableRow: Component {
                     style: .ghost(.secondary),
                     permission: SystemPermissions.Variables.update
                 ),
-                .init(
-                    "Remove",
-                    href: AdminLocation.remove(
-                        path: SystemVariableRoutes.remove.description,
-                        ids: [variable.id],
-                        returnTo: returnTo
-                    ),
-                    style: .destructive,
-                    permission: SystemPermissions.Variables.delete
-                ),
             ]
         }
     }

@@ -18,11 +18,6 @@ protocol AdminListBlogPostController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
-    func getBlogPostsRemoveConfirmation(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
-
     func postBlogPostsRemove(
         request: Request,
         context: AuthenticatedRequestContext
@@ -42,10 +37,6 @@ extension AdminListBlogPostController {
         router.get(
             "/admin/blog/posts",
             use: getBlogPosts
-        )
-        router.get(
-            "/admin/blog/posts/remove/",
-            use: getBlogPostsRemoveConfirmation
         )
         router.post(
             "/admin/blog/posts/remove/",

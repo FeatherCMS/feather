@@ -25,12 +25,5 @@ protocol AdminListAuthEmailPresenter: Sendable {
     func renderError(
         error: OpenAPIRepositoryError
     ) async throws -> HTMLResponse
-
-    func renderRemovePage(
-        items: [AdminRemoveItemContext],
-        page: Int,
-        search: String?,
-        userID: String?
-    ) async throws -> HTMLResponse
     func renderInvalidNoncePage() async throws -> HTMLResponse
 }
