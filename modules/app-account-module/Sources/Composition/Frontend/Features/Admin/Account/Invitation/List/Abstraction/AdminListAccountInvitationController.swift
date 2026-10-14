@@ -8,10 +8,6 @@ protocol AdminListAccountInvitationController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
-    func postAccountInvitationsRemove(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
 }
 
 extension AdminListAccountInvitationController {
@@ -22,12 +18,6 @@ extension AdminListAccountInvitationController {
         router.get(
             AccountAdminRoutes.invitations,
             use: getAccountInvitations
-        )
-        router.post(
-            RouterPath(
-                AccountAdminRoutes.invitationRemoveBulk.description + "/"
-            ),
-            use: postAccountInvitationsRemove
         )
     }
 }

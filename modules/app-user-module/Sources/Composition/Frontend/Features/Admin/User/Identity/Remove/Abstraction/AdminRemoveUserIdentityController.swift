@@ -20,10 +20,6 @@ extension AdminRemoveUserIdentityController {
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.post(
-            UserIdentityRoutes.remove(RouterPath("{id}")),
-            use: postRemoveUserIdentity
-        )
-        router.post(
             UserIdentityRoutes.remove,
             use: postRemoveUserIdentities
         )

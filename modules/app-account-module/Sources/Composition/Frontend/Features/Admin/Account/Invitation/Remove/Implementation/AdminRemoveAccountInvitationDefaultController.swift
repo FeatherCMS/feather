@@ -16,7 +16,6 @@ struct AdminRemoveAccountInvitationDefaultController:
         context: AuthenticatedRequestContext
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
-        let id = try context.requiredID()
         let nonceRequest = try await request.decode(
             as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
@@ -31,9 +30,7 @@ struct AdminRemoveAccountInvitationDefaultController:
                 status: .seeOther,
                 headers: [
                     .location: AdminNotificationRedirect.location(
-                        defaultPath:
-                            AccountAdminRoutes.invitationRemove(RouterPath(id))
-                            .description,
+                        defaultPath: AccountAdminRoutes.invitations.description,
                         title: "Expired",
                         message:
                             "This form has expired. Please reload the page."
@@ -41,17 +38,24 @@ struct AdminRemoveAccountInvitationDefaultController:
                 ]
             )
         }
-        do {
-            try await interactor.execute(
-                entity: .init(id: id)
+        let ids = nonceRequest.input.normalizedIds
+        guard !ids.isEmpty else {
+            return Response(
+                status: .seeOther,
+                headers: [.location: AccountAdminRoutes.invitations.description]
             )
+        }
+        do {
+            try await interactor.execute(ids: ids)
             return Response(
                 status: .seeOther,
                 headers: [
                     .location: AdminNotificationRedirect.location(
                         defaultPath: "/admin/account/invitations/",
                         title: "Removed",
-                        message: "User invitation removed successfully."
+                        message: ids.count == 1
+                            ? "User invitation removed successfully."
+                            : "User invitations removed successfully."
                     )
                 ]
             )
@@ -59,7 +63,7 @@ struct AdminRemoveAccountInvitationDefaultController:
         catch let error as OpenAPIRepositoryError {
             return
                 try await presenter.renderErrorPage(
-                    id: id,
+                    id: ids[0],
                     info: error.errorTitle,
                     message: error.errorDescription
                 )

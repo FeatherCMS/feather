@@ -18,11 +18,6 @@ protocol AdminListBlogAuthorController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
-    func postBlogAuthorsRemove(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
-
     func postBlogAuthorStatus(
         request: Request,
         context: AuthenticatedRequestContext
@@ -37,10 +32,6 @@ extension AdminListBlogAuthorController {
         router.get(
             "/admin/blog/authors",
             use: getBlogAuthors
-        )
-        router.post(
-            "/admin/blog/authors/remove/",
-            use: postBlogAuthorsRemove
         )
         router.post(
             "/admin/blog/authors/{id}/status/",

@@ -18,7 +18,4 @@ protocol AdminListBlogAuthorRepository: Sendable {
         search: String?
     ) async throws -> AdminListBlogAuthorModel
 
-    func delete(
-        id: String
-    ) async throws
 }

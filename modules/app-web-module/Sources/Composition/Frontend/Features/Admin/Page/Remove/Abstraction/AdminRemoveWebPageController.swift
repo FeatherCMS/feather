@@ -16,9 +16,6 @@ extension AdminRemoveWebPageController {
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        router.post(
-            "/admin/web/pages/{id}/remove/",
-            use: postRemoveWebPage
-        )
+        router.post("/admin/web/pages/remove/", use: postRemoveWebPage)
     }
 }

@@ -26,7 +26,6 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
-        let id = try context.requiredParameter("itemId")
         let nonceRequest = try await request.decode(
             as: NonceRequest<AdminListRemoveFormInput>.self,
             context: context
@@ -37,13 +36,24 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
                 sessionToken: context.sessionToken
             )
         else { return Response(status: .badRequest) }
+        let ids = nonceRequest.input.normalizedSelectedIds
+        let location = AdminLocation.url(
+            path: BlogAdminRoutes.author(RouterPath(menuId)).description,
+            page: nonceRequest.input.normalizedPage,
+            search: nonceRequest.input.normalizedSearch
+        )
+        guard !ids.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
         do {
-            try await runtime.interactor.delete(menuId: menuId, id: id)
+            try await runtime.interactor.delete(menuId: menuId, ids: ids)
             return AdminNotificationFlash.redirect(
-                to: "/admin/blog/authors/\(menuId)/",
+                to: location,
                 notification: .init(
                     title: "Removed",
-                    message: "Link removed successfully."
+                    message: ids.count == 1
+                        ? "Link removed successfully."
+                        : "Links removed successfully."
                 )
             )
         }
@@ -51,7 +61,7 @@ struct AdminRemoveBlogAuthorLinkDefaultController:
             return try await runtime.presenter
                 .renderErrorPage(
                     menuId: menuId,
-                    id: id,
+                    id: ids[0],
                     info: error.errorTitle,
                     message: error.errorDescription
                 )

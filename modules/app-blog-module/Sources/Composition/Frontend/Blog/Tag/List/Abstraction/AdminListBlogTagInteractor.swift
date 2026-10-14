@@ -18,7 +18,4 @@ protocol AdminListBlogTagInteractor: Sendable {
         search: String?
     ) async throws -> AdminListBlogTagModel
 
-    func remove(
-        ids: [String]
-    ) async throws
 }

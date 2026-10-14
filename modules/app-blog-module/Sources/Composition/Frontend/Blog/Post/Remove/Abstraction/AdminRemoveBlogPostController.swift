@@ -24,9 +24,6 @@ extension AdminRemoveBlogPostController {
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        router.post(
-            "/admin/blog/posts/{id}/remove/",
-            use: postRemoveBlogPost
-        )
+        router.post("/admin/blog/posts/remove/", use: postRemoveBlogPost)
     }
 }

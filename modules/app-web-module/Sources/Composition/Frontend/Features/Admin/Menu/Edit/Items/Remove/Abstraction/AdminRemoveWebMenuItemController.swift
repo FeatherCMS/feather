@@ -17,7 +17,7 @@ extension AdminRemoveWebMenuItemController {
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.post(
-            "/admin/web/menus/{id}/items/{itemId}/remove/",
+            "/admin/web/menus/{id}/items/remove/",
             use: postRemoveWebMenuItem
         )
     }

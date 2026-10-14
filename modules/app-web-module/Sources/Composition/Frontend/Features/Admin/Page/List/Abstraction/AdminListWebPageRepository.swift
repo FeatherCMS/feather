@@ -13,7 +13,4 @@ protocol AdminListWebPageRepository: Sendable {
         id: String
     ) async throws -> String
 
-    func delete(
-        id: String
-    ) async throws
 }

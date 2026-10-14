@@ -18,7 +18,6 @@ struct AdminRemoveWebMenuItemDefaultController:
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         let menuId = try context.requiredID()
-        let id = try context.requiredParameter("itemId")
         let origin = WebMenuItemRoutes.removeOrigin(
             request.queryString("origin")
         )
@@ -32,13 +31,24 @@ struct AdminRemoveWebMenuItemDefaultController:
                 sessionToken: context.sessionToken
             )
         else { return Response(status: .badRequest) }
+        let ids = nonceRequest.input.normalizedIds
+        let location = AdminLocation.url(
+            path: WebMenuItemRoutes.list(RouterPath(menuId)).description,
+            page: nonceRequest.input.normalizedPage,
+            search: nonceRequest.input.normalizedSearch
+        )
+        guard !ids.isEmpty else {
+            return Response(status: .seeOther, headers: [.location: location])
+        }
         do {
-            try await runtime.interactor.delete(menuId: menuId, id: id)
+            try await runtime.interactor.delete(menuId: menuId, ids: ids)
             return AdminNotificationFlash.redirect(
-                to: WebMenuItemRoutes.list(RouterPath(menuId)).description,
+                to: location,
                 notification: .init(
                     title: "Removed",
-                    message: "Item removed successfully."
+                    message: ids.count == 1
+                        ? "Item removed successfully."
+                        : "Items removed successfully."
                 )
             )
         }
@@ -46,7 +56,7 @@ struct AdminRemoveWebMenuItemDefaultController:
             return try await runtime.presenter
                 .renderErrorPage(
                     menuId: menuId,
-                    id: id,
+                    id: ids[0],
                     info: error.errorTitle,
                     message: error.errorDescription,
                     origin: origin

@@ -9,10 +9,6 @@ protocol AdminListWebMenuController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
-    func postWebMenusRemove(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
 }
 
 extension AdminListWebMenuController {
@@ -23,10 +19,6 @@ extension AdminListWebMenuController {
         router.get(
             "/admin/web/menus",
             use: getWebMenus
-        )
-        router.post(
-            "/admin/web/menus/remove/",
-            use: postWebMenusRemove
         )
     }
 }

@@ -9,7 +9,4 @@ protocol AdminListWebMenuRepository: Sendable {
         search: String?
     ) async throws -> AdminListWebMenuModel
 
-    func delete(
-        id: String
-    ) async throws
 }

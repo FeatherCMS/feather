@@ -20,10 +20,6 @@ extension AdminRemoveRedirectRuleController {
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.post(
-            RedirectRuleRoutes.remove(RouterPath("{id}")),
-            use: postRemoveRedirectRule
-        )
-        router.post(
             RedirectRuleRoutes.remove,
             use: postRemoveRedirectRules
         )

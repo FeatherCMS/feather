@@ -31,7 +31,4 @@ protocol AdminListAuthMagicLinkRepository: Sendable {
         size: Int
     )
 
-    func delete(
-        id: String
-    ) async throws
 }

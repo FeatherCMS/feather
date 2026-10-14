@@ -25,10 +25,6 @@ protocol AdminRemoveContactFormSubmissionsController: Sendable {
 extension AdminRemoveContactFormSubmissionsController {
     func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.post(
-            ContactAdminRoutes.formSubmissionRemoveRoute,
-            use: remove
-        )
-        router.post(
             ContactAdminRoutes.formSubmissionRemoveSelectedRoute,
             use: removeSelected
         )

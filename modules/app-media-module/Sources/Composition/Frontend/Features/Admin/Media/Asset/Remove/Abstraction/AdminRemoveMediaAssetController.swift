@@ -10,7 +10,7 @@ import WebComponents
 
 protocol AdminRemoveMediaAssetController: Sendable {
 
-    func postRemoveMediaAsset(
+    func remove(
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> Response
@@ -21,9 +21,6 @@ extension AdminRemoveMediaAssetController {
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        router.post(
-            "/admin/media/assets/{id}/remove/",
-            use: postRemoveMediaAsset
-        )
+        router.post("/admin/media/assets/remove/", use: remove)
     }
 }

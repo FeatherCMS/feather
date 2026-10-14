@@ -25,7 +25,7 @@ extension AdminRemoveBlogAuthorLinkController {
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.post(
-            "/admin/blog/authors/{id}/links/{itemId}/remove/",
+            "/admin/blog/authors/{id}/links/remove/",
             use: postRemoveBlogAuthorLink
         )
     }

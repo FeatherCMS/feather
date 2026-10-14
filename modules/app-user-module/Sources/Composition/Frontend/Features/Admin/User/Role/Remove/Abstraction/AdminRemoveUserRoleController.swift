@@ -21,10 +21,6 @@ extension AdminRemoveUserRoleController {
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
         router.post(
-            UserRoleRoutes.remove(RouterPath("{id}")),
-            use: postRemoveUserRole
-        )
-        router.post(
             UserRoleRoutes.remove,
             use: postRemoveUserRoles
         )

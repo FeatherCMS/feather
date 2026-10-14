@@ -18,7 +18,4 @@ protocol AdminListBlogTagRepository: Sendable {
         search: String?
     ) async throws -> AdminListBlogTagModel
 
-    func delete(
-        id: String
-    ) async throws
 }

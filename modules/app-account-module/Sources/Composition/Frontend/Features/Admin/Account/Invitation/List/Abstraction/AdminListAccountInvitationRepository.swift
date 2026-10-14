@@ -13,7 +13,4 @@ protocol AdminListAccountInvitationRepository: Sendable {
         size: Int
     )
 
-    func delete(
-        id: String
-    ) async throws
 }

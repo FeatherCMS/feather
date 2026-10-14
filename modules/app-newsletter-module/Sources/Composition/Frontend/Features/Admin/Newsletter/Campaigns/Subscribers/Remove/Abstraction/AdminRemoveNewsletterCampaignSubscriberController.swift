@@ -19,10 +19,6 @@ protocol AdminRemoveNewsletterCampaignSubscriberController: Sendable {
 extension AdminRemoveNewsletterCampaignSubscriberController {
     func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
         router.post(
-            NewsletterAdminRoutes.campaignSubscriberRemoveRoute,
-            use: remove
-        )
-        router.post(
             NewsletterAdminRoutes.campaignSubscriberRemoveSelectedRoute,
             use: removeSelected
         )

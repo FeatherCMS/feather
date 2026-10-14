@@ -12,9 +12,5 @@ extension AdminRemoveNewsCategoryController {
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        router.post(
-            NewsAdminRoutes.categoryRemove(RouterPath("{id}")),
-            use: postRemoveNewsCategory
-        )
     }
 }

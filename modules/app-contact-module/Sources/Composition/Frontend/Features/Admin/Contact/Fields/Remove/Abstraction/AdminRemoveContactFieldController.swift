@@ -24,7 +24,6 @@ protocol AdminRemoveContactFieldController: Sendable {
 
 extension AdminRemoveContactFieldController {
     func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-        router.post(ContactAdminRoutes.fieldRemoveRoute, use: remove)
         router.post(ContactAdminRoutes.fieldRemove, use: removeSelected)
     }
 }

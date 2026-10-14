@@ -17,4 +17,10 @@ struct AdminRemoveWebPageDefaultInteractor:
     ) async throws {
         try await repository.delete(id: id)
     }
+
+    func delete(ids: [String]) async throws {
+        for id in ids {
+            try await repository.delete(id: id)
+        }
+    }
 }

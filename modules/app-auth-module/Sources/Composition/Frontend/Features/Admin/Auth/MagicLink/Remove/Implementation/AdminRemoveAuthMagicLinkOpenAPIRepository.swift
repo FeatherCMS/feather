@@ -21,45 +21,10 @@ struct AdminRemoveAuthMagicLinkOpenAPIRepository:
 {
     let api: AuthAdminAPIClient
 
-    func get(
-        id: String
-    ) async throws -> AuthMagicLinkDetailsModel {
-        try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response =
-                try await client
-                .authMagicLinkGet(
-                    path: .init(authMagicLinkId: id),
-                    headers: .init(accept: [.init(contentType: .json)])
-                )
-            switch response {
-            case .ok(let ok):
-                let item = try ok.body.json
-                return .init(
-                    id: item.id,
-                    credentialId: item.credentialId,
-                    isPersistent: item.isPersistent
-                )
-            case .notFound:
-                throw OpenAPIRepositoryError.notFound
-            case .unauthorized:
-                throw OpenAPIRepositoryError.unauthorized
-            case .forbidden:
-                throw OpenAPIRepositoryError.forbidden
-            case .undocumented(let statusCode, let response):
-                throw try await api.failure(
-                    statusCode: statusCode,
-                    responseBody: response.body
-                )
-            }
-        }
-    }
-
-    func delete(
-        id: String
-    ) async throws {
+    func delete(ids: [String]) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.authMagicLinkRemove(
-                body: .json(.init(ids: [id], results: false, summary: true))
+                body: .json(.init(ids: ids, results: false, summary: true))
             )
         }
     }

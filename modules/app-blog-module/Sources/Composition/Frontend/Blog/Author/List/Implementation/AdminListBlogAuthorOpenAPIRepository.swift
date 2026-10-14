@@ -70,15 +70,6 @@ struct AdminListBlogAuthorOpenAPIRepository:
         }
     }
 
-    func delete(
-        id: String
-    ) async throws {
-        try await api.withOpenAPIRepositoryErrorMapping { client in
-            _ = try await client.blogAuthorRemove(
-                body: .json(.init(ids: [id], results: false, summary: true))
-            )
-        }
-    }
 
     private func loadItems(
         _ items: [BlogAdminAPI.Components.Schemas.BlogAuthorListItemSchema]

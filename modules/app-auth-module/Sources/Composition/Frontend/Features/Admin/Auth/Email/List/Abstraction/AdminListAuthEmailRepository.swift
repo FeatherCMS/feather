@@ -31,7 +31,4 @@ protocol AdminListAuthEmailRepository: Sendable {
         size: Int
     )
 
-    func delete(
-        id: String
-    ) async throws
 }

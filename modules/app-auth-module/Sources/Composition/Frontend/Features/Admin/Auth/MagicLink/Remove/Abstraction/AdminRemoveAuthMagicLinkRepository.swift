@@ -18,11 +18,5 @@ import WebComponents
 
 protocol AdminRemoveAuthMagicLinkRepository: Sendable {
 
-    func get(
-        id: String
-    ) async throws -> AuthMagicLinkDetailsModel
-
-    func delete(
-        id: String
-    ) async throws
+    func delete(ids: [String]) async throws
 }

@@ -10,10 +10,6 @@ protocol AdminListWebMenuItemInteractor: Sendable {
         search: String?
     ) async throws -> AdminListWebMenuItemModel
 
-    func remove(
-        menuId: String,
-        ids: [String]
-    ) async throws
 
     func move(
         menuId: String,

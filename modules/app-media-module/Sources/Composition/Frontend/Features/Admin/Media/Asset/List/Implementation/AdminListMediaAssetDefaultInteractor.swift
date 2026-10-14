@@ -63,14 +63,6 @@ struct AdminListMediaAssetDefaultInteractor: AdminListMediaAssetInteractor {
         )
     }
 
-    func remove(
-        ids: [String]
-    ) async throws {
-        for id in ids {
-            try await repository.delete(id: id)
-        }
-    }
-
     func resolveRemoveItems(
         ids: [String]
     ) async throws -> [AdminRemoveItemContext] {

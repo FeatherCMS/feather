@@ -16,9 +16,6 @@ extension AdminRemoveWebMenuController {
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        router.post(
-            "/admin/web/menus/{id}/remove/",
-            use: postRemoveWebMenu
-        )
+        router.post("/admin/web/menus/remove/", use: postRemoveWebMenu)
     }
 }

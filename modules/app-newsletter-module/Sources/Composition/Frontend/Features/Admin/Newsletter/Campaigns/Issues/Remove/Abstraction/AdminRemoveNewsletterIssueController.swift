@@ -18,9 +18,5 @@ protocol AdminRemoveNewsletterIssueController: Sendable {
 
 extension AdminRemoveNewsletterIssueController {
     func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
-        router.post(
-            NewsletterAdminRoutes.issueRemoveRoute,
-            use: remove
-        )
     }
 }

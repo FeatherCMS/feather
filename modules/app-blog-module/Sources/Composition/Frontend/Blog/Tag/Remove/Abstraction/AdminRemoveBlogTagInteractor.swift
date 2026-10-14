@@ -20,4 +20,6 @@ protocol AdminRemoveBlogTagInteractor: Sendable {
     func delete(
         id: String
     ) async throws
+
+    func delete(ids: [String]) async throws
 }

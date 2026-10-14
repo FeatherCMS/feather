@@ -14,12 +14,5 @@ extension AdminRemoveAuthSessionController {
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        router.post(
-            AuthSessionRoutes.remove(
-                RouterPath("{id}"),
-                sessionID: RouterPath("{sessionId}")
-            ),
-            use: postRemoveAuthSession
-        )
     }
 }

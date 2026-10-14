@@ -18,10 +18,6 @@ protocol AdminListBlogAuthorLinkController: Sendable {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse
 
-    func postBlogAuthorLinksRemove(
-        request: Request,
-        context: AuthenticatedRequestContext
-    ) async throws -> Response
 }
 
 extension AdminListBlogAuthorLinkController {
@@ -32,10 +28,6 @@ extension AdminListBlogAuthorLinkController {
         router.get(
             "/admin/blog/authors/{id}/links/",
             use: getBlogAuthorLinks
-        )
-        router.post(
-            "/admin/blog/authors/{id}/links/remove/",
-            use: postBlogAuthorLinksRemove
         )
     }
 }

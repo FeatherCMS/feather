@@ -24,9 +24,6 @@ extension AdminRemoveBlogTagController {
     func route(
         on router: any RouterMethods<AuthenticatedRequestContext>
     ) {
-        router.post(
-            "/admin/blog/tags/{id}/remove/",
-            use: postRemoveBlogTag
-        )
+        router.post("/admin/blog/tags/remove/", use: postRemoveBlogTag)
     }
 }
