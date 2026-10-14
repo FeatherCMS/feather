@@ -3,12 +3,6 @@ import FeatherAdmin
 struct AdminRemoveUserRoleDefaultInteractor: AdminRemoveUserRoleInteractor {
     let repository: any AdminRemoveUserRoleRepository
 
-    func names(
-        ids: [String]
-    ) async throws -> [String] {
-        do { return try await repository.names(ids: ids) }
-        catch let error as OpenAPIRepositoryError { throw map(error) }
-    }
 
     func delete(
         ids: [String]

@@ -47,7 +47,4 @@ struct AdminListNewsletterSubscribersDefaultInteractor:
         try await repository.get(id: id)
     }
 
-    func names(ids: [String]) async throws -> [String] {
-        try await repository.names(ids: ids)
-    }
 }

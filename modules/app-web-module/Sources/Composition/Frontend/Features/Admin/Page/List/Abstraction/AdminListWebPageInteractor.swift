@@ -9,8 +9,4 @@ protocol AdminListWebPageInteractor: Sendable {
         search: String?
     ) async throws -> AdminListWebPageModel
 
-    func resolveRemoveItems(
-        ids: [String]
-    ) async throws -> [AdminRemoveItemContext]
-
 }

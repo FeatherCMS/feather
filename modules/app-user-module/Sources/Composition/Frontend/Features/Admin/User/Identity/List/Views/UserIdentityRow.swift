@@ -16,7 +16,9 @@ struct UserIdentityRow: Component {
                 context.build(AdminListRowCheckbox(id: identity.id))
             }
             Td(identity.id).data("label", "ID")
-            Td(identity.name).data("label", "Name")
+            Td(identity.name)
+                .data("label", "Name")
+                .data("remove-label", "true")
             Td {
                 context.build(
                     UserIdentityStatusChip.make(

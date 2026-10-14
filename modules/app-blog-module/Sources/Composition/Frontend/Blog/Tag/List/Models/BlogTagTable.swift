@@ -155,6 +155,7 @@ private struct BlogTagTableContent: Component {
                                                                 )
                                                         }
                                                         .data("label", "Title")
+                                                        .data("remove-label", "true")
                                                         Td {
                                                             if state.canEdit {
                                                                 context.build(

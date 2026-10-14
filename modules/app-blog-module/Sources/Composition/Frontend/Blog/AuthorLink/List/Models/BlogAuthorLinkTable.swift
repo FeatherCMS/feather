@@ -135,6 +135,10 @@ struct BlogAuthorLinkTableContent: Component {
                                                                 "label",
                                                                 "Label"
                                                             )
+                                                            .data(
+                                                                "remove-label",
+                                                                "true"
+                                                            )
                                                         Td(item.url)
                                                             .data(
                                                                 "label",

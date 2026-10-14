@@ -9,18 +9,6 @@ struct AdminRemoveContactSubmissionsDefaultController:
             any AdminRemoveContactSubmissionsInteractor,
             any AdminRemoveContactSubmissionsPresenter
         >
-    func confirm(request: Request, context: AuthenticatedRequestContext)
-        async throws
-        -> HTMLResponse
-    {
-        let (_, presenter) = buildRuntime((request, context))
-        return try await presenter.renderRemovePage(
-            items: request.queryStrings("ids")
-                .map {
-                    .init(id: $0, label: $0)
-                }
-        )
-    }
     func remove(request: Request, context: AuthenticatedRequestContext)
         async throws
         -> Response

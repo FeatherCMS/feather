@@ -99,6 +99,15 @@ public struct AdminDialogHost: Component {
 
                 function rowLabel(row, fallback) {
                     if (!row) { return fallback; }
+                    var marked = row.querySelector("[data-remove-label]");
+                    if (marked) {
+                        var markedValue = marked.getAttribute("data-remove-label");
+                        var markedLabel = markedValue && markedValue !== "true"
+                            ? markedValue
+                            : (marked.innerText || marked.textContent || "");
+                        markedLabel = markedLabel.trim().replace(/\s+/g, " ");
+                        if (markedLabel) { return markedLabel; }
+                    }
                     var cells = row.querySelectorAll("td");
                     for (var index = 0; index < cells.length; index += 1) {
                         var cell = cells[index];

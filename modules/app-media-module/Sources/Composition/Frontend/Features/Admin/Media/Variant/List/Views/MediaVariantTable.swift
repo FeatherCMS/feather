@@ -233,7 +233,9 @@ struct MediaVariantRow: Component {
             if permissions.allows(MediaPermissions.Variants.delete) {
                 context.build(AdminListRowCheckbox(id: variant.id))
             }
-            Td(variant.key).data("label", "Key")
+            Td(variant.key)
+                .data("label", "Key")
+                .data("remove-label", "true")
             Td(variant.name).data("label", "Name")
             Td(variant.isRequired ? "Yes" : "No").data("label", "Required")
             Td(variant.isActive ? "Yes" : "No").data("label", "Active")

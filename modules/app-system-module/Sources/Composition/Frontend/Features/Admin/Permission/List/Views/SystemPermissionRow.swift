@@ -38,6 +38,7 @@ struct SystemPermissionRow: Component {
             }
             Td(permission.key)
                 .data("label", "Key")
+                .data("remove-label", "true")
             Td(permission.name?.emptyToNil ?? "—")
                 .data("label", "Name")
             context.build(

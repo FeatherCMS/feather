@@ -36,7 +36,9 @@ struct RedirectRuleRow: Component {
             if permissions.allows(RedirectPermissions.Rules.delete) {
                 context.build(AdminListRowCheckbox(id: rule.id))
             }
-            Td(rule.source).data("label", "Source")
+            Td(rule.source)
+                .data("label", "Source")
+                .data("remove-label", "true")
             Td(rule.destination).data("label", "Destination")
             Td {
                 context.build(statusChip)

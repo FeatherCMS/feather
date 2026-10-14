@@ -38,14 +38,6 @@ struct AdminRemoveUserIdentityOpenAPIRepository:
         }
     }
 
-    func names(
-        ids: [String]
-    ) async throws -> [String] {
-        for id in ids {
-            try await exists(id: id)
-        }
-        return ids
-    }
 
     func delete(
         ids: [String]

@@ -5,18 +5,6 @@ struct AdminRemoveSystemPermissionDefaultInteractor:
 {
     let repository: any AdminRemoveSystemPermissionRepository
 
-    func names(ids: [String]) async throws -> [String] {
-        do {
-            var result: [String] = []
-            for id in ids {
-                result.append(try await repository.get(id: id).name ?? "")
-            }
-            return result
-        }
-        catch let error as OpenAPIRepositoryError {
-            throw map(error)
-        }
-    }
 
     func delete(ids: [String]) async throws {
         do {

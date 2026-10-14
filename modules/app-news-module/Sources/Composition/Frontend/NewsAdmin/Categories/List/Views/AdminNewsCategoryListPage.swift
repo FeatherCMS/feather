@@ -73,6 +73,10 @@ struct AdminNewsCategoryListPage: Component {
                                                                 "label",
                                                                 "Title"
                                                             )
+                                                            .data(
+                                                                "remove-label",
+                                                                "true"
+                                                            )
                                                         Td(item.excerpt)
                                                             .data(
                                                                 "label",

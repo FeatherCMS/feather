@@ -75,6 +75,7 @@ struct WebPageRow: Component {
             }
         }
         .data("label", "Title")
+        .data("remove-label", "true")
     }
 
     private func statusCell(context: inout BuilderContext) -> Td {

@@ -2,12 +2,11 @@ import FeatherAdmin
 import Hummingbird
 
 protocol AdminRemoveContactSubmissionsController: Sendable {
-    func confirm(request: Request, context: AuthenticatedRequestContext)
-        async throws
-        -> HTMLResponse
-    func remove(request: Request, context: AuthenticatedRequestContext)
-        async throws
-        -> Response
+
+    func remove(
+        request: Request,
+        context: AuthenticatedRequestContext
+    ) async throws -> Response
 }
 
 extension AdminRemoveContactSubmissionsController {

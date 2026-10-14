@@ -8,12 +8,6 @@ import WebBuilders
 import WebComponents
 
 protocol AdminRemoveNewsletterIssueController: Sendable {
-    func confirm(request: Request, context: AuthenticatedRequestContext)
-        async throws
-        -> HTMLResponse
-    func remove(request: Request, context: AuthenticatedRequestContext)
-        async throws
-        -> Response
 }
 
 extension AdminRemoveNewsletterIssueController {

@@ -23,7 +23,4 @@ struct AdminListNewsletterSubscribersOpenAPIRepository {
         try await AdminNewsletterSubscribersAPIClient(api: api).get(id: id)
     }
 
-    func names(ids: [String]) async throws -> [String] {
-        try await AdminNewsletterSubscribersAPIClient(api: api).names(ids: ids)
-    }
 }

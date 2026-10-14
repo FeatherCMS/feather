@@ -1331,6 +1331,7 @@ extension AssetListView {
     ) -> some BasicTag {
         Td(folder.name)
             .data("label", "Name")
+            .data("remove-label", "true")
     }
 
     fileprivate func assetTitleCell(
@@ -1354,5 +1355,6 @@ extension AssetListView {
             )
         }
         .data("label", "Name")
+        .data("remove-label", "true")
     }
 }

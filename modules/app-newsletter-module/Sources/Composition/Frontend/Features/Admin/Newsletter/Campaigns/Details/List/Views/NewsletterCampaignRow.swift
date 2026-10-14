@@ -29,7 +29,9 @@ struct NewsletterCampaignRow: Component {
                 .data("label", "Name")
             }
             else {
-                Td(item.name).data("label", "Name")
+                Td(item.name)
+                    .data("label", "Name")
+                    .data("remove-label", "true")
             }
             context.build(
                 AdminListRowActions(

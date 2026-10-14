@@ -15,7 +15,9 @@ struct UserRoleRow: Component {
             if permissions.allows(UserPermissions.Roles.delete) {
                 context.build(AdminListRowCheckbox(id: role.id))
             }
-            Td(role.name ?? "—").data("label", "Name")
+            Td(role.name ?? "—")
+                .data("label", "Name")
+                .data("remove-label", "true")
             context.build(
                 AdminListRowActions(
                     label: "Actions",

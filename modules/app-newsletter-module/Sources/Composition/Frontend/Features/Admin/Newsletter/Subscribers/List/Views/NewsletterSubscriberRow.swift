@@ -43,7 +43,9 @@ struct NewsletterSubscriberRow: Component {
             if permissions.allows(Permissions.Subscribers.delete) {
                 context.build(AdminListRowCheckbox(id: item.id))
             }
-            Td(item.email).data("label", "Email")
+            Td(item.email)
+                .data("label", "Email")
+                .data("remove-label", "true")
             Td(item.name).data("label", "Name")
             Td {
                 for campaign in item.newsletters {

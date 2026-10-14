@@ -49,7 +49,9 @@ struct SystemVariableRow: Component {
             if permissions.allows(SystemPermissions.Variables.delete) {
                 context.build(AdminListRowCheckbox(id: state.id))
             }
-            Td(state.key).data("label", "Key")
+            Td(state.key)
+                .data("label", "Key")
+                .data("remove-label", "true")
             Td(state.value.emptyToNil == nil ? "—" : state.value)
                 .data("label", "Value")
             context.build(
