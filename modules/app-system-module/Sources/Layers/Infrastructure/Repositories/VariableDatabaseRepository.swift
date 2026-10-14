@@ -8,7 +8,7 @@ public import FeatherDomain
 public import FeatherInfrastructure
 public import SystemDomain
 
-extension VariableTable.Row {
+extension VariableTable.Row.Detail {
     var asDomain: Variable {
         .init(
             id: id,
@@ -41,15 +41,18 @@ public struct VariableDatabaseRepository: VariableRepository {
         _ model: Variable.New
     ) async throws -> Variable {
         let table = VariableTable(connection: context.connection)
-        let saved = try await table.create(
-            row: .init(
+        guard let saved = try await table.insert(
+            VariableTable.Row.Create(
                 id: idGenerator.generate(),
                 key: model.key,
                 value: model.value,
                 name: model.name,
                 notes: model.notes
-            )
-        )
+            ),
+            returning: VariableTable.Row.Detail.self
+        ) else {
+            throw RepositoryError.notFound
+        }
         return saved.asDomain
     }
 
@@ -57,32 +60,40 @@ public struct VariableDatabaseRepository: VariableRepository {
         key: String
     ) async throws -> Variable? {
         let table = VariableTable(connection: context.connection)
-        return try await table.find(key: key)?.asDomain
+        return try await table.findFirst(
+            by: VariableTable.Fields.key,
+            equals: key,
+            returning: VariableTable.Row.Detail.self
+        )?.asDomain
     }
 
     public func find(
         id: String
     ) async throws -> Variable? {
         let table = VariableTable(connection: context.connection)
-        return try await table.find(id: id)?.asDomain
+        return try await table.findFirst(
+            by: VariableTable.Fields.id,
+            equals: id,
+            returning: VariableTable.Row.Detail.self
+        )?.asDomain
     }
 
     public func update(
         _ model: Variable
     ) async throws -> Variable {
         let table = VariableTable(connection: context.connection)
-        let updated = try await table.update(
-            id: model.id,
-            row: .init(
-                id: model.id,
+        guard let updated = try await table.update(
+            VariableTable.Row.Update(
                 key: model.key,
                 value: model.value,
                 name: model.name,
-                notes: model.notes,
-                createdAt: model.createdAt,
-                updatedAt: model.createdAt
-            )
-        )
+                notes: model.notes
+            ),
+            matching: model.id,
+            returning: VariableTable.Row.Detail.self
+        ) else {
+            throw RepositoryError.notFound
+        }
         return updated.asDomain
     }
 

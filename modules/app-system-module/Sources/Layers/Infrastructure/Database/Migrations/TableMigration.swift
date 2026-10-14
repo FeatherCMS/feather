@@ -31,23 +31,15 @@ public struct TableMigration: DatabaseMigration {
                 updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
             );
             """#,
-            // MARK: - variable
-            #"""
-            CREATE TABLE IF NOT EXISTS system_variable (
-                id TEXT PRIMARY KEY,
-                key TEXT NOT NULL UNIQUE,
-                value TEXT NOT NULL,
-                name TEXT,
-                notes TEXT,
-                created_at TIMESTAMPTZ NOT NULL DEFAULT (NOW()),
-                updated_at TIMESTAMPTZ NOT NULL DEFAULT (NOW())
-            );
-            """#,
         ]
 
         for query in queries {
             try await connection.run(query: query) { _ in }
         }
+
+        try await connection.run(
+            query: VariableTableSchema.table.createTableQuery()
+        ) { _ in }
     }
 
 }

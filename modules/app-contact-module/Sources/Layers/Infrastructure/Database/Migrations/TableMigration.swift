@@ -64,21 +64,6 @@ public struct TableMigration: DatabaseMigration {
             ON contact_form_field (key);
             """#,
             #"""
-            CREATE TABLE IF NOT EXISTS contact_form_form_field (
-                form_id TEXT NOT NULL,
-                field_id TEXT NOT NULL,
-                position INTEGER NOT NULL DEFAULT 0,
-                PRIMARY KEY (form_id, field_id),
-                FOREIGN KEY(form_id) REFERENCES contact_form(id) ON DELETE CASCADE,
-                FOREIGN KEY(field_id) REFERENCES contact_form_field(id) ON DELETE CASCADE
-            );
-            """#,
-            #"""
-            CREATE INDEX IF NOT EXISTS contact_form_form_field_form_id_idx
-            ON contact_form_form_field (form_id, position);
-            """#,
-            #"CREATE INDEX IF NOT EXISTS contact_form_form_field_field_id_idx ON contact_form_form_field (field_id);"#,
-            #"""
             CREATE TABLE IF NOT EXISTS contact_form_submission (
                 id TEXT PRIMARY KEY,
                 form_id TEXT NOT NULL,
@@ -103,6 +88,14 @@ public struct TableMigration: DatabaseMigration {
         ]
 
         for query in queries {
+            try await connection.run(query: query) { _ in }
+        }
+
+        try await connection.run(
+            query: FormFormFieldTableSchema.table.createTableQuery()
+        ) { _ in }
+
+        for query in FormFormFieldTableSchema.table.createIndexQueries() {
             try await connection.run(query: query) { _ in }
         }
     }

@@ -9,7 +9,7 @@ import FeatherApplication
 public import FeatherInfrastructure
 public import SystemApplication
 
-extension VariableTable.Row {
+extension VariableTable.Row.List {
 
     var asQueryListItem: VariableList.Item {
         .init(
@@ -23,6 +23,9 @@ extension VariableTable.Row {
         )
     }
 
+}
+
+extension VariableTable.Row.Detail {
     var asDetail: VariableDetail {
         .init(
             id: id,
@@ -44,43 +47,74 @@ public struct VariableDatabaseQueries: VariableQueries {
         self.context = context
     }
 
-    func pageSizeOffset(
-        _ page: Search.Page
-    ) -> (size: Int, offset: Int) {
-        let size = max(1, page.size)
-        let number = max(1, page.number)
-        return (size, (number - 1) * size)
-    }
-
-    func sortDirectionSQL(
-        _ direction: Search.SortDirection
-    ) -> String {
-        switch direction {
-        case .asc:
-            "ASC"
-        case .desc:
-            "DESC"
-        }
-    }
-
-    func orderBySystemVariable(
+    func databaseQuery(
         _ query: VariableList.Query
-    ) -> String {
-        let sortParts = query.sort.map { rule -> String in
-            let column: String
+    ) -> DatabaseTableQuery {
+        var databaseQuery = DatabaseTableQuery()
+
+        if let ids = query.ids, !ids.isEmpty {
+            databaseQuery = databaseQuery.filter(
+                VariableTable.Fields.id,
+                isIn: ids
+            )
+        }
+
+        if let search = query.search {
+            databaseQuery = databaseQuery.search(
+                search,
+                in: [
+                    VariableTable.Fields.key,
+                    VariableTable.Fields.name,
+                    VariableTable.Fields.value,
+                    VariableTable.Fields.notes
+                ]
+            )
+        }
+
+        var orderings: [DatabaseTableQuery.Ordering] = []
+        for rule in query.sort {
+            let field: any DatabaseFieldRepresentable
             switch rule.field {
             case .key:
-                column = "key"
+                field = VariableTable.Fields.key
             case .name:
-                column = "name"
+                field = VariableTable.Fields.name
             case .value:
-                column = "value"
+                field = VariableTable.Fields.value
             case .notes:
-                column = "notes"
+                field = VariableTable.Fields.notes
             }
-            return "\(column) \(sortDirectionSQL(rule.direction))"
+            let direction: DatabaseTableQuery.SortDirection
+            switch rule.direction {
+            case .asc:
+                direction = .ascending
+            case .desc:
+                direction = .descending
+            }
+            orderings.append(
+                .init(
+                    field: field,
+                    direction: direction
+                )
+            )
         }
-        return (sortParts + ["key ASC"]).joined(separator: ", ")
+
+        if !query.sort.contains(where: { $0.field == .key }) {
+            orderings.append(
+                .init(
+                    field: VariableTable.Fields.key,
+                    direction: .ascending
+                )
+            )
+        }
+
+        databaseQuery = databaseQuery.orderBy(orderings)
+
+        let pageSize = max(1, query.page.size)
+        let pageNumber = max(1, query.page.number)
+        return databaseQuery
+            .limit(pageSize)
+            .offset((pageNumber - 1) * pageSize)
     }
 
     // MARK: -
@@ -89,7 +123,11 @@ public struct VariableDatabaseQueries: VariableQueries {
         id: String
     ) async throws -> VariableDetail {
         let table = VariableTable(connection: context.connection)
-        guard let row = try await table.find(id: id) else {
+        guard let row = try await table.findFirst(
+            by: VariableTable.Fields.id,
+            equals: id,
+            returning: VariableTable.Row.Detail.self
+        ) else {
             throw RepositoryError.notFound
         }
         return row.asDetail
@@ -98,26 +136,23 @@ public struct VariableDatabaseQueries: VariableQueries {
     public func get(
         _ key: String
     ) async throws -> String? {
-        try await VariableTable(connection: context.connection)
-            .find(key: key)?
-            .value
+        let table = VariableTable(connection: context.connection)
+        let row = try await table.findFirst(
+            by: VariableTable.Fields.key,
+            equals: key,
+            returning: VariableTable.Row.Detail.self
+        )
+        return row?.value
     }
 
     public func list(
         query: VariableList.Query
     ) async throws -> VariableList {
-        let search = query.search
-        let page = pageSizeOffset(query.page)
-        let orderBy = orderBySystemVariable(query)
-
         let table = VariableTable(connection: context.connection)
         let items =
             try await table.list(
-                search: search,
-                ids: query.ids,
-                orderBy: orderBy,
-                limit: page.size,
-                offset: page.offset
+                databaseQuery(query),
+                returning: VariableTable.Row.List.self
             )
             .map(\.asQueryListItem)
 
@@ -127,8 +162,7 @@ public struct VariableDatabaseQueries: VariableQueries {
     public func count(
         query: VariableList.Query
     ) async throws -> Int {
-        let search = query.search
         let table = VariableTable(connection: context.connection)
-        return try await table.count(search: search, ids: query.ids)
+        return try await table.count(databaseQuery(query))
     }
 }

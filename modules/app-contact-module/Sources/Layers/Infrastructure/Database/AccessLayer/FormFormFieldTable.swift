@@ -1,6 +1,15 @@
 import FeatherDatabase
+import FeatherInfrastructure
 
-struct FormFormFieldTable {
+struct FormFormFieldTable: DatabaseTable {
+    static let name = "contact_form_form_field"
+
+    enum Fields {
+        static let formID = DatabaseField<String>("form_id")
+        static let fieldID = DatabaseField<String>("field_id")
+        static let position = DatabaseField<Int>("position")
+    }
+
     let connection: any DatabaseConnection
 
     func assign(
@@ -10,9 +19,17 @@ struct FormFormFieldTable {
     ) async throws {
         try await connection.run(
             query: #"""
-                INSERT INTO contact_form_form_field (form_id, field_id, position)
+                INSERT INTO \#(unescaped: Self.name) (
+                    \#(unescaped: Fields.formID.name),
+                    \#(unescaped: Fields.fieldID.name),
+                    \#(unescaped: Fields.position.name)
+                )
                 VALUES (\#(formId), \#(fieldId), \#(position))
-                ON CONFLICT (form_id, field_id) DO UPDATE SET position = EXCLUDED.position;
+                ON CONFLICT (
+                    \#(unescaped: Fields.formID.name),
+                    \#(unescaped: Fields.fieldID.name)
+                ) DO UPDATE SET
+                    \#(unescaped: Fields.position.name) = EXCLUDED.\#(unescaped: Fields.position.name);
                 """#
         ) { _ in }
     }
@@ -23,8 +40,9 @@ struct FormFormFieldTable {
     ) async throws {
         try await connection.run(
             query: #"""
-                DELETE FROM contact_form_form_field
-                WHERE form_id = \#(formId) AND field_id = \#(fieldId);
+                DELETE FROM \#(unescaped: Self.name)
+                WHERE \#(unescaped: Fields.formID.name) = \#(formId)
+                    AND \#(unescaped: Fields.fieldID.name) = \#(fieldId);
                 """#
         ) { _ in }
     }

@@ -29,6 +29,11 @@ extension FormTable.Row {
 struct FormTable: DatabaseTableWithBulkDelete {
     static let name = "contact_form"
     static let primaryKey = "id"
+
+    enum Fields {
+        static let id = DatabaseField<String>("id")
+    }
+
     struct Row {
 
         struct Create {

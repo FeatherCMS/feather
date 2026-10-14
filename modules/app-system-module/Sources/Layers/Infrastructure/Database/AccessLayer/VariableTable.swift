@@ -9,222 +9,112 @@ import FeatherInfrastructure
 
 import struct Foundation.Date
 
-extension VariableTable.Row {
-
-    init(from row: any DatabaseRow) throws {
-        self.id = try row.decode(column: "id", as: String.self)
-        self.key = try row.decode(column: "key", as: String.self)
-        self.value = try row.decode(column: "value", as: String.self)
-        self.name = try row.decode(column: "name", as: String?.self)
-        self.notes = try row.decode(column: "notes", as: String?.self)
-        self.createdAt = try row.decode(
-            column: "created_at",
-            as: Date.self
-        )
-        self.updatedAt = try row.decode(
-            column: "updated_at",
-            as: Date.self
-        )
-    }
-}
-
-struct VariableTable: DatabaseTableWithBulkDelete {
+struct VariableTable: 
+    DatabaseTable,
+    DatabaseTableWithPrimaryKey,
+    DatabaseTableWithFind,
+    DatabaseTableWithInsert,
+    DatabaseTableWithList,
+    DatabaseTableWithUpdate,
+    DatabaseTableWithBulkDelete,
+{
     static let name = "system_variable"
+
     static let primaryKey = "id"
+    static let primaryKeyField = Fields.id
+
+    enum Fields {
+        static let id = DatabaseField<String>("id")
+        static let key = DatabaseField<String>("key")
+        static let value = DatabaseField<String>("value")
+        static let name = DatabaseField<String?>("name")
+        static let notes = DatabaseField<String?>("notes")
+        static let createdAt = DatabaseField<Date>("created_at")
+        static let updatedAt = DatabaseField<Date>("updated_at")
+    }
+
     struct Row {
 
-        struct Create {
+        fileprivate typealias Fields = VariableTable.Fields
+
+        struct Create: DatabaseEncodable {
             let id: String
             let key: String
             let value: String
             let name: String?
             let notes: String?
+
+            func encode(to encoder: inout DatabaseFieldEncoder) {
+                encoder.encode(id, for: Fields.id)
+                encoder.encode(key, for: Fields.key)
+                encoder.encode(name, for: Fields.name)
+                encoder.encode(value, for: Fields.value)
+                encoder.encode(notes, for: Fields.notes)
+            }
         }
 
-        let id: String
-        let key: String
-        let value: String
-        let name: String?
-        let notes: String?
-        let createdAt: Date
-        let updatedAt: Date
+        struct Update: DatabaseEncodable {
+            let key: String
+            let value: String
+            let name: String?
+            let notes: String?
+
+            func encode(to encoder: inout DatabaseFieldEncoder) {
+                encoder.encode(key, for: Fields.key)
+                encoder.encode(name, for: Fields.name)
+                encoder.encode(value, for: Fields.value)
+                encoder.encode(notes, for: Fields.notes)
+                encoder.encode(.currentTimestamp, for: Fields.updatedAt)
+            }
+        }
+
+        struct List: DatabaseDecodable {
+            let id: String
+            let key: String
+            let value: String
+            let name: String?
+            let notes: String?
+            let createdAt: Date
+            let updatedAt: Date
+
+            init(
+                from decoder: DatabaseRowDecoder,
+                row: any DatabaseRow
+            ) throws {
+                self.id = try decoder.decode(Fields.id, from: row)
+                self.key = try decoder.decode(Fields.key, from: row)
+                self.value = try decoder.decode(Fields.value, from: row)
+                self.name = try decoder.decode(Fields.name, from: row)
+                self.notes = try decoder.decode(Fields.notes, from: row)
+                self.createdAt = try decoder.decode(Fields.createdAt, from: row)
+                self.updatedAt = try decoder.decode(Fields.updatedAt, from: row)
+            }
+        }
+
+        struct Detail: DatabaseDecodable {
+            let id: String
+            let key: String
+            let value: String
+            let name: String?
+            let notes: String?
+            let createdAt: Date
+            let updatedAt: Date
+
+            init(
+                from decoder: DatabaseRowDecoder,
+                row: any DatabaseRow
+            ) throws {
+                self.id = try decoder.decode(Fields.id, from: row)
+                self.key = try decoder.decode(Fields.key, from: row)
+                self.value = try decoder.decode(Fields.value, from: row)
+                self.name = try decoder.decode(Fields.name, from: row)
+                self.notes = try decoder.decode(Fields.notes, from: row)
+                self.createdAt = try decoder.decode(Fields.createdAt, from: row)
+                self.updatedAt = try decoder.decode(Fields.updatedAt, from: row)
+            }
+        }
     }
 
     let connection: any DatabaseConnection
-
-    func create(
-        row: Row.Create
-    ) async throws -> Row {
-        try await connection.run(
-            query: #"""
-                INSERT INTO system_variable (
-                    id,
-                    key,
-                    name,
-                    value,
-                    notes,
-                    created_at,
-                    updated_at
-                )
-                VALUES (
-                    \#(row.id),
-                    \#(row.key),
-                    \#(row.name),
-                    \#(row.value),
-                    \#(row.notes),
-                    NOW(),
-                    NOW()
-                )
-                RETURNING *;
-                """#
-        ) { sequence in
-            guard let row = try await sequence.collect().first else {
-                throw RepositoryError.notFound
-            }
-            return try Row(from: row)
-        }
-    }
-
-    func list(
-        search: String?,
-        ids: [String]?,
-        orderBy: String,
-        limit: Int,
-        offset: Int
-    ) async throws -> [Row] {
-        let idValues = ids ?? []
-        let idFilter = idValues.isEmpty ? [""] : idValues
-
-        return try await connection.run(
-            query: #"""
-                SELECT *
-                FROM system_variable
-                WHERE (
-                    \#(idValues.isEmpty)
-                    OR id IN (\#(idFilter))
-                ) AND (
-                    \#(search == nil)
-                    OR LOWER(key) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(name) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(value) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(notes) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                )
-                ORDER BY \#(unescaped: orderBy)
-                LIMIT \#(limit)
-                OFFSET \#(offset);
-                """#
-        ) { sequence in
-            try await sequence.collect().map { try Row(from: $0) }
-        }
-    }
-
-    func count(
-        search: String?,
-        ids: [String]?
-    ) async throws -> Int {
-        let idValues = ids ?? []
-        let idFilter = idValues.isEmpty ? [""] : idValues
-
-        return try await connection.run(
-            query: #"""
-                SELECT COUNT(*) AS count
-                FROM system_variable
-                WHERE (
-                    \#(idValues.isEmpty)
-                    OR id IN (\#(idFilter))
-                ) AND (
-                    \#(search == nil)
-                    OR LOWER(key) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(name) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(value) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                    OR LOWER(notes) LIKE '%' || LOWER(\#(search ?? "")) || '%'
-                );
-                """#
-        ) { sequence in
-            guard let row = try await sequence.collect().first else {
-                return 0
-            }
-            return try row.decode(column: "count", as: Int.self)
-        }
-    }
-
-    func find(
-        id: String
-    ) async throws -> Row? {
-        try await connection.run(
-            query: #"""
-                SELECT *
-                FROM system_variable
-                WHERE id=\#(id)
-                LIMIT 1;
-                """#
-        ) { sequence in
-            guard let row = try await sequence.collect().first else {
-                return nil
-            }
-            return try Row(from: row)
-        }
-    }
-
-    func find(
-        key: String
-    ) async throws -> Row? {
-        try await connection.run(
-            query: #"""
-                SELECT *
-                FROM system_variable
-                WHERE key=\#(key)
-                LIMIT 1;
-                """#
-        ) { sequence in
-            guard let row = try await sequence.collect().first else {
-                return nil
-            }
-            return try Row(from: row)
-        }
-    }
-
-    func find(
-        name: String
-    ) async throws -> Row? {
-        try await connection.run(
-            query: #"""
-                SELECT *
-                FROM system_variable
-                WHERE name=\#(name)
-                LIMIT 1;
-                """#
-        ) { sequence in
-            guard let row = try await sequence.collect().first else {
-                return nil
-            }
-            return try Row(from: row)
-        }
-    }
-
-    func update(
-        id: String,
-        row: Row
-    ) async throws -> Row {
-        try await connection.run(
-            query: #"""
-                UPDATE system_variable
-                SET
-                    id=\#(row.id),
-                    key=\#(row.key),
-                    name=\#(row.name),
-                    value=\#(row.value),
-                    notes=\#(row.notes),
-                    updated_at=NOW()
-                WHERE id=\#(id)
-                RETURNING *;
-                """#
-        ) { sequence in
-            guard let row = try await sequence.collect().first else {
-                throw RepositoryError.notFound
-            }
-            return try Row(from: row)
-        }
-    }
 
 }

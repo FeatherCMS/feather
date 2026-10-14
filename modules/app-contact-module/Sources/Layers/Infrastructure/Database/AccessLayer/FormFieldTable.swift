@@ -27,6 +27,12 @@ extension FormFieldTable.Row {
 }
 
 struct FormFieldTable {
+    static let name = "contact_form_field"
+
+    enum Fields {
+        static let id = DatabaseField<String>("id")
+    }
+
 
     struct Row {
 
