@@ -6,7 +6,6 @@
 //
 
 public import FeatherOpenAPI
-public import OpenAPIKit30
 
 public struct CustomResponse: ResponseRepresentable {
 

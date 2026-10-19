@@ -92,7 +92,10 @@ let package = Package(
             url: "https://github.com/hummingbird-project/swift-openapi-hummingbird",
             from: "2.0.1"
         ),
-        .package(path: "../../feather-database-postgres"),
+        .package(
+            url: "https://github.com/feather-framework/feather-database-postgres",
+            exact: "1.0.0-rc.3"
+        ),
         .package(
             url: "https://github.com/feather-framework/feather-http-hummingbird-testing",
             exact: "1.0.0-beta.1"
@@ -122,8 +125,14 @@ let package = Package(
             from: "7.0.0"
         ),
         .package(path: "../feather-core"),
-        .package(path: "../../feather-sql"),
-        .package(path: "../../feather-sql-postgres"),
+        .package(
+            url: "https://github.com/feather-framework/feather-sql",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-sql-postgres",
+            exact: "1.0.0-alpha.1"
+        ),
         .package(
             url: "https://github.com/feather-framework/feather-dbal",
             exact: "1.0.0-alpha.1"

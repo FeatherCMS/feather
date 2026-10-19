@@ -69,7 +69,10 @@ let package = Package(
             url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
-        .package(path: "../../../feather-database-postgres"),
+        .package(
+            url: "https://github.com/feather-framework/feather-database-postgres",
+            exact: "1.0.0-rc.3"
+        ),
         .package(
             url: "https://github.com/vapor/postgres-nio",
             from: "1.32.2"

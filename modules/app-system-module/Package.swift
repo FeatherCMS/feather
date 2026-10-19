@@ -85,7 +85,10 @@ let package = Package(
             exact: "1.0.0-beta.1"
         ),
         .package(path: "../../feather-core"),
-        .package(path: "../../../feather-database"),
+        .package(
+            url: "https://github.com/feather-framework/feather-database",
+            exact: "1.0.0-rc.3"
+        ),
         .package(
             url: "https://github.com/feather-framework/feather-dbal",
             exact: "1.0.0-alpha.1"

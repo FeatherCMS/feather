@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 extension Variable.Query.Schemas {
     struct Filter: ArraySchemaRepresentable {

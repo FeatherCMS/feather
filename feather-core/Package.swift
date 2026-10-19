@@ -45,15 +45,6 @@ let package = Package(
         .library(name: "FeatherAdmin", targets: ["FeatherAdmin"]),
     ],
     dependencies: [
-        //        .package(
-        //            url: "https://github.com/apple/swift-configuration",
-        //            exact: "1.0.2",
-        //            traits: [.defaults, "CommandLineArguments"]
-        //        ),
-        //        .package(
-        //            url: "https://github.com/apple/swift-nio",
-        //            from: "2.0.0"
-        //        ),
         .package(
             url: "https://github.com/swift-server/swift-service-lifecycle",
             from: "2.0.0"
@@ -62,10 +53,6 @@ let package = Package(
             url: "https://github.com/hummingbird-project/swift-jobs",
             from: "1.1.0"
         ),
-        //        .package(
-        //            url: "https://github.com/apple/swift-log",
-        //            from: "1.0.0"
-        //        ),
         .package(
             url: "https://github.com/BinaryBirds/swift-nanoid",
             from: "1.0.0"
@@ -82,13 +69,22 @@ let package = Package(
             url: "https://github.com/binarybirds/swift-bcrypt",
             from: "2.0.1"
         ),
-        .package(path: "../../feather-database"),
+        .package(
+            url: "https://github.com/feather-framework/feather-database",
+            exact: "1.0.0-rc.3"
+        ),
         .package(
             url: "https://github.com/feather-framework/feather-dbal",
             exact: "1.0.0-alpha.1"
         ),
-        .package(path: "../../feather-sql"),
-        .package(path: "../../feather-sql-postgres"),
+        .package(
+            url: "https://github.com/feather-framework/feather-sql",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-sql-postgres",
+            exact: "1.0.0-alpha.1"
+        ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
             from: "2.27.0"
@@ -133,26 +129,6 @@ let package = Package(
             url: "https://github.com/apple/swift-nio",
             from: "2.0.0"
         ),
-        //        .package(
-        //            url: "https://github.com/feather-framework/feather-database-sqlite",
-        //            exact: "1.0.0-beta.9"
-        //        ),
-        //        .package(
-        //            url: "https://github.com/feather-framework/feather-validation",
-        //            exact: "1.0.0-beta.1"
-        //        ),
-        //        .package(
-        //            url: "https://github.com/feather-framework/feather-access-control",
-        //            branch: "main"
-        //        ),
-        //        .package(
-        //            url: "https://github.com/feather-framework/feather-mail",
-        //            exact: "1.0.0-beta.3"
-        //        ),
-        //        .package(
-        //            url: "https://github.com/feather-framework/feather-mail-ephemeral",
-        //            exact: "1.0.0-beta.2"
-        //        ),
     ],
     targets: [
         .target(

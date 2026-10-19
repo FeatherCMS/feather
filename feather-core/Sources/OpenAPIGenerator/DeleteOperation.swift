@@ -1,5 +1,4 @@
 public import FeatherOpenAPI
-public import OpenAPIKit30
 
 struct DeleteIdField: StringSchemaRepresentable {
     var example: String? = "id1"
@@ -12,7 +11,7 @@ struct DeleteIdListSchema: ArraySchemaRepresentable {
 struct DeleteRequestSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
-            "ids": DeleteIdListSchema(),
+            "ids": DeleteIdListSchema()
         ]
     }
 }

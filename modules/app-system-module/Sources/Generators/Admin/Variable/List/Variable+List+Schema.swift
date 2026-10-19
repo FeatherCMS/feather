@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 extension Variable.List {
     struct Schema: ArraySchemaRepresentable {

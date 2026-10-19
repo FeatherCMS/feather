@@ -54,44 +54,9 @@ extension BearerProtectedOperation {
     }
 
     public func openAPIOperation() -> OpenAPI.Operation {
-        let openAPITags = tags.isEmpty ? nil : tags.map(\.name)
-        let openAPISecurity: [OpenAPI.SecurityRequirement]? = [
-            BearerSecurityRequirement().openAPISecurityRequirement()
-        ]
-        let responses = responseMapWithAuthFailures.mapValues {
-            $0.openAPIResponse()
-        }
-
-        if let requestBody {
-            return .init(
-                tags: openAPITags,
-                summary: summary,
-                description: description,
-                externalDocs: nil,
-                operationId: operationId,
-                parameters: parameters.map { $0.openAPIParameter() },
-                requestBody: requestBody.openAPIRequestBody(),
-                responses: responses,
-                callbacks: [:],
-                deprecated: deprecated,
-                security: openAPISecurity,
-                servers: servers?.map { $0.openAPIServer() },
-                vendorExtensions: vendorExtensions
-            )
-        }
-        return .init(
-            tags: openAPITags,
-            summary: summary,
-            description: description,
-            externalDocs: nil,
-            operationId: operationId,
-            parameters: parameters.map { $0.openAPIParameter() },
-            responses: responses,
-            callbacks: [:],
-            deprecated: deprecated,
-            security: openAPISecurity,
-            servers: servers?.map { $0.openAPIServer() },
-            vendorExtensions: vendorExtensions
+        openAPIOperation(
+            responseMap: responseMapWithAuthFailures,
+            security: [BearerSecurityRequirement()]
         )
     }
 }

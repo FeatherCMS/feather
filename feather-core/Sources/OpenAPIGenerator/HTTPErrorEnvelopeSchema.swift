@@ -1,5 +1,4 @@
 public import FeatherOpenAPI
-public import OpenAPIKit30
 
 public struct HTTPErrorEnvelopeSchema<Content: SchemaRepresentable>:
     ObjectSchemaRepresentable

@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 extension Variable.List {
     struct Operation: Variable.Operation, BearerProtectedOperation {

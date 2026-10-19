@@ -1,5 +1,4 @@
 public import FeatherOpenAPI
-public import OpenAPIKit30
 
 public struct DefaultHTTPErrorContentSchema: ObjectSchemaRepresentable {
     public var openAPIIdentifier: String { "DefaultHTTPErrorContentSchema" }

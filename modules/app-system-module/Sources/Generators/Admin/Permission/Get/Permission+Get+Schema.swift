@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 extension Permission.Get {
     struct Schema: ObjectSchemaRepresentable {

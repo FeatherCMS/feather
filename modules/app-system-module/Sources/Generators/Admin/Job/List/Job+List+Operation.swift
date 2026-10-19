@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 extension Job.List {
     struct Operation: Job.Operation, BearerProtectedOperation {

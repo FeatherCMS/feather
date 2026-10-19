@@ -1,5 +1,4 @@
 public import FeatherOpenAPI
-public import OpenAPIKit30
 
 public struct ErrorTraceSchema: ObjectSchemaRepresentable {
     public var openAPIIdentifier: String { "ErrorTraceSchema" }

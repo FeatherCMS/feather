@@ -1,5 +1,4 @@
 public import FeatherOpenAPI
-public import OpenAPIKit30
 
 public struct NoContentResponse: ResponseRepresentable {
     public let description: String

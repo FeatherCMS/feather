@@ -1,6 +1,5 @@
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
 
 extension Permission.Get {
     struct Operation: Permission.IdentifiableOperation, BearerProtectedOperation
