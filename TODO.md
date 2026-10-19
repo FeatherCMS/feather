@@ -16,7 +16,6 @@
 - [ ] Autocomplete reuqests instead of states, like city & country
 - [ ] Storage context, database context, worker context unification
 - [ ] Telemetry, CI, auto-deployment
-- [ ] Tag remaining framework packages with 1.0-rc.x
 - [ ] Template editor for web module
 - [ ] Duplicate feature
 - [ ] RCE undo / redo feature

@@ -56,6 +56,15 @@
       }
     },
     {
+      "identity" : "feather-openapi",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-openapi",
+      "state" : {
+        "revision" : "a3d72f160a93db1d16b6fe1a90a612cde5bfb3b3",
+        "version" : "1.0.0-rc.2"
+      }
+    },
+    {
       "identity" : "feather-sql",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/feather-framework/feather-sql",
