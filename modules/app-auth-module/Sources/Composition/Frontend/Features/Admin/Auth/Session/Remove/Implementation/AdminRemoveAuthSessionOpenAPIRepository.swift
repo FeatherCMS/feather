@@ -105,7 +105,7 @@ struct AdminRemoveAuthSessionOpenAPIRepository:
             _ = try await client.userIdentitySessionRemove(
                 path: .init(userIdentityId: identityId),
                 body: .json(
-                    .init(ids: [sessionId], results: false, summary: true)
+                    .init(ids: [sessionId])
                 )
             )
         }

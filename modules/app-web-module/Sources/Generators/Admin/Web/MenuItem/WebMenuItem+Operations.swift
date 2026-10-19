@@ -54,7 +54,7 @@ struct WebMenuItemListOperation: WebMenuItemMenuOperation {
 }
 
 struct WebMenuItemSearchOperation: WebMenuItemMenuOperation {
-    var searchQuery: SearchQuerySchema {
+    var searchRequestQuery: SearchRequestQuerySchema {
         .init(
             items: WebMenuItemListItemSchema(),
             sortFieldKeys: [
@@ -71,12 +71,15 @@ struct WebMenuItemSearchOperation: WebMenuItemMenuOperation {
     }
 
     var requestBody: (any RequestBodyRepresentable)? {
-        SearchRequestBody(query: searchQuery)
+        SearchRequestBody(query: searchRequestQuery)
     }
 
     var responseMap: ResponseMap {
         [
-            200: SearchResponse(query: searchQuery).reference()
+            200: SearchResponse(
+                query: SearchResponseQuerySchema(query: searchRequestQuery)
+            )
+            .reference()
         ]
     }
 }

@@ -1,5 +1,5 @@
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 
 actor MockTransactionExecutor<S: Scope>: TransactionExecutor {
     private(set) var runCallCount = 0

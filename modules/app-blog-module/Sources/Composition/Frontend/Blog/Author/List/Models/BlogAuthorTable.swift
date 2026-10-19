@@ -2,7 +2,7 @@ import BlogAdminAPI
 import BlogAppAPI
 import BlogContracts
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import Foundation
 import HTML
 import Hummingbird

@@ -1,3 +1,4 @@
+import SystemModule
 enum AdminRemoveSystemPermissionError: Error, Sendable {
     case notFound
     case unauthorized

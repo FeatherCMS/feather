@@ -1,10 +1,10 @@
+import SystemModule
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import SystemContracts
 import WebBuilders
 import WebComponents
 
@@ -25,17 +25,17 @@ struct SystemVariableRow: Component {
             self.actions = [
                 .init(
                     "View",
-                    href: SystemVariableRoutes.details(RouterPath(variable.id))
+                    href: SystemVariableRoutes.details(RouterPath(variable.key))
                         .description,
                     style: .ghost(.primary),
-                    permission: SystemPermissions.Variables.read
+                    permission: SystemModule.Variable.Permissions.read
                 ),
                 .init(
                     "Edit",
-                    href: SystemVariableRoutes.edit(RouterPath(variable.id))
+                    href: SystemVariableRoutes.edit(RouterPath(variable.key))
                         .description,
                     style: .ghost(.secondary),
-                    permission: SystemPermissions.Variables.update
+                    permission: SystemModule.Variable.Permissions.update
                 ),
             ]
         }
@@ -46,7 +46,7 @@ struct SystemVariableRow: Component {
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
-            if permissions.allows(SystemPermissions.Variables.delete) {
+            if permissions.allows(SystemModule.Variable.Permissions.delete) {
                 context.build(AdminListRowCheckbox(id: state.id))
             }
             Td(state.key)

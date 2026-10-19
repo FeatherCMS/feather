@@ -1,6 +1,7 @@
-import FeatherContracts
+import FeatherModuleKit
 public import SystemAdminAPI
 import SystemApplication
+import SystemModule
 
 extension AdminAPIGateway {
 
@@ -16,8 +17,21 @@ extension AdminAPIGateway {
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(
+                    permissionDetailSchema(from: result)
+                )
             )
+        )
+    }
+
+    private func permissionDetailSchema(
+        from output: SystemModule.Permission.Detail.Output
+    ) -> Components.Schemas.SystemPermissionDetailSchema {
+        .init(
+            id: output.id,
+            key: output.key,
+            name: output.name,
+            notes: output.notes
         )
     }
 }

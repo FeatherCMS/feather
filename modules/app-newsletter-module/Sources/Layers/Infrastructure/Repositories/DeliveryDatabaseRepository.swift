@@ -1,4 +1,5 @@
 public import FeatherInfrastructure
+import FeatherDBAL
 public import NewsletterDomain
 
 extension DeliveryTable.Row {

@@ -1,13 +1,12 @@
 public import RedirectApplication
+public import FeatherBackend
 import NIOHTTP1
-import OpenAPIRuntime
 
 extension GetPublicRuleBySource.Error: HTTPErrorRepresentable {
-    var status: HTTPResponseStatus { .notFound }
+    public var status: HTTPResponseStatus { .notFound }
 
-    var content: ServerError.Details? {
-        .init(
-            code: .notFound,
+    public var content: any HTTPErrorContent {
+        DefaultHTTPErrorContent(
             message: "Redirect rule not found.",
             reason: "redirect_rule_not_found"
         )

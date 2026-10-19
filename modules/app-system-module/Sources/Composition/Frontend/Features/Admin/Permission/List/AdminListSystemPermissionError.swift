@@ -1,3 +1,4 @@
+import SystemModule
 enum AdminListSystemPermissionError: Error, Sendable {
     case unauthorized
     case forbidden

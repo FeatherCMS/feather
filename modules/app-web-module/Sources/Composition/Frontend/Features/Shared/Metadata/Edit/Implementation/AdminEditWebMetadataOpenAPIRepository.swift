@@ -1,5 +1,5 @@
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import FeatherDomain
 import Foundation
 import Hummingbird

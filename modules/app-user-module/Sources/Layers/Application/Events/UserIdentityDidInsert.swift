@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 //
 //  UserIdentityDidInsert.swift

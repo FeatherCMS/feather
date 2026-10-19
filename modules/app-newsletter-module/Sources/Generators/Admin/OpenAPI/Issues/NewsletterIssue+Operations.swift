@@ -60,7 +60,7 @@ struct NewsletterIssueTestEmailOperation: NewsletterIssueIDOperation {
     }
     var responseMap: ResponseMap {
         [
-            204: CustomResponse(description: "Test email queued"),
+            204: NoContentResponse(description: "Test email queued"),
             404: CustomResponse(description: "Newsletter issue not found"),
         ]
     }
@@ -70,6 +70,6 @@ struct NewsletterCampaignTestEmailOperation: NewsletterIssueOperation {
         NewsletterIssueTestEmailRequestBody().reference()
     }
     var responseMap: ResponseMap {
-        [204: CustomResponse(description: "Test email queued")]
+        [204: NoContentResponse(description: "Test email queued")]
     }
 }

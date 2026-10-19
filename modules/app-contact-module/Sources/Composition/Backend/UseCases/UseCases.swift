@@ -2,7 +2,7 @@ import ContactApplication
 import ContactContracts
 import ContactInfrastructure
 public import FeatherApplication
-public import FeatherContracts
+public import FeatherModuleKit
 public import FeatherInfrastructure
 
 public struct UseCases: Sendable {

@@ -2,7 +2,7 @@ import FeatherAdmin
 import Hummingbird
 import OpenAPIRuntime
 import SystemAdminAPI
-import SystemContracts
+import SystemModule
 
 struct AdminListSystemPermissionOpenAPIRepository:
     AdminListSystemPermissionRepository
@@ -24,7 +24,7 @@ struct AdminListSystemPermissionOpenAPIRepository:
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
-                .systemPermissionSearch(
+                .systemPermissionQuery(
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
@@ -38,7 +38,14 @@ struct AdminListSystemPermissionOpenAPIRepository:
             case .ok(let okResponse):
                 let body = try okResponse.body.json
                 return .init(
-                    items: body.data.items,
+                    items: body.data.items.map { item in
+                        .init(
+                            id: item.id,
+                            key: item.key,
+                            name: item.name,
+                            notes: item.notes
+                        )
+                    },
                     total: body.data.total,
                     page: body.query.page.number,
                     pageSize: body.query.page.size

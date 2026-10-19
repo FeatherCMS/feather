@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct WebMenuItemProvider: Event {
     public typealias Output = [WebMenuItemDefinition]

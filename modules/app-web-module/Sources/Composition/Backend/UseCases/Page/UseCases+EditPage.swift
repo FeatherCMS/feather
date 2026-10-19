@@ -1,8 +1,10 @@
+import SystemModule
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
+import SystemApplication
 import SystemInfrastructure
 import WebAdminAPI
 import WebAppAPI
@@ -19,8 +21,8 @@ extension UseCases {
                     page: PageDatabaseRepository(context: context),
                     metadata: MetadataDatabaseRepository(context: context),
                     settings: SettingsDatabaseRepository(context: context),
-                    variable: VariableDatabaseQueries(
-                        context: .init(connection: context.connection)
+                    variable: SystemModule.Variable.Lookup.Database(
+                        context: context
                     )
                 )
             }

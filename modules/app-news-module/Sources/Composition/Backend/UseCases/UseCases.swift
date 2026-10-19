@@ -1,9 +1,11 @@
-public import FeatherContracts
+import SystemModule
+public import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 public import FeatherInfrastructure
 import NewsApplication
 import NewsInfrastructure
+import SystemApplication
 import SystemInfrastructure
 import WebInfrastructure
 
@@ -56,8 +58,8 @@ extension UseCases {
                 WriteArticleMetadata(
                     article: ArticleDatabaseRepository(context: context),
                     metadata: MetadataDatabaseRepository(context: context),
-                    variable: VariableDatabaseQueries(
-                        context: .init(connection: context.connection)
+                    variable: SystemModule.Variable.Lookup.Database(
+                        context: context
                     )
                 )
             }
@@ -94,8 +96,8 @@ extension UseCases {
                 WriteCategoryMetadata(
                     category: CategoryDatabaseRepository(context: context),
                     metadata: MetadataDatabaseRepository(context: context),
-                    variable: VariableDatabaseQueries(
-                        context: .init(connection: context.connection)
+                    variable: SystemModule.Variable.Lookup.Database(
+                        context: context
                     )
                 )
             }

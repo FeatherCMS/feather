@@ -92,10 +92,7 @@ let package = Package(
             url: "https://github.com/hummingbird-project/swift-openapi-hummingbird",
             from: "2.0.1"
         ),
-        .package(
-            url: "https://github.com/feather-framework/feather-database-postgres",
-            exact: "1.0.0-rc.2"
-        ),
+        .package(path: "../../feather-database-postgres"),
         .package(
             url: "https://github.com/feather-framework/feather-http-hummingbird-testing",
             exact: "1.0.0-beta.1"
@@ -125,6 +122,16 @@ let package = Package(
             from: "7.0.0"
         ),
         .package(path: "../feather-core"),
+        .package(path: "../../feather-sql"),
+        .package(path: "../../feather-sql-postgres"),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal-postgres",
+            exact: "1.0.0-alpha.1"
+        ),
         .package(path: "../modules/app-system-module"),
         .package(path: "../modules/app-analytics-module"),
         .package(path: "../modules/app-redirect-module"),
@@ -145,7 +152,7 @@ let package = Package(
                 .product(name: "Configuration", package: "swift-configuration"),
                 .product(name: "Logging", package: "swift-log"),
                 .product(name: "Jobs", package: "swift-jobs"),
-                .product(name: "FeatherContracts", package: "feather-core")
+                .product(name: "FeatherModuleKit", package: "feather-core")
             ],
             swiftSettings: swiftSettings
         ),
@@ -157,11 +164,16 @@ let package = Package(
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
                 .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
+                .product(name: "FeatherSQLPostgres", package: "feather-sql-postgres"),
+                .product(name: "FeatherSQL", package: "feather-sql"),
                 // kernel & module infrastructure
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
-                .product(name: "FeatherContracts", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "AnalyticsInfrastructure", package: "app-analytics-module"),
                 .product(name: "RedirectInfrastructure", package: "app-redirect-module"),
@@ -188,6 +200,7 @@ let package = Package(
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
                 .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
+                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
                 .product(name: "Jobs", package: "swift-jobs"),
                 .product(name: "JobsPostgres", package: "swift-jobs-postgres"),
 
@@ -214,7 +227,7 @@ let package = Package(
                 .product(name: "NewsletterInfrastructure", package: "app-newsletter-module"),
                 .product(name: "AccountInfrastructure", package: "app-account-module"),
                 .target(name: "Environment"),
-                .product(name: "FeatherContracts", package: "feather-core")
+                .product(name: "FeatherModuleKit", package: "feather-core")
             ],
             swiftSettings: swiftSettings
         ),
@@ -235,7 +248,7 @@ let package = Package(
             name: "WebApp",
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
-                .product(name: "FeatherContracts", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "WebContracts", package: "app-web-module"),
 
                 .product(name: "Configuration", package: "swift-configuration"),
@@ -281,8 +294,10 @@ let package = Package(
                 .product(name: "JobsPostgres", package: "swift-jobs-postgres"),
 
                 .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
+                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "FeatherBackend", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "FeatherStorageFS", package: "feather-storage-fs"),
                 .product(name: "FeatherStorage", package: "feather-storage"),
 
@@ -323,6 +338,7 @@ let package = Package(
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
                 .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "RedirectInfrastructure", package: "app-redirect-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
                 .product(name: "BlogInfrastructure", package: "app-blog-module"),
@@ -347,8 +363,10 @@ let package = Package(
             name: "ServerTests",
             dependencies: [
                 .product(name: "FeatherHTTPHummingbirdTesting", package: "feather-http-hummingbird-testing"),
+                .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "HummingbirdTesting", package: "hummingbird"),
                 .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
+                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
                 .product(name: "JobsPostgres", package: "swift-jobs-postgres"),
@@ -358,6 +376,8 @@ let package = Package(
                 .product(name: "AccountAdminAPI", package: "app-account-module"),
                 .product(name: "UserAdminAPI", package: "app-user-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
+                .product(name: "FeatherInfrastructure", package: "feather-core"),
                 .target(name: "Server"),
             ],
             swiftSettings: swiftSettings
@@ -379,7 +399,7 @@ let package = Package(
             dependencies: [
                 .product(name: "HummingbirdTesting", package: "hummingbird"),
                 .product(name: "FeatherAdmin", package: "feather-core"),
-                .product(name: "FeatherContracts", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "AccountFrontend", package: "app-account-module"),
                 .product(name: "WebFrontend", package: "app-web-module"),
                 .target(name: "WebApp"),

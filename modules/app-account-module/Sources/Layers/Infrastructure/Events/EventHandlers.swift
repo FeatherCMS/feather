@@ -1,7 +1,8 @@
 import AccountContracts
-public import FeatherContracts
+public import FeatherModuleKit
 import FeatherInfrastructure
 import SystemApplication
+import SystemModule
 import UserApplication
 
 public enum EventHandlers {
@@ -10,9 +11,8 @@ public enum EventHandlers {
         in registry: inout EventRegistry
     ) {
         registry.register(
-            event: PermissionSeedProvider.self,
-            context: EventContext.self
-        ) { _, _ in
+            event: Permission.Event.Seed.self
+        ) { _ in
             AccountPermissions.allPermissions()
                 .map {
                     .init(permission: $0)

@@ -1,9 +1,9 @@
+import SystemModule
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import FeatherValidation
 import HTML
 import Hummingbird
-import SystemContracts
 
 struct AdminEditSystemVariableDefaultController:
     AdminEditSystemVariableController
@@ -20,7 +20,9 @@ struct AdminEditSystemVariableDefaultController:
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         guard
-            context.isCurrentUserAllowed(to: SystemPermissions.Variables.update)
+            context.isCurrentUserAllowed(
+                to: SystemModule.Variable.Permissions.update
+            )
         else {
             return try await runtime.presenter.renderErrorPage(
                 error: .forbidden
@@ -32,6 +34,7 @@ struct AdminEditSystemVariableDefaultController:
             let variable = try await runtime.interactor.load(id: id)
             return try await runtime.presenter.renderEditPage(
                 id: id,
+                deleteID: variable.id,
                 state: .from(variable: variable),
                 permissions: permissions
             )
@@ -49,7 +52,9 @@ struct AdminEditSystemVariableDefaultController:
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         guard
-            context.isCurrentUserAllowed(to: SystemPermissions.Variables.update)
+            context.isCurrentUserAllowed(
+                to: SystemModule.Variable.Permissions.update
+            )
         else {
             return try await runtime.presenter
                 .renderErrorPage(
@@ -80,7 +85,9 @@ struct AdminEditSystemVariableDefaultController:
             try await payload.input.validate()
             try await runtime.interactor.edit(id: id, input: payload.input)
 
-            return runtime.presenter.renderSuccess(id: id)
+            return runtime.presenter.renderSuccess(
+                id: payload.input.normalizedKey
+            )
         }
         catch let error as ValidationError {
             return try await runtime.presenter

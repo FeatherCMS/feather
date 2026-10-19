@@ -55,7 +55,7 @@ struct UserIdentityListOperation: UserIdentityOperation {
 
 struct UserIdentitySearchOperation: UserIdentityOperation {
 
-    var searchQuery: SearchQuerySchema {
+    var searchRequestQuery: SearchRequestQuerySchema {
         .init(
             items: UserIdentityListItemSchema(),
             sortFieldKeys: [
@@ -70,12 +70,15 @@ struct UserIdentitySearchOperation: UserIdentityOperation {
     }
 
     var requestBody: (any RequestBodyRepresentable)? {
-        SearchRequestBody(query: searchQuery)
+        SearchRequestBody(query: searchRequestQuery)
     }
 
     var responseMap: ResponseMap {
         [
-            200: SearchResponse(query: searchQuery).reference()
+            200: SearchResponse(
+                query: SearchResponseQuerySchema(query: searchRequestQuery)
+            )
+            .reference()
         ]
     }
 }

@@ -41,7 +41,7 @@ struct UserRoleListOperation: UserRoleOperation {
 }
 
 struct UserRoleSearchOperation: UserRoleOperation {
-    var searchQuery: SearchQuerySchema {
+    var searchRequestQuery: SearchRequestQuerySchema {
         .init(
             items: UserRoleListItemSchema(),
             sortFieldKeys: [
@@ -54,12 +54,15 @@ struct UserRoleSearchOperation: UserRoleOperation {
     }
 
     var requestBody: (any RequestBodyRepresentable)? {
-        SearchRequestBody(query: searchQuery)
+        SearchRequestBody(query: searchRequestQuery)
     }
 
     var responseMap: ResponseMap {
         [
-            200: SearchResponse(query: searchQuery).reference()
+            200: SearchResponse(
+                query: SearchResponseQuerySchema(query: searchRequestQuery)
+            )
+            .reference()
         ]
     }
 }

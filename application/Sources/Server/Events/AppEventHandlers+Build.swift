@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 //
 //  AppEventHandlers+Build.swift
 //  application

@@ -5,7 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import FeatherApplication
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct GetPublicRuleBySource {
     public enum Error: UseCaseError {

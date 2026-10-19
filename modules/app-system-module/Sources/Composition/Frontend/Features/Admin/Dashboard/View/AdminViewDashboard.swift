@@ -1,5 +1,6 @@
+import SystemModule
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 
 struct AdminViewDashboard {
     let controller: any AdminViewDashboardController

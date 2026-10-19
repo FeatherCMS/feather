@@ -11,6 +11,7 @@ import Jobs
 import JobsPostgres
 import Logging
 import FeatherDatabasePostgres
+import FeatherDBALPostgres
 import NIOSSL
 import PostgresMigrations
 import PostgresNIO
@@ -94,7 +95,8 @@ func buildWorker(
     let idGenerator = NanoIDGenerator()
     let databaseContext = DatabaseClientContext(
         database: database,
-        idGenerator: idGenerator
+        idGenerator: idGenerator,
+        platform: PostgresDatabasePlatform()
     )
 
     let postgresMigrations = DatabaseMigrations()

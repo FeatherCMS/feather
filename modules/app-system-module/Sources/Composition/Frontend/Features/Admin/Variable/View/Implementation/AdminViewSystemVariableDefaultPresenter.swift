@@ -1,9 +1,9 @@
+import SystemModule
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import HTML
 import Hummingbird
 import SGML
-import SystemContracts
 import WebBuilders
 import WebComponents
 

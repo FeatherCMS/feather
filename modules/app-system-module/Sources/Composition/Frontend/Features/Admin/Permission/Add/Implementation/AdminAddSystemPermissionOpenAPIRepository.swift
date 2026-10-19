@@ -1,3 +1,5 @@
+import Foundation
+import SystemModule
 import FeatherAdmin
 import Hummingbird
 import OpenAPIRuntime
@@ -14,7 +16,7 @@ struct AdminAddSystemPermissionOpenAPIRepository:
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
-                .systemPermissionCreate(
+                .systemPermissionPost(
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
@@ -28,6 +30,14 @@ struct AdminAddSystemPermissionOpenAPIRepository:
             switch response {
             case .created:
                 return
+            case .badRequest(let response):
+                let data = try JSONEncoder().encode(try response.body.json)
+                throw OpenAPIRepositoryError.parsedFailure(
+                    statusCode: 400,
+                    responseBody: String(data: data, encoding: .utf8)
+                )
+            case .conflict:
+                throw OpenAPIRepositoryError.conflict
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized
             case .forbidden:

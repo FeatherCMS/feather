@@ -1,6 +1,6 @@
 import AnalyticsAdminAPI
 import FeatherAdmin
-public import FeatherContracts
+public import FeatherModuleKit
 import OpenAPIRuntime
 import SystemFrontend
 

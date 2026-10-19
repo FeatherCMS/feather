@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 07. 16.
 
 public import AccountDomain
+import FeatherDBAL
 import FeatherDatabase
 import FeatherDomain
 public import FeatherInfrastructure

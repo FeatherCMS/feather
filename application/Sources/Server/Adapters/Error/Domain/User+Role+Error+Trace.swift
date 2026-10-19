@@ -1,3 +1,4 @@
+public import FeatherBackend
 public import UserDomain
 
 extension Role.Error: ErrorTraceRepresentable {

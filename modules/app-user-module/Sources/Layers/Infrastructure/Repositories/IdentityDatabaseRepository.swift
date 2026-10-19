@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherApplication
+import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
 public import UserApplication
@@ -184,7 +185,7 @@ public struct IdentityDatabaseRepository: IdentityRepository {
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        let table = IdentityTable(connection: context.connection)
-        return try await table.delete(ids: ids)
+        try await DatabaseAccessLayer<IdentityTable>(context: context).delete(where: \.id, in: ids)
+        return ids
     }
 }

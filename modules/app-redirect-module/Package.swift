@@ -45,7 +45,6 @@ let package = Package(
         .library(name: "RedirectFrontend", targets: ["RedirectFrontend"]),
     ],
     dependencies: [
-        // [docc-plugin-placeholder]
         .package(
             url: "https://github.com/apple/swift-log",
             from: "1.0.0"
@@ -60,7 +59,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-openapi-runtime",
-            from: "1.12.1"
+            from: "1.13.2"
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
@@ -70,10 +69,7 @@ let package = Package(
             url: "https://github.com/swift-server/async-http-client",
             from: "1.0.0"
         ),
-        .package(
-            url: "https://github.com/feather-framework/feather-database-postgres",
-            exact: "1.0.0-rc.2"
-        ),
+        .package(path: "../../../feather-database-postgres"),
         .package(
             url: "https://github.com/vapor/postgres-nio",
             from: "1.32.2"
@@ -83,13 +79,21 @@ let package = Package(
             from: "2.34.0"
         ),
         .package(path: "../../feather-core"),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal-postgres",
+            exact: "1.0.0-alpha.1"
+        ),
         .package(path: "../app-system-module"),
     ],
     targets: [
         .target(
             name: "RedirectContracts",
             dependencies: [
-                .product(name: "FeatherContracts", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
             ],
             path: "Sources/Contracts",
             swiftSettings: swiftSettings
@@ -109,6 +113,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "RedirectDomain"),
             ],
@@ -119,6 +124,9 @@ let package = Package(
             name: "RedirectInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "RedirectApplication"),
             ],
@@ -187,7 +195,7 @@ let package = Package(
             name: "RedirectFrontend",
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
-                .product(name: "SystemContracts", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemFrontend", package: "app-system-module"),
 
                 .target(name: "RedirectContracts"),
@@ -216,6 +224,7 @@ let package = Package(
             name: "RedirectInfrastructureTests",
             dependencies: [
                 .product(name: "FeatherDatabasePostgres", package: "feather-database-postgres"),
+                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
 

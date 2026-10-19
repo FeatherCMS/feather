@@ -1,5 +1,6 @@
+import SystemModule
 public import FeatherAdmin
-public import FeatherContracts
+public import FeatherModuleKit
 public import Hummingbird
 
 public struct AdminSystem {

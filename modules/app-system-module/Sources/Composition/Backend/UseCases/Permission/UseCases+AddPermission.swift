@@ -1,15 +1,19 @@
+import SystemModule
 import FeatherInfrastructure
 import SystemApplication
+import SystemDomain
 import SystemInfrastructure
 
 extension UseCases {
 
-    func makeAddPermission() -> AddPermission {
+    func makeAddPermission() -> SystemModule.Permission.Add.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WritePermission(
-                    permission: PermissionDatabaseRepository(context: context)
+                SystemModule.Permission.Add.Scope(
+                    permission: SystemModule.Permission.Repository.Database(
+                        context: context
+                    )
                 )
             }
         )

@@ -1,5 +1,6 @@
 import FeatherDatabase
-import FeatherContracts
+import FeatherDBALPostgres
+import FeatherModuleKit
 import FeatherDomain
 import FeatherInfrastructure
 import AccountInfrastructure
@@ -36,6 +37,7 @@ public func buildTestMigrations(
     )
 
     let context = DatabaseTransactionContext(
+        platform: PostgresDatabasePlatform(),
         connection: connection,
         idGenerator: idGenerator
     )
@@ -51,7 +53,10 @@ public func buildTestMigrations(
         UserInfrastructure.TableMigration(connection: connection),
         AccountInfrastructure.TableMigration(connection: connection),
         AuthInfrastructure.TableMigration(connection: connection),
-        ContactInfrastructure.TableMigration(connection: connection),
+        ContactInfrastructure.TableMigration(
+            connection: connection,
+            platform: PostgresDatabasePlatform()
+        ),
         NewsletterInfrastructure.TableMigration(connection: connection),
         // Seed data
         UserInfrastructure.TableSeedMigration(
@@ -60,6 +65,7 @@ public func buildTestMigrations(
         ),
         SystemInfrastructure.TableSeedMigration(
             context: context,
+            platform: PostgresDatabasePlatform(),
             events: events
         ),
         AnalyticsInfrastructure.TableSeedMigration(context: context),

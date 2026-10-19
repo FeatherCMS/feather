@@ -1,19 +1,19 @@
 import FeatherOpenAPI
 
 struct NewsArticleCollectionPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { NewsArticleCreateOperation() }
-    var delete: OperationRepresentable? { NewsArticleRemoveOperation() }
+    var post: (any OperationRepresentable)? { NewsArticleCreateOperation() }
+    var delete: (any OperationRepresentable)? { NewsArticleRemoveOperation() }
 }
 
 struct NewsArticleListPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { NewsArticleListOperation() }
+    var get: (any OperationRepresentable)? { NewsArticleListOperation() }
 }
 
 struct NewsArticleSearchPathItems: PathItemRepresentable {
-    var post: OperationRepresentable? { NewsArticleSearchOperation() }
+    var post: (any OperationRepresentable)? { NewsArticleSearchOperation() }
 }
 
 struct NewsArticleIDPathItems: PathItemRepresentable {
-    var get: OperationRepresentable? { NewsArticleGetOperation() }
-    var put: OperationRepresentable? { NewsArticleUpdateOperation() }
+    var get: (any OperationRepresentable)? { NewsArticleGetOperation() }
+    var put: (any OperationRepresentable)? { NewsArticleUpdateOperation() }
 }

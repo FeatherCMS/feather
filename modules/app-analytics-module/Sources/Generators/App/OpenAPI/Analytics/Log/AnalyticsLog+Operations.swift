@@ -17,7 +17,7 @@ struct AnalyticsLogTrackOperation: OperationRepresentable {
 
     var responseMap: ResponseMap {
         [
-            204: CustomResponse(description: "Analytics log tracked")
+            204: NoContentResponse(description: "Analytics log tracked")
         ]
     }
 }

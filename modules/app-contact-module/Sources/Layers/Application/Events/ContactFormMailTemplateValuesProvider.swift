@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct ContactFormMailTemplateValuesProvider: Event {
     public let formKey: String

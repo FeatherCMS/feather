@@ -1,5 +1,5 @@
 public import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 
 public import struct Foundation.Date
 

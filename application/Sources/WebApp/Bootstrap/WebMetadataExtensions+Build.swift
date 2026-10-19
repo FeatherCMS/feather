@@ -1,5 +1,5 @@
 import Foundation
-import FeatherContracts
+import FeatherModuleKit
 import WebApplication
 import BlogFrontend
 import NewsFrontend

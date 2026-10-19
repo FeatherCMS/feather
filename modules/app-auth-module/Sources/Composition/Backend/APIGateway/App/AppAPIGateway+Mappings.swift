@@ -35,7 +35,7 @@ extension AdminAPIGateway {
 
     public func map(
         _ query: AuthAdminAPI.Components.Schemas
-            .AuthRolePermissionListItemSearchQuerySchema
+            .AuthRolePermissionListItemSearchRequestQuerySchema
     ) -> RolePermissionList.Query {
         .init(
             page: map(query.page),
@@ -69,7 +69,7 @@ extension AdminAPIGateway {
 
     public func map(
         _ query: AuthAdminAPI.Components.Schemas
-            .AuthMagicLinkListItemSearchQuerySchema
+            .AuthMagicLinkListItemSearchRequestQuerySchema
     ) -> MagicLinkList.Query {
         .init(
             page: map(query.page),
@@ -118,7 +118,7 @@ extension AdminAPIGateway {
 
     public func map(
         _ query: AuthAdminAPI.Components.Schemas
-            .AuthCredentialListItemSearchQuerySchema
+            .AuthCredentialListItemSearchRequestQuerySchema
     ) -> CredentialList.Query {
         .init(
             page: map(query.page),

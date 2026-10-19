@@ -1,3 +1,4 @@
+import SystemModule
 public import SystemAdminAPI
 
 public struct AdminAPIGateway: Sendable, SystemAdminAPI.APIProtocol {

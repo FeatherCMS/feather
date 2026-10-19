@@ -1,5 +1,5 @@
-public import FeatherContracts
-import SystemContracts
+public import FeatherModuleKit
+import SystemModule
 import WebContracts
 import WebFrontend
 

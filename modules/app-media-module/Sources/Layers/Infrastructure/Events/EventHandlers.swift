@@ -1,5 +1,6 @@
-public import FeatherContracts
+public import FeatherModuleKit
 import MediaContracts
+import SystemModule
 import SystemApplication
 
 public enum EventHandlers {
@@ -8,9 +9,8 @@ public enum EventHandlers {
         in registry: inout EventRegistry
     ) {
         registry.register(
-            event: PermissionSeedProvider.self,
-            context: EventContext.self
-        ) { _, _ in
+            event: Permission.Event.Seed.self
+        ) { _ in
             MediaPermissions.allPermissions()
                 .map {
                     .init(permission: $0)

@@ -1,6 +1,7 @@
 import FeatherAdmin
 import Hummingbird
 import SystemAdminAPI
+import SystemModule
 
 struct AdminListSystemVariableDefaultInteractor:
     AdminListSystemVariableInteractor
@@ -21,7 +22,15 @@ struct AdminListSystemVariableDefaultInteractor:
             )
             let body = try response.body.json
             return .init(
-                items: body.data.items,
+                items: body.data.items.map { item in
+                    .init(
+                        id: item.id,
+                        key: item.key,
+                        value: item.value,
+                        name: item.name,
+                        notes: item.notes
+                    )
+                },
                 pageState: .init(
                     page: body.query.page.number,
                     pageSize: body.query.page.size,

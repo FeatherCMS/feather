@@ -5,6 +5,8 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 import RedirectContracts
 
@@ -30,9 +32,8 @@ extension RuleTable.Row {
     }
 }
 
-struct RuleTable: DatabaseTableWithBulkDelete {
+struct RuleTable: DatabaseLegacyTable {
     static let name = "redirect_rule"
-    static let primaryKey = "id"
     struct Row {
 
         struct Create {

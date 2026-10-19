@@ -1,5 +1,5 @@
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure

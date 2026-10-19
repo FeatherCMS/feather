@@ -1,4 +1,5 @@
 import FeatherDomain
+import FeatherDBAL
 public import FeatherInfrastructure
 public import NewsletterDomain
 
@@ -92,7 +93,7 @@ public struct IssueDatabaseRepository:
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        let table = IssueTable(connection: context.connection)
-        return try await table.delete(ids: ids)
+        try await DatabaseAccessLayer<IssueTable>(context: context).delete(where: \.id, in: ids)
+        return ids
     }
 }

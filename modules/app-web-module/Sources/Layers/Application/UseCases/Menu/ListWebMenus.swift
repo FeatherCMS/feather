@@ -5,7 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherApplication
-public import FeatherContracts
+public import FeatherModuleKit
 import WebDomain
 
 public struct ListPublicMenus: Sendable {

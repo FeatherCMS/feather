@@ -1,3 +1,4 @@
+import SystemModule
 enum AdminRemoveSystemVariableError: Error, Sendable {
     case notFound
     case unauthorized

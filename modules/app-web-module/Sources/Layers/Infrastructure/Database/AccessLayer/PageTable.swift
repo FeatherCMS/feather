@@ -5,6 +5,8 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 
 import struct Foundation.Date
@@ -25,9 +27,8 @@ extension PageTable.Row {
     }
 }
 
-struct PageTable: DatabaseTableWithBulkDelete {
+struct PageTable: DatabaseLegacyTable {
     static let name = "web_page"
-    static let primaryKey = "id"
     struct Row {
 
         struct Create {

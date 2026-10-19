@@ -81,6 +81,106 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/AnalyticsLogIdField`.
         public typealias AnalyticsLogIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
+        public struct DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/error`.
+            public var error: Components.Schemas.DefaultHTTPErrorContentSchema
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/trace`.
+            public var trace: Components.Schemas.ErrorTraceSchema?
+            /// Creates a new `DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
+            ///
+            /// - Parameters:
+            ///   - error:
+            ///   - trace:
+            public init(
+                error: Components.Schemas.DefaultHTTPErrorContentSchema,
+                trace: Components.Schemas.ErrorTraceSchema? = nil
+            ) {
+                self.error = error
+                self.trace = trace
+            }
+            public enum CodingKeys: String, CodingKey {
+                case error
+                case trace
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema`.
+        public struct DefaultHTTPErrorContentSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/message`.
+            public var message: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/reason`.
+            public var reason: Swift.String
+            /// Creates a new `DefaultHTTPErrorContentSchema`.
+            ///
+            /// - Parameters:
+            ///   - message:
+            ///   - reason:
+            public init(
+                message: Swift.String,
+                reason: Swift.String
+            ) {
+                self.message = message
+                self.reason = reason
+            }
+            public enum CodingKeys: String, CodingKey {
+                case message
+                case reason
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema`.
+        public struct ErrorTraceSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/message`.
+            public var message: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/reasons`.
+            public var reasons: Components.Schemas.ErrorTraceReasonsSchema?
+            /// Creates a new `ErrorTraceSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - message:
+            ///   - reasons:
+            public init(
+                id: Swift.String,
+                message: Swift.String,
+                reasons: Components.Schemas.ErrorTraceReasonsSchema? = nil
+            ) {
+                self.id = id
+                self.message = message
+                self.reasons = reasons
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case message
+                case reasons
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonsSchema`.
+        public typealias ErrorTraceReasonsSchema = [Components.Schemas.ErrorTraceReasonSchema]
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema`.
+        public struct ErrorTraceReasonSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/message`.
+            public var message: Swift.String
+            /// Creates a new `ErrorTraceReasonSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - message:
+            public init(
+                id: Swift.String,
+                message: Swift.String
+            ) {
+                self.id = id
+                self.message = message
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case message
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewQuerySchema`.
         public struct AnalyticsLogOverviewQuerySchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewQuerySchema/source`.
@@ -326,13 +426,13 @@ extension Components {
                 case share
             }
         }
-        /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema`.
-        public struct AnalyticsLogListItemSearchQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema/page`.
-            public var page: Components.Schemas.SearchPageSchema
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema/SortPayload`.
+        /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema`.
+        public struct AnalyticsLogListItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema/page`.
+            public var page: Components.Schemas.SearchPageSchema?
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case accountId = "accountId"
@@ -344,9 +444,9 @@ extension Components {
                     case browserName = "browserName"
                     case createdAt = "createdAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.AnalyticsLogListItemSearchQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.AnalyticsLogListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -354,7 +454,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.AnalyticsLogListItemSearchQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.AnalyticsLogListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -365,23 +465,23 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.AnalyticsLogListItemSearchQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema/sort`.
-            public var sort: Components.Schemas.AnalyticsLogListItemSearchQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.AnalyticsLogListItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.AnalyticsLogListItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.AnalyticsLogPathField?
-                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema/filters/source`.
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema/filters/source`.
                 public var source: Components.Schemas.AnalyticsLogSourceField?
-                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema/filters/method`.
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema/filters/method`.
                 public var method: Components.Schemas.AnalyticsLogMethodField?
-                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema/filters/responseCode`.
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema/filters/responseCode`.
                 public var responseCode: Components.Schemas.AnalyticsLogResponseCodeField?
-                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema/filters/from`.
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema/filters/from`.
                 public var from: Components.Schemas.AnalyticsLogOverviewDateField?
-                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema/filters/to`.
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema/filters/to`.
                 public var to: Components.Schemas.AnalyticsLogOverviewDateField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -416,18 +516,18 @@ extension Components {
                     case to
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchQuerySchema/filters`.
-            public var filters: Components.Schemas.AnalyticsLogListItemSearchQuerySchema.FiltersPayload
-            /// Creates a new `AnalyticsLogListItemSearchQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.AnalyticsLogListItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `AnalyticsLogListItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
             ///   - sort:
             ///   - filters:
             public init(
-                page: Components.Schemas.SearchPageSchema,
-                sort: Components.Schemas.AnalyticsLogListItemSearchQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.AnalyticsLogListItemSearchQuerySchema.FiltersPayload
+                page: Components.Schemas.SearchPageSchema? = nil,
+                sort: Components.Schemas.AnalyticsLogListItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.AnalyticsLogListItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -442,17 +542,17 @@ extension Components {
         /// - Remark: Generated from `#/components/schemas/SearchPageSchema`.
         public struct SearchPageSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/SearchPageSchema/size`.
-            public var size: Components.Schemas.SearchPageSizeField
+            public var size: Components.Schemas.SearchPageSizeField?
             /// - Remark: Generated from `#/components/schemas/SearchPageSchema/number`.
-            public var number: Components.Schemas.SearchPageNumberField
+            public var number: Components.Schemas.SearchPageNumberField?
             /// Creates a new `SearchPageSchema`.
             ///
             /// - Parameters:
             ///   - size:
             ///   - number:
             public init(
-                size: Components.Schemas.SearchPageSizeField,
-                number: Components.Schemas.SearchPageNumberField
+                size: Components.Schemas.SearchPageSizeField? = nil,
+                number: Components.Schemas.SearchPageNumberField? = nil
             ) {
                 self.size = size
                 self.number = number
@@ -462,8 +562,12 @@ extension Components {
                 case number
             }
         }
+        /// Results per page. Defaults to 20 when omitted; values below 1 are clamped to 1. Endpoint-specific maximums may apply.
+        ///
         /// - Remark: Generated from `#/components/schemas/SearchPageSizeField`.
         public typealias SearchPageSizeField = Swift.Int
+        /// 1-based page number. Defaults to 1 when omitted; values below 1 are clamped to 1.
+        ///
         /// - Remark: Generated from `#/components/schemas/SearchPageNumberField`.
         public typealias SearchPageNumberField = Swift.Int
         /// - Remark: Generated from `#/components/schemas/SortDirection`.
@@ -484,7 +588,7 @@ extension Components {
         /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchSchema`.
         public struct AnalyticsLogListItemSearchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchSchema/query`.
-            public var query: Components.Schemas.AnalyticsLogListItemSearchQuerySchema
+            public var query: Components.Schemas.AnalyticsLogListItemSearchResponseQuerySchema
             /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchSchema/data/items`.
@@ -516,7 +620,7 @@ extension Components {
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.AnalyticsLogListItemSearchQuerySchema,
+                query: Components.Schemas.AnalyticsLogListItemSearchResponseQuerySchema,
                 data: Components.Schemas.AnalyticsLogListItemSearchSchema.DataPayload
             ) {
                 self.query = query
@@ -525,6 +629,142 @@ extension Components {
             public enum CodingKeys: String, CodingKey {
                 case query
                 case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema`.
+        public struct AnalyticsLogListItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema/page`.
+            public var page: Components.Schemas.SearchResponsePageSchema
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case id = "id"
+                    case accountId = "accountId"
+                    case method = "method"
+                    case source = "source"
+                    case path = "path"
+                    case responseCode = "responseCode"
+                    case ip = "ip"
+                    case browserName = "browserName"
+                    case createdAt = "createdAt"
+                }
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.AnalyticsLogListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.AnalyticsLogListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.AnalyticsLogListItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.AnalyticsLogListItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema/filters/search`.
+                public var search: Components.Schemas.AnalyticsLogPathField?
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema/filters/source`.
+                public var source: Components.Schemas.AnalyticsLogSourceField?
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema/filters/method`.
+                public var method: Components.Schemas.AnalyticsLogMethodField?
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema/filters/responseCode`.
+                public var responseCode: Components.Schemas.AnalyticsLogResponseCodeField?
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema/filters/from`.
+                public var from: Components.Schemas.AnalyticsLogOverviewDateField?
+                /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema/filters/to`.
+                public var to: Components.Schemas.AnalyticsLogOverviewDateField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                ///   - source:
+                ///   - method:
+                ///   - responseCode:
+                ///   - from:
+                ///   - to:
+                public init(
+                    search: Components.Schemas.AnalyticsLogPathField? = nil,
+                    source: Components.Schemas.AnalyticsLogSourceField? = nil,
+                    method: Components.Schemas.AnalyticsLogMethodField? = nil,
+                    responseCode: Components.Schemas.AnalyticsLogResponseCodeField? = nil,
+                    from: Components.Schemas.AnalyticsLogOverviewDateField? = nil,
+                    to: Components.Schemas.AnalyticsLogOverviewDateField? = nil
+                ) {
+                    self.search = search
+                    self.source = source
+                    self.method = method
+                    self.responseCode = responseCode
+                    self.from = from
+                    self.to = to
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                    case source
+                    case method
+                    case responseCode
+                    case from
+                    case to
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.AnalyticsLogListItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `AnalyticsLogListItemSearchResponseQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchResponsePageSchema,
+                sort: Components.Schemas.AnalyticsLogListItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.AnalyticsLogListItemSearchResponseQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/SearchResponsePageSchema`.
+        public struct SearchResponsePageSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/SearchResponsePageSchema/size`.
+            public var size: Components.Schemas.SearchPageSizeField
+            /// - Remark: Generated from `#/components/schemas/SearchResponsePageSchema/number`.
+            public var number: Components.Schemas.SearchPageNumberField
+            /// Creates a new `SearchResponsePageSchema`.
+            ///
+            /// - Parameters:
+            ///   - size:
+            ///   - number:
+            public init(
+                size: Components.Schemas.SearchPageSizeField,
+                number: Components.Schemas.SearchPageNumberField
+            ) {
+                self.size = size
+                self.number = number
+            }
+            public enum CodingKeys: String, CodingKey {
+                case size
+                case number
             }
         }
         /// - Remark: Generated from `#/components/schemas/AnalyticsLogDetailSchema`.

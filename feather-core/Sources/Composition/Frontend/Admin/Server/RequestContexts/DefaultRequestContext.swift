@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 03. 01..
 //
 
-import FeatherContracts
+import FeatherModuleKit
 public import Hummingbird
 import OpenAPIRuntime
 

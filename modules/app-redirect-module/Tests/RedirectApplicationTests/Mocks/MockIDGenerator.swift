@@ -6,7 +6,7 @@
 //
 
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 import FeatherDomain
 
 struct FixedIDGenerator: IDGenerator {

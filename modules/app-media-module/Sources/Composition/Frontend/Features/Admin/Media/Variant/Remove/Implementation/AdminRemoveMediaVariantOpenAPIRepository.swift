@@ -11,11 +11,10 @@ struct AdminRemoveMediaVariantOpenAPIRepository:
     func delete(ids: [String]) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.mediaVariantRemove(
-                headers: .init(accept: [.init(contentType: .json)]),
-                body: .json(.init(ids: ids, results: false, summary: true))
+                body: .json(.init(ids: ids))
             )
             switch response {
-            case .ok: return
+            case .noContent: return
             case .unauthorized: throw OpenAPIRepositoryError.unauthorized
             case .forbidden: throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):

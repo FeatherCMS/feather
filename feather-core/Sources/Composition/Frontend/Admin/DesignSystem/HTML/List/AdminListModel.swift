@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 
 public struct AdminListModel<Item: Sendable>: Sendable {
     public let items: [Item]

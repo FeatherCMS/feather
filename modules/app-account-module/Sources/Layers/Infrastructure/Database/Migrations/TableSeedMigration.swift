@@ -1,7 +1,8 @@
 import AccountApplication
+import FeatherDBAL
 import AuthDomain
 import AuthInfrastructure
-public import FeatherContracts
+public import FeatherModuleKit
 public import FeatherDatabase
 public import FeatherInfrastructure
 import SystemApplication
@@ -30,8 +31,7 @@ public struct TableSeedMigration: DatabaseMigration {
     ) async throws {
         let definitions =
             try await events.trigger(
-                event: AccountSeedProvider(),
-                using: EventContext()
+                event: AccountSeedProvider()
             )
             .flatMap { $0 }
 

@@ -3,16 +3,24 @@
 //  feather-core
 //
 
-public import FeatherContracts
+public import FeatherModuleKit
+public import FeatherDBAL
 public import FeatherDatabase
+public import FeatherDomain
 
 public struct DatabaseQueryContext: QueryContext, DatabaseContext {
 
+    public let platform: any DatabasePlatform
     public let connection: any DatabaseConnection
+    public let idGenerator: any IDGenerator
 
     public init(
-        connection: any DatabaseConnection
+        platform: any DatabasePlatform,
+        connection: any DatabaseConnection,
+        idGenerator: any IDGenerator
     ) {
+        self.platform = platform
         self.connection = connection
+        self.idGenerator = idGenerator
     }
 }

@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 
 public struct AdminStatusActionFormInput: Codable, Sendable, Equatable,
     Hashable

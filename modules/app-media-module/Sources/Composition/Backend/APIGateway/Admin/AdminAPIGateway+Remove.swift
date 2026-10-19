@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 public import MediaAdminAPI
 
 extension AdminAPIGateway {
@@ -10,35 +10,11 @@ extension AdminAPIGateway {
         case .json(let value): body = value
         }
         let subject = try await CurrentSubject.require()
-        let deletedIds = try await useCases.deleteAssetNodesAndFiles(
+        _ = try await useCases.deleteAssetNodesAndFiles(
             subject: subject,
             assetIds: body.ids
         )
-        let results = body.ids.map {
-            Components.Schemas.DeleteResultListSchemaPayload(
-                id: $0,
-                status: deletedIds.contains($0) ? .deleted : .notFound
-            )
-        }
-        return .ok(
-            .init(
-                body: .json(
-                    .init(
-                        results: body.results ? results : nil,
-                        summary: body.summary
-                            ? .init(
-                                requested: results.count,
-                                deleted:
-                                    results.filter { $0.status == .deleted }
-                                    .count,
-                                omitted:
-                                    results.filter { $0.status != .deleted }
-                                    .count
-                            ) : nil
-                    )
-                )
-            )
-        )
+        return .noContent(.init())
     }
 
 }

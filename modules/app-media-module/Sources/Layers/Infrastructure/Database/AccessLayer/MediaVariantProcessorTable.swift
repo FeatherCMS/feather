@@ -1,4 +1,6 @@
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 
 import struct Foundation.Date
@@ -22,9 +24,8 @@ extension MediaVariantProcessorTable.Row {
     }
 }
 
-struct MediaVariantProcessorTable: DatabaseTableWithBulkDelete {
+struct MediaVariantProcessorTable: DatabaseLegacyTable {
     static let name = "media_variant_processor"
-    static let primaryKey = "id"
     struct Row {
         let id: String
         let variantId: String

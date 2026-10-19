@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 import RedirectContracts
 
 public struct RedirectRuleAddFormInput: Decodable, Sendable, Equatable, Hashable

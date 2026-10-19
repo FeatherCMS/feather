@@ -1,5 +1,5 @@
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 
 public struct AdminAddUserRoleFormInput: Decodable, Sendable, Equatable,
     Hashable

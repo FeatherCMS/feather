@@ -44,7 +44,6 @@ let package = Package(
         .library(name: "AnalyticsFrontend", targets: ["AnalyticsFrontend"]),
     ],
     dependencies: [
-        // [docc-plugin-placeholder]
         .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
             from: "7.0.0"
@@ -55,7 +54,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-openapi-runtime",
-            from: "1.12.1"
+            from: "1.13.2"
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
@@ -66,13 +65,17 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(path: "../../feather-core"),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal",
+            exact: "1.0.0-alpha.1"
+        ),
         .package(path: "../app-system-module"),
     ],
     targets: [
         .target(
             name: "AnalyticsContracts",
             dependencies: [
-                .product(name: "FeatherContracts", package: "feather-core")
+                .product(name: "FeatherModuleKit", package: "feather-core")
             ],
             path: "Sources/Contracts",
             swiftSettings: swiftSettings
@@ -92,6 +95,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "AnalyticsDomain"),
             ],
@@ -102,6 +106,8 @@ let package = Package(
             name: "AnalyticsInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "AnalyticsApplication"),
             ],
@@ -171,7 +177,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
 
-                .product(name: "SystemContracts", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemFrontend", package: "app-system-module"),
                 .target(name: "AnalyticsContracts"),
                 .target(name: "AnalyticsAdminAPI"),

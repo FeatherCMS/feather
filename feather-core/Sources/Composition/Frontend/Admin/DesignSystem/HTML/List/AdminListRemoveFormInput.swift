@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 
 public struct AdminListRemoveFormInput: Decodable, Sendable {
     public var ids: [String]?

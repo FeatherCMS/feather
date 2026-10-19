@@ -1,15 +1,19 @@
+import SystemModule
 import FeatherInfrastructure
 import SystemApplication
+import SystemDomain
 import SystemInfrastructure
 
 extension UseCases {
 
-    func makeRemoveVariable() -> RemoveVariable {
+    func makeRemoveVariable() -> SystemModule.Variable.Remove.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteVariable(
-                    variable: VariableDatabaseRepository(context: context)
+                SystemModule.Variable.Remove.Scope(
+                    variable: SystemModule.Variable.Repository.Database(
+                        context: context
+                    )
                 )
             }
         )

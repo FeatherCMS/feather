@@ -1,13 +1,13 @@
 public import BlogAdminAPI
 import BlogApplication
-import FeatherContracts
+import FeatherModuleKit
 
 extension AdminAPIGateway {
 
     public func blogAuthorSearch(
         _ input: Operations.BlogAuthorSearch.Input
     ) async throws -> Operations.BlogAuthorSearch.Output {
-        let query: Components.Schemas.BlogAuthorListItemSearchQuerySchema
+        let query: Components.Schemas.BlogAuthorListItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value

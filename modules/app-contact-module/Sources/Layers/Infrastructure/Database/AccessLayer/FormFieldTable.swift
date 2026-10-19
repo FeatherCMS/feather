@@ -1,4 +1,5 @@
 import ContactDomain
+import FeatherDBAL
 import FeatherDatabase
 import FeatherInfrastructure
 
@@ -30,7 +31,7 @@ struct FormFieldTable {
     static let name = "contact_form_field"
 
     enum Fields {
-        static let id = DatabaseField<String>("id")
+        static let id = DatabaseTableColumnSchema(name: "id", type: .string)
     }
 
 

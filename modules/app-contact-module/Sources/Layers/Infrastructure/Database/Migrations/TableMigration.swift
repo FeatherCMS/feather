@@ -1,13 +1,17 @@
 public import FeatherDatabase
+public import FeatherDBAL
 public import FeatherInfrastructure
 
 public struct TableMigration: DatabaseMigration {
     public let connection: any DatabaseConnection
+    public let platform: any DatabasePlatform
 
     public init(
-        connection: any DatabaseConnection
+        connection: any DatabaseConnection,
+        platform: any DatabasePlatform
     ) {
         self.connection = connection
+        self.platform = platform
     }
 
     public func apply(
@@ -92,10 +96,10 @@ public struct TableMigration: DatabaseMigration {
         }
 
         try await connection.run(
-            query: FormFormFieldTableSchema.table.createTableQuery()
+            query: FormFormFieldTableSchema.table.createTableQuery(using: platform)
         ) { _ in }
 
-        for query in FormFormFieldTableSchema.table.createIndexQueries() {
+        for query in FormFormFieldTableSchema.table.createIndexQueries(using: platform) {
             try await connection.run(query: query) { _ in }
         }
     }

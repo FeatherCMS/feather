@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct AdminMenuItemProvider: Event {
     public typealias Output = [AdminMenuItemDefinition]

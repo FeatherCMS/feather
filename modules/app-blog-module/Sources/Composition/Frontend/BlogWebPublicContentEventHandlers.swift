@@ -1,9 +1,9 @@
 import BlogAppAPI
 import FeatherAdmin
-public import FeatherContracts
+public import FeatherModuleKit
 import Foundation
 import OpenAPIRuntime
-import SystemContracts
+import SystemModule
 import WebContracts
 import WebFrontend
 

@@ -1,9 +1,9 @@
+import SystemModule
 import FeatherAdmin
 import HTML
 import Hummingbird
 import SGML
 import SystemAdminAPI
-import SystemContracts
 import WebBuilders
 import WebComponents
 
@@ -26,7 +26,7 @@ struct SystemVariableTableContent: Component {
     }
 
     func html(context: inout BuilderContext) -> Div {
-        let canDelete = permissions.allows(SystemPermissions.Variables.delete)
+        let canDelete = permissions.allows(SystemModule.Variable.Permissions.delete)
         let hasActiveQuery = !(search?.isEmpty ?? true)
 
         return context.build(
@@ -67,7 +67,7 @@ struct SystemVariableTableContent: Component {
                                     icon: FeatherIcons.inbox(),
                                     action: {
                                         if permissions.allows(
-                                            SystemPermissions.Variables.create
+                                            SystemModule.Variable.Permissions.create
                                         ) {
                                             context.build(
                                                 AdminButton(
@@ -164,7 +164,7 @@ struct SystemVariableTableContent: Component {
                     )
                 },
                 toolbar: {
-                    if permissions.allows(SystemPermissions.Variables.create) {
+                    if permissions.allows(SystemModule.Variable.Permissions.create) {
                         context.build(
                             AdminListToolbar {
                                 context.build(

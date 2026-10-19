@@ -5,7 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import AuthDomain
-public import FeatherContracts
+public import FeatherModuleKit
 public import UserDomain
 
 // TODO: no need for magic link custom scope for sign in

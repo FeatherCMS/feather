@@ -1,3 +1,4 @@
+import SystemModule
 import FeatherAdmin
 
 struct AdminRemoveSystemVariableDefaultInteractor:
@@ -15,7 +16,6 @@ struct AdminRemoveSystemVariableDefaultInteractor:
             throw map(error)
         }
     }
-
 
     private func map(
         _ error: OpenAPIRepositoryError

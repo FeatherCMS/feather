@@ -1,6 +1,8 @@
+import SystemModule
 import AccountApplication
 import AccountInfrastructure
 import FeatherInfrastructure
+import SystemApplication
 import SystemInfrastructure
 import UserInfrastructure
 
@@ -13,8 +15,8 @@ extension UseCases {
                 WriteInvitationOnlyWithVariable(
                     invitation: InvitationDatabaseRepository(context: context),
                     role: RoleDatabaseRepository(context: context),
-                    variable: VariableDatabaseQueries(
-                        context: .init(connection: context.connection)
+                    variable: SystemModule.Variable.Lookup.Database(
+                        context: context
                     )
                 )
             }

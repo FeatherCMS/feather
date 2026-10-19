@@ -5,7 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 
 public struct ResolvedMetadata: DTO {
     public let title: String

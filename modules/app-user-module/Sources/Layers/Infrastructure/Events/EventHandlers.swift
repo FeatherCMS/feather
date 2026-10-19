@@ -1,5 +1,6 @@
-public import FeatherContracts
+public import FeatherModuleKit
 import FeatherDomain
+import SystemModule
 import SystemApplication
 import UserApplication
 import UserContracts
@@ -10,9 +11,8 @@ public enum EventHandlers {
         in registry: inout EventRegistry
     ) {
         registry.register(
-            event: PermissionSeedProvider.self,
-            context: EventContext.self
-        ) { _, _ in
+            event: Permission.Event.Seed.self
+        ) { _ in
             UserPermissions.allPermissions()
                 .map {
                     .init(permission: $0)

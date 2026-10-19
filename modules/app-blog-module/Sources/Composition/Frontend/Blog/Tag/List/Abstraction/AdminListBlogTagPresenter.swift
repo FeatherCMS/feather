@@ -19,3 +19,4 @@ protocol AdminListBlogTagPresenter: Sendable {
         search: String?,
         error: String?
     ) async throws -> HTMLResponse
+}

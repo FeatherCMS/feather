@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 import Foundation
 public import NewsAppAPI
 import NewsApplication

@@ -13,7 +13,7 @@ struct AdminSystemPermissionOpenAPIRepository:
         ) async throws -> [String]
     {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.systemPermissionSearch(
+            let response = try await client.systemPermissionQuery(
                 headers: .init(accept: [.init(contentType: .json)]),
                 body: .json(
                     .init(

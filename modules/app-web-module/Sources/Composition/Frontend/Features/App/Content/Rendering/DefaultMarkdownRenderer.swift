@@ -1,5 +1,5 @@
 import FeatherAdmin
-public import FeatherContracts
+public import FeatherModuleKit
 import Foundation
 import Logging
 import Markdown

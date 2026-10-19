@@ -24,7 +24,7 @@ extension Components {
 }
 
 // swift-openapi-generator dummy public import compatibility
-public func unsafeOpenAPIGenerationHotfixForAppNewsAdminModuleAdminTypesComponentsParameters(
+public func unsafeOpenAPIGenerationHotfixForAppNewsModuleAdminTypesComponentsParameters(
     _ url: Foundation.URL,
     _ data: Foundation.Data,
     _ date: Foundation.Date,

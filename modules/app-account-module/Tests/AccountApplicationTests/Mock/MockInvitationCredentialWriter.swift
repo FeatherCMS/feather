@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 
 @testable import AccountApplication
 

@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import FeatherDomain
+import FeatherDBAL
 public import FeatherInfrastructure
 public import UserDomain
 
@@ -95,7 +96,7 @@ public struct RoleDatabaseRepository: RoleRepository {
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        let table = RoleTable(connection: context.connection)
-        return try await table.delete(ids: ids)
+        try await DatabaseAccessLayer<RoleTable>(context: context).delete(where: \.id, in: ids)
+        return ids
     }
 }

@@ -1,6 +1,6 @@
 import AuthApplication
 public import FeatherBackend
-import FeatherContracts
+import FeatherModuleKit
 public import HTTPTypes
 import Hummingbird
 public import OpenAPIRuntime

@@ -1,5 +1,5 @@
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import FeatherValidation
 
 struct MediaVariantProcessorFormInput: Decodable, Sendable, Equatable, Hashable

@@ -1,4 +1,5 @@
-import FeatherContracts
+import SystemModule
+import FeatherModuleKit
 
 struct SystemPermissionAddFormInput: Decodable, Sendable, Equatable, Hashable {
     let key: String

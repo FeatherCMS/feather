@@ -57,7 +57,6 @@ let package = Package(
         ),
     ],
     dependencies: [
-        // [docc-plugin-placeholder]
         .package(
             url: "https://github.com/apple/swift-log",
             from: "1.0.0"
@@ -72,7 +71,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-openapi-runtime",
-            from: "1.12.1"
+            from: "1.13.2"
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
@@ -87,6 +86,14 @@ let package = Package(
             from: "2.34.0"
         ),
         .package(path: "../../feather-core"),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal-postgres",
+            exact: "1.0.0-alpha.1"
+        ),
         .package(path: "../app-system-module"),
         .package(path: "../app-web-module"),
         .package(path: "../app-media-module"),
@@ -96,7 +103,7 @@ let package = Package(
         .target(
             name: "BlogContracts",
             dependencies: [
-                .product(name: "FeatherContracts", package: "feather-core")
+                .product(name: "FeatherModuleKit", package: "feather-core")
             ],
             path: "Sources/Contracts",
             swiftSettings: swiftSettings
@@ -117,6 +124,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "WebApplication", package: "app-web-module"),
 
                 .target(name: "BlogDomain"),
@@ -127,10 +135,14 @@ let package = Package(
         .target(
             name: "BlogInfrastructure",
             dependencies: [
+                .product(name: "FeatherDomain", package: "feather-core"),
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
                 .product(name: "MediaDomain", package: "app-media-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "WebInfrastructure", package: "app-web-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
 
@@ -212,7 +224,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
 
-                .product(name: "SystemContracts", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemFrontend", package: "app-system-module"),
                 .product(name: "WebContracts", package: "app-web-module"),
                 .product(name: "WebFrontend", package: "app-web-module"),

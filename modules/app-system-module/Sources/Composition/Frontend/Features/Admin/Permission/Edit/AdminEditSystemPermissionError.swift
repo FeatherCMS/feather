@@ -1,3 +1,4 @@
+import SystemModule
 enum AdminEditSystemPermissionError: Error, Sendable {
     case notFound
     case unauthorized

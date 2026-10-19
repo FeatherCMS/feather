@@ -1,7 +1,7 @@
 import AccountContracts
 import AccountDomain
 public import FeatherApplication
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct EditAccountProfile: UseCase {
     struct Action: PermissionAction {

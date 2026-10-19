@@ -45,7 +45,6 @@ let package = Package(
         .executable(name: "AccountAppOpenAPIGenerator", targets: ["AccountAppOpenAPIGenerator"]),
     ],
     dependencies: [
-        // [docc-plugin-placeholder]
 
         .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
@@ -57,7 +56,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-openapi-runtime",
-            from: "1.12.1"
+            from: "1.13.2"
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
@@ -69,6 +68,14 @@ let package = Package(
         ),
 
         .package(path: "../../feather-core"),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal-postgres",
+            exact: "1.0.0-alpha.1"
+        ),
         .package(
             url: "https://github.com/feather-framework/feather-mail",
             exact: "1.0.0-rc.1"
@@ -97,7 +104,7 @@ let package = Package(
         .target(
             name: "AccountContracts",
             dependencies: [
-                .product(name: "FeatherContracts", package: "feather-core")
+                .product(name: "FeatherModuleKit", package: "feather-core")
             ],
             path: "Sources/Contracts",
             swiftSettings: swiftSettings
@@ -120,6 +127,7 @@ let package = Package(
                 .product(name: "FeatherDomain", package: "feather-core"),
 
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "AuthDomain", package: "app-auth-module"),
                 .product(name: "UserApplication", package: "app-user-module"),
                 .product(name: "UserDomain", package: "app-user-module"),
@@ -133,10 +141,13 @@ let package = Package(
             name: "AccountInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
 
                 .product(name: "AuthInfrastructure", package: "app-auth-module"),
                 .product(name: "UserInfrastructure", package: "app-user-module"),
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "AccountApplication"),
             ],
@@ -218,7 +229,7 @@ let package = Package(
                 .product(name: "AuthAppAPI", package: "app-auth-module"),
                 .product(name: "MediaFrontend", package: "app-media-module"),
                 .product(name: "SystemAdminAPI", package: "app-system-module"),
-                .product(name: "SystemContracts", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemFrontend", package: "app-system-module"),
                 .product(name: "UserAdminAPI", package: "app-user-module"),
                 .product(name: "UserContracts", package: "app-user-module"),

@@ -26,8 +26,16 @@ paths:
           $ref: '#/components/responses/UserIdentityDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -37,12 +45,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/user/identities/:
@@ -55,8 +71,16 @@ paths:
           $ref: '#/components/responses/UserIdentityListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/user/identities/search:
@@ -68,15 +92,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserIdentityListItemSearchQuerySchema'
+              $ref: '#/components/schemas/UserIdentityListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/UserIdentityListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/user/identities/{userIdentityId}:
@@ -91,10 +123,22 @@ paths:
           $ref: '#/components/responses/UserIdentityDetailResponse'
         404:
           description: UserIdentity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -110,10 +154,22 @@ paths:
           $ref: '#/components/responses/UserIdentityDetailResponse'
         404:
           description: UserIdentity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -129,10 +185,22 @@ paths:
           $ref: '#/components/responses/UserIdentityDetailResponse'
         404:
           description: UserIdentity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/user/roles:
@@ -147,8 +215,16 @@ paths:
           $ref: '#/components/responses/UserRoleDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -158,12 +234,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/user/roles/:
@@ -176,8 +260,16 @@ paths:
           $ref: '#/components/responses/UserRoleListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/user/roles/search:
@@ -189,15 +281,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserRoleListItemSearchQuerySchema'
+              $ref: '#/components/schemas/UserRoleListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/UserRoleListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/user/roles/{userRoleId}:
@@ -212,10 +312,22 @@ paths:
           $ref: '#/components/responses/UserRoleDetailResponse'
         404:
           description: UserRole not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -231,10 +343,22 @@ paths:
           $ref: '#/components/responses/UserRoleDetailResponse'
         404:
           description: UserRole not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -250,10 +374,22 @@ paths:
           $ref: '#/components/responses/UserRoleDetailResponse'
         404:
           description: UserRole not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
 components:
@@ -310,6 +446,51 @@ components:
       type: array
       items:
         type: string
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
+      required:
+      - error
+    DefaultHTTPErrorContentSchema:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - message
+      - reason
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
     DeleteRequestSchema:
       type: object
       properties:
@@ -318,57 +499,8 @@ components:
           items:
             type: string
             example: id1
-        results:
-          type: boolean
-          example: true
-        summary:
-          type: boolean
-          example: true
       required:
       - ids
-      - results
-      - summary
-    DeleteResponseSchema:
-      type: object
-      properties:
-        results:
-          $ref: '#/components/schemas/DeleteResultListSchema'
-        summary:
-          $ref: '#/components/schemas/DeleteSummarySchema'
-    DeleteResultListSchema:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            example: id1
-          status:
-            type: string
-            enum:
-            - deleted
-            - not_found
-            - forbidden
-            example: deleted
-        required:
-        - id
-        - status
-    DeleteSummarySchema:
-      type: object
-      properties:
-        requested:
-          type: integer
-          example: 1
-        deleted:
-          type: integer
-          example: 1
-        omitted:
-          type: integer
-          example: 1
-      required:
-      - requested
-      - deleted
-      - omitted
     UserIdentityListSchema:
       type: array
       items:
@@ -389,7 +521,7 @@ components:
       - name
       - status
       - roles
-    UserIdentityListItemSearchQuerySchema:
+    UserIdentityListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -419,7 +551,6 @@ components:
             role:
               $ref: '#/components/schemas/UserRoleNameField'
       required:
-      - page
       - filters
     SearchPageSchema:
       type: object
@@ -428,14 +559,17 @@ components:
           $ref: '#/components/schemas/SearchPageSizeField'
         number:
           $ref: '#/components/schemas/SearchPageNumberField'
-      required:
-      - size
-      - number
     SearchPageSizeField:
       type: integer
+      default: 20
+      description: Results per page. Defaults to 20 when omitted; values below 1 are
+        clamped to 1. Endpoint-specific maximums may apply.
       example: 20
     SearchPageNumberField:
       type: integer
+      default: 1
+      description: 1-based page number. Defaults to 1 when omitted; values below 1
+        are clamped to 1.
       example: 1
     SortDirection:
       type: string
@@ -453,7 +587,7 @@ components:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/UserIdentityListItemSearchQuerySchema'
+          $ref: '#/components/schemas/UserIdentityListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -470,6 +604,48 @@ components:
       required:
       - query
       - data
+    UserIdentityListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            role:
+              $ref: '#/components/schemas/UserRoleNameField'
+      required:
+      - page
+      - filters
+    SearchResponsePageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
     UserIdentityUpdateSchema:
       type: object
       properties:
@@ -537,7 +713,7 @@ components:
       required:
       - id
       - key
-    UserRoleListItemSearchQuerySchema:
+    UserRoleListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -567,13 +743,12 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
       required:
-      - page
       - filters
     UserRoleListItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/UserRoleListItemSearchQuerySchema'
+          $ref: '#/components/schemas/UserRoleListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -590,6 +765,38 @@ components:
       required:
       - query
       - data
+    UserRoleListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - name
+                - notes
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
     UserRolePatchSchema:
       type: object
       properties:
@@ -604,12 +811,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UserIdentityDetailSchema'
-    DeleteResponse:
-      description: Delete response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeleteResponseSchema'
+    NoContentResponse:
+      description: Delete succeeded
     UserIdentityListResponse:
       description: UserIdentity list response
       content:

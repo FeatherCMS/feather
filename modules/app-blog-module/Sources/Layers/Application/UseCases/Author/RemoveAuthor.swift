@@ -1,7 +1,7 @@
 import BlogContracts
 import BlogDomain
 public import FeatherApplication
-public import FeatherContracts
+public import FeatherModuleKit
 import WebDomain
 
 //

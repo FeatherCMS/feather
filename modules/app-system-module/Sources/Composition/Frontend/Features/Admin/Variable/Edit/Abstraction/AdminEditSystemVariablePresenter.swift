@@ -1,5 +1,6 @@
+import SystemModule
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import FeatherValidation
 import Hummingbird
 
@@ -7,6 +8,7 @@ protocol AdminEditSystemVariablePresenter: Sendable {
 
     func renderEditPage(
         id: String,
+        deleteID: String,
         state: SystemVariableEditForm.State,
         permissions: Set<PermissionKey>
     ) async throws -> HTMLResponse

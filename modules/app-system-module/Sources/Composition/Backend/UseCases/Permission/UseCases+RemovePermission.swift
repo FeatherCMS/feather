@@ -1,15 +1,19 @@
+import SystemModule
 import FeatherInfrastructure
 import SystemApplication
+import SystemDomain
 import SystemInfrastructure
 
 extension UseCases {
 
-    func makeRemovePermission() -> RemovePermission {
+    func makeRemovePermission() -> SystemModule.Permission.Remove.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WritePermission(
-                    permission: PermissionDatabaseRepository(context: context)
+                SystemModule.Permission.Remove.Scope(
+                    permission: SystemModule.Permission.Repository.Database(
+                        context: context
+                    )
                 )
             }
         )

@@ -1,6 +1,6 @@
 import AccountContracts
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import Hummingbird
 
 struct AdminViewAccountProfileDefaultController:

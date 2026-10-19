@@ -1,6 +1,6 @@
+import SystemModule
 import FeatherAdmin
 import Hummingbird
-import SystemContracts
 
 struct AdminViewSystemJobDefaultController: AdminViewSystemJobController {
     let buildRuntime:
@@ -14,7 +14,7 @@ struct AdminViewSystemJobDefaultController: AdminViewSystemJobController {
         context: AuthenticatedRequestContext
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Jobs.read)
+        guard context.isCurrentUserAllowed(to: SystemModule.Job.Permissions.read)
         else {
             return try await runtime.presenter.renderErrorPage(
                 error: .forbidden

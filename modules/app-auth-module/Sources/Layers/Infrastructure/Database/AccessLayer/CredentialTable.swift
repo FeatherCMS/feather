@@ -1,11 +1,12 @@
 public import FeatherDatabase
-public import FeatherInfrastructure
+public import FeatherDBAL
+import FeatherDBALPostgres
+import FeatherInfrastructure
 
 public import struct Foundation.Date
 
-public struct CredentialTable: DatabaseTableWithBulkDelete {
+public struct CredentialTable: DatabaseLegacyTable {
     public static let name = "auth_email_credential"
-    public static let primaryKey = "id"
     public struct Row: Sendable {
 
         public let id: String

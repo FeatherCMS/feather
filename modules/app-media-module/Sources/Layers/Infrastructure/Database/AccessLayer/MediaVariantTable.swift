@@ -1,4 +1,6 @@
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 
 import struct Foundation.Date
@@ -15,9 +17,8 @@ extension MediaVariantTable.Row {
     }
 }
 
-struct MediaVariantTable: DatabaseTableWithBulkDelete {
+struct MediaVariantTable: DatabaseLegacyTable {
     static let name = "media_variant"
-    static let primaryKey = "id"
     struct Row {
         let id: String
         let key: String

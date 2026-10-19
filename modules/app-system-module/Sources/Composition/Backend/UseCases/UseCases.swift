@@ -1,4 +1,5 @@
-public import FeatherContracts
+import SystemModule
+public import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 public import FeatherInfrastructure

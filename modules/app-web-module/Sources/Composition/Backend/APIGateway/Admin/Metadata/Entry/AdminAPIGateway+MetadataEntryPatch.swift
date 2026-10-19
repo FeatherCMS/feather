@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 import Foundation
 public import WebAdminAPI
 import WebApplication

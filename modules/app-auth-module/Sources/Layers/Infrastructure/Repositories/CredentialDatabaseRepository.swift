@@ -1,4 +1,5 @@
 public import AuthDomain
+import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
 
@@ -84,7 +85,7 @@ public struct CredentialDatabaseRepository: CredentialRepository {
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        let table = CredentialTable(connection: context.connection)
-        return try await table.delete(ids: ids)
+        try await DatabaseAccessLayer<CredentialTable>(context: context).delete(where: \.id, in: ids)
+        return ids
     }
 }

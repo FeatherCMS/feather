@@ -40,33 +40,9 @@ extension Components {
                 self.body = body
             }
         }
-        public struct DeleteResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/DeleteResponse/content`.
-            @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/DeleteResponse/content/application\/json`.
-                case json(Components.Schemas.DeleteResponseSchema)
-                /// The associated value of the enum case if `self` is `.json`.
-                ///
-                /// - Throws: An error if `self` is not `.json`.
-                /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.DeleteResponseSchema {
-                    get throws {
-                        switch self {
-                        case let .json(body):
-                            return body
-                        }
-                    }
-                }
-            }
-            /// Received HTTP response body
-            public var body: Components.Responses.DeleteResponse.Body
-            /// Creates a new `DeleteResponse`.
-            ///
-            /// - Parameters:
-            ///   - body: Received HTTP response body
-            public init(body: Components.Responses.DeleteResponse.Body) {
-                self.body = body
-            }
+        public struct NoContentResponse: Sendable, Hashable {
+            /// Creates a new `NoContentResponse`.
+            public init() {}
         }
         public struct NewsArticleListResponse: Sendable, Hashable {
             /// - Remark: Generated from `#/components/responses/NewsArticleListResponse/content`.
@@ -212,7 +188,7 @@ extension Components {
 }
 
 // swift-openapi-generator dummy public import compatibility
-public func unsafeOpenAPIGenerationHotfixForAppNewsAdminModuleAdminTypesComponentsResponses(
+public func unsafeOpenAPIGenerationHotfixForAppNewsModuleAdminTypesComponentsResponses(
     _ url: Foundation.URL,
     _ data: Foundation.Data,
     _ date: Foundation.Date,

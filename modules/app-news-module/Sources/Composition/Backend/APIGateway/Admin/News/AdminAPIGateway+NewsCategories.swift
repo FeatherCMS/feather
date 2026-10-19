@@ -1,5 +1,5 @@
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 import Foundation
 public import NewsAdminAPI
 import NewsApplication
@@ -37,7 +37,7 @@ extension AdminAPIGateway {
     public func newsCategorySearch(
         _ input: Operations.NewsCategorySearch.Input
     ) async throws -> Operations.NewsCategorySearch.Output {
-        let query: Components.Schemas.NewsCategoryListItemSearchQuerySchema =
+        let query: Components.Schemas.NewsCategoryListItemSearchRequestQuerySchema =
             switch input.body {
             case .json(let value): value
             }
@@ -103,34 +103,12 @@ extension AdminAPIGateway {
             case .json(let value): value
             }
         let subject = try await CurrentSubject.require()
-        let removedIDs = try await useCases.makeRemoveCategory()
+        _ = try await useCases.makeRemoveCategory()
             .execute(
                 subject: subject,
                 input: .init(ids: body.ids)
             )
-        let removedIDSet = Set(removedIDs)
-        let results = body.ids.map { id in
-            Components.Schemas.DeleteResultListSchemaPayload(
-                id: id,
-                status: removedIDSet.contains(id) ? .deleted : .notFound
-            )
-        }
-        return .ok(
-            .init(
-                body: .json(
-                    .init(
-                        results: body.results ? results : nil,
-                        summary: body.summary
-                            ? .init(
-                                requested: body.ids.count,
-                                deleted: removedIDs.count,
-                                omitted: body.ids.count - removedIDs.count
-                            )
-                            : nil
-                    )
-                )
-            )
-        )
+        return .noContent(.init())
     }
 }
 

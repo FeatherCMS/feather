@@ -1,4 +1,5 @@
-public import FeatherContracts
+import SystemModule
+public import FeatherModuleKit
 public import Foundation
 
 public struct AdminDashboardEventContext: ExecutionContext {

@@ -1,5 +1,5 @@
 public import FeatherApplication
-public import FeatherContracts
+public import FeatherModuleKit
 import FeatherDatabase
 public import FeatherInfrastructure
 import FeatherStorage
@@ -119,6 +119,7 @@ public struct UseCases: Sendable {
         try await databaseContext.database.withConnection { connection in
             let repo = MediaVariantProcessorDatabaseRepository(
                 context: .init(
+                    platform: databaseContext.platform,
                     connection: connection,
                     idGenerator: databaseContext.idGenerator
                 )
@@ -142,6 +143,7 @@ public struct UseCases: Sendable {
             connection in
             let repo = MediaAssetNodeFileDatabaseRepository(
                 context: .init(
+                    platform: databaseContext.platform,
                     connection: connection,
                     idGenerator: databaseContext.idGenerator
                 )
@@ -175,7 +177,11 @@ public struct UseCases: Sendable {
     public func getAssetDetails(id: String) async throws -> MediaAssetDetail {
         try await databaseContext.database.withConnection { connection in
             try await MediaAssetDatabaseQueries(
-                context: .init(connection: connection),
+                context: .init(
+                    platform: databaseContext.platform,
+                    connection: connection,
+                    idGenerator: databaseContext.idGenerator
+                ),
                 objectKeyGenerator: storageContext.objectKeyGenerator
             )
             .find(id: id)
@@ -188,7 +194,11 @@ public struct UseCases: Sendable {
         let asset = try await databaseContext.database.withConnection {
             connection in
             try await MediaAssetDatabaseQueries(
-                context: .init(connection: connection),
+                context: .init(
+                    platform: databaseContext.platform,
+                    connection: connection,
+                    idGenerator: databaseContext.idGenerator
+                ),
                 objectKeyGenerator: storageContext.objectKeyGenerator
             )
             .find(id: assetId)
@@ -220,12 +230,14 @@ public struct UseCases: Sendable {
             connection in
             let repo = MediaAssetNodeFileVariantDatabaseRepository(
                 context: .init(
+                    platform: databaseContext.platform,
                     connection: connection,
                     idGenerator: databaseContext.idGenerator
                 )
             )
             let definitions = try await MediaVariantDatabaseRepository(
                 context: .init(
+                    platform: databaseContext.platform,
                     connection: connection,
                     idGenerator: databaseContext.idGenerator
                 )
@@ -240,6 +252,7 @@ public struct UseCases: Sendable {
             else { throw RepositoryError.notFound }
             let objectRepository = MediaAssetStorageObjectDatabaseRepository(
                 context: .init(
+                    platform: databaseContext.platform,
                     connection: connection,
                     idGenerator: databaseContext.idGenerator
                 )
@@ -278,6 +291,7 @@ public struct UseCases: Sendable {
         try await databaseContext.database.withConnection { connection in
             let repo = MediaAssetNodeFileVariantDatabaseRepository(
                 context: .init(
+                    platform: databaseContext.platform,
                     connection: connection,
                     idGenerator: databaseContext.idGenerator
                 )
@@ -285,6 +299,7 @@ public struct UseCases: Sendable {
             let variantDefinitions = Dictionary(
                 uniqueKeysWithValues: try await MediaVariantDatabaseRepository(
                     context: .init(
+                        platform: databaseContext.platform,
                         connection: connection,
                         idGenerator: databaseContext.idGenerator
                     )
@@ -295,6 +310,7 @@ public struct UseCases: Sendable {
             guard
                 let asset = try await MediaAssetNodeFileDatabaseRepository(
                     context: .init(
+                        platform: databaseContext.platform,
                         connection: connection,
                         idGenerator: databaseContext.idGenerator
                     )
@@ -303,6 +319,7 @@ public struct UseCases: Sendable {
             else { throw RepositoryError.notFound }
             let objects = try await MediaAssetStorageObjectDatabaseRepository(
                 context: .init(
+                    platform: databaseContext.platform,
                     connection: connection,
                     idGenerator: databaseContext.idGenerator
                 )

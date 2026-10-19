@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 08. 11..
 //
 
-public import FeatherContracts
+public import FeatherModuleKit
 public import UserDomain
 
 public struct WriteIdentityRole: Scope {

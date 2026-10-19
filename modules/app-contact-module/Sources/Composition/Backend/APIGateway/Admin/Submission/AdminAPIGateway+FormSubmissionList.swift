@@ -1,7 +1,7 @@
 public import ContactAdminAPI
 import ContactApplication
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 
 extension AdminAPIGateway {
     public func contactFormSubmissionList(

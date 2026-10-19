@@ -1,5 +1,5 @@
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import OpenAPIRuntime
 
 public struct WebPageFormInput: Codable, Sendable, Equatable, Hashable {

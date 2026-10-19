@@ -1,7 +1,7 @@
 import AccountFrontend
 import AccountAppAPI
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import Hummingbird
 import MediaFrontend
 

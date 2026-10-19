@@ -1,10 +1,10 @@
+import SystemModule
 import FeatherAdmin
 
 struct AdminRemoveSystemPermissionDefaultInteractor:
     AdminRemoveSystemPermissionInteractor
 {
     let repository: any AdminRemoveSystemPermissionRepository
-
 
     func delete(ids: [String]) async throws {
         do {

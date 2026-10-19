@@ -22,7 +22,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ query: Components.Schemas.RedirectRuleListItemSearchQuerySchema
+        _ query: Components.Schemas.RedirectRuleListItemSearchRequestQuerySchema
     ) -> RuleList.Query {
         .init(
             page: map(query.page),

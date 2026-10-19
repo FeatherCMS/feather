@@ -1,9 +1,9 @@
+import SystemModule
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import HTML
 import Hummingbird
 import SystemAdminAPI
-import SystemContracts
 import WebBuilders
 import WebComponents
 
@@ -16,24 +16,24 @@ struct SystemPermissionRow: Component {
         [
             .init(
                 "View",
-                href: SystemPermissionRoutes.details(RouterPath(permission.id))
+                href: SystemPermissionRoutes.details(RouterPath(permission.key))
                     .description,
                 style: .ghost(.primary),
-                permission: SystemPermissions.Permissions.read
+                permission: SystemModule.Permission.Permissions.read
             ),
             .init(
                 "Edit",
-                href: SystemPermissionRoutes.edit(RouterPath(permission.id))
+                href: SystemPermissionRoutes.edit(RouterPath(permission.key))
                     .description,
                 style: .ghost(.secondary),
-                permission: SystemPermissions.Permissions.update
+                permission: SystemModule.Permission.Permissions.update
             ),
         ]
     }
 
     func html(context: inout BuilderContext) -> Tr {
         Tr {
-            if actions.allows(SystemPermissions.Permissions.delete) {
+            if actions.allows(SystemModule.Permission.Permissions.delete) {
                 context.build(AdminListRowCheckbox(id: permission.id))
             }
             Td(permission.key)

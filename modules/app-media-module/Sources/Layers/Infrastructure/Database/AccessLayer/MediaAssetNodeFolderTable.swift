@@ -1,4 +1,5 @@
 import FeatherDatabase
+import FeatherDBAL
 import FeatherInfrastructure
 
 import struct Foundation.Date

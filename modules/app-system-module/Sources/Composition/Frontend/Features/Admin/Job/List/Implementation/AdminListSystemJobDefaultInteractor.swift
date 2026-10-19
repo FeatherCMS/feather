@@ -1,5 +1,6 @@
+import SystemModule
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import Foundation
 import SystemAdminAPI
 
@@ -52,11 +53,14 @@ struct AdminListSystemJobDefaultInteractor: AdminListSystemJobInteractor {
         }
         let pageSize = AdminListSystemJob.pageSize
         let normalizedPage = max(1, page)
-        let start = (normalizedPage - 1) * pageSize
+        let pageIndex = normalizedPage - 1
+        let start = pageIndex > Int.max / pageSize
+            ? Int.max
+            : pageIndex * pageSize
         let items =
             start < sortedJobs.count
             ? Array(
-                sortedJobs[start..<min(start + pageSize, sortedJobs.count)]
+                sortedJobs[start..<start + min(pageSize, sortedJobs.count - start)]
             )
             : []
         return .init(

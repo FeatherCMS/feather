@@ -1,5 +1,5 @@
 public import ContactDomain
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct WriteForm: Scope {
     public let form: any FormRepository

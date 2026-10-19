@@ -1,15 +1,19 @@
+import SystemModule
 import FeatherInfrastructure
 import SystemApplication
+import SystemDomain
 import SystemInfrastructure
 
 extension UseCases {
 
-    func makeEditVariable() -> EditVariable {
+    func makeEditVariable() -> SystemModule.Variable.Edit.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteVariable(
-                    variable: VariableDatabaseRepository(context: context)
+                SystemModule.Variable.Edit.Scope(
+                    variable: SystemModule.Variable.Repository.Database(
+                        context: context
+                    )
                 )
             }
         )

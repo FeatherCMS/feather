@@ -1,9 +1,9 @@
+import SystemModule
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import FeatherValidation
 import Hummingbird
 import SystemAdminAPI
-import SystemContracts
 import WebComponents
 
 struct AdminEditSystemVariableDefaultPresenter:
@@ -15,11 +15,13 @@ struct AdminEditSystemVariableDefaultPresenter:
 
     func renderEditPage(
         id: String,
+        deleteID: String,
         state: SystemVariableEditForm.State,
         permissions: Set<PermissionKey>
     ) async throws -> HTMLResponse {
         try await renderEditPage(
             id: id,
+            deleteID: deleteID,
             state: state,
             permissions: permissions,
             status: .ok
@@ -28,6 +30,7 @@ struct AdminEditSystemVariableDefaultPresenter:
 
     private func renderEditPage(
         id: String,
+        deleteID: String?,
         state: SystemVariableEditForm.State,
         permissions: Set<PermissionKey>,
         status: HTTPResponse.Status
@@ -45,14 +48,17 @@ struct AdminEditSystemVariableDefaultPresenter:
                     viewHref: SystemVariableRoutes.details(RouterPath(id))
                         .description,
                     removeHref: actions.allows(
-                        SystemPermissions.Variables.delete
+                        SystemModule.Variable.Permissions.delete
                     )
-                        ? AdminLocation.remove(
-                            path: SystemVariableRoutes.remove.description,
-                            ids: [id],
-                            returnTo: SystemVariableRoutes.edit(RouterPath(id))
-                                .description
-                        ) : nil,
+                        ? deleteID.map { deleteID in
+                            AdminLocation.remove(
+                                path: SystemVariableRoutes.remove.description,
+                                ids: [deleteID],
+                                returnTo:
+                                    SystemVariableRoutes.edit(RouterPath(id))
+                                    .description
+                            )
+                        } : nil,
                     nonceToken: nonceToken
                 )
             ),
@@ -79,6 +85,7 @@ struct AdminEditSystemVariableDefaultPresenter:
 
         return try await renderEditPage(
             id: id,
+            deleteID: nil,
             state: state,
             permissions: permissions,
             status: .unprocessableContent
@@ -208,6 +215,7 @@ struct AdminEditSystemVariableDefaultPresenter:
 
         return try await renderEditPage(
             id: id,
+            deleteID: nil,
             state: state,
             permissions: permissions,
             status: status

@@ -1,5 +1,5 @@
 public import FeatherAdmin
-public import FeatherContracts
+public import FeatherModuleKit
 import WebAppAPI
 import WebContracts
 

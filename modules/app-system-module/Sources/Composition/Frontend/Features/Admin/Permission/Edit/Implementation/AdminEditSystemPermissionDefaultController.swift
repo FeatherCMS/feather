@@ -1,7 +1,7 @@
+import SystemModule
 import FeatherAdmin
 import FeatherValidation
 import Hummingbird
-import SystemContracts
 
 struct AdminEditSystemPermissionDefaultController:
     AdminEditSystemPermissionController
@@ -20,7 +20,7 @@ struct AdminEditSystemPermissionDefaultController:
         let id = try context.requiredID()
         guard
             context.isCurrentUserAllowed(
-                to: SystemPermissions.Permissions.update
+                to: SystemModule.Permission.Permissions.update
             )
         else {
             return try await presenter.renderErrorPage(error: .forbidden)
@@ -50,7 +50,7 @@ struct AdminEditSystemPermissionDefaultController:
         let id = try context.requiredID()
         guard
             context.isCurrentUserAllowed(
-                to: SystemPermissions.Permissions.update
+                to: SystemModule.Permission.Permissions.update
             )
         else {
             return
@@ -76,7 +76,7 @@ struct AdminEditSystemPermissionDefaultController:
             }
             try await payload.input.validate()
             try await interactor.update(id: id, input: payload.input)
-            return presenter.renderSuccess(id: id)
+            return presenter.renderSuccess(id: payload.input.normalizedKey)
         }
         catch let error as ValidationError {
             return

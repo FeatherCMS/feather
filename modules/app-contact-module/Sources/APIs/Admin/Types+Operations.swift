@@ -61,8 +61,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormList.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormList.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -70,14 +94,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFormList.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/get(contactFormList)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -96,8 +112,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormList.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormList.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -105,14 +145,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFormList.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/get(contactFormList)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -217,8 +249,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/POST/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/POST/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormCreate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormCreate.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -226,14 +282,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFormCreate.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/post(contactFormCreate)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -252,8 +300,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/POST/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/POST/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormCreate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormCreate.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -261,14 +333,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFormCreate.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/post(contactFormCreate)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -349,32 +413,64 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Delete response
+            /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)/responses/204`.
             ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.DeleteResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
+            /// HTTP response code: `204 noContent`.
+            case noContent(Components.Responses.NoContentResponse)
+            /// Delete succeeded
             ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.DeleteResponse {
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            public static var noContent: Self {
+                .noContent(.init())
+            }
+            /// The associated value of the enum case if `self` is `.noContent`.
+            ///
+            /// - Throws: An error if `self` is not `.noContent`.
+            /// - SeeAlso: `.noContent`.
+            public var noContent: Components.Responses.NoContentResponse {
                 get throws {
                     switch self {
-                    case let .ok(response):
+                    case let .noContent(response):
                         return response
                     default:
                         try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
+                            expectedStatus: "noContent",
                             response: self
                         )
                     }
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/DELETE/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/DELETE/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormRemove.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormRemove.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -382,14 +478,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFormRemove.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -408,8 +496,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/DELETE/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/DELETE/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormRemove.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormRemove.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -417,14 +529,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFormRemove.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/delete(contactFormRemove)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -541,8 +645,32 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/GET/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/GET/responses/404/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormGet.Output.NotFound.Body
                 /// Creates a new `NotFound`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormGet.Output.NotFound.Body) {
+                    self.body = body
+                }
             }
             /// Contact form not found
             ///
@@ -550,14 +678,6 @@ public enum Operations {
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.ContactFormGet.Output.NotFound)
-            /// Contact form not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
@@ -576,8 +696,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormGet.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormGet.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -585,14 +729,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFormGet.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -611,8 +747,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormGet.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormGet.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -620,14 +780,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFormGet.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/get(contactFormGet)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -748,8 +900,32 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/PUT/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/PUT/responses/404/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormUpdate.Output.NotFound.Body
                 /// Creates a new `NotFound`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormUpdate.Output.NotFound.Body) {
+                    self.body = body
+                }
             }
             /// Contact form not found
             ///
@@ -757,14 +933,6 @@ public enum Operations {
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.ContactFormUpdate.Output.NotFound)
-            /// Contact form not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/put(contactFormUpdate)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
@@ -783,8 +951,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/PUT/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/PUT/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormUpdate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormUpdate.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -792,14 +984,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFormUpdate.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/put(contactFormUpdate)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -818,8 +1002,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/PUT/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/PUT/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormUpdate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormUpdate.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -827,14 +1035,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFormUpdate.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/put(contactFormUpdate)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -933,8 +1133,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFieldList.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFieldList.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -942,14 +1166,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFieldList.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/get(contactFieldList)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -968,8 +1184,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFieldList.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFieldList.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -977,14 +1217,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFieldList.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/get(contactFieldList)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -1089,8 +1321,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/POST/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/POST/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFieldCreate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFieldCreate.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -1098,14 +1354,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFieldCreate.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/post(contactFieldCreate)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -1124,8 +1372,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/POST/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/POST/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFieldCreate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFieldCreate.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -1133,14 +1405,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFieldCreate.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/post(contactFieldCreate)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -1221,32 +1485,64 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Delete response
+            /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)/responses/204`.
             ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.DeleteResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
+            /// HTTP response code: `204 noContent`.
+            case noContent(Components.Responses.NoContentResponse)
+            /// Delete succeeded
             ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.DeleteResponse {
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            public static var noContent: Self {
+                .noContent(.init())
+            }
+            /// The associated value of the enum case if `self` is `.noContent`.
+            ///
+            /// - Throws: An error if `self` is not `.noContent`.
+            /// - SeeAlso: `.noContent`.
+            public var noContent: Components.Responses.NoContentResponse {
                 get throws {
                     switch self {
-                    case let .ok(response):
+                    case let .noContent(response):
                         return response
                     default:
                         try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
+                            expectedStatus: "noContent",
                             response: self
                         )
                     }
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/DELETE/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/DELETE/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFieldRemove.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFieldRemove.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -1254,14 +1550,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFieldRemove.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -1280,8 +1568,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/DELETE/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/DELETE/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFieldRemove.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFieldRemove.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -1289,14 +1601,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFieldRemove.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/delete(contactFieldRemove)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -1413,8 +1717,32 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/GET/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/GET/responses/404/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFieldGet.Output.NotFound.Body
                 /// Creates a new `NotFound`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFieldGet.Output.NotFound.Body) {
+                    self.body = body
+                }
             }
             /// Contact field not found
             ///
@@ -1422,14 +1750,6 @@ public enum Operations {
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.ContactFieldGet.Output.NotFound)
-            /// Contact field not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/get(contactFieldGet)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
@@ -1448,8 +1768,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFieldGet.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFieldGet.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -1457,14 +1801,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFieldGet.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/get(contactFieldGet)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -1483,8 +1819,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFieldGet.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFieldGet.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -1492,14 +1852,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFieldGet.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/get(contactFieldGet)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -1620,8 +1972,32 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PUT/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PUT/responses/404/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFieldUpdate.Output.NotFound.Body
                 /// Creates a new `NotFound`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFieldUpdate.Output.NotFound.Body) {
+                    self.body = body
+                }
             }
             /// Contact field not found
             ///
@@ -1629,14 +2005,6 @@ public enum Operations {
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.ContactFieldUpdate.Output.NotFound)
-            /// Contact field not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/put(contactFieldUpdate)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
@@ -1655,8 +2023,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PUT/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PUT/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFieldUpdate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFieldUpdate.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -1664,14 +2056,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFieldUpdate.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/put(contactFieldUpdate)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -1690,8 +2074,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PUT/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/field/{formFieldId}/PUT/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFieldUpdate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFieldUpdate.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -1699,14 +2107,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFieldUpdate.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/field/{formFieldId}/put(contactFieldUpdate)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -1823,8 +2223,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormSubmissionList.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormSubmissionList.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -1832,14 +2256,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFormSubmissionList.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/get(contactFormSubmissionList)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -1858,8 +2274,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormSubmissionList.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormSubmissionList.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -1867,14 +2307,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFormSubmissionList.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/get(contactFormSubmissionList)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -1971,32 +2403,64 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Delete response
+            /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/delete(contactFormSubmissionRemove)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/delete(contactFormSubmissionRemove)/responses/204`.
             ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.DeleteResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
+            /// HTTP response code: `204 noContent`.
+            case noContent(Components.Responses.NoContentResponse)
+            /// Delete succeeded
             ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.DeleteResponse {
+            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/delete(contactFormSubmissionRemove)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            public static var noContent: Self {
+                .noContent(.init())
+            }
+            /// The associated value of the enum case if `self` is `.noContent`.
+            ///
+            /// - Throws: An error if `self` is not `.noContent`.
+            /// - SeeAlso: `.noContent`.
+            public var noContent: Components.Responses.NoContentResponse {
                 get throws {
                     switch self {
-                    case let .ok(response):
+                    case let .noContent(response):
                         return response
                     default:
                         try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
+                            expectedStatus: "noContent",
                             response: self
                         )
                     }
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/DELETE/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/DELETE/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormSubmissionRemove.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormSubmissionRemove.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -2004,14 +2468,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFormSubmissionRemove.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/delete(contactFormSubmissionRemove)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -2030,8 +2486,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/DELETE/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/DELETE/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormSubmissionRemove.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormSubmissionRemove.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -2039,14 +2519,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFormSubmissionRemove.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/delete(contactFormSubmissionRemove)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -2170,8 +2642,32 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/GET/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/GET/responses/404/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormSubmissionGet.Output.NotFound.Body
                 /// Creates a new `NotFound`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormSubmissionGet.Output.NotFound.Body) {
+                    self.body = body
+                }
             }
             /// Contact form submission not found
             ///
@@ -2179,14 +2675,6 @@ public enum Operations {
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.ContactFormSubmissionGet.Output.NotFound)
-            /// Contact form submission not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
@@ -2205,8 +2693,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormSubmissionGet.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormSubmissionGet.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -2214,14 +2726,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFormSubmissionGet.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -2240,8 +2744,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormSubmissionGet.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormSubmissionGet.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -2249,14 +2777,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFormSubmissionGet.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/get(contactFormSubmissionGet)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -2384,8 +2904,32 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/responses/404/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormSubmissionUpdate.Output.NotFound.Body
                 /// Creates a new `NotFound`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormSubmissionUpdate.Output.NotFound.Body) {
+                    self.body = body
+                }
             }
             /// Contact form submission not found
             ///
@@ -2393,14 +2937,6 @@ public enum Operations {
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.ContactFormSubmissionUpdate.Output.NotFound)
-            /// Contact form submission not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
@@ -2419,8 +2955,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormSubmissionUpdate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormSubmissionUpdate.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -2428,14 +2988,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.ContactFormSubmissionUpdate.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -2454,8 +3006,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/PATCH/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.ContactFormSubmissionUpdate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.ContactFormSubmissionUpdate.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -2463,14 +3039,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.ContactFormSubmissionUpdate.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/contact/form/{contactFormKey}/submission/{contactFormSubmissionId}/patch(contactFormSubmissionUpdate)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.

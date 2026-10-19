@@ -1,5 +1,5 @@
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 
 actor MockPermissionAuthorizer: Authorizer {
     private(set) var canCallCount = 0

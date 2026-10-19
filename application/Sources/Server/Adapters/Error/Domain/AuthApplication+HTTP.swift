@@ -1,6 +1,6 @@
 public import AuthApplication
 import NIOHTTP1
-import OpenAPIRuntime
+public import FeatherBackend
 
 extension AuthApplication.UseCaseError: ErrorTraceRepresentable {
 
@@ -15,7 +15,7 @@ extension AuthApplication.UseCaseError: ErrorTraceRepresentable {
 
 extension AuthApplication.UseCaseError: HTTPErrorRepresentable {
 
-    var status: HTTPResponseStatus {
+    public var status: HTTPResponseStatus {
         switch reason {
         case .auth:
             return .unauthorized
@@ -26,9 +26,8 @@ extension AuthApplication.UseCaseError: HTTPErrorRepresentable {
         }
     }
 
-    var content: ServerError.Details? {
-        .init(
-            code: status,
+    public var content: any HTTPErrorContent {
+        DefaultHTTPErrorContent(
             message: message,
             reason: debugMessage
         )

@@ -1,5 +1,5 @@
 public import AuthDomain
-public import FeatherContracts
+public import FeatherModuleKit
 public import UserDomain
 
 public struct WriteAccount: Scope {

@@ -1,3 +1,5 @@
+import Foundation
+import SystemModule
 import FeatherAdmin
 import Hummingbird
 import OpenAPIRuntime
@@ -46,7 +48,7 @@ struct AdminEditSystemVariableOpenAPIRepository:
         input: Components.Schemas.SystemVariableCreateSchema
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.systemVariableUpdate(
+            let response = try await client.systemVariablePut(
                 path: .init(systemVariableId: id),
                 headers: .init(accept: [.init(contentType: .json)]),
                 body: .json(input)
@@ -54,6 +56,14 @@ struct AdminEditSystemVariableOpenAPIRepository:
             switch response {
             case .ok:
                 return
+            case .badRequest(let response):
+                let data = try JSONEncoder().encode(try response.body.json)
+                throw OpenAPIRepositoryError.parsedFailure(
+                    statusCode: 400,
+                    responseBody: String(data: data, encoding: .utf8)
+                )
+            case .conflict:
+                throw OpenAPIRepositoryError.conflict
             case .notFound:
                 throw OpenAPIRepositoryError.notFound
             case .unauthorized:

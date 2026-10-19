@@ -1,8 +1,8 @@
+import SystemModule
 import FeatherAdmin
 import HTML
 import Hummingbird
 import SGML
-import SystemContracts
 import WebBuilders
 import WebComponents
 
@@ -42,20 +42,22 @@ struct SystemVariableDetails: Component {
         state: State
     ) -> [AdminDetailView.Action] {
         var result: [AdminDetailView.Action] = []
-        if state.permissions.allows(SystemPermissions.Variables.update) {
+        if state.permissions.allows(SystemModule.Variable.Permissions.update)
+        {
             result.append(
                 .init(
                     label: "Edit",
                     href:
                         SystemVariableRoutes.edit(
-                            RouterPath(state.variable.id)
+                            RouterPath(state.variable.key)
                         )
                         .description,
                     style: .primary
                 )
             )
         }
-        if state.permissions.allows(SystemPermissions.Variables.delete) {
+        if state.permissions.allows(SystemModule.Variable.Permissions.delete)
+        {
             result.append(
                 .init(
                     label: "Remove",
@@ -64,7 +66,7 @@ struct SystemVariableDetails: Component {
                         ids: [state.variable.id],
                         returnTo:
                             SystemVariableRoutes.details(
-                                RouterPath(state.variable.id)
+                                RouterPath(state.variable.key)
                             )
                             .description
                     ),

@@ -1,4 +1,5 @@
 import FeatherDomain
+import FeatherDBAL
 public import FeatherInfrastructure
 import Foundation
 public import MediaDomain
@@ -68,7 +69,8 @@ public struct MediaVariantDatabaseRepository: MediaVariantRepository {
             .map(\.asDomain)
     }
     public func delete(ids: [String]) async throws -> [String] {
-        try await MediaVariantTable(connection: context.connection)
-            .delete(ids: ids)
+        try await DatabaseAccessLayer<MediaVariantTable>(context: context)
+            .delete(where: \.id, in: ids)
+        return ids
     }
 }

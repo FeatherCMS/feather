@@ -1,11 +1,13 @@
+import SystemModule
 public import BlogApplication
 import BlogInfrastructure
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 import FeatherDatabase
 import FeatherDomain
 import FeatherInfrastructure
 import MediaBackend
+import SystemApplication
 import SystemInfrastructure
 import WebInfrastructure
 
@@ -22,8 +24,8 @@ extension UseCases {
                     metadata: MetadataDatabaseRepository(
                         context: context
                     ),
-                    variable: VariableDatabaseQueries(
-                        context: .init(connection: context.connection)
+                    variable: SystemModule.Variable.Lookup.Database(
+                        context: context
                     )
                 )
             }

@@ -1,6 +1,6 @@
 import BlogAppAPI
 import BlogApplication
-import FeatherContracts
+import FeatherModuleKit
 import Foundation
 import MediaApplication
 import MediaBackend

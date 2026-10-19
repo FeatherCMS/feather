@@ -5,6 +5,8 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 
 import struct Foundation.Data
@@ -42,9 +44,8 @@ extension InvitationTable.Row {
     }
 }
 
-struct InvitationTable: DatabaseTableWithBulkDelete {
+struct InvitationTable: DatabaseLegacyTable {
     static let name = "account_invitation"
-    static let primaryKey = "id"
     struct Row {
         struct Create {
             let id: String

@@ -197,7 +197,7 @@ public enum Servers {
 }
 
 // swift-openapi-generator dummy public import compatibility
-public func unsafeOpenAPIGenerationHotfixForAppNewsAdminModuleAdminTypes(
+public func unsafeOpenAPIGenerationHotfixForAppNewsModuleAdminTypes(
     _ url: Foundation.URL,
     _ data: Foundation.Data,
     _ date: Foundation.Date,

@@ -45,7 +45,6 @@ let package = Package(
         .executable(name: "WebAppOpenAPIGenerator", targets: ["WebAppOpenAPIGenerator"]),
     ],
     dependencies: [
-        // [docc-plugin-placeholder]
         .package(
             url: "https://github.com/apple/swift-log",
             from: "1.15.0"
@@ -60,7 +59,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-openapi-runtime",
-            from: "1.12.1"
+            from: "1.13.2"
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
@@ -95,6 +94,14 @@ let package = Package(
             exact: "1.0.0-beta.4"
         ),
         .package(path: "../../feather-core"),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal-postgres",
+            exact: "1.0.0-alpha.1"
+        ),
         .package(path: "../app-media-module"),
         .package(path: "../app-system-module"),
     ],
@@ -102,7 +109,7 @@ let package = Package(
         .target(
             name: "WebContracts",
             dependencies: [
-                .product(name: "FeatherContracts", package: "feather-core")
+                .product(name: "FeatherModuleKit", package: "feather-core")
             ],
             path: "Sources/Contracts",
             swiftSettings: swiftSettings
@@ -122,7 +129,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
 
-                .product(name: "SystemContracts", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
                 .product(
                     name: "SystemApplication",
                     package: "app-system-module"
@@ -136,6 +143,9 @@ let package = Package(
         .target(
             name: "WebInfrastructure",
             dependencies: [
+                .product(name: "FeatherDomain", package: "feather-core"),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
                 .product(name: "MediaDomain", package: "app-media-module"),
                 .product(name: "MediaInfrastructure", package: "app-media-module"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
@@ -219,7 +229,7 @@ let package = Package(
                 .product(name: "RSS", package: "swift-web-standards"),
                 .product(name: "SGML", package: "swift-web-standards"),
                 .product(name: "Sitemap", package: "swift-web-standards"),
-                .product(name: "SystemContracts", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "WebContracts"),
                 .target(name: "WebAdminAPI"),
@@ -262,12 +272,13 @@ let package = Package(
             dependencies: [
                 .target(name: "WebInfrastructure"),
 
-                .product(name: "FeatherContracts", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(
                     name: "FeatherDatabasePostgres",
                     package: "feather-database-postgres"
                 ),
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "PostgresNIO", package: "postgres-nio"),
                 .product(name: "NIOSSL", package: "swift-nio-ssl"),
             ],

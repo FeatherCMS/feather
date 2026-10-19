@@ -1,4 +1,5 @@
-import FeatherContracts
+import SystemModule
+import FeatherModuleKit
 
 struct AdminViewDashboardDefaultInteractor: AdminViewDashboardInteractor {
     let events: any EventPublisher

@@ -32,7 +32,7 @@ struct MediaFolderCreateOperation: MediaFolderOperation {
 }
 
 struct MediaFolderListOperation: MediaFolderOperation {
-    var searchQuery: SearchQuerySchema {
+    var searchRequestQuery: SearchRequestQuerySchema {
         .init(
             items: MediaFolderListItemSchema(),
             sortFieldKeys: [
@@ -49,12 +49,15 @@ struct MediaFolderListOperation: MediaFolderOperation {
     }
 
     var requestBody: (any RequestBodyRepresentable)? {
-        SearchRequestBody(query: searchQuery)
+        SearchRequestBody(query: searchRequestQuery)
     }
 
     var responseMap: ResponseMap {
         [
-            200: SearchResponse(query: searchQuery).reference()
+            200: SearchResponse(
+                query: SearchResponseQuerySchema(query: searchRequestQuery)
+            )
+            .reference()
         ]
     }
 }

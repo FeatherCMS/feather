@@ -109,125 +109,128 @@ extension Components {
         }
         /// - Remark: Generated from `#/components/schemas/MediaAssetIdField`.
         public typealias MediaAssetIdField = Swift.String
+        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
+        public struct DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/error`.
+            public var error: Components.Schemas.DefaultHTTPErrorContentSchema
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/trace`.
+            public var trace: Components.Schemas.ErrorTraceSchema?
+            /// Creates a new `DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
+            ///
+            /// - Parameters:
+            ///   - error:
+            ///   - trace:
+            public init(
+                error: Components.Schemas.DefaultHTTPErrorContentSchema,
+                trace: Components.Schemas.ErrorTraceSchema? = nil
+            ) {
+                self.error = error
+                self.trace = trace
+            }
+            public enum CodingKeys: String, CodingKey {
+                case error
+                case trace
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema`.
+        public struct DefaultHTTPErrorContentSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/message`.
+            public var message: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/reason`.
+            public var reason: Swift.String
+            /// Creates a new `DefaultHTTPErrorContentSchema`.
+            ///
+            /// - Parameters:
+            ///   - message:
+            ///   - reason:
+            public init(
+                message: Swift.String,
+                reason: Swift.String
+            ) {
+                self.message = message
+                self.reason = reason
+            }
+            public enum CodingKeys: String, CodingKey {
+                case message
+                case reason
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema`.
+        public struct ErrorTraceSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/message`.
+            public var message: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/reasons`.
+            public var reasons: Components.Schemas.ErrorTraceReasonsSchema?
+            /// Creates a new `ErrorTraceSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - message:
+            ///   - reasons:
+            public init(
+                id: Swift.String,
+                message: Swift.String,
+                reasons: Components.Schemas.ErrorTraceReasonsSchema? = nil
+            ) {
+                self.id = id
+                self.message = message
+                self.reasons = reasons
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case message
+                case reasons
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonsSchema`.
+        public typealias ErrorTraceReasonsSchema = [Components.Schemas.ErrorTraceReasonSchema]
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema`.
+        public struct ErrorTraceReasonSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/message`.
+            public var message: Swift.String
+            /// Creates a new `ErrorTraceReasonSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - message:
+            public init(
+                id: Swift.String,
+                message: Swift.String
+            ) {
+                self.id = id
+                self.message = message
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case message
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
         public struct DeleteRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
             public var ids: [Swift.String]
-            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/results`.
-            public var results: Swift.Bool
-            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/summary`.
-            public var summary: Swift.Bool
             /// Creates a new `DeleteRequestSchema`.
             ///
             /// - Parameters:
             ///   - ids:
-            ///   - results:
-            ///   - summary:
-            public init(
-                ids: [Swift.String],
-                results: Swift.Bool,
-                summary: Swift.Bool
-            ) {
+            public init(ids: [Swift.String]) {
                 self.ids = ids
-                self.results = results
-                self.summary = summary
             }
             public enum CodingKeys: String, CodingKey {
                 case ids
-                case results
-                case summary
             }
         }
-        /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema`.
-        public struct DeleteResponseSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/results`.
-            public var results: Components.Schemas.DeleteResultListSchema?
-            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary`.
-            public var summary: Components.Schemas.DeleteSummarySchema?
-            /// Creates a new `DeleteResponseSchema`.
-            ///
-            /// - Parameters:
-            ///   - results:
-            ///   - summary:
-            public init(
-                results: Components.Schemas.DeleteResultListSchema? = nil,
-                summary: Components.Schemas.DeleteSummarySchema? = nil
-            ) {
-                self.results = results
-                self.summary = summary
-            }
-            public enum CodingKeys: String, CodingKey {
-                case results
-                case summary
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
-        public struct DeleteResultListSchemaPayload: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/id`.
-            public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
-            @frozen public enum StatusPayload: String, Codable, Hashable, Sendable, CaseIterable {
-                case deleted = "deleted"
-                case notFound = "not_found"
-                case forbidden = "forbidden"
-            }
-            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
-            public var status: Components.Schemas.DeleteResultListSchemaPayload.StatusPayload
-            /// Creates a new `DeleteResultListSchemaPayload`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - status:
-            public init(
-                id: Swift.String,
-                status: Components.Schemas.DeleteResultListSchemaPayload.StatusPayload
-            ) {
-                self.id = id
-                self.status = status
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case status
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
-        public typealias DeleteResultListSchema = [Components.Schemas.DeleteResultListSchemaPayload]
-        /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema`.
-        public struct DeleteSummarySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/requested`.
-            public var requested: Swift.Int
-            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/deleted`.
-            public var deleted: Swift.Int
-            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/omitted`.
-            public var omitted: Swift.Int
-            /// Creates a new `DeleteSummarySchema`.
-            ///
-            /// - Parameters:
-            ///   - requested:
-            ///   - deleted:
-            ///   - omitted:
-            public init(
-                requested: Swift.Int,
-                deleted: Swift.Int,
-                omitted: Swift.Int
-            ) {
-                self.requested = requested
-                self.deleted = deleted
-                self.omitted = omitted
-            }
-            public enum CodingKeys: String, CodingKey {
-                case requested
-                case deleted
-                case omitted
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema`.
-        public struct MediaAssetNodeSearchItemSearchQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/page`.
-            public var page: Components.Schemas.SearchPageSchema
-            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/SortPayload`.
+        /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchRequestQuerySchema`.
+        public struct MediaAssetNodeSearchItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchRequestQuerySchema/page`.
+            public var page: Components.Schemas.SearchPageSchema?
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case name = "name"
@@ -239,9 +242,9 @@ extension Components {
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.MediaAssetNodeSearchItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -249,7 +252,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.MediaAssetNodeSearchItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -260,15 +263,15 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/sort`.
-            public var sort: Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.MediaAssetNodeSearchItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.MediaAssetNodeSearchItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchRequestQuerySchema/filters/search`.
                 public var search: Swift.String?
-                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/filters/parentId`.
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchRequestQuerySchema/filters/parentId`.
                 public var parentId: Swift.String?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -287,18 +290,18 @@ extension Components {
                     case parentId
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema/filters`.
-            public var filters: Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema.FiltersPayload
-            /// Creates a new `MediaAssetNodeSearchItemSearchQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.MediaAssetNodeSearchItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `MediaAssetNodeSearchItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
             ///   - sort:
             ///   - filters:
             public init(
-                page: Components.Schemas.SearchPageSchema,
-                sort: Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema.FiltersPayload
+                page: Components.Schemas.SearchPageSchema? = nil,
+                sort: Components.Schemas.MediaAssetNodeSearchItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.MediaAssetNodeSearchItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -313,17 +316,17 @@ extension Components {
         /// - Remark: Generated from `#/components/schemas/SearchPageSchema`.
         public struct SearchPageSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/SearchPageSchema/size`.
-            public var size: Components.Schemas.SearchPageSizeField
+            public var size: Components.Schemas.SearchPageSizeField?
             /// - Remark: Generated from `#/components/schemas/SearchPageSchema/number`.
-            public var number: Components.Schemas.SearchPageNumberField
+            public var number: Components.Schemas.SearchPageNumberField?
             /// Creates a new `SearchPageSchema`.
             ///
             /// - Parameters:
             ///   - size:
             ///   - number:
             public init(
-                size: Components.Schemas.SearchPageSizeField,
-                number: Components.Schemas.SearchPageNumberField
+                size: Components.Schemas.SearchPageSizeField? = nil,
+                number: Components.Schemas.SearchPageNumberField? = nil
             ) {
                 self.size = size
                 self.number = number
@@ -333,8 +336,12 @@ extension Components {
                 case number
             }
         }
+        /// Results per page. Defaults to 20 when omitted; values below 1 are clamped to 1. Endpoint-specific maximums may apply.
+        ///
         /// - Remark: Generated from `#/components/schemas/SearchPageSizeField`.
         public typealias SearchPageSizeField = Swift.Int
+        /// 1-based page number. Defaults to 1 when omitted; values below 1 are clamped to 1.
+        ///
         /// - Remark: Generated from `#/components/schemas/SearchPageNumberField`.
         public typealias SearchPageNumberField = Swift.Int
         /// - Remark: Generated from `#/components/schemas/SortDirection`.
@@ -345,7 +352,7 @@ extension Components {
         /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchSchema`.
         public struct MediaAssetNodeSearchItemSearchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchSchema/query`.
-            public var query: Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema
+            public var query: Components.Schemas.MediaAssetNodeSearchItemSearchResponseQuerySchema
             /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchSchema/data/items`.
@@ -377,7 +384,7 @@ extension Components {
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema,
+                query: Components.Schemas.MediaAssetNodeSearchItemSearchResponseQuerySchema,
                 data: Components.Schemas.MediaAssetNodeSearchItemSearchSchema.DataPayload
             ) {
                 self.query = query
@@ -386,6 +393,118 @@ extension Components {
             public enum CodingKeys: String, CodingKey {
                 case query
                 case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchResponseQuerySchema`.
+        public struct MediaAssetNodeSearchItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchResponseQuerySchema/page`.
+            public var page: Components.Schemas.SearchResponsePageSchema
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchResponseQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchResponseQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case id = "id"
+                    case name = "name"
+                    case slugPath = "slugPath"
+                    case _extension = "extension"
+                    case sizeBytes = "sizeBytes"
+                    case status = "status"
+                    case title = "title"
+                    case createdAt = "createdAt"
+                    case updatedAt = "updatedAt"
+                }
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.MediaAssetNodeSearchItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchResponseQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.MediaAssetNodeSearchItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.MediaAssetNodeSearchItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.MediaAssetNodeSearchItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchResponseQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchResponseQuerySchema/filters/search`.
+                public var search: Swift.String?
+                /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchResponseQuerySchema/filters/parentId`.
+                public var parentId: Swift.String?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                ///   - parentId:
+                public init(
+                    search: Swift.String? = nil,
+                    parentId: Swift.String? = nil
+                ) {
+                    self.search = search
+                    self.parentId = parentId
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                    case parentId
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.MediaAssetNodeSearchItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `MediaAssetNodeSearchItemSearchResponseQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchResponsePageSchema,
+                sort: Components.Schemas.MediaAssetNodeSearchItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.MediaAssetNodeSearchItemSearchResponseQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/SearchResponsePageSchema`.
+        public struct SearchResponsePageSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/SearchResponsePageSchema/size`.
+            public var size: Components.Schemas.SearchPageSizeField
+            /// - Remark: Generated from `#/components/schemas/SearchResponsePageSchema/number`.
+            public var number: Components.Schemas.SearchPageNumberField
+            /// Creates a new `SearchResponsePageSchema`.
+            ///
+            /// - Parameters:
+            ///   - size:
+            ///   - number:
+            public init(
+                size: Components.Schemas.SearchPageSizeField,
+                number: Components.Schemas.SearchPageNumberField
+            ) {
+                self.size = size
+                self.number = number
+            }
+            public enum CodingKeys: String, CodingKey {
+                case size
+                case number
             }
         }
         /// - Remark: Generated from `#/components/schemas/MediaAssetNodeSearchItemSchema`.
@@ -853,13 +972,13 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema`.
-        public struct MediaFolderListItemSearchQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema/page`.
-            public var page: Components.Schemas.SearchPageSchema
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema/SortPayload`.
+        /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchRequestQuerySchema`.
+        public struct MediaFolderListItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchRequestQuerySchema/page`.
+            public var page: Components.Schemas.SearchPageSchema?
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case name = "name"
@@ -869,9 +988,9 @@ extension Components {
                     case createdAt = "createdAt"
                     case updatedAt = "updatedAt"
                 }
-                /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.MediaFolderListItemSearchQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.MediaFolderListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -879,7 +998,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.MediaFolderListItemSearchQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.MediaFolderListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -890,13 +1009,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.MediaFolderListItemSearchQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema/sort`.
-            public var sort: Components.Schemas.MediaFolderListItemSearchQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.MediaFolderListItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.MediaFolderListItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema/filters/parentId`.
+                /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchRequestQuerySchema/filters/parentId`.
                 public var parentId: Swift.String?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -909,18 +1028,18 @@ extension Components {
                     case parentId
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchQuerySchema/filters`.
-            public var filters: Components.Schemas.MediaFolderListItemSearchQuerySchema.FiltersPayload
-            /// Creates a new `MediaFolderListItemSearchQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.MediaFolderListItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `MediaFolderListItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
             ///   - sort:
             ///   - filters:
             public init(
-                page: Components.Schemas.SearchPageSchema,
-                sort: Components.Schemas.MediaFolderListItemSearchQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.MediaFolderListItemSearchQuerySchema.FiltersPayload
+                page: Components.Schemas.SearchPageSchema? = nil,
+                sort: Components.Schemas.MediaFolderListItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.MediaFolderListItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -935,7 +1054,7 @@ extension Components {
         /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchSchema`.
         public struct MediaFolderListItemSearchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchSchema/query`.
-            public var query: Components.Schemas.MediaFolderListItemSearchQuerySchema
+            public var query: Components.Schemas.MediaFolderListItemSearchResponseQuerySchema
             /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchSchema/data/items`.
@@ -967,7 +1086,7 @@ extension Components {
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.MediaFolderListItemSearchQuerySchema,
+                query: Components.Schemas.MediaFolderListItemSearchResponseQuerySchema,
                 data: Components.Schemas.MediaFolderListItemSearchSchema.DataPayload
             ) {
                 self.query = query
@@ -976,6 +1095,85 @@ extension Components {
             public enum CodingKeys: String, CodingKey {
                 case query
                 case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchResponseQuerySchema`.
+        public struct MediaFolderListItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchResponseQuerySchema/page`.
+            public var page: Components.Schemas.SearchResponsePageSchema
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchResponseQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchResponseQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case id = "id"
+                    case name = "name"
+                    case path = "path"
+                    case assetCount = "assetCount"
+                    case totalSizeBytes = "totalSizeBytes"
+                    case createdAt = "createdAt"
+                    case updatedAt = "updatedAt"
+                }
+                /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.MediaFolderListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchResponseQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.MediaFolderListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.MediaFolderListItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.MediaFolderListItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchResponseQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchResponseQuerySchema/filters/parentId`.
+                public var parentId: Swift.String?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - parentId:
+                public init(parentId: Swift.String? = nil) {
+                    self.parentId = parentId
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case parentId
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/MediaFolderListItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.MediaFolderListItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `MediaFolderListItemSearchResponseQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchResponsePageSchema,
+                sort: Components.Schemas.MediaFolderListItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.MediaFolderListItemSearchResponseQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
             }
         }
         /// - Remark: Generated from `#/components/schemas/MediaFolderPatchSchema`.
@@ -1130,13 +1328,13 @@ extension Components {
                 case isActive
             }
         }
-        /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema`.
-        public struct MediaVariantListItemSearchQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/page`.
-            public var page: Components.Schemas.SearchPageSchema
-            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/SortPayload`.
+        /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchRequestQuerySchema`.
+        public struct MediaVariantListItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchRequestQuerySchema/page`.
+            public var page: Components.Schemas.SearchPageSchema?
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case key = "key"
@@ -1144,9 +1342,9 @@ extension Components {
                     case isRequired = "isRequired"
                     case isActive = "isActive"
                 }
-                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.MediaVariantListItemSearchQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.MediaVariantListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -1154,7 +1352,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.MediaVariantListItemSearchQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.MediaVariantListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -1165,13 +1363,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.MediaVariantListItemSearchQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/sort`.
-            public var sort: Components.Schemas.MediaVariantListItemSearchQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.MediaVariantListItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.MediaVariantListItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -1184,18 +1382,18 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchQuerySchema/filters`.
-            public var filters: Components.Schemas.MediaVariantListItemSearchQuerySchema.FiltersPayload
-            /// Creates a new `MediaVariantListItemSearchQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.MediaVariantListItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `MediaVariantListItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
             ///   - sort:
             ///   - filters:
             public init(
-                page: Components.Schemas.SearchPageSchema,
-                sort: Components.Schemas.MediaVariantListItemSearchQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.MediaVariantListItemSearchQuerySchema.FiltersPayload
+                page: Components.Schemas.SearchPageSchema? = nil,
+                sort: Components.Schemas.MediaVariantListItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.MediaVariantListItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -1212,7 +1410,7 @@ extension Components {
         /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchSchema`.
         public struct MediaVariantListItemSearchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchSchema/query`.
-            public var query: Components.Schemas.MediaVariantListItemSearchQuerySchema
+            public var query: Components.Schemas.MediaVariantListItemSearchResponseQuerySchema
             /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchSchema/data/items`.
@@ -1244,7 +1442,7 @@ extension Components {
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.MediaVariantListItemSearchQuerySchema,
+                query: Components.Schemas.MediaVariantListItemSearchResponseQuerySchema,
                 data: Components.Schemas.MediaVariantListItemSearchSchema.DataPayload
             ) {
                 self.query = query
@@ -1253,6 +1451,83 @@ extension Components {
             public enum CodingKeys: String, CodingKey {
                 case query
                 case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchResponseQuerySchema`.
+        public struct MediaVariantListItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchResponseQuerySchema/page`.
+            public var page: Components.Schemas.SearchResponsePageSchema
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchResponseQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchResponseQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case id = "id"
+                    case key = "key"
+                    case name = "name"
+                    case isRequired = "isRequired"
+                    case isActive = "isActive"
+                }
+                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.MediaVariantListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchResponseQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.MediaVariantListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.MediaVariantListItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.MediaVariantListItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchResponseQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchResponseQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                public init(search: Components.Schemas.SearchStringField? = nil) {
+                    self.search = search
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.MediaVariantListItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `MediaVariantListItemSearchResponseQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchResponsePageSchema,
+                sort: Components.Schemas.MediaVariantListItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.MediaVariantListItemSearchResponseQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
             }
         }
         /// - Remark: Generated from `#/components/schemas/MediaVariantListItemSchema`.
@@ -1390,13 +1665,13 @@ extension Components {
                 case updatedAt
             }
         }
-        /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema`.
-        public struct MediaVariantProcessorListItemSearchQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/page`.
-            public var page: Components.Schemas.SearchPageSchema
-            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/SortPayload`.
+        /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchRequestQuerySchema`.
+        public struct MediaVariantProcessorListItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchRequestQuerySchema/page`.
+            public var page: Components.Schemas.SearchPageSchema?
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case name = "name"
@@ -1404,9 +1679,9 @@ extension Components {
                     case commandTemplate = "commandTemplate"
                     case isActive = "isActive"
                 }
-                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.MediaVariantProcessorListItemSearchQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.MediaVariantProcessorListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -1414,7 +1689,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.MediaVariantProcessorListItemSearchQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.MediaVariantProcessorListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -1425,13 +1700,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.MediaVariantProcessorListItemSearchQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/sort`.
-            public var sort: Components.Schemas.MediaVariantProcessorListItemSearchQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.MediaVariantProcessorListItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.MediaVariantProcessorListItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -1444,18 +1719,18 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema/filters`.
-            public var filters: Components.Schemas.MediaVariantProcessorListItemSearchQuerySchema.FiltersPayload
-            /// Creates a new `MediaVariantProcessorListItemSearchQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.MediaVariantProcessorListItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `MediaVariantProcessorListItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
             ///   - sort:
             ///   - filters:
             public init(
-                page: Components.Schemas.SearchPageSchema,
-                sort: Components.Schemas.MediaVariantProcessorListItemSearchQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.MediaVariantProcessorListItemSearchQuerySchema.FiltersPayload
+                page: Components.Schemas.SearchPageSchema? = nil,
+                sort: Components.Schemas.MediaVariantProcessorListItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.MediaVariantProcessorListItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -1470,7 +1745,7 @@ extension Components {
         /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchSchema`.
         public struct MediaVariantProcessorListItemSearchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchSchema/query`.
-            public var query: Components.Schemas.MediaVariantProcessorListItemSearchQuerySchema
+            public var query: Components.Schemas.MediaVariantProcessorListItemSearchResponseQuerySchema
             /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchSchema/data/items`.
@@ -1502,7 +1777,7 @@ extension Components {
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.MediaVariantProcessorListItemSearchQuerySchema,
+                query: Components.Schemas.MediaVariantProcessorListItemSearchResponseQuerySchema,
                 data: Components.Schemas.MediaVariantProcessorListItemSearchSchema.DataPayload
             ) {
                 self.query = query
@@ -1511,6 +1786,83 @@ extension Components {
             public enum CodingKeys: String, CodingKey {
                 case query
                 case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchResponseQuerySchema`.
+        public struct MediaVariantProcessorListItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchResponseQuerySchema/page`.
+            public var page: Components.Schemas.SearchResponsePageSchema
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchResponseQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchResponseQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case id = "id"
+                    case name = "name"
+                    case matchExtensions = "matchExtensions"
+                    case commandTemplate = "commandTemplate"
+                    case isActive = "isActive"
+                }
+                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.MediaVariantProcessorListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchResponseQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.MediaVariantProcessorListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.MediaVariantProcessorListItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.MediaVariantProcessorListItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchResponseQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchResponseQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                public init(search: Components.Schemas.SearchStringField? = nil) {
+                    self.search = search
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/MediaVariantProcessorListItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.MediaVariantProcessorListItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `MediaVariantProcessorListItemSearchResponseQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchResponsePageSchema,
+                sort: Components.Schemas.MediaVariantProcessorListItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.MediaVariantProcessorListItemSearchResponseQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
             }
         }
     }

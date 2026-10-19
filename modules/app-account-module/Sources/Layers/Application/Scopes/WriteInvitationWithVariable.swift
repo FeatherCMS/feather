@@ -1,6 +1,7 @@
-public import AuthDomain
+public import SystemModule
 public import AccountDomain
-public import FeatherContracts
+public import AuthDomain
+public import FeatherModuleKit
 public import SystemApplication
 public import UserDomain
 
@@ -10,7 +11,7 @@ public struct WriteInvitationWithVariable: Scope {
     public let role: any RoleRepository
     public let authEmail: any AuthEmailRepository
     public let credential: any InvitationCredentialWriter
-    public let variable: any VariableQueries
+    public let variable: any SystemModule.Variable.Lookup.Interface
 
     public init(
         invitation: any InvitationRepository,
@@ -18,7 +19,7 @@ public struct WriteInvitationWithVariable: Scope {
         role: any RoleRepository,
         authEmail: any AuthEmailRepository,
         credential: any InvitationCredentialWriter,
-        variable: any VariableQueries
+        variable: any SystemModule.Variable.Lookup.Interface
     ) {
         self.invitation = invitation
         self.identity = identity

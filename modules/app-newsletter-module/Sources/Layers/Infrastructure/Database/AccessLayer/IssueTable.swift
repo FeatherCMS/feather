@@ -1,4 +1,6 @@
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 
 import struct Foundation.Date
@@ -28,9 +30,8 @@ extension IssueTable.Row {
     }
 }
 
-struct IssueTable: DatabaseTableWithBulkDelete {
+struct IssueTable: DatabaseLegacyTable {
     static let name = "newsletter_issue"
-    static let primaryKey = "id"
     struct Row {
 
         struct Create {

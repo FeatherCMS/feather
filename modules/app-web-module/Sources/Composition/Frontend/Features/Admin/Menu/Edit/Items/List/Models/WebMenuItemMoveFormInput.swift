@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 
 struct WebMenuItemMoveFormInput: Decodable, Sendable {
     let beforeItemId: String?

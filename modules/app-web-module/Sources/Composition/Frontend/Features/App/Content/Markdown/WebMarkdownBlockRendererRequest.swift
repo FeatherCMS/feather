@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct WebMarkdownBlockRendererRequest: Sendable, ExecutionContext {
     public let arguments: [String: String]

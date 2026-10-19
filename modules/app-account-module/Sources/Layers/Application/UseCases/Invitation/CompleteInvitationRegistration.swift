@@ -7,7 +7,7 @@
 import AccountDomain
 import AuthDomain
 public import FeatherApplication
-public import FeatherContracts
+public import FeatherModuleKit
 public import UserApplication
 import UserDomain
 

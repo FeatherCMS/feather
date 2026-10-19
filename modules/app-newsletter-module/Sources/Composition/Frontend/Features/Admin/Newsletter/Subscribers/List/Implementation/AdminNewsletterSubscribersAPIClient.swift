@@ -1,5 +1,5 @@
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import FeatherValidation
 import Foundation
 import HTML
@@ -101,9 +101,7 @@ struct AdminNewsletterSubscribersAPIClient {
                         path: .init(newsletterCampaignKey: newsletter.id),
                         body: .json(
                             .init(
-                                ids: [item.email],
-                                results: false,
-                                summary: true
+                                ids: [item.email]
                             )
                         )
                     )

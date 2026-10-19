@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 public enum ContactPermissions: PermissionProvider {
     public enum Forms: PermissionProvider {

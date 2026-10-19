@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 04. 18.
 //
 
-public import FeatherContracts
+public import FeatherModuleKit
 public import UserApplication
 
 public struct AuthScope: Scope {

@@ -1,6 +1,6 @@
-import AccountApplication
+public import AccountApplication
 import NIOHTTP1
-import OpenAPIRuntime
+public import FeatherBackend
 
 private protocol AccountInvitationHTTPError: ErrorTraceRepresentable,
     HTTPErrorRepresentable
@@ -20,11 +20,9 @@ extension AccountInvitationHTTPError {
         )
     }
 
-    var status: HTTPResponseStatus { .notFound }
-
-    var content: ServerError.Details? {
-        .init(
-            code: .notFound,
+    public var status: HTTPResponseStatus { .notFound }
+    public var content: any HTTPErrorContent {
+        DefaultHTTPErrorContent(
             message: message,
             reason: "invitation_not_found"
         )

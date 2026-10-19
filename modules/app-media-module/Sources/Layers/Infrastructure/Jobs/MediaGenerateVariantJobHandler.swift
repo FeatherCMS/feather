@@ -1,4 +1,5 @@
 public import FeatherApplication
+import FeatherDBAL
 public import FeatherInfrastructure
 import FeatherStorage
 public import Jobs

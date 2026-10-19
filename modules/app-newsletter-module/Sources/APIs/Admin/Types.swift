@@ -161,10 +161,12 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/test-email/post(newsletterCampaignTestEmail)`.
     public func newsletterCampaignTestEmail(
         path: Operations.NewsletterCampaignTestEmail.Input.Path,
+        headers: Operations.NewsletterCampaignTestEmail.Input.Headers = .init(),
         body: Components.RequestBodies.NewsletterIssueTestEmailRequestBody
     ) async throws -> Operations.NewsletterCampaignTestEmail.Output {
         try await newsletterCampaignTestEmail(Operations.NewsletterCampaignTestEmail.Input(
             path: path,
+            headers: headers,
             body: body
         ))
     }
@@ -207,10 +209,12 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/newsletter/campaign/{newsletterCampaignKey}/issues/{newsletterIssueId}/test-email/post(newsletterIssueTestEmail)`.
     public func newsletterIssueTestEmail(
         path: Operations.NewsletterIssueTestEmail.Input.Path,
+        headers: Operations.NewsletterIssueTestEmail.Input.Headers = .init(),
         body: Components.RequestBodies.NewsletterIssueTestEmailRequestBody
     ) async throws -> Operations.NewsletterIssueTestEmail.Output {
         try await newsletterIssueTestEmail(Operations.NewsletterIssueTestEmail.Input(
             path: path,
+            headers: headers,
             body: body
         ))
     }

@@ -1,5 +1,5 @@
 {
-  "originHash" : "d53dff5717724454f61f250ce3b50fc6c44e9b294b0ae754259bf37306183551",
+  "originHash" : "1a27d2a523267dca32929d6cdcb404d51c73e089f8b29cbf7597b18bc5060b92",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -8,24 +8,6 @@
       "state" : {
         "revision" : "4c005f955e83f888d5616e579717a36d2dfc6301",
         "version" : "1.36.2"
-      }
-    },
-    {
-      "identity" : "feather-database",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-database",
-      "state" : {
-        "revision" : "d290d92b2617ad5768c293c4edcdd66b4f178d48",
-        "version" : "1.0.0-rc.2"
-      }
-    },
-    {
-      "identity" : "feather-database-postgres",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-database-postgres",
-      "state" : {
-        "revision" : "d7ceeb1371bd21511ac77bd09ebbfaf2e772950e",
-        "version" : "1.0.0-rc.2"
       }
     },
     {
@@ -348,8 +330,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-runtime",
       "state" : {
-        "revision" : "50ad7976f18fec6c09466d2aebf7be3dc9476cfb",
-        "version" : "1.13.0"
+        "revision" : "478bf6ce34f71734bc88b79b37b842118312d133",
+        "version" : "1.13.2"
       }
     },
     {

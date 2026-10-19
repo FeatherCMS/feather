@@ -1,10 +1,11 @@
+public import SystemModule
 //
 //  WriteCategoryMetadata.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-public import FeatherContracts
+public import FeatherModuleKit
 public import NewsDomain
 public import SystemApplication
 public import WebDomain
@@ -12,12 +13,12 @@ public import WebDomain
 public struct WriteCategoryMetadata: Scope {
     public let category: any CategoryRepository
     public let metadata: any MetadataRepository
-    public let variable: any VariableQueries
+    public let variable: any SystemModule.Variable.Lookup.Interface
 
     public init(
         category: any CategoryRepository,
         metadata: any MetadataRepository,
-        variable: any VariableQueries
+        variable: any SystemModule.Variable.Lookup.Interface
     ) {
         self.category = category
         self.metadata = metadata

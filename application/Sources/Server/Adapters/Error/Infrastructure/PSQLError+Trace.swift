@@ -5,6 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 04. 19..
 //
 
+public import FeatherBackend
 public import PostgresNIO
 
 extension PSQLError: ErrorTraceRepresentable {

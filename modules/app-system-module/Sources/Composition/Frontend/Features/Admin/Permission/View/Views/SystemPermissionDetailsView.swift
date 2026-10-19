@@ -1,9 +1,9 @@
+import SystemModule
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import HTML
 import Hummingbird
 import SGML
-import SystemContracts
 import WebBuilders
 import WebComponents
 
@@ -41,20 +41,24 @@ struct SystemPermissionDetailsView: Component {
 
     private var actions: [AdminDetailView.Action] {
         var result: [AdminDetailView.Action] = []
-        if state.permissions.allows(SystemPermissions.Permissions.update) {
+        if state.permissions.allows(
+            SystemModule.Permission.Permissions.update
+        ) {
             result.append(
                 .init(
                     label: "Edit",
                     href:
                         SystemPermissionRoutes.edit(
-                            RouterPath(state.permission.id)
+                            RouterPath(state.permission.key)
                         )
                         .description,
                     style: .primary
                 )
             )
         }
-        if state.permissions.allows(SystemPermissions.Permissions.delete) {
+        if state.permissions.allows(
+            SystemModule.Permission.Permissions.delete
+        ) {
             result.append(
                 .init(
                     label: "Remove",
@@ -63,7 +67,7 @@ struct SystemPermissionDetailsView: Component {
                         ids: [state.permission.id],
                         returnTo:
                             SystemPermissionRoutes.details(
-                                RouterPath(state.permission.id)
+                                RouterPath(state.permission.key)
                             )
                             .description
                     ),

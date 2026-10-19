@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct ReadAccountProfile: Scope {
     public let profile: any AccountProfileQueries

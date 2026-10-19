@@ -1,6 +1,6 @@
 import AuthApplication
 import AuthInfrastructure
-import FeatherContracts
+import FeatherModuleKit
 import FeatherInfrastructure
 import UserInfrastructure
 

@@ -1,6 +1,6 @@
+public import FeatherBackend
 import NIOHTTP1
-import OpenAPIRuntime
-import PostgresNIO
+public import PostgresNIO
 
 extension PSQLError: HTTPErrorRepresentable {
 
@@ -8,7 +8,7 @@ extension PSQLError: HTTPErrorRepresentable {
         serverInfo?[.sqlState]
     }
 
-    var status: HTTPResponseStatus {
+    public var status: HTTPResponseStatus {
         switch sqlState {
         case "23505":
             return .conflict
@@ -19,32 +19,23 @@ extension PSQLError: HTTPErrorRepresentable {
         }
     }
 
-    var content: ServerError.Details? {
+    private var errorMessage: String {
         switch sqlState {
         case "23505":
-            return .init(
-                code: .conflict,
-                message: "Duplicate value.",
-                reason: serverInfo?[.message] ?? description
-            )
+            return "Duplicate value."
         case "23502":
-            return .init(
-                code: .badRequest,
-                message: "Missing required value.",
-                reason: serverInfo?[.message] ?? description
-            )
+            return "Missing required value."
         case "23503":
-            return .init(
-                code: .badRequest,
-                message: "Invalid reference.",
-                reason: serverInfo?[.message] ?? description
-            )
+            return "Invalid reference."
         default:
-            return .init(
-                code: .internalServerError,
-                message: "Internal server error.",
-                reason: serverInfo?[.message] ?? description
-            )
+            return "Internal server error."
         }
+    }
+
+    public var content: any HTTPErrorContent {
+        DefaultHTTPErrorContent(
+            message: errorMessage,
+            reason: serverInfo?[.message] ?? description
+        )
     }
 }

@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct NewsArticleExtensionContext: Sendable {
     public let articleID: String

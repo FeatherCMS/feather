@@ -1,4 +1,5 @@
-public import FeatherContracts
+public import FeatherModuleKit
+import FeatherDBAL
 public import FeatherDatabase
 public import FeatherInfrastructure
 import WebContracts

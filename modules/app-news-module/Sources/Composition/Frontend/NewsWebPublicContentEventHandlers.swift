@@ -1,6 +1,6 @@
 import AsyncHTTPClient
 import FeatherAdmin
-public import FeatherContracts
+public import FeatherModuleKit
 import Foundation
 import NIOCore
 import NewsAppAPI

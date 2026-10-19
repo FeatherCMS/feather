@@ -5,6 +5,8 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 
 import struct Foundation.Date
@@ -70,9 +72,8 @@ extension WebMetadataTable.Row {
     }
 }
 
-struct WebMetadataTable: DatabaseTableWithBulkDelete {
+struct WebMetadataTable: DatabaseLegacyTable {
     static let name = "web_metadata"
-    static let primaryKey = "id"
     struct Row {
 
         struct Create {

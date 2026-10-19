@@ -20,3 +20,4 @@ protocol AdminListBlogAuthorLinkPresenter: Sendable {
         search: String?,
         error: String?
     ) async throws -> HTMLResponse
+}

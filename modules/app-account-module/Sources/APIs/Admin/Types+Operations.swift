@@ -67,8 +67,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/users/POST/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/users/POST/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountCreate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountCreate.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -76,14 +100,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.AccountCreate.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -102,8 +118,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/users/POST/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/users/POST/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountCreate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountCreate.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -111,14 +151,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.AccountCreate.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/post(accountCreate)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -217,8 +249,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/settings/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/settings/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountSettingsGet.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountSettingsGet.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -226,14 +282,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.AccountSettingsGet.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -252,8 +300,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/settings/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/settings/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountSettingsGet.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountSettingsGet.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -261,14 +333,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.AccountSettingsGet.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/get(accountSettingsGet)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -373,8 +437,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/settings/PUT/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/settings/PUT/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountSettingsUpdate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountSettingsUpdate.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -382,14 +470,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.AccountSettingsUpdate.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/put(accountSettingsUpdate)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -408,8 +488,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/settings/PUT/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/settings/PUT/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountSettingsUpdate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountSettingsUpdate.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -417,14 +521,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.AccountSettingsUpdate.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/settings/put(accountSettingsUpdate)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -541,8 +637,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/users/{userId}/profile/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/users/{userId}/profile/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AdminAccountProfileGet.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AdminAccountProfileGet.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -550,14 +670,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.AdminAccountProfileGet.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/{userId}/profile/get(adminAccountProfileGet)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -576,8 +688,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/users/{userId}/profile/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/users/{userId}/profile/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AdminAccountProfileGet.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AdminAccountProfileGet.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -585,14 +721,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.AdminAccountProfileGet.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/{userId}/profile/get(adminAccountProfileGet)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -713,8 +841,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/users/{userId}/profile/PUT/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/users/{userId}/profile/PUT/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AdminAccountProfileUpdate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AdminAccountProfileUpdate.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -722,14 +874,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.AdminAccountProfileUpdate.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/{userId}/profile/put(adminAccountProfileUpdate)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -748,8 +892,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/users/{userId}/profile/PUT/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/users/{userId}/profile/PUT/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AdminAccountProfileUpdate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AdminAccountProfileUpdate.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -757,14 +925,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.AdminAccountProfileUpdate.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/users/{userId}/profile/put(adminAccountProfileUpdate)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -1069,8 +1229,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/POST/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/POST/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationCreate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationCreate.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -1078,14 +1262,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.AccountInvitationCreate.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/post(accountInvitationCreate)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -1104,8 +1280,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/POST/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/POST/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationCreate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationCreate.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -1113,14 +1313,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.AccountInvitationCreate.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/post(accountInvitationCreate)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -1201,32 +1393,64 @@ public enum Operations {
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Delete response
+            /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationRemove)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationRemove)/responses/204`.
             ///
-            /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.DeleteResponse)
-            /// The associated value of the enum case if `self` is `.ok`.
+            /// HTTP response code: `204 noContent`.
+            case noContent(Components.Responses.NoContentResponse)
+            /// Delete succeeded
             ///
-            /// - Throws: An error if `self` is not `.ok`.
-            /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.DeleteResponse {
+            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationRemove)/responses/204`.
+            ///
+            /// HTTP response code: `204 noContent`.
+            public static var noContent: Self {
+                .noContent(.init())
+            }
+            /// The associated value of the enum case if `self` is `.noContent`.
+            ///
+            /// - Throws: An error if `self` is not `.noContent`.
+            /// - SeeAlso: `.noContent`.
+            public var noContent: Components.Responses.NoContentResponse {
                 get throws {
                     switch self {
-                    case let .ok(response):
+                    case let .noContent(response):
                         return response
                     default:
                         try throwUnexpectedResponseStatus(
-                            expectedStatus: "ok",
+                            expectedStatus: "noContent",
                             response: self
                         )
                     }
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/DELETE/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/DELETE/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationRemove.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationRemove.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -1234,14 +1458,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.AccountInvitationRemove.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationRemove)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -1260,8 +1476,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/DELETE/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/DELETE/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationRemove.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationRemove.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -1269,14 +1509,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.AccountInvitationRemove.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/delete(accountInvitationRemove)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -1375,8 +1607,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationList.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationList.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -1384,14 +1640,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.AccountInvitationList.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations//get(accountInvitationList)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -1410,8 +1658,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationList.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationList.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -1419,14 +1691,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.AccountInvitationList.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations//get(accountInvitationList)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -1495,7 +1759,7 @@ public enum Operations {
             /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/search/POST/requestBody`.
             @frozen public enum Body: Sendable, Hashable {
                 /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/search/POST/requestBody/content/application\/json`.
-                case json(Components.Schemas.AccountInvitationListItemSearchQuerySchema)
+                case json(Components.Schemas.AccountInvitationListItemSearchRequestQuerySchema)
             }
             public var body: Operations.AccountInvitationSearch.Input.Body
             /// Creates a new `Input`.
@@ -1536,8 +1800,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/search/POST/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/search/POST/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationSearch.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationSearch.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -1545,14 +1833,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.AccountInvitationSearch.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/search/post(accountInvitationSearch)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -1571,8 +1851,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/search/POST/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/search/POST/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationSearch.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationSearch.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -1580,14 +1884,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.AccountInvitationSearch.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/search/post(accountInvitationSearch)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -1706,8 +2002,32 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/GET/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/GET/responses/404/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationGet.Output.NotFound.Body
                 /// Creates a new `NotFound`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationGet.Output.NotFound.Body) {
+                    self.body = body
+                }
             }
             /// AccountInvitation not found
             ///
@@ -1715,14 +2035,6 @@ public enum Operations {
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.AccountInvitationGet.Output.NotFound)
-            /// AccountInvitation not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/{accountInvitationId}/get(accountInvitationGet)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
@@ -1741,8 +2053,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/GET/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/GET/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationGet.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationGet.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -1750,14 +2086,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.AccountInvitationGet.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/{accountInvitationId}/get(accountInvitationGet)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -1776,8 +2104,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/GET/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/GET/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationGet.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationGet.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -1785,14 +2137,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.AccountInvitationGet.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/{accountInvitationId}/get(accountInvitationGet)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -1915,8 +2259,32 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/PATCH/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/PATCH/responses/404/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationPatch.Output.NotFound.Body
                 /// Creates a new `NotFound`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationPatch.Output.NotFound.Body) {
+                    self.body = body
+                }
             }
             /// AccountInvitation not found
             ///
@@ -1924,14 +2292,6 @@ public enum Operations {
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.AccountInvitationPatch.Output.NotFound)
-            /// AccountInvitation not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/{accountInvitationId}/patch(accountInvitationPatch)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
@@ -1950,8 +2310,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/PATCH/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/PATCH/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationPatch.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationPatch.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -1959,14 +2343,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.AccountInvitationPatch.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/{accountInvitationId}/patch(accountInvitationPatch)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -1985,8 +2361,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/PATCH/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/PATCH/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationPatch.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationPatch.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -1994,14 +2394,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.AccountInvitationPatch.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/{accountInvitationId}/patch(accountInvitationPatch)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -2124,8 +2516,32 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/PUT/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/PUT/responses/404/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationUpdate.Output.NotFound.Body
                 /// Creates a new `NotFound`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationUpdate.Output.NotFound.Body) {
+                    self.body = body
+                }
             }
             /// AccountInvitation not found
             ///
@@ -2133,14 +2549,6 @@ public enum Operations {
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.AccountInvitationUpdate.Output.NotFound)
-            /// AccountInvitation not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/{accountInvitationId}/put(accountInvitationUpdate)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
@@ -2159,8 +2567,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/PUT/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/PUT/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationUpdate.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationUpdate.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -2168,14 +2600,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.AccountInvitationUpdate.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/{accountInvitationId}/put(accountInvitationUpdate)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -2194,8 +2618,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/PUT/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/PUT/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationUpdate.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationUpdate.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -2203,14 +2651,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.AccountInvitationUpdate.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/{accountInvitationId}/put(accountInvitationUpdate)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
@@ -2329,8 +2769,32 @@ public enum Operations {
                 }
             }
             public struct NotFound: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/resend/POST/responses/404/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/resend/POST/responses/404/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationResend.Output.NotFound.Body
                 /// Creates a new `NotFound`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationResend.Output.NotFound.Body) {
+                    self.body = body
+                }
             }
             /// AccountInvitation not found
             ///
@@ -2338,14 +2802,6 @@ public enum Operations {
             ///
             /// HTTP response code: `404 notFound`.
             case notFound(Operations.AccountInvitationResend.Output.NotFound)
-            /// AccountInvitation not found
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/{accountInvitationId}/resend/post(accountInvitationResend)/responses/404`.
-            ///
-            /// HTTP response code: `404 notFound`.
-            public static var notFound: Self {
-                .notFound(.init())
-            }
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
@@ -2364,8 +2820,32 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/resend/POST/responses/401/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/resend/POST/responses/401/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationResend.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationResend.Output.Unauthorized.Body) {
+                    self.body = body
+                }
             }
             /// Unauthorized
             ///
@@ -2373,14 +2853,6 @@ public enum Operations {
             ///
             /// HTTP response code: `401 unauthorized`.
             case unauthorized(Operations.AccountInvitationResend.Output.Unauthorized)
-            /// Unauthorized
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/{accountInvitationId}/resend/post(accountInvitationResend)/responses/401`.
-            ///
-            /// HTTP response code: `401 unauthorized`.
-            public static var unauthorized: Self {
-                .unauthorized(.init())
-            }
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
@@ -2399,8 +2871,32 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/resend/POST/responses/403/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/account/invitations/{accountInvitationId}/resend/POST/responses/403/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.AccountInvitationResend.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
-                public init() {}
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.AccountInvitationResend.Output.Forbidden.Body) {
+                    self.body = body
+                }
             }
             /// Forbidden
             ///
@@ -2408,14 +2904,6 @@ public enum Operations {
             ///
             /// HTTP response code: `403 forbidden`.
             case forbidden(Operations.AccountInvitationResend.Output.Forbidden)
-            /// Forbidden
-            ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/account/invitations/{accountInvitationId}/resend/post(accountInvitationResend)/responses/403`.
-            ///
-            /// HTTP response code: `403 forbidden`.
-            public static var forbidden: Self {
-                .forbidden(.init())
-            }
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.

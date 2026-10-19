@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct WebTemplateProviderEvent: Event {
     public typealias Output = any WebTemplateProvider

@@ -1,4 +1,5 @@
 import ContactDomain
+import FeatherDBAL
 public import FeatherDatabase
 public import FeatherInfrastructure
 

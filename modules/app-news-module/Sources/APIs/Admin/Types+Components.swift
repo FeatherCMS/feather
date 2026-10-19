@@ -13,7 +13,7 @@ public import struct Foundation.Date
 public enum Components {}
 
 // swift-openapi-generator dummy public import compatibility
-public func unsafeOpenAPIGenerationHotfixForAppNewsAdminModuleAdminTypesComponents(
+public func unsafeOpenAPIGenerationHotfixForAppNewsModuleAdminTypesComponents(
     _ url: Foundation.URL,
     _ data: Foundation.Data,
     _ date: Foundation.Date,

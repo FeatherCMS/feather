@@ -1,4 +1,5 @@
 import FeatherDatabase
+import FeatherDBAL
 public import FeatherInfrastructure
 public import FeatherMail
 import Foundation
@@ -64,6 +65,7 @@ public enum SendNewsletterIssueJobHandler {
             }
             let repository = DeliveryDatabaseRepository(
                 context: .init(
+                    platform: databaseContext.platform,
                     connection: connection,
                     idGenerator: databaseContext.idGenerator
                 )

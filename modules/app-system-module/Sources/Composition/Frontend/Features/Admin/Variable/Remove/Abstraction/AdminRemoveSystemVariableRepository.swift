@@ -1,3 +1,4 @@
+import SystemModule
 import FeatherAdmin
 
 protocol AdminRemoveSystemVariableRepository: Sendable {

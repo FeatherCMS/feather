@@ -1,10 +1,10 @@
+import SystemModule
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import Foundation
 import HTML
 import Hummingbird
 import SystemAdminAPI
-import SystemContracts
 import WebBuilders
 import WebComponents
 
@@ -18,7 +18,7 @@ struct SystemJobRow: Component {
                 "View",
                 href: SystemJobRoutes.details(RouterPath(job.id)).description,
                 style: .ghost(.primary),
-                permission: SystemPermissions.Jobs.read
+                permission: SystemModule.Job.Permissions.read
             )
         ]
     }
@@ -31,9 +31,10 @@ struct SystemJobRow: Component {
             Td(
                 htmlEscaped(
                     truncatedParameterSummary(payload.parameterSummary)
-                ).emptyToNil ?? "—"
+                )
+                .emptyToNil ?? "—"
             )
-                .data("label", "Parameters")
+            .data("label", "Parameters")
             Td {
                 context.build(statusChip(job.status))
             }

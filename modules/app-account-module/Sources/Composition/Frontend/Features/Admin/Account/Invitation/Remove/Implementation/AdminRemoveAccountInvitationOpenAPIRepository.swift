@@ -49,7 +49,7 @@ struct AdminRemoveAccountInvitationOpenAPIRepository:
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.accountInvitationRemove(
-                body: .json(.init(ids: [id], results: false, summary: true))
+                body: .json(.init(ids: [id]))
             )
         }
     }

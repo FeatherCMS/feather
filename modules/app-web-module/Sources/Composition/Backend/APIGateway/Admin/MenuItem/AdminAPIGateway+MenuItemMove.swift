@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 public import WebAdminAPI
 import WebApplication
 
@@ -15,7 +15,7 @@ extension AdminAPIGateway {
 
         let useCase = useCases.makeMoveMenuItem()
         let subject = try await CurrentSubject.require()
-        try await useCase.execute(
+        _ = try await useCase.execute(
             subject: subject,
             input: .init(
                 id: input.path.webMenuItemId,

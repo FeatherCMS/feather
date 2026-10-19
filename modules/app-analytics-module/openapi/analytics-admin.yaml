@@ -20,8 +20,16 @@ paths:
           $ref: '#/components/responses/AnalyticsLogListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/analytics/logs/overview:
@@ -36,8 +44,16 @@ paths:
           $ref: '#/components/responses/AnalyticsLogOverviewResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/analytics/logs/search:
@@ -49,15 +65,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AnalyticsLogListItemSearchQuerySchema'
+              $ref: '#/components/schemas/AnalyticsLogListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/AnalyticsLogListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/analytics/logs/{id}:
@@ -72,10 +96,22 @@ paths:
           $ref: '#/components/responses/AnalyticsLogDetailResponse'
         404:
           description: AnalyticsLog not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
 components:
@@ -127,6 +163,51 @@ components:
     AnalyticsLogIdField:
       type: string
       example: analytics-log-01
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
+      required:
+      - error
+    DefaultHTTPErrorContentSchema:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - message
+      - reason
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
     AnalyticsLogOverviewQuerySchema:
       type: object
       properties:
@@ -270,7 +351,7 @@ components:
       - label
       - count
       - share
-    AnalyticsLogListItemSearchQuerySchema:
+    AnalyticsLogListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -301,9 +382,9 @@ components:
         filters:
           type: object
           example:
-            source: web_app
-            method: GET
             search: /articles/hello-world/
+            method: GET
+            source: web_app
           properties:
             search:
               $ref: '#/components/schemas/AnalyticsLogPathField'
@@ -318,7 +399,6 @@ components:
             to:
               $ref: '#/components/schemas/AnalyticsLogOverviewDateField'
       required:
-      - page
       - filters
     SearchPageSchema:
       type: object
@@ -327,14 +407,17 @@ components:
           $ref: '#/components/schemas/SearchPageSizeField'
         number:
           $ref: '#/components/schemas/SearchPageNumberField'
-      required:
-      - size
-      - number
     SearchPageSizeField:
       type: integer
+      default: 20
+      description: Results per page. Defaults to 20 when omitted; values below 1 are
+        clamped to 1. Endpoint-specific maximums may apply.
       example: 20
     SearchPageNumberField:
       type: integer
+      default: 1
+      description: 1-based page number. Defaults to 1 when omitted; values below 1
+        are clamped to 1.
       example: 1
     SortDirection:
       type: string
@@ -362,7 +445,7 @@ components:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/AnalyticsLogListItemSearchQuerySchema'
+          $ref: '#/components/schemas/AnalyticsLogListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -379,6 +462,66 @@ components:
       required:
       - query
       - data
+    AnalyticsLogListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - accountId
+                - method
+                - source
+                - path
+                - responseCode
+                - ip
+                - browserName
+                - createdAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: /articles/hello-world/
+            method: GET
+            source: web_app
+          properties:
+            search:
+              $ref: '#/components/schemas/AnalyticsLogPathField'
+            source:
+              $ref: '#/components/schemas/AnalyticsLogSourceField'
+            method:
+              $ref: '#/components/schemas/AnalyticsLogMethodField'
+            responseCode:
+              $ref: '#/components/schemas/AnalyticsLogResponseCodeField'
+            from:
+              $ref: '#/components/schemas/AnalyticsLogOverviewDateField'
+            to:
+              $ref: '#/components/schemas/AnalyticsLogOverviewDateField'
+      required:
+      - page
+      - filters
+    SearchResponsePageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
     AnalyticsLogDetailSchema:
       type: object
       properties:

@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 
 public protocol WebMarkdownBlockRenderer: Sendable {
     var name: String { get }

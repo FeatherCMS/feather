@@ -5,9 +5,10 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 import FeatherDatabase
 import FeatherDatabasePostgres
+import FeatherDBALPostgres
 import FeatherDomain
 import FeatherInfrastructure
 import Foundation
@@ -75,6 +76,7 @@ struct UserInfrastructureTestSuite {
                     UserInfrastructure.TableMigration(connection: connection),
                     UserInfrastructure.TableSeedMigration(
                         context: .init(
+                            platform: PostgresDatabasePlatform(),
                             connection: connection,
                             idGenerator: TestIDGenerator()
                         ),

@@ -1,6 +1,6 @@
+import SystemModule
 import FeatherAdmin
 import Hummingbird
-import SystemContracts
 import WebComponents
 
 struct AdminRemoveSystemPermissionDefaultPresenter:

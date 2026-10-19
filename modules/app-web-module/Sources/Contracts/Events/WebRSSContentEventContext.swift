@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct WebRSSContentEventContext<T: Sendable>: ExecutionContext {
     public let runtime: T

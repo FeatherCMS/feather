@@ -1,7 +1,9 @@
+import SystemModule
 import AccountApplication
 import AccountInfrastructure
 import AuthInfrastructure
 import FeatherInfrastructure
+import SystemApplication
 import SystemInfrastructure
 import UserInfrastructure
 
@@ -17,8 +19,8 @@ extension UseCases {
                     role: RoleDatabaseRepository(context: context),
                     authEmail: AuthEmailDatabaseRepository(context: context),
                     credential: credentialWriter,
-                    variable: VariableDatabaseQueries(
-                        context: .init(connection: context.connection)
+                    variable: SystemModule.Variable.Lookup.Database(
+                        context: context
                     )
                 )
             }

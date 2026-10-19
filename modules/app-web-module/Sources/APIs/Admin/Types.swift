@@ -438,10 +438,12 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move/post(webMenuItemMove)`.
     public func webMenuItemMove(
         path: Operations.WebMenuItemMove.Input.Path,
+        headers: Operations.WebMenuItemMove.Input.Headers = .init(),
         body: Components.RequestBodies.WebMenuItemMoveRequestBody
     ) async throws -> Operations.WebMenuItemMove.Output {
         try await webMenuItemMove(Operations.WebMenuItemMove.Input(
             path: path,
+            headers: headers,
             body: body
         ))
     }

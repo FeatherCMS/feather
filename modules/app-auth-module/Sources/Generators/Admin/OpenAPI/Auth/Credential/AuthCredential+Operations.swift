@@ -43,7 +43,7 @@ struct AuthCredentialListOperation: AuthCredentialOperation {
 }
 
 struct AuthCredentialSearchOperation: AuthCredentialOperation {
-    var searchQuery: SearchQuerySchema {
+    var searchRequestQuery: SearchRequestQuerySchema {
         .init(
             items: AuthCredentialListItemSchema(),
             sortFieldKeys: [
@@ -55,12 +55,15 @@ struct AuthCredentialSearchOperation: AuthCredentialOperation {
     }
 
     var requestBody: (any RequestBodyRepresentable)? {
-        SearchRequestBody(query: searchQuery)
+        SearchRequestBody(query: searchRequestQuery)
     }
 
     var responseMap: ResponseMap {
         [
-            200: SearchResponse(query: searchQuery).reference()
+            200: SearchResponse(
+                query: SearchResponseQuerySchema(query: searchRequestQuery)
+            )
+            .reference()
         ]
     }
 }

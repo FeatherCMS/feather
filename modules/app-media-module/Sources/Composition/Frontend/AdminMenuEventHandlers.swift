@@ -1,6 +1,6 @@
 import FeatherAdmin
-public import FeatherContracts
-import SystemContracts
+public import FeatherModuleKit
+import SystemModule
 
 public enum MediaAdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {

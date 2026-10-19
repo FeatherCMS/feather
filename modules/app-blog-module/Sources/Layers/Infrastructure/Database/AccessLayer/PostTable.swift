@@ -5,6 +5,8 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 
 import struct Foundation.Data
@@ -56,9 +58,8 @@ extension PostTable.Row {
     }
 }
 
-struct PostTable: DatabaseTableWithBulkDelete {
+struct PostTable: DatabaseLegacyTable {
     static let name = "blog_post"
-    static let primaryKey = "id"
     struct Row {
 
         struct Create {

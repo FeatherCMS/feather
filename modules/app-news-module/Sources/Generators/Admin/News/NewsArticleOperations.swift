@@ -5,19 +5,19 @@ import OpenAPIKit30
 protocol NewsArticleOperation: BearerProtectedOperation {}
 
 extension NewsArticleOperation {
-    var tags: [TagRepresentable] { [NewsArticleTag()] }
+    var tags: [any TagRepresentable] { [NewsArticleTag()] }
 }
 
 protocol NewsArticleIDOperation: NewsArticleOperation {}
 
 extension NewsArticleIDOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [NewsArticleIDParameter().reference()]
     }
 }
 
 struct NewsArticleCreateOperation: NewsArticleOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         NewsArticleRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -32,7 +32,7 @@ struct NewsArticleListOperation: NewsArticleOperation {
 }
 
 struct NewsArticleSearchOperation: NewsArticleOperation {
-    var searchQuery: SearchQuerySchema {
+    var searchRequestQuery: SearchRequestQuerySchema {
         .init(
             items: NewsArticleListItemSchema(),
             sortFieldKeys: ["id", "title", "createdAt", "updatedAt"],
@@ -40,12 +40,17 @@ struct NewsArticleSearchOperation: NewsArticleOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
-        SearchRequestBody(query: searchQuery)
+    var requestBody: (any RequestBodyRepresentable)? {
+        SearchRequestBody(query: searchRequestQuery)
     }
 
     var responseMap: ResponseMap {
-        [200: SearchResponse(query: searchQuery).reference()]
+        [
+            200: SearchResponse(
+                query: SearchResponseQuerySchema(query: searchRequestQuery)
+            )
+            .reference()
+        ]
     }
 }
 
@@ -59,7 +64,7 @@ struct NewsArticleGetOperation: NewsArticleIDOperation {
 }
 
 struct NewsArticleUpdateOperation: NewsArticleIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         NewsArticleUpdateRequestBody().reference()
     }
     var responseMap: ResponseMap {

@@ -1,5 +1,5 @@
 public import AccountDomain
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct WriteAccountProfile: Scope {
     public let profile: any AccountProfileRepository

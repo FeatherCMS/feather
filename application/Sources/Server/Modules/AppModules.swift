@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 import FeatherInfrastructure
 import AuthApplication
 import AuthInfrastructure

@@ -90,7 +90,7 @@ struct AdminEditAuthAccessControlOpenAPIRepository:
         try await systemAPI.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
-                .systemPermissionSearch(
+                .systemPermissionQuery(
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
@@ -102,7 +102,14 @@ struct AdminEditAuthAccessControlOpenAPIRepository:
 
             switch response {
             case .ok(let ok):
-                return try ok.body.json.data.items
+                return try ok.body.json.data.items.map {
+                    .init(
+                        id: $0.id,
+                        key: $0.key,
+                        name: $0.name,
+                        notes: $0.notes
+                    )
+                }
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
@@ -163,14 +170,12 @@ struct AdminEditAuthAccessControlOpenAPIRepository:
             let response = try await client.authRolePermissionRemove(
                 body: .json(
                     .init(
-                        ids: ["\(pair.roleId):\(pair.permissionId)"],
-                        results: false,
-                        summary: true
+                        ids: ["\(pair.roleId):\(pair.permissionId)"]
                     )
                 )
             )
             switch response {
-            case .ok:
+            case .noContent:
                 break
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized

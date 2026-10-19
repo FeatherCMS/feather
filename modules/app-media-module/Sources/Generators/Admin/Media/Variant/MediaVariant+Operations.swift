@@ -37,7 +37,7 @@ struct MediaVariantCreateOperation: MediaVariantOperation {
 }
 
 struct MediaVariantListOperation: MediaVariantOperation {
-    var searchQuery: SearchQuerySchema {
+    var searchRequestQuery: SearchRequestQuerySchema {
         .init(
             items: MediaVariantListItemSchema(),
             sortFieldKeys: ["id", "key", "name", "isRequired", "isActive"],
@@ -45,10 +45,15 @@ struct MediaVariantListOperation: MediaVariantOperation {
         )
     }
     var requestBody: (any RequestBodyRepresentable)? {
-        SearchRequestBody(query: searchQuery)
+        SearchRequestBody(query: searchRequestQuery)
     }
     var responseMap: ResponseMap {
-        [200: SearchResponse(query: searchQuery).reference()]
+        [
+            200: SearchResponse(
+                query: SearchResponseQuerySchema(query: searchRequestQuery)
+            )
+            .reference()
+        ]
     }
 }
 
@@ -88,7 +93,7 @@ struct MediaVariantProcessorCreateOperation: MediaVariantIDOperation {
 }
 
 struct MediaVariantProcessorListOperation: MediaVariantIDOperation {
-    var searchQuery: SearchQuerySchema {
+    var searchRequestQuery: SearchRequestQuerySchema {
         .init(
             items: MediaVariantProcessorListItemSchema(),
             sortFieldKeys: [
@@ -98,11 +103,14 @@ struct MediaVariantProcessorListOperation: MediaVariantIDOperation {
         )
     }
     var requestBody: (any RequestBodyRepresentable)? {
-        SearchRequestBody(query: searchQuery)
+        SearchRequestBody(query: searchRequestQuery)
     }
     var responseMap: ResponseMap {
         [
-            200: SearchResponse(query: searchQuery).reference(),
+            200: SearchResponse(
+                query: SearchResponseQuerySchema(query: searchRequestQuery)
+            )
+            .reference(),
             404: CustomResponse(description: "Media variant not found"),
         ]
     }

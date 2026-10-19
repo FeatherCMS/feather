@@ -1,7 +1,7 @@
 import BlogAdminAPI
 import BlogAppAPI
 public import FeatherAdmin
-public import FeatherContracts
+public import FeatherModuleKit
 import FeatherValidation
 import HTML
 public import Hummingbird

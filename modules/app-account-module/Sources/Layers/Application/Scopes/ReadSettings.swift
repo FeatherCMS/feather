@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct ReadSettings: Scope {
     public let settings: any SettingsQueries

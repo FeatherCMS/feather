@@ -4,7 +4,7 @@
 //
 //  Created by Binary Birds on 2026. 07. 16.
 
-import FeatherContracts
+import FeatherModuleKit
 import SystemApplication
 import Testing
 
@@ -29,7 +29,7 @@ struct WebInfrastructureTestSuite {
 
         let variables =
             try await events.trigger(
-                event: VariableSeedProvider(),
+                event: Variable.Event.Seed(),
                 using: EventContext()
             )
             .flatMap { $0 }

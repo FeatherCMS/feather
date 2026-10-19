@@ -1,13 +1,13 @@
 public import AnalyticsAdminAPI
 import AnalyticsApplication
-import FeatherContracts
+import FeatherModuleKit
 
 extension AdminAPIGateway {
 
     public func analyticsLogSearch(
         _ input: Operations.AnalyticsLogSearch.Input
     ) async throws -> Operations.AnalyticsLogSearch.Output {
-        let query: Components.Schemas.AnalyticsLogListItemSearchQuerySchema
+        let query: Components.Schemas.AnalyticsLogListItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value

@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 public import Foundation
 public import Hummingbird
 

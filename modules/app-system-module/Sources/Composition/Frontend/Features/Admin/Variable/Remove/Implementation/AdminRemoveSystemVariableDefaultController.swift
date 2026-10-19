@@ -1,8 +1,8 @@
+import SystemModule
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import HTML
 import Hummingbird
-import SystemContracts
 
 struct AdminRemoveSystemVariableDefaultController:
     AdminRemoveSystemVariableController
@@ -19,7 +19,7 @@ struct AdminRemoveSystemVariableDefaultController:
     ) async throws -> Response {
         let (interactor, presenter) = buildRuntime((request, context))
         guard
-            context.isCurrentUserAllowed(to: SystemPermissions.Variables.delete)
+            context.isCurrentUserAllowed(to: SystemModule.Variable.Permissions.delete)
         else {
             return
                 try await presenter.renderErrorPage(

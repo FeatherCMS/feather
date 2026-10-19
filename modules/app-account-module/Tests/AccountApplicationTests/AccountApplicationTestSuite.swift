@@ -1,6 +1,6 @@
 import AccountContracts
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 import FeatherMail
 import Foundation
 import SystemApplication
@@ -182,7 +182,7 @@ struct AccountApplicationTestSuite {
                 role: MockRoleRepository(),
                 authEmail: MockAuthEmailRepository(),
                 credential: MockInvitationCredentialWriter(),
-                variable: MockVariableQueries(value: "https://example.test")
+                variable: MockVariableLookup(value: "https://example.test")
             )
         )
         let useCase = AddInvitation(
@@ -232,7 +232,7 @@ struct AccountApplicationTestSuite {
                 role: MockRoleRepository(),
                 authEmail: authEmailRepository,
                 credential: MockInvitationCredentialWriter(),
-                variable: MockVariableQueries(
+                variable: MockVariableLookup(
                     value: "https://example.test",
                     mailFromAddress: "invitations@example.test",
                     mailFromName: "Binary Birds"
@@ -338,7 +338,7 @@ struct AccountApplicationTestSuite {
             context: WriteInvitationOnlyWithVariable(
                 invitation: repository,
                 role: MockRoleRepository(),
-                variable: MockVariableQueries(
+                variable: MockVariableLookup(
                     value: "https://example.test",
                     mailFromAddress: "resend@example.test",
                     mailFromName: "Binary Birds"
@@ -440,7 +440,7 @@ struct AccountApplicationTestSuite {
             context: WriteInvitationOnlyWithVariable(
                 invitation: repository,
                 role: MockRoleRepository(),
-                variable: MockVariableQueries(value: "https://example.test")
+                variable: MockVariableLookup(value: "https://example.test")
             )
         )
         let useCase = ResendInvitation(

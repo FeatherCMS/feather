@@ -94,116 +94,119 @@ extension Components {
         public typealias UserIdentityIDField = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserIdentityRoleIDListSchema`.
         public typealias UserIdentityRoleIDListSchema = [Swift.String]
+        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
+        public struct DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/error`.
+            public var error: Components.Schemas.DefaultHTTPErrorContentSchema
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema/trace`.
+            public var trace: Components.Schemas.ErrorTraceSchema?
+            /// Creates a new `DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema`.
+            ///
+            /// - Parameters:
+            ///   - error:
+            ///   - trace:
+            public init(
+                error: Components.Schemas.DefaultHTTPErrorContentSchema,
+                trace: Components.Schemas.ErrorTraceSchema? = nil
+            ) {
+                self.error = error
+                self.trace = trace
+            }
+            public enum CodingKeys: String, CodingKey {
+                case error
+                case trace
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema`.
+        public struct DefaultHTTPErrorContentSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/message`.
+            public var message: Swift.String
+            /// - Remark: Generated from `#/components/schemas/DefaultHTTPErrorContentSchema/reason`.
+            public var reason: Swift.String
+            /// Creates a new `DefaultHTTPErrorContentSchema`.
+            ///
+            /// - Parameters:
+            ///   - message:
+            ///   - reason:
+            public init(
+                message: Swift.String,
+                reason: Swift.String
+            ) {
+                self.message = message
+                self.reason = reason
+            }
+            public enum CodingKeys: String, CodingKey {
+                case message
+                case reason
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema`.
+        public struct ErrorTraceSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/message`.
+            public var message: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceSchema/reasons`.
+            public var reasons: Components.Schemas.ErrorTraceReasonsSchema?
+            /// Creates a new `ErrorTraceSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - message:
+            ///   - reasons:
+            public init(
+                id: Swift.String,
+                message: Swift.String,
+                reasons: Components.Schemas.ErrorTraceReasonsSchema? = nil
+            ) {
+                self.id = id
+                self.message = message
+                self.reasons = reasons
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case message
+                case reasons
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonsSchema`.
+        public typealias ErrorTraceReasonsSchema = [Components.Schemas.ErrorTraceReasonSchema]
+        /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema`.
+        public struct ErrorTraceReasonSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/id`.
+            public var id: Swift.String
+            /// - Remark: Generated from `#/components/schemas/ErrorTraceReasonSchema/message`.
+            public var message: Swift.String
+            /// Creates a new `ErrorTraceReasonSchema`.
+            ///
+            /// - Parameters:
+            ///   - id:
+            ///   - message:
+            public init(
+                id: Swift.String,
+                message: Swift.String
+            ) {
+                self.id = id
+                self.message = message
+            }
+            public enum CodingKeys: String, CodingKey {
+                case id
+                case message
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema`.
         public struct DeleteRequestSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/ids`.
             public var ids: [Swift.String]
-            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/results`.
-            public var results: Swift.Bool
-            /// - Remark: Generated from `#/components/schemas/DeleteRequestSchema/summary`.
-            public var summary: Swift.Bool
             /// Creates a new `DeleteRequestSchema`.
             ///
             /// - Parameters:
             ///   - ids:
-            ///   - results:
-            ///   - summary:
-            public init(
-                ids: [Swift.String],
-                results: Swift.Bool,
-                summary: Swift.Bool
-            ) {
+            public init(ids: [Swift.String]) {
                 self.ids = ids
-                self.results = results
-                self.summary = summary
             }
             public enum CodingKeys: String, CodingKey {
                 case ids
-                case results
-                case summary
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema`.
-        public struct DeleteResponseSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/results`.
-            public var results: Components.Schemas.DeleteResultListSchema?
-            /// - Remark: Generated from `#/components/schemas/DeleteResponseSchema/summary`.
-            public var summary: Components.Schemas.DeleteSummarySchema?
-            /// Creates a new `DeleteResponseSchema`.
-            ///
-            /// - Parameters:
-            ///   - results:
-            ///   - summary:
-            public init(
-                results: Components.Schemas.DeleteResultListSchema? = nil,
-                summary: Components.Schemas.DeleteSummarySchema? = nil
-            ) {
-                self.results = results
-                self.summary = summary
-            }
-            public enum CodingKeys: String, CodingKey {
-                case results
-                case summary
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
-        public struct DeleteResultListSchemaPayload: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/id`.
-            public var id: Swift.String
-            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
-            @frozen public enum StatusPayload: String, Codable, Hashable, Sendable, CaseIterable {
-                case deleted = "deleted"
-                case notFound = "not_found"
-                case forbidden = "forbidden"
-            }
-            /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema/status`.
-            public var status: Components.Schemas.DeleteResultListSchemaPayload.StatusPayload
-            /// Creates a new `DeleteResultListSchemaPayload`.
-            ///
-            /// - Parameters:
-            ///   - id:
-            ///   - status:
-            public init(
-                id: Swift.String,
-                status: Components.Schemas.DeleteResultListSchemaPayload.StatusPayload
-            ) {
-                self.id = id
-                self.status = status
-            }
-            public enum CodingKeys: String, CodingKey {
-                case id
-                case status
-            }
-        }
-        /// - Remark: Generated from `#/components/schemas/DeleteResultListSchema`.
-        public typealias DeleteResultListSchema = [Components.Schemas.DeleteResultListSchemaPayload]
-        /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema`.
-        public struct DeleteSummarySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/requested`.
-            public var requested: Swift.Int
-            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/deleted`.
-            public var deleted: Swift.Int
-            /// - Remark: Generated from `#/components/schemas/DeleteSummarySchema/omitted`.
-            public var omitted: Swift.Int
-            /// Creates a new `DeleteSummarySchema`.
-            ///
-            /// - Parameters:
-            ///   - requested:
-            ///   - deleted:
-            ///   - omitted:
-            public init(
-                requested: Swift.Int,
-                deleted: Swift.Int,
-                omitted: Swift.Int
-            ) {
-                self.requested = requested
-                self.deleted = deleted
-                self.omitted = omitted
-            }
-            public enum CodingKeys: String, CodingKey {
-                case requested
-                case deleted
-                case omitted
             }
         }
         /// - Remark: Generated from `#/components/schemas/UserIdentityListSchema`.
@@ -243,19 +246,19 @@ extension Components {
                 case roles
             }
         }
-        /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchQuerySchema`.
-        public struct UserIdentityListItemSearchQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchQuerySchema/page`.
-            public var page: Components.Schemas.SearchPageSchema
-            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchQuerySchema/SortPayload`.
+        /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchRequestQuerySchema`.
+        public struct UserIdentityListItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchRequestQuerySchema/page`.
+            public var page: Components.Schemas.SearchPageSchema?
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                 }
-                /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.UserIdentityListItemSearchQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.UserIdentityListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -263,7 +266,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.UserIdentityListItemSearchQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.UserIdentityListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -274,15 +277,15 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.UserIdentityListItemSearchQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchQuerySchema/sort`.
-            public var sort: Components.Schemas.UserIdentityListItemSearchQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.UserIdentityListItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.UserIdentityListItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
-                /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchQuerySchema/filters/role`.
+                /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchRequestQuerySchema/filters/role`.
                 public var role: Components.Schemas.UserRoleNameField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -301,18 +304,18 @@ extension Components {
                     case role
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchQuerySchema/filters`.
-            public var filters: Components.Schemas.UserIdentityListItemSearchQuerySchema.FiltersPayload
-            /// Creates a new `UserIdentityListItemSearchQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.UserIdentityListItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `UserIdentityListItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
             ///   - sort:
             ///   - filters:
             public init(
-                page: Components.Schemas.SearchPageSchema,
-                sort: Components.Schemas.UserIdentityListItemSearchQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.UserIdentityListItemSearchQuerySchema.FiltersPayload
+                page: Components.Schemas.SearchPageSchema? = nil,
+                sort: Components.Schemas.UserIdentityListItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.UserIdentityListItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -327,17 +330,17 @@ extension Components {
         /// - Remark: Generated from `#/components/schemas/SearchPageSchema`.
         public struct SearchPageSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/SearchPageSchema/size`.
-            public var size: Components.Schemas.SearchPageSizeField
+            public var size: Components.Schemas.SearchPageSizeField?
             /// - Remark: Generated from `#/components/schemas/SearchPageSchema/number`.
-            public var number: Components.Schemas.SearchPageNumberField
+            public var number: Components.Schemas.SearchPageNumberField?
             /// Creates a new `SearchPageSchema`.
             ///
             /// - Parameters:
             ///   - size:
             ///   - number:
             public init(
-                size: Components.Schemas.SearchPageSizeField,
-                number: Components.Schemas.SearchPageNumberField
+                size: Components.Schemas.SearchPageSizeField? = nil,
+                number: Components.Schemas.SearchPageNumberField? = nil
             ) {
                 self.size = size
                 self.number = number
@@ -347,8 +350,12 @@ extension Components {
                 case number
             }
         }
+        /// Results per page. Defaults to 20 when omitted; values below 1 are clamped to 1. Endpoint-specific maximums may apply.
+        ///
         /// - Remark: Generated from `#/components/schemas/SearchPageSizeField`.
         public typealias SearchPageSizeField = Swift.Int
+        /// 1-based page number. Defaults to 1 when omitted; values below 1 are clamped to 1.
+        ///
         /// - Remark: Generated from `#/components/schemas/SearchPageNumberField`.
         public typealias SearchPageNumberField = Swift.Int
         /// - Remark: Generated from `#/components/schemas/SortDirection`.
@@ -363,7 +370,7 @@ extension Components {
         /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchSchema`.
         public struct UserIdentityListItemSearchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchSchema/query`.
-            public var query: Components.Schemas.UserIdentityListItemSearchQuerySchema
+            public var query: Components.Schemas.UserIdentityListItemSearchResponseQuerySchema
             /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchSchema/data/items`.
@@ -395,7 +402,7 @@ extension Components {
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.UserIdentityListItemSearchQuerySchema,
+                query: Components.Schemas.UserIdentityListItemSearchResponseQuerySchema,
                 data: Components.Schemas.UserIdentityListItemSearchSchema.DataPayload
             ) {
                 self.query = query
@@ -404,6 +411,110 @@ extension Components {
             public enum CodingKeys: String, CodingKey {
                 case query
                 case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchResponseQuerySchema`.
+        public struct UserIdentityListItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchResponseQuerySchema/page`.
+            public var page: Components.Schemas.SearchResponsePageSchema
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchResponseQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchResponseQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case id = "id"
+                }
+                /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.UserIdentityListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchResponseQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.UserIdentityListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.UserIdentityListItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.UserIdentityListItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchResponseQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchResponseQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchResponseQuerySchema/filters/role`.
+                public var role: Components.Schemas.UserRoleNameField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                ///   - role:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    role: Components.Schemas.UserRoleNameField? = nil
+                ) {
+                    self.search = search
+                    self.role = role
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                    case role
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/UserIdentityListItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.UserIdentityListItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `UserIdentityListItemSearchResponseQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchResponsePageSchema,
+                sort: Components.Schemas.UserIdentityListItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.UserIdentityListItemSearchResponseQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/SearchResponsePageSchema`.
+        public struct SearchResponsePageSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/SearchResponsePageSchema/size`.
+            public var size: Components.Schemas.SearchPageSizeField
+            /// - Remark: Generated from `#/components/schemas/SearchResponsePageSchema/number`.
+            public var number: Components.Schemas.SearchPageNumberField
+            /// Creates a new `SearchResponsePageSchema`.
+            ///
+            /// - Parameters:
+            ///   - size:
+            ///   - number:
+            public init(
+                size: Components.Schemas.SearchPageSizeField,
+                number: Components.Schemas.SearchPageNumberField
+            ) {
+                self.size = size
+                self.number = number
+            }
+            public enum CodingKeys: String, CodingKey {
+                case size
+                case number
             }
         }
         /// - Remark: Generated from `#/components/schemas/UserIdentityUpdateSchema`.
@@ -563,21 +674,21 @@ extension Components {
                 case name
             }
         }
-        /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchQuerySchema`.
-        public struct UserRoleListItemSearchQuerySchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchQuerySchema/page`.
-            public var page: Components.Schemas.SearchPageSchema
-            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchQuerySchema/SortPayload`.
+        /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchRequestQuerySchema`.
+        public struct UserRoleListItemSearchRequestQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchRequestQuerySchema/page`.
+            public var page: Components.Schemas.SearchPageSchema?
+            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchRequestQuerySchema/SortPayload`.
             public struct SortPayloadPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchQuerySchema/SortPayload/field`.
+                /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchRequestQuerySchema/SortPayload/field`.
                 @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
                     case id = "id"
                     case name = "name"
                     case notes = "notes"
                 }
-                /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchQuerySchema/SortPayload/field`.
-                public var field: Components.Schemas.UserRoleListItemSearchQuerySchema.SortPayloadPayload.FieldPayload
-                /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchQuerySchema/SortPayload/direction`.
+                /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchRequestQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.UserRoleListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchRequestQuerySchema/SortPayload/direction`.
                 public var direction: Components.Schemas.SortDirection
                 /// Creates a new `SortPayloadPayload`.
                 ///
@@ -585,7 +696,7 @@ extension Components {
                 ///   - field:
                 ///   - direction:
                 public init(
-                    field: Components.Schemas.UserRoleListItemSearchQuerySchema.SortPayloadPayload.FieldPayload,
+                    field: Components.Schemas.UserRoleListItemSearchRequestQuerySchema.SortPayloadPayload.FieldPayload,
                     direction: Components.Schemas.SortDirection
                 ) {
                     self.field = field
@@ -596,13 +707,13 @@ extension Components {
                     case direction
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchQuerySchema/sort`.
-            public typealias SortPayload = [Components.Schemas.UserRoleListItemSearchQuerySchema.SortPayloadPayload]
-            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchQuerySchema/sort`.
-            public var sort: Components.Schemas.UserRoleListItemSearchQuerySchema.SortPayload?
-            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchQuerySchema/filters`.
+            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.UserRoleListItemSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchRequestQuerySchema/sort`.
+            public var sort: Components.Schemas.UserRoleListItemSearchRequestQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchRequestQuerySchema/filters`.
             public struct FiltersPayload: Codable, Hashable, Sendable {
-                /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchQuerySchema/filters/search`.
+                /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchRequestQuerySchema/filters/search`.
                 public var search: Components.Schemas.SearchStringField?
                 /// Creates a new `FiltersPayload`.
                 ///
@@ -615,18 +726,18 @@ extension Components {
                     case search
                 }
             }
-            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchQuerySchema/filters`.
-            public var filters: Components.Schemas.UserRoleListItemSearchQuerySchema.FiltersPayload
-            /// Creates a new `UserRoleListItemSearchQuerySchema`.
+            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchRequestQuerySchema/filters`.
+            public var filters: Components.Schemas.UserRoleListItemSearchRequestQuerySchema.FiltersPayload
+            /// Creates a new `UserRoleListItemSearchRequestQuerySchema`.
             ///
             /// - Parameters:
             ///   - page:
             ///   - sort:
             ///   - filters:
             public init(
-                page: Components.Schemas.SearchPageSchema,
-                sort: Components.Schemas.UserRoleListItemSearchQuerySchema.SortPayload? = nil,
-                filters: Components.Schemas.UserRoleListItemSearchQuerySchema.FiltersPayload
+                page: Components.Schemas.SearchPageSchema? = nil,
+                sort: Components.Schemas.UserRoleListItemSearchRequestQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.UserRoleListItemSearchRequestQuerySchema.FiltersPayload
             ) {
                 self.page = page
                 self.sort = sort
@@ -641,7 +752,7 @@ extension Components {
         /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchSchema`.
         public struct UserRoleListItemSearchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchSchema/query`.
-            public var query: Components.Schemas.UserRoleListItemSearchQuerySchema
+            public var query: Components.Schemas.UserRoleListItemSearchResponseQuerySchema
             /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchSchema/data`.
             public struct DataPayload: Codable, Hashable, Sendable {
                 /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchSchema/data/items`.
@@ -673,7 +784,7 @@ extension Components {
             ///   - query:
             ///   - data:
             public init(
-                query: Components.Schemas.UserRoleListItemSearchQuerySchema,
+                query: Components.Schemas.UserRoleListItemSearchResponseQuerySchema,
                 data: Components.Schemas.UserRoleListItemSearchSchema.DataPayload
             ) {
                 self.query = query
@@ -682,6 +793,81 @@ extension Components {
             public enum CodingKeys: String, CodingKey {
                 case query
                 case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchResponseQuerySchema`.
+        public struct UserRoleListItemSearchResponseQuerySchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchResponseQuerySchema/page`.
+            public var page: Components.Schemas.SearchResponsePageSchema
+            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchResponseQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchResponseQuerySchema/SortPayload/field`.
+                @frozen public enum FieldPayload: String, Codable, Hashable, Sendable, CaseIterable {
+                    case id = "id"
+                    case name = "name"
+                    case notes = "notes"
+                }
+                /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchResponseQuerySchema/SortPayload/field`.
+                public var field: Components.Schemas.UserRoleListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchResponseQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.UserRoleListItemSearchResponseQuerySchema.SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas.UserRoleListItemSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchResponseQuerySchema/sort`.
+            public var sort: Components.Schemas.UserRoleListItemSearchResponseQuerySchema.SortPayload?
+            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchResponseQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchResponseQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                public init(search: Components.Schemas.SearchStringField? = nil) {
+                    self.search = search
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/UserRoleListItemSearchResponseQuerySchema/filters`.
+            public var filters: Components.Schemas.UserRoleListItemSearchResponseQuerySchema.FiltersPayload
+            /// Creates a new `UserRoleListItemSearchResponseQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchResponsePageSchema,
+                sort: Components.Schemas.UserRoleListItemSearchResponseQuerySchema.SortPayload? = nil,
+                filters: Components.Schemas.UserRoleListItemSearchResponseQuerySchema.FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
             }
         }
         /// - Remark: Generated from `#/components/schemas/UserRolePatchSchema`.

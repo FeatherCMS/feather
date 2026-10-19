@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 public import MediaAdminAPI
 import MediaApplication
 
@@ -6,7 +6,7 @@ extension AdminAPIGateway {
     public func mediaAssetList(
         _ input: Operations.MediaAssetList.Input
     ) async throws -> Operations.MediaAssetList.Output {
-        let query: Components.Schemas.MediaAssetNodeSearchItemSearchQuerySchema
+        let query: Components.Schemas.MediaAssetNodeSearchItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value

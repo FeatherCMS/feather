@@ -1,6 +1,6 @@
+import SystemModule
 import FeatherAdmin
 import Hummingbird
-import SystemContracts
 
 struct AdminViewSystemPermissionDefaultController:
     AdminViewSystemPermissionController
@@ -17,7 +17,7 @@ struct AdminViewSystemPermissionDefaultController:
     ) async throws -> HTMLResponse {
         let (interactor, presenter) = buildRuntime((request, context))
         guard
-            context.isCurrentUserAllowed(to: SystemPermissions.Permissions.read)
+            context.isCurrentUserAllowed(to: SystemModule.Permission.Permissions.read)
         else {
             return try await presenter.renderErrorPage(error: .forbidden)
         }

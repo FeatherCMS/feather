@@ -53,7 +53,7 @@ struct AdminRemoveWebMenuItemOpenAPIRepository:
         try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.webMenuItemRemove(
                 path: .init(webMenuId: menuId),
-                body: .json(.init(ids: [id], results: false, summary: true))
+                body: .json(.init(ids: [id]))
             )
         }
     }

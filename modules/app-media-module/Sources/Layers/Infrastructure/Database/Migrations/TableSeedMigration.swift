@@ -1,4 +1,5 @@
 public import FeatherDatabase
+import FeatherDBAL
 public import FeatherInfrastructure
 import MediaDomain
 

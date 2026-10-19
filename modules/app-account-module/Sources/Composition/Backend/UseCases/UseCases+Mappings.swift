@@ -24,7 +24,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ query: Components.Schemas.AccountInvitationListItemSearchQuerySchema
+        _ query: Components.Schemas.AccountInvitationListItemSearchRequestQuerySchema
     ) -> InvitationList.Query {
         .init(
             page: map(query.page),

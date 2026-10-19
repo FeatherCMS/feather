@@ -1,5 +1,6 @@
 import BlogDomain
-import FeatherContracts
+import FeatherDBAL
+import FeatherModuleKit
 public import FeatherDatabase
 public import FeatherInfrastructure
 import WebDomain

@@ -1,4 +1,5 @@
 public import ContactDomain
+import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
 
@@ -75,7 +76,8 @@ public struct SubmissionDatabaseRepository:
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        try await SubmissionTable(connection: context.connection)
-            .delete(ids: ids)
+        try await DatabaseAccessLayer<SubmissionTable>(context: context)
+            .delete(where: \.id, in: ids)
+        return ids
     }
 }

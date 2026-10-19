@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 /// Creates Auth credentials within the invitation registration transaction.
 public protocol InvitationCredentialWriter: Sendable {

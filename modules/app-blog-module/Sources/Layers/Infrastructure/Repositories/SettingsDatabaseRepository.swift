@@ -1,15 +1,17 @@
 public import BlogDomain
+import FeatherDomain
 public import FeatherInfrastructure
 import SystemDomain
 import SystemInfrastructure
+import SystemModule
 
 public struct SettingsDatabaseRepository: SettingsRepository {
     private let context: any DatabaseContext
-    private let variables: any VariableRepository
+    private let variables: any SystemModule.Variable.Repository.Interface
 
     public init(context: any DatabaseContext) {
         self.context = context
-        self.variables = VariableDatabaseRepository(context: context)
+        self.variables = SystemModule.Variable.Repository.Database(context: context)
     }
 
     public func get() async throws -> Settings {
@@ -84,12 +86,12 @@ public struct SettingsDatabaseRepository: SettingsRepository {
         notes: String
     ) async throws {
         if var variable = try await variables.find(key: key) {
-            try variable.update(value: value)
+            try variable.update(value: .set(value))
             _ = try await variables.update(variable)
         }
         else {
             _ = try await variables.insert(
-                Variable.create(
+                SystemModule.Variable.Model.create(
                     key: key,
                     value: value,
                     name: name,

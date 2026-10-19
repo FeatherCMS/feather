@@ -1,6 +1,6 @@
 import FeatherAdmin
-public import FeatherContracts
-import SystemContracts
+public import FeatherModuleKit
+import SystemModule
 
 public enum BlogAdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {

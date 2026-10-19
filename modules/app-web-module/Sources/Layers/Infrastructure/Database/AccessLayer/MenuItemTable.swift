@@ -5,6 +5,8 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 import WebDomain
 
@@ -32,9 +34,8 @@ extension MenuItemTable.Row {
     }
 }
 
-struct MenuItemTable: DatabaseTableWithBulkDelete {
+struct MenuItemTable: DatabaseLegacyTable {
     static let name = "web_menu_item"
-    static let primaryKey = "id"
     struct Row {
 
         struct Create {

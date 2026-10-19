@@ -1,3 +1,4 @@
+import SystemModule
 import SystemAdminAPI
 
 protocol AdminListSystemJobRepository: Sendable {

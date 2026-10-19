@@ -1,4 +1,5 @@
-import FeatherContracts
+import FeatherModuleKit
+import FeatherDBAL
 public import FeatherDatabase
 public import FeatherInfrastructure
 import NewsDomain

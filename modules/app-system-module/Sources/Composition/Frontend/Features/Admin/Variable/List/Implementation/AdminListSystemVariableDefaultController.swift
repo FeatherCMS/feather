@@ -1,8 +1,8 @@
+import SystemModule
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import Hummingbird
 import SystemAdminAPI
-import SystemContracts
 
 struct AdminListSystemVariableDefaultController:
     AdminListSystemVariableController
@@ -22,7 +22,7 @@ struct AdminListSystemVariableDefaultController:
         let search = request.querySearch()
         let permissions = context.currentUserPermissions
         let canAccess = context.isCurrentUserAllowed(
-            to: SystemPermissions.Variables.list
+            to: SystemModule.Variable.Permissions.list
         )
         guard canAccess else {
             return try await presenter.renderErrorPage(

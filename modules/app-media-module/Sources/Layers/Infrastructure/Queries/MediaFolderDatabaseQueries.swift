@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import FeatherInfrastructure
+import FeatherDBAL
 public import MediaApplication
 
 extension MediaAssetNodeFolderTable.Row {

@@ -1,4 +1,5 @@
-import FeatherContracts
+import FeatherModuleKit
+public import FeatherDBAL
 public import FeatherDatabase
 public import FeatherDomain
 public import FeatherInfrastructure
@@ -6,13 +7,16 @@ import MediaDomain
 import MediaInfrastructure
 
 public struct MediaFolderMigration: DatabaseMigration {
+    private let platform: any DatabasePlatform
     public let connection: any DatabaseConnection
     private let idGenerator: any IDGenerator
 
     public init(
+        platform: any DatabasePlatform,
         connection: any DatabaseConnection,
         idGenerator: any IDGenerator
     ) {
+        self.platform = platform
         self.connection = connection
         self.idGenerator = idGenerator
     }
@@ -21,6 +25,7 @@ public struct MediaFolderMigration: DatabaseMigration {
         on connection: any DatabaseConnection
     ) async throws {
         let context = DatabaseTransactionContext(
+            platform: platform,
             connection: connection,
             idGenerator: idGenerator
         )

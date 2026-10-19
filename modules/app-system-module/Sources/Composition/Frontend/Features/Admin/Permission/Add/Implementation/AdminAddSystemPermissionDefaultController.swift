@@ -1,7 +1,7 @@
+import SystemModule
 import FeatherAdmin
 import FeatherValidation
 import Hummingbird
-import SystemContracts
 
 struct AdminAddSystemPermissionDefaultController:
     AdminAddSystemPermissionController
@@ -19,7 +19,7 @@ struct AdminAddSystemPermissionDefaultController:
         let (_, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
-                to: SystemPermissions.Permissions.create
+                to: SystemModule.Permission.Permissions.create
             )
         else {
             return try await presenter.renderForbiddenPage()
@@ -34,7 +34,7 @@ struct AdminAddSystemPermissionDefaultController:
         let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
-                to: SystemPermissions.Permissions.create
+                to: SystemModule.Permission.Permissions.create
             )
         else {
             return

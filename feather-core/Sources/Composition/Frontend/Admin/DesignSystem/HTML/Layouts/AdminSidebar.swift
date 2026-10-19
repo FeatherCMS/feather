@@ -6,7 +6,7 @@
 //
 
 import DOM
-public import FeatherContracts
+public import FeatherModuleKit
 import HTML
 public import Hummingbird
 public import SGML

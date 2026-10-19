@@ -30,8 +30,16 @@ paths:
           $ref: '#/components/responses/BlogPostDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -41,12 +49,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/posts/:
@@ -59,8 +75,16 @@ paths:
           $ref: '#/components/responses/BlogPostListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/posts/search:
@@ -72,15 +96,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlogPostListItemSearchQuerySchema'
+              $ref: '#/components/schemas/BlogPostListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/BlogPostListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/posts/{blogPostId}:
@@ -95,10 +127,22 @@ paths:
           $ref: '#/components/responses/BlogPostDetailResponse'
         404:
           description: BlogPost not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -114,10 +158,22 @@ paths:
           $ref: '#/components/responses/BlogPostDetailResponse'
         404:
           description: BlogPost not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -133,10 +189,22 @@ paths:
           $ref: '#/components/responses/BlogPostDetailResponse'
         404:
           description: BlogPost not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/authors:
@@ -151,8 +219,16 @@ paths:
           $ref: '#/components/responses/BlogAuthorDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -162,12 +238,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/authors/:
@@ -180,8 +264,16 @@ paths:
           $ref: '#/components/responses/BlogAuthorListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/authors/search:
@@ -193,15 +285,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlogAuthorListItemSearchQuerySchema'
+              $ref: '#/components/schemas/BlogAuthorListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/BlogAuthorListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/authors/{blogAuthorId}:
@@ -216,10 +316,22 @@ paths:
           $ref: '#/components/responses/BlogAuthorDetailResponse'
         404:
           description: BlogAuthor not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -235,10 +347,22 @@ paths:
           $ref: '#/components/responses/BlogAuthorDetailResponse'
         404:
           description: BlogAuthor not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -254,10 +378,22 @@ paths:
           $ref: '#/components/responses/BlogAuthorDetailResponse'
         404:
           description: BlogAuthor not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/authors/{blogAuthorId}/links:
@@ -274,8 +410,16 @@ paths:
           $ref: '#/components/responses/BlogAuthorLinkDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -287,12 +431,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/authors/{blogAuthorId}/links/:
@@ -307,8 +459,16 @@ paths:
           $ref: '#/components/responses/BlogAuthorLinkListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/authors/{blogAuthorId}/links/search:
@@ -322,15 +482,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlogAuthorLinkListItemSearchQuerySchema'
+              $ref: '#/components/schemas/BlogAuthorLinkListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/BlogAuthorLinkListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/authors/{blogAuthorId}/links/{blogAuthorLinkId}:
@@ -346,10 +514,22 @@ paths:
           $ref: '#/components/responses/BlogAuthorLinkDetailResponse'
         404:
           description: BlogAuthorLink not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -366,10 +546,22 @@ paths:
           $ref: '#/components/responses/BlogAuthorLinkDetailResponse'
         404:
           description: BlogAuthorLink not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -386,10 +578,22 @@ paths:
           $ref: '#/components/responses/BlogAuthorLinkDetailResponse'
         404:
           description: BlogAuthorLink not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/settings:
@@ -402,8 +606,16 @@ paths:
           $ref: '#/components/responses/BlogSettingsDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -417,8 +629,16 @@ paths:
           $ref: '#/components/responses/BlogSettingsDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/tags:
@@ -433,8 +653,16 @@ paths:
           $ref: '#/components/responses/BlogTagDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -444,12 +672,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/tags/:
@@ -462,8 +698,16 @@ paths:
           $ref: '#/components/responses/BlogTagListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/tags/search:
@@ -475,15 +719,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BlogTagListItemSearchQuerySchema'
+              $ref: '#/components/schemas/BlogTagListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/BlogTagListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/blog/tags/{blogTagId}:
@@ -498,10 +750,22 @@ paths:
           $ref: '#/components/responses/BlogTagDetailResponse'
         404:
           description: BlogTag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -517,10 +781,22 @@ paths:
           $ref: '#/components/responses/BlogTagDetailResponse'
         404:
           description: BlogTag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -536,10 +812,22 @@ paths:
           $ref: '#/components/responses/BlogTagDetailResponse'
         404:
           description: BlogTag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
 components:
@@ -699,6 +987,51 @@ components:
     AdminWebMetadataReferenceIDField:
       type: string
       example: wp_home
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
+      required:
+      - error
+    DefaultHTTPErrorContentSchema:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - message
+      - reason
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
     DeleteRequestSchema:
       type: object
       properties:
@@ -707,57 +1040,8 @@ components:
           items:
             type: string
             example: id1
-        results:
-          type: boolean
-          example: true
-        summary:
-          type: boolean
-          example: true
       required:
       - ids
-      - results
-      - summary
-    DeleteResponseSchema:
-      type: object
-      properties:
-        results:
-          $ref: '#/components/schemas/DeleteResultListSchema'
-        summary:
-          $ref: '#/components/schemas/DeleteSummarySchema'
-    DeleteResultListSchema:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            example: id1
-          status:
-            type: string
-            enum:
-            - deleted
-            - not_found
-            - forbidden
-            example: deleted
-        required:
-        - id
-        - status
-    DeleteSummarySchema:
-      type: object
-      properties:
-        requested:
-          type: integer
-          example: 1
-        deleted:
-          type: integer
-          example: 1
-        omitted:
-          type: integer
-          example: 1
-      required:
-      - requested
-      - deleted
-      - omitted
     BlogPostListSchema:
       type: array
       items:
@@ -800,7 +1084,7 @@ components:
       type: number
       format: double
       example: 1.76e+9
-    BlogPostListItemSearchQuerySchema:
+    BlogPostListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -831,7 +1115,6 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
       required:
-      - page
       - filters
     SearchPageSchema:
       type: object
@@ -840,14 +1123,17 @@ components:
           $ref: '#/components/schemas/SearchPageSizeField'
         number:
           $ref: '#/components/schemas/SearchPageNumberField'
-      required:
-      - size
-      - number
     SearchPageSizeField:
       type: integer
+      default: 20
+      description: Results per page. Defaults to 20 when omitted; values below 1 are
+        clamped to 1. Endpoint-specific maximums may apply.
       example: 20
     SearchPageNumberField:
       type: integer
+      default: 1
+      description: 1-based page number. Defaults to 1 when omitted; values below 1
+        are clamped to 1.
       example: 1
     SortDirection:
       type: string
@@ -862,7 +1148,7 @@ components:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/BlogPostListItemSearchQuerySchema'
+          $ref: '#/components/schemas/BlogPostListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -879,6 +1165,49 @@ components:
       required:
       - query
       - data
+    BlogPostListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
+    SearchResponsePageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
     BlogPostPatchSchema:
       type: object
       properties:
@@ -991,7 +1320,7 @@ components:
       type: number
       format: double
       example: 1.76e+9
-    BlogAuthorListItemSearchQuerySchema:
+    BlogAuthorListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1023,13 +1352,12 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
       required:
-      - page
       - filters
     BlogAuthorListItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/BlogAuthorListItemSearchQuerySchema'
+          $ref: '#/components/schemas/BlogAuthorListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -1046,6 +1374,40 @@ components:
       required:
       - query
       - data
+    BlogAuthorListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - key
+                - name
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
     BlogAuthorPatchSchema:
       type: object
       properties:
@@ -1193,7 +1555,7 @@ components:
       type: number
       format: double
       example: 1.76e+9
-    BlogAuthorLinkListItemSearchQuerySchema:
+    BlogAuthorLinkListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1227,13 +1589,12 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
       required:
-      - page
       - filters
     BlogAuthorLinkListItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/BlogAuthorLinkListItemSearchQuerySchema'
+          $ref: '#/components/schemas/BlogAuthorLinkListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -1250,6 +1611,42 @@ components:
       required:
       - query
       - data
+    BlogAuthorLinkListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - label
+                - url
+                - priority
+                - permission
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
     BlogAuthorLinkPatchSchema:
       type: object
       properties:
@@ -1416,7 +1813,7 @@ components:
       type: number
       format: double
       example: 1.76e+9
-    BlogTagListItemSearchQuerySchema:
+    BlogTagListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1447,13 +1844,12 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
       required:
-      - page
       - filters
     BlogTagListItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/BlogTagListItemSearchQuerySchema'
+          $ref: '#/components/schemas/BlogTagListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -1470,6 +1866,39 @@ components:
       required:
       - query
       - data
+    BlogTagListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
     BlogTagPatchSchema:
       type: object
       properties:
@@ -1491,12 +1920,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/BlogPostDetailSchema'
-    DeleteResponse:
-      description: Delete response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeleteResponseSchema'
+    NoContentResponse:
+      description: Delete succeeded
     BlogPostListResponse:
       description: BlogPost list response
       content:

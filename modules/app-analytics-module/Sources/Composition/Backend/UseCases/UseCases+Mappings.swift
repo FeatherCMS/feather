@@ -1,7 +1,7 @@
 import AnalyticsAdminAPI
 import AnalyticsApplication
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 
 extension AdminAPIGateway {
 
@@ -23,7 +23,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ query: Components.Schemas.AnalyticsLogListItemSearchQuerySchema
+        _ query: Components.Schemas.AnalyticsLogListItemSearchRequestQuerySchema
     ) -> LogList.Query {
         let sort = (query.sort ?? [])
             .map { item in

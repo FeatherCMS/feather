@@ -1,6 +1,6 @@
+import SystemModule
 import FeatherAdmin
 import Hummingbird
-import SystemContracts
 
 struct AdminRemoveSystemPermissionDefaultController:
     AdminRemoveSystemPermissionController
@@ -18,7 +18,7 @@ struct AdminRemoveSystemPermissionDefaultController:
         let (interactor, presenter) = buildRuntime((request, context))
         guard
             context.isCurrentUserAllowed(
-                to: SystemPermissions.Permissions.delete
+                to: SystemModule.Permission.Permissions.delete
             )
         else {
             return

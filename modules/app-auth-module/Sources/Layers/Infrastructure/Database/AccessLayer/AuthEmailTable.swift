@@ -1,11 +1,12 @@
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 
 import struct Foundation.Date
 
-struct AuthEmailTable: DatabaseTableWithBulkDelete {
+struct AuthEmailTable: DatabaseLegacyTable {
     static let name = "auth_email"
-    static let primaryKey = "id"
     struct Row {
         let id: String
         let identityId: String

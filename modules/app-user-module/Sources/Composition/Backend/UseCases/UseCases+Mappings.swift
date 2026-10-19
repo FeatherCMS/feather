@@ -26,7 +26,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ query: Components.Schemas.UserIdentityListItemSearchQuerySchema
+        _ query: Components.Schemas.UserIdentityListItemSearchRequestQuerySchema
     ) -> IdentityList.Query {
         .init(
             page: map(query.page),
@@ -65,7 +65,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ query: Components.Schemas.UserRoleListItemSearchQuerySchema
+        _ query: Components.Schemas.UserRoleListItemSearchRequestQuerySchema
     ) -> RoleList.Query {
         .init(
             page: map(query.page),

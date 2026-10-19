@@ -1,9 +1,9 @@
+import SystemModule
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import FeatherValidation
 import HTML
 import Hummingbird
-import SystemContracts
 
 struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
 {
@@ -19,7 +19,7 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
     ) async throws -> HTMLResponse {
         let runtime = buildRuntime((request, context))
         guard
-            context.isCurrentUserAllowed(to: SystemPermissions.Variables.create)
+            context.isCurrentUserAllowed(to: SystemModule.Variable.Permissions.create)
         else {
             return try await runtime.presenter.renderForbiddenPage()
         }
@@ -34,7 +34,7 @@ struct AdminAddSystemVariableDefaultController: AdminAddSystemVariableController
     ) async throws -> Response {
         let runtime = buildRuntime((request, context))
         guard
-            context.isCurrentUserAllowed(to: SystemPermissions.Variables.create)
+            context.isCurrentUserAllowed(to: SystemModule.Variable.Permissions.create)
         else {
             return try await runtime.presenter
                 .renderForbiddenPage()

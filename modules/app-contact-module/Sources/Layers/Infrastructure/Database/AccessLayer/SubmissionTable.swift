@@ -1,4 +1,6 @@
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 
 import struct Foundation.Date
@@ -20,9 +22,8 @@ extension SubmissionTable.Row {
     }
 }
 
-struct SubmissionTable: DatabaseTableWithBulkDelete {
+struct SubmissionTable: DatabaseLegacyTable {
     static let name = "contact_form_submission"
-    static let primaryKey = "id"
     struct Row {
         struct Create {
             let id: String

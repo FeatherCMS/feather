@@ -1,6 +1,7 @@
 import FeatherApplication
 import FeatherDatabase
 import FeatherDatabasePostgres
+import FeatherDBALPostgres
 import Environment
 import FeatherInfrastructure
 import Logging
@@ -72,6 +73,7 @@ struct Entrypoint {
                 let migrator = Migrator(
                     migrations: buildMigrations(
                         connection: connection,
+                        platform: PostgresDatabasePlatform(),
                         events: buildMigrationEventPublisher(
                             webPublicBaseURL: config.webPublicBaseURL
                         ),

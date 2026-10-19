@@ -1,6 +1,7 @@
-import FeatherContracts
+import FeatherModuleKit
 public import SystemAdminAPI
 import SystemApplication
+import SystemModule
 
 extension AdminAPIGateway {
 
@@ -16,8 +17,20 @@ extension AdminAPIGateway {
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(variableDetailSchema(from: result))
             )
+        )
+    }
+
+    private func variableDetailSchema(
+        from output: Variable.Detail.Output
+    ) -> Components.Schemas.SystemVariableDetailSchema {
+        .init(
+            id: output.id,
+            key: output.key,
+            value: output.value,
+            name: output.name,
+            notes: output.notes
         )
     }
 }

@@ -34,7 +34,8 @@ let package = Package(
     products: [
         .library(name: "FeatherDomain", targets: ["FeatherDomain"]),
         .library(name: "FeatherApplication", targets: ["FeatherApplication"]),
-        .library(name: "FeatherContracts", targets: ["FeatherContracts"]),
+        .library(name: "FeatherModuleKit", targets: ["FeatherModuleKit"]),
+        .library(name: "FeatherTesting", targets: ["FeatherTesting"]),
         .library(name: "FeatherInfrastructure", targets: ["FeatherInfrastructure"]),
         .library(name: "FeatherBackend", targets: ["FeatherBackend"]),
         .library(
@@ -44,7 +45,6 @@ let package = Package(
         .library(name: "FeatherAdmin", targets: ["FeatherAdmin"]),
     ],
     dependencies: [
-        // [docc-plugin-placeholder]
         //        .package(
         //            url: "https://github.com/apple/swift-configuration",
         //            exact: "1.0.2",
@@ -82,10 +82,13 @@ let package = Package(
             url: "https://github.com/binarybirds/swift-bcrypt",
             from: "2.0.1"
         ),
+        .package(path: "../../feather-database"),
         .package(
-            url: "https://github.com/feather-framework/feather-database",
-            exact: "1.0.0-rc.2"
+            url: "https://github.com/feather-framework/feather-dbal",
+            exact: "1.0.0-alpha.1"
         ),
+        .package(path: "../../feather-sql"),
+        .package(path: "../../feather-sql-postgres"),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
             from: "2.27.0"
@@ -124,7 +127,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-openapi-runtime",
-            from: "1.12.1"
+            from: "1.13.2"
         ),
         .package(
             url: "https://github.com/apple/swift-nio",
@@ -153,17 +156,28 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "FeatherContracts",
+            name: "FeatherModuleKit",
             dependencies: [
 
             ],
-            path: "Sources/Contracts",
+            path: "Sources/ModuleKit",
+            swiftSettings: swiftSettings
+        ),
+        .target(
+            name: "FeatherTesting",
+            dependencies: [
+                .target(name: "FeatherModuleKit"),
+                .target(name: "FeatherApplication"),
+                .target(name: "FeatherDomain"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+            ],
+            path: "Sources/Testing",
             swiftSettings: swiftSettings
         ),
         .target(
             name: "FeatherDomain",
             dependencies: [
-                .target(name: "FeatherContracts"),
+                .target(name: "FeatherModuleKit"),
                 .product(name: "FeatherStorage", package: "feather-storage"),
             ],
             path: "Sources/Layers/Domain",
@@ -183,6 +197,9 @@ let package = Package(
             name: "FeatherInfrastructure",
             dependencies: [
                 .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherSQL", package: "feather-sql"),
+                .product(name: "FeatherSQLPostgres", package: "feather-sql-postgres"),
                 .product(name: "FeatherStorage", package: "feather-storage"),
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "Jobs", package: "swift-jobs"),
@@ -191,7 +208,6 @@ let package = Package(
                 .product(name: "NanoID", package: "swift-nanoid"),
                 .product(name: "BCrypt", package: "swift-bcrypt"),
                 .product(name: "NIOPosix", package: "swift-nio"),
-
                 .target(name: "FeatherApplication"),
                 .target(name: "FeatherDomain"),
             ],
@@ -202,8 +218,10 @@ let package = Package(
             name: "FeatherBackend",
             dependencies: [
                 .product(name: "Hummingbird", package: "hummingbird"),
+                .product(name: "NIOHTTP1", package: "swift-nio"),
                 .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
 
+                .target(name: "FeatherModuleKit"),
                 .target(name: "FeatherInfrastructure"),
             ],
             path: "Sources/Composition/Backend",
@@ -257,9 +275,19 @@ let package = Package(
         .testTarget(
             name: "InfrastructureTests",
             dependencies: [
-                .target(name: "FeatherContracts"),
+                .product(name: "FeatherDatabase", package: "feather-database"),
+                .product(name: "FeatherSQL", package: "feather-sql"),
+                .product(name: "FeatherSQLPostgres", package: "feather-sql-postgres"),
+                .target(name: "FeatherModuleKit"),
                 .target(name: "FeatherDomain"),
                 .target(name: "FeatherInfrastructure")
+            ],
+            swiftSettings: swiftSettings
+        ),
+        .testTarget(
+            name: "BackendTests",
+            dependencies: [
+                .target(name: "FeatherBackend")
             ],
             swiftSettings: swiftSettings
         ),

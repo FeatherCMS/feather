@@ -1,6 +1,6 @@
 import AuthContracts
 public import FeatherApplication
-public import FeatherContracts
+public import FeatherModuleKit
 
 //
 //  ListIdentitySessions.swift

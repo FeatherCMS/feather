@@ -1,6 +1,6 @@
 import AnalyticsContracts
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import Hummingbird
 
 struct AdminListAnalyticsLogDefaultPresenter:

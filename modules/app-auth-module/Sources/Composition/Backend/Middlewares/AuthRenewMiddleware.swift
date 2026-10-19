@@ -1,6 +1,6 @@
 import FeatherApplication
 public import FeatherBackend
-import FeatherContracts
+import FeatherModuleKit
 import FeatherDomain
 public import HTTPTypes
 import Hummingbird

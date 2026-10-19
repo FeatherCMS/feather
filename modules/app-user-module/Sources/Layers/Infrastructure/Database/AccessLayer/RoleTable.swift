@@ -5,6 +5,8 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 
 import struct Foundation.Date
@@ -29,9 +31,8 @@ extension RoleTable.Row {
     }
 }
 
-struct RoleTable: DatabaseTableWithBulkDelete {
+struct RoleTable: DatabaseLegacyTable {
     static let name = "user_role"
-    static let primaryKey = "id"
     struct Row {
         let id: String
         let key: String

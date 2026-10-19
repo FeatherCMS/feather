@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherDomain
+import FeatherDBAL
 public import FeatherInfrastructure
 public import WebDomain
 
@@ -148,8 +149,8 @@ public struct MetadataDatabaseRepository: MetadataRepository {
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        let table = WebMetadataTable(connection: context.connection)
-        return try await table.delete(ids: ids)
+        try await DatabaseAccessLayer<WebMetadataTable>(context: context).delete(where: \.id, in: ids)
+        return ids
     }
 
     public func delete(

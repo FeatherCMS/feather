@@ -27,7 +27,7 @@ struct AuthLogoutOperation: AuthOperation, BearerProtectedOperation {
 
     var responseMap: ResponseMap {
         [
-            204: CustomResponse(description: "Logged out")
+            204: NoContentResponse(description: "Logged out")
         ]
     }
 }
@@ -39,7 +39,7 @@ struct AuthMagicLinkOperation: AuthOperation {
     }
     var responseMap: ResponseMap {
         [
-            204: CustomResponse(description: "Magic link requested")
+            204: NoContentResponse(description: "Magic link requested")
         ]
     }
 }

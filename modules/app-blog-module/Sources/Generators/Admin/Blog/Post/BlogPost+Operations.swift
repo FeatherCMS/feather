@@ -42,7 +42,7 @@ struct BlogPostListOperation: BlogPostOperation {
 }
 
 struct BlogPostSearchOperation: BlogPostOperation {
-    var searchQuery: SearchQuerySchema {
+    var searchRequestQuery: SearchRequestQuerySchema {
         .init(
             items: BlogPostListItemSchema(),
             sortFieldKeys: [
@@ -56,12 +56,15 @@ struct BlogPostSearchOperation: BlogPostOperation {
     }
 
     var requestBody: (any RequestBodyRepresentable)? {
-        SearchRequestBody(query: searchQuery)
+        SearchRequestBody(query: searchRequestQuery)
     }
 
     var responseMap: ResponseMap {
         [
-            200: SearchResponse(query: searchQuery).reference()
+            200: SearchResponse(
+                query: SearchResponseQuerySchema(query: searchRequestQuery)
+            )
+            .reference()
         ]
     }
 }

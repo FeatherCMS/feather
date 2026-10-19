@@ -149,11 +149,10 @@ struct AdminEditMediaVariantOpenAPIRepository: AdminEditMediaVariantRepository {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response = try await client.mediaVariantProcessorRemove(
                 path: .init(mediaVariantId: variantId),
-                headers: .init(accept: [.init(contentType: .json)]),
-                body: .json(.init(ids: [id], results: false, summary: true))
+                body: .json(.init(ids: [id]))
             )
             switch response {
-            case .ok: return
+            case .noContent: return
             case .unauthorized: throw OpenAPIRepositoryError.unauthorized
             case .forbidden: throw OpenAPIRepositoryError.forbidden
             case .undocumented(let statusCode, let response):

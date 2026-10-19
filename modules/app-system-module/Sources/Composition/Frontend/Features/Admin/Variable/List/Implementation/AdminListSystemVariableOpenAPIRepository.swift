@@ -1,3 +1,4 @@
+import SystemModule
 import FeatherAdmin
 import Hummingbird
 import OpenAPIRuntime
@@ -18,12 +19,12 @@ struct AdminListSystemVariableOpenAPIRepository:
         ids: [String]? = nil
     ) async throws
         -> SystemAdminAPI.Components.Responses
-        .SystemVariableListItemSearchSchemaSearchResponse
+        .SystemVariableQueryItemSearchSchemaSearchResponse
     {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let response =
                 try await client
-                .systemVariableSearch(
+                .systemVariableQuery(
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(

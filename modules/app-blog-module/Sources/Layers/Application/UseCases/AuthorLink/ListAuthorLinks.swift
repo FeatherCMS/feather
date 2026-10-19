@@ -1,6 +1,6 @@
 import BlogContracts
 public import FeatherApplication
-public import FeatherContracts
+public import FeatherModuleKit
 
 //
 //  ListAuthorLinks.swift

@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import BlogDomain
+import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
 import WebDomain
@@ -90,7 +91,7 @@ public struct TagDatabaseRepository: TagRepository {
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        let table = TagTable(connection: context.connection)
-        return try await table.delete(ids: ids)
+        try await DatabaseAccessLayer<TagTable>(context: context).delete(where: \.id, in: ids)
+        return ids
     }
 }

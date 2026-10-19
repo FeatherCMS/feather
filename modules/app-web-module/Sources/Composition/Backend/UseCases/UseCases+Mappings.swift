@@ -1,5 +1,5 @@
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 import FeatherDomain
 import Foundation
 import WebAdminAPI
@@ -171,7 +171,7 @@ extension UseCases {
 
     func map(
         _ query: WebAdminAPI.Components.Schemas
-            .WebMetadataListItemSearchQuerySchema
+            .WebMetadataListItemSearchRequestQuerySchema
     ) -> MetadataList.Query {
         .init(
             page: map(query.page),
@@ -246,7 +246,7 @@ extension UseCases {
     }
 
     func map(
-        _ query: WebAdminAPI.Components.Schemas.WebPageListItemSearchQuerySchema
+        _ query: WebAdminAPI.Components.Schemas.WebPageListItemSearchRequestQuerySchema
     ) -> PageList.Query {
         .init(page: map(query.page), sort: [], search: query.filters.search)
     }
@@ -280,7 +280,7 @@ extension UseCases {
     }
 
     func map(
-        _ query: WebAdminAPI.Components.Schemas.WebMenuListItemSearchQuerySchema
+        _ query: WebAdminAPI.Components.Schemas.WebMenuListItemSearchRequestQuerySchema
     ) -> MenuList.Query {
         .init(
             page: map(query.page),
@@ -316,7 +316,7 @@ extension UseCases {
 
     func map(
         _ query: WebAdminAPI.Components.Schemas
-            .WebMenuItemListItemSearchQuerySchema
+            .WebMenuItemListItemSearchRequestQuerySchema
     ) -> MenuItemList.Query {
         .init(
             page: map(query.page),

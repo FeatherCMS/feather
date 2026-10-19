@@ -1,13 +1,13 @@
 public import AccountAdminAPI
 import AccountApplication
-import FeatherContracts
+import FeatherModuleKit
 
 extension AdminAPIGateway {
 
     public func accountInvitationSearch(
         _ input: Operations.AccountInvitationSearch.Input
     ) async throws -> Operations.AccountInvitationSearch.Output {
-        let query: Components.Schemas.AccountInvitationListItemSearchQuerySchema
+        let query: Components.Schemas.AccountInvitationListItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value

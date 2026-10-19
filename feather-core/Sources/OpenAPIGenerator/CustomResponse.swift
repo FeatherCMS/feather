@@ -11,19 +11,11 @@ public import OpenAPIKit30
 public struct CustomResponse: ResponseRepresentable {
 
     public let description: String
-    public var contentMap: ContentMap { [:] }
+    public var contentMap: ContentMap {
+        DefaultHTTPErrorContentResponse(description: description).contentMap
+    }
 
     public init(description: String) {
         self.description = description
-    }
-
-    // MARK: - standard
-
-    static var unauthorized: Self {
-        .init(description: "Unauthorized")
-    }
-
-    static var forbidden: Self {
-        .init(description: "Forbidden")
     }
 }

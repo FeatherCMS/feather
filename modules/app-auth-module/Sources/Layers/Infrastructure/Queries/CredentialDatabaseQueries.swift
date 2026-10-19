@@ -1,4 +1,5 @@
 public import AuthApplication
+import FeatherDBAL
 import FeatherApplication
 public import FeatherInfrastructure
 

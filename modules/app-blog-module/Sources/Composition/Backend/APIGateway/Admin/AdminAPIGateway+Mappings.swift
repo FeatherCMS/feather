@@ -1,7 +1,7 @@
 import BlogAdminAPI
 import BlogApplication
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 import Foundation
 import WebAdminAPI
 import WebApplication
@@ -157,7 +157,7 @@ extension AdminAPIGateway {
 
     func map(
         _ query: BlogAdminAPI.Components.Schemas
-            .BlogPostListItemSearchQuerySchema
+            .BlogPostListItemSearchRequestQuerySchema
     ) -> PostList.Query {
         let sort = (query.sort ?? [])
             .map { item in
@@ -216,7 +216,7 @@ extension AdminAPIGateway {
 
     func map(
         _ query: BlogAdminAPI.Components.Schemas
-            .BlogTagListItemSearchQuerySchema
+            .BlogTagListItemSearchRequestQuerySchema
     ) -> TagList.Query {
         let sort = (query.sort ?? [])
             .map { item in
@@ -273,7 +273,7 @@ extension AdminAPIGateway {
 
     func map(
         _ query: BlogAdminAPI.Components.Schemas
-            .BlogAuthorListItemSearchQuerySchema
+            .BlogAuthorListItemSearchRequestQuerySchema
     ) -> AuthorList.Query {
         let sort = (query.sort ?? [])
             .map { item in
@@ -330,7 +330,7 @@ extension AdminAPIGateway {
 
     func map(
         _ query: BlogAdminAPI.Components.Schemas
-            .BlogAuthorLinkListItemSearchQuerySchema
+            .BlogAuthorLinkListItemSearchRequestQuerySchema
     ) -> AuthorLinkList.Query {
         let sort = (query.sort ?? [])
             .map { item in

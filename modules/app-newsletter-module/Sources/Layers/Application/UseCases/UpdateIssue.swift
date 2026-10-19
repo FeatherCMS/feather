@@ -1,5 +1,5 @@
 public import FeatherApplication
-public import FeatherContracts
+public import FeatherModuleKit
 public import Foundation
 import NewsletterContracts
 import NewsletterDomain

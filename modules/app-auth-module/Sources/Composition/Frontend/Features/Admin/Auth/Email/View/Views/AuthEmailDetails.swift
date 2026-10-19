@@ -1,6 +1,6 @@
 import AuthContracts
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import HTML
 import Hummingbird
 import WebBuilders

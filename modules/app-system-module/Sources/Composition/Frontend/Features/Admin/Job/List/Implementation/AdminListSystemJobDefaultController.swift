@@ -1,6 +1,6 @@
+import SystemModule
 import FeatherAdmin
 import Hummingbird
-import SystemContracts
 
 struct AdminListSystemJobDefaultController: AdminListSystemJobController {
     let buildRuntime:
@@ -18,7 +18,7 @@ struct AdminListSystemJobDefaultController: AdminListSystemJobController {
         let search = request.querySearch()
         let status = request.queryString("status").flatMap(Int.init)
         let permissions = context.currentUserAdminListActions
-        guard context.isCurrentUserAllowed(to: SystemPermissions.Jobs.list)
+        guard context.isCurrentUserAllowed(to: SystemModule.Job.Permissions.list)
         else {
             return try await runtime.presenter.renderErrorPage(
                 error: .forbidden

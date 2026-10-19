@@ -1,6 +1,6 @@
 public import FeatherInfrastructure
 import NIOHTTP1
-import OpenAPIRuntime
+public import FeatherBackend
 
 extension RepositoryError: ErrorTraceRepresentable {
 
@@ -15,18 +15,19 @@ extension RepositoryError: ErrorTraceRepresentable {
 
 extension RepositoryError: HTTPErrorRepresentable {
 
-    var status: HTTPResponseStatus {
+    public var status: HTTPResponseStatus {
         switch reason {
         case .database(.notFound):
             .notFound
-        case .database(.rowDecoding), .database(.duplicateKey), .unknown:
+        case .database(.duplicateKey):
+            .conflict
+        case .database(.rowDecoding), .unknown:
             .internalServerError
         }
     }
 
-    var content: ServerError.Details? {
-        .init(
-            code: status,
+    public var content: any HTTPErrorContent {
+        DefaultHTTPErrorContent(
             message: message,
             reason: debugMessage
         )

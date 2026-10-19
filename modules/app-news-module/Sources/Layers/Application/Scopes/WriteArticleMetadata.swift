@@ -1,10 +1,11 @@
+public import SystemModule
 //
 //  WriteArticleMetadata.swift
 //  app-news-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
-public import FeatherContracts
+public import FeatherModuleKit
 public import NewsDomain
 public import SystemApplication
 public import WebDomain
@@ -12,12 +13,12 @@ public import WebDomain
 public struct WriteArticleMetadata: Scope {
     public let article: any ArticleRepository
     public let metadata: any MetadataRepository
-    public let variable: any VariableQueries
+    public let variable: any SystemModule.Variable.Lookup.Interface
 
     public init(
         article: any ArticleRepository,
         metadata: any MetadataRepository,
-        variable: any VariableQueries
+        variable: any SystemModule.Variable.Lookup.Interface
     ) {
         self.article = article
         self.metadata = metadata

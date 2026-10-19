@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherDomain
+import FeatherDBAL
 public import FeatherInfrastructure
 public import WebDomain
 
@@ -99,7 +100,7 @@ public struct MenuItemDatabaseRepository: MenuItemRepository {
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        let table = MenuItemTable(connection: context.connection)
-        return try await table.delete(ids: ids)
+        try await DatabaseAccessLayer<MenuItemTable>(context: context).delete(where: \.id, in: ids)
+        return ids
     }
 }

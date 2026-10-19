@@ -6,7 +6,7 @@
 
 public import AuthDomain
 public import AccountDomain
-public import FeatherContracts
+public import FeatherModuleKit
 public import UserDomain
 
 public struct WriteInvitation: Scope {

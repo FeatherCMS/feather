@@ -5,19 +5,19 @@ import OpenAPIKit30
 protocol NewsCategoryOperation: BearerProtectedOperation {}
 
 extension NewsCategoryOperation {
-    var tags: [TagRepresentable] { [NewsCategoryTag()] }
+    var tags: [any TagRepresentable] { [NewsCategoryTag()] }
 }
 
 protocol NewsCategoryIDOperation: NewsCategoryOperation {}
 
 extension NewsCategoryIDOperation {
-    var parameters: [ParameterRepresentable] {
+    var parameters: [any ParameterRepresentable] {
         [NewsCategoryIDParameter().reference()]
     }
 }
 
 struct NewsCategoryCreateOperation: NewsCategoryOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         NewsCategoryRequestBody().reference()
     }
     var responseMap: ResponseMap {
@@ -32,7 +32,7 @@ struct NewsCategoryListOperation: NewsCategoryOperation {
 }
 
 struct NewsCategorySearchOperation: NewsCategoryOperation {
-    var searchQuery: SearchQuerySchema {
+    var searchRequestQuery: SearchRequestQuerySchema {
         .init(
             items: NewsCategoryListItemSchema(),
             sortFieldKeys: ["id", "title", "createdAt", "updatedAt"],
@@ -40,12 +40,17 @@ struct NewsCategorySearchOperation: NewsCategoryOperation {
         )
     }
 
-    var requestBody: RequestBodyRepresentable? {
-        SearchRequestBody(query: searchQuery)
+    var requestBody: (any RequestBodyRepresentable)? {
+        SearchRequestBody(query: searchRequestQuery)
     }
 
     var responseMap: ResponseMap {
-        [200: SearchResponse(query: searchQuery).reference()]
+        [
+            200: SearchResponse(
+                query: SearchResponseQuerySchema(query: searchRequestQuery)
+            )
+            .reference()
+        ]
     }
 }
 
@@ -59,7 +64,7 @@ struct NewsCategoryGetOperation: NewsCategoryIDOperation {
 }
 
 struct NewsCategoryUpdateOperation: NewsCategoryIDOperation {
-    var requestBody: RequestBodyRepresentable? {
+    var requestBody: (any RequestBodyRepresentable)? {
         NewsCategoryUpdateRequestBody().reference()
     }
     var responseMap: ResponseMap {

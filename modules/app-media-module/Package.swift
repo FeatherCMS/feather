@@ -44,7 +44,6 @@ let package = Package(
         .library(name: "MediaFrontend", targets: ["MediaFrontend"]),
     ],
     dependencies: [
-        // [docc-plugin-placeholder]
 
         .package(
             url: "https://github.com/feather-framework/feather-storage",
@@ -53,7 +52,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-nio.git", from: "2.34.0"),
         .package(url: "https://github.com/mattpolzin/OpenAPIKit", from: "7.0.0"),
         .package(url: "https://github.com/jpsim/Yams", from: "6.2.0"),
-        .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.12.1"),
+        .package(url: "https://github.com/apple/swift-openapi-runtime", from: "1.13.2"),
         .package(url: "https://github.com/hummingbird-project/hummingbird", from: "2.27.0"),
         .package(url: "https://github.com/swift-server/async-http-client", from: "1.0.0"),
         .package(url: "https://github.com/hummingbird-project/swift-jobs", from: "1.1.0"),
@@ -62,13 +61,21 @@ let package = Package(
             exact: "1.0.0-beta.4"
         ),
         .package(path: "../../feather-core"),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal-postgres",
+            exact: "1.0.0-alpha.1"
+        ),
         .package(path: "../app-system-module"),
     ],
     targets: [
         .target(
             name: "MediaContracts",
             dependencies: [
-                .product(name: "FeatherContracts", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
             ],
             path: "Sources/Contracts",
             swiftSettings: swiftSettings
@@ -92,6 +99,7 @@ let package = Package(
                 .product(name: "MIME", package: "swift-web-standards"),
                 .product(name: "NIOCore", package: "swift-nio"),
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "MediaDomain"),
             ],
@@ -102,6 +110,8 @@ let package = Package(
             name: "MediaInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
                 .product(name: "Jobs", package: "swift-jobs"),
                 .product(name: "FeatherDomain", package: "feather-core"),
 
@@ -168,7 +178,7 @@ let package = Package(
             name: "MediaFrontend",
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
-                .product(name: "SystemContracts", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "MediaContracts"),
                 .target(name: "MediaAdminAPI"),

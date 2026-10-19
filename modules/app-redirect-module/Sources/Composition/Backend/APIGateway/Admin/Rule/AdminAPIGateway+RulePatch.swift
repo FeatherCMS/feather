@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 public import RedirectAdminAPI
 import RedirectApplication
 import RedirectContracts

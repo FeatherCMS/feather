@@ -4,7 +4,6 @@ import OpenAPIHummingbird
 import OpenAPIRuntime
 import Logging
 import SystemAdminAPI
-import SystemAppAPI
 import UserAdminAPI
 import UserAppAPI
 import AccountAdminAPI
@@ -123,12 +122,6 @@ func buildRouter(
             on: router,
             middlewares: middlewares
         )
-    try SystemBackend.AppAPIGateway(useCases: modules.system)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
-
     try UserBackend.AppAPIGateway(useCases: modules.user)
         .registerHandlers(
             on: router,

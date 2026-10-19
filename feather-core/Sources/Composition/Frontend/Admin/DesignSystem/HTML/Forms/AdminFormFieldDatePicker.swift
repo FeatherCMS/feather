@@ -1,5 +1,5 @@
 public import CSS
-import FeatherContracts
+import FeatherModuleKit
 public import HTML
 import SGML
 import WebBuilders

@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct AdminRichContentEditorBlockDefinition: Codable, Hashable, Sendable {
     public enum Editor: String, Codable, Hashable, Sendable {

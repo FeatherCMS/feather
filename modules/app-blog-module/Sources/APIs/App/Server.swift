@@ -252,7 +252,20 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
                     suppressMutabilityWarning(&response)
-                    return (response, nil)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
                 case let .undocumented(statusCode, _):
                     return (.init(soar_statusCode: statusCode), nil)
                 }
@@ -355,7 +368,20 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
                     suppressMutabilityWarning(&response)
-                    return (response, nil)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
                 case let .undocumented(statusCode, _):
                     return (.init(soar_statusCode: statusCode), nil)
                 }
@@ -458,7 +484,20 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 404)
                     suppressMutabilityWarning(&response)
-                    return (response, nil)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
                 case let .undocumented(statusCode, _):
                     return (.init(soar_statusCode: statusCode), nil)
                 }

@@ -1,4 +1,5 @@
 public import AuthDomain
+import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
 
@@ -65,7 +66,8 @@ public struct AuthEmailDatabaseRepository: AuthEmailRepository {
     }
 
     public func delete(ids: [String]) async throws -> [String] {
-        try await AuthEmailTable(connection: context.connection)
-            .delete(ids: ids)
+        try await DatabaseAccessLayer<AuthEmailTable>(context: context)
+            .delete(where: \.id, in: ids)
+        return ids
     }
 }

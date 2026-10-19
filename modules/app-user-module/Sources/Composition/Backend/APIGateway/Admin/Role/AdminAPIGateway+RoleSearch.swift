@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 public import UserAdminAPI
 import UserApplication
 
@@ -7,7 +7,7 @@ extension AdminAPIGateway {
     public func userRoleSearch(
         _ input: Operations.UserRoleSearch.Input
     ) async throws -> Operations.UserRoleSearch.Output {
-        let query: Components.Schemas.UserRoleListItemSearchQuerySchema
+        let query: Components.Schemas.UserRoleListItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value

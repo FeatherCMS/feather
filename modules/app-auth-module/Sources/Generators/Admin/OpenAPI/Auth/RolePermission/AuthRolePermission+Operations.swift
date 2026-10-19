@@ -36,7 +36,7 @@ struct AuthRolePermissionCreateOperation: AuthRolePermissionOperation {
 }
 
 struct AuthRolePermissionSearchOperation: AuthRolePermissionOperation {
-    var searchQuery: SearchQuerySchema {
+    var searchRequestQuery: SearchRequestQuerySchema {
         .init(
             items: AuthRolePermissionListItemSchema(),
             sortFieldKeys: [
@@ -48,12 +48,15 @@ struct AuthRolePermissionSearchOperation: AuthRolePermissionOperation {
     }
 
     var requestBody: (any RequestBodyRepresentable)? {
-        SearchRequestBody(query: searchQuery)
+        SearchRequestBody(query: searchRequestQuery)
     }
 
     var responseMap: ResponseMap {
         [
-            200: SearchResponse(query: searchQuery).reference()
+            200: SearchResponse(
+                query: SearchResponseQuerySchema(query: searchRequestQuery)
+            )
+            .reference()
         ]
     }
 }

@@ -1,7 +1,7 @@
 public import AuthAdminAPI
 import AuthApplication
 import AuthDomain
-import FeatherContracts
+import FeatherModuleKit
 import UserApplication
 // @TODO: do not import domain
 import UserDomain

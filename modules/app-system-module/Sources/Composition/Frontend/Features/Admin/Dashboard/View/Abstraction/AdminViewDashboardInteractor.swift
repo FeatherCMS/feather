@@ -1,3 +1,4 @@
+import SystemModule
 protocol AdminViewDashboardInteractor: Sendable {
     func getHome(
         context: AdminDashboardEventContext

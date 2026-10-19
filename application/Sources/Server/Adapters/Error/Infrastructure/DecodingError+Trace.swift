@@ -10,6 +10,7 @@ import FoundationEssentials
 #else
 import Foundation
 #endif
+public import FeatherBackend
 
 extension DecodingError: ErrorTraceRepresentable {
 

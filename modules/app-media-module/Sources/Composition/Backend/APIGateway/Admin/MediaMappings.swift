@@ -1,5 +1,5 @@
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 import Foundation
 import MediaAdminAPI
 import MediaApplication
@@ -20,7 +20,7 @@ extension AdminAPIGateway {
 
     func map(
         _ query: MediaAdminAPI.Components.Schemas
-            .MediaAssetNodeSearchItemSearchQuerySchema
+            .MediaAssetNodeSearchItemSearchRequestQuerySchema
     ) -> MediaAssetList.Query {
         let sort = (query.sort ?? [])
             .map { rule -> MediaAssetList.Query.Sort in
@@ -133,7 +133,7 @@ extension AdminAPIGateway {
 
     func map(
         _ query: MediaAdminAPI.Components.Schemas
-            .MediaFolderListItemSearchQuerySchema
+            .MediaFolderListItemSearchRequestQuerySchema
     ) -> MediaFolderList.Query {
         .init(parentId: (query.filters.parentId ?? "").emptyToNil)
     }
@@ -226,14 +226,14 @@ extension AdminAPIGateway {
 
     func map(
         _ query: MediaAdminAPI.Components.Schemas
-            .MediaVariantListItemSearchQuerySchema
+            .MediaVariantListItemSearchRequestQuerySchema
     ) -> MediaVariantList.Query {
         .init(page: map(query.page), search: query.filters.search)
     }
 
     func map(
         _ query: MediaAdminAPI.Components.Schemas
-            .MediaVariantProcessorListItemSearchQuerySchema
+            .MediaVariantProcessorListItemSearchRequestQuerySchema
     ) -> MediaVariantProcessorList.Query {
         .init(page: map(query.page), search: query.filters.search)
     }

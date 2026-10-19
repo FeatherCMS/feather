@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 
 struct AdminListWebPageMetadata: Sendable {
     let slug: String

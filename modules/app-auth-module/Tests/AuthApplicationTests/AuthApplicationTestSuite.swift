@@ -5,7 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 import SystemApplication
 import Testing
 
@@ -83,7 +83,7 @@ struct AuthApplicationTestSuite {
             context: WriteRequestMagicLink(
                 credential: credentialRepository,
                 magicLink: magicLinkRepository,
-                variable: MockVariableQueries(
+                variable: MockVariableLookup(
                     value: "https://example.test",
                     mailFromAddress: "magic-links@example.test",
                     mailFromName: "Binary Birds"

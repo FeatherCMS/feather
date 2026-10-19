@@ -60,7 +60,7 @@ struct AdminRemoveBlogTagOpenAPIRepository:
     ) async throws {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.blogTagRemove(
-                body: .json(.init(ids: [id], results: false, summary: true))
+                body: .json(.init(ids: [id]))
             )
         }
     }

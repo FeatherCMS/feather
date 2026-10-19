@@ -5,7 +5,10 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import FeatherInfrastructure
+import FeatherDomain
+import FeatherDBAL
 public import SystemDomain
+public import SystemModule
 import SystemInfrastructure
 import WebApplication
 public import WebDomain
@@ -13,11 +16,11 @@ public import WebDomain
 public struct SettingsDatabaseRepository: SettingsRepository {
 
     public let context: any DatabaseContext
-    public var variableRepository: any VariableRepository
+    public var variableRepository: any SystemModule.Variable.Repository.Interface
 
     public init(context: any DatabaseContext) {
         self.context = context
-        self.variableRepository = VariableDatabaseRepository(context: context)
+        self.variableRepository = SystemModule.Variable.Repository.Database(context: context)
     }
 
     public func get(
@@ -25,7 +28,11 @@ public struct SettingsDatabaseRepository: SettingsRepository {
         ) async throws -> Settings
     {
         let detail = try await SettingsDatabaseQueries(
-            context: DatabaseQueryContext(connection: context.connection)
+            context: DatabaseQueryContext(
+                platform: context.platform,
+                connection: context.connection,
+                idGenerator: context.idGenerator
+            )
         )
         .get()
         return .init(
@@ -158,15 +165,15 @@ public struct SettingsDatabaseRepository: SettingsRepository {
     ) async throws {
         if var existing = try await variableRepository.find(key: key) {
             try existing.update(
-                name: name,
-                value: value,
-                notes: notes
+                name: .set(name),
+                value: .set(value),
+                notes: .set(notes)
             )
             _ = try await variableRepository.update(existing)
         }
         else {
             _ = try await variableRepository.insert(
-                try Variable.create(
+                try SystemModule.Variable.Model.create(
                     key: key,
                     value: value,
                     name: name,

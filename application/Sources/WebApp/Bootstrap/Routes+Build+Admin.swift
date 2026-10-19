@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 import WebApplication
 import BlogFrontend
 import MediaFrontend

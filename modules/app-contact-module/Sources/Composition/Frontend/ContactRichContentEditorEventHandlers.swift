@@ -1,5 +1,5 @@
 import FeatherAdmin
-public import FeatherContracts
+public import FeatherModuleKit
 
 public enum ContactRichContentEditorEventHandlers {
     public static func register(in registry: inout EventRegistry) {

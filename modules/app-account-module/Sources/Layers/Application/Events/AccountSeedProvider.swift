@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct AccountSeedProvider: Event {
     public typealias Output = [AccountSeedDefinition]

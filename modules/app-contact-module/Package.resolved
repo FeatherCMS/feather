@@ -1,5 +1,5 @@
 {
-  "originHash" : "d85a5b405c45027283e56892cab347b03d725aa3efaabb4f7cd1e1a02c92a0c4",
+  "originHash" : "871598fe6c41025ee5e724eacda868fa2737c699418f5c08a29d0c34dfd77c81",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -8,15 +8,6 @@
       "state" : {
         "revision" : "9544287b9416c0bc71e58b9f3aead8dd14b16103",
         "version" : "1.36.0"
-      }
-    },
-    {
-      "identity" : "feather-database",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/feather-framework/feather-database",
-      "state" : {
-        "revision" : "d290d92b2617ad5768c293c4edcdd66b4f178d48",
-        "version" : "1.0.0-rc.2"
       }
     },
     {
@@ -80,6 +71,15 @@
       "state" : {
         "revision" : "2cabbac1d08b25c5d22960cc9554f7960a3824cf",
         "version" : "7.0.0"
+      }
+    },
+    {
+      "identity" : "postgres-nio",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vapor/postgres-nio",
+      "state" : {
+        "revision" : "39ce38a93408937bcd27f521f3cdf88266136b80",
+        "version" : "1.33.1"
       }
     },
     {
@@ -150,8 +150,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-collections.git",
       "state" : {
-        "revision" : "a0cb0954ecb21e4e31b0070e6ed5674e8556685a",
-        "version" : "1.6.0"
+        "revision" : "35a1edcb8ebd2bfe251d587f0b69e62af28f508c",
+        "version" : "1.7.3"
       }
     },
     {
@@ -204,8 +204,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-http-types.git",
       "state" : {
-        "revision" : "db774a277f60063a32d854f2980299caf06da041",
-        "version" : "1.6.0"
+        "revision" : "bff4b6903cdc99dda49649dd52f46c11cfd3ed50",
+        "version" : "1.8.0"
       }
     },
     {
@@ -330,8 +330,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-openapi-runtime",
       "state" : {
-        "revision" : "9e53df53e043b53046a371b31aaf0a1e26eef946",
-        "version" : "1.12.1"
+        "revision" : "478bf6ce34f71734bc88b79b37b842118312d133",
+        "version" : "1.13.2"
       }
     },
     {

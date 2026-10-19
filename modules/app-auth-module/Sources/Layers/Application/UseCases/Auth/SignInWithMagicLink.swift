@@ -6,7 +6,7 @@
 
 import AuthDomain
 public import FeatherApplication
-public import FeatherContracts
+public import FeatherModuleKit
 import UserDomain
 
 public struct SignInWithMagicLink: SignIn {

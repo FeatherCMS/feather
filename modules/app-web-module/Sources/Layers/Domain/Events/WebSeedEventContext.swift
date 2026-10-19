@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 /// Context for backend-owned web seed event providers.
 public struct WebSeedEventContext: ExecutionContext {

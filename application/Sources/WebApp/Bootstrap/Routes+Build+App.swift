@@ -1,5 +1,5 @@
 import Foundation
-import FeatherContracts
+import FeatherModuleKit
 import BlogFrontend
 import MediaFrontend
 import ContactFrontend

@@ -1,17 +1,18 @@
+public import SystemModule
 public import AccountDomain
-public import FeatherContracts
+public import FeatherModuleKit
 public import SystemApplication
 public import UserDomain
 
 public struct WriteInvitationOnlyWithVariable: Scope {
     public let invitation: any InvitationRepository
     public let role: any RoleRepository
-    public let variable: any VariableQueries
+    public let variable: any SystemModule.Variable.Lookup.Interface
 
     public init(
         invitation: any InvitationRepository,
         role: any RoleRepository,
-        variable: any VariableQueries
+        variable: any SystemModule.Variable.Lookup.Interface
     ) {
         self.invitation = invitation
         self.role = role

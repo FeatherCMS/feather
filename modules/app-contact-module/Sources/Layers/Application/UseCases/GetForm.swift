@@ -1,7 +1,7 @@
 import ContactContracts
 import ContactDomain
 public import FeatherApplication
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct GetForm: UseCase {
     struct Action: PermissionAction {

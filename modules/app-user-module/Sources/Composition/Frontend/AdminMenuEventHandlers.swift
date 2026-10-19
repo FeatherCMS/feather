@@ -1,5 +1,5 @@
 import FeatherAdmin
-public import FeatherContracts
+public import FeatherModuleKit
 import Hummingbird
 
 public enum UserAdminMenuEventHandlers {

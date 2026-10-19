@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 import FeatherStorage
 public import MediaAdminAPI
 import MediaApplication

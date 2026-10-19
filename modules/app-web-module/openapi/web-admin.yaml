@@ -30,8 +30,16 @@ paths:
           $ref: '#/components/responses/WebMetadataDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -41,12 +49,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/metadata/:
@@ -59,8 +75,16 @@ paths:
           $ref: '#/components/responses/WebMetadataListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/metadata/search:
@@ -72,15 +96,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WebMetadataListItemSearchQuerySchema'
+              $ref: '#/components/schemas/WebMetadataListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/WebMetadataListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/metadata/resolve:
@@ -95,8 +127,16 @@ paths:
           $ref: '#/components/responses/WebMetadataResolveResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/metadata/{webMetadataId}:
@@ -111,10 +151,22 @@ paths:
           $ref: '#/components/responses/WebMetadataDetailResponse'
         404:
           description: WebMetadata not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -130,10 +182,22 @@ paths:
           $ref: '#/components/responses/WebMetadataDetailResponse'
         404:
           description: WebMetadata not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -149,10 +213,22 @@ paths:
           $ref: '#/components/responses/WebMetadataDetailResponse'
         404:
           description: WebMetadata not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/pages:
@@ -167,8 +243,16 @@ paths:
           $ref: '#/components/responses/WebPageDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -178,12 +262,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/pages/:
@@ -196,8 +288,16 @@ paths:
           $ref: '#/components/responses/WebPageListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/pages/search:
@@ -209,15 +309,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WebPageListItemSearchQuerySchema'
+              $ref: '#/components/schemas/WebPageListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/WebPageListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/pages/{webPageId}:
@@ -232,10 +340,22 @@ paths:
           $ref: '#/components/responses/WebPageDetailResponse'
         404:
           description: WebPage not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -251,10 +371,22 @@ paths:
           $ref: '#/components/responses/WebPageDetailResponse'
         404:
           description: WebPage not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -270,10 +402,22 @@ paths:
           $ref: '#/components/responses/WebPageDetailResponse'
         404:
           description: WebPage not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/menus:
@@ -288,8 +432,16 @@ paths:
           $ref: '#/components/responses/WebMenuDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -299,12 +451,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/menus/:
@@ -317,8 +477,16 @@ paths:
           $ref: '#/components/responses/WebMenuListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/menus/search:
@@ -330,15 +498,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WebMenuListItemSearchQuerySchema'
+              $ref: '#/components/schemas/WebMenuListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/WebMenuListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/menus/{webMenuId}:
@@ -353,10 +529,22 @@ paths:
           $ref: '#/components/responses/WebMenuDetailResponse'
         404:
           description: WebMenu not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -372,10 +560,22 @@ paths:
           $ref: '#/components/responses/WebMenuDetailResponse'
         404:
           description: WebMenu not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -391,10 +591,22 @@ paths:
           $ref: '#/components/responses/WebMenuDetailResponse'
         404:
           description: WebMenu not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/menus/{webMenuId}/items:
@@ -411,8 +623,16 @@ paths:
           $ref: '#/components/responses/WebMenuItemDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -424,12 +644,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/menus/{webMenuId}/items/:
@@ -444,8 +672,16 @@ paths:
           $ref: '#/components/responses/WebMenuItemListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/menus/{webMenuId}/items/search:
@@ -459,15 +695,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/WebMenuItemListItemSearchQuerySchema'
+              $ref: '#/components/schemas/WebMenuItemListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/WebMenuItemListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}:
@@ -483,10 +727,22 @@ paths:
           $ref: '#/components/responses/WebMenuItemDetailResponse'
         404:
           description: WebMenuItem not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -503,10 +759,22 @@ paths:
           $ref: '#/components/responses/WebMenuItemDetailResponse'
         404:
           description: WebMenuItem not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -523,10 +791,22 @@ paths:
           $ref: '#/components/responses/WebMenuItemDetailResponse'
         404:
           description: WebMenuItem not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/menus/{webMenuId}/items/{webMenuItemId}/move:
@@ -544,10 +824,22 @@ paths:
           description: WebMenuItem moved
         404:
           description: WebMenuItem not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/web/settings:
@@ -560,8 +852,16 @@ paths:
           $ref: '#/components/responses/WebSettingsDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -575,8 +875,16 @@ paths:
           $ref: '#/components/responses/WebSettingsDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
 components:
@@ -724,6 +1032,51 @@ components:
       - expired
       - archived
       example: live
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
+      required:
+      - error
+    DefaultHTTPErrorContentSchema:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - message
+      - reason
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
     DeleteRequestSchema:
       type: object
       properties:
@@ -732,57 +1085,8 @@ components:
           items:
             type: string
             example: id1
-        results:
-          type: boolean
-          example: true
-        summary:
-          type: boolean
-          example: true
       required:
       - ids
-      - results
-      - summary
-    DeleteResponseSchema:
-      type: object
-      properties:
-        results:
-          $ref: '#/components/schemas/DeleteResultListSchema'
-        summary:
-          $ref: '#/components/schemas/DeleteSummarySchema'
-    DeleteResultListSchema:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            example: id1
-          status:
-            type: string
-            enum:
-            - deleted
-            - not_found
-            - forbidden
-            example: deleted
-        required:
-        - id
-        - status
-    DeleteSummarySchema:
-      type: object
-      properties:
-        requested:
-          type: integer
-          example: 1
-        deleted:
-          type: integer
-          example: 1
-        omitted:
-          type: integer
-          example: 1
-      required:
-      - requested
-      - deleted
-      - omitted
     WebMetadataListSchema:
       type: array
       items:
@@ -838,7 +1142,7 @@ components:
       type: number
       format: double
       example: 1.76e+9
-    WebMetadataListItemSearchQuerySchema:
+    WebMetadataListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -875,7 +1179,6 @@ components:
             referenceType:
               $ref: '#/components/schemas/WebMetadataReferenceTypeField'
       required:
-      - page
       - filters
     SearchPageSchema:
       type: object
@@ -884,14 +1187,17 @@ components:
           $ref: '#/components/schemas/SearchPageSizeField'
         number:
           $ref: '#/components/schemas/SearchPageNumberField'
-      required:
-      - size
-      - number
     SearchPageSizeField:
       type: integer
+      default: 20
+      description: Results per page. Defaults to 20 when omitted; values below 1 are
+        clamped to 1. Endpoint-specific maximums may apply.
       example: 20
     SearchPageNumberField:
       type: integer
+      default: 1
+      description: 1-based page number. Defaults to 1 when omitted; values below 1
+        are clamped to 1.
       example: 1
     SortDirection:
       type: string
@@ -906,7 +1212,7 @@ components:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/WebMetadataListItemSearchQuerySchema'
+          $ref: '#/components/schemas/WebMetadataListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -923,6 +1229,55 @@ components:
       required:
       - query
       - data
+    WebMetadataListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - slug
+                - publicationDate
+                - expirationDate
+                - status
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            referenceType:
+              $ref: '#/components/schemas/WebMetadataReferenceTypeField'
+      required:
+      - page
+      - filters
+    SearchResponsePageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
     WebMetadataResolveRequestSchema:
       type: object
       properties:
@@ -1111,7 +1466,7 @@ components:
       type: number
       format: double
       example: 1.76e+9
-    WebPageListItemSearchQuerySchema:
+    WebPageListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1142,13 +1497,12 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
       required:
-      - page
       - filters
     WebPageListItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/WebPageListItemSearchQuerySchema'
+          $ref: '#/components/schemas/WebPageListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -1165,6 +1519,39 @@ components:
       required:
       - query
       - data
+    WebPageListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - title
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
     WebPagePatchSchema:
       type: object
       properties:
@@ -1264,7 +1651,7 @@ components:
       type: number
       format: double
       example: 1.76e+9
-    WebMenuListItemSearchQuerySchema:
+    WebMenuListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1296,13 +1683,12 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
       required:
-      - page
       - filters
     WebMenuListItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/WebMenuListItemSearchQuerySchema'
+          $ref: '#/components/schemas/WebMenuListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -1319,6 +1705,40 @@ components:
       required:
       - query
       - data
+    WebMenuListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - key
+                - name
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
     WebMenuPatchSchema:
       type: object
       properties:
@@ -1474,7 +1894,7 @@ components:
       type: number
       format: double
       example: 1.76e+9
-    WebMenuItemListItemSearchQuerySchema:
+    WebMenuItemListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1508,13 +1928,12 @@ components:
             search:
               $ref: '#/components/schemas/SearchStringField'
       required:
-      - page
       - filters
     WebMenuItemListItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/WebMenuItemListItemSearchQuerySchema'
+          $ref: '#/components/schemas/WebMenuItemListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -1531,6 +1950,42 @@ components:
       required:
       - query
       - data
+    WebMenuItemListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - label
+                - url
+                - priority
+                - permission
+                - createdAt
+                - updatedAt
+                example: id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+      required:
+      - page
+      - filters
     WebMenuItemPatchSchema:
       type: object
       properties:
@@ -1702,12 +2157,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/WebMetadataDetailSchema'
-    DeleteResponse:
-      description: Delete response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeleteResponseSchema'
+    NoContentResponse:
+      description: Delete succeeded
     WebMetadataListResponse:
       description: WebMetadata list response
       content:

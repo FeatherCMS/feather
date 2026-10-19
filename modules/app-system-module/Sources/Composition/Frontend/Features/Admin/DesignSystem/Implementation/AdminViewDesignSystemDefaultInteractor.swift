@@ -1,3 +1,4 @@
+import SystemModule
 struct AdminViewDesignSystemDefaultInteractor: AdminViewDesignSystemInteractor {
 
     func getDesignSystem() async throws -> AdminViewDesignSystemModel {

@@ -32,10 +32,22 @@ paths:
           $ref: '#/components/responses/MediaAssetDetailResponse'
         409:
           description: A media asset with this path already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -45,12 +57,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/media/assets/list:
@@ -62,15 +82,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema'
+              $ref: '#/components/schemas/MediaAssetNodeSearchItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/MediaAssetNodeSearchItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/media/assets/resolve:
@@ -85,8 +113,16 @@ paths:
           $ref: '#/components/responses/MediaAssetResolveResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/media/assets/{mediaAssetId}:
@@ -101,10 +137,22 @@ paths:
           $ref: '#/components/responses/MediaAssetDetailResponse'
         404:
           description: MediaAsset not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -120,10 +168,22 @@ paths:
           $ref: '#/components/responses/MediaAssetDetailResponse'
         404:
           description: MediaAsset not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/media/assets/{mediaAssetId}/variants:
@@ -138,10 +198,22 @@ paths:
           $ref: '#/components/responses/MediaAssetVariantListResponse'
         404:
           description: MediaAsset not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/media/folders:
@@ -156,10 +228,22 @@ paths:
           $ref: '#/components/responses/MediaFolderDetailResponse'
         409:
           description: A media folder with this path already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/media/folders/list:
@@ -171,15 +255,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MediaFolderListItemSearchQuerySchema'
+              $ref: '#/components/schemas/MediaFolderListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/MediaFolderListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/media/folders/{mediaFolderId}:
@@ -194,10 +286,22 @@ paths:
           $ref: '#/components/responses/MediaFolderDetailResponse'
         404:
           description: MediaFolder not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -213,10 +317,22 @@ paths:
           $ref: '#/components/responses/MediaFolderDetailResponse'
         404:
           description: MediaFolder not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/media/variants:
@@ -231,8 +347,16 @@ paths:
           $ref: '#/components/responses/MediaVariantDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -242,12 +366,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/media/variants/list:
@@ -259,15 +391,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MediaVariantListItemSearchQuerySchema'
+              $ref: '#/components/schemas/MediaVariantListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/MediaVariantListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/media/variants/{mediaVariantId}:
@@ -282,10 +422,22 @@ paths:
           $ref: '#/components/responses/MediaVariantDetailResponse'
         404:
           description: Media variant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -301,10 +453,22 @@ paths:
           $ref: '#/components/responses/MediaVariantDetailResponse'
         404:
           description: Media variant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/media/variants/{mediaVariantId}/processors:
@@ -321,10 +485,22 @@ paths:
           $ref: '#/components/responses/MediaVariantProcessorDetailResponse'
         404:
           description: Media variant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -336,12 +512,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/media/variants/{mediaVariantId}/processors/list:
@@ -355,17 +539,29 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema'
+              $ref: '#/components/schemas/MediaVariantProcessorListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/MediaVariantProcessorListItemSearchSchemaSearchResponse'
         404:
           description: Media variant not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/media/variants/{mediaVariantId}/processors/{mediaVariantProcessorId}:
@@ -381,10 +577,22 @@ paths:
           $ref: '#/components/responses/MediaVariantProcessorDetailResponse'
         404:
           description: Media variant processor not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -401,10 +609,22 @@ paths:
           $ref: '#/components/responses/MediaVariantProcessorDetailResponse'
         404:
           description: Media variant processor not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
 components:
@@ -484,6 +704,57 @@ components:
       type: string
       examples:
       - media_asset_1
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
+      required:
+      - error
+      minProperties: 1
+    DefaultHTTPErrorContentSchema:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - message
+      - reason
+      minProperties: 2
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+      minProperties: 2
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+      minItems: 0
+      uniqueItems: false
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
+      minProperties: 2
     DeleteRequestSchema:
       type: object
       properties:
@@ -495,71 +766,10 @@ components:
             - id1
           minItems: 0
           uniqueItems: false
-        results:
-          type: boolean
-          examples:
-          - true
-        summary:
-          type: boolean
-          examples:
-          - true
       required:
       - ids
-      - results
-      - summary
-      minProperties: 3
-    DeleteResponseSchema:
-      type: object
-      properties:
-        results:
-          $ref: '#/components/schemas/DeleteResultListSchema'
-        summary:
-          $ref: '#/components/schemas/DeleteSummarySchema'
-      minProperties: 0
-    DeleteResultListSchema:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            examples:
-            - id1
-          status:
-            type: string
-            enum:
-            - deleted
-            - not_found
-            - forbidden
-            examples:
-            - deleted
-        required:
-        - id
-        - status
-        minProperties: 2
-      minItems: 0
-      uniqueItems: false
-    DeleteSummarySchema:
-      type: object
-      properties:
-        requested:
-          type: integer
-          examples:
-          - 1
-        deleted:
-          type: integer
-          examples:
-          - 1
-        omitted:
-          type: integer
-          examples:
-          - 1
-      required:
-      - requested
-      - deleted
-      - omitted
-      minProperties: 3
-    MediaAssetNodeSearchItemSearchQuerySchema:
+      minProperties: 1
+    MediaAssetNodeSearchItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -604,9 +814,8 @@ components:
               - 'null'
           minProperties: 0
       required:
-      - page
       - filters
-      minProperties: 2
+      minProperties: 1
     SearchPageSchema:
       type: object
       properties:
@@ -614,16 +823,19 @@ components:
           $ref: '#/components/schemas/SearchPageSizeField'
         number:
           $ref: '#/components/schemas/SearchPageNumberField'
-      required:
-      - size
-      - number
-      minProperties: 2
+      minProperties: 0
     SearchPageSizeField:
       type: integer
+      default: 20
+      description: Results per page. Defaults to 20 when omitted; values below 1 are
+        clamped to 1. Endpoint-specific maximums may apply.
       examples:
       - 20
     SearchPageNumberField:
       type: integer
+      default: 1
+      description: 1-based page number. Defaults to 1 when omitted; values below 1
+        are clamped to 1.
       examples:
       - 1
     SortDirection:
@@ -637,7 +849,7 @@ components:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/MediaAssetNodeSearchItemSearchQuerySchema'
+          $ref: '#/components/schemas/MediaAssetNodeSearchItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -658,6 +870,65 @@ components:
       required:
       - query
       - data
+      minProperties: 2
+    MediaAssetNodeSearchItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - name
+                - slugPath
+                - extension
+                - sizeBytes
+                - status
+                - title
+                - createdAt
+                - updatedAt
+                examples:
+                - id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          properties:
+            search:
+              type:
+              - string
+              - 'null'
+            parentId:
+              type:
+              - string
+              - 'null'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    SearchResponsePageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
       minProperties: 2
     MediaAssetNodeSearchItemSchema:
       type: object
@@ -997,7 +1268,7 @@ components:
       - createdAt
       - updatedAt
       minProperties: 8
-    MediaFolderListItemSearchQuerySchema:
+    MediaFolderListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1036,14 +1307,13 @@ components:
               - 'null'
           minProperties: 0
       required:
-      - page
       - filters
-      minProperties: 2
+      minProperties: 1
     MediaFolderListItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/MediaFolderListItemSearchQuerySchema'
+          $ref: '#/components/schemas/MediaFolderListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -1064,6 +1334,48 @@ components:
       required:
       - query
       - data
+      minProperties: 2
+    MediaFolderListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - name
+                - path
+                - assetCount
+                - totalSizeBytes
+                - createdAt
+                - updatedAt
+                examples:
+                - id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          properties:
+            parentId:
+              type:
+              - string
+              - 'null'
+          minProperties: 0
+      required:
+      - page
+      - filters
       minProperties: 2
     MediaFolderPatchSchema:
       type: object
@@ -1179,7 +1491,7 @@ components:
       - commandTemplate
       - isActive
       minProperties: 5
-    MediaVariantListItemSearchQuerySchema:
+    MediaVariantListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1216,9 +1528,8 @@ components:
               $ref: '#/components/schemas/SearchStringField'
           minProperties: 0
       required:
-      - page
       - filters
-      minProperties: 2
+      minProperties: 1
     SearchStringField:
       type: string
       examples:
@@ -1227,7 +1538,7 @@ components:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/MediaVariantListItemSearchQuerySchema'
+          $ref: '#/components/schemas/MediaVariantListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -1248,6 +1559,46 @@ components:
       required:
       - query
       - data
+      minProperties: 2
+    MediaVariantListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - key
+                - name
+                - isRequired
+                - isActive
+                examples:
+                - id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - page
+      - filters
       minProperties: 2
     MediaVariantListItemSchema:
       type: object
@@ -1345,7 +1696,7 @@ components:
       - createdAt
       - updatedAt
       minProperties: 8
-    MediaVariantProcessorListItemSearchQuerySchema:
+    MediaVariantProcessorListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1382,14 +1733,13 @@ components:
               $ref: '#/components/schemas/SearchStringField'
           minProperties: 0
       required:
-      - page
       - filters
-      minProperties: 2
+      minProperties: 1
     MediaVariantProcessorListItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/MediaVariantProcessorListItemSearchQuerySchema'
+          $ref: '#/components/schemas/MediaVariantProcessorListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -1411,6 +1761,46 @@ components:
       - query
       - data
       minProperties: 2
+    MediaVariantProcessorListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - name
+                - matchExtensions
+                - commandTemplate
+                - isActive
+                examples:
+                - id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
   responses:
     MediaAssetDetailResponse:
       description: MediaAsset response
@@ -1418,12 +1808,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MediaAssetDetailSchema'
-    DeleteResponse:
-      description: Delete response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeleteResponseSchema'
+    NoContentResponse:
+      description: Delete succeeded
     MediaAssetNodeSearchItemSearchSchemaSearchResponse:
       description: Search response
       content:

@@ -1,6 +1,8 @@
+import SystemModule
 import AuthApplication
 import AuthInfrastructure
 import FeatherInfrastructure
+import SystemApplication
 import SystemInfrastructure
 
 extension UseCases {
@@ -15,8 +17,8 @@ extension UseCases {
                         context: context
                     ),
                     magicLink: MagicLinkDatabaseRepository(context: context),
-                    variable: VariableDatabaseQueries(
-                        context: .init(connection: context.connection)
+                    variable: SystemModule.Variable.Lookup.Database(
+                        context: context
                     )
                 )
             }

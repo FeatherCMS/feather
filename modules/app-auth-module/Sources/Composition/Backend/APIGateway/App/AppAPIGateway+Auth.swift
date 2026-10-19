@@ -1,7 +1,7 @@
 public import AuthAppAPI
 import AuthApplication
 import AuthDomain
-import FeatherContracts
+import FeatherModuleKit
 import UserApplication
 import UserDomain
 

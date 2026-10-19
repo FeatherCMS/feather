@@ -45,7 +45,6 @@ let package = Package(
         .executable(name: "UserAppOpenAPIGenerator", targets: ["UserAppOpenAPIGenerator"]),
     ],
     dependencies: [
-        // [docc-plugin-placeholder]
         .package(
             url: "https://github.com/apple/swift-nio",
             from: "2.0.0"
@@ -60,7 +59,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-openapi-runtime",
-            from: "1.12.1"
+            from: "1.13.2"
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
@@ -83,13 +82,21 @@ let package = Package(
             from: "2.34.0"
         ),
         .package(path: "../../feather-core"),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal-postgres",
+            exact: "1.0.0-alpha.1"
+        ),
         .package(path: "../app-system-module"),
     ],
     targets: [
         .target(
             name: "UserContracts",
             dependencies: [
-                .product(name: "FeatherContracts", package: "feather-core")
+                .product(name: "FeatherModuleKit", package: "feather-core")
             ],
             path: "Sources/Contracts",
             swiftSettings: swiftSettings
@@ -109,6 +116,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "UserDomain"),
             ],
@@ -119,8 +127,11 @@ let package = Package(
             name: "UserInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
                 .product(name: "NIOHTTP1", package: "swift-nio"),
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "UserApplication"),
             ],
@@ -181,6 +192,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "UserInfrastructure"),
                 .target(name: "UserAdminAPI"),
@@ -194,7 +206,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
 
-                .product(name: "SystemContracts", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
                 .target(name: "UserContracts"),
                 .target(name: "UserAdminAPI"),
                 .target(name: "UserAppAPI"),

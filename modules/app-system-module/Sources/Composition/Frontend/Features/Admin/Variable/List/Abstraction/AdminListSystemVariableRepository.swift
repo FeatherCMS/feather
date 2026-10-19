@@ -1,3 +1,4 @@
+import SystemModule
 import FeatherAdmin
 import Hummingbird
 import SystemAdminAPI
@@ -10,5 +11,5 @@ protocol AdminListSystemVariableRepository: Sendable {
         ids: [String]?
     ) async throws
         -> SystemAdminAPI.Components.Responses
-        .SystemVariableListItemSearchSchemaSearchResponse
+        .SystemVariableQueryItemSearchSchemaSearchResponse
 }

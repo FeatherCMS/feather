@@ -6,9 +6,12 @@
 
 import AuthApplication
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 import FeatherDatabase
 import FeatherDatabasePostgres
+import FeatherDBALPostgres
+import FeatherSQL
+import FeatherSQLPostgres
 import FeatherDomain
 import FeatherInfrastructure
 import Foundation
@@ -75,9 +78,13 @@ struct AuthInfrastructureTestSuite {
             let idGenerator = TestIDGenerator()
             let migrator = Migrator(
                 migrations: [
-                    SystemInfrastructure.TableMigration(connection: connection),
+                    SystemInfrastructure.TableMigration(
+                        connection: connection,
+                        platform: PostgresDatabasePlatform()
+                    ),
                     SystemInfrastructure.TableSeedMigration(
                         context: .init(
+                            platform: PostgresDatabasePlatform(),
                             connection: connection,
                             idGenerator: idGenerator
                         ),
@@ -86,6 +93,7 @@ struct AuthInfrastructureTestSuite {
                     UserInfrastructure.TableMigration(connection: connection),
                     UserInfrastructure.TableSeedMigration(
                         context: .init(
+                            platform: PostgresDatabasePlatform(),
                             connection: connection,
                             idGenerator: idGenerator
                         ),
@@ -94,6 +102,7 @@ struct AuthInfrastructureTestSuite {
                     AuthInfrastructure.TableMigration(connection: connection),
                     AuthInfrastructure.TableSeedMigration(
                         context: .init(
+                            platform: PostgresDatabasePlatform(),
                             connection: connection,
                             idGenerator: idGenerator
                         ),
@@ -106,6 +115,7 @@ struct AuthInfrastructureTestSuite {
             try await migrator.apply(on: connection)
 
             let context = DatabaseTransactionContext(
+                platform: PostgresDatabasePlatform(),
                 connection: connection,
                 idGenerator: idGenerator
             )
@@ -139,7 +149,11 @@ struct AuthInfrastructureTestSuite {
                 )
 
             let magicLinks = try await MagicLinkDatabaseQueries(
-                context: .init(connection: connection)
+                context: .init(
+                    platform: PostgresDatabasePlatform(),
+                    connection: connection,
+                    idGenerator: idGenerator
+                )
             )
             .list(
                 query: .init(userId: "user-2")

@@ -54,7 +54,7 @@ let package = Package(
         ),
         .package(
             url: "https://github.com/apple/swift-openapi-runtime",
-            from: "1.12.1"
+            from: "1.13.2"
         ),
         .package(
             url: "https://github.com/hummingbird-project/hummingbird",
@@ -71,6 +71,14 @@ let package = Package(
 
         .package(path: "../../feather-core"),
         .package(
+            url: "https://github.com/feather-framework/feather-dbal",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
+            url: "https://github.com/feather-framework/feather-dbal-postgres",
+            exact: "1.0.0-alpha.1"
+        ),
+        .package(
             url: "https://github.com/feather-framework/feather-mail",
             exact: "1.0.0-rc.1"
         ),
@@ -81,7 +89,7 @@ let package = Package(
         .target(
             name: "NewsletterContracts",
             dependencies: [
-                .product(name: "FeatherContracts", package: "feather-core")
+                .product(name: "FeatherModuleKit", package: "feather-core")
             ],
             path: "Sources/Contracts",
             swiftSettings: swiftSettings
@@ -102,6 +110,7 @@ let package = Package(
                 .product(name: "FeatherApplication", package: "feather-core"),
                 .product(name: "FeatherMail", package: "feather-mail"),
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "NewsletterDomain"),
             ],
@@ -112,8 +121,11 @@ let package = Package(
             name: "NewsletterInfrastructure",
             dependencies: [
                 .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(name: "FeatherDBAL", package: "feather-dbal"),
+                .product(name: "FeatherDBALPostgres", package: "feather-dbal-postgres"),
                 .product(name: "Jobs", package: "swift-jobs"),
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "NewsletterApplication"),
             ],
@@ -166,6 +178,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "NewsletterInfrastructure"),
                 .target(name: "NewsletterAdminAPI"),
@@ -180,6 +193,7 @@ let package = Package(
                 .product(name: "FeatherAdmin", package: "feather-core"),
 
                 .product(name: "SystemApplication", package: "app-system-module"),
+                .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "WebFrontend", package: "app-web-module"),
                 .target(name: "NewsletterContracts"),
                 .target(name: "NewsletterAdminAPI"),

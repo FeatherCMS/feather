@@ -1,29 +1,29 @@
+public import FeatherBackend
 import NIOHTTP1
-import OpenAPIRuntime
-import UserDomain
+public import UserDomain
 
 extension Role.Error: HTTPErrorRepresentable {
 
-    var status: HTTPResponseStatus { .badRequest }
+    public var status: HTTPResponseStatus { .badRequest }
 
-    var content: ServerError.Details? {
-        let message: String
+    private var errorMessage: String {
         switch self {
         case .keyTooShort:
-            message = "Role key is required."
+            return "Role key is required."
         case .keyTooLong:
-            message = "Role key must be shorter than 255 characters."
+            return "Role key must be shorter than 255 characters."
         case .nameTooShort:
-            message = "Role name must be at least 4 characters."
+            return "Role name must be at least 4 characters."
         case .nameTooLong:
-            message = "Role name must be shorter than 255 characters."
+            return "Role name must be shorter than 255 characters."
         case .notesTooLong:
-            message = "Role notes must be shorter than 255 characters."
+            return "Role notes must be shorter than 255 characters."
         }
+    }
 
-        return .init(
-            code: .badRequest,
-            message: message,
+    public var content: any HTTPErrorContent {
+        DefaultHTTPErrorContent(
+            message: errorMessage,
             reason: String(describing: self)
         )
     }

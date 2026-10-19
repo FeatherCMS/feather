@@ -5,6 +5,8 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 
 import struct Foundation.Date
@@ -47,9 +49,8 @@ extension SessionTable.Row {
     }
 }
 
-struct SessionTable: DatabaseTableWithBulkDelete {
+struct SessionTable: DatabaseLegacyTable {
     static let name = "auth_session"
-    static let primaryKey = "id"
     struct Row {
         struct Create {
             let id: String

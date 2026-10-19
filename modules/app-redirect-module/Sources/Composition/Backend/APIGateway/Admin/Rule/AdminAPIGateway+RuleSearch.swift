@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 public import RedirectAdminAPI
 import RedirectApplication
 
@@ -7,7 +7,7 @@ extension AdminAPIGateway {
     public func redirectRuleSearch(
         _ input: Operations.RedirectRuleSearch.Input
     ) async throws -> Operations.RedirectRuleSearch.Output {
-        let query: Components.Schemas.RedirectRuleListItemSearchQuerySchema
+        let query: Components.Schemas.RedirectRuleListItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value

@@ -1,13 +1,13 @@
 public import AuthAdminAPI
 import AuthApplication
-import FeatherContracts
+import FeatherModuleKit
 
 extension AdminAPIGateway {
 
     public func authMagicLinkSearch(
         _ input: Operations.AuthMagicLinkSearch.Input
     ) async throws -> Operations.AuthMagicLinkSearch.Output {
-        let query: Components.Schemas.AuthMagicLinkListItemSearchQuerySchema
+        let query: Components.Schemas.AuthMagicLinkListItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value

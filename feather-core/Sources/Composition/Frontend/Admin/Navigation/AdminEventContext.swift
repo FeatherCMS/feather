@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct AdminEventContext: ExecutionContext {
     public let path: String

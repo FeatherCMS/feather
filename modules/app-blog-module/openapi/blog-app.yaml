@@ -36,6 +36,10 @@ paths:
           $ref: '#/components/responses/BlogPostDetailResponse'
         404:
           description: Blog post not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
   /api/v1/blog/authors:
     get:
       tags:
@@ -56,6 +60,10 @@ paths:
           $ref: '#/components/responses/BlogAuthorDetailResponse'
         404:
           description: Blog author not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
   /api/v1/blog/tags:
     get:
       tags:
@@ -76,6 +84,10 @@ paths:
           $ref: '#/components/responses/BlogTagDetailResponse'
         404:
           description: Blog tag not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
 components:
   schemas:
     BlogRouteSettingsSchema:
@@ -378,6 +390,51 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/BlogPostSummarySchema'
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
+      required:
+      - error
+    DefaultHTTPErrorContentSchema:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - message
+      - reason
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
     BlogAuthorListSchema:
       type: array
       items:

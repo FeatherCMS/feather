@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 
 public struct AdminEditUserIdentityFormInput: Decodable, Sendable, Equatable,
     Hashable

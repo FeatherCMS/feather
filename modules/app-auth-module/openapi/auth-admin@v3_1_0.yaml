@@ -29,8 +29,16 @@ paths:
           $ref: '#/components/responses/AuthMeResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/login:
@@ -53,8 +61,16 @@ paths:
           description: Logged out
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/magic-link:
@@ -89,10 +105,22 @@ paths:
           $ref: '#/components/responses/UserIdentitySessionListResponse'
         404:
           description: UserIdentity not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -104,12 +132,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/user/identities/{userIdentityId}/sessions/{sessionId}: {}
@@ -125,8 +161,16 @@ paths:
           $ref: '#/components/responses/AuthCredentialDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -136,12 +180,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/credentials/:
@@ -154,8 +206,16 @@ paths:
           $ref: '#/components/responses/AuthCredentialListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/credentials/search:
@@ -167,15 +227,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AuthCredentialListItemSearchQuerySchema'
+              $ref: '#/components/schemas/AuthCredentialListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/AuthCredentialListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/credentials/{authCredentialId}:
@@ -190,10 +258,22 @@ paths:
           $ref: '#/components/responses/AuthCredentialDetailResponse'
         404:
           description: AuthCredential not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -209,10 +289,22 @@ paths:
           $ref: '#/components/responses/AuthCredentialDetailResponse'
         404:
           description: AuthCredential not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -228,10 +320,22 @@ paths:
           $ref: '#/components/responses/AuthCredentialDetailResponse'
         404:
           description: AuthCredential not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/emails:
@@ -246,8 +350,16 @@ paths:
           $ref: '#/components/responses/AuthEmailDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -257,12 +369,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/emails/:
@@ -275,8 +395,16 @@ paths:
           $ref: '#/components/responses/AuthEmailListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/emails/{authEmailId}:
@@ -291,10 +419,22 @@ paths:
           $ref: '#/components/responses/AuthEmailDetailResponse'
         404:
           description: Auth auth email not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -310,10 +450,22 @@ paths:
           $ref: '#/components/responses/AuthEmailDetailResponse'
         404:
           description: Auth auth email not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/role-permissions:
@@ -328,8 +480,16 @@ paths:
           $ref: '#/components/responses/AuthRolePermissionDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -339,12 +499,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/role-permissions/search:
@@ -356,15 +524,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AuthRolePermissionListItemSearchQuerySchema'
+              $ref: '#/components/schemas/AuthRolePermissionListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/AuthRolePermissionListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/role-permissions/{userRoleId}/{systemPermissionId}: {}
@@ -380,8 +556,16 @@ paths:
           $ref: '#/components/responses/AuthMagicLinkDetailResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     delete:
@@ -391,12 +575,20 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
-        200:
-          $ref: '#/components/responses/DeleteResponse'
+        204:
+          $ref: '#/components/responses/NoContentResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/magic-links/:
@@ -409,8 +601,16 @@ paths:
           $ref: '#/components/responses/AuthMagicLinkListResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/magic-links/search:
@@ -422,15 +622,23 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/AuthMagicLinkListItemSearchQuerySchema'
+              $ref: '#/components/schemas/AuthMagicLinkListItemSearchRequestQuerySchema'
         required: true
       responses:
         200:
           $ref: '#/components/responses/AuthMagicLinkListItemSearchSchemaSearchResponse'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
   /api/v1/admin/auth/magic-links/{authMagicLinkId}:
@@ -445,10 +653,22 @@ paths:
           $ref: '#/components/responses/AuthMagicLinkDetailResponse'
         404:
           description: AuthMagicLink not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     put:
@@ -464,10 +684,22 @@ paths:
           $ref: '#/components/responses/AuthMagicLinkDetailResponse'
         404:
           description: AuthMagicLink not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
     patch:
@@ -483,10 +715,22 @@ paths:
           $ref: '#/components/responses/AuthMagicLinkDetailResponse'
         404:
           description: AuthMagicLink not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         401:
           description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         403:
           description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
 components:
@@ -545,6 +789,57 @@ components:
       type: string
       examples:
       - eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
+      required:
+      - error
+      minProperties: 1
+    DefaultHTTPErrorContentSchema:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - message
+      - reason
+      minProperties: 2
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+      minProperties: 2
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+      minItems: 0
+      uniqueItems: false
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
+      minProperties: 2
     AuthLoginRequestSchema:
       type: object
       properties:
@@ -660,70 +955,9 @@ components:
             - id1
           minItems: 0
           uniqueItems: false
-        results:
-          type: boolean
-          examples:
-          - true
-        summary:
-          type: boolean
-          examples:
-          - true
       required:
       - ids
-      - results
-      - summary
-      minProperties: 3
-    DeleteResponseSchema:
-      type: object
-      properties:
-        results:
-          $ref: '#/components/schemas/DeleteResultListSchema'
-        summary:
-          $ref: '#/components/schemas/DeleteSummarySchema'
-      minProperties: 0
-    DeleteResultListSchema:
-      type: array
-      items:
-        type: object
-        properties:
-          id:
-            type: string
-            examples:
-            - id1
-          status:
-            type: string
-            enum:
-            - deleted
-            - not_found
-            - forbidden
-            examples:
-            - deleted
-        required:
-        - id
-        - status
-        minProperties: 2
-      minItems: 0
-      uniqueItems: false
-    DeleteSummarySchema:
-      type: object
-      properties:
-        requested:
-          type: integer
-          examples:
-          - 1
-        deleted:
-          type: integer
-          examples:
-          - 1
-        omitted:
-          type: integer
-          examples:
-          - 1
-      required:
-      - requested
-      - deleted
-      - omitted
-      minProperties: 3
+      minProperties: 1
     AuthCredentialCreateSchema:
       type: object
       properties:
@@ -803,7 +1037,7 @@ components:
       type: string
       examples:
       - john.doe@example.com
-    AuthCredentialListItemSearchQuerySchema:
+    AuthCredentialListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -840,9 +1074,8 @@ components:
               $ref: '#/components/schemas/AuthCredentialUserIdField'
           minProperties: 0
       required:
-      - page
       - filters
-      minProperties: 2
+      minProperties: 1
     SearchPageSchema:
       type: object
       properties:
@@ -850,16 +1083,19 @@ components:
           $ref: '#/components/schemas/SearchPageSizeField'
         number:
           $ref: '#/components/schemas/SearchPageNumberField'
-      required:
-      - size
-      - number
-      minProperties: 2
+      minProperties: 0
     SearchPageSizeField:
       type: integer
+      default: 20
+      description: Results per page. Defaults to 20 when omitted; values below 1 are
+        clamped to 1. Endpoint-specific maximums may apply.
       examples:
       - 20
     SearchPageNumberField:
       type: integer
+      default: 1
+      description: 1-based page number. Defaults to 1 when omitted; values below 1
+        are clamped to 1.
       examples:
       - 1
     SortDirection:
@@ -877,7 +1113,7 @@ components:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/AuthCredentialListItemSearchQuerySchema'
+          $ref: '#/components/schemas/AuthCredentialListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -898,6 +1134,57 @@ components:
       required:
       - query
       - data
+      minProperties: 2
+    AuthCredentialListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - userId
+                - email
+                examples:
+                - userId
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - userId: user_7nL3xQ2v
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/AuthCredentialSearchField'
+            userId:
+              $ref: '#/components/schemas/AuthCredentialUserIdField'
+          minProperties: 0
+      required:
+      - page
+      - filters
+      minProperties: 2
+    SearchResponsePageSchema:
+      type: object
+      properties:
+        size:
+          $ref: '#/components/schemas/SearchPageSizeField'
+        number:
+          $ref: '#/components/schemas/SearchPageNumberField'
+      required:
+      - size
+      - number
       minProperties: 2
     AuthCredentialPatchSchema:
       type: object
@@ -1008,7 +1295,7 @@ components:
       type: string
       examples:
       - user_roles.list
-    AuthRolePermissionListItemSearchQuerySchema:
+    AuthRolePermissionListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1042,9 +1329,8 @@ components:
               $ref: '#/components/schemas/SearchStringField'
           minProperties: 0
       required:
-      - page
       - filters
-      minProperties: 2
+      minProperties: 1
     SearchStringField:
       type: string
       examples:
@@ -1053,7 +1339,7 @@ components:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/AuthRolePermissionListItemSearchQuerySchema'
+          $ref: '#/components/schemas/AuthRolePermissionListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -1074,6 +1360,43 @@ components:
       required:
       - query
       - data
+      minProperties: 2
+    AuthRolePermissionListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - roleId
+                - permissionId
+                examples:
+                - roleId
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+          minProperties: 0
+      required:
+      - page
+      - filters
       minProperties: 2
     AuthRolePermissionListItemSchema:
       type: object
@@ -1191,7 +1514,7 @@ components:
       type: boolean
       examples:
       - false
-    AuthMagicLinkListItemSearchQuerySchema:
+    AuthMagicLinkListItemSearchRequestQuerySchema:
       type: object
       properties:
         page:
@@ -1231,16 +1554,15 @@ components:
               $ref: '#/components/schemas/AuthMagicLinkUserIdField'
           minProperties: 0
       required:
-      - page
       - filters
-      minProperties: 2
+      minProperties: 1
     AuthMagicLinkUserIdField:
       type: string
     AuthMagicLinkListItemSearchSchema:
       type: object
       properties:
         query:
-          $ref: '#/components/schemas/AuthMagicLinkListItemSearchQuerySchema'
+          $ref: '#/components/schemas/AuthMagicLinkListItemSearchResponseQuerySchema'
         data:
           type: object
           properties:
@@ -1261,6 +1583,49 @@ components:
       required:
       - query
       - data
+      minProperties: 2
+    AuthMagicLinkListItemSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - id
+                - credentialId
+                - token
+                - expiresAt
+                - isPersistent
+                - isUsed
+                examples:
+                - id
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+            minProperties: 2
+          minItems: 0
+          uniqueItems: false
+        filters:
+          type: object
+          examples:
+          - search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            userId:
+              $ref: '#/components/schemas/AuthMagicLinkUserIdField'
+          minProperties: 0
+      required:
+      - page
+      - filters
       minProperties: 2
     AuthMagicLinkPatchSchema:
       type: object
@@ -1289,12 +1654,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/UserAuthSessionListSchema'
-    DeleteResponse:
-      description: Delete response
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DeleteResponseSchema'
+    NoContentResponse:
+      description: Delete succeeded
     AuthCredentialDetailResponse:
       description: User credential response
       content:

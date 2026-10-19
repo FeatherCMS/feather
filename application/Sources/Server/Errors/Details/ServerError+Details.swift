@@ -1,3 +1,4 @@
+import FeatherBackend
 import HTTPTypes
 import Foundation
 
@@ -8,12 +9,8 @@ extension ServerError {
 
     struct Details: Encodable {
         enum CodingKeys: CodingKey {
-            case code
             case message
             case reason
-            case trace
-            case requestPath
-            case operationID
         }
 
         let code: HTTPResponseStatus
@@ -43,19 +40,15 @@ extension ServerError {
             to encoder: any Encoder
         ) throws {
             var container = encoder.container(keyedBy: CodingKeys.self)
-            try container.encode(code.code, forKey: .code)
             try container.encode(message, forKey: .message)
             try container.encode(reason, forKey: .reason)
-            try container.encodeIfPresent(trace, forKey: .trace)
-            try container.encodeIfPresent(requestPath, forKey: .requestPath)
-            try container.encodeIfPresent(operationID, forKey: .operationID)
         }
 
         var status: HTTPResponse.Status {
             .init(code: Int(code.code))
         }
 
-        var plainTextValue: String {
+        func plainTextValue(includeTrace: Bool) -> String {
             var bodyArray = [
                 "CODE: " + String(code.code),
                 "MESSAGE: " + message,
@@ -67,7 +60,7 @@ extension ServerError {
             if let operationID {
                 bodyArray.append("OPERATION ID: " + operationID)
             }
-            if let trace = trace?.plainTextValue {
+            if includeTrace, let trace = trace?.plainTextValue {
                 bodyArray.append("TRACE:\n" + trace)
             }
             return bodyArray.joined(separator: "\n")

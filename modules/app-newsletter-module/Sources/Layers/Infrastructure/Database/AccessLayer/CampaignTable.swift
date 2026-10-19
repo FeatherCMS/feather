@@ -1,4 +1,6 @@
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 
 import struct Foundation.Date
@@ -15,9 +17,8 @@ extension CampaignTable.Row {
     }
 }
 
-struct CampaignTable: DatabaseTableWithBulkDelete {
+struct CampaignTable: DatabaseLegacyTable {
     static let name = "newsletter_campaign"
-    static let primaryKey = "id"
     struct Row {
 
         struct Create {

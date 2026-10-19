@@ -153,7 +153,7 @@ struct AdminNewsletterCampaignSubscribersAPIClient {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.newsletterSubscriberRemove(
                 path: .init(newsletterCampaignKey: newsletterId),
-                body: .json(.init(ids: [email], results: false, summary: true))
+                body: .json(.init(ids: [email]))
             )
         }
     }

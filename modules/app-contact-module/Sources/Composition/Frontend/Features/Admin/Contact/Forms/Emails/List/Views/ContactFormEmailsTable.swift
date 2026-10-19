@@ -1,6 +1,6 @@
 import ContactContracts
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import HTML
 import Hummingbird
 import SGML

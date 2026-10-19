@@ -1,6 +1,6 @@
 public import FeatherApplication
-public import FeatherContracts
-import SystemContracts
+public import FeatherModuleKit
+import SystemModule
 public import WebDomain
 
 public import struct Foundation.Date
@@ -14,7 +14,7 @@ public import struct Foundation.Date
 public struct EditMetadata: UseCase {
 
     struct Action: PermissionAction {
-        let key = SystemPermissions.Admin.access
+        let key = Permissions.Admin.access
     }
 
     struct Error: UseCaseError {

@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import BlogDomain
+import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
 import WebDomain
@@ -91,7 +92,7 @@ public struct AuthorDatabaseRepository: AuthorRepository {
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        let table = AuthorTable(connection: context.connection)
-        return try await table.delete(ids: ids)
+        try await DatabaseAccessLayer<AuthorTable>(context: context).delete(where: \.id, in: ids)
+        return ids
     }
 }

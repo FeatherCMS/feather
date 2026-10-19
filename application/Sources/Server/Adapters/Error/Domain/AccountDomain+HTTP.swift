@@ -1,6 +1,6 @@
 public import AccountDomain
+public import FeatherBackend
 import NIOHTTP1
-import OpenAPIRuntime
 
 extension Settings.Error: ErrorTraceRepresentable {
 
@@ -19,24 +19,24 @@ extension Settings.Error: ErrorTraceRepresentable {
 
 extension Settings.Error: HTTPErrorRepresentable {
 
-    var status: HTTPResponseStatus { .badRequest }
+    public var status: HTTPResponseStatus { .badRequest }
 
-    var content: ServerError.Details? {
-        let message: String
+    private var errorMessage: String {
         switch self {
         case .invalidUserId:
-            message = "User ID is invalid."
+            return "User ID is invalid."
         case .invalidLanguage:
-            message = "Language is invalid."
+            return "Language is invalid."
         case .invalidTimezone:
-            message = "Timezone is invalid."
+            return "Timezone is invalid."
         case .invalidPageSize:
-            message = "Page size is invalid."
+            return "Page size is invalid."
         }
+    }
 
-        return .init(
-            code: .badRequest,
-            message: message,
+    public var content: any HTTPErrorContent {
+        DefaultHTTPErrorContent(
+            message: errorMessage,
             reason: String(describing: self)
         )
     }

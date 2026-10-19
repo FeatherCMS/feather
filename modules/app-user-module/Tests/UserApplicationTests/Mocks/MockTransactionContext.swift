@@ -4,6 +4,6 @@
 //
 
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 
 struct MockTransactionContext: TransactionContext {}

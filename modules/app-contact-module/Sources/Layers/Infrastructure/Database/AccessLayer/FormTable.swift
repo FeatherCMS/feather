@@ -1,4 +1,6 @@
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 
 import struct Foundation.Date
@@ -26,12 +28,11 @@ extension FormTable.Row {
     }
 }
 
-struct FormTable: DatabaseTableWithBulkDelete {
+struct FormTable: DatabaseLegacyTable {
     static let name = "contact_form"
-    static let primaryKey = "id"
 
     enum Fields {
-        static let id = DatabaseField<String>("id")
+        static let id = DatabaseTableColumnSchema(name: "id", type: .string)
     }
 
     struct Row {

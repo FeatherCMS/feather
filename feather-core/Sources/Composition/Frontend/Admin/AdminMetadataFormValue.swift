@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 
 public struct AdminMetadataFormValue: Sendable, Equatable, Hashable {
     public let slug: String

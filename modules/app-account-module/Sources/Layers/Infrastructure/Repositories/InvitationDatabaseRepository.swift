@@ -5,6 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import AccountDomain
+import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
 
@@ -89,7 +90,7 @@ public struct InvitationDatabaseRepository: InvitationRepository {
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        let table = InvitationTable(connection: context.connection)
-        return try await table.delete(ids: ids)
+        try await DatabaseAccessLayer<InvitationTable>(context: context).delete(where: \.id, in: ids)
+        return ids
     }
 }

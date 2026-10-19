@@ -1,5 +1,5 @@
 public import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 public import Foundation
 import HTTPTypes
 public import Hummingbird

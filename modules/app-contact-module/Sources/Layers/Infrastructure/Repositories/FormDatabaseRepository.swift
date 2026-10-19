@@ -1,4 +1,5 @@
 public import ContactDomain
+import FeatherDBAL
 import FeatherDomain
 public import FeatherInfrastructure
 
@@ -83,7 +84,7 @@ public struct FormDatabaseRepository: FormRepository {
     public func delete(
         ids: [String]
     ) async throws -> [String] {
-        let table = FormTable(connection: context.connection)
-        return try await table.delete(ids: ids)
+        try await DatabaseAccessLayer<FormTable>(context: context).delete(where: \.id, in: ids)
+        return ids
     }
 }

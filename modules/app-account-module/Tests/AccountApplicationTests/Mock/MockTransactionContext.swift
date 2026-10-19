@@ -1,3 +1,3 @@
-import FeatherContracts
+import FeatherModuleKit
 
 struct MockTransactionContext: TransactionContext {}

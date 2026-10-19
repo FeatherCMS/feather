@@ -1,40 +1,47 @@
 import FeatherInfrastructure
+import FeatherDBAL
 
 enum FormFormFieldTableSchema {
+
+    private enum Columns {
+        static let formID = DatabaseTableColumnSchema(
+            name: "form_id",
+            type: .string,
+            constraints: [.notNull]
+        )
+        static let fieldID = DatabaseTableColumnSchema(
+            name: "field_id",
+            type: .string,
+            constraints: [.notNull]
+        )
+        static let position = DatabaseTableColumnSchema(
+            name: "position",
+            type: .integer,
+            constraints: [.notNull, .default(.value(0))]
+        )
+    }
 
     static let table = DatabaseTableSchema(
         name: FormFormFieldTable.name,
         columns: [
-            .init(
-                field: FormFormFieldTable.Fields.formID,
-                type: .text,
-                constraints: [.notNull]
-            ),
-            .init(
-                field: FormFormFieldTable.Fields.fieldID,
-                type: .text,
-                constraints: [.notNull]
-            ),
-            .init(
-                field: FormFormFieldTable.Fields.position,
-                type: .integer,
-                constraints: [.notNull, .defaultValue(.integer(0))]
-            )
+            Columns.formID,
+            Columns.fieldID,
+            Columns.position
         ],
         constraints: [
             .primaryKey([
-                FormFormFieldTable.Fields.formID,
-                FormFormFieldTable.Fields.fieldID
+                Columns.formID,
+                Columns.fieldID
             ]),
             .foreignKey(
-                columns: [FormFormFieldTable.Fields.formID],
+                columns: [Columns.formID],
                 referencesTable: FormTable.name,
                 referencedColumns: [FormTable.Fields.id],
                 onDelete: .cascade,
                 onUpdate: nil
             ),
             .foreignKey(
-                columns: [FormFormFieldTable.Fields.fieldID],
+                columns: [Columns.fieldID],
                 referencesTable: FormFieldTable.name,
                 referencedColumns: [FormFieldTable.Fields.id],
                 onDelete: .cascade,
@@ -45,13 +52,13 @@ enum FormFormFieldTableSchema {
             .init(
                 name: "contact_form_form_field_form_id_idx",
                 columns: [
-                    FormFormFieldTable.Fields.formID,
-                    FormFormFieldTable.Fields.position
+                    Columns.formID,
+                    Columns.position
                 ]
             ),
             .init(
                 name: "contact_form_form_field_field_id_idx",
-                columns: [FormFormFieldTable.Fields.fieldID]
+                columns: [Columns.fieldID]
             )
         ]
     )

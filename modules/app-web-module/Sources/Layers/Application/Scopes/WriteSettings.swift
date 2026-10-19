@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 public import WebDomain
 
 public struct WriteSettings: Scope {

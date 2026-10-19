@@ -1,6 +1,6 @@
 public import AuthAdminAPI
 import AuthApplication
-import FeatherContracts
+import FeatherModuleKit
 
 extension AdminAPIGateway {
 
@@ -8,7 +8,7 @@ extension AdminAPIGateway {
         _ input: Operations.AuthRolePermissionSearch.Input
     ) async throws -> Operations.AuthRolePermissionSearch.Output {
         let query:
-            Components.Schemas.AuthRolePermissionListItemSearchQuerySchema
+            Components.Schemas.AuthRolePermissionListItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value

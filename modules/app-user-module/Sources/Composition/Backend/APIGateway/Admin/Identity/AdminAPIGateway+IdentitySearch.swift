@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 public import UserAdminAPI
 import UserApplication
 
@@ -7,7 +7,7 @@ extension AdminAPIGateway {
     public func userIdentitySearch(
         _ input: Operations.UserIdentitySearch.Input
     ) async throws -> Operations.UserIdentitySearch.Output {
-        let query: Components.Schemas.UserIdentityListItemSearchQuerySchema
+        let query: Components.Schemas.UserIdentityListItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value

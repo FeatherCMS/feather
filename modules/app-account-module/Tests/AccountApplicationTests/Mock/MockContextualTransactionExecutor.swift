@@ -1,5 +1,5 @@
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 
 actor MockContextualTransactionExecutor<S: Scope>: ContextualTransactionExecutor
 {

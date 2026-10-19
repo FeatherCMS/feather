@@ -1,7 +1,7 @@
 public import FeatherAdmin
-public import FeatherContracts
+public import FeatherModuleKit
 public import Hummingbird
-public import SystemContracts
+public import SystemModule
 
 public struct AdminAuthMiddleware: RouterMiddleware {
 
@@ -14,7 +14,7 @@ public struct AdminAuthMiddleware: RouterMiddleware {
     public init(
         loginPath: String,
         unauthorizedPath: String,
-        requiredPermission: PermissionKey = SystemPermissions.Admin.access
+        requiredPermission: PermissionKey = Permissions.Admin.access
     ) {
         self.loginPath = loginPath
         self.unauthorizedPath = unauthorizedPath

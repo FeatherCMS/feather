@@ -5,7 +5,7 @@
 //  Created by Binary Birds on 2026. 06. 18.
 
 public import BlogDomain
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct WriteAuthorLink: Scope {
     public let authorLink: any AuthorLinkRepository

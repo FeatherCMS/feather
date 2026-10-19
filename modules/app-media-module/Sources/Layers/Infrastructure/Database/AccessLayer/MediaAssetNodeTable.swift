@@ -1,11 +1,12 @@
 import FeatherDatabase
+import FeatherDBAL
+import FeatherDBALPostgres
 import FeatherInfrastructure
 
 import struct Foundation.Date
 
-struct MediaAssetNodeTable: DatabaseTableWithBulkDelete {
+struct MediaAssetNodeTable: DatabaseLegacyTable {
     static let name = "media_asset_node"
-    static let primaryKey = "id"
     struct Row {
         struct Create {
             let id: String

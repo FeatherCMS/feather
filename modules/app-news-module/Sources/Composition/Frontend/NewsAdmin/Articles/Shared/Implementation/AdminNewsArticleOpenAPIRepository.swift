@@ -161,12 +161,12 @@ struct AdminNewsArticleOpenAPIRepository: AdminNewsArticleRepository {
             let response = try await client.newsArticleRemove(
                 .init(
                     body: .json(
-                        .init(ids: [id], results: false, summary: false)
+                        .init(ids: [id])
                     )
                 )
             )
             switch response {
-            case .ok:
+            case .noContent:
                 return
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized

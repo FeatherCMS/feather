@@ -48,8 +48,8 @@ extension APIProtocol {
     }
     /// - Remark: HTTP `POST /api/v1/auth/logout`.
     /// - Remark: Generated from `#/paths//api/v1/auth/logout/post(authLogout)`.
-    public func authLogout() async throws -> Operations.AuthLogout.Output {
-        try await authLogout(Operations.AuthLogout.Input())
+    public func authLogout(headers: Operations.AuthLogout.Input.Headers = .init()) async throws -> Operations.AuthLogout.Output {
+        try await authLogout(Operations.AuthLogout.Input(headers: headers))
     }
     /// - Remark: HTTP `POST /api/v1/auth/magic-link`.
     /// - Remark: Generated from `#/paths//api/v1/auth/magic-link/post(authMagicLink)`.

@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct ReadCredentialLink: Scope {
     public let credential: any CredentialQueries

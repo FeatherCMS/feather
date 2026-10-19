@@ -1,4 +1,4 @@
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct WebMarkdownSourceTransformerProvider: Event {
     public typealias Output = (any WebMarkdownSourceTransformer)?

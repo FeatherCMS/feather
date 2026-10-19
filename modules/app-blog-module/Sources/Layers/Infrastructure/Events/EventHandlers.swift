@@ -1,6 +1,7 @@
 import BlogContracts
-public import FeatherContracts
+public import FeatherModuleKit
 import SystemApplication
+import SystemModule
 import WebContracts
 import WebDomain
 
@@ -10,9 +11,8 @@ public enum EventHandlers {
         in registry: inout EventRegistry
     ) {
         registry.register(
-            event: PermissionSeedProvider.self,
-            context: EventContext.self
-        ) { _, _ in
+            event: Permission.Event.Seed.self
+        ) { _ in
             BlogPermissions.allPermissions()
                 .map {
                     .init(permission: $0)
@@ -20,9 +20,8 @@ public enum EventHandlers {
         }
 
         registry.register(
-            event: VariableSeedProvider.self,
-            context: EventContext.self
-        ) { _, _ in
+            event: Variable.Event.Seed.self
+        ) { _ in
             [
                 .init(
                     key: "blog-settings-post-list-path",

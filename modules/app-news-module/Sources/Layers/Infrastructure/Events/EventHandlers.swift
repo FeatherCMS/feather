@@ -1,6 +1,7 @@
-public import FeatherContracts
+public import FeatherModuleKit
 import NewsContracts
 import SystemApplication
+import SystemModule
 
 public enum EventHandlers {
 
@@ -8,9 +9,8 @@ public enum EventHandlers {
         in registry: inout EventRegistry
     ) {
         registry.register(
-            event: PermissionSeedProvider.self,
-            context: EventContext.self
-        ) { _, _ in
+            event: Permission.Event.Seed.self
+        ) { _ in
             NewsPermissions.allPermissions()
                 .map {
                     .init(permission: $0)
@@ -18,9 +18,8 @@ public enum EventHandlers {
         }
 
         registry.register(
-            event: VariableSeedProvider.self,
-            context: EventContext.self
-        ) { _, _ in
+            event: Variable.Event.Seed.self
+        ) { _ in
             [
                 .init(
                     key: "news-settings-article-path-prefix",

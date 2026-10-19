@@ -2,7 +2,7 @@ public import ContactAdminAPI
 import ContactApplication
 import ContactDomain
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 
 extension AdminAPIGateway {
     public func contactFieldCreate(

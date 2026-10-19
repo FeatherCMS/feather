@@ -36,6 +36,10 @@ paths:
           $ref: '#/components/responses/WebMenuResponse'
         404:
           description: Web menu not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
   /api/v1/web/routes/{slug}:
     get:
       tags:
@@ -48,6 +52,10 @@ paths:
           $ref: '#/components/responses/WebMetadataResponse'
         404:
           description: Web metadata not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
   /api/v1/web/metadata:
     get:
       tags:
@@ -68,6 +76,10 @@ paths:
           $ref: '#/components/responses/WebPageDetailResponse'
         404:
           description: Web page not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
 components:
   schemas:
     WebSiteSettingsSchema:
@@ -230,6 +242,51 @@ components:
     WebMenuItemIsBlankField:
       type: boolean
       example: false
+    DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema:
+      type: object
+      properties:
+        error:
+          $ref: '#/components/schemas/DefaultHTTPErrorContentSchema'
+        trace:
+          $ref: '#/components/schemas/ErrorTraceSchema'
+      required:
+      - error
+    DefaultHTTPErrorContentSchema:
+      type: object
+      properties:
+        message:
+          type: string
+        reason:
+          type: string
+      required:
+      - message
+      - reason
+    ErrorTraceSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        reasons:
+          $ref: '#/components/schemas/ErrorTraceReasonsSchema'
+      required:
+      - id
+      - message
+    ErrorTraceReasonsSchema:
+      type: array
+      items:
+        $ref: '#/components/schemas/ErrorTraceReasonSchema'
+    ErrorTraceReasonSchema:
+      type: object
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+      required:
+      - id
+      - message
     WebMetadataSlugField:
       type: string
       example: homepage

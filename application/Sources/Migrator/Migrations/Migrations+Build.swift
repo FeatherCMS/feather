@@ -1,12 +1,14 @@
-public import FeatherContracts
+public import FeatherModuleKit
 import AccountInfrastructure
 import AnalyticsInfrastructure
 import AuthInfrastructure
 import BlogInfrastructure
 import ContactInfrastructure
 public import FeatherDatabase
+public import FeatherDBAL
 public import FeatherDomain
 public import FeatherInfrastructure
+import FeatherDBALPostgres
 import MediaInfrastructure
 import NewsletterInfrastructure
 import NewsInfrastructure
@@ -18,16 +20,21 @@ import WebInfrastructure
 
 public func buildMigrations(
     connection: any DatabaseConnection,
+    platform: any DatabasePlatform,
     events: any EventPublisher,
     idGenerator: any IDGenerator
 ) -> [any Migration] {
     let context = DatabaseTransactionContext(
+        platform: platform,
         connection: connection,
         idGenerator: idGenerator
     )
     return [
         // Tables
-        SystemInfrastructure.TableMigration(connection: connection),
+        SystemInfrastructure.TableMigration(
+            connection: connection,
+            platform: platform
+        ),
         AnalyticsInfrastructure.TableMigration(connection: connection),
         MediaInfrastructure.TableMigration(connection: connection),
         WebInfrastructure.TableMigration(connection: connection),
@@ -37,19 +44,22 @@ public func buildMigrations(
         UserInfrastructure.TableMigration(connection: connection),
         AccountInfrastructure.TableMigration(connection: connection),
         AuthInfrastructure.TableMigration(connection: connection),
-        ContactInfrastructure.TableMigration(connection: connection),
+        ContactInfrastructure.TableMigration(connection: connection, platform: platform),
         NewsletterInfrastructure.TableMigration(connection: connection),
 
         // Media folder structure
         WebInfrastructure.MediaFolderMigration(
+            platform: platform,
             connection: connection,
             idGenerator: idGenerator
         ),
         BlogInfrastructure.MediaFolderMigration(
+            platform: platform,
             connection: connection,
             idGenerator: idGenerator
         ),
         NewsInfrastructure.MediaFolderMigration(
+            platform: platform,
             connection: connection,
             idGenerator: idGenerator
         ),
@@ -57,12 +67,8 @@ public func buildMigrations(
         // Seed data
         SystemInfrastructure.TableSeedMigration(
             context: context,
+            platform: platform,
             events: events
-        ),
-        SystemInfrastructure.MailFromVariableMigration(
-            connection: connection,
-            events: events,
-            idGenerator: idGenerator
         ),
         UserInfrastructure.TableSeedMigration(
             context: context,
@@ -95,7 +101,7 @@ public func buildMigrationEventPublisher(
 ) -> any EventPublisher {
     var events = EventRegistry()
     SystemInfrastructure.EventHandlers.register(in: &events)
-    FeatherMailFromAddressEventHandlers.register(in: &events)
+    FeatherVariableSeedEventHandlers.register(in: &events)
     AuthInfrastructure.EventHandlers.register(in: &events)
     UserInfrastructure.EventHandlers.register(in: &events)
     AccountInfrastructure.EventHandlers.register(in: &events)

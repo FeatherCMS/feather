@@ -5,7 +5,7 @@
 //  Created by Tibor Bödecs on 2026. 05. 08.
 //
 
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct IsAuthenticated: Action {
 

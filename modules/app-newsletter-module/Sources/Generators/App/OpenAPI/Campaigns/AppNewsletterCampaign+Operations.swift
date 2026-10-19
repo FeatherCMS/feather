@@ -16,7 +16,7 @@ struct AppNewsletterCampaignSubscribeOperation: OperationRepresentable {
         AppNewsletterCampaignSubscriptionRequestBody().reference()
     }
     var responseMap: ResponseMap {
-        [204: CustomResponse(description: "Subscriber added")]
+        [204: NoContentResponse(description: "Subscriber added")]
     }
 }
 struct AppNewsletterCampaignUnsubscribeOperation: OperationRepresentable {
@@ -28,6 +28,6 @@ struct AppNewsletterCampaignUnsubscribeOperation: OperationRepresentable {
         AppNewsletterCampaignSubscriptionRequestBody().reference()
     }
     var responseMap: ResponseMap {
-        [204: CustomResponse(description: "Subscriber unsubscribed")]
+        [204: NoContentResponse(description: "Subscriber unsubscribed")]
     }
 }

@@ -1,4 +1,4 @@
-import FeatherContracts
+import FeatherModuleKit
 public import WebAdminAPI
 import WebApplication
 
@@ -7,7 +7,7 @@ extension AdminAPIGateway {
     public func webPageSearch(
         _ input: Operations.WebPageSearch.Input
     ) async throws -> Operations.WebPageSearch.Output {
-        let query: Components.Schemas.WebPageListItemSearchQuerySchema
+        let query: Components.Schemas.WebPageListItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value

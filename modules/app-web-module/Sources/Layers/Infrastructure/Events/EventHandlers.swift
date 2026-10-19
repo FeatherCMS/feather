@@ -1,4 +1,5 @@
-public import FeatherContracts
+public import FeatherModuleKit
+import SystemModule
 import SystemApplication
 import WebContracts
 import WebDomain
@@ -23,9 +24,8 @@ public enum EventHandlers {
         }
 
         registry.register(
-            event: PermissionSeedProvider.self,
-            context: EventContext.self
-        ) { _, _ in
+            event: Permission.Event.Seed.self
+        ) { _ in
             WebPermissions.allPermissions()
                 .map {
                     .init(permission: $0)
@@ -63,9 +63,8 @@ public enum EventHandlers {
         }
 
         registry.register(
-            event: VariableSeedProvider.self,
-            context: EventContext.self
-        ) { _, _ in
+            event: Variable.Event.Seed.self
+        ) { _ in
             [
                 .init(
                     key: "web-settings-logo",

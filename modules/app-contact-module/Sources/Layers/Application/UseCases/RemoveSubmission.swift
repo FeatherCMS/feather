@@ -1,7 +1,7 @@
 import ContactContracts
 import ContactDomain
 public import FeatherApplication
-public import FeatherContracts
+public import FeatherModuleKit
 
 public struct RemoveSubmission: UseCase {
     struct Action: PermissionAction {

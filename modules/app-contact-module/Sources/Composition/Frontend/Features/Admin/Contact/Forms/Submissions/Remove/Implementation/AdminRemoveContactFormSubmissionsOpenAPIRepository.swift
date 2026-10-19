@@ -12,7 +12,7 @@ struct AdminRemoveContactFormSubmissionsOpenAPIRepository {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.contactFormSubmissionRemove(
                 path: .init(contactFormKey: formId),
-                body: .json(.init(ids: [id], results: false, summary: true))
+                body: .json(.init(ids: [id]))
             )
         }
     }
@@ -20,7 +20,7 @@ struct AdminRemoveContactFormSubmissionsOpenAPIRepository {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             _ = try await client.contactFormSubmissionRemove(
                 path: .init(contactFormKey: formId),
-                body: .json(.init(ids: ids, results: false, summary: true))
+                body: .json(.init(ids: ids))
             )
         }
     }

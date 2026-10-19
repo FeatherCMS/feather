@@ -1,6 +1,6 @@
 import AccountContracts
 public import FeatherApplication
-public import FeatherContracts
+public import FeatherModuleKit
 
 //
 //  GetInvitation.swift

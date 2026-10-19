@@ -1,3 +1,4 @@
+import SystemModule
 enum SystemJobStatus {
     struct Option: Sendable {
         let value: Int

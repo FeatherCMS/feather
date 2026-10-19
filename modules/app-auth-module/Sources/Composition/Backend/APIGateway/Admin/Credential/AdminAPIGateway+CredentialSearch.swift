@@ -1,13 +1,13 @@
 public import AuthAdminAPI
 import AuthApplication
-import FeatherContracts
+import FeatherModuleKit
 
 extension AdminAPIGateway {
 
     public func authCredentialSearch(
         _ input: Operations.AuthCredentialSearch.Input
     ) async throws -> Operations.AuthCredentialSearch.Output {
-        let query: Components.Schemas.AuthCredentialListItemSearchQuerySchema
+        let query: Components.Schemas.AuthCredentialListItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value

@@ -24,14 +24,12 @@ struct AdminRemoveNewsletterIssueOpenAPIRepository {
             let response = try await client.newsletterIssueRemove(
                 path: .init(newsletterCampaignKey: newsletterId),
                 body: .json(
-                    .init(ids: [issueId], results: false, summary: true)
+                    .init(ids: [issueId])
                 )
             )
             switch response {
-            case .ok(let value):
-                guard try value.body.json.summary?.deleted == 1 else {
-                    throw OpenAPIRepositoryError.notFound
-                }
+            case .noContent:
+                return
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized
             case .forbidden:

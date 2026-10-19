@@ -1,6 +1,7 @@
+import SystemModule
 import CSS
 import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import Foundation
 import HTML
 import Hummingbird
@@ -23,7 +24,7 @@ struct SystemJobDetailsView: Component {
                 WhiteSpace(.preWrap)
                 OverflowWrap(.anywhere)
                 OverflowX(.auto)
-            },
+            }
         ]
     }
 
@@ -39,7 +40,10 @@ struct SystemJobDetailsView: Component {
                         description: "Inspect the selected worker job."
                     ),
                     fields: [
-                        .init(label: "Job", value: payload.name.emptyToNil ?? "—"),
+                        .init(
+                            label: "Job",
+                            value: payload.name.emptyToNil ?? "—"
+                        ),
                         .init(
                             label: "Queue",
                             value: job.queueName.emptyToNil ?? "—"
@@ -53,7 +57,10 @@ struct SystemJobDetailsView: Component {
                             label: "Last modified",
                             value: String(describing: job.lastModified)
                         ),
-                        .init(label: "Queued at", value: payload.queuedAt ?? "—"),
+                        .init(
+                            label: "Queued at",
+                            value: payload.queuedAt ?? "—"
+                        ),
                         .init(label: "Attempt", value: payload.attempt ?? "—"),
                         .init(
                             label: "Next scheduled at",

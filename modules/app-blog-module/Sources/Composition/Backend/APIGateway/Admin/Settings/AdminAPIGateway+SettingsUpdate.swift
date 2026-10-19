@@ -1,6 +1,6 @@
 public import BlogAdminAPI
 import BlogApplication
-import FeatherContracts
+import FeatherModuleKit
 
 extension AdminAPIGateway {
     public func blogSettingsUpdate(

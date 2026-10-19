@@ -1,5 +1,5 @@
 public import FeatherAdmin
-import FeatherContracts
+import FeatherModuleKit
 import OpenAPIRuntime
 
 public struct AdminEditWebSettingsFormInput: Codable, Sendable, Equatable,

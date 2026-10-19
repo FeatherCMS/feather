@@ -6,9 +6,10 @@
 
 import AccountDomain
 import FeatherApplication
-import FeatherContracts
+import FeatherModuleKit
 import FeatherDatabase
 import FeatherDatabasePostgres
+import FeatherDBALPostgres
 import FeatherDomain
 import FeatherInfrastructure
 import Foundation
@@ -74,6 +75,7 @@ struct AccountInfrastructureTestSuite {
             _ = try await events.trigger(
                 event: UserIdentityDidInsert(identityID: "account-1"),
                 using: DatabaseTransactionContext(
+                    platform: PostgresDatabasePlatform(),
                     connection: connection,
                     idGenerator: TestIDGenerator()
                 )
@@ -81,6 +83,7 @@ struct AccountInfrastructureTestSuite {
             _ = try await events.trigger(
                 event: UserIdentityDidInsert(identityID: "account-1"),
                 using: DatabaseTransactionContext(
+                    platform: PostgresDatabasePlatform(),
                     connection: connection,
                     idGenerator: TestIDGenerator()
                 )
@@ -88,6 +91,7 @@ struct AccountInfrastructureTestSuite {
 
             let repository = AccountProfileDatabaseRepository(
                 context: .init(
+                    platform: PostgresDatabasePlatform(),
                     connection: connection,
                     idGenerator: TestIDGenerator()
                 )
@@ -135,6 +139,7 @@ struct AccountInfrastructureTestSuite {
         try await database.withTransaction { connection in
             let repository = AccountProfileDatabaseRepository(
                 context: .init(
+                    platform: PostgresDatabasePlatform(),
                     connection: connection,
                     idGenerator: TestIDGenerator()
                 )

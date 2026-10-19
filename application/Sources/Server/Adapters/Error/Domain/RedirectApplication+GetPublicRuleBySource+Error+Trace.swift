@@ -1,3 +1,4 @@
+public import FeatherBackend
 public import RedirectApplication
 
 extension GetPublicRuleBySource.Error: ErrorTraceRepresentable {
