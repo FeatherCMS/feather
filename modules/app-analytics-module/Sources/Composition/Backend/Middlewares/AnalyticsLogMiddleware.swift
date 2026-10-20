@@ -69,6 +69,8 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
                     origin: request.headers[.origin],
                     acceptLanguage: acceptLanguage,
                     userAgent: userAgent,
+                    trafficCategory:
+                        AnalyticsLogRequestMetadata.classifyUserAgent(userAgent),
                     language: languageComponents.language,
                     region: languageComponents.region,
                     osName: userAgentComponents.osName,

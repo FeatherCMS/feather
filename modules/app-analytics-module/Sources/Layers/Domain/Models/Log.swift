@@ -10,6 +10,12 @@ public import struct Foundation.Date
 
 public struct Log: Model {
 
+    public enum TrafficCategory: String, Sendable {
+        case human
+        case bot
+        case ai
+    }
+
     public enum Source: String, Sendable, CaseIterable {
         case backendAPI = "backend_api"
         case webApp = "web_app"
@@ -37,6 +43,7 @@ public struct Log: Model {
         public let origin: String?
         public let acceptLanguage: String?
         public let userAgent: String?
+        public let trafficCategory: TrafficCategory
         public let language: String?
         public let region: String?
         public let osName: String?
@@ -64,6 +71,7 @@ public struct Log: Model {
     public let origin: String?
     public let acceptLanguage: String?
     public let userAgent: String?
+    public let trafficCategory: TrafficCategory
     public let language: String?
     public let region: String?
     public let osName: String?
@@ -93,6 +101,7 @@ public struct Log: Model {
         origin: String?,
         acceptLanguage: String?,
         userAgent: String?,
+        trafficCategory: TrafficCategory,
         language: String?,
         region: String?,
         osName: String?,
@@ -121,6 +130,7 @@ public struct Log: Model {
         self.origin = origin
         self.acceptLanguage = acceptLanguage
         self.userAgent = userAgent
+        self.trafficCategory = trafficCategory
         self.language = language
         self.region = region
         self.osName = osName
@@ -194,6 +204,7 @@ extension Log {
         origin: String?,
         acceptLanguage: String?,
         userAgent: String?,
+        trafficCategory: TrafficCategory = .human,
         language: String?,
         region: String?,
         osName: String?,
@@ -225,6 +236,7 @@ extension Log {
             origin: origin,
             acceptLanguage: acceptLanguage,
             userAgent: userAgent,
+            trafficCategory: trafficCategory,
             language: language,
             region: region,
             osName: osName,

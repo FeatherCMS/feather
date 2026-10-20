@@ -188,29 +188,23 @@ public struct LogDatabaseQueries: LogQueries {
     }
 
     func overviewAIPredicateSQL(columns: Set<String>) -> String {
-        // Curated from ai.robots.txt and DataFast's AI-answer, training, and other-AI lists.
-        // Search-engine-only agents (e.g. Googlebot/Bingbot) remain in the Bot category.
-        guard columns.contains("user_agent") else { return "FALSE" }
-        return "COALESCE(user_agent, '') ~* '(addsearchbot|agentdatabot|agenttimes|ai.?2.?bot|aihitbot|aiwebindex|amazonbot|amazon.?qbusiness|amazonbuyforme|amzn.?searchbot|amzn.?user|andibot|anomura|anthropic.?ai|apifybot|apifywebsitecontentcrawler|applebot(-extended)?|azureai.?searchbot|bedrockbot|bigsur\\.ai|bixelbot|brightbot|buddybot|bytespider|ccbot|channel3bot|chatglm.?spider|chatgpt|claude|cloudflare.?autorag|cloudflarebrowserrenderingcrawler|cloudvertexbot|cohere.?ai|cohere-training-data-crawler|copilot|cotoyogi|cragcrawler|crawl4ai|crawlspace|cursor|deepseekbot|devin|diffbot(-user)?|doubao.?bot|duckassistbot|echobot|echoboxbot|erniebot|exa(search)?bot|facebookbot|facebookexternalhit|firecrawl(agent)?|geisthaus-pagefetcher|gemini|google-agent|google-cloudvertexbot|google-extended|google-firebase|google-gemini-cli|google-notebooklm|google-read-aloud|googleagent|googleother|gptbot|grok(appandroid|bot|deepsearch)?|xai-(bot|grok|searchbot|web-crawler)|henkbot|hunyuan|iask(bot|spider)|imagesiftbot|img2dataset|kagi-fetcher|kangaroo.?bot|kimi(-agent|-searchbot|-user)?|kimibot|klaviyoaibot|laion(huggingface-processor|downloader)|linerbot|linkupbot|manus-user|meta-external(agent|fetcher|ads)|meta-webindexer|mistralai-(index|training|user)|moonshotbot|mycentrala[s]?scraperbot|newsai|notebooklm|novaact|oai-(ads|search)bot|openai|opencode|operator|pangu.?bot|panscient(\\.com)?|perplexity(-user)?bot?|phindbot|poggio-citations|poseidon research crawler|qodercli|qwen(-user)?bot?|reflectionbot|shap(-user)?bot|tavilybot|tongyibot|twinagent|useai|wrtnbot|yiyanbot|youbot|zanistabot|aliyunbot)'"
+        guard columns.contains("traffic_category") else { return "FALSE" }
+        return "traffic_category = 'ai'"
     }
 
     func overviewBotPredicateSQL(columns: Set<String>) -> String {
-        // User-agent matching is approximate; all raw log rows remain available for diagnosis.
-        guard columns.contains("user_agent") else { return "FALSE" }
-        return "COALESCE(user_agent, '') ~* '(bot|crawler|spider|slurp|preview|scrapy|facebookexternalhit|googlebot|bingbot|msnbot|baiduspider|yandex)'"
+        guard columns.contains("traffic_category") else { return "FALSE" }
+        return "traffic_category IN ('bot', 'ai')"
     }
 
     func overviewOtherBotPredicateSQL(columns: Set<String>) -> String {
-        let botPredicate = overviewBotPredicateSQL(columns: columns)
-        let aiPredicate = overviewAIPredicateSQL(columns: columns)
-        return "(\(botPredicate) AND NOT (\(aiPredicate)))"
+        guard columns.contains("traffic_category") else { return "FALSE" }
+        return "traffic_category = 'bot'"
     }
 
     func overviewHumanPredicateSQL(columns: Set<String>) -> String {
-        guard columns.contains("user_agent") else { return "TRUE" }
-        let botPredicate = overviewBotPredicateSQL(columns: columns)
-        let aiPredicate = overviewAIPredicateSQL(columns: columns)
-        return "(NOT (\(botPredicate)) AND NOT (\(aiPredicate)))"
+        guard columns.contains("traffic_category") else { return "TRUE" }
+        return "traffic_category = 'human'"
     }
 
     func overviewPageViewPredicateSQL(
@@ -223,10 +217,19 @@ public struct LogDatabaseQueries: LogQueries {
             return "FALSE"
         }
         let prefix = tableAlias.isEmpty ? "" : "\(tableAlias)."
-        let botPredicate = "(\(overviewBotPredicateSQL(columns: columns)) OR \(overviewAIPredicateSQL(columns: columns)))"
-            .replacingOccurrences(of: "user_agent", with: "\(prefix)user_agent")
+        let botPredicate = "\(prefix)traffic_category IN ('bot', 'ai')"
         return
             "\(prefix)method = 'GET' AND \(prefix)response_code BETWEEN 200 AND 299 AND NOT (\(botPredicate))"
+    }
+
+    func overviewTrafficCategorySQL(
+        source: String,
+        columns: Set<String>
+    ) -> String {
+        guard source == "web_app", columns.contains("traffic_category") else {
+            return "'human'::text"
+        }
+        return "traffic_category"
     }
 
     func overviewDays(
@@ -294,13 +297,9 @@ public struct LogDatabaseQueries: LogQueries {
         )
         let authenticatedSQL =
             "(\(accountIDSQL) IS NOT NULL) AS is_authenticated"
-        let botPredicateSQL = overviewBotPredicateSQL(columns: columns)
-        let aiPredicateSQL = overviewAIPredicateSQL(columns: columns)
         let trafficTypeSQL = notFoundOnly
             ? "'human'::text"
-            : source == "web_app"
-            ? "CASE WHEN \(aiPredicateSQL) THEN 'ai' WHEN \(botPredicateSQL) THEN 'bot' ELSE 'human' END"
-            : "'human'::text"
+            : overviewTrafficCategorySQL(source: source, columns: columns)
         let baseWhereSQL = overviewWhereSQL(
             source: source,
             columns: columns
@@ -532,13 +531,9 @@ public struct LogDatabaseQueries: LogQueries {
             columns: columns,
             fallback: "NULL::text"
         )
-        let botPredicateSQL = overviewBotPredicateSQL(columns: columns)
-        let aiPredicateSQL = overviewAIPredicateSQL(columns: columns)
         let trafficTypeSQL = notFoundOnly
             ? "'human'::text"
-            : source == "web_app"
-            ? "CASE WHEN \(aiPredicateSQL) THEN 'ai' WHEN \(botPredicateSQL) THEN 'bot' ELSE 'human' END"
-            : "'human'::text"
+            : overviewTrafficCategorySQL(source: source, columns: columns)
         let baseWhereSQL = overviewWhereSQL(
             source: source,
             columns: columns
@@ -864,11 +859,11 @@ public struct LogDatabaseQueries: LogQueries {
             ? "COUNT(*) FILTER (WHERE method = 'POST' AND LOWER(TRIM(BOTH '/' FROM path)) = 'search') AS search_requests"
             : "0 AS search_requests"
         let botRequestsSQL =
-            source == "web_app" && columns.contains("user_agent")
+            source == "web_app" && columns.contains("traffic_category")
             ? "COUNT(*) FILTER (WHERE \(otherBotPredicateSQL)) AS bot_requests"
             : "0 AS bot_requests"
         let aiRequestsSQL =
-            source == "web_app" && columns.contains("user_agent")
+            source == "web_app" && columns.contains("traffic_category")
             ? "COUNT(*) FILTER (WHERE \(aiPredicateSQL)) AS ai_requests"
             : "0 AS ai_requests"
         let humanRequestsSQL =
@@ -999,7 +994,7 @@ public struct LogDatabaseQueries: LogQueries {
             columns.isSuperset(of: ["method", "response_code"])
         {
             requestsSQL =
-                "COUNT(log.id) FILTER (WHERE log.method = 'GET' AND log.response_code BETWEEN 200 AND 299 AND NOT (\(botPredicateSQL.replacingOccurrences(of: "user_agent", with: "log.user_agent")))) AS requests"
+                "COUNT(log.id) FILTER (WHERE log.method = 'GET' AND log.response_code BETWEEN 200 AND 299 AND NOT (\(botPredicateSQL.replacingOccurrences(of: "traffic_category", with: "log.traffic_category")))) AS requests"
         }
         else {
             requestsSQL = "COUNT(log.id) AS requests"
