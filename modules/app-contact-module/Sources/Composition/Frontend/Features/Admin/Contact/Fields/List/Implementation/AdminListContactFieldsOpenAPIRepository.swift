@@ -1,4 +1,5 @@
 import ContactAdminAPI
+import ContactContracts
 import FeatherAdmin
 import FeatherValidation
 import HTML
@@ -11,9 +12,11 @@ import WebComponents
 struct AdminListContactFieldsOpenAPIRepository {
     let api: ContactAdminAPIClient
 
-    func list() async throws -> [AdminContactFieldRow] {
+    func list(formKey: String? = nil) async throws -> [AdminContactFieldRow] {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            switch try await client.contactFieldList() {
+            switch try await client.contactFieldList(
+                .init(query: .init(form: formKey))
+            ) {
             case .ok(let value):
                 return try value.body.json.map(Self.mapField)
             case .unauthorized:
@@ -34,28 +37,16 @@ struct AdminListContactFieldsOpenAPIRepository {
         try await api.withOpenAPIRepositoryErrorMapping { client in
             let formsResponse = try await client.contactFormList()
             let forms: [AdminContactFormFilterOption]
-            let formFields: [String: [AdminContactFieldRow]]
             switch formsResponse {
             case .ok(let value):
                 let formSchemas = try value.body.json
                 forms = formSchemas.map {
                     .init(key: $0.key, name: $0.name)
                 }
-                formFields = Dictionary(
-                    uniqueKeysWithValues: formSchemas.map { form in
-                        (
-                            form.key,
-                            (form.items ?? []).map(Self.mapField)
-                        )
-                    }
-                )
             case .unauthorized:
                 throw OpenAPIRepositoryError.unauthorized
             case .forbidden:
-                guard formKey == nil else {
-                    throw OpenAPIRepositoryError.forbidden
-                }
-                return .init(fields: try await self.list(), forms: [])
+                forms = []
             case .undocumented(let statusCode, let response):
                 throw try await api.failure(
                     statusCode: statusCode,
@@ -63,11 +54,7 @@ struct AdminListContactFieldsOpenAPIRepository {
                 )
             }
 
-            if let formKey {
-                return .init(fields: formFields[formKey] ?? [], forms: forms)
-            }
-
-            let fields = try await self.list()
+            let fields = try await self.list(formKey: formKey)
             return .init(fields: fields, forms: forms)
         }
     }

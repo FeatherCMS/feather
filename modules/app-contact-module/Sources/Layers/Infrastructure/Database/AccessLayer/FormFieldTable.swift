@@ -152,6 +152,23 @@ struct FormFieldTable {
         }
     }
 
+    func listUnassigned() async throws -> [Row] {
+        try await connection.run(
+            query: #"""
+                SELECT i.*, '' AS form_id, 0 AS position
+                FROM contact_form_field i
+                WHERE NOT EXISTS (
+                    SELECT 1
+                    FROM contact_form_form_field a
+                    WHERE a.field_id = i.id
+                )
+                ORDER BY i.id;
+                """#
+        ) { sequence in
+            try await sequence.collect().map { try Row(from: $0) }
+        }
+    }
+
     func update(
         id: String,
         row: Row

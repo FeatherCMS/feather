@@ -86,7 +86,11 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
             }
             children.append(contentsOf: fields.map(renderField))
             appendCaptcha(to: &children)
-            children.append(Button("Submit").type(.submit))
+            children.append(
+                Button("Submit")
+                    .type(.submit)
+                    .setClass("button primary")
+            )
         }
         let formElement = Form { children }
             .method(.post)
@@ -129,7 +133,11 @@ struct ContactFormMarkdownBlockRenderer: WebMarkdownBlockRenderer {
                 return Document(root: renderField(field)).render()
             case "contactformsubmit":
                 submitCount += 1
-                return Document(root: Button("Submit").type(.submit)).render()
+                return Document(
+                    root: Button("Submit")
+                        .type(.submit)
+                        .setClass("button primary")
+                ).render()
             case "contactformerror":
                 errorCount += 1
                 return feedbackElement(feedback, form: form, status: .failure)

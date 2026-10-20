@@ -16,6 +16,22 @@ struct ContactFieldsTableContent: Component {
     let search: String
     let permissions: NewAdminListActions
 
+    private var emptyStateMessage: String {
+        if formKey == FormFieldListFilter.unassigned {
+            return search.isEmpty
+                ? "No unassigned contact form fields."
+                : "No unassigned fields match your search."
+        }
+        if formKey != nil {
+            return search.isEmpty
+                ? "This form has no assigned fields."
+                : "No assigned fields match your search."
+        }
+        return search.isEmpty
+            ? "No contact form fields yet."
+            : "No contact form fields match your search."
+    }
+
     func html(context: inout BuilderContext) -> Div {
         let returnTo = NewAdminLocation.url(
             path: ContactAdminRoutes.fields.description,
@@ -37,13 +53,7 @@ struct ContactFieldsTableContent: Component {
                     else if fields.isEmpty {
                         context.build(
                             NewAdminListEmptyState(
-                                message: search.isEmpty && formKey == nil
-                                    ? "No contact form fields yet."
-                                    : formKey == nil
-                                        ? "No contact form fields match your search."
-                                        : search.isEmpty
-                                            ? "This form has no assigned fields."
-                                            : "No assigned fields match your search.",
+                                message: emptyStateMessage,
                                 icon: FeatherIcons.inbox(),
                                 action: {
                                     if search.isEmpty && formKey == nil {
@@ -59,16 +69,13 @@ struct ContactFieldsTableContent: Component {
                                             )
                                         }
                                     }
-                                    else if !search.isEmpty {
+                                    else if !search.isEmpty || formKey != nil {
                                         context.build(
                                             NewAdminButton(
-                                                "Reset search",
+                                                "Reset filters",
                                                 href: NewAdminLocation.url(
                                                     path: ContactAdminRoutes
                                                         .fields.description,
-                                                    queryItems: formKey.map {
-                                                        [("form", $0)]
-                                                    } ?? []
                                                 ),
                                                 style: .secondary
                                             )
@@ -248,11 +255,18 @@ struct ContactFieldsTableContent: Component {
                                 )
                             ),
                             additionalFields: {
-                                Label {
-                                    Span("Form").class("visually-hidden")
+                                Div {
                                     Select {
                                         Option("All forms").value("")
                                             .if(formKey == nil) {
+                                                $0.selected()
+                                            }
+                                        Option("No form assigned")
+                                            .value(FormFieldListFilter.unassigned)
+                                            .if(
+                                                formKey == FormFieldListFilter
+                                                    .unassigned
+                                            ) {
                                                 $0.selected()
                                             }
                                         for form in forms {
@@ -261,12 +275,13 @@ struct ContactFieldsTableContent: Component {
                                                 .if(form.key == formKey) {
                                                     $0.selected()
                                                 }
+                                            }
                                         }
-                                    }
                                     .name("form")
                                     .ariaLabel("Filter fields by form")
-                                    .class("form-filter-select")
+                                    .onChange("this.form.requestSubmit()")
                                 }
+                                .class("table-search-filter")
                             }
                         )
                     )
