@@ -24,19 +24,23 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
             @concurrent (Request, BasicRequestContext) async throws -> Response
     ) async throws -> Response {
         let path = request.uri.path
+        let url = request.uri.description
+        let method = request.method.rawValue
         let response = try await next(request, context)
         let responseCode = Int(response.status.code)
-        guard shouldTrack(path: path, responseCode: responseCode) else {
+        guard
+            shouldTrack(
+                path: path,
+                method: method,
+                responseCode: responseCode
+            )
+        else {
             return response
         }
 
         let useCase = analytics.makeTrackLog()
         let accountId = await resolveAccountID(request)
-        let headers = request.headers.reduce(into: [String: String]()) {
-            result,
-            field in
-            result[field.name.rawName.lowercased()] = field.value
-        }
+        let headers = Self.storedHeaders(from: request)
         let headersString = AnalyticsLogRequestMetadata.headersJSONString(
             headers
         )
@@ -54,8 +58,8 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
                 input: .init(
                     accountId: accountId,
                     source: .backendAPI,
-                    method: request.method.rawValue,
-                    url: request.uri.description,
+                    method: method,
+                    url: url,
                     headers: headersString,
                     ip: request.headers[Self.forwardedFor],
                     path: path,
@@ -88,20 +92,57 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
 
     private func shouldTrack(
         path: String,
+        method: String,
         responseCode: Int
     ) -> Bool {
-        if path == "/health" {
+        let lowercasedPath = path.lowercased()
+        if Self.isIgnoredPath(lowercasedPath) {
             return false
         }
-        if path.hasPrefix("/api/v1/admin/analytics/") {
+        if lowercasedPath.hasPrefix("/api/v1/admin/analytics/") {
             return false
         }
-        if path == "/api/v1/analytics/logs/track" {
+        if lowercasedPath == "/api/v1/analytics/logs/track" {
             return false
         }
-        if responseCode == 404 {
+        if Self.isStaticAsset(lowercasedPath) {
+            return false
+        }
+
+        // Public page visits are tracked by the web app middleware. Keep API
+        // failures and successful state-changing requests here, but skip the
+        // high-volume successful API reads and preflight checks.
+        return responseCode >= 400
+            || (300..<400).contains(responseCode)
+            || ["POST", "PUT", "PATCH", "DELETE"].contains(method)
+    }
+
+    private static func storedHeaders(from request: Request) -> [String: String] {
+        let allowedNames: Set<String> = ["accept", "content-type"]
+        return request.headers.reduce(into: [String: String]()) {
+            result,
+            field in
+            let name = field.name.rawName.lowercased()
+            guard allowedNames.contains(name) else { return }
+            result[name] = String(field.value.prefix(256))
+        }
+    }
+
+    private static func isStaticAsset(_ path: String) -> Bool {
+        [
+            ".css", ".js", ".mjs", ".map", ".png", ".jpg", ".jpeg",
+            ".gif", ".svg", ".webp", ".ico", ".woff", ".woff2",
+            ".ttf", ".eot", ".avif",
+        ].contains { path.hasSuffix($0) }
+    }
+
+    private static func isIgnoredPath(_ path: String) -> Bool {
+        if path == "/health" || path == "/robots.txt" || path == "/favicon.ico" {
             return true
         }
-        return true
+        return [
+            "/.env", "/.git", "/.svn", "/wp-", "/wp/", "/wordpress",
+            "/xmlrpc.php", "/phpmyadmin", "/cgi-bin/",
+        ].contains { path.contains($0) }
     }
 }
