@@ -31,22 +31,6 @@ struct ContactFormFieldsPage: Component {
             context.build(
                 AdminContactFormTabs(formId: state.key, active: .fields)
             )
-            if state.canAddField {
-                context.build(
-                    NewAdminListToolbar {
-                        context.build(
-                            NewAdminButton(
-                                "Add field",
-                                href: NewAdminLocation.url(
-                                    path: ContactAdminRoutes.fieldAdd
-                                        .description,
-                                    queryItems: [("form", state.key)]
-                                )
-                            )
-                        )
-                    }
-                )
-            }
             context.build(
                 NewAdminRelationshipGroup(
                     pageHeader: .secondary(
@@ -55,6 +39,22 @@ struct ContactFormFieldsPage: Component {
                             "Select fields and drag them to set the order shown to visitors."
                     )
                 ) {
+                    if state.canAddField {
+                        context.build(
+                            NewAdminListToolbar {
+                                context.build(
+                                    NewAdminButton(
+                                        "Add field",
+                                        href: NewAdminLocation.url(
+                                            path: ContactAdminRoutes.fieldAdd
+                                                .description,
+                                            queryItems: [("form", state.key)]
+                                        )
+                                    )
+                                )
+                            }
+                        )
+                    }
                     context.build(
                         ContactFormForm(
                             state: state.form,

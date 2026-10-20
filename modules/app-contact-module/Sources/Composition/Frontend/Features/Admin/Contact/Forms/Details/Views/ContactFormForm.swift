@@ -181,30 +181,32 @@ struct ContactFormForm: Component {
             if mode == .fields, !state.availableFields.isEmpty {
                 Section {
                     Div {
-                        Div {
-                            H4("Selected fields")
-                                .class("contact-form-field-group-title")
-                            Div {
-                                for field in selectedFields {
-                                    fieldRow(
-                                        field: field,
-                                        isSelected: true,
-                                        context: &context
-                                    )
+                        context.build(
+                            NewAdminFormGroup(
+                                id: "contact-form-selected-fields-\(state.key)",
+                                title: "Selected fields",
+                                isOpen: true
+                            ) {
+                                Div {
+                                    for field in selectedFields {
+                                        fieldRow(
+                                            field: field,
+                                            isSelected: true,
+                                            context: &context
+                                        )
+                                    }
                                 }
+                                .class(
+                                    "contact-form-field-list",
+                                    "contact-form-selected-fields"
+                                )
                             }
-                            .class(
-                                "contact-form-field-list",
-                                "contact-form-selected-fields"
-                            )
-                        }
-                        .class("contact-form-field-group")
+                        )
                         context.build(
                             NewAdminFormGroup(
                                 id:
                                     "contact-form-available-fields-\(state.key)",
-                                title:
-                                    "Available fields (\(availableUnselectedFields.count))",
+                                title: "Available fields",
                                 isOpen: false
                             ) {
                                 Div {

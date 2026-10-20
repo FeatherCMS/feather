@@ -1,4 +1,6 @@
+import ContactContracts
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -37,9 +39,15 @@ struct AdminEditContactFormDefaultPresenter: AdminEditContactFormPresenter {
             content: ContactFormFieldsPage(
                 state: .init(
                     key: item.key,
-                    isReadOnly: !permissions.contains("contact:forms:update"),
-                    canAddField: permissions.contains("contact:forms:update")
-                        && permissions.contains("contact:fields:create"),
+                    isReadOnly: !permissions.contains(
+                        ContactPermissions.Forms.update.rawValue
+                    ),
+                    canAddField: permissions.contains(
+                        ContactPermissions.Forms.update.rawValue
+                    )
+                        && permissions.contains(
+                            ContactPermissions.Fields.create.rawValue
+                        ),
                     form: .init(
                         key: item.key,
                         name: item.name,
@@ -71,7 +79,9 @@ struct AdminEditContactFormDefaultPresenter: AdminEditContactFormPresenter {
             content: ContactFormEditPage(
                 state: .init(
                     key: key,
-                    isReadOnly: !permissions.contains("contact:forms:update"),
+                    isReadOnly: !permissions.contains(
+                        ContactPermissions.Forms.update.rawValue
+                    ),
                     form: .init(
                         key: item.key,
                         name: item.name,
