@@ -25,6 +25,8 @@ public struct AdminContact {
             renderingEngine: renderingEngine
         )
         .controller.route(on: router)
+        AdminContactFormFieldsData(apiBuilder: apiBuilder)
+            .route(on: router)
         AdminAddContactForm(
             apiBuilder: apiBuilder,
             renderingEngine: renderingEngine

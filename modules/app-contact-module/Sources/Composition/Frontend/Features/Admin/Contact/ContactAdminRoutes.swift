@@ -5,6 +5,9 @@ enum ContactAdminRoutes {
     static let admin = RouterPath("admin")
     static let contact = admin.appendingPath(RouterPath("contact"))
     static let forms = contact.appendingPath(RouterPath("forms"))
+    static let formFieldsDataRoute = forms
+        .appendingPath(RouterPath(":formKey"))
+        .appendingPath(RouterPath("fields-data"))
     static let formAdd = forms.appendingPath(RouterPath("add"))
     static let formRemove = forms.appendingPath(RouterPath("remove"))
     static let fields = contact.appendingPath(RouterPath("fields"))

@@ -56,7 +56,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
     private static let markdownEditorScript = #"""
         if (document.querySelector('#markdownInput')) {
             const initialMarkdown = document.querySelector('#markdownInput').defaultValue || document.querySelector('#markdownInput').value;
-            const state = { blocks: [], mode: 'visual', dragging: null, insertPosition: 'bottom' };
+            const state = { blocks: [], mode: 'visual', dragging: null, insertPosition: 'bottom', activeContactForm: null };
             const editorExtensions = Array.isArray(window.featherRichContentEditorBlocks)
               ? window.featherRichContentEditorBlocks
               : [];
@@ -75,9 +75,33 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             window.addEventListener('resize', resizeMarkdownInput);
 
             function newBlock(type, value = '') { return { id: crypto.randomUUID(), type, value, url: '', level: 2 }; }
+            function findMatchingBrace(source, openingIndex) {
+              let depth = 0; let fenced = false;
+              for (let index = openingIndex; index < source.length; index++) {
+                const lineStart = source.lastIndexOf('\n', index - 1) + 1;
+                if (!source.slice(lineStart, index).trim() && source.startsWith('```', index)) { fenced = !fenced; const lineEnd = source.indexOf('\n', index); if (lineEnd < 0) break; index = lineEnd; continue; }
+                if (fenced) continue;
+                if (source[index] === '{') depth++;
+                else if (source[index] === '}' && --depth === 0) return index;
+              }
+              return -1;
+            }
             function splitMarkdownBlocks(markdown) {
-              const lines = markdown.replace(/\r/g, '').split('\n'); const blocks = []; let current = []; let fenced = false; let gridDepth = 0;
-              lines.forEach(line => { const trimmed = line.trim(); if (!fenced && /^```/.test(trimmed)) { if (current.length) { blocks.push(current.join('\n').trim()); current = []; } fenced = true; current.push(line); } else if (fenced) { current.push(line); if (trimmed === '```') { blocks.push(current.join('\n').trim()); current = []; fenced = false; } } else if (gridDepth > 0) { current.push(line); gridDepth += (line.match(/\{/g) || []).length - (line.match(/\}/g) || []).length; if (gridDepth === 0) { blocks.push(current.join('\n').trim()); current = []; } } else if (current.length && /^@Grid\(/.test(current[0].trim()) && line.includes('{')) { current.push(line); gridDepth = (current.join('\n').match(/\{/g) || []).length - (current.join('\n').match(/\}/g) || []).length; if (gridDepth === 0) { blocks.push(current.join('\n').trim()); current = []; } } else if (!trimmed) { if (current.length) { blocks.push(current.join('\n').trim()); current = []; } } else { current.push(line); if (current.length === 1 && /^@Grid\(/.test(trimmed) && line.includes('{')) { gridDepth = (line.match(/\{/g) || []).length - (line.match(/\}/g) || []).length; if (gridDepth === 0) { blocks.push(current.join('\n').trim()); current = []; } } } });
+              const lines = markdown.replace(/\r/g, '').split('\n'); const blocks = []; let current = []; let fenced = false; let directiveFence = false; let directiveDepth = 0;
+              lines.forEach(line => {
+                const trimmed = line.trim();
+                if (directiveDepth > 0) {
+                  const fenceLine = /^\s*```/.test(line); if (fenceLine) directiveFence = !directiveFence; current.push(line);
+                  if (!directiveFence && !fenceLine) directiveDepth += (line.match(/\{/g) || []).length - (line.match(/\}/g) || []).length;
+                  if (directiveDepth <= 0) { blocks.push(current.join('\n').trim()); current = []; directiveDepth = 0; directiveFence = false; }
+                  return;
+                }
+                if (fenced) { current.push(line); if (trimmed === '```') { blocks.push(current.join('\n').trim()); current = []; fenced = false; } return; }
+                if (/^```/.test(trimmed)) { if (current.length) { blocks.push(current.join('\n').trim()); current = []; } fenced = true; current.push(line); return; }
+                if (!trimmed) { if (current.length) { blocks.push(current.join('\n').trim()); current = []; } return; }
+                current.push(line);
+                if (current.length === 1 && /^@(Grid|ContactForm)\b/.test(trimmed) && line.includes('{')) { directiveDepth = (line.match(/\{/g) || []).length - (line.match(/\}/g) || []).length; if (directiveDepth <= 0) { blocks.push(current.join('\n').trim()); current = []; directiveDepth = 0; } }
+              });
               if (current.length) blocks.push(current.join('\n').trim()); return blocks;
             }
             function parseArgumentValue(value) {
@@ -87,12 +111,37 @@ public struct NewAdminFormFieldRichContentEditor: Component {
               }
               return trimmed;
             }
+            function parseDirectiveArguments(value) {
+              const result = {};
+              const pattern = /(?:^|,)\s*([A-Za-z][\w-]*)\s*:\s*("(?:\\.|[^"])*"|'(?:\\.|[^'])*'|[^,]*)/g;
+              for (const match of value.matchAll(pattern)) result[match[1]] = parseArgumentValue(match[2]);
+              return result;
+            }
             function parseExtensionBlock(part) {
               for (const definition of editorExtensions) {
                 const directive = definition.directive.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
                 const argument = (definition.argument || 'key').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                if (definition.editor === 'marker') {
+                  if (new RegExp(`^@${directive}(?:\\(\\s*\\))?$`).test(part)) return newBlock(definition.type);
+                  continue;
+                }
                 const match = part.match(new RegExp(`^@${directive}\\(\\s*${argument}\\s*:\\s*([\\s\\S]+)\\)$`));
                 if (match) return newBlock(definition.type, parseArgumentValue(match[1]));
+              }
+              return null;
+            }
+            function parseContainerBlock(part) {
+              for (const definition of editorExtensions.filter(item => item.isContainer)) {
+                const directive = definition.directive.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const argument = (definition.argument || 'key').replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                const match = part.match(new RegExp(`^@${directive}\\(\\s*([\\s\\S]*?)\\)\\s*(?:\\{([\\s\\S]*)\\})?$`));
+                if (match) {
+                  const args = parseDirectiveArguments(match[1]);
+                  if (args[definition.argument || 'key'] === undefined) continue;
+                  const hasBody = match[2] !== undefined;
+                  const mode = args.displayMode === 'custom' || (args.displayMode === undefined && args.mode === 'custom') ? 'custom' : 'automatic';
+                  return Object.assign(newBlock(definition.type, args[definition.argument || 'key']), { children: mode === 'custom' && hasBody ? parseMarkdown(match[2]) : [], mode });
+                }
               }
               return null;
             }
@@ -110,8 +159,9 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 const image = part.match(/^!\[([^\]]*)\]\(([^)]+)\)$/); if (image) return Object.assign(newBlock('image', image[2]), { alt: image[1] });
                 const video = part.match(/^<video[^>]*\bsrc=["']([^"']+)["'][^>]*>\s*<\/video>$/i); if (video) return Object.assign(newBlock('video', video[1]), { controls: true, kind: 'file' });
                 const videoBlock = parseVideoBlock(part); if (videoBlock) return videoBlock;
+                const containerBlock = parseContainerBlock(part); if (containerBlock) return containerBlock;
                 const extensionBlock = parseExtensionBlock(part); if (extensionBlock) return extensionBlock;
-                const grid = part.match(/^@Grid\(([^)]*)\)\s*\{([\s\S]*)\}$/); if (grid) { const settings = { desktop: 3, tablet: 2, mobile: 1 }; grid[1].split(',').forEach(pair => { const match = pair.match(/(desktop|tablet|mobile)\s*:\s*(\d+)/); if (match) settings[match[1]] = Number(match[2]); }); const cells = [...grid[2].matchAll(/@Cell\s*\{([\s\S]*?)\}/g)].map(cell => ({ blocks: parseMarkdown(cell[1].trim()) })); return Object.assign(newBlock('grid', ''), { settings, columnCount: cells.length || 1, columns: cells }); }
+                const grid = part.match(/^@Grid\(([^)]*)\)\s*\{/); if (grid) { const openingIndex = grid[0].length - 1; const closingIndex = findMatchingBrace(part, openingIndex); if (closingIndex !== part.length - 1) return newBlock('text', part); const settings = { desktop: 3, tablet: 2, mobile: 1 }; grid[1].split(',').forEach(pair => { const match = pair.match(/(desktop|tablet|mobile)\s*:\s*(\d+)/); if (match) settings[match[1]] = Number(match[2]); }); const cellSource = part.slice(openingIndex + 1, closingIndex); const cellPattern = /(?:^|\n)\s*@Cell\s*\{/g; const cells = []; let cell; while ((cell = cellPattern.exec(cellSource))) { const cellOpeningIndex = cellSource.indexOf('{', cell.index); const cellClosingIndex = findMatchingBrace(cellSource, cellOpeningIndex); if (cellClosingIndex < 0) break; cells.push({ blocks: parseMarkdown(cellSource.slice(cellOpeningIndex + 1, cellClosingIndex).trim()) }); cellPattern.lastIndex = cellClosingIndex + 1; } return Object.assign(newBlock('grid', ''), { settings, columnCount: cells.length || 1, columns: cells }); }
                 const custom = part.match(/^@([A-Za-z][\w-]*)\(([^]*)\)$/); if (custom) return Object.assign(newBlock('custom', custom[2]), { name: custom[1] });
                 const heading = part.match(/^(#{1,6})\s+(.+)$/); if (heading) return Object.assign(newBlock('heading', heading[2]), { level: heading[1].length });
                 if (/^<[^>]+[\s\S]*>$/.test(part)) return newBlock('html', part);
@@ -120,7 +170,24 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             }
             function serializeBlocks(blocks) { return blocks.map(serializeBlock).filter(Boolean).join('\n\n'); }
             function serialize() { return serializeBlocks(state.blocks); }
-            function serializeBlock(block) { const value = (block.value || '').trim(); if (!value && !['code', 'grid', 'separator'].includes(block.type)) return ''; if (block.type === 'separator') return '---'; if (block.type === 'heading') return `${'#'.repeat(block.level)} ${value}`; if (block.type === 'code') return '```' + (block.language || '').trim() + '\n' + value + '\n```'; if (block.type === 'ul') return value.split('\n').filter(Boolean).map(item => '- ' + item.trim()).join('\n'); if (block.type === 'ol') return value.split('\n').filter(Boolean).map((item, index) => `${index + 1}. ${item.trim()}`).join('\n'); if (block.type === 'blockquote') return value.split('\n').map(line => '> ' + line).join('\n') + (block.cite ? '\n>\n> — ' + block.cite.trim() : ''); if (block.type === 'image') return `![${(block.alt || '').trim()}](${value})`; if (block.type === 'video') return '@Video(source: ' + JSON.stringify(value) + ', kind: "' + (block.kind || 'file') + '")'; const extension = editorExtension(block.type); if (extension) return '@' + extension.directive + '(' + (extension.argument || 'key') + ': ' + JSON.stringify(value) + ')'; if (block.type === 'custom') return '@' + (block.name || '').trim() + '(' + value + ')'; if (block.type === 'grid') { const settings = block.settings || { desktop: 3, tablet: 2, mobile: 1 }; const columns = (block.columns || []).map(column => '@Cell {\n' + serializeBlocks(column.blocks || []) + '\n}').join('\n'); return '@Grid(desktop: ' + settings.desktop + ', tablet: ' + settings.tablet + ', mobile: ' + settings.mobile + ') {\n' + columns + '\n}'; } return value; }
+            function serializeBlock(block) {
+              const value = (block.value || '').trim(); const extension = editorExtension(block.type);
+              if (extension?.isContainer) return value ? '@' + extension.directive + '(' + (extension.argument || 'key') + ': ' + JSON.stringify(value) + (block.mode === 'custom' ? ', displayMode: custom' : '') + ')' + (block.mode === 'custom' ? ' {\n' + serializeBlocks(block.children || []) + '\n}' : '') : '';
+              if (extension?.editor === 'marker') return '@' + extension.directive;
+              if (!value && !['code', 'grid', 'separator'].includes(block.type)) return '';
+              if (block.type === 'separator') return '---';
+              if (block.type === 'heading') return `${'#'.repeat(block.level)} ${value}`;
+              if (block.type === 'code') return '```' + (block.language || '').trim() + '\n' + value + '\n```';
+              if (block.type === 'ul') return value.split('\n').filter(Boolean).map(item => '- ' + item.trim()).join('\n');
+              if (block.type === 'ol') return value.split('\n').filter(Boolean).map((item, index) => `${index + 1}. ${item.trim()}`).join('\n');
+              if (block.type === 'blockquote') return value.split('\n').map(line => '> ' + line).join('\n') + (block.cite ? '\n>\n> — ' + block.cite.trim() : '');
+              if (block.type === 'image') return `![${(block.alt || '').trim()}](${value})`;
+              if (block.type === 'video') return '@Video(source: ' + JSON.stringify(value) + ', kind: "' + (block.kind || 'file') + '")';
+              if (extension) return '@' + extension.directive + '(' + (extension.argument || 'key') + ': ' + JSON.stringify(value) + ')';
+              if (block.type === 'custom') return '@' + (block.name || '').trim() + '(' + value + ')';
+              if (block.type === 'grid') { const settings = block.settings || { desktop: 3, tablet: 2, mobile: 1 }; const columns = (block.columns || []).map(column => '@Cell {\n' + serializeBlocks(column.blocks || []) + '\n}').join('\n'); return '@Grid(desktop: ' + settings.desktop + ', tablet: ' + settings.tablet + ', mobile: ' + settings.mobile + ') {\n' + columns + '\n}'; }
+              return value;
+            }
             function setStatus(message) { status.textContent = message; clearTimeout(setStatus.timer); setStatus.timer = setTimeout(() => status.textContent = 'Saved locally in editor', 900); }
             function syncRaw() { input.value = serialize(); }
             function updateBlock(id, key, value) { const block = state.blocks.find(item => item.id === id); if (!block) return; block[key] = value; syncRaw(); setStatus('Updated'); }
@@ -174,14 +241,30 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 items.forEach(item => { const button = document.createElement('button'); button.type = 'button'; button.textContent = item.getAttribute('data-mce-picker-label') || item.textContent.trim(); button.addEventListener('click', () => { modal.__apply(item.getAttribute('data-mce-picker-item'), button.textContent); if (modal.close) modal.close(); else modal.removeAttribute('open'); render(); }); list.append(button); });
               } catch (_) { list.innerHTML = '<p class="error">Unable to load items.</p>'; }
             }
+            async function loadContactFormFields(block) {
+              if (!block.value || block.loadingFields) return;
+              block.loadingFields = true; block.fieldLoadError = '';
+              try {
+                const response = await fetch(`/admin/contact/forms/${encodeURIComponent(block.value)}/fields-data/`, { credentials: 'same-origin', headers: { Accept: 'application/json' } });
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                if (response.redirected) throw new Error('The request was redirected, likely to the sign-in page.');
+                if (!(response.headers.get('content-type') || '').toLowerCase().includes('application/json')) throw new Error('The response was not JSON.');
+                const form = await response.json();
+                if (!Array.isArray(form.items)) throw new Error('The response did not contain a form fields list.');
+                block.availableFields = form.items;
+              } catch (error) { block.availableFields = []; block.fieldLoadError = `Could not load the selected form fields. ${error.message || 'Check the request and try again.'}`; }
+              finally { block.loadingFields = false; if (state.blocks.includes(block)) { syncRaw(); render(); } }
+            }
             function renderEmbedControl(body, block, update, definition) {
               const fields = document.createElement('div'); fields.className = 'embed-fields';
-              const key = document.createElement('input'); key.value = block.value || ''; key.placeholder = `${definition.title} ${definition.argument || 'key'}`; key.setAttribute('aria-label', key.placeholder); key.addEventListener('input', event => update('value', event.target.value));
+              const key = document.createElement('input'); key.value = block.value || ''; key.placeholder = `${definition.title} ${definition.argument || 'key'}`; key.setAttribute('aria-label', key.placeholder); key.addEventListener(definition.isContainer ? 'change' : 'input', event => update('value', event.target.value));
               fields.append(key);
               if (definition.pickerEndpoint) { const picker = document.createElement('button'); picker.type = 'button'; picker.className = 'embed-picker-button'; picker.textContent = block.value ? 'Change selection' : 'Choose from list'; picker.addEventListener('click', () => openEmbedPicker(definition, value => { update('value', value); })); fields.append(picker); }
               body.append(fields);
             }
             function renderExtensionControl(body, block, update, definition) {
+              if (definition.type === 'contact-form-field') { const preview = document.createElement('div'); preview.className = 'contact-form-field-preview'; const key = document.createElement('code'); key.textContent = block.value || ''; preview.append(key); body.append(preview); return; }
+              if (definition.editor === 'marker') { const names = { 'contact-form-captcha': 'CAPTCHA', 'contact-form-error': 'Error message', 'contact-form-success': 'Success message', 'contact-form-submit': 'Submit button' }; const preview = document.createElement('div'); preview.className = 'contact-form-marker-preview'; const title = document.createElement('strong'); title.textContent = 'Contact Form'; const component = document.createElement('span'); component.textContent = names[block.type] || definition.title; preview.append(title, component); body.append(preview); return; }
               if (definition.editor === 'text') { const field = document.createElement('textarea'); field.value = block.value || ''; field.placeholder = definition.title; field.setAttribute('aria-label', definition.title); configureTextEditor(field); field.addEventListener('input', event => update('value', event.target.value)); body.append(field); return; }
               renderEmbedControl(body, block, update, definition);
             }
@@ -198,7 +281,8 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             function escapeHTML(value) { return value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character])); }
             function inlineMarkdown(value) { let html = escapeHTML(value); html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noreferrer">$1</a>'); html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>').replace(/__([^_]+)__/g, '<u>$1</u>').replace(/~~([^~]+)~~/g, '<del>$1</del>').replace(/\*([^*]+)\*/g, '<em>$1</em>'); return html; }
             function renderPreviewBlock(block) { let element; if (block.type === 'heading') { element = document.createElement(`h${block.level}`); element.innerHTML = inlineMarkdown(block.value); } else if (block.type === 'text') { element = document.createElement('p'); element.innerHTML = inlineMarkdown(block.value); } else if (block.type === 'separator') element = document.createElement('hr'); else if (block.type === 'ul' || block.type === 'ol') { element = document.createElement(block.type); block.value.split('\n').filter(Boolean).forEach(item => { const li = document.createElement('li'); li.innerHTML = inlineMarkdown(item); element.append(li); }); } else if (block.type === 'blockquote') { element = document.createElement('blockquote'); element.innerHTML = inlineMarkdown(block.value.replace(/\n/g, '<br>')); if (block.cite) { const cite = document.createElement('cite'); cite.textContent = `— ${block.cite}`; element.append(cite); } } else if (block.type === 'image') { element = document.createElement('img'); element.src = mediaURL(block.value); element.alt = block.alt || ''; } else if (block.type === 'video') { if (block.kind === 'embed') { element = document.createElement('iframe'); element.src = block.value; element.title = 'Embedded video'; element.loading = 'lazy'; element.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture'; element.allowFullscreen = true; } else { element = document.createElement('video'); element.src = mediaURL(block.value); element.controls = true; element.preload = 'metadata'; } } else if (block.type === 'code') { element = document.createElement('pre'); const code = document.createElement('code'); code.textContent = block.value; element.append(code); } else if (block.type === 'html') { element = document.createElement('div'); element.innerHTML = block.value; } else if (block.type === 'grid') { const settings = block.settings || { desktop: 3, tablet: 2, mobile: 1 }; element = document.createElement('div'); element.className = 'preview-grid'; element.style.setProperty('--grid-desktop', settings.desktop); element.style.setProperty('--grid-tablet', settings.tablet); element.style.setProperty('--grid-mobile', settings.mobile); (block.columns || []).forEach(column => { const columnElement = document.createElement('div'); columnElement.className = 'preview-grid-column'; (column.blocks || []).forEach(child => columnElement.append(renderPreviewBlock(child))); element.append(columnElement); }); } else { element = document.createElement('pre'); element.className = 'preview-custom'; element.textContent = serializeBlock(block); } return element; }
-            function renderPreview() { previewContent.innerHTML = ''; if (!state.blocks.length) { previewContent.innerHTML = '<div class="preview-empty">Nothing to preview yet.</div>'; return; } state.blocks.forEach(block => previewContent.append(renderPreviewBlock(block))); }
+            function renderContactFormPreview(block) { const container = document.createElement('section'); container.className = 'preview-contact-form'; const title = document.createElement('strong'); title.textContent = `Contact form: ${block.value || 'Choose a form'}`; container.append(title); (block.children || []).forEach(child => container.append(renderPreviewBlock(child))); return container; }
+            function renderPreview() { previewContent.innerHTML = ''; if (!state.blocks.length) { previewContent.innerHTML = '<div class="preview-empty">Nothing to preview yet.</div>'; return; } state.blocks.forEach(block => previewContent.append(editorExtension(block.type)?.isContainer ? renderContactFormPreview(block) : renderPreviewBlock(block))); }
             function configureTextEditor(field) {
               field.classList.add('text-editor');
               field.rows = 1;
@@ -231,9 +315,43 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             function makeGridBlock() { return Object.assign(newBlock('grid', ''), { settings: { desktop: 3, tablet: 2, mobile: 1 }, columnCount: 3, columns: [0, 1, 2].map(() => ({ blocks: [] })) }); }
             function ensureGridColumns(block) { block.columns = block.columns || []; block.columnCount = Math.max(1, Math.min(12, block.columnCount || block.columns.length || 1)); while (block.columns.length < block.columnCount) block.columns.push({ blocks: [] }); }
             function updateGridColumn(id, index, value) { const block = state.blocks.find(item => item.id === id); if (!block) return; if (!block.columns) block.columns = []; while (block.columns.length <= index) block.columns.push({ blocks: [] }); block.columns[index].blocks = parseMarkdown(value); syncRaw(); setStatus('Updated'); }
+            function renderNestedGridEditor(body, grid) {
+              const contactForm = state.activeContactForm;
+              grid.settings = Object.assign({ desktop: 3, tablet: 2, mobile: 1 }, grid.settings || {}); ensureGridColumns(grid);
+              const controls = document.createElement('div'); controls.className = 'contact-form-grid-editor';
+              const settings = document.createElement('div'); settings.className = 'grid-settings';
+              const responsive = document.createElement('div'); responsive.className = 'grid-responsive';
+              [['desktop', grid.settings.desktop], ['tablet', grid.settings.tablet], ['mobile', grid.settings.mobile], ['cells', grid.columnCount]].forEach(([size, value]) => {
+                const label = document.createElement('label'); label.className = 'grid-setting'; label.textContent = size === 'cells' ? 'Cells' : size.charAt(0).toUpperCase() + size.slice(1);
+                const field = document.createElement('input'); field.className = 'grid-setting-input'; field.type = 'number'; field.min = 1; field.max = 12; field.value = value; field.setAttribute('aria-label', label.textContent);
+                field.addEventListener('change', event => { const nextValue = Math.max(1, Math.min(12, Number(event.target.value) || 1)); if (size === 'cells') grid.columnCount = nextValue; else grid.settings[size] = nextValue; ensureGridColumns(grid); contactForm.mode = 'custom'; syncRaw(); render(); });
+                label.append(field); responsive.append(label);
+              });
+              settings.append(responsive);
+              const columns = document.createElement('div'); columns.className = 'grid-columns contact-form-grid-columns'; columns.style.setProperty('--grid-desktop', grid.settings.desktop); columns.style.setProperty('--grid-tablet', grid.settings.tablet); columns.style.setProperty('--grid-mobile', grid.settings.mobile);
+              for (let columnIndex = 0; columnIndex < grid.columnCount; columnIndex++) {
+                const column = document.createElement('div'); column.className = 'grid-column contact-form-grid-column'; const title = document.createElement('label'); title.textContent = `Cell ${columnIndex + 1}`; column.append(title); const children = grid.columns[columnIndex].blocks || [];
+                children.forEach((child, childIndex) => {
+                  const card = document.createElement('article'); card.className = 'block grid-child contact-form-grid-child'; card.draggable = true;
+                  const controls = document.createElement('div'); controls.className = 'drag-controls'; const handle = document.createElement('span'); handle.className = 'drag-handle'; handle.textContent = '⠿'; handle.title = 'Drag to rearrange'; controls.append(handle);
+                  const up = document.createElement('button'); up.type = 'button'; up.className = 'move-button'; up.textContent = '↑'; up.title = 'Move up'; up.disabled = childIndex === 0; up.addEventListener('click', () => { [children[childIndex - 1], children[childIndex]] = [children[childIndex], children[childIndex - 1]]; contactForm.mode = 'custom'; syncRaw(); render(); });
+                  const down = document.createElement('button'); down.type = 'button'; down.className = 'move-button'; down.textContent = '↓'; down.title = 'Move down'; down.disabled = childIndex === children.length - 1; down.addEventListener('click', () => { [children[childIndex + 1], children[childIndex]] = [children[childIndex], children[childIndex + 1]]; contactForm.mode = 'custom'; syncRaw(); render(); }); controls.append(up, down); card.append(controls);
+                  const childBody = document.createElement('div'); childBody.className = 'block-body'; const label = document.createElement('label'); label.className = 'block-label'; label.textContent = child.displayTitle || editorExtension(child.type)?.title || child.type; childBody.append(label); renderBlockContent(childBody, child, (key, value) => { child[key] = value; syncRaw(); setStatus('Updated'); }); card.append(childBody);
+                  const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'remove'; remove.textContent = '×'; remove.title = 'Remove component'; remove.setAttribute('aria-label', 'Remove component'); remove.addEventListener('click', () => { children.splice(childIndex, 1); contactForm.mode = 'custom'; syncRaw(); render(); }); card.append(remove);
+                  card.addEventListener('dragstart', event => { event.stopPropagation(); event.dataTransfer.effectAllowed = 'move'; state.dragging = { kind: 'contact-form-grid-child', formId: contactForm?.id, grid, columnIndex, childIndex }; card.classList.add('dragging'); }); card.addEventListener('dragend', event => { event.stopPropagation(); clearDragState(); });
+                  column.append(card);
+                });
+                if (!children.length) { const empty = document.createElement('div'); empty.className = 'grid-column-empty contact-form-grid-empty'; empty.textContent = 'Drag a component here'; column.append(empty); }
+                column.addEventListener('dragover', event => { if (state.dragging?.formId === contactForm?.id && ['contact-form-field', 'contact-form-component', 'contact-form-grid-child', 'contact-form-child'].includes(state.dragging.kind)) { event.preventDefault(); column.classList.add('drop-target'); } }); column.addEventListener('dragleave', () => column.classList.remove('drop-target'));
+                column.addEventListener('drop', event => { event.preventDefault(); event.stopPropagation(); const drag = state.dragging; if (!drag || drag.formId !== contactForm?.id || !['contact-form-field', 'contact-form-component', 'contact-form-grid-child', 'contact-form-child'].includes(drag.kind)) return; let moved; if (drag.kind === 'contact-form-field') { if (!flattenContactFormBlocks(contactForm.children).some(child => child.type === 'contact-form-field' && child.value === drag.key)) moved = Object.assign(newBlock('contact-form-field', drag.key), { displayTitle: drag.label }); } else if (drag.kind === 'contact-form-component') moved = createBlock(drag.type); else if (drag.kind === 'contact-form-grid-child') moved = drag.grid.columns[drag.columnIndex].blocks.splice(drag.childIndex, 1)[0]; else if (drag.kind === 'contact-form-child') moved = contactForm.children.splice(drag.childIndex, 1)[0]; if (moved) { children.push(moved); contactForm.mode = 'custom'; } state.dragging = null; syncRaw(); render(); });
+                columns.append(column);
+              }
+              settings.append(columns); controls.append(settings); body.append(controls);
+            }
             function renderBlockContent(body, block, update) {
               const extension = editorExtension(block.type);
-              if (extension) { renderExtensionControl(body, block, update, extension); const label = body.querySelector('.block-label'); if (label) label.textContent = extension.title; return; }
+              if (block.type === 'grid') { if (state.activeContactForm) renderNestedGridEditor(body, block); else { const field = document.createElement('textarea'); field.className = 'contact-form-grid-source'; field.value = serializeBlock(block); field.setAttribute('aria-label', 'Grid layout Markdown'); field.addEventListener('input', () => { const parsed = parseMarkdown(field.value).find(item => item.type === 'grid'); if (parsed) { Object.assign(block, parsed); syncRaw(); setStatus('Updated'); } }); body.append(field); } return; }
+              if (extension) { renderExtensionControl(body, block, update, extension); const label = body.querySelector('.block-label'); if (label) { label.hidden = extension.editor === 'marker'; label.textContent = extension.editor === 'marker' ? '' : extension.type === 'contact-form-field' ? 'Contact form field' : extension.title; } return; }
               if (block.type === 'heading') { const toolbar = document.createElement('div'); toolbar.className = 'heading-toolbar'; toolbar.setAttribute('aria-label', 'Heading level'); toolbar.innerHTML = [1,2,3,4,5,6].map(level => `<button type="button" class="${level === block.level ? 'active' : ''}" data-level="${level}" title="Heading ${level}">H${level}</button>`).join(''); toolbar.querySelectorAll('[data-level]').forEach(button => button.addEventListener('click', () => { update('level', Number(button.dataset.level)); render(); })); const field = document.createElement('input'); field.value = block.value; field.placeholder = 'Heading text…'; field.setAttribute('aria-label', 'Heading text'); field.addEventListener('input', e => update('value', e.target.value)); body.append(toolbar, field); }
               else if (block.type === 'separator') { const rule = document.createElement('div'); rule.className = 'preview-content'; rule.innerHTML = '<hr>'; body.append(rule); }
               else if (block.type === 'ul' || block.type === 'ol') { const toolbar = document.createElement('div'); toolbar.className = 'format-toolbar'; toolbar.setAttribute('aria-label', 'Text formatting'); toolbar.innerHTML = '<button type="button" data-format="bold" title="Bold"><strong>B</strong></button><button type="button" data-format="italic" title="Italic"><em>I</em></button><button type="button" data-format="underline" title="Underline"><u>U</u></button><button type="button" data-format="strike" title="Strikethrough"><del>S</del></button><button type="button" data-format="link" title="Add link">↗</button>'; const field = document.createElement('textarea'); field.className = 'list-editor'; field.value = block.value; field.placeholder = 'One list item per line…'; field.setAttribute('aria-label', `${block.type === 'ul' ? 'Unordered' : 'Ordered'} list items`); field.addEventListener('input', e => update('value', e.target.value)); body.append(toolbar, field); toolbar.querySelectorAll('[data-format]').forEach(button => button.addEventListener('click', () => formatSelectionForBlock(field, block, update, button.dataset.format))); }
@@ -245,6 +363,74 @@ public struct NewAdminFormFieldRichContentEditor: Component {
               else if (block.type === 'custom') { const fields = document.createElement('div'); fields.className = 'custom-fields'; const name = document.createElement('input'); name.value = block.name || 'CustomBlock'; name.placeholder = 'Component name'; name.setAttribute('aria-label', 'Custom component name'); name.addEventListener('input', e => update('name', e.target.value)); const args = document.createElement('input'); args.value = block.value; args.placeholder = 'Arguments, e.g. id: 123'; args.setAttribute('aria-label', 'Custom component arguments'); args.addEventListener('input', e => update('value', e.target.value)); fields.append(name, args); body.append(fields); }
               else { const toolbar = document.createElement('div'); toolbar.className = 'format-toolbar'; toolbar.setAttribute('aria-label', 'Text formatting'); toolbar.innerHTML = '<button type="button" data-format="bold" title="Bold"><strong>B</strong></button><button type="button" data-format="italic" title="Italic"><em>I</em></button><button type="button" data-format="underline" title="Underline"><u>U</u></button><button type="button" data-format="strike" title="Strikethrough"><del>S</del></button><button type="button" data-format="link" title="Add link">↗</button>'; const field = document.createElement('textarea'); field.value = block.value; field.placeholder = 'Write text… Select text, then choose a format'; field.setAttribute('aria-label', 'Text with Markdown formatting'); configureTextEditor(field); field.addEventListener('input', e => update('value', e.target.value)); body.append(toolbar, field); toolbar.querySelectorAll('[data-format]').forEach(button => button.addEventListener('click', () => formatSelectionForBlock(field, block, update, button.dataset.format))); }
             }
+            function renderContactFormContainer(body, block, definition, update) {
+              block.children = block.children || [];
+              renderEmbedControl(body, block, (key, value) => { if (key === 'value' && value !== block.value) { block.availableFields = null; block.fieldLoadError = ''; block.children = []; update(key, value); if (block.mode === 'custom') loadContactFormFields(block); } else update(key, value); }, definition);
+              const modeSwitch = document.createElement('div'); modeSwitch.className = 'mode-switch contact-form-mode-switch'; modeSwitch.setAttribute('role', 'tablist'); modeSwitch.setAttribute('aria-label', 'Contact form display mode');
+              [['automatic', 'Standard'], ['custom', 'Rich content editor']].forEach(([mode, title]) => { const button = document.createElement('button'); button.type = 'button'; button.className = block.mode === mode ? 'active' : ''; button.textContent = title; button.setAttribute('role', 'tab'); button.setAttribute('aria-selected', String(block.mode === mode)); button.addEventListener('click', () => { if (block.mode === mode) return; block.mode = mode; syncRaw(); render(); if (mode === 'custom' && block.value) loadContactFormFields(block); }); modeSwitch.append(button); });
+              body.append(modeSwitch);
+              if (block.mode !== 'custom') return;
+              const panel = document.createElement('div'); panel.className = 'contact-form-layout-editor';
+              const toolbar = document.createElement('div'); toolbar.className = 'component-list contact-form-component-toolbar'; const fieldsLabel = document.createElement('p'); fieldsLabel.className = 'eyebrow contact-form-toolbar-heading'; fieldsLabel.textContent = 'Fields'; toolbar.append(fieldsLabel);
+              if (block.loadingFields) { const loading = document.createElement('p'); loading.className = 'contact-form-palette-status'; loading.textContent = 'Loading fields…'; toolbar.append(loading); }
+              else if (block.fieldLoadError) { const error = document.createElement('p'); error.className = 'error contact-form-palette-status'; error.textContent = block.fieldLoadError; const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'button secondary'; retry.textContent = 'Retry'; retry.addEventListener('click', () => { block.availableFields = null; loadContactFormFields(block); }); toolbar.append(error, retry); }
+              else if (block.availableFields?.length) {
+                const used = flattenContactFormBlocks(block.children).filter(child => child.type === 'contact-form-field').map(child => child.value);
+                block.availableFields.forEach(field => { const button = document.createElement('button'); button.type = 'button'; button.className = 'component-button contact-form-field-option'; button.title = field.key; button.draggable = !used.includes(field.key); button.disabled = used.includes(field.key); const icon = document.createElement('span'); icon.className = 'component-icon'; icon.textContent = '▤'; icon.setAttribute('aria-hidden', 'true'); const label = document.createElement('span'); label.textContent = field.label || field.key; const description = document.createElement('small'); description.textContent = field.key; button.append(icon, label, description); button.addEventListener('dragstart', event => { event.stopPropagation(); event.dataTransfer.effectAllowed = 'copy'; event.dataTransfer.setData('text/plain', field.key); state.dragging = { kind: 'contact-form-field', formId: block.id, key: field.key, label: field.label || field.key }; }); button.addEventListener('dragend', event => { event.stopPropagation(); clearDragState(); }); toolbar.append(button); });
+              } else if (block.value && !block.loadingFields && !block.fieldLoadError) { const empty = document.createElement('p'); empty.className = 'contact-form-palette-status'; empty.textContent = 'No fields are assigned to this form.'; toolbar.append(empty); }
+              const separator = document.createElement('hr'); separator.className = 'contact-form-toolbar-separator'; toolbar.append(separator); const componentsLabel = document.createElement('p'); componentsLabel.className = 'eyebrow contact-form-toolbar-heading'; componentsLabel.textContent = 'Form components'; toolbar.append(componentsLabel);
+              const componentTitles = { 'contact-form-captcha': 'CAPTCHA', 'contact-form-submit': 'Submit button', 'contact-form-error': 'Error message', 'contact-form-success': 'Success message' }; const componentOrder = ['contact-form-captcha', 'contact-form-submit', 'contact-form-error', 'contact-form-success'];
+              editorExtensions.filter(item => item.isContainerChild && item.type !== 'contact-form-field').sort((left, right) => componentOrder.indexOf(left.type) - componentOrder.indexOf(right.type)).forEach(item => { if (flattenContactFormBlocks(block.children).some(child => child.type === item.type)) return; const titleText = componentTitles[item.type] || item.title; const button = document.createElement('button'); button.type = 'button'; button.className = 'component-button contact-form-marker-option'; button.draggable = true; const icon = document.createElement('span'); icon.className = 'component-icon'; icon.textContent = item.icon; icon.setAttribute('aria-hidden', 'true'); const label = document.createElement('span'); label.textContent = titleText; const description = document.createElement('small'); description.textContent = titleText; button.append(icon, label, description); button.addEventListener('dragstart', event => { event.stopPropagation(); event.dataTransfer.effectAllowed = 'copy'; event.dataTransfer.setData('text/plain', item.type); state.dragging = { kind: 'contact-form-component', formId: block.id, type: item.type }; }); button.addEventListener('dragend', event => { event.stopPropagation(); clearDragState(); }); toolbar.append(button); });
+              panel.append(toolbar);
+              const validation = validateContactFormLayout(block);
+              if (validation.length && !block.fieldLoadError) { const message = document.createElement('p'); message.className = 'contact-form-layout-validation'; message.textContent = validation.join(' '); panel.append(message); }
+              const layout = document.createElement('div'); layout.className = 'contact-form-layout-children'; const previousContactForm = state.activeContactForm; state.activeContactForm = block;
+              block.children.forEach((child, index) => {
+                const card = document.createElement('article'); card.className = 'block contact-form-layout-child'; card.draggable = true;
+                const controls = document.createElement('div'); controls.className = 'drag-controls';
+                const drag = document.createElement('span'); drag.className = 'drag-handle'; drag.textContent = '⠿'; drag.title = 'Drag to reorder';
+                const up = document.createElement('button'); up.type = 'button'; up.textContent = '↑'; up.title = 'Move up'; up.disabled = index === 0; up.addEventListener('click', () => { block.mode = 'custom'; [block.children[index - 1], block.children[index]] = [block.children[index], block.children[index - 1]]; syncRaw(); render(); });
+                const down = document.createElement('button'); down.type = 'button'; down.textContent = '↓'; down.title = 'Move down'; down.disabled = index === block.children.length - 1; down.addEventListener('click', () => { block.mode = 'custom'; [block.children[index + 1], block.children[index]] = [block.children[index], block.children[index + 1]]; syncRaw(); render(); });
+                const remove = document.createElement('button'); remove.type = 'button'; remove.textContent = '×'; remove.title = 'Remove'; remove.addEventListener('click', () => { block.mode = 'custom'; block.children.splice(index, 1); syncRaw(); render(); });
+                up.className = 'move-button'; up.dataset.move = 'up'; up.setAttribute('aria-label', 'Move up');
+                down.className = 'move-button'; down.dataset.move = 'down'; down.setAttribute('aria-label', 'Move down');
+                remove.className = 'remove'; remove.setAttribute('aria-label', 'Remove component');
+                controls.append(drag, up, down); card.append(controls);
+                const childBody = document.createElement('div'); childBody.className = 'contact-form-layout-child-body block-body'; childBody.innerHTML = '<label class="block-label"></label>'; renderBlockContent(childBody, child, (key, value) => { child[key] = value; syncRaw(); setStatus('Updated'); }); if (child.displayTitle && child.type !== 'contact-form-field' && editorExtension(child.type)?.editor !== 'marker') childBody.querySelector('.block-label').textContent = child.displayTitle; card.append(childBody);
+                card.append(remove);
+                card.addEventListener('dragstart', event => { event.stopPropagation(); event.dataTransfer.effectAllowed = 'move'; state.dragging = { kind: 'contact-form-child', formId: block.id, childIndex: index }; card.classList.add('dragging'); });
+                card.addEventListener('dragend', event => { event.stopPropagation(); clearDragState(); });
+                card.addEventListener('dragover', event => { event.preventDefault(); event.stopPropagation(); marker.classList.remove('visible'); marker.dataset.position = ''; card.classList.add('drop-target'); });
+                card.addEventListener('dragleave', () => card.classList.remove('drop-target'));
+                card.addEventListener('drop', event => { event.preventDefault(); event.stopPropagation(); card.classList.remove('drop-target'); const dragState = state.dragging; if (!dragState || dragState.formId && dragState.formId !== block.id || dragState.kind === 'existing' && dragState.id === block.id) return; const after = event.clientY > card.getBoundingClientRect().top + card.offsetHeight / 2; let moved; let source = null; let sourceIndex = -1; if (dragState.kind === 'new') moved = createBlock(dragState.type); else if (dragState.kind === 'contact-form-field') { if (!flattenContactFormBlocks(block.children).some(item => item.type === 'contact-form-field' && item.value === dragState.key)) moved = Object.assign(newBlock('contact-form-field', dragState.key), { displayTitle: dragState.label }); } else if (dragState.kind === 'contact-form-component') moved = createBlock(dragState.type); else if (dragState.kind === 'contact-form-child') { source = block.children; sourceIndex = dragState.childIndex; moved = source.splice(sourceIndex, 1)[0]; } else if (dragState.kind === 'contact-form-grid-child') { source = dragState.grid.columns[dragState.columnIndex].blocks; sourceIndex = dragState.childIndex; moved = source.splice(sourceIndex, 1)[0]; } else if (dragState.kind === 'existing' || dragState.kind === 'grid-child') { const taken = takeDraggedBlock(dragState); if (taken) { moved = taken.block; source = dragState.kind === 'existing' ? state.blocks : null; sourceIndex = taken.index; } } if (!moved) return; let target = index + (after ? 1 : 0); if (source === block.children && sourceIndex < target) target--; block.children.splice(target, 0, moved); block.mode = 'custom'; state.dragging = null; syncRaw(); render(); setStatus('Moved into contact form'); });
+                layout.append(card);
+              });
+              state.activeContactForm = previousContactForm;
+              if (!block.children.length) { const empty = document.createElement('div'); empty.className = 'contact-form-layout-empty'; empty.textContent = 'Drop components here to add them to the form'; layout.append(empty); }
+              layout.addEventListener('dragover', event => { if (state.dragging && (!state.dragging.formId || state.dragging.formId === block.id)) { event.preventDefault(); layout.classList.add('drop-target'); } });
+              layout.addEventListener('dragleave', event => { if (!layout.contains(event.relatedTarget)) layout.classList.remove('drop-target'); });
+              layout.addEventListener('drop', event => { if (!state.dragging || event.target.closest('.contact-form-layout-child') || state.dragging.formId && state.dragging.formId !== block.id) return; event.preventDefault(); event.stopPropagation(); layout.classList.remove('drop-target'); const dragState = state.dragging; let moved; if (dragState.kind === 'new') moved = createBlock(dragState.type); else if (dragState.kind === 'contact-form-field') { if (!flattenContactFormBlocks(block.children).some(item => item.type === 'contact-form-field' && item.value === dragState.key)) moved = Object.assign(newBlock('contact-form-field', dragState.key), { displayTitle: dragState.label }); } else if (dragState.kind === 'contact-form-component') moved = createBlock(dragState.type); else if (dragState.kind === 'contact-form-child') moved = block.children.splice(dragState.childIndex, 1)[0]; else if (dragState.kind === 'contact-form-grid-child') moved = dragState.grid.columns[dragState.columnIndex].blocks.splice(dragState.childIndex, 1)[0]; else if (dragState.kind === 'existing' || dragState.kind === 'grid-child') moved = takeDraggedBlock(dragState)?.block; if (!moved) return; block.children.push(moved); block.mode = 'custom'; state.dragging = null; syncRaw(); render(); setStatus('Moved into contact form'); });
+              panel.append(layout);
+              body.append(panel);
+              if (block.value && !block.availableFields && !block.loadingFields && !block.fieldLoadError) loadContactFormFields(block);
+            }
+            function validateContactFormLayout(block) {
+              if (block.mode !== 'custom') return [];
+              if (!block.value) return ['Choose a contact form.'];
+              if (block.loadingFields) return ['Wait for this form’s fields to load.'];
+              if (block.fieldLoadError) return [block.fieldLoadError];
+              if (!Array.isArray(block.availableFields)) return ['Could not load the selected form’s fields.'];
+              const errors = []; const children = flattenContactFormBlocks(block.children); const fields = children.filter(child => child.type === 'contact-form-field'); const keys = fields.map(field => (field.value || '').trim());
+              const expected = block.availableFields.map(field => field.key); const duplicates = [...new Set(keys.filter((key, index) => key && keys.indexOf(key) !== index))]; const missing = expected.filter(key => !keys.includes(key)); const unknown = keys.filter(key => key && !expected.includes(key));
+              if (missing.length) errors.push(`Add every assigned field (${missing.length} missing).`);
+              if (duplicates.length) errors.push('Each field can appear only once.');
+              if (unknown.length) errors.push('Remove fields not assigned to this form.');
+              if (fields.some(field => !field.value.trim())) errors.push('Choose a key for each field block.');
+              for (const [type, title] of [['contact-form-submit', 'Submit'], ['contact-form-error', 'Error message'], ['contact-form-success', 'Success message']]) { const count = children.filter(child => child.type === type).length; if (count !== 1) errors.push(`Add exactly one ${title} block.`); }
+              if (children.filter(child => child.type === 'contact-form-captcha').length > 1) errors.push('Use at most one CAPTCHA block.');
+              return errors;
+            }
+            function flattenContactFormBlocks(blocks) { return (blocks || []).flatMap(block => [block, ...(block.columns || []).flatMap(column => flattenContactFormBlocks(column.blocks)), ...flattenContactFormBlocks(block.children)]); }
             function formatSelectionForBlock(field, block, update, format) { const start = field.selectionStart; const end = field.selectionEnd; if (start === end) return; const selected = field.value.slice(start, end); const wrappers = { bold: ['**', '**'], italic: ['*', '*'], underline: ['__', '__'], strike: ['~~', '~~'] }; let before; let after; if (format === 'link') { const url = window.prompt('Link URL', 'https://'); if (!url) return; before = '['; after = `](${url})`; } else { [before, after] = wrappers[format]; } const value = field.value.slice(0, start) + before + selected + after + field.value.slice(end); update('value', value); field.value = value; field.focus(); field.setSelectionRange(start + before.length, end + before.length); setStatus('Formatted'); }
             function render() {
               canvas.innerHTML = '';
@@ -254,14 +440,15 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 item.innerHTML = `<div class="drag-controls"><span class="drag-handle" title="Drag to rearrange" aria-label="Drag to rearrange">⠿</span><button class="move-button" data-move="up" title="Move up" aria-label="Move up">↑</button><button class="move-button" data-move="down" title="Move down" aria-label="Move down">↓</button></div><div class="block-body"><label class="block-label">${block.type === 'heading' ? `Heading ${block.level}` : block.type}</label></div><button type="button" class="remove" title="Remove component" aria-label="Remove component">×</button>`;
                 const body = item.querySelector('.block-body');
                 const extension = editorExtension(block.type);
-                if (extension) { renderExtensionControl(body, block, (key, value) => updateBlock(block.id, key, value), extension); body.querySelector('.block-label').textContent = extension.title; }
+                if (extension?.isContainer) { renderContactFormContainer(body, block, extension, (key, value) => updateBlock(block.id, key, value)); body.querySelector('.block-label').textContent = extension.title; }
+                else if (extension) { renderExtensionControl(body, block, (key, value) => updateBlock(block.id, key, value), extension); body.querySelector('.block-label').textContent = extension.title; }
                 else if (block.type === 'separator') { const rule = document.createElement('div'); rule.className = 'preview-content'; rule.innerHTML = '<hr>'; body.querySelector('.block-label').textContent = 'Separator'; body.append(rule); }
                 else if (block.type === 'ul' || block.type === 'ol') { const toolbar = document.createElement('div'); toolbar.className = 'format-toolbar'; toolbar.setAttribute('aria-label', 'Text formatting'); toolbar.innerHTML = '<button type="button" data-format="bold" title="Bold"><strong>B</strong></button><button type="button" data-format="italic" title="Italic"><em>I</em></button><button type="button" data-format="underline" title="Underline"><u>U</u></button><button type="button" data-format="strike" title="Strikethrough"><del>S</del></button><button type="button" data-format="link" title="Add link">↗</button>'; const field = document.createElement('textarea'); field.className = 'list-editor'; field.value = block.value; field.placeholder = 'One list item per line…'; field.setAttribute('aria-label', `${block.type === 'ul' ? 'Unordered' : 'Ordered'} list items`); field.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); body.querySelector('.block-label').textContent = block.type === 'ul' ? 'Unordered list' : 'Ordered list'; body.append(toolbar, field); toolbar.querySelectorAll('[data-format]').forEach(button => button.addEventListener('click', () => formatSelection(field, block.id, button.dataset.format))); }
                 else if (block.type === 'blockquote') { const fields = document.createElement('div'); fields.className = 'quote-fields'; const quote = document.createElement('textarea'); quote.value = block.value; quote.placeholder = 'Quote text…'; quote.setAttribute('aria-label', 'Blockquote text'); quote.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); const cite = document.createElement('input'); cite.value = block.cite || ''; cite.placeholder = 'Citation (optional)'; cite.setAttribute('aria-label', 'Blockquote citation'); cite.addEventListener('input', e => updateBlock(block.id, 'cite', e.target.value)); fields.append(quote, cite); body.querySelector('.block-label').textContent = 'Blockquote'; body.append(fields); }
                 else if (block.type === 'heading') { const toolbar = document.createElement('div'); toolbar.className = 'heading-toolbar'; toolbar.setAttribute('aria-label', 'Heading level'); toolbar.innerHTML = [1,2,3,4,5,6].map(level => `<button type="button" class="${level === block.level ? 'active' : ''}" data-level="${level}" title="Heading ${level}">H${level}</button>`).join(''); toolbar.querySelectorAll('[data-level]').forEach(button => button.addEventListener('click', () => { updateBlock(block.id, 'level', Number(button.dataset.level)); render(); })); const field = document.createElement('input'); field.value = block.value; field.placeholder = 'Heading text…'; field.setAttribute('aria-label', 'Heading text'); field.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); body.querySelector('.block-label').after(toolbar, field); }
                 else if (block.type === 'html') { const field = document.createElement('textarea'); field.className = 'html-editor'; field.value = block.value; field.placeholder = '<div>Raw HTML…</div>'; field.setAttribute('aria-label', 'Raw HTML'); field.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); body.querySelector('.block-label').textContent = 'Raw HTML'; body.append(field); }
                 else if (block.type === 'code') { const language = document.createElement('input'); language.className = 'code-language'; language.value = block.language; language.placeholder = 'Language (e.g. swift)'; language.setAttribute('aria-label', 'Code language'); language.addEventListener('input', e => updateBlock(block.id, 'language', e.target.value)); const field = document.createElement('textarea'); field.className = 'code-editor'; field.value = block.value; field.placeholder = 'Paste or type code…'; field.setAttribute('aria-label', 'Code'); field.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); body.querySelector('.block-label').textContent = 'Code block'; body.append(language, field); }
-                else if (block.type === 'grid') { const settings = block.settings || { desktop: 3, tablet: 2, mobile: 1 }; block.settings = settings; block.columns = block.columns || []; ensureGridColumns(block); const controls = document.createElement('div'); controls.className = 'grid-settings'; const responsive = document.createElement('div'); responsive.className = 'grid-responsive'; [['desktop', settings.desktop], ['tablet', settings.tablet], ['mobile', settings.mobile], ['cells', block.columnCount]].forEach(([size, value]) => { const label = document.createElement('label'); if (size === 'cells') label.className = 'cells-stepper'; label.textContent = size; const field = document.createElement('input'); field.type = 'number'; field.min = 1; field.max = 12; field.value = value; field.addEventListener('change', e => { const nextValue = Math.max(1, Math.min(12, Number(e.target.value) || 1)); if (size === 'cells') block.columnCount = nextValue; else block.settings[size] = nextValue; ensureGridColumns(block); syncRaw(); render(); }); label.append(field); responsive.append(label); }); const columns = document.createElement('div'); columns.className = 'grid-columns'; columns.style.setProperty('--grid-desktop', settings.desktop); columns.style.setProperty('--grid-tablet', settings.tablet); columns.style.setProperty('--grid-mobile', settings.mobile); for (let columnIndex = 0; columnIndex < block.columnCount; columnIndex++) { const column = document.createElement('div'); column.className = 'grid-column'; const label = document.createElement('label'); label.textContent = `Cell ${columnIndex + 1}`; column.append(label); (block.columns[columnIndex].blocks || []).forEach((child, childIndex) => { const childCard = document.createElement('article'); childCard.className = 'grid-child block'; childCard.draggable = true; childCard.innerHTML = '<div class="drag-controls"><span class="drag-handle" title="Drag to rearrange" aria-label="Drag to rearrange">⠿</span><button class="move-button" data-move="up" title="Move up" aria-label="Move up">↑</button><button class="move-button" data-move="down" title="Move down" aria-label="Move down">↓</button></div><div class="block-body"><label class="block-label">' + (child.type === 'heading' ? `Heading ${child.level}` : child.type) + '</label></div><button class="remove" title="Remove component" aria-label="Remove component">×</button>'; const childBody = childCard.querySelector('.block-body'); renderBlockContent(childBody, child, (key, value) => { child[key] = value; syncRaw(); setStatus('Updated'); }); childCard.querySelector('.remove').addEventListener('click', () => { block.columns[columnIndex].blocks.splice(childIndex, 1); syncRaw(); render(); setStatus('Removed'); }); childCard.querySelectorAll('[data-move]').forEach(button => button.addEventListener('click', () => { const target = button.dataset.move === 'up' ? childIndex - 1 : childIndex + 1; if (target < 0 || target >= block.columns[columnIndex].blocks.length) return; [block.columns[columnIndex].blocks[childIndex], block.columns[columnIndex].blocks[target]] = [block.columns[columnIndex].blocks[target], block.columns[columnIndex].blocks[childIndex]]; syncRaw(); render(); setStatus('Rearranged'); })); childCard.addEventListener('dragstart', e => { e.stopPropagation(); e.dataTransfer.effectAllowed = 'move'; state.dragging = { kind: 'grid-child', gridId: block.id, columnIndex, childIndex }; childCard.classList.add('dragging'); }); childCard.addEventListener('dragend', e => { e.stopPropagation(); clearDragState(); }); childCard.addEventListener('dragover', e => { e.preventDefault(); e.stopPropagation(); marker.classList.remove('visible'); marker.dataset.position = ''; canvas.classList.remove('drag-over'); if (state.dragging && ['existing', 'grid-child'].includes(state.dragging.kind)) childCard.classList.add('drop-target'); }); childCard.addEventListener('drop', e => { e.preventDefault(); e.stopPropagation(); if (!state.dragging || !['existing', 'grid-child'].includes(state.dragging.kind)) return; const drag = state.dragging; const sameColumn = drag.kind === 'grid-child' && drag.gridId === block.id && drag.columnIndex === columnIndex; const from = sameColumn ? drag.childIndex : -1; const moved = takeDraggedBlock(drag); if (!moved) return; const to = Math.min(Math.max(0, childIndex - (sameColumn && from < childIndex ? 1 : 0)), block.columns[columnIndex].blocks.length); block.columns[columnIndex].blocks.splice(to, 0, moved.block); clearDragState(); syncRaw(); render(); setStatus('Moved into grid'); }); column.append(childCard); }); if (!block.columns[columnIndex].blocks.length) { const empty = document.createElement('div'); empty.className = 'grid-column-empty'; empty.textContent = 'Drag a component here'; column.append(empty); } column.addEventListener('dragover', e => { e.preventDefault(); e.stopPropagation(); marker.classList.remove('visible'); marker.dataset.position = ''; canvas.classList.remove('drag-over'); if (state.dragging && ['new', 'existing', 'grid-child'].includes(state.dragging.kind)) column.classList.add('drop-target'); }); column.addEventListener('dragleave', () => column.classList.remove('drop-target')); column.addEventListener('drop', e => { e.preventDefault(); e.stopPropagation(); if (!state.dragging || !['new', 'existing', 'grid-child'].includes(state.dragging.kind)) return; const drag = state.dragging; const moved = drag.kind === 'new' ? { block: createBlock(drag.type) } : takeDraggedBlock(drag); if (!moved) return; block.columns[columnIndex].blocks.push(moved.block); clearDragState(); syncRaw(); render(); setStatus(drag.kind === 'new' ? 'Added to grid' : 'Moved into grid'); }); columns.append(column); } controls.append(responsive, columns); body.querySelector('.block-label').textContent = 'Grid'; body.append(controls); }
+                else if (block.type === 'grid') { const settings = block.settings || { desktop: 3, tablet: 2, mobile: 1 }; block.settings = settings; block.columns = block.columns || []; ensureGridColumns(block); const controls = document.createElement('div'); controls.className = 'grid-settings'; const responsive = document.createElement('div'); responsive.className = 'grid-responsive'; [['desktop', settings.desktop], ['tablet', settings.tablet], ['mobile', settings.mobile], ['cells', block.columnCount]].forEach(([size, value]) => { const label = document.createElement('label'); label.className = 'grid-setting'; label.textContent = size === 'cells' ? 'Cells' : size.charAt(0).toUpperCase() + size.slice(1); const field = document.createElement('input'); field.className = 'grid-setting-input'; field.type = 'number'; field.min = 1; field.max = 12; field.value = value; field.setAttribute('aria-label', label.textContent); field.addEventListener('change', e => { const nextValue = Math.max(1, Math.min(12, Number(e.target.value) || 1)); if (size === 'cells') block.columnCount = nextValue; else block.settings[size] = nextValue; ensureGridColumns(block); syncRaw(); render(); }); label.append(field); responsive.append(label); }); const columns = document.createElement('div'); columns.className = 'grid-columns'; columns.style.setProperty('--grid-desktop', settings.desktop); columns.style.setProperty('--grid-tablet', settings.tablet); columns.style.setProperty('--grid-mobile', settings.mobile); for (let columnIndex = 0; columnIndex < block.columnCount; columnIndex++) { const column = document.createElement('div'); column.className = 'grid-column'; const label = document.createElement('label'); label.textContent = `Cell ${columnIndex + 1}`; column.append(label); (block.columns[columnIndex].blocks || []).forEach((child, childIndex) => { const childCard = document.createElement('article'); childCard.className = 'grid-child block'; childCard.draggable = true; childCard.innerHTML = '<div class="drag-controls"><span class="drag-handle" title="Drag to rearrange" aria-label="Drag to rearrange">⠿</span><button class="move-button" data-move="up" title="Move up" aria-label="Move up">↑</button><button class="move-button" data-move="down" title="Move down" aria-label="Move down">↓</button></div><div class="block-body"><label class="block-label">' + (child.type === 'heading' ? `Heading ${child.level}` : child.type) + '</label></div><button class="remove" title="Remove component" aria-label="Remove component">×</button>'; const childBody = childCard.querySelector('.block-body'); renderBlockContent(childBody, child, (key, value) => { child[key] = value; syncRaw(); setStatus('Updated'); }); childCard.querySelector('.remove').addEventListener('click', () => { block.columns[columnIndex].blocks.splice(childIndex, 1); syncRaw(); render(); setStatus('Removed'); }); childCard.querySelectorAll('[data-move]').forEach(button => button.addEventListener('click', () => { const target = button.dataset.move === 'up' ? childIndex - 1 : childIndex + 1; if (target < 0 || target >= block.columns[columnIndex].blocks.length) return; [block.columns[columnIndex].blocks[childIndex], block.columns[columnIndex].blocks[target]] = [block.columns[columnIndex].blocks[target], block.columns[columnIndex].blocks[childIndex]]; syncRaw(); render(); setStatus('Rearranged'); })); childCard.addEventListener('dragstart', e => { e.stopPropagation(); e.dataTransfer.effectAllowed = 'move'; state.dragging = { kind: 'grid-child', gridId: block.id, columnIndex, childIndex }; childCard.classList.add('dragging'); }); childCard.addEventListener('dragend', e => { e.stopPropagation(); clearDragState(); }); childCard.addEventListener('dragover', e => { e.preventDefault(); e.stopPropagation(); marker.classList.remove('visible'); marker.dataset.position = ''; canvas.classList.remove('drag-over'); if (state.dragging && ['existing', 'grid-child'].includes(state.dragging.kind)) childCard.classList.add('drop-target'); }); childCard.addEventListener('drop', e => { e.preventDefault(); e.stopPropagation(); if (!state.dragging || !['existing', 'grid-child'].includes(state.dragging.kind)) return; const drag = state.dragging; const sameColumn = drag.kind === 'grid-child' && drag.gridId === block.id && drag.columnIndex === columnIndex; const from = sameColumn ? drag.childIndex : -1; const moved = takeDraggedBlock(drag); if (!moved) return; const to = Math.min(Math.max(0, childIndex - (sameColumn && from < childIndex ? 1 : 0)), block.columns[columnIndex].blocks.length); block.columns[columnIndex].blocks.splice(to, 0, moved.block); clearDragState(); syncRaw(); render(); setStatus('Moved into grid'); }); column.append(childCard); }); if (!block.columns[columnIndex].blocks.length) { const empty = document.createElement('div'); empty.className = 'grid-column-empty'; empty.textContent = 'Drag a component here'; column.append(empty); } column.addEventListener('dragover', e => { e.preventDefault(); e.stopPropagation(); marker.classList.remove('visible'); marker.dataset.position = ''; canvas.classList.remove('drag-over'); if (state.dragging && ['new', 'existing', 'grid-child'].includes(state.dragging.kind)) column.classList.add('drop-target'); }); column.addEventListener('dragleave', () => column.classList.remove('drop-target')); column.addEventListener('drop', e => { e.preventDefault(); e.stopPropagation(); if (!state.dragging || !['new', 'existing', 'grid-child'].includes(state.dragging.kind)) return; const drag = state.dragging; const moved = drag.kind === 'new' ? { block: createBlock(drag.type) } : takeDraggedBlock(drag); if (!moved) return; block.columns[columnIndex].blocks.push(moved.block); clearDragState(); syncRaw(); render(); setStatus(drag.kind === 'new' ? 'Added to grid' : 'Moved into grid'); }); columns.append(column); } controls.append(responsive, columns); body.querySelector('.block-label').textContent = 'Grid'; body.append(controls); }
                 else if (block.type === 'image') { const fields = document.createElement('div'); fields.className = 'media-fields'; const url = document.createElement('input'); url.value = block.value; url.placeholder = 'Image URL'; url.setAttribute('aria-label', 'Image URL'); url.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); const picker = document.createElement('button'); picker.type = 'button'; picker.className = 'media-picker-button'; picker.textContent = 'Choose from gallery'; picker.addEventListener('click', () => openMediaPicker('image', value => updateBlock(block.id, 'value', value))); fields.append(url, picker); const alt = document.createElement('input'); alt.value = block.alt || ''; alt.placeholder = 'Alt text'; alt.setAttribute('aria-label', 'Image alt text'); alt.addEventListener('input', e => updateBlock(block.id, 'alt', e.target.value)); fields.append(alt); body.querySelector('.block-label').textContent = 'Image'; body.append(fields); }
                 else if (block.type === 'video') { renderVideoControl(body, block, (key, value) => updateBlock(block.id, key, value)); body.querySelector('.block-label').textContent = 'Video'; }
                 else if (block.type === 'custom') { const fields = document.createElement('div'); fields.className = 'custom-fields'; const name = document.createElement('input'); name.value = block.name || 'CustomBlock'; name.placeholder = 'Component name'; name.setAttribute('aria-label', 'Custom component name'); name.addEventListener('input', e => updateBlock(block.id, 'name', e.target.value)); const args = document.createElement('input'); args.value = block.value; args.placeholder = 'Arguments, e.g. id: 123'; args.setAttribute('aria-label', 'Custom component arguments'); args.addEventListener('input', e => updateBlock(block.id, 'value', e.target.value)); fields.append(name, args); body.querySelector('.block-label').textContent = 'Custom block'; body.append(fields); }
@@ -293,23 +480,24 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                   clearTimeout(setStatus.timer);
                 });
                 item.querySelector('.drag-controls').querySelectorAll('[data-move]').forEach(button => button.addEventListener('click', e => { e.stopPropagation(); const target = button.dataset.move === 'up' ? index - 1 : index + 1; if (target < 0 || target >= state.blocks.length) return; [state.blocks[index], state.blocks[target]] = [state.blocks[target], state.blocks[index]]; syncRaw(); render(); setStatus('Rearranged'); }));
-                item.addEventListener('dragstart', () => { state.dragging = { kind: 'existing', id: block.id }; item.classList.add('dragging'); }); item.addEventListener('dragend', clearDragState);
-                item.addEventListener('dragover', e => { e.preventDefault(); if (!state.dragging || (state.dragging.kind === 'existing' && state.dragging.id === block.id)) return; const after = e.clientY > item.getBoundingClientRect().top + item.offsetHeight / 2; placeMarker(item, after); canvas.classList.add('drag-over'); });
-                item.addEventListener('drop', e => { e.preventDefault(); if (!state.dragging) return; const drag = state.dragging; const after = e.clientY > item.getBoundingClientRect().top + item.offsetHeight / 2; let to = state.blocks.findIndex(b => b.id === block.id) + (after ? 1 : 0); if (drag.kind === 'new') { state.blocks.splice(to, 0, createBlock(drag.type)); setStatus('Added'); } else if (drag.kind === 'existing' || drag.kind === 'grid-child') { const moved = takeDraggedBlock(drag); if (!moved) return; if (drag.kind === 'existing' && moved.index < to) to--; state.blocks.splice(to, 0, moved.block); setStatus(drag.kind === 'grid-child' ? 'Moved out of grid' : 'Rearranged'); } syncRaw(); clearDragState(); render(); });
+                item.addEventListener('dragstart', event => { if (event.target.closest('.contact-form-component-toolbar')) { event.stopPropagation(); return; } state.dragging = { kind: 'existing', id: block.id }; item.classList.add('dragging'); }); item.addEventListener('dragend', clearDragState);
+                item.addEventListener('dragover', e => { if (!state.dragging || !['new', 'existing', 'grid-child'].includes(state.dragging.kind) || (state.dragging.kind === 'existing' && state.dragging.id === block.id)) return; e.preventDefault(); const after = e.clientY > item.getBoundingClientRect().top + item.offsetHeight / 2; placeMarker(item, after); canvas.classList.add('drag-over'); });
+                item.addEventListener('drop', e => { if (!state.dragging || !['new', 'existing', 'grid-child'].includes(state.dragging.kind)) return; e.preventDefault(); const drag = state.dragging; const after = e.clientY > item.getBoundingClientRect().top + item.offsetHeight / 2; let to = state.blocks.findIndex(b => b.id === block.id) + (after ? 1 : 0); if (drag.kind === 'new') { state.blocks.splice(to, 0, createBlock(drag.type)); setStatus('Added'); } else if (drag.kind === 'existing' || drag.kind === 'grid-child') { const moved = takeDraggedBlock(drag); if (!moved) return; if (drag.kind === 'existing' && moved.index < to) to--; state.blocks.splice(to, 0, moved.block); setStatus(drag.kind === 'grid-child' ? 'Moved out of grid' : 'Rearranged'); } syncRaw(); clearDragState(); render(); });
                 canvas.append(item);
               });
             }
-            function createBlock(type) { if (type === 'grid') return makeGridBlock(); const block = newBlock(type, ''); if (type === 'code') block.language = ''; if (type === 'image') block.alt = ''; if (type === 'video') block.kind = 'file'; if (type === 'blockquote') block.cite = ''; if (type === 'custom') block.name = ''; return block; }
+            function createBlock(type) { if (type === 'grid') return makeGridBlock(); const definition = editorExtension(type); const block = newBlock(type); if (definition?.isContainer) { block.mode = 'automatic'; block.children = []; } if (type === 'code') block.language = ''; if (type === 'image') block.alt = ''; if (type === 'video') block.kind = 'file'; if (type === 'blockquote') block.cite = ''; if (type === 'custom') block.name = ''; return block; }
             function takeDraggedBlock(drag) { if (drag.kind === 'existing') { const index = state.blocks.findIndex(block => block.id === drag.id); return index < 0 ? null : { block: state.blocks.splice(index, 1)[0], index }; } if (drag.kind === 'grid-child') { const grid = state.blocks.find(block => block.id === drag.gridId); if (!grid || !grid.columns[drag.columnIndex]) return null; const column = grid.columns[drag.columnIndex].blocks; return drag.childIndex < 0 ? null : { block: column.splice(drag.childIndex, 1)[0], index: -1 }; } return null; }
             function placeMarker(item, after) { const position = `${item.dataset.id}:${after ? 'after' : 'before'}`; if (marker.dataset.position !== position) { if (after) item.after(marker); else item.before(marker); marker.dataset.position = position; } marker.classList.add('visible'); }
             function clearDragState() { state.dragging = null; marker.classList.remove('visible'); marker.dataset.position = ''; canvas.classList.remove('drag-over'); document.querySelectorAll('.component-button').forEach(button => button.classList.remove('dragging')); document.querySelectorAll('.grid-column, .grid-child').forEach(element => element.classList.remove('drop-target', 'dragging')); }
-            canvas.addEventListener('dragover', e => { e.preventDefault(); if (!state.dragging || e.target.closest('.block') || marker.classList.contains('visible')) return; canvas.append(marker); marker.dataset.position = 'canvas-end'; marker.classList.add('visible'); canvas.classList.add('drag-over'); });
-            canvas.addEventListener('drop', e => { e.preventDefault(); if (!state.dragging || e.target.closest('.block')) return; const drag = state.dragging; let to = state.blocks.length; const position = marker.dataset.position; const targetMatch = position && position.match(/^([^:]+):(before|after)$/); if (targetMatch) { to = state.blocks.findIndex(block => block.id === targetMatch[1]) + (targetMatch[2] === 'after' ? 1 : 0); } if (drag.kind === 'existing') { const from = state.blocks.findIndex(b => b.id === drag.id); if (from >= 0) { const [moved] = state.blocks.splice(from, 1); if (from < to) to--; state.blocks.splice(to, 0, moved); } } else if (drag.kind === 'new') state.blocks.splice(to, 0, createBlock(drag.type)); syncRaw(); clearDragState(); render(); setStatus(drag.kind === 'new' ? 'Added' : 'Rearranged'); });
+            canvas.addEventListener('dragover', e => { if (!state.dragging || !['new', 'existing', 'grid-child'].includes(state.dragging.kind) || e.target.closest('.block') || marker.classList.contains('visible')) return; e.preventDefault(); canvas.append(marker); marker.dataset.position = 'canvas-end'; marker.classList.add('visible'); canvas.classList.add('drag-over'); });
+            canvas.addEventListener('drop', e => { if (!state.dragging || !['new', 'existing', 'grid-child'].includes(state.dragging.kind) || e.target.closest('.block')) return; e.preventDefault(); const drag = state.dragging; let to = state.blocks.length; const position = marker.dataset.position; const targetMatch = position && position.match(/^([^:]+):(before|after)$/); if (targetMatch) { to = state.blocks.findIndex(block => block.id === targetMatch[1]) + (targetMatch[2] === 'after' ? 1 : 0); } if (drag.kind === 'existing') { const from = state.blocks.findIndex(b => b.id === drag.id); if (from >= 0) { const [moved] = state.blocks.splice(from, 1); if (from < to) to--; state.blocks.splice(to, 0, moved); } } else if (drag.kind === 'new') state.blocks.splice(to, 0, createBlock(drag.type)); syncRaw(); clearDragState(); render(); setStatus(drag.kind === 'new' ? 'Added' : 'Rearranged'); });
             function showMode(mode) { state.mode = mode; document.querySelector('#visualView').hidden = mode !== 'visual'; document.querySelector('#previewView').hidden = mode !== 'preview'; document.querySelector('#rawView').hidden = mode !== 'raw'; document.querySelectorAll('[data-mode]').forEach(button => button.classList.toggle('active', button.dataset.mode === mode)); if (mode === 'raw') { syncRaw(); requestAnimationFrame(resizeMarkdownInput); } if (mode === 'preview') renderPreview(); }
             document.querySelectorAll('[data-mode]').forEach(button => button.addEventListener('click', () => { if (state.mode === 'raw' && button.dataset.mode !== 'raw') { state.blocks = parseMarkdown(input.value); render(); } showMode(button.dataset.mode); }));
             function formatSelection(field, id, format) { const start = field.selectionStart; const end = field.selectionEnd; if (start === end) return; const selected = field.value.slice(start, end); const wrappers = { bold: ['**', '**'], italic: ['*', '*'], underline: ['__', '__'], strike: ['~~', '~~'] }; let before; let after; if (format === 'link') { const url = window.prompt('Link URL', 'https://'); if (!url) return; before = '['; after = `](${url})`; } else { [before, after] = wrappers[format]; } const value = field.value.slice(0, start) + before + selected + after + field.value.slice(end); updateBlock(id, 'value', value); field.value = value; field.focus(); field.setSelectionRange(start + before.length, end + before.length); setStatus('Formatted'); }
             const componentList = document.querySelector('.component-list');
             editorExtensions.forEach(definition => {
+              if (definition.isContainerChild) return;
               if (!componentList || componentList.querySelector(`[data-add="${definition.type}"]`)) return;
               const button = document.createElement('button'); button.type = 'button'; button.className = 'component-button'; button.dataset.add = definition.type;
               const icon = document.createElement('span'); icon.className = 'component-icon'; icon.textContent = definition.icon; icon.setAttribute('aria-hidden', 'true');
@@ -320,6 +508,7 @@ public struct NewAdminFormFieldRichContentEditor: Component {
             document.querySelectorAll('.component-button').forEach(button => { const description = button.querySelector('small'); if (description) button.title = description.textContent; });
             document.querySelectorAll('[data-insert]').forEach(button => button.addEventListener('click', () => { state.insertPosition = button.dataset.insert; document.querySelectorAll('[data-insert]').forEach(option => option.classList.toggle('active', option === button)); }));
             document.querySelectorAll('[data-add]').forEach(button => { button.draggable = true; button.addEventListener('click', () => { const block = createBlock(button.dataset.add); if (state.insertPosition === 'top') state.blocks.unshift(block); else state.blocks.push(block); syncRaw(); render(); setStatus('Added'); }); button.addEventListener('dragstart', e => { e.dataTransfer.effectAllowed = 'copy'; e.dataTransfer.setData('text/plain', button.dataset.add); state.dragging = { kind: 'new', type: button.dataset.add }; button.classList.add('dragging'); canvas.classList.add('drag-over'); }); button.addEventListener('dragend', clearDragState); });
+            input.closest('form')?.addEventListener('submit', event => { if (state.mode === 'raw') state.blocks = parseMarkdown(input.value); const invalid = state.blocks.find(block => editorExtension(block.type)?.isContainer && block.mode === 'custom' && validateContactFormLayout(block).length); if (!invalid) return; event.preventDefault(); render(); const message = validateContactFormLayout(invalid)[0]; setStatus(message); canvas.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
             input.value = initialMarkdown; state.blocks = parseMarkdown(initialMarkdown); render();
 
         }
@@ -784,6 +973,27 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 Display(.grid)
                 Gap(8.px)
             },
+            Custom("\(root) .grid-responsive") {
+                Display(.flex)
+                FlexWrap(.wrap)
+                AlignItems(.center)
+                Gap(12.px)
+            },
+            Custom("\(root) .grid-setting") {
+                Display(.flex)
+                AlignItems(.center)
+                Gap(6.px)
+                WhiteSpace(.nowrap)
+                FontSize(0.8.rem)
+                FontWeight(.number(600))
+                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+            },
+            Custom("\(root) .grid-responsive .grid-setting-input") {
+                Width(3.25.rem)
+                MinWidth(3.25.rem)
+                Padding(vertical: 6.px, horizontal: 5.px)
+                TextAlign(.center)
+            },
             Custom("\(root) .embed-fields") {
                 Margin(bottom: 8.px)
             },
@@ -792,19 +1002,118 @@ public struct NewAdminFormFieldRichContentEditor: Component {
                 GridTemplateColumns(.repeat(3, .fraction(1.fr)))
                 Gap(8.px)
             },
-            Custom("\(root) .grid-column, \(root) .grid-child") {
+            Custom("\(root) .grid-child") {
                 MinWidth(0.px)
+            },
+            Custom("\(root) .grid-column") {
+                Padding(8.px)
+            },
+            Custom("\(root) .grid-column, \(root) .contact-form-layout-children") {
+                Border(
+                    1.px,
+                    .dashed,
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
+                BorderRadius(8.px)
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
+            },
+            Custom("\(root) .contact-form-layout-editor") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(12.px)
+                MarginTop(12.px)
+                Padding(12.px)
                 Border(
                     1.px,
                     .solid,
                     .variable(TokenKey.Colors.Materials.Tertiary.border)
                 )
                 BorderRadius(8.px)
-                Padding(8.px)
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
+            },
+            Custom("\(root) .contact-form-mode-switch") {
+                Margin(top: 8.px, bottom: 12.px)
+            },
+            Custom("\(root) .contact-form-toolbar-heading, \(root) .contact-form-toolbar-separator") {
+                GridColumn(.span(6))
+            },
+            Custom("\(root) .contact-form-toolbar-heading") {
+                Margin(vertical: 4.px, horizontal: 0.px)
+            },
+            Custom("\(root) .contact-form-toolbar-separator") {
+                Border(0)
+                BorderTop(
+                    1.px,
+                    .solid,
+                    .variable(TokenKey.Colors.Materials.Tertiary.border)
+                )
+                Margin(vertical: 4.px, horizontal: 0.px)
+            },
+            Custom("\(root) .contact-form-field-preview, \(root) .contact-form-marker-preview") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(5.px)
+            },
+            Custom("\(root) .contact-form-field-preview code") {
+                Color(.variable(TokenKey.Colors.Materials.Secondary.text))
+            },
+            Custom("\(root) .contact-form-field-option") {
+                Cursor(.grab)
+            },
+            Custom("\(root) .contact-form-field-option:disabled") {
+                Opacity(0.45)
+                Cursor(.default)
+            },
+            Custom("\(root) .contact-form-layout-children") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(8.px)
+                MinHeight(360.px)
+                Padding(12.px)
+            },
+            Custom("\(root) .contact-form-layout-empty") {
+                MinHeight(70.px)
+                Display(.grid)
+                AlignItems(.center)
+                JustifyContent(.center)
+                Padding(10.px)
+                Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+                TextAlign(.center)
+            },
+            Custom("\(root) .contact-form-layout-children.drop-target .contact-form-layout-empty") {
+                BorderColor(.variable(TokenKey.Colors.Link.default))
+                Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
+            },
+            Custom("\(root) .contact-form-palette-status") {
+                GridColumn(.span(6))
+                Margin(0.px)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+            },
+            Custom("\(root) .contact-form-layout-validation, \(root) .contact-form-layout-note") {
+                Margin(0.px)
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+            },
+            Custom("\(root) .contact-form-layout-validation") {
+                Color(.variable(TokenKey.Colors.Materials.Tertiary.text))
+            },
+            Custom("\(root) .contact-form-grid-source") {
+                MinHeight(130.px)
+                Width(100.percent)
+            },
+            Custom("\(root) .contact-form-grid-editor") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(8.px)
+            },
+            Custom("\(root) .contact-form-grid-column") {
+                Display(.flex)
+                FlexDirection(.column)
+                Gap(6.px)
                 Background(.variable(TokenKey.Colors.Materials.Secondary.tint))
             },
             Custom(
-                "\(root) .grid-column.drop-target, \(root) .grid-child.drop-target"
+                "\(root) .grid-column.drop-target, \(root) .contact-form-grid-column.drop-target, \(root) .contact-form-layout-children.drop-target, \(root) .grid-child.drop-target, \(root) .contact-form-layout-child.drop-target"
             ) {
                 BorderColor(.variable(TokenKey.Colors.Link.default))
                 Background(.variable(TokenKey.Colors.Materials.Tertiary.tint))
