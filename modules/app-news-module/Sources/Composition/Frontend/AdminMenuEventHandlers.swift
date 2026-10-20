@@ -1,13 +1,13 @@
 import FeatherAdmin
 public import FeatherModuleKit
 import SystemModule
-import SystemModuleWebAdmin
+import SystemWebAdmin
 
 public enum NewsAdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {
         events.register(
-            event: SystemModuleWebAdmin.Admin.Menu.Item.Provider.self,
-            context: SystemModuleWebAdmin.Admin.Menu.Context.self
+            event: SystemWebAdmin.Admin.Menu.Item.Provider.self,
+            context: SystemWebAdmin.Admin.Menu.Context.self
         ) { event, _ in
             guard event.menuKey == "news" else { return [] }
             return [

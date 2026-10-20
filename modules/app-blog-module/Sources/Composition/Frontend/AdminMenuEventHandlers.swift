@@ -1,13 +1,13 @@
 import FeatherAdmin
 public import FeatherModuleKit
 import SystemModule
-import SystemModuleWebAdmin
+import SystemWebAdmin
 
 public enum BlogAdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {
         events.register(
-            event: SystemModuleWebAdmin.Admin.Menu.Group.Provider.self,
-            context: SystemModuleWebAdmin.Admin.Menu.Context.self
+            event: SystemWebAdmin.Admin.Menu.Group.Provider.self,
+            context: SystemWebAdmin.Admin.Menu.Context.self
         ) { _, _ in
             [
                 .init(
@@ -20,8 +20,8 @@ public enum BlogAdminMenuEventHandlers {
             ]
         }
         events.register(
-            event: SystemModuleWebAdmin.Admin.Menu.Item.Provider.self,
-            context: SystemModuleWebAdmin.Admin.Menu.Context.self
+            event: SystemWebAdmin.Admin.Menu.Item.Provider.self,
+            context: SystemWebAdmin.Admin.Menu.Context.self
         ) { event, _ in
             guard event.menuKey == "blog" else { return [] }
             return [

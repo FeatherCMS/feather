@@ -10,7 +10,7 @@ import AnalyticsFrontend
 import RedirectFrontend
 import UserFrontend
 import AccountFrontend
-import SystemModuleWebAdmin
+import SystemWebAdmin
 import AuthFrontend
 import FeatherAdmin
 import FeatherApplication
@@ -21,7 +21,7 @@ func buildAdminRoutes(
     renderingEngine: any RenderingEngine,
     adminEvents: any EventPublisher,
     apiBuilder: APIBuilder,
-    systemRoutes: SystemModuleWebAdmin.Router.Routes
+    systemRoutes: SystemWebAdmin.Router.Routes
 ) {
     AuthFrontend.AdminAuth(
         apiBuilder: apiBuilder.auth,
@@ -35,7 +35,7 @@ func buildAdminRoutes(
     .route(on: router)
     AdminUser(apiBuilder: apiBuilder.user, renderingEngine: renderingEngine)
         .route(on: router)
-    SystemModuleWebAdmin.WebAdmin
+    SystemWebAdmin.WebAdmin
         .Router(
             apiBuilder: apiBuilder.system,
             renderingEngine: renderingEngine,

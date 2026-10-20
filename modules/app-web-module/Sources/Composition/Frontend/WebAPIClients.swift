@@ -5,7 +5,7 @@ public import MediaFrontend
 import NIOCore
 import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
-public import SystemModuleWebAdmin
+public import SystemWebAdmin
 public import SystemModule
 public import WebAdminAPI
 public import WebAppAPI
@@ -174,7 +174,7 @@ public struct WebAppAPIClient: Sendable {
 public struct WebAPIBuilder: Sendable {
     private let apiBaseURL: URL
     public let media: MediaAPIBuilder
-    public let system: SystemModuleWebAdmin.API.Builder
+    public let system: SystemWebAdmin.API.Builder
 
     public init(apiBaseURL: URL) {
         self.apiBaseURL = apiBaseURL
@@ -204,7 +204,7 @@ public struct WebAPIBuilder: Sendable {
 
     public func makeSystemAdmin(
         _ context: AuthenticatedRequestContext
-    ) -> SystemModuleWebAdmin.API.Client {
+    ) -> SystemWebAdmin.API.Client {
         system.makeSystemAdmin(context)
     }
 }

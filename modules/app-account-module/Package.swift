@@ -230,7 +230,7 @@ let package = Package(
                 .product(name: "MediaFrontend", package: "app-media-module"),
                 .product(name: "SystemAdminAPI", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
-                .product(name: "SystemModuleWebAdmin", package: "app-system-module"),
+                .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .product(name: "UserAdminAPI", package: "app-user-module"),
                 .product(name: "UserContracts", package: "app-user-module"),
                 .product(name: "UserAppAPI", package: "app-user-module"),

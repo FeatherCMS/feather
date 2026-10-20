@@ -235,7 +235,7 @@ let package = Package(
                 .target(name: "WebAdminAPI"),
                 .target(name: "WebAppAPI"),
                 .product(name: "SystemAdminAPI", package: "app-system-module"),
-                .product(name: "SystemModuleWebAdmin", package: "app-system-module"),
+                .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .product(name: "MediaFrontend", package: "app-media-module")
             ],
             path: "Sources/Composition/Frontend",

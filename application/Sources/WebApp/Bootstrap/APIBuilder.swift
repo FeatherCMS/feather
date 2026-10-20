@@ -9,7 +9,7 @@ import Foundation
 import MediaFrontend
 import NewsletterFrontend
 import RedirectFrontend
-import SystemModuleWebAdmin
+import SystemWebAdmin
 import UserFrontend
 import WebFrontend
 
@@ -22,7 +22,7 @@ struct APIBuilder: Sendable {
     let media: MediaAPIBuilder
     let newsletter: NewsletterAPIBuilder
     let redirect: RedirectAPIBuilder
-    let system: SystemModuleWebAdmin.API.Builder
+    let system: SystemWebAdmin.API.Builder
     let user: UserAPIBuilder
     let web: WebAPIBuilder
 

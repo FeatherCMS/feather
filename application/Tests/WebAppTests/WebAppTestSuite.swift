@@ -6,7 +6,7 @@ import FeatherAdmin
 import FeatherModuleKit
 import HTML
 import SGML
-import SystemModuleWebAdmin
+import SystemWebAdmin
 import Testing
 import UserFrontend
 import AccountFrontend
@@ -24,10 +24,10 @@ struct WebAppTestSuite {
         AuthAdminMenuEventHandlers.register(in: &events)
 
         let items = try await events.trigger(
-            event: SystemModuleWebAdmin.Admin.Menu.Item.Provider(
+            event: SystemWebAdmin.Admin.Menu.Item.Provider(
                 menuKey: "auth"
             ),
-            using: SystemModuleWebAdmin.Admin.Menu.Context(
+            using: SystemWebAdmin.Admin.Menu.Context(
                 path: "/admin/auth/",
                 permissions: []
             )

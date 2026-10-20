@@ -11,7 +11,7 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import SystemAdminAPI
-import SystemModuleWebAdmin
+import SystemWebAdmin
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend

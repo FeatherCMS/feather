@@ -2,13 +2,13 @@ import FeatherAdmin
 import Foundation
 import OpenAPIRuntime
 import SystemAdminAPI
-import SystemModuleWebAdmin
+import SystemWebAdmin
 import SystemModule
 
 struct AdminSystemPermissionOpenAPIRepository:
     AdminSystemPermissionRepository
 {
-    let api: SystemModuleWebAdmin.API.Client
+    let api: SystemWebAdmin.API.Client
 
     func listNames(  // empty
         ) async throws -> [String]

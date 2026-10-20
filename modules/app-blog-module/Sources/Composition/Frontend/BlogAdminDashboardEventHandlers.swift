@@ -2,14 +2,14 @@ import BlogAdminAPI
 import FeatherAdmin
 public import FeatherModuleKit
 import OpenAPIRuntime
-import SystemModuleWebAdmin
+import SystemWebAdmin
 import SystemModule
 
 public enum BlogAdminDashboardEventHandlers {
     public static func register(in events: inout EventRegistry) {
         events.register(
-            event: SystemModuleWebAdmin.Dashboard.Event.Provider.self,
-            context: SystemModuleWebAdmin.Dashboard.Event.Context.self
+            event: SystemWebAdmin.Dashboard.Event.Provider.self,
+            context: SystemWebAdmin.Dashboard.Event.Context.self
         ) { _, context in
             let api = BlogAdminAPIClient(
                 apiBaseURL: context.apiBaseURL,

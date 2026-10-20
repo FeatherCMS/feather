@@ -1,13 +1,13 @@
 import FeatherAdmin
 public import FeatherModuleKit
 import SystemModule
-import SystemModuleWebAdmin
+import SystemWebAdmin
 
 public enum NewsletterRichContentEditorEventHandlers {
     public static func register(in registry: inout EventRegistry) {
         registry.register(
             event: AdminRichContentEditorBlockProvider.self,
-            context: SystemModuleWebAdmin.Admin.Menu.Context.self
+            context: SystemWebAdmin.Admin.Menu.Context.self
         ) { _, _ in
             AdminRichContentEditorBlockDefinition(
                 type: "newsletter",

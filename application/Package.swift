@@ -265,7 +265,7 @@ let package = Package(
                 .product(name: "HummingbirdAuth", package: "hummingbird-auth"),
                 .product(name: "Mustache", package: "swift-mustache"),
 
-                .product(name: "SystemModuleWebAdmin", package: "app-system-module"),
+                .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .product(name: "UserFrontend", package: "app-user-module"),
                 .product(name: "AccountFrontend", package: "app-account-module"),
                 .product(name: "RedirectFrontend", package: "app-redirect-module"),
