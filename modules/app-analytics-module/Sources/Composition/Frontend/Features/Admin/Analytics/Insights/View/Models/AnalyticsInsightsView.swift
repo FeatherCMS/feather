@@ -272,44 +272,81 @@ struct AnalyticsInsightsView: Component {
         let kpis = page.overview.kpis
         if page.source == .web {
             return [
-                ("Tracked web events", "\(kpis.totalRequests)"),
+                (
+                    "Tracked web events",
+                    kpis.totalRequests.formatted(.number.grouping(.automatic))
+                ),
                 (
                     "Events/day",
                     kpis.averageRequestsPerDay.formatted(
-                        .number.precision(.fractionLength(1))
+                        .number.grouping(.automatic).precision(
+                            .fractionLength(1)
+                        )
                     )
                 ),
-                ("Authenticated requests", "\(kpis.authenticatedRequests)"),
-                ("Estimated unique visitors", "\(kpis.uniqueVisitors)"),
-                ("Page views", "\(kpis.pageViews)"),
-                ("POST /search requests", "\(kpis.searchRequests)"),
-                ("Human requests (estimated)", "\(kpis.humanRequests)"),
-                ("Bot requests", "\(kpis.botRequests)"),
-                ("AI requests", "\(kpis.aiRequests)"),
-                ("404s", "\(kpis.notFoundRequests)"),
-                ("4xx", "\(kpis.clientErrorRequests)"),
-                ("5xx", "\(kpis.serverErrorRequests)"),
+                (
+                    "Authenticated requests",
+                    kpis.authenticatedRequests.formatted(
+                        .number.grouping(.automatic)
+                    )
+                ),
+                (
+                    "Estimated unique visitors",
+                    kpis.uniqueVisitors.formatted(.number.grouping(.automatic))
+                ),
+                ("Page views", kpis.pageViews.formatted(.number.grouping(.automatic))),
+                (
+                    "POST requests",
+                    kpis.searchRequests.formatted(.number.grouping(.automatic))
+                ),
+                (
+                    "Human requests (estimated)",
+                    kpis.humanRequests.formatted(.number.grouping(.automatic))
+                ),
+                (
+                    "Bot requests",
+                    kpis.botRequests.formatted(.number.grouping(.automatic))
+                ),
+                ("AI requests", kpis.aiRequests.formatted(.number.grouping(.automatic))),
+                ("404s", kpis.notFoundRequests.formatted(.number.grouping(.automatic))),
+                ("4xx", kpis.clientErrorRequests.formatted(.number.grouping(.automatic))),
+                ("5xx", kpis.serverErrorRequests.formatted(.number.grouping(.automatic))),
             ]
         }
         return [
-            ("Logged API events", "\(kpis.totalRequests)"),
+            (
+                "Logged API events",
+                kpis.totalRequests.formatted(.number.grouping(.automatic))
+            ),
             (
                 "Events/day",
                 kpis.averageRequestsPerDay.formatted(
-                    .number.precision(.fractionLength(1))
+                        .number.grouping(.automatic).precision(
+                            .fractionLength(1)
+                        )
                 )
             ),
             (
                 "Non-error events (logged)",
-                successRate.formatted(.number.precision(.fractionLength(1)))
+                successRate.formatted(
+                    .number.grouping(.automatic).precision(.fractionLength(1))
+                )
                     + "%"
             ),
             (
                 "Error events (logged)",
-                errorRate.formatted(.number.precision(.fractionLength(1))) + "%"
+                errorRate.formatted(
+                    .number.grouping(.automatic).precision(.fractionLength(1))
+                ) + "%"
             ),
-            ("4xx errors", "\(kpis.clientErrorRequests)"),
-            ("5xx errors", "\(kpis.serverErrorRequests)"),
+            (
+                "4xx errors",
+                kpis.clientErrorRequests.formatted(.number.grouping(.automatic))
+            ),
+            (
+                "5xx errors",
+                kpis.serverErrorRequests.formatted(.number.grouping(.automatic))
+            ),
         ]
     }
 

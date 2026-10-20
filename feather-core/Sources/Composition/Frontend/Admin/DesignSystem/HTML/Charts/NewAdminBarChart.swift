@@ -1,3 +1,4 @@
+import Foundation
 public import CSS
 public import HTML
 import SGML
@@ -50,6 +51,7 @@ public struct NewAdminBarChart: Component {
                 Gap(12.px)
             }
             Custom(".new-admin-bar-chart__label") {
+                Flex(1, .number(1), .auto)
                 MinWidth(0.px)
                 Overflow(.hidden)
                 TextOverflow(.ellipsis)
@@ -94,7 +96,11 @@ public struct NewAdminBarChart: Component {
                     Div {
                         Div {
                             Span(item.label).class("new-admin-bar-chart__label")
-                            Span("\(item.value)")
+                            Span(
+                                item.value.formatted(
+                                    .number.grouping(.automatic)
+                                )
+                            )
                                 .class("new-admin-bar-chart__value")
                         }
                         .class("new-admin-bar-chart__header")
