@@ -40,7 +40,7 @@ let package = Package(
         .library(name: "SystemInfrastructure", targets: ["SystemInfrastructure"]),
         .library(name: "SystemAdminAPI", targets: ["SystemAdminAPI"]),
         .library(name: "SystemBackend", targets: ["SystemBackend"]),
-        .library(name: "SystemFrontend", targets: ["SystemFrontend"]),
+        .library(name: "SystemModuleWebAdmin", targets: ["SystemModuleWebAdmin"]),
         .executable(name: "SystemAdminOpenAPIGenerator", targets: ["SystemAdminOpenAPIGenerator"]),
     ],
     dependencies: [
@@ -178,14 +178,15 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "SystemFrontend",
+            name: "SystemModuleWebAdmin",
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
+                .product(name: "FeatherModuleKit", package: "feather-core"),
 
                 .target(name: "SystemModule"),
                 .target(name: "SystemAdminAPI"),
             ],
-            path: "Sources/Composition/Frontend",
+            path: "Sources/Composition/WebAdmin",
             swiftSettings: swiftSettings
         ),
         // MARK: -

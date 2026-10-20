@@ -207,6 +207,7 @@ let package = Package(
                 .product(name: "FeatherAdmin", package: "feather-core"),
 
                 .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "SystemModuleWebAdmin", package: "app-system-module"),
                 .target(name: "UserContracts"),
                 .target(name: "UserAdminAPI"),
                 .target(name: "UserAppAPI"),

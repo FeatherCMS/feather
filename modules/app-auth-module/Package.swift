@@ -227,7 +227,7 @@ let package = Package(
 
                 .product(name: "MediaFrontend", package: "app-media-module"),
                 .product(name: "UserFrontend", package: "app-user-module"),
-                .product(name: "SystemFrontend", package: "app-system-module"),
+                .product(name: "SystemModuleWebAdmin", package: "app-system-module"),
                 .product(name: "WebContracts", package: "app-web-module"),
                 .product(name: "WebFrontend", package: "app-web-module"),
 

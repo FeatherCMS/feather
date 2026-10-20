@@ -4,6 +4,8 @@ import FeatherAdmin
 import FeatherModuleKit
 import Hummingbird
 import MediaFrontend
+import SystemModuleWebAdmin
+import SystemModule
 
 struct DefaultAdminPageRenderContextProvider:
     AdminPageRenderContextProvider
@@ -17,7 +19,7 @@ struct DefaultAdminPageRenderContextProvider:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> AdminPageRenderContext {
-        let menuGroups = try await adminMenuGroups(
+        let menuGroups = try await SystemModuleWebAdmin.Menu.groups(
             for: context,
             request: request,
             events: events

@@ -2,13 +2,14 @@ import AnalyticsAdminAPI
 import FeatherAdmin
 public import FeatherModuleKit
 import OpenAPIRuntime
-import SystemFrontend
+import SystemModuleWebAdmin
+import SystemModule
 
 public enum AnalyticsAdminDashboardEventHandlers {
     public static func register(in events: inout EventRegistry) {
         events.register(
-            event: AdminHomeOverviewProvider.self,
-            context: AdminDashboardEventContext.self
+            event: SystemModuleWebAdmin.Dashboard.Event.Provider.self,
+            context: SystemModuleWebAdmin.Dashboard.Event.Context.self
         ) { _, context in
             guard context.permissions.contains("analytics:insights:list") else {
                 return []

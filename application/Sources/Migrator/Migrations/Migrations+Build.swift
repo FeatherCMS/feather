@@ -15,6 +15,7 @@ import NewsInfrastructure
 import RedirectInfrastructure
 import SystemApplication
 import SystemInfrastructure
+import SystemModule
 import UserInfrastructure
 import WebInfrastructure
 
@@ -100,7 +101,7 @@ public func buildMigrationEventPublisher(
     webPublicBaseURL: String
 ) -> any EventPublisher {
     var events = EventRegistry()
-    SystemInfrastructure.EventHandlers.register(in: &events)
+    SystemModule.Event.Handlers.register(in: &events)
     FeatherVariableSeedEventHandlers.register(in: &events)
     AuthInfrastructure.EventHandlers.register(in: &events)
     UserInfrastructure.EventHandlers.register(in: &events)

@@ -164,6 +164,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherAdmin", package: "feather-core"),
                 .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "SystemModuleWebAdmin", package: "app-system-module"),
                 .product(name: "WebFrontend", package: "app-web-module"),
 
                 .target(name: "ContactContracts"),

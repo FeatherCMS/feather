@@ -1,5 +1,5 @@
 {
-  "originHash" : "cc11b593b5dae03140066ec05224a0dc0b35b000fb4bfbb2118b964e7e101b24",
+  "originHash" : "dababf4da258c856714be2e0b291b25dd38cebc1c9d109c338c0c11d6c500ff9",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -8,6 +8,24 @@
       "state" : {
         "revision" : "9544287b9416c0bc71e58b9f3aead8dd14b16103",
         "version" : "1.36.0"
+      }
+    },
+    {
+      "identity" : "feather-database",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-database",
+      "state" : {
+        "revision" : "9a885148b6470cea32f40854f5359a872154dbf1",
+        "version" : "1.0.0-rc.3"
+      }
+    },
+    {
+      "identity" : "feather-dbal",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-dbal",
+      "state" : {
+        "revision" : "3507e6b8933425e02e823ce74db7c5a98907c93b",
+        "version" : "1.0.0-alpha.1"
       }
     },
     {
@@ -26,6 +44,24 @@
       "state" : {
         "revision" : "a3d72f160a93db1d16b6fe1a90a612cde5bfb3b3",
         "version" : "1.0.0-rc.2"
+      }
+    },
+    {
+      "identity" : "feather-sql",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-sql",
+      "state" : {
+        "revision" : "6f9e5ef57a25d0e36e489ebc71ee8ce133e8c6ed",
+        "version" : "1.0.0-alpha.1"
+      }
+    },
+    {
+      "identity" : "feather-sql-postgres",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-sql-postgres",
+      "state" : {
+        "revision" : "a2190dfa726aab9b0519084cf7ec05b0161bd271",
+        "version" : "1.0.0-alpha.1"
       }
     },
     {

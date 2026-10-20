@@ -2363,7 +2363,7 @@ public enum FeatherIcons {
         .class("feather feather-heart")
     }
 
-    static func helpCircle() -> SVG {
+    public static func helpCircle() -> SVG {
         SVG {
             Circle(cx: 12, cy: 12, r: 10)
             Path("M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3")

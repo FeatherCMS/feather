@@ -223,6 +223,7 @@ let package = Package(
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "MediaFrontend", package: "app-media-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
+                .product(name: "SystemModuleWebAdmin", package: "app-system-module"),
                 .product(name: "WebContracts", package: "app-web-module"),
                 .product(name: "WebFrontend", package: "app-web-module"),
                 .product(name: "AsyncHTTPClient", package: "async-http-client"),

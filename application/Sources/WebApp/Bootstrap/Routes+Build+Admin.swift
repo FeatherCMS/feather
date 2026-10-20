@@ -1,3 +1,4 @@
+import SystemModule
 import FeatherModuleKit
 import WebApplication
 import BlogFrontend
@@ -9,7 +10,7 @@ import AnalyticsFrontend
 import RedirectFrontend
 import UserFrontend
 import AccountFrontend
-import SystemFrontend
+import SystemModuleWebAdmin
 import AuthFrontend
 import FeatherAdmin
 import FeatherApplication
@@ -20,7 +21,7 @@ func buildAdminRoutes(
     renderingEngine: any RenderingEngine,
     adminEvents: any EventPublisher,
     apiBuilder: APIBuilder,
-    systemRoutes: WebAdmin.System.Router.Routes
+    systemRoutes: SystemModuleWebAdmin.Router.Routes
 ) {
     AuthFrontend.AdminAuth(
         apiBuilder: apiBuilder.auth,
@@ -34,7 +35,7 @@ func buildAdminRoutes(
     .route(on: router)
     AdminUser(apiBuilder: apiBuilder.user, renderingEngine: renderingEngine)
         .route(on: router)
-    WebAdmin.System
+    SystemModuleWebAdmin.WebAdmin
         .Router(
             apiBuilder: apiBuilder.system,
             renderingEngine: renderingEngine,

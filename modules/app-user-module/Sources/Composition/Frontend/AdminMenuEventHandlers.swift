@@ -1,12 +1,14 @@
 import FeatherAdmin
 public import FeatherModuleKit
 import Hummingbird
+import SystemModule
+import SystemModuleWebAdmin
 
 public enum UserAdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {
         events.register(
-            event: WebAdmin.Events.Menu.Provider.self,
-            context: WebAdmin.Events.Context.self
+            event: SystemModuleWebAdmin.Events.Menu.Provider.self,
+            context: SystemModuleWebAdmin.Events.Context.self
         ) { _, _ in
             [
                 .init(
@@ -19,8 +21,8 @@ public enum UserAdminMenuEventHandlers {
             ]
         }
         events.register(
-            event: WebAdmin.Events.MenuItem.Provider.self,
-            context: WebAdmin.Events.Context.self
+            event: SystemModuleWebAdmin.Events.MenuItem.Provider.self,
+            context: SystemModuleWebAdmin.Events.Context.self
         ) { event, _ in
             guard event.menuKey == "user" else { return [] }
             return [

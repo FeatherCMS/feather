@@ -1,7 +1,7 @@
 import FeatherAdmin
 import Hummingbird
 import OpenAPIRuntime
-import SystemFrontend
+import SystemModuleWebAdmin
 
 struct AdminAddWebMenuItem {
     let controller: any AdminAddWebMenuItemController

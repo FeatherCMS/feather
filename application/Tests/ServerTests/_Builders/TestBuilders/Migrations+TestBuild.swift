@@ -6,6 +6,7 @@ import FeatherInfrastructure
 import AccountInfrastructure
 import AnalyticsInfrastructure
 import SystemInfrastructure
+import SystemModule
 import UserInfrastructure
 import AuthInfrastructure
 import BlogInfrastructure
@@ -21,7 +22,7 @@ public func buildTestMigrations(
     idGenerator: any IDGenerator
 ) -> [Migration] {
     var events = EventRegistry()
-    SystemInfrastructure.EventHandlers.register(in: &events)
+    SystemModule.Event.Handlers.register(in: &events)
     AuthInfrastructure.EventHandlers.register(in: &events)
     UserInfrastructure.EventHandlers.register(in: &events)
     AccountInfrastructure.EventHandlers.register(in: &events)

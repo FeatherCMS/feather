@@ -9,7 +9,8 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import SystemAdminAPI
-import SystemFrontend
+import SystemModuleWebAdmin
+import SystemModule
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
@@ -21,7 +22,7 @@ struct AdminEditAuthAccessControlOpenAPIRepository:
 {
     let api: AuthAdminAPIClient
     let userAPI: UserAdminAPIClient
-    let systemAPI: SystemAdminAPIClient
+    let systemAPI: SystemModuleWebAdmin.API.Client
     private let rolesUnauthorizedMessage =
         "Please sign in again to view user roles."
     private let rolesForbiddenMessage =
@@ -45,7 +46,7 @@ struct AdminEditAuthAccessControlOpenAPIRepository:
     init(
         api: AuthAdminAPIClient,
         userAPI: UserAdminAPIClient,
-        systemAPI: SystemAdminAPIClient
+        systemAPI: SystemModuleWebAdmin.API.Client
     ) {
         self.api = api
         self.userAPI = userAPI

@@ -6,7 +6,7 @@ import WebFrontend
 import AnalyticsFrontend
 import RedirectFrontend
 import UserFrontend
-import SystemFrontend
+import SystemModuleWebAdmin
 import FeatherAdmin
 import Configuration
 import Foundation

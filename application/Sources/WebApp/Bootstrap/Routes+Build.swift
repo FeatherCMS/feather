@@ -1,3 +1,4 @@
+import SystemModule
 import Foundation
 import FeatherModuleKit
 import WebApplication
@@ -11,7 +12,7 @@ import WebContracts
 import AnalyticsFrontend
 import RedirectFrontend
 import UserFrontend
-import SystemFrontend
+import SystemModuleWebAdmin
 import FeatherAdmin
 import Hummingbird
 import HummingbirdAuth
@@ -46,7 +47,7 @@ func buildRouter(
         Response(status: .ok)
     }
 
-    let systemRoutes = WebAdmin.System.Router.Routes.standard
+    let systemRoutes = SystemModuleWebAdmin.Router.Routes.standard
     var adminEvents = EventRegistry()
     WebFrontend.WebEventHandlers.register(in: &adminEvents)
     BlogFrontend.BlogEventHandlers.register(in: &adminEvents)
@@ -55,7 +56,7 @@ func buildRouter(
     WebAdminDashboardEventHandlers.register(in: &adminEvents)
     RedirectAdminDashboardEventHandlers.register(in: &adminEvents)
     AnalyticsAdminDashboardEventHandlers.register(in: &adminEvents)
-    AdminMenuEventHandlers.register(
+    SystemModuleWebAdmin.Event.Handlers.register(
         in: &adminEvents,
         routes: systemRoutes
     )
@@ -75,7 +76,10 @@ func buildRouter(
     let richContentEditorBlocks =
         (try? await adminEvents.trigger(
             event: AdminRichContentEditorBlockProvider(),
-            using: WebAdmin.Events.Context(path: "", permissions: [])
+            using: SystemModuleWebAdmin.Events.Context(
+                path: "",
+                permissions: []
+            )
         )
         .compactMap { $0 }) ?? []
     let renderingEngine = DefaultRenderingEngine(

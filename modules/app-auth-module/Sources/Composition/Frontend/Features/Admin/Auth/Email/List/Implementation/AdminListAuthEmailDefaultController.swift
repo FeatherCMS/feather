@@ -12,7 +12,7 @@ import Hummingbird
 import OpenAPIRuntime
 import SGML
 import SystemAdminAPI
-import SystemFrontend
+import SystemModuleWebAdmin
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend

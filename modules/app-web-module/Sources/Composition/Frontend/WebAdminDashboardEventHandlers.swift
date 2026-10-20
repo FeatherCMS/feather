@@ -1,20 +1,23 @@
 import FeatherAdmin
 public import FeatherModuleKit
 import OpenAPIRuntime
-import SystemFrontend
+import SystemModuleWebAdmin
+import SystemModule
 import WebAdminAPI
 
 public enum WebAdminDashboardEventHandlers {
     public static func register(in events: inout EventRegistry) {
         events.register(
-            event: AdminHomeOverviewProvider.self,
-            context: AdminDashboardEventContext.self
+            event: SystemModuleWebAdmin.Dashboard.Event.Provider.self,
+            context: SystemModuleWebAdmin.Dashboard.Event.Context.self
         ) { _, context in
             let api = WebAdminAPIClient(
                 apiBaseURL: context.apiBaseURL,
                 sessionToken: context.sessionToken
             )
-            var contentStats: [AdminViewDashboardModel.ContentStat] = []
+            var contentStats:
+                [SystemModuleWebAdmin.Dashboard.Model
+                    .ContentStat] = []
 
             await appendCount(
                 label: "Web pages",
@@ -74,7 +77,9 @@ public enum WebAdminDashboardEventHandlers {
         permission: String,
         permissions: Set<String>,
         operation: @escaping @Sendable () async throws -> Int,
-        to contentStats: inout [AdminViewDashboardModel.ContentStat]
+        to contentStats:
+            inout [SystemModuleWebAdmin.Dashboard.Model
+            .ContentStat]
     ) async {
         guard permissions.contains(permission),
             let count = try? await operation()

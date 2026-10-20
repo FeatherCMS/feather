@@ -13,7 +13,8 @@ import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
 import SGML
 import SystemAdminAPI
-import SystemFrontend
+import SystemModuleWebAdmin
+import SystemModule
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
@@ -62,7 +63,7 @@ public struct AuthAdminAPIClient: Sendable {
 public struct AuthAPIBuilder: Sendable {
     private let apiBaseURL: URL
     let user: UserAPIBuilder
-    let system: SystemAPIBuilder
+    let system: SystemModuleWebAdmin.API.Builder
 
     public init(apiBaseURL: URL) {
         self.apiBaseURL = apiBaseURL
@@ -94,7 +95,7 @@ public struct AuthAPIBuilder: Sendable {
 
     func makeSystemAdmin(
         _ context: AuthenticatedRequestContext
-    ) -> SystemAdminAPIClient {
+    ) -> SystemModuleWebAdmin.API.Client {
         system.makeSystemAdmin(context)
     }
 }
