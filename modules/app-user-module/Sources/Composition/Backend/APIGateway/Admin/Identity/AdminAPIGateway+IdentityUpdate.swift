@@ -1,3 +1,4 @@
+import FeatherDomain
 import FeatherModuleKit
 public import UserAdminAPI
 import UserApplication
@@ -21,11 +22,13 @@ extension AdminAPIGateway {
             subject: subject,
             input: .init(
                 id: input.path.userIdentityId,
-                name: body.name,
-                roleIds: body.roleIds,
-                status: body.status.flatMap {
-                    Identity.Model.Status(rawValue: $0.rawValue)
-                }
+                name: body.name.map(FieldChange.set) ?? .unchanged,
+                roleIds: .set(body.roleIds ?? []),
+                status: body.status
+                    .flatMap {
+                        Identity.Model.Status(rawValue: $0.rawValue)
+                    }
+                    .map(FieldChange.set) ?? .unchanged
             )
         )
 

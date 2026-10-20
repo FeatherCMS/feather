@@ -1,4 +1,5 @@
 public import FeatherApplication
+import FeatherDomain
 public import FeatherModuleKit
 public import UserDomain
 public import UserModule
@@ -52,21 +53,30 @@ extension Identity.Edit {
 
                 let updated = try await scope.identity.update(model)
 
-                let roleIds = input.roleIds ?? []
+                let currentRoleIds = try await scope.identity.findRoleIdsBy(
+                    identityId: model.id
+                )
+                let roleIds = input.roleIds.apply(to: currentRoleIds)
                 for roleId in roleIds {
                     guard try await scope.role.findBy(id: roleId) != nil
                     else {
                         throw Error(message: "Role not found: \(roleId)")
                     }
                 }
-                try await scope.identity.replaceRoleIds(
-                    identityId: model.id,
-                    roleIds: roleIds
-                )
+                let persistedRoleIds: [String]
+                if roleIds != currentRoleIds {
+                    try await scope.identity.replaceRoleIds(
+                        identityId: model.id,
+                        roleIds: roleIds
+                    )
+                    persistedRoleIds = try await scope.identity.findRoleIdsBy(
+                        identityId: updated.id
+                    )
+                }
+                else {
+                    persistedRoleIds = currentRoleIds
+                }
 
-                let persistedRoleIds = try await scope.identity.findRoleIdsBy(
-                    identityId: updated.id
-                )
                 let detail = updated.asDetail
                 return .init(
                     id: detail.id,

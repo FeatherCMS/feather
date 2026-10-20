@@ -65,10 +65,10 @@ extension Identity.Model {
     }
 
     public mutating func update(
-        name: String? = nil,
-        status: Status? = nil
+        name: FieldChange<String> = .unchanged,
+        status: FieldChange<Status> = .unchanged
     ) {
-        self.name = name ?? self.name
-        self.status = status ?? self.status
+        self.name = name.apply(to: self.name)
+        self.status = status.apply(to: self.status)
     }
 }

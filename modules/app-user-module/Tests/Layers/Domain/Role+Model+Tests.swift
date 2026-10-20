@@ -1,3 +1,4 @@
+import FeatherDomain
 import Testing
 import UserModule
 
@@ -31,7 +32,9 @@ struct RoleModelTests {
         )
 
         #expect(throws: Role.Model.Error.notesTooLong) {
-            try role.update(notes: String(repeating: "n", count: 255))
+            try role.update(
+                notes: .set(String(repeating: "n", count: 255))
+            )
         }
     }
 }

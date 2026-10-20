@@ -35,6 +35,15 @@ struct UserRolePatchSchema: ObjectSchemaRepresentable {
     }
 }
 
+struct UserRoleUpdateSchema: ObjectSchemaRepresentable {
+    var propertyMap: SchemaMap {
+        [
+            "name": UserRoleNameField().reference(required: false),
+            "notes": UserRoleNotesField().reference(required: false),
+        ]
+    }
+}
+
 struct UserRoleDetailSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [

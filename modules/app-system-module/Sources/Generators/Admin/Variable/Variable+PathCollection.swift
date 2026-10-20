@@ -8,7 +8,7 @@ extension Variable {
                 "api/v1/admin/system/variables": PathItem(),
                 "api/v1/admin/system/variables/query": Query.PathItem(),
                 "api/v1/admin/system/variables/{systemVariableId}":
-                    Get.PathItem(),
+                    ID.PathItem(),
             ]
         }
     }

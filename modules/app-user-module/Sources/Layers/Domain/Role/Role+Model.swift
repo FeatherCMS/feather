@@ -103,11 +103,11 @@ extension Role.Model {
     }
 
     public mutating func update(
-        name: String? = nil,
-        notes: String? = nil
+        name: OptionalFieldChange<String> = .unchanged,
+        notes: OptionalFieldChange<String> = .unchanged
     ) throws(Self.Error) {
-        let newName = name ?? self.name
-        let newNotes = notes ?? self.notes
+        let newName = name.apply(to: self.name)
+        let newNotes = notes.apply(to: self.notes)
 
         try Self.validate(name: newName)
         try Self.validate(notes: newNotes)

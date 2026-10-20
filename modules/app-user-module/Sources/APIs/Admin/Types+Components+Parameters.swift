@@ -10,9 +10,17 @@ extension Components {
         ///
         /// - Remark: Generated from `#/components/parameters/UserIdentityIdParameter`.
         public typealias UserIdentityIdParameter = Components.Schemas.UserIdentityIDField
+        /// Comma-separated list of fields to update. Include an optional field to clear it when omitted from the request body.
+        ///
+        /// - Remark: Generated from `#/components/parameters/IdentityParametersUpdateMask`.
+        public typealias IdentityParametersUpdateMask = Components.Schemas.UserIdentityUpdateMask
         /// UserRole id
         ///
         /// - Remark: Generated from `#/components/parameters/RoleParametersID`.
         public typealias RoleParametersID = Components.Schemas.UserRoleIdField
+        /// Comma-separated list of fields to update. Include an optional field to clear it when omitted from the request body.
+        ///
+        /// - Remark: Generated from `#/components/parameters/RoleParametersUpdateMask`.
+        public typealias RoleParametersUpdateMask = Components.Schemas.UserRoleUpdateMask
     }
 }

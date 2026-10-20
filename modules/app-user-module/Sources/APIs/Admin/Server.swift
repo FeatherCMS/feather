@@ -591,6 +591,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     name: "userIdentityId",
                     as: Components.Parameters.UserIdentityIdParameter.self
                 ))
+                let query: Operations.UserIdentityPatch.Input.Query = .init(updateMask: try converter.getRequiredQueryItemAsURI(
+                    in: request.soar_query,
+                    style: .form,
+                    explode: true,
+                    name: "updateMask",
+                    as: Components.Parameters.IdentityParametersUpdateMask.self
+                ))
                 let headers: Operations.UserIdentityPatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.UserIdentityPatchRequestBody
@@ -614,6 +621,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 }
                 return Operations.UserIdentityPatch.Input(
                     path: path,
+                    query: query,
                     headers: headers,
                     body: body
                 )
@@ -623,6 +631,24 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 case let .ok(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {
@@ -1253,6 +1279,13 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                     name: "userRoleId",
                     as: Components.Parameters.RoleParametersID.self
                 ))
+                let query: Operations.UserRolePatch.Input.Query = .init(updateMask: try converter.getRequiredQueryItemAsURI(
+                    in: request.soar_query,
+                    style: .form,
+                    explode: true,
+                    name: "updateMask",
+                    as: Components.Parameters.RoleParametersUpdateMask.self
+                ))
                 let headers: Operations.UserRolePatch.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.UserRolePatchRequestBody
@@ -1276,6 +1309,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 }
                 return Operations.UserRolePatch.Input(
                     path: path,
+                    query: query,
                     headers: headers,
                     body: body
                 )
@@ -1285,6 +1319,24 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 case let .ok(value):
                     suppressUnusedWarning(value)
                     var response = HTTPTypes.HTTPResponse(soar_statusCode: 200)
+                    suppressMutabilityWarning(&response)
+                    let body: OpenAPIRuntime.HTTPBody
+                    switch value.body {
+                    case let .json(value):
+                        try converter.validateAcceptIfPresent(
+                            "application/json",
+                            in: request.headerFields
+                        )
+                        body = try converter.setResponseBodyAsJSON(
+                            value,
+                            headerFields: &response.headerFields,
+                            contentType: "application/json; charset=utf-8"
+                        )
+                    }
+                    return (response, body)
+                case let .badRequest(value):
+                    suppressUnusedWarning(value)
+                    var response = HTTPTypes.HTTPResponse(soar_statusCode: 400)
                     suppressMutabilityWarning(&response)
                     let body: OpenAPIRuntime.HTTPBody
                     switch value.body {
@@ -1393,7 +1445,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 switch chosenContentType {
                 case "application/json":
                     body = try await converter.getRequiredRequestBodyAsJSON(
-                        Components.Schemas.UserRolePatchSchema.self,
+                        Components.Schemas.UserRoleUpdateSchema.self,
                         from: requestBody,
                         transforming: { value in
                             .json(value)

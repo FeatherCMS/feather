@@ -8,7 +8,7 @@ extension Permission {
                 "api/v1/admin/system/permissions": PathItem(),
                 "api/v1/admin/system/permissions/query": Query.PathItem(),
                 "api/v1/admin/system/permissions/{systemPermissionId}":
-                    Get.PathItem(),
+                    ID.PathItem(),
             ]
         }
     }

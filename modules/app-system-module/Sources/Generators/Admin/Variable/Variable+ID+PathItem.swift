@@ -1,6 +1,6 @@
 import FeatherOpenAPI
 
-extension Variable.Get {
+extension Variable.ID {
     struct PathItem: PathItemRepresentable {
         var get: (any OperationRepresentable)? { Variable.Get.Operation() }
         var put: (any OperationRepresentable)? { Variable.Put.Operation() }

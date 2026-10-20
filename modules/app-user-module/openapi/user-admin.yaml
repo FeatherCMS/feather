@@ -156,11 +156,18 @@ paths:
       operationId: userIdentityPatch
       parameters:
       - $ref: '#/components/parameters/UserIdentityIdParameter'
+      - $ref: '#/components/parameters/IdentityParametersUpdateMask'
       requestBody:
         $ref: '#/components/requestBodies/UserIdentityPatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/UserIdentityDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: UserIdentity not found
           content:
@@ -323,11 +330,18 @@ paths:
       operationId: userRolePatch
       parameters:
       - $ref: '#/components/parameters/RoleParametersID'
+      - $ref: '#/components/parameters/RoleParametersUpdateMask'
       requestBody:
         $ref: '#/components/requestBodies/UserRolePatchRequestBody'
       responses:
         200:
           $ref: '#/components/responses/UserRoleDetailResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
         404:
           description: UserRole not found
           content:
@@ -607,15 +621,18 @@ components:
           $ref: '#/components/schemas/UserIdentityStatusField'
         roleIds:
           $ref: '#/components/schemas/UserIdentityRoleIdsField'
+    UserIdentityUpdateMask:
+      type: string
+      example: name,status,roleIds
     UserIdentityPatchSchema:
       type: object
       properties:
         name:
           $ref: '#/components/schemas/UserIdentityNameField'
-        status:
-          $ref: '#/components/schemas/UserIdentityStatusField'
         roleIds:
           $ref: '#/components/schemas/UserIdentityRoleIdsField'
+        status:
+          $ref: '#/components/schemas/UserIdentityStatusField'
     UserRoleCreateSchema:
       type: object
       properties:
@@ -745,13 +762,31 @@ components:
       required:
       - id
       - key
-    UserRolePatchSchema:
+    UserRoleUpdateSchema:
       type: object
       properties:
         name:
           $ref: '#/components/schemas/UserRoleNameField'
         notes:
           $ref: '#/components/schemas/UserRoleNotesField'
+    UserRoleUpdateMask:
+      type: string
+      example: name,notes
+    UserRolePatchSchema:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/UserRoleNameFieldNullable'
+        notes:
+          $ref: '#/components/schemas/UserRoleNotesFieldNullable'
+    UserRoleNameFieldNullable:
+      type: string
+      example: manager
+      nullable: true
+    UserRoleNotesFieldNullable:
+      type: string
+      example: Management role.
+      nullable: true
   responses:
     UserIdentityDetailResponse:
       description: UserIdentity response
@@ -787,6 +822,15 @@ components:
       schema:
         $ref: '#/components/schemas/UserIdentityIDField'
       description: User identity id
+    IdentityParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/UserIdentityUpdateMask'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
     RoleParametersID:
       name: userRoleId
       in: path
@@ -794,6 +838,15 @@ components:
       schema:
         $ref: '#/components/schemas/UserRoleIdField'
       description: UserRole id
+    RoleParametersUpdateMask:
+      name: updateMask
+      allowEmptyValue: true
+      in: query
+      required: true
+      schema:
+        $ref: '#/components/schemas/UserRoleUpdateMask'
+      description: Comma-separated list of fields to update. Include an optional field
+        to clear it when omitted from the request body.
   requestBodies:
     UserIdentityCreateRequestBody:
       content:
@@ -829,7 +882,7 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/UserRolePatchSchema'
+            $ref: '#/components/schemas/UserRoleUpdateSchema'
       required: true
     UserRolePatchRequestBody:
       content:

@@ -1,0 +1,21 @@
+import FeatherOpenAPI
+
+extension Role.Parameters {
+    struct UpdateMask: QueryParameterRepresentable {
+        var name: String { "updateMask" }
+        var required: Bool { true }
+        var description: String? {
+            "Comma-separated list of fields to update. Include an optional field to clear it when omitted from the request body."
+        }
+        var schema: any OpenAPISchemaRepresentable {
+            Role.Schemas.UpdateMask().reference()
+        }
+    }
+}
+
+extension Role.Schemas {
+    struct UpdateMask: StringSchemaRepresentable {
+        var openAPIIdentifier: String { "UserRoleUpdateMask" }
+        var example: String? = "name,notes"
+    }
+}

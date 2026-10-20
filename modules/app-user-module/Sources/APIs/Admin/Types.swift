@@ -101,11 +101,13 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/patch(userIdentityPatch)`.
     public func userIdentityPatch(
         path: Operations.UserIdentityPatch.Input.Path,
+        query: Operations.UserIdentityPatch.Input.Query,
         headers: Operations.UserIdentityPatch.Input.Headers = .init(),
         body: Components.RequestBodies.UserIdentityPatchRequestBody
     ) async throws -> Operations.UserIdentityPatch.Output {
         try await userIdentityPatch(Operations.UserIdentityPatch.Input(
             path: path,
+            query: query,
             headers: headers,
             body: body
         ))
@@ -171,11 +173,13 @@ extension APIProtocol {
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/patch(userRolePatch)`.
     public func userRolePatch(
         path: Operations.UserRolePatch.Input.Path,
+        query: Operations.UserRolePatch.Input.Query,
         headers: Operations.UserRolePatch.Input.Headers = .init(),
         body: Components.RequestBodies.UserRolePatchRequestBody
     ) async throws -> Operations.UserRolePatch.Output {
         try await userRolePatch(Operations.UserRolePatch.Input(
             path: path,
+            query: query,
             headers: headers,
             body: body
         ))

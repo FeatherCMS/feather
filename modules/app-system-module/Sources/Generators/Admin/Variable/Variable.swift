@@ -6,6 +6,7 @@ public enum Variable {
         public enum Schemas {}
     }
     public enum Get {}
+    public enum ID {}
     public enum Put {}
     public enum Patch {}
     public enum Schemas {}

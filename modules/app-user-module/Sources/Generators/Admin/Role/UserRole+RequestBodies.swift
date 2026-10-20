@@ -11,15 +11,7 @@ struct UserRoleRequestBody: RequestBodyRepresentable {
 struct UserRoleUpdateRequestBody: RequestBodyRepresentable {
     var contentMap: ContentMap {
         [
-            .json: Content(UserRolePatchSchema().reference())
-        ]
-    }
-}
-
-struct UserRolePatchRequestBody: RequestBodyRepresentable {
-    var contentMap: ContentMap {
-        [
-            .json: Content(UserRolePatchSchema().reference())
+            .json: Content(UserRoleUpdateSchema().reference())
         ]
     }
 }

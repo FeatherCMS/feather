@@ -859,6 +859,21 @@ public enum Operations {
                 }
             }
             public var path: Operations.UserIdentityPatch.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/{userIdentityId}/PATCH/query`.
+            public struct Query: Sendable, Hashable {
+                /// Comma-separated list of fields to update. Include an optional field to clear it when omitted from the request body.
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/{userIdentityId}/PATCH/query/updateMask`.
+                public var updateMask: Components.Parameters.IdentityParametersUpdateMask
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - updateMask: Comma-separated list of fields to update. Include an optional field to clear it when omitted from the request body.
+                public init(updateMask: Components.Parameters.IdentityParametersUpdateMask) {
+                    self.updateMask = updateMask
+                }
+            }
+            public var query: Operations.UserIdentityPatch.Input.Query
             /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/{userIdentityId}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserIdentityPatch.AcceptableContentType>]
@@ -876,14 +891,17 @@ public enum Operations {
             ///
             /// - Parameters:
             ///   - path:
+            ///   - query:
             ///   - headers:
             ///   - body:
             public init(
                 path: Operations.UserIdentityPatch.Input.Path,
+                query: Operations.UserIdentityPatch.Input.Query,
                 headers: Operations.UserIdentityPatch.Input.Headers = .init(),
                 body: Components.RequestBodies.UserIdentityPatchRequestBody
             ) {
                 self.path = path
+                self.query = query
                 self.headers = headers
                 self.body = body
             }
@@ -907,6 +925,57 @@ public enum Operations {
                     default:
                         try throwUnexpectedResponseStatus(
                             expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct BadRequest: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/{userIdentityId}/PATCH/responses/400/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/{userIdentityId}/PATCH/responses/400/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.UserIdentityPatch.Output.BadRequest.Body
+                /// Creates a new `BadRequest`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.UserIdentityPatch.Output.BadRequest.Body) {
+                    self.body = body
+                }
+            }
+            /// Bad Request
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/patch(userIdentityPatch)/responses/400`.
+            ///
+            /// HTTP response code: `400 badRequest`.
+            case badRequest(Operations.UserIdentityPatch.Output.BadRequest)
+            /// The associated value of the enum case if `self` is `.badRequest`.
+            ///
+            /// - Throws: An error if `self` is not `.badRequest`.
+            /// - SeeAlso: `.badRequest`.
+            public var badRequest: Operations.UserIdentityPatch.Output.BadRequest {
+                get throws {
+                    switch self {
+                    case let .badRequest(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "badRequest",
                             response: self
                         )
                     }
@@ -2203,6 +2272,21 @@ public enum Operations {
                 }
             }
             public var path: Operations.UserRolePatch.Input.Path
+            /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/{userRoleId}/PATCH/query`.
+            public struct Query: Sendable, Hashable {
+                /// Comma-separated list of fields to update. Include an optional field to clear it when omitted from the request body.
+                ///
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/{userRoleId}/PATCH/query/updateMask`.
+                public var updateMask: Components.Parameters.RoleParametersUpdateMask
+                /// Creates a new `Query`.
+                ///
+                /// - Parameters:
+                ///   - updateMask: Comma-separated list of fields to update. Include an optional field to clear it when omitted from the request body.
+                public init(updateMask: Components.Parameters.RoleParametersUpdateMask) {
+                    self.updateMask = updateMask
+                }
+            }
+            public var query: Operations.UserRolePatch.Input.Query
             /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/{userRoleId}/PATCH/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserRolePatch.AcceptableContentType>]
@@ -2220,14 +2304,17 @@ public enum Operations {
             ///
             /// - Parameters:
             ///   - path:
+            ///   - query:
             ///   - headers:
             ///   - body:
             public init(
                 path: Operations.UserRolePatch.Input.Path,
+                query: Operations.UserRolePatch.Input.Query,
                 headers: Operations.UserRolePatch.Input.Headers = .init(),
                 body: Components.RequestBodies.UserRolePatchRequestBody
             ) {
                 self.path = path
+                self.query = query
                 self.headers = headers
                 self.body = body
             }
@@ -2251,6 +2338,57 @@ public enum Operations {
                     default:
                         try throwUnexpectedResponseStatus(
                             expectedStatus: "ok",
+                            response: self
+                        )
+                    }
+                }
+            }
+            public struct BadRequest: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/{userRoleId}/PATCH/responses/400/content`.
+                @frozen public enum Body: Sendable, Hashable {
+                    /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/{userRoleId}/PATCH/responses/400/content/application\/json`.
+                    case json(Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema)
+                    /// The associated value of the enum case if `self` is `.json`.
+                    ///
+                    /// - Throws: An error if `self` is not `.json`.
+                    /// - SeeAlso: `.json`.
+                    public var json: Components.Schemas.DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema {
+                        get throws {
+                            switch self {
+                            case let .json(body):
+                                return body
+                            }
+                        }
+                    }
+                }
+                /// Received HTTP response body
+                public var body: Operations.UserRolePatch.Output.BadRequest.Body
+                /// Creates a new `BadRequest`.
+                ///
+                /// - Parameters:
+                ///   - body: Received HTTP response body
+                public init(body: Operations.UserRolePatch.Output.BadRequest.Body) {
+                    self.body = body
+                }
+            }
+            /// Bad Request
+            ///
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/patch(userRolePatch)/responses/400`.
+            ///
+            /// HTTP response code: `400 badRequest`.
+            case badRequest(Operations.UserRolePatch.Output.BadRequest)
+            /// The associated value of the enum case if `self` is `.badRequest`.
+            ///
+            /// - Throws: An error if `self` is not `.badRequest`.
+            /// - SeeAlso: `.badRequest`.
+            public var badRequest: Operations.UserRolePatch.Output.BadRequest {
+                get throws {
+                    switch self {
+                    case let .badRequest(response):
+                        return response
+                    default:
+                        try throwUnexpectedResponseStatus(
+                            expectedStatus: "badRequest",
                             response: self
                         )
                     }

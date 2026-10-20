@@ -163,6 +163,18 @@ Within a route feature, keep its files together under
   `items` and `total` to the response. Do not expose a parallel legacy `GET
   /identities/` list operation or call the HTTP operation `Search`; reserve
   `Query` for the transport endpoint and `Search` for the application action.
+- Implement partial updates consistently with System: every PATCH operation
+  has a required, entity-specific `updateMask` query parameter listing the
+  fields being changed, plus a PATCH-specific request schema and documented
+  `400` error response. Keep the generated operation, parameter/schema
+  declarations, OpenAPI output, gateway, and application edit input aligned.
+  The gateway must reject malformed masks and a missing body value for a
+  selected non-nullable field; fields omitted from the mask remain unchanged.
+  A selected nullable field with no body value is explicitly cleared. Carry
+  these semantics through the application/domain boundary with `FieldChange`
+  or `OptionalFieldChange`; do not collapse omission and clearing into plain
+  optionals. Composition tests should cover an update, an omitted/unmasked
+  field, clearing a nullable field, and invalid or incomplete masks.
 - Organize OpenAPI generator source like the System generator: one directory per
   entity and one subdirectory per operation (`Identity/Query/`, `Identity/Get/`,
   etc.), with the operation definition and its `PathItem` in separately named
@@ -248,6 +260,13 @@ generated Swift manually.
 - Give each entity its own `PathCollection`; the API-level `PathCollection`
   merges those maps. Keep `Document` limited to assembling metadata, paths, and
   components, and keep process/file output in `Entrypoint`.
+- Put the path item for an ID-addressed resource at the entity root as
+  `<Entity>+ID+PathItem.swift`, extending `<Entity>.ID`. Keep the corresponding
+  `ID.PathItem()` reference in the entity `PathCollection`. Do not put this
+  combined path item in `ID/` or name it `Get+PathItem`: it can collect GET,
+  PUT, PATCH, and other operations for the same `{id}` path. Operation-specific
+  `Get.Operation` and its response/schema remain in `Get/`; a single-operation
+  `Get.PathItem`, if needed, is distinct from the combined ID path item.
 - Generator targets should depend directly on `FeatherOpenAPIGenerator`,
   `OpenAPIKitCompat`, and `Yams` as needed. Prefer Feather's generator
   abstractions over direct `OpenAPIKit30` imports; only add a lower-level

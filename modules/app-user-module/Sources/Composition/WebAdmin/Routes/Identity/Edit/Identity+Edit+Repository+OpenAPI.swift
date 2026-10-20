@@ -47,18 +47,27 @@ extension Identity.Edit.Repository {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response = try await client.userIdentityPatch(
                     path: .init(userIdentityId: id),
+                    query: .init(updateMask: "name,roleIds,status"),
                     headers: .init(accept: [.init(contentType: .json)]),
                     body: .json(
                         .init(
                             name: payload.name,
-                            status: .init(rawValue: payload.status) ?? .invited,
-                            roleIds: payload.roleIds
+                            roleIds: payload.roleIds,
+                            status: .init(rawValue: payload.status) ?? .invited
                         )
                     )
                 )
                 switch response {
                 case .ok:
                     return
+                case .badRequest:
+                    throw OpenAPIRepositoryError.failure(
+                        .init(
+                            statusCode: 400,
+                            responseBody: nil,
+                            backendError: nil
+                        )
+                    )
                 case .notFound:
                     throw OpenAPIRepositoryError.notFound
                 case .unauthorized:

@@ -4,6 +4,7 @@
 //
 //  Created by Binary Birds on 2026. 06. 18.
 
+import FeatherDomain
 import Testing
 import UserModule
 
@@ -24,7 +25,7 @@ struct IdentityModelTests {
     @Test
     func identityUpdateChangesStatus() async throws {
         var identity = makeIdentity()
-        identity.update(status: .active)
+        identity.update(status: .set(.active))
         #expect(identity.status == .active)
     }
 

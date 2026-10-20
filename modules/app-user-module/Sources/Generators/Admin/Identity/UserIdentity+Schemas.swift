@@ -19,7 +19,6 @@ struct UserIdentityListItemSchema: ObjectSchemaRepresentable {
         ]
     }
 }
-
 struct UserIdentityRoleIdsField: ArraySchemaRepresentable {
     var items: (any SchemaRepresentable)? {
         UserRoleIdField().reference()
@@ -48,16 +47,6 @@ struct UserIdentityCreateSchema: ObjectSchemaRepresentable {
 }
 
 struct UserIdentityUpdateSchema: ObjectSchemaRepresentable {
-    var propertyMap: SchemaMap {
-        [
-            "name": UserIdentityNameField().reference(required: false),
-            "status": UserIdentityStatusField().reference(required: false),
-            "roleIds": UserIdentityRoleIdsField().reference(required: false),
-        ]
-    }
-}
-
-struct UserIdentityPatchSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
         [
             "name": UserIdentityNameField().reference(required: false),

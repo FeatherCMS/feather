@@ -538,33 +538,35 @@ extension Components {
                 case roleIds
             }
         }
+        /// - Remark: Generated from `#/components/schemas/UserIdentityUpdateMask`.
+        public typealias UserIdentityUpdateMask = Swift.String
         /// - Remark: Generated from `#/components/schemas/UserIdentityPatchSchema`.
         public struct UserIdentityPatchSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/UserIdentityPatchSchema/name`.
             public var name: Components.Schemas.UserIdentityNameField?
-            /// - Remark: Generated from `#/components/schemas/UserIdentityPatchSchema/status`.
-            public var status: Components.Schemas.UserIdentityStatusField?
             /// - Remark: Generated from `#/components/schemas/UserIdentityPatchSchema/roleIds`.
             public var roleIds: Components.Schemas.UserIdentityRoleIdsField?
+            /// - Remark: Generated from `#/components/schemas/UserIdentityPatchSchema/status`.
+            public var status: Components.Schemas.UserIdentityStatusField?
             /// Creates a new `UserIdentityPatchSchema`.
             ///
             /// - Parameters:
             ///   - name:
-            ///   - status:
             ///   - roleIds:
+            ///   - status:
             public init(
                 name: Components.Schemas.UserIdentityNameField? = nil,
-                status: Components.Schemas.UserIdentityStatusField? = nil,
-                roleIds: Components.Schemas.UserIdentityRoleIdsField? = nil
+                roleIds: Components.Schemas.UserIdentityRoleIdsField? = nil,
+                status: Components.Schemas.UserIdentityStatusField? = nil
             ) {
                 self.name = name
-                self.status = status
                 self.roleIds = roleIds
+                self.status = status
             }
             public enum CodingKeys: String, CodingKey {
                 case name
-                case status
                 case roleIds
+                case status
             }
         }
         /// - Remark: Generated from `#/components/schemas/UserRoleCreateSchema`.
@@ -860,13 +862,13 @@ extension Components {
                 case name
             }
         }
-        /// - Remark: Generated from `#/components/schemas/UserRolePatchSchema`.
-        public struct UserRolePatchSchema: Codable, Hashable, Sendable {
-            /// - Remark: Generated from `#/components/schemas/UserRolePatchSchema/name`.
+        /// - Remark: Generated from `#/components/schemas/UserRoleUpdateSchema`.
+        public struct UserRoleUpdateSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserRoleUpdateSchema/name`.
             public var name: Components.Schemas.UserRoleNameField?
-            /// - Remark: Generated from `#/components/schemas/UserRolePatchSchema/notes`.
+            /// - Remark: Generated from `#/components/schemas/UserRoleUpdateSchema/notes`.
             public var notes: Components.Schemas.UserRoleNotesField?
-            /// Creates a new `UserRolePatchSchema`.
+            /// Creates a new `UserRoleUpdateSchema`.
             ///
             /// - Parameters:
             ///   - name:
@@ -883,5 +885,34 @@ extension Components {
                 case notes
             }
         }
+        /// - Remark: Generated from `#/components/schemas/UserRoleUpdateMask`.
+        public typealias UserRoleUpdateMask = Swift.String
+        /// - Remark: Generated from `#/components/schemas/UserRolePatchSchema`.
+        public struct UserRolePatchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/UserRolePatchSchema/name`.
+            public var name: Components.Schemas.UserRoleNameFieldNullable?
+            /// - Remark: Generated from `#/components/schemas/UserRolePatchSchema/notes`.
+            public var notes: Components.Schemas.UserRoleNotesFieldNullable?
+            /// Creates a new `UserRolePatchSchema`.
+            ///
+            /// - Parameters:
+            ///   - name:
+            ///   - notes:
+            public init(
+                name: Components.Schemas.UserRoleNameFieldNullable? = nil,
+                notes: Components.Schemas.UserRoleNotesFieldNullable? = nil
+            ) {
+                self.name = name
+                self.notes = notes
+            }
+            public enum CodingKeys: String, CodingKey {
+                case name
+                case notes
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/UserRoleNameFieldNullable`.
+        public typealias UserRoleNameFieldNullable = Swift.String
+        /// - Remark: Generated from `#/components/schemas/UserRoleNotesFieldNullable`.
+        public typealias UserRoleNotesFieldNullable = Swift.String
     }
 }

@@ -1,6 +1,6 @@
 import FeatherOpenAPI
 
-extension Job.Get {
+extension Job.ID {
     struct PathItem: PathItemRepresentable {
         var get: (any OperationRepresentable)? { Job.Get.Operation() }
     }

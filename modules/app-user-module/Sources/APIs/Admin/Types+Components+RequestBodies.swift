@@ -34,7 +34,7 @@ extension Components {
         /// - Remark: Generated from `#/components/requestBodies/UserRoleUpdateRequestBody`.
         @frozen public enum UserRoleUpdateRequestBody: Sendable, Hashable {
             /// - Remark: Generated from `#/components/requestBodies/UserRoleUpdateRequestBody/content/application\/json`.
-            case json(Components.Schemas.UserRolePatchSchema)
+            case json(Components.Schemas.UserRoleUpdateSchema)
         }
         /// - Remark: Generated from `#/components/requestBodies/UserRolePatchRequestBody`.
         @frozen public enum UserRolePatchRequestBody: Sendable, Hashable {

@@ -17,23 +17,11 @@ public struct UserIdentityCreateRequestBody: RequestBodyRepresentable {
 
     public init() {}
 }
-
 public struct UserIdentityUpdateRequestBody: RequestBodyRepresentable {
 
     public var contentMap: ContentMap {
         [
             .json: Content(UserIdentityUpdateSchema().reference())
-        ]
-    }
-
-    public init() {}
-}
-
-public struct UserIdentityPatchRequestBody: RequestBodyRepresentable {
-
-    public var contentMap: ContentMap {
-        [
-            .json: Content(UserIdentityPatchSchema().reference())
         ]
     }
 
