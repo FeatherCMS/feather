@@ -46,6 +46,7 @@ func buildRouter(
         Response(status: .ok)
     }
 
+    let systemRoutes = WebAdmin.System.Router.Routes.standard
     var adminEvents = EventRegistry()
     WebFrontend.WebEventHandlers.register(in: &adminEvents)
     BlogFrontend.BlogEventHandlers.register(in: &adminEvents)
@@ -54,7 +55,10 @@ func buildRouter(
     WebAdminDashboardEventHandlers.register(in: &adminEvents)
     RedirectAdminDashboardEventHandlers.register(in: &adminEvents)
     AnalyticsAdminDashboardEventHandlers.register(in: &adminEvents)
-    AdminMenuEventHandlers.register(in: &adminEvents)
+    AdminMenuEventHandlers.register(
+        in: &adminEvents,
+        routes: systemRoutes
+    )
     AccountAdminMenuEventHandlers.register(in: &adminEvents)
     AuthAdminMenuEventHandlers.register(in: &adminEvents)
     UserAdminMenuEventHandlers.register(in: &adminEvents)
@@ -71,8 +75,9 @@ func buildRouter(
     let richContentEditorBlocks =
         (try? await adminEvents.trigger(
             event: AdminRichContentEditorBlockProvider(),
-            using: AdminEventContext(path: "", permissions: [])
-        ).compactMap { $0 }) ?? []
+            using: WebAdmin.Events.Context(path: "", permissions: [])
+        )
+        .compactMap { $0 }) ?? []
     let renderingEngine = DefaultRenderingEngine(
         publicOrigins: environment.publicOrigins,
         adminEvents: adminEvents,
@@ -156,7 +161,8 @@ func buildRouter(
         router: adminRouter,
         renderingEngine: renderingEngine,
         adminEvents: adminEvents,
-        apiBuilder: apiBuilder
+        apiBuilder: apiBuilder,
+        systemRoutes: systemRoutes
     )
 
     return router

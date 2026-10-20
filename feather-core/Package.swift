@@ -267,5 +267,13 @@ let package = Package(
             ],
             swiftSettings: swiftSettings
         ),
+        .testTarget(
+            name: "AdminTests",
+            dependencies: [
+                .target(name: "FeatherAdmin"),
+                .product(name: "Hummingbird", package: "hummingbird"),
+            ],
+            swiftSettings: swiftSettings
+        ),
     ]
 )

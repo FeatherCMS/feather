@@ -5,7 +5,7 @@ public enum NewsletterRichContentEditorEventHandlers {
     public static func register(in registry: inout EventRegistry) {
         registry.register(
             event: AdminRichContentEditorBlockProvider.self,
-            context: AdminEventContext.self
+            context: WebAdmin.Events.Context.self
         ) { _, _ in
             AdminRichContentEditorBlockDefinition(
                 type: "newsletter",

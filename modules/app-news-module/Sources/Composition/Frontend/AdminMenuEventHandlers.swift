@@ -4,8 +4,8 @@ public import FeatherModuleKit
 public enum NewsAdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {
         events.register(
-            event: AdminMenuItemProvider.self,
-            context: AdminEventContext.self
+            event: WebAdmin.Events.MenuItem.Provider.self,
+            context: WebAdmin.Events.Context.self
         ) { event, _ in
             guard event.menuKey == "news" else { return [] }
             return [

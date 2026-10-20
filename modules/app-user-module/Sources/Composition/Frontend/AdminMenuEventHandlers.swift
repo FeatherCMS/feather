@@ -5,8 +5,8 @@ import Hummingbird
 public enum UserAdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {
         events.register(
-            event: AdminMenuProvider.self,
-            context: AdminEventContext.self
+            event: WebAdmin.Events.Menu.Provider.self,
+            context: WebAdmin.Events.Context.self
         ) { _, _ in
             [
                 .init(
@@ -19,8 +19,8 @@ public enum UserAdminMenuEventHandlers {
             ]
         }
         events.register(
-            event: AdminMenuItemProvider.self,
-            context: AdminEventContext.self
+            event: WebAdmin.Events.MenuItem.Provider.self,
+            context: WebAdmin.Events.Context.self
         ) { event, _ in
             guard event.menuKey == "user" else { return [] }
             return [

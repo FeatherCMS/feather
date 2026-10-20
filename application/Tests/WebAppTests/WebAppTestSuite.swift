@@ -23,8 +23,11 @@ struct WebAppTestSuite {
         AuthAdminMenuEventHandlers.register(in: &events)
 
         let items = try await events.trigger(
-            event: AdminMenuItemProvider(menuKey: "auth"),
-            using: AdminEventContext(path: "/admin/auth/", permissions: [])
+            event: WebAdmin.Events.MenuItem.Provider(menuKey: "auth"),
+            using: WebAdmin.Events.Context(
+                path: "/admin/auth/",
+                permissions: []
+            )
         )
 
         let credentials = items.flatMap { $0 }

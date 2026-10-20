@@ -19,7 +19,8 @@ func buildAdminRoutes(
     router: any RouterMethods<AuthenticatedRequestContext>,
     renderingEngine: any RenderingEngine,
     adminEvents: any EventPublisher,
-    apiBuilder: APIBuilder
+    apiBuilder: APIBuilder,
+    systemRoutes: WebAdmin.System.Router.Routes
 ) {
     AuthFrontend.AdminAuth(
         apiBuilder: apiBuilder.auth,
@@ -33,12 +34,14 @@ func buildAdminRoutes(
     .route(on: router)
     AdminUser(apiBuilder: apiBuilder.user, renderingEngine: renderingEngine)
         .route(on: router)
-    AdminSystem(
-        apiBuilder: apiBuilder.system,
-        renderingEngine: renderingEngine,
-        adminEvents: adminEvents
-    )
-    .route(on: router)
+    WebAdmin.System
+        .Router(
+            apiBuilder: apiBuilder.system,
+            renderingEngine: renderingEngine,
+            adminEvents: adminEvents,
+            routes: systemRoutes
+        )
+        .route(on: router)
     AdminAnalytics(
         apiBuilder: apiBuilder.analytics,
         renderingEngine: renderingEngine

@@ -1,12 +1,12 @@
 public import FeatherModuleKit
 
 public struct AdminMenuCatalog: Sendable {
-    public let menus: [AdminMenuDefinition]
-    public let items: [AdminMenuItemDefinition]
+    public let menus: [WebAdmin.Events.Menu.Definition]
+    public let items: [WebAdmin.Events.MenuItem.Definition]
 
     public init(
-        menus: [AdminMenuDefinition],
-        items: [AdminMenuItemDefinition]
+        menus: [WebAdmin.Events.Menu.Definition],
+        items: [WebAdmin.Events.MenuItem.Definition]
     ) {
         self.menus = menus
         self.items = items
@@ -15,18 +15,18 @@ public struct AdminMenuCatalog: Sendable {
     public static func load(
         from events: any EventPublisher
     ) async throws -> Self {
-        let context = AdminEventContext(path: "", permissions: [])
+        let context = WebAdmin.Events.Context(path: "", permissions: [])
         let menus =
             try await events.trigger(
-                event: AdminMenuProvider(),
+                event: WebAdmin.Events.Menu.Provider(),
                 using: context
             )
             .flatMap { $0 }
-        var items: [AdminMenuItemDefinition] = []
+        var items: [WebAdmin.Events.MenuItem.Definition] = []
         for menu in menus {
             items +=
                 try await events.trigger(
-                    event: AdminMenuItemProvider(menuKey: menu.key),
+                    event: WebAdmin.Events.MenuItem.Provider(menuKey: menu.key),
                     using: context
                 )
                 .flatMap { $0 }

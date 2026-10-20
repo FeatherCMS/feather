@@ -391,18 +391,18 @@ private func normalizedPath(_ value: String) -> String {
 private func load(
     events: any EventPublisher
 ) async throws -> AdminMenuCatalog {
-    let context = AdminEventContext(path: "", permissions: [])
+    let context = WebAdmin.Events.Context(path: "", permissions: [])
     let menus =
         try await events.trigger(
-            event: AdminMenuProvider(),
+            event: WebAdmin.Events.Menu.Provider(),
             using: context
         )
         .flatMap { $0 }
-    var items: [AdminMenuItemDefinition] = []
+    var items: [WebAdmin.Events.MenuItem.Definition] = []
     for menu in menus {
         items +=
             try await events.trigger(
-                event: AdminMenuItemProvider(menuKey: menu.key),
+                event: WebAdmin.Events.MenuItem.Provider(menuKey: menu.key),
                 using: context
             )
             .flatMap { $0 }
