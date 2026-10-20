@@ -181,7 +181,9 @@ struct AnalyticsInsightsView: Component {
                 sectionHeading(
                     icon: "activity",
                     title: "Traffic summary",
-                    description: "Key request metrics for the selected range."
+                    description: page.source == .web
+                        ? "Key metrics for this range. Unique visitors are estimated from signed-in accounts or anonymous IP/browser signatures."
+                        : "Key request metrics for the selected range."
                 )
                 Div {
                     for item in metrics {
@@ -278,8 +280,9 @@ struct AnalyticsInsightsView: Component {
                     )
                 ),
                 ("Authenticated requests", "\(kpis.authenticatedRequests)"),
+                ("Estimated unique visitors", "\(kpis.uniqueVisitors)"),
                 ("Page views", "\(kpis.pageViews)"),
-                ("Searches", "\(kpis.searchRequests)"),
+                ("POST /search requests", "\(kpis.searchRequests)"),
                 ("Human requests (estimated)", "\(kpis.humanRequests)"),
                 ("Bot requests", "\(kpis.botRequests)"),
                 ("AI requests", "\(kpis.aiRequests)"),
@@ -316,20 +319,18 @@ struct AnalyticsInsightsView: Component {
             return [
                 breakdown("Top pages", overview.paths),
                 breakdown("Referrers", overview.referrers),
+                trafficTypeBreakdown,
                 breakdown("Operating systems", overview.operatingSystems),
                 breakdown("Browsers", overview.browsers),
                 breakdown("Device types", overview.deviceTypes),
                 breakdown("Languages", overview.languages),
                 breakdown("Language regions", overview.regions),
-                breakdown("404 pages", overview.notFoundPaths),
                 breakdown("5xx paths", overview.serverErrorPaths),
-                trafficTypeBreakdown,
             ]
         }
         return [
             breakdown("Top paths", overview.paths),
             breakdown("Methods", overview.methods),
-            breakdown("Status codes", overview.statusFamilies),
             breakdown("5xx paths", overview.serverErrorPaths),
         ]
     }
@@ -378,14 +379,14 @@ struct AnalyticsInsightsView: Component {
                         share: humanShare
                     ),
                     .init(
-                        label: "Bot",
-                        value: bots,
-                        share: botShare
-                    ),
-                    .init(
                         label: "AI",
                         value: ai,
                         share: aiShare
+                    ),
+                    .init(
+                        label: "Bot",
+                        value: bots,
+                        share: botShare
                     ),
                 ]
             )

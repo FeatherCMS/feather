@@ -234,6 +234,9 @@ components:
         humanRequests:
           type: integer
           example: 123
+        uniqueVisitors:
+          type: integer
+          example: 123
       required:
       - totalRequests
       - averageRequestsPerDay
@@ -246,6 +249,7 @@ components:
       - botRequests
       - aiRequests
       - humanRequests
+      - uniqueVisitors
     AnalyticsLogOverviewDailyListSchema:
       type: array
       items:
@@ -328,8 +332,8 @@ components:
           type: object
           example:
             source: web_app
-            method: GET
             search: /articles/hello-world/
+            method: GET
           properties:
             search:
               $ref: '#/components/schemas/AnalyticsLogPathField'

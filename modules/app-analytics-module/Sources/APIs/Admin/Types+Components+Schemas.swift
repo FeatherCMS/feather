@@ -243,6 +243,8 @@ extension Components {
             public var aiRequests: Swift.Int
             /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewKPISchema/humanRequests`.
             public var humanRequests: Swift.Int
+            /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewKPISchema/uniqueVisitors`.
+            public var uniqueVisitors: Swift.Int
             /// Creates a new `AnalyticsLogOverviewKPISchema`.
             ///
             /// - Parameters:
@@ -257,6 +259,7 @@ extension Components {
             ///   - botRequests:
             ///   - aiRequests:
             ///   - humanRequests:
+            ///   - uniqueVisitors:
             public init(
                 totalRequests: Swift.Int,
                 averageRequestsPerDay: Swift.Double,
@@ -268,7 +271,8 @@ extension Components {
                 searchRequests: Swift.Int,
                 botRequests: Swift.Int,
                 aiRequests: Swift.Int,
-                humanRequests: Swift.Int
+                humanRequests: Swift.Int,
+                uniqueVisitors: Swift.Int
             ) {
                 self.totalRequests = totalRequests
                 self.averageRequestsPerDay = averageRequestsPerDay
@@ -281,6 +285,7 @@ extension Components {
                 self.botRequests = botRequests
                 self.aiRequests = aiRequests
                 self.humanRequests = humanRequests
+                self.uniqueVisitors = uniqueVisitors
             }
             public enum CodingKeys: String, CodingKey {
                 case totalRequests
@@ -294,6 +299,7 @@ extension Components {
                 case botRequests
                 case aiRequests
                 case humanRequests
+                case uniqueVisitors
             }
         }
         /// - Remark: Generated from `#/components/schemas/AnalyticsLogOverviewDailyListSchema`.

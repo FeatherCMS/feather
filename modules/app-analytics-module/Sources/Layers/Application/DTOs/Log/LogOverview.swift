@@ -42,6 +42,7 @@ public struct LogOverview: DTO {
         public let botRequests: Int
         public let aiRequests: Int
         public let humanRequests: Int
+        public let uniqueVisitors: Int
 
         package init(
             totalRequests: Int,
@@ -54,7 +55,8 @@ public struct LogOverview: DTO {
             searchRequests: Int,
             botRequests: Int,
             aiRequests: Int,
-            humanRequests: Int
+            humanRequests: Int,
+            uniqueVisitors: Int
         ) {
             self.totalRequests = totalRequests
             self.averageRequestsPerDay = averageRequestsPerDay
@@ -67,6 +69,7 @@ public struct LogOverview: DTO {
             self.botRequests = botRequests
             self.aiRequests = aiRequests
             self.humanRequests = humanRequests
+            self.uniqueVisitors = uniqueVisitors
         }
     }
 

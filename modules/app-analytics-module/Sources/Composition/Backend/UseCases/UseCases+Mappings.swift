@@ -132,7 +132,8 @@ extension AdminAPIGateway {
                 searchRequests: overview.kpis.searchRequests,
                 botRequests: overview.kpis.botRequests,
                 aiRequests: overview.kpis.aiRequests,
-                humanRequests: overview.kpis.humanRequests
+                humanRequests: overview.kpis.humanRequests,
+                uniqueVisitors: overview.kpis.uniqueVisitors
             ),
             daily: overview.daily.map(map),
             statusFamilies: overview.statusFamilies.map(map),

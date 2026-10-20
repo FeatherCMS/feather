@@ -45,6 +45,7 @@ struct AnalyticsLogOverviewKPISchema: ObjectSchemaRepresentable {
             "botRequests": AnalyticsLogOverviewKPIIntField(),
             "aiRequests": AnalyticsLogOverviewKPIIntField(),
             "humanRequests": AnalyticsLogOverviewKPIIntField(),
+            "uniqueVisitors": AnalyticsLogOverviewKPIIntField(),
         ]
     }
 }

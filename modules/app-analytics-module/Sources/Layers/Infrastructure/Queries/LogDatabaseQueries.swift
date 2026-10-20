@@ -76,6 +76,7 @@ public struct LogDatabaseQueries: LogQueries {
         let botRequests: Int?
         let aiRequests: Int?
         let humanRequests: Int?
+        let uniqueVisitors: Int?
         let itemCount: Int?
     }
 
@@ -271,12 +272,23 @@ public struct LogDatabaseQueries: LogQueries {
         from: Date,
         to: Date,
         columns: Set<String>,
+        dashboardOnly: Bool,
         notFoundOnly: Bool = false
     ) async throws -> [OverviewSummaryRow] {
         let fromTimestamp = from.timeIntervalSince1970
         let toTimestamp = to.timeIntervalSince1970
         let accountIDSQL = overviewOptionalColumnSQL(
             "account_id",
+            columns: columns,
+            fallback: "NULL::text"
+        )
+        let ipSQL = overviewOptionalColumnSQL(
+            "ip",
+            columns: columns,
+            fallback: "NULL::text"
+        )
+        let userAgentSQL = overviewOptionalColumnSQL(
+            "user_agent",
             columns: columns,
             fallback: "NULL::text"
         )
@@ -295,8 +307,6 @@ public struct LogDatabaseQueries: LogQueries {
             columns: columns,
             fallback: "NULL::text"
         )
-        let authenticatedSQL =
-            "(\(accountIDSQL) IS NOT NULL) AS is_authenticated"
         let trafficTypeSQL = notFoundOnly
             ? "'human'::text"
             : overviewTrafficCategorySQL(source: source, columns: columns)
@@ -320,16 +330,46 @@ public struct LogDatabaseQueries: LogQueries {
         let chartRequestPredicateSQL =
             source == "web_app" ? "is_page_view" : "TRUE"
         let webSourceSQL = source == "web_app" ? "TRUE" : "FALSE"
+        let visitorKeySQL: String
+        let uniqueVisitorsAggregateSQL: String
+        if source == "web_app",
+            !dashboardOnly,
+            !notFoundOnly,
+            columns.isSuperset(of: ["method", "response_code"])
+        {
+            visitorKeySQL = """
+                CASE
+                    WHEN \(accountIDSQL) IS NOT NULL
+                        THEN 'account:' || \(accountIDSQL)
+                    WHEN \(ipSQL) IS NOT NULL
+                        AND \(userAgentSQL) IS NOT NULL
+                        THEN 'anonymous:' || MD5(
+                            \(ipSQL) || CHR(31) || \(userAgentSQL)
+                        )
+                    ELSE NULL
+                END
+                """
+            uniqueVisitorsAggregateSQL = """
+                COUNT(DISTINCT visitor_key) FILTER (
+                    WHERE is_page_view
+                ) AS unique_visitors
+                """
+        }
+        else {
+            visitorKeySQL = "NULL::text"
+            uniqueVisitorsAggregateSQL = "0::bigint AS unique_visitors"
+        }
 
         let query: DatabaseQuery = #"""
-            WITH base AS MATERIALIZED (
+            WITH base AS (
                 SELECT
                     date_trunc('day', created_at) AS bucket,
-                    \#(unescaped: authenticatedSQL),
+                    (\#(unescaped: accountIDSQL) IS NOT NULL) AS is_authenticated,
                     \#(unescaped: responseCodeSQL) AS response_code,
                     \#(unescaped: methodSQL) AS method,
                     \#(unescaped: pathSQL) AS path,
-                    \#(unescaped: trafficTypeSQL) AS traffic_type
+                    \#(unescaped: trafficTypeSQL) AS traffic_type,
+                    \#(unescaped: visitorKeySQL) AS visitor_key
                 FROM analytics_log
                 WHERE created_at >= TO_TIMESTAMP(\#(fromTimestamp))
                     AND created_at < TO_TIMESTAMP(\#(toTimestamp))
@@ -381,7 +421,8 @@ public struct LogDatabaseQueries: LogQueries {
                     COUNT(*) FILTER (
                         WHERE \#(unescaped: webSourceSQL)
                             AND traffic_type = 'human'
-                    ) AS human_requests
+                    ) AS human_requests,
+                    \#(unescaped: uniqueVisitorsAggregateSQL)
                 FROM events
                 GROUP BY GROUPING SETS ((bucket), ())
             ),
@@ -409,7 +450,8 @@ public struct LogDatabaseQueries: LogQueries {
                     search_requests,
                     bot_requests,
                     ai_requests,
-                    human_requests
+                    human_requests,
+                    unique_visitors
                 FROM aggregates
                 WHERE is_total
 
@@ -428,7 +470,8 @@ public struct LogDatabaseQueries: LogQueries {
                     NULL::bigint AS search_requests,
                     NULL::bigint AS bot_requests,
                     NULL::bigint AS ai_requests,
-                    NULL::bigint AS human_requests
+                    NULL::bigint AS human_requests,
+                    NULL::bigint AS unique_visitors
                 FROM buckets
                 LEFT JOIN aggregates
                     ON aggregates.bucket = buckets.bucket
@@ -450,6 +493,7 @@ public struct LogDatabaseQueries: LogQueries {
                 bot_requests,
                 ai_requests,
                 human_requests,
+                unique_visitors,
                 NULL::bigint AS item_count
             FROM summary_rows
             ORDER BY category, bucket NULLS FIRST;
@@ -500,6 +544,10 @@ public struct LogDatabaseQueries: LogQueries {
                     ),
                     humanRequests: try row.decode(
                         column: "human_requests",
+                        as: Int?.self
+                    ),
+                    uniqueVisitors: try row.decode(
+                        column: "unique_visitors",
                         as: Int?.self
                     ),
                     itemCount: try row.decode(
@@ -555,7 +603,11 @@ public struct LogDatabaseQueries: LogQueries {
                 .init(category: "paths", column: "path_label")
             )
         }
-        if !notFoundOnly, !dashboardOnly, columns.contains("response_code") {
+        if source == "web_app",
+            !notFoundOnly,
+            !dashboardOnly,
+            columns.contains("response_code")
+        {
             baseSelectSQL.append(
                 """
                 CASE
@@ -580,7 +632,7 @@ public struct LogDatabaseQueries: LogQueries {
         }
 
         let textDimensions: [(String, String, String, Bool)] = [
-            ("referer", "referrers", "referer_label", !dashboardOnly),
+            ("referer", "referrers", "referer_label", true),
             ("browser_name", "browsers", "browser_label", true),
             ("os_name", "operatingSystems", "os_label", true),
             ("device_type", "deviceTypes", "device_label", true),
@@ -589,7 +641,9 @@ public struct LogDatabaseQueries: LogQueries {
         ]
         for (column, category, alias, enabled) in textDimensions
         where !notFoundOnly
-            && enabled && columns.contains(column) {
+            && source == "web_app"
+            && enabled
+            && columns.contains(column) {
             let labelSQL =
                 column == "referer"
                 ? "COALESCE(NULLIF(referer, ''), '(Direct)')"
@@ -666,7 +720,7 @@ public struct LogDatabaseQueries: LogQueries {
         }
 
         let query: DatabaseQuery = #"""
-            WITH base AS MATERIALIZED (
+            WITH base AS (
                 SELECT
                     \#(unescaped: baseSelectListSQL),
                     \#(unescaped: trafficTypeSQL) AS traffic_type
@@ -757,6 +811,7 @@ public struct LogDatabaseQueries: LogQueries {
                 NULL::bigint AS bot_requests,
                 NULL::bigint AS ai_requests,
                 NULL::bigint AS human_requests,
+                NULL::bigint AS unique_visitors,
                 item_count
             FROM ranked
             WHERE category_rank <=
@@ -811,6 +866,10 @@ public struct LogDatabaseQueries: LogQueries {
                         column: "human_requests",
                         as: Int?.self
                     ),
+                uniqueVisitors: try row.decode(
+                    column: "unique_visitors",
+                    as: Int?.self
+                ),
                     itemCount: try row.decode(
                         column: "item_count",
                         as: Int?.self
@@ -1221,6 +1280,7 @@ public struct LogDatabaseQueries: LogQueries {
             from: from,
             to: to,
             columns: columns,
+            dashboardOnly: query.dashboardOnly,
             notFoundOnly: query.notFoundOnly
         )
         let breakdownRows = try await decodeOverviewBreakdowns(
@@ -1290,7 +1350,8 @@ public struct LogDatabaseQueries: LogQueries {
                 searchRequests: totalRow?.searchRequests ?? 0,
                 botRequests: totalRow?.botRequests ?? 0,
                 aiRequests: totalRow?.aiRequests ?? 0,
-                humanRequests: totalRow?.humanRequests ?? 0
+                humanRequests: totalRow?.humanRequests ?? 0,
+                uniqueVisitors: totalRow?.uniqueVisitors ?? 0
             ),
             daily: daily,
             statusFamilies: mappedBreakdown("statusFamilies", total: total),
