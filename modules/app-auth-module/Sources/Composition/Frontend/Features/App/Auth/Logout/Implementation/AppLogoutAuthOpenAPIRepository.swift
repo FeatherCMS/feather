@@ -1,5 +1,5 @@
 import AuthAppAPI
-import FeatherAdmin
+import FeatherWebAdmin
 import OpenAPIRuntime
 
 struct AppLogoutAuthOpenAPIRepository: AppLogoutAuthRepository {

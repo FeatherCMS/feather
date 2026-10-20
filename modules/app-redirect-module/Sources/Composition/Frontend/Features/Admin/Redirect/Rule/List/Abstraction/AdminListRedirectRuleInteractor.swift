@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import RedirectAdminAPI
 import RedirectContracts
 

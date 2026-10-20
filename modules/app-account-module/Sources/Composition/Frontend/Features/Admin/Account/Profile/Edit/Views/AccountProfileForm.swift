@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import Hummingbird
 import WebBuilders
@@ -6,14 +6,14 @@ import WebComponents
 
 struct AccountProfileForm: Component {
 
-    struct FieldState: FeatherAdmin.Object {
+    struct FieldState: FeatherWebAdmin.Object {
         var key: String
         var label: String
         var value: String?
         var error: String?
     }
 
-    struct State: FeatherAdmin.Object {
+    struct State: FeatherWebAdmin.Object {
         var firstName: FieldState
         var lastName: FieldState
         var profileImageAssetId: FieldState

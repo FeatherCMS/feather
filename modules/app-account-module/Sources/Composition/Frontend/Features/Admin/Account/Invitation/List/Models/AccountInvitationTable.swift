@@ -1,6 +1,6 @@
 import AccountAdminAPI
 import AccountContracts
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import Hummingbird
 import SGML

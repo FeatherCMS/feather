@@ -35,20 +35,20 @@ public struct TableSeedMigration: DatabaseMigration {
         on connection: any DatabaseConnection
     ) async throws {
         let rootPassword = try await BCryptPasswordHasher().hash("root")
-        let identityRepository = IdentityDatabaseRepository(context: context)
+        let identityRepository = Identity.Repository.Database(context: context)
         let authEmailRepository = AuthEmailDatabaseRepository(context: context)
         let credentialRepository = CredentialDatabaseRepository(
             context: context
         )
 
-        let roleRepository = RoleDatabaseRepository(context: context)
+        let roleRepository = Role.Repository.Database(context: context)
         let rolePermissionRepository = RolePermissionDatabaseRepository(
             context: context
         )
         let roleDefinitions =
             try await events.trigger(
-                event: UserRoleSeedProvider(),
-                using: UserEventContext(idGenerator: context.idGenerator)
+                event: Role.Event.Seed.Provider(),
+                using: UserModule.Event.Context(idGenerator: context.idGenerator)
             )
             .flatMap { $0 }
 

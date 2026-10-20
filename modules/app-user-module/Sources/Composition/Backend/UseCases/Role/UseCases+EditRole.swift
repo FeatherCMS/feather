@@ -1,15 +1,16 @@
 import FeatherInfrastructure
 import UserApplication
 import UserInfrastructure
+import UserModule
 
 extension UseCases {
 
-    func makeEditRole() -> EditRole {
+    func makeEditRole() -> Role.Edit.UseCase {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                WriteRole(
-                    role: RoleDatabaseRepository(context: context)
+                Role.Repository.Scope(
+                    role: Role.Repository.Database(context: context)
                 )
             }
         )

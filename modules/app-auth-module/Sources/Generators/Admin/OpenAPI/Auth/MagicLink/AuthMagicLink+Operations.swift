@@ -2,7 +2,7 @@ import AuthSharedOpenAPIGenerator
 public import FeatherOpenAPI
 public import FeatherOpenAPIGenerator
 import OpenAPIKit30
-import UserSharedOpenAPIGenerator
+import UserOpenAPIGeneratorSupport
 
 public protocol AuthMagicLinkOperation: BearerProtectedOperation {
 }

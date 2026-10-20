@@ -190,7 +190,7 @@ let package = Package(
         .target(
             name: "NewsletterFrontend",
             dependencies: [
-                .product(name: "FeatherAdmin", package: "feather-core"),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
 
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),

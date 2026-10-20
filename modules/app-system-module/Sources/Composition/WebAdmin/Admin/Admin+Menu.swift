@@ -1,4 +1,4 @@
-public import FeatherAdmin
+public import FeatherWebAdmin
 public import FeatherModuleKit
 public import Hummingbird
 

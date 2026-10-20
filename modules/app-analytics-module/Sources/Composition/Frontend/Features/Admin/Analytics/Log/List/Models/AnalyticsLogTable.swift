@@ -1,7 +1,7 @@
 import AnalyticsAdminAPI
 import AnalyticsContracts
 import CSS
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import Hummingbird
 import SGML

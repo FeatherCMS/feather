@@ -1,7 +1,7 @@
 import AuthSharedOpenAPIGenerator
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import UserSharedOpenAPIGenerator
+import UserOpenAPIGeneratorSupport
 
 struct AuthCredentialDetailResponse: JSONResponseRepresentable {
     var description: String = "User credential response"

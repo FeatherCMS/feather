@@ -1,7 +1,7 @@
 public import AnalyticsAdminAPI
 public import AnalyticsAppAPI
 import AsyncHTTPClient
-public import FeatherAdmin
+public import FeatherWebAdmin
 public import Foundation
 import NIOCore
 import OpenAPIAsyncHTTPClient

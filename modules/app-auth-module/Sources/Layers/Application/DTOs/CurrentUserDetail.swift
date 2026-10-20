@@ -9,7 +9,7 @@ public import FeatherApplication
 public import UserApplication
 
 public struct CurrentUserDetail: DTO {
-    public var user: IdentityDetail
+    public var user: Identity.Detail.Output
     public var roles: [String]
     public var permissions: [String]
 }

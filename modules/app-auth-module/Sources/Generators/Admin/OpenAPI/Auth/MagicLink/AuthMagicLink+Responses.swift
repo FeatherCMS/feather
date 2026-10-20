@@ -1,7 +1,7 @@
 import AuthSharedOpenAPIGenerator
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import UserSharedOpenAPIGenerator
+import UserOpenAPIGeneratorSupport
 
 struct AuthMagicLinkDetailResponse: JSONResponseRepresentable {
     var description: String = "User magic link response"

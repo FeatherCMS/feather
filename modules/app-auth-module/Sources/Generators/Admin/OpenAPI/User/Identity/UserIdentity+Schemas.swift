@@ -9,7 +9,7 @@ import AuthSharedOpenAPIGenerator
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 import OpenAPIKit30
-import UserSharedOpenAPIGenerator
+import UserOpenAPIGeneratorSupport
 
 struct UserAuthSessionTimestampField: DoubleSchemaRepresentable {}
 

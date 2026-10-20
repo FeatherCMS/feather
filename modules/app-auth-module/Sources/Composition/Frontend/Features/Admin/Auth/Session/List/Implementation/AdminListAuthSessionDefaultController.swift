@@ -1,5 +1,5 @@
 import AuthContracts
-import FeatherAdmin
+import FeatherWebAdmin
 import Hummingbird
 
 struct AdminListAuthSessionDefaultController:

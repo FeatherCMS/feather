@@ -1,6 +1,6 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import Hummingbird
-import UserFrontend
+import UserWebAdmin
 
 struct AdminRemoveAuthSession {
     let controller: any AdminRemoveAuthSessionController

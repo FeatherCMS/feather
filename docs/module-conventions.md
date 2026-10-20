@@ -1,0 +1,369 @@
+# Feather Module Conventions
+
+This document records the module structure currently used by `app-system-module`
+and the migration checks that were easy to miss while aligning
+`app-user-module`. Use it as the baseline when aligning or migrating another
+Feather application module. Keep domain-specific names and behavior; copy the
+organization and namespace patterns, not System's terminology. Treat it as a
+checklist, not a visual comparison of a few representative files.
+
+## Package and target boundaries
+
+Use separate products/targets for the module namespace, domain, application,
+infrastructure, each generated API, backend composition, and WebAdmin
+composition. Add an OpenAPI generator executable only for each API the module
+owns. Do not create a generator, generated API, API client, or API-client
+dependency for an API the module does not provide. If schemas are deliberately
+shared with another module's generator, keep only the smallest dedicated schema
+support target and document its consumers.
+
+Keep the package's Swift tools/minimum toolchain version consistent with the
+repository baseline (currently Swift 6.3). Docker test images must use a
+compatible toolchain and copy every local package path dependency required by
+`Package.swift`, not just the module under test and Feather Core.
+
+The intended dependency direction is:
+
+```text
+Module <- Domain <- Application <- Infrastructure
+                           |             |
+                           +------ Backend composition
+Module + generated Admin API + FeatherWebAdmin -> WebAdmin composition
+```
+
+Keep driver-specific dependencies in infrastructure targets that implement a
+driver-backed adapter; test targets should not depend on a concrete database
+server/client package. Package target names use the module name (`UserModule`, `UserDomain`,
+`UserApplication`, `UserInfrastructure`, `UserAdminAPI`, `UserBackend`, and
+`UserWebAdmin` for User). Test targets live under `Tests/Layers/...` and
+`Tests/Composition/...`, mirroring the layer they exercise.
+
+Infrastructure database tests should use the shared `FeatherDatabaseTesting`
+mock connection and `FeatherDBALTesting` mock platform. They can assert query
+mapping and migration behavior without starting PostgreSQL or another server.
+Keep real-driver behavior tests in the corresponding database-driver package or
+the repository's dedicated integration-test suite. Composition HTTP tests
+should exercise the real generated API router and gateway with the mock database
+client and mock authorizer; assert HTTP status/body and consume the expected
+mock query responses, rather than asserting SQL details at the API boundary.
+Consequently, a module's Docker test service should run package tests without
+database/certificate services unless a deliberately separate integration-test
+job requires them.
+
+## Source layout
+
+```text
+Sources/
+  Module/                         # Public domain namespace and module events
+  Layers/
+    Domain/<Entity>/              # Model and repository contract
+    Application/<Entity>/         # Use cases, inputs, outputs, scopes, queries
+    Infrastructure/<Entity>/      # Database repository/query/table adapters
+    Infrastructure/               # Cross-entity migrations and event handlers
+  APIs/<API>/                      # Generated Swift; do not hand-edit
+  Composition/
+    Backend/                       # HTTP gateway and use-case factories
+    WebAdmin/                      # Admin API client, events, route composition
+  Generators/<API>/                # Generator for the module-owned API
+Tests/
+  Layers/{Domain,Application,Infrastructure}/
+  Composition/{Backend,WebAdmin}/
+```
+
+Keep entity-specific files in that entity's directory. Put cross-entity
+infrastructure such as the aggregate migration at the infrastructure root.
+Within a route feature, keep its files together under
+`Composition/WebAdmin/Routes/<Entity>/<Operation>/`.
+
+## Namespaces and symbols
+
+- The module target owns a top-level enum named after the module, such as
+  `UserModule`; define domain namespace enums such as `Identity` and `Role`
+  there. Avoid parallel flat names when a type naturally belongs to an entity.
+- A SwiftPM target/product name does not automatically namespace declarations.
+  Decide explicitly which target owns each public namespace and keep
+  composition-only namespaces out of the module/domain target when that would
+  make them visible to unrelated layers. Do not add a second redundant module
+  segment when the imported target/module already establishes that context.
+- When moving a declaration between targets, update its namespace owner,
+  imports, package dependencies, and every consumer together. A successful
+  build of the defining target alone does not prove the public API migration is
+  complete.
+- Put the model at `<Entity>.Model`; put its repository contract at
+  `<Entity>.Repository.Interface`.
+- Nest application operations under their entity and operation, for example
+  `Identity.Add.Input`, `Identity.Add.Output`, and `Identity.Add.UseCase`.
+  Read/search contracts belong under named query namespaces, not in unrelated
+  list operation types. Scope/action types should also be nested with the
+  operation or query that owns them.
+- Keep request and response models separate from the use-case implementation:
+  `Identity.Add.Input`, `Identity.Add.Output`, and `Identity.Add.UseCase` are
+  sibling declarations, normally in `Identity+Add+Input.swift`,
+  `Identity+Add+Output.swift`, and `Identity+Add+UseCase.swift`. Do not nest
+  `Input` in `UseCase`, and do not put request criteria on `Output`.
+- Search request filters belong to `Identity.Search.Input.Query`; result rows
+  and the total count belong to `Identity.Search.Output`. This keeps request
+  criteria independent of response shape and makes a search a single
+  application operation.
+- Put permission keys below the owning entity (`Identity.Permissions`), and
+  aggregate module registration through the module namespace, e.g.
+  `UserModule.Permissions`. Avoid parallel flat permission types per entity.
+- Put repository/query abstractions below the entity, with implementations
+  under the same abstraction: `Identity.Repository.Interface` and
+  `Identity.Repository.Database`; `Identity.Query.Interface` and
+  `Identity.Query.Database`. Put shared executor scopes under the abstraction
+  they bind to (`Identity.Query.Scope`, `Identity.Repository.Scope`); use
+  operation-specific scopes when their capabilities differ. Name files to
+  match, e.g.
+  `Identity+Repository+Interface.swift` and `Identity+Query+Database.swift`.
+- Put database tables below the entity (`Identity.Table`) and name cross-entity
+  infrastructure files by responsibility (`Table+Migration.swift`,
+  `Table+SeedMigration.swift`). Avoid `Database/` subfolders that merely repeat
+  the infrastructure layer name.
+- Keep authorization scopes/actions close to the operation or query that uses
+  them. Check generic executor scope types and their composition construction;
+  don't leave flat `ReadIdentity`/`WriteRole` types behind after moving the
+  use-case namespace.
+- Put module-wide events under the module namespace (`UserModule.Event`) and
+  layer-specific registration below it (`UserModule.Event.Handlers` in
+  Infrastructure). Put entity events under the entity (`Identity.Event`) and
+  seed contracts below their entity event namespace
+  (`Identity.Event.Seed.Provider|Definition|Status`). Put shared execution
+  context under `UserModule.Event.Context`. Keep event and seed responsibilities
+  with their owner instead of adding competing flat `User...Event` names. This
+  applies to publishers, registry keys, migrations, mocks, and downstream
+  modules—not only the event declaration. For example, all consumers of the
+  identity-created event use `Identity.Event.DidInsert`, and role seed
+  consumers use `Role.Event.Seed.Provider`.
+- Put persistence implementations under the corresponding abstraction, for
+  example `<Entity>.Repository.Database` and `<Entity>.Search.Database`.
+- Keep generated API and composition namespaces explicit: `UserAdminAPI`,
+  `UserBackend`, and `UserWebAdmin`. Within WebAdmin, route types extend the
+  domain entity namespace (`Identity.List.Controller.Interface|Default`,
+  `Identity.List.Repository.Interface|OpenAPI`, `Identity.List.Router`). The
+  route namespace owns its abstraction and implementation; avoid flat `Admin...`
+  names or an extra `Feature` wrapper where a route router can construct its
+  collaborators and register the route.
+- Prefer one source file per meaningful nested declaration, with filename
+  segments matching its namespace, e.g. `Identity+Add+Input.swift` and
+  `Identity+Repository.swift`. Do not add `Typealias` compatibility shims for
+  a deliberate rename.
+- Keep filenames, declared type names, and namespace paths in sync after moves.
+  Remove stale file-header names and old directory names, and search for the old
+  symbol/path across the entire repository, generated-code boundaries aside.
+- Use operation names consistently across layers (`Add`, `Edit`, `Detail`,
+  `List`, `Search`, `Remove`). Avoid mixing synonyms such as `Create`/`Add`,
+  `Update`/`Edit`, or `Get`/`Detail` unless the external API contract requires
+  that distinction.
+- Keep the HTTP/OpenAPI operation named `Query` when it accepts a query
+  document and returns a filtered, paginated result (for example,
+  `POST /identities/query`, operation ID `userIdentityQuery`). The application
+  use-case remains `Identity.Search`: gateways translate the generated `Query`
+  request into `Search.Input`, invoke `Search.UseCase` once, and map its
+  `items` and `total` to the response. Do not expose a parallel legacy `GET
+  /identities/` list operation or call the HTTP operation `Search`; reserve
+  `Query` for the transport endpoint and `Search` for the application action.
+- Organize OpenAPI generator source like the System generator: one directory per
+  entity and one subdirectory per operation (`Identity/Query/`, `Identity/Get/`,
+  etc.), with the operation definition and its `PathItem` in separately named
+  files. Keep entity-level `PathCollection` and shared operation/tag/parameter
+  declarations beside the entity, and merge entity path collections from the
+  API-level `PathCollection`. Use explicit operation IDs matching the transport
+  operation name, regenerate YAML and Swift API sources from the generator, and
+  remove obsolete generated operations rather than preserving compatibility
+  routes by accident.
+
+## Composition and WebAdmin
+
+Backend gateways adapt generated HTTP operations to application use cases;
+use-case factories are grouped under `UseCases/<Entity>/`. Keep API mapping
+helpers close to the operation or in a narrowly scoped entity mapping file.
+The backend composition target owns backend gateway/factory namespaces; the
+WebAdmin target owns WebAdmin client, event, and route composition namespaces.
+Avoid declaring a WebAdmin-only root namespace in a target imported by backend
+or domain code just to make frontend names shorter.
+
+WebAdmin route composition owns route construction and passes its configured
+`AppEnvironment` and rendering engine to feature routers. Each feature router
+owns its route definitions and registration. Controllers handle HTTP boundary
+concerns; interactors coordinate; repositories adapt the generated API client;
+presenters prepare view state. Build the API client from the authenticated
+request context at the request boundary rather than sharing request-specific
+credentials globally.
+
+### WebAdmin namespace and route ownership
+
+- A composition target is already a Swift module namespace to external clients.
+  Do not add a same-named namespace enum inside it (for example, no
+  `UserWebAdmin` enum in the `UserWebAdmin` target). Declare target-level
+  composition roots such as `API` and `Router` directly. When a WebAdmin target
+  extends an existing domain/module namespace, extend that namespace in this
+  target rather than introducing another wrapper; for example,
+  `UserModule.Event.Handlers`.
+- Define feature abstractions on the feature namespace in their own files:
+  `extension Identity.Add { enum Controller {} }`, followed by the protocol in
+  `extension Identity.Add.Controller`. Keep the `Default` implementation in
+  the same nested namespace and use `struct Default: Interface`, not a repeated
+  fully qualified conformance when the lexical scope already supplies it.
+  Apply the same pattern to `Interactor`, `Presenter`, and `Repository`.
+- When a feature needs more than one repository, nest the specialized one under
+  the repository namespace, e.g. `Identity.Add.Repository.Role.Interface` and
+  `Identity.Add.Repository.Role.OpenAPI`. Do not create a sibling
+  `RoleRepository` namespace. Match filenames to that nesting, such as
+  `Identity+Add+Repository+Role+OpenAPI.swift`.
+- Each entity owns a `Router` and nested `Router.Routes` value. Routes are
+  instance configuration built from a `WebRoute` root, not global static route
+  constants. The top-level WebAdmin router supplies roots and shared
+  configuration once; entity routers derive child routes and pass their route
+  values to feature routers, presenters, and components that need links.
+- Feature routers own both handler construction and Hummingbird registration.
+  Controllers implement handler behavior but should not be responsible for
+  registering routes. The entity router composes its child feature routers.
+- Keep route parameters in `WebRoute` templates and interpolate validated
+  values through its path-building API. Do not construct paths by joining
+  strings or reaching for Hummingbird `RouterPath` throughout feature code.
+- Prefer names relative to the current extension scope. Inside
+  `extension Identity.Add`, write `Controller.Default`, not
+  `Identity.Add.Controller.Default`; inside `extension Controller`, write
+  `Default: Interface`. Keep full qualification where the declaration is
+  outside the relevant namespace or where it clarifies a cross-entity use.
+
+## OpenAPI generators and generated output
+
+Only generator source is handwritten under `Sources/Generators/<API>/`; output
+belongs under `Sources/APIs/<API>/`. The generator target owns OpenAPI parsing
+and YAML dependencies. A module without an app-facing API must not retain an
+App generator, App API target, app-facing API client, or WebAdmin app-client
+builder just because another module has them. Generated targets should consume
+the runtime package and apply the same targeted warning suppression/configuration
+as the System API.
+Regenerate through the module's checked-in script/Makefile and never patch the
+generated Swift manually.
+
+- Mirror the System generator organization: each API entity has a namespace
+  enum in its own directory, operations are nested under semantic operation
+  namespaces (for example `Identity.Post.Operation`), and path items are
+  associated with those operations/entities rather than declared as flat
+  `UserIdentity...PathItems` types.
+- Give each entity its own `PathCollection`; the API-level `PathCollection`
+  merges those maps. Keep `Document` limited to assembling metadata, paths, and
+  components, and keep process/file output in `Entrypoint`.
+- Generator targets should depend directly on `FeatherOpenAPIGenerator`,
+  `OpenAPIKitCompat`, and `Yams` as needed. Prefer Feather's generator
+  abstractions over direct `OpenAPIKit30` imports; only add a lower-level
+  dependency/import when the source actually needs an API not exposed by the
+  Feather abstraction.
+- Ordinary WebAdmin/API composition and infrastructure tests should use the
+  driver-independent database mock from Feather testing packages. Do not add a
+  concrete database driver dependency just to exercise repository-backed HTTP
+  handlers in tests. Keep a driver dependency only when production source in
+  that target genuinely uses driver-specific APIs; otherwise move dialect
+  selection to composition/platform configuration and remove the driver from
+  the module package.
+- Add a small composition HTTP test for each important API surface using the
+  mock database connection, mock platform, mock ID generator, and mock
+  authorizer. Assert the HTTP status and decoded response contract, and assert
+  that configured mock responses were consumed. These tests validate the
+  gateway/use-case/adapter composition without asserting SQL text unless SQL
+  behavior is specifically the subject of the test.
+
+### Docker tests and OpenAPI UI
+
+- Keep the ordinary `tests` Compose service self-contained: it runs the module
+  test suite without PostgreSQL, certificates, or other external services.
+  When real-driver integration tests are needed, add a clearly separate
+  integration service/profile with its own disposable PostgreSQL service and
+  health check; do not make unit or composition tests depend on it. Any
+  database volume used for such tests must be isolated and safe to remove.
+- Serve generated API documentation with a pinned
+  `swaggerapi/swagger-ui:<version>` image instead of maintaining a custom
+  Swagger UI download, Dockerfile, Nginx config, or copied UI assets. Set
+  `SWAGGER_JSON` to the in-container path of the selected generated YAML file,
+  mount that same file read-only, and map the host port to container port
+  `8080`. Prefer the latest generated OAS version supported by Swagger UI.
+- `make docker-openapi` should start only the documentation service; it should
+  not download UI assets or rebuild a custom image. Keep the OpenAPI YAML
+  generation workflow documented separately from serving the generated file.
+
+A small `*OpenAPIGeneratorSupport` target is an explicit exception when schemas
+are intentionally reused by another module's generator (as User identity
+schemas are consumed by Auth and Account). Keep that support API narrow and
+organized by the schema's owner; do not use it as a dumping ground for generator
+implementation details.
+
+## Migration plan
+
+For an existing module, use this audit and migrate in order so each stage has a
+clear build boundary. Search package sources, tests, and downstream modules for
+old symbols and paths at each rename; a source-only check misses public API
+consumers and mocks.
+
+1. Inventory products, targets, generated APIs, module-owned endpoints, and
+   every cross-module import/reference. Mark intentional shared schema targets.
+2. Align target/product names and remove targets for APIs the module does not
+   own, including associated clients/builders. Update package dependencies and
+   all consuming packages together.
+3. Establish the module namespace and entity namespaces; move domain models and
+   repository contracts into them.
+4. Nest application inputs, outputs, use cases, queries, actions, and scopes by
+   entity/operation. Verify filters are on `Input`, not `Output`, and DTOs are
+   siblings of `UseCase`. Update adapters and all external consumers.
+5. Nest infrastructure implementations under their contracts and normalize
+   filenames/layout. Keep aggregate migrations and event registration at the
+   infrastructure root, in the module's event namespace.
+6. Align backend gateway/factory and WebAdmin namespaces, route construction,
+   and API-client boundaries. Keep generated API names tied to the API surface,
+   not to implementation layers. Confirm clients exist only for owned APIs and
+   are built from the authenticated request context.
+7. Move tests to mirrored `Layers`/`Composition` targets, use the shared mock
+   database/platform for infrastructure tests, and add HTTP tests through the
+   real API gateway/router with mock database and authorizer dependencies. Keep
+   concrete-driver tests in driver/integration packages. Regenerate OpenAPI
+   sources only through the generator.
+8. Run formatting, generator validation, module tests/build, then build/test
+   downstream modules that consume the renamed public contracts. Search for old
+   type names, namespace paths, filenames, target names, and stale generated or
+   documentation references before considering the migration complete.
+
+During the audit, explicitly check cross-target Swift import visibility. Use
+`public import` only when the imported module is intentionally re-exported or
+its declarations appear in the importing target's public API; otherwise use a
+plain `import`. Strict member-import-visibility diagnostics are useful here:
+they catch both accidental public dependencies and imports that no longer need
+to be public after a namespace/type move.
+
+## Migration sign-off checklist
+
+- [ ] Products, targets, dependencies, and API ownership match the module's
+  actual public surfaces; no unused app-facing API/client remains.
+- [ ] Source tree is layered and entity-first; cross-entity infrastructure is
+  intentionally placed at the layer root.
+- [ ] Public symbols and source filenames tell the same namespace story.
+- [ ] Namespace ownership matches target boundaries; frontend-only namespaces
+  do not leak into backend/domain targets, and no redundant namespace segment
+  remains.
+- [ ] Each operation has sibling `Input`, `Output` (when applicable), and
+  `UseCase`; query criteria are not embedded in outputs.
+- [ ] Repository/query interfaces, adapters, tables, permissions, events, and
+  handlers are nested below their owning entity/module namespace.
+- [ ] Composition owns HTTP/API adaptation and route registration; route feature
+  abstractions and implementations are not flattened into generic names.
+- [ ] Tests mirror the layer/composition boundary, and mocks implement the new
+  contracts rather than old flat types.
+- [ ] Infrastructure and composition tests use shared mock database/platform
+  facilities; concrete database server/client dependencies are not pulled into
+  unit-test targets or required to run the module's ordinary test suite.
+- [ ] Event declarations and every publisher, registry, migration, mock, and
+  downstream consumer use the new module/entity event namespace.
+- [ ] Cross-module imports expose the renamed public API intentionally; public
+  imports are not retained merely to silence a missing direct dependency.
+- [ ] Docker-based tests use an isolated database/service namespace; never run a
+  test that drops schemas against a persistent or shared development volume.
+- [ ] Downstream modules and app composition compile against renamed public APIs.
+- [ ] Formatting, module tests/build, generated-source checks, and downstream
+  builds have run; intentional deviations are recorded beside the relevant
+  package/source declaration and here.
+
+User-specific exceptions to the System baseline should be documented beside
+the relevant package/source declaration and here when they affect future
+migrations; do not force a module to expose an API it does not own.

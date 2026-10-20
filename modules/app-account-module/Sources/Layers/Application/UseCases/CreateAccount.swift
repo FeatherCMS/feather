@@ -70,7 +70,7 @@ public struct CreateAccount: UseCase {
                 )
             )
             try await events.trigger(
-                event: UserIdentityDidInsert(identityID: identity.id),
+                event: Identity.Event.DidInsert(identityID: identity.id),
                 using: context
             )
             return .init(userId: identity.id, email: input.email)

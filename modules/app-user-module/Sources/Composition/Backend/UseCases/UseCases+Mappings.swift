@@ -2,6 +2,8 @@ import FeatherApplication
 import Foundation
 import UserAdminAPI
 import UserApplication
+import UserDomain
+import UserModule
 
 extension AdminAPIGateway {
     func timestamp(_ date: Date) -> Double {
@@ -20,14 +22,17 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ page: Components.Schemas.SearchPageSchema
+        _ page: Components.Schemas.SearchPageSchema?
     ) -> Search.Page {
-        .init(size: page.size, number: page.number)
+        .init(
+            size: page?.size ?? 20,
+            number: page?.number ?? 1
+        )
     }
 
     func map(
         _ query: Components.Schemas.UserIdentityListItemSearchRequestQuerySchema
-    ) -> IdentityList.Query {
+    ) -> Identity.Search.Input.Query {
         .init(
             page: map(query.page),
             sort: (query.sort ?? [])
@@ -43,7 +48,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ detail: IdentityDetail
+        _ detail: Identity.Detail.Output
     ) -> Components.Schemas.UserIdentityDetailSchema {
         .init(
             id: detail.id,
@@ -54,7 +59,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ item: IdentityList.Item
+        _ item: Identity.Search.Output.Item
     ) -> Components.Schemas.UserIdentityListItemSchema {
         .init(
             id: item.id,
@@ -66,7 +71,7 @@ extension AdminAPIGateway {
 
     func map(
         _ query: Components.Schemas.UserRoleListItemSearchRequestQuerySchema
-    ) -> RoleList.Query {
+    ) -> Role.Search.Input.Query {
         .init(
             page: map(query.page),
             sort: (query.sort ?? [])
@@ -81,7 +86,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ detail: RoleDetail
+        _ detail: Role.Detail.Output
     ) -> Components.Schemas.UserRoleDetailSchema {
         .init(
             id: detail.id,
@@ -92,7 +97,7 @@ extension AdminAPIGateway {
     }
 
     func map(
-        _ item: RoleList.Item
+        _ item: Role.Search.Output.Item
     ) -> Components.Schemas.UserRoleListItemSchema {
         .init(id: item.id, key: item.key, name: item.name)
     }

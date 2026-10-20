@@ -1,5 +1,5 @@
 {
-  "originHash" : "1d5a379c17ea1c72ee732b3029b36a493b9edab44e1cd4b709e7034015d748fd",
+  "originHash" : "5125316408f8eac9e3bba5d24c0b3410beb8b944ee805d647d750a82b46b255a",
   "pins" : [
     {
       "identity" : "async-http-client",
@@ -8,6 +8,42 @@
       "state" : {
         "revision" : "9544287b9416c0bc71e58b9f3aead8dd14b16103",
         "version" : "1.36.0"
+      }
+    },
+    {
+      "identity" : "feather-database",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-database",
+      "state" : {
+        "revision" : "9a885148b6470cea32f40854f5359a872154dbf1",
+        "version" : "1.0.0-rc.3"
+      }
+    },
+    {
+      "identity" : "feather-dbal",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-dbal",
+      "state" : {
+        "revision" : "3507e6b8933425e02e823ce74db7c5a98907c93b",
+        "version" : "1.0.0-alpha.1"
+      }
+    },
+    {
+      "identity" : "feather-http",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-http",
+      "state" : {
+        "revision" : "a9a62ce791dcc742d0e10c2f7df86bed628e1fd2",
+        "version" : "1.0.0-beta.1"
+      }
+    },
+    {
+      "identity" : "feather-http-hummingbird-testing",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-http-hummingbird-testing",
+      "state" : {
+        "revision" : "50f164e49a60c99233494cfa767d09dd32618166",
+        "version" : "1.0.0-beta.1"
       }
     },
     {
@@ -26,6 +62,24 @@
       "state" : {
         "revision" : "a3d72f160a93db1d16b6fe1a90a612cde5bfb3b3",
         "version" : "1.0.0-rc.2"
+      }
+    },
+    {
+      "identity" : "feather-sql",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-sql",
+      "state" : {
+        "revision" : "6f9e5ef57a25d0e36e489ebc71ee8ce133e8c6ed",
+        "version" : "1.0.0-alpha.1"
+      }
+    },
+    {
+      "identity" : "feather-sql-postgres",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/feather-framework/feather-sql-postgres",
+      "state" : {
+        "revision" : "a2190dfa726aab9b0519084cf7ec05b0161bd271",
+        "version" : "1.0.0-alpha.1"
       }
     },
     {
@@ -71,15 +125,6 @@
       "state" : {
         "revision" : "2cabbac1d08b25c5d22960cc9554f7960a3824cf",
         "version" : "7.0.0"
-      }
-    },
-    {
-      "identity" : "postgres-nio",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vapor/postgres-nio.git",
-      "state" : {
-        "revision" : "39ce38a93408937bcd27f521f3cdf88266136b80",
-        "version" : "1.33.1"
       }
     },
     {
@@ -213,8 +258,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",
       "state" : {
-        "revision" : "3ffafb9722d5d918c614feb496c8789a3b59d222",
-        "version" : "1.15.0"
+        "revision" : "4038b6a4f74a1426f47eb1dd5b4bb5628a15d597",
+        "version" : "1.16.1"
       }
     },
     {
@@ -296,6 +341,15 @@
       "state" : {
         "revision" : "3681f659d9417652b8119f0adbdf57c04b6cb292",
         "version" : "1.5.0"
+      }
+    },
+    {
+      "identity" : "swift-openapi-hummingbird",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/hummingbird-project/swift-openapi-hummingbird",
+      "state" : {
+        "revision" : "3a7da5097f1e610c5984e422fd2ec5a26f325c02",
+        "version" : "2.1.0"
       }
     },
     {

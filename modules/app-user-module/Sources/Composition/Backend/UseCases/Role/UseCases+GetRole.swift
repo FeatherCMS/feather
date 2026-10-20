@@ -1,15 +1,16 @@
 import FeatherInfrastructure
 import UserApplication
 import UserInfrastructure
+import UserModule
 
 extension UseCases {
 
-    func makeGetRole() -> GetRole {
+    func makeGetRole() -> Role.Detail.UseCase {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                ReadRole(
-                    role: RoleDatabaseQueries(
+                Role.Query.Scope(
+                    role: Role.Query.Database(
                         context: context
                     )
                 )

@@ -13,7 +13,7 @@ import struct Foundation.Date
 protocol SignIn: UseCase {
 
     func makeAuthResponse(
-        userIdentityRepository: any IdentityRepository,
+        userIdentityRepository: any Identity.Repository.Interface,
         userSessionRepository: any SessionRepository,
         user: Identity,
         authenticationType: String,
@@ -26,7 +26,7 @@ protocol SignIn: UseCase {
 extension SignIn {
 
     func makeAuthResponse(
-        userIdentityRepository: any IdentityRepository,
+        userIdentityRepository: any Identity.Repository.Interface,
         userSessionRepository: any SessionRepository,
         user: Identity,
         authenticationType: String,

@@ -1,22 +1,22 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import WebBuilders
 import WebComponents
 
 struct BlogAuthorLinkForm: Component {
-    struct FieldState: FeatherAdmin.Object {
+    struct FieldState: FeatherWebAdmin.Object {
         var key: String
         var label: String
         var value: String?
         var error: String?
     }
-    struct CheckboxState: FeatherAdmin.Object {
+    struct CheckboxState: FeatherWebAdmin.Object {
         var key: String
         var label: String
         var value: Bool
         var error: String?
     }
-    struct State: FeatherAdmin.Object {
+    struct State: FeatherWebAdmin.Object {
         var label: FieldState
         var url: FieldState
         var priority: FieldState

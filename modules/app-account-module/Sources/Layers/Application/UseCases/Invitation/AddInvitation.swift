@@ -122,7 +122,7 @@ public struct AddInvitation: UseCase {
                 )
             )
             try await events.trigger(
-                event: UserIdentityDidInsert(identityID: identity.id),
+                event: Identity.Event.DidInsert(identityID: identity.id),
                 using: context
             )
             let configuredPublicBaseURL =

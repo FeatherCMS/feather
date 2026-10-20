@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import SystemModule
 
 extension Variable.View.Interactor {

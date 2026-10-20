@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 
 protocol AdminViewContactOverviewPresenter: Sendable {
     func renderOverview(

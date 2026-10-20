@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 
 struct AdminViewContactFormSubmission {
     let controller: any AdminViewContactFormSubmissionController

@@ -39,7 +39,7 @@ public struct CompleteInvitationRegistration: UseCase {
 
     public func execute(
         input: Input
-    ) async throws -> IdentityDetail {
+    ) async throws -> Identity.Detail.Output {
         try await transaction.run { scope, context in
             guard
                 var invitation = try await scope.invitation.findBy(

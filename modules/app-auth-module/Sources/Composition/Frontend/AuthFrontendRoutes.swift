@@ -1,7 +1,7 @@
 import AuthAdminAPI
 import AuthAppAPI
 import CSS
-public import FeatherAdmin
+public import FeatherWebAdmin
 import FeatherValidation
 import FeatherValidationFoundation
 import HTML
@@ -12,8 +12,7 @@ import SGML
 import SystemAdminAPI
 import SystemWebAdmin
 import UserAdminAPI
-import UserAppAPI
-import UserFrontend
+import UserWebAdmin
 import WebBuilders
 import WebComponents
 public import WebFrontend
@@ -21,7 +20,7 @@ public import WebFrontend
 public enum AuthFrontendRoutes {
 
     public static func registerAppRoutes(
-        router: Router<DefaultRequestContext>,
+        router: Hummingbird.Router<DefaultRequestContext>,
         renderingEngine: any RenderingEngine,
         authAPIBuilder: AuthAPIBuilder,
         usesSecureCookies: Bool,

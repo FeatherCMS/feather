@@ -1,10 +1,10 @@
-public import FeatherAdmin
+public import FeatherWebAdmin
 public import Hummingbird
 
 public enum AccountFrontendRoutes {
 
     public static func registerAppRoutes(
-        router: Router<DefaultRequestContext>,
+        router: Hummingbird.Router<DefaultRequestContext>,
         renderingEngine: any RenderingEngine,
         apiBuilder: AccountAPIBuilder
     ) {

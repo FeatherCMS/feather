@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 
 struct AdminListNewsletterCampaigns {
     let controller: any AdminListNewsletterCampaignsController

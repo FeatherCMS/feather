@@ -17,7 +17,7 @@ import FeatherStorageFS
 import MediaApplication
 import MediaInfrastructure
 import FeatherModuleKit
-import FeatherAdmin
+import FeatherWebAdmin
 #if canImport(FoundationEssentials)
 import FoundationEssentials
 #else

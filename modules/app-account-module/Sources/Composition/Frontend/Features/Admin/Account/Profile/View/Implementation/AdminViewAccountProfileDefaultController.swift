@@ -1,5 +1,5 @@
 import AccountContracts
-import FeatherAdmin
+import FeatherWebAdmin
 import FeatherModuleKit
 import Hummingbird
 

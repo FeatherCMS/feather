@@ -8,11 +8,11 @@ public import FeatherModuleKit
 public import UserApplication
 
 public struct ReadAuth: Scope {
-    public let identity: any IdentityQueries
+    public let identity: any Identity.Query.Interface
     public let session: any SessionQueries
 
     public init(
-        identity: any IdentityQueries,
+        identity: any Identity.Query.Interface,
         session: any SessionQueries
     ) {
         self.identity = identity

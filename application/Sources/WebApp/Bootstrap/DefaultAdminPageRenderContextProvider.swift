@@ -1,6 +1,6 @@
 import AccountFrontend
 import AccountAppAPI
-import FeatherAdmin
+import FeatherWebAdmin
 import FeatherModuleKit
 import Hummingbird
 import MediaFrontend

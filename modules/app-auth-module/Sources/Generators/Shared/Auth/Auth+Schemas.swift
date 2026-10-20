@@ -1,7 +1,7 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 public import OpenAPIKit30
-import UserSharedOpenAPIGenerator
+import UserOpenAPIGeneratorSupport
 
 // MARK: - fields
 struct UserAuthIsPersistentField: BoolSchemaRepresentable {

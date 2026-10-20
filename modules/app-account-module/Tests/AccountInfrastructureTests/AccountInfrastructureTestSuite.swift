@@ -73,7 +73,7 @@ struct AccountInfrastructureTestSuite {
             var events = EventRegistry()
             EventHandlers.register(in: &events)
             _ = try await events.trigger(
-                event: UserIdentityDidInsert(identityID: "account-1"),
+                event: Identity.Event.DidInsert(identityID: "account-1"),
                 using: DatabaseTransactionContext(
                     platform: PostgresDatabasePlatform(),
                     connection: connection,
@@ -81,7 +81,7 @@ struct AccountInfrastructureTestSuite {
                 )
             )
             _ = try await events.trigger(
-                event: UserIdentityDidInsert(identityID: "account-1"),
+                event: Identity.Event.DidInsert(identityID: "account-1"),
                 using: DatabaseTransactionContext(
                     platform: PostgresDatabasePlatform(),
                     connection: connection,

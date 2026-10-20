@@ -1,6 +1,6 @@
 import AccountAppAPI
 import CSS
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -366,7 +366,7 @@ struct AppAcceptAccountInvitation {
     }
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: Hummingbird.Router<DefaultRequestContext>
     ) {
         router.get("/account/invitation/accept/", use: get)
         router.post("/account/invitation/accept/", use: post)

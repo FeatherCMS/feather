@@ -1,7 +1,7 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import OpenAPIRuntime
 import UserAdminAPI
-import UserFrontend
+import UserWebAdmin
 
 struct AdminViewAccountInvitation {
     let controller: any AdminViewAccountInvitationController

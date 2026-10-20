@@ -222,7 +222,7 @@ let package = Package(
         .target(
             name: "BlogFrontend",
             dependencies: [
-                .product(name: "FeatherAdmin", package: "feather-core"),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
 
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),

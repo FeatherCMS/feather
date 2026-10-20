@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 
 struct AdminViewAccountProfileModel: Sendable {
     let id: String

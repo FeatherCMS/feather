@@ -5,7 +5,6 @@ import OpenAPIRuntime
 import Logging
 import SystemAdminAPI
 import UserAdminAPI
-import UserAppAPI
 import AccountAdminAPI
 import AccountAppAPI
 import RedirectAdminAPI
@@ -118,11 +117,6 @@ func buildRouter(
     ]
 
     try SystemBackend.AdminAPIGateway(useCases: modules.system)
-        .registerHandlers(
-            on: router,
-            middlewares: middlewares
-        )
-    try UserBackend.AppAPIGateway(useCases: modules.user)
         .registerHandlers(
             on: router,
             middlewares: middlewares

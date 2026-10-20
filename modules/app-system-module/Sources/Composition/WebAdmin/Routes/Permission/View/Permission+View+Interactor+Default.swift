@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import SystemModule
 
 extension Permission.View.Interactor {

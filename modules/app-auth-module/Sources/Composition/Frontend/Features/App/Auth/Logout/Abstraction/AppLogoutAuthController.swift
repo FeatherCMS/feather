@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import Hummingbird
 
 protocol AppLogoutAuthController: Sendable {
@@ -12,7 +12,7 @@ protocol AppLogoutAuthController: Sendable {
 extension AppLogoutAuthController {
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: Hummingbird.Router<DefaultRequestContext>
     ) {
         router.get(
             "/logout/",

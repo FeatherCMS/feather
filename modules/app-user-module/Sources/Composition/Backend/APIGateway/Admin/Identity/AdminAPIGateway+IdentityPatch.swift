@@ -2,6 +2,7 @@ import FeatherModuleKit
 public import UserAdminAPI
 import UserApplication
 import UserDomain
+import UserModule
 
 extension AdminAPIGateway {
 
@@ -23,7 +24,7 @@ extension AdminAPIGateway {
                 name: body.name,
                 roleIds: body.roleIds,
                 status: body.status.flatMap {
-                    Identity.Status(rawValue: $0.rawValue)
+                    Identity.Model.Status(rawValue: $0.rawValue)
                 }
             )
         )

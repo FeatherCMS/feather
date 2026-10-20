@@ -1,6 +1,6 @@
 import AuthAdminAPI
 import AuthContracts
-import FeatherAdmin
+import FeatherWebAdmin
 import FeatherModuleKit
 import HTML
 import SGML

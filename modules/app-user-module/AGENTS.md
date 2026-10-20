@@ -1,23 +1,22 @@
 # Admin User Frontend Module Guide
 
-Admin user frontend features follow the same operation boundaries as the
-system module:
+The user module follows the system module's layer, target, namespace, and
+operation conventions. Admin UI code lives in `Sources/Composition/WebAdmin`.
+Feature routes are grouped by entity and operation, for example
+`Routes/Identity/List` and `Routes/Role/Edit`; keep each operation's files flat
+and use names such as `Identity+List+Controller+Default.swift`.
 
-- `Add`, `Edit`, `Get`, `List`, and `Remove` each have `Abstraction/` and
-  `Implementation/` folders. Implementation-owned models and views live under
-  `Implementation/Models/` and `Implementation/Views/`.
-- The operation composition file wires the controller, interactor, repository,
-  and presenter.
-- Shared route helpers live beside the operation folders; shared user payload
-  models and forms live under `Shared/Models/` and `Shared/Views/`. Generic
-  form fields belong to the `FeatherAdmin` design system, not to the
-  user module.
-
-The user module overview follows the system module convention:
-`Overview/Get/{Abstraction,Implementation}`.
+Use nested Swift namespaces for operation types, for example
+`Identity.List.Controller.Interface|Default`,
+`Identity.List.Interactor.Interface|Default`,
+`Identity.List.Repository.Interface|OpenAPI`, and `Identity.List.Router`.
+Keep the composition router responsible for constructing its dependencies and
+registering its route. Pass `AppEnvironment` through routers and create API
+clients at the request-context boundary so each request supplies its own auth
+context. Do not add compatibility aliases when renaming module APIs.
 
 The request flow is Router → Controller → Interactor → OpenAPI Repository →
-shared API client. Controllers own route parameters, permissions, decoding,
+API client. Controllers own route parameters, permissions, decoding,
 nonce consumption, validation, and error branching. Interactors translate
 `OpenAPIRepositoryError` into operation-specific errors. Presenters own
 user-facing wording, HTML, response status codes, and success redirects.

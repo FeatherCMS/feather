@@ -218,7 +218,7 @@ let package = Package(
         .target(
             name: "NewsFrontend",
             dependencies: [
-                .product(name: "FeatherAdmin", package: "feather-core"),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
 
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "MediaFrontend", package: "app-media-module"),

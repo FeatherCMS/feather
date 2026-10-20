@@ -1,5 +1,5 @@
 import CSS
-import FeatherAdmin
+import FeatherWebAdmin
 import FeatherValidation
 import HTML
 import SGML

@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 
 struct AdminEditRedirectRule {
     let controller: any AdminEditRedirectRuleController

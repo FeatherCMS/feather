@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 
 struct AdminEditAccountInvitation {
     let controller: any AdminEditAccountInvitationController

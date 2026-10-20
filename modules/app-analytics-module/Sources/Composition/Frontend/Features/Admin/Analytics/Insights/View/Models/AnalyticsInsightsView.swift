@@ -1,6 +1,6 @@
 import AnalyticsAdminAPI
 import CSS
-import FeatherAdmin
+import FeatherWebAdmin
 import Foundation
 import HTML
 import SGML

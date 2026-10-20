@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 
 struct AdminRemoveMediaVariant {
     let controller: any AdminRemoveMediaVariantController

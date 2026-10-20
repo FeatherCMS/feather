@@ -1,5 +1,5 @@
 import ContactContracts
-import FeatherAdmin
+import FeatherWebAdmin
 import FeatherModuleKit
 import Foundation
 import HTML

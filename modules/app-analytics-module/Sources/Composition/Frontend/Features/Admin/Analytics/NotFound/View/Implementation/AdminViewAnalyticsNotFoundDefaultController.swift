@@ -1,5 +1,5 @@
 import AnalyticsContracts
-import FeatherAdmin
+import FeatherWebAdmin
 import Foundation
 import Hummingbird
 

@@ -1,5 +1,5 @@
 import AsyncHTTPClient
-import FeatherAdmin
+import FeatherWebAdmin
 public import FeatherModuleKit
 import Foundation
 import NIOCore
@@ -36,7 +36,7 @@ public enum NewsWebPublicContentEventHandlers {
                 configuration: .init(client: .shared, timeout: .seconds(3))
             ),
             middlewares: [
-                FeatherAdmin.ClientAPIAuthMiddleware(
+                FeatherWebAdmin.ClientAPIAuthMiddleware(
                     sessionToken: context.runtime.context.sessionToken
                 )
             ]
@@ -73,7 +73,7 @@ public enum NewsWebPublicContentEventHandlers {
                 configuration: .init(client: .shared, timeout: .seconds(3))
             ),
             middlewares: [
-                FeatherAdmin.ClientAPIAuthMiddleware(
+                FeatherWebAdmin.ClientAPIAuthMiddleware(
                     sessionToken: context.runtime.context.sessionToken
                 )
             ]

@@ -12,7 +12,7 @@ extension UseCases {
             databaseContext: databaseContext,
         ) { context in
             WriteAuth(
-                identity: IdentityDatabaseRepository(context: context),
+                identity: Identity.Repository.Database(context: context),
                 credential: CredentialDatabaseRepository(context: context),
                 authEmail: AuthEmailDatabaseRepository(
                     context: context

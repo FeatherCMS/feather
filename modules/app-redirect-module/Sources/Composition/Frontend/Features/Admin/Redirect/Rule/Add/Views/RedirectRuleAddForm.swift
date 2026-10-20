@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import WebBuilders
 import WebComponents

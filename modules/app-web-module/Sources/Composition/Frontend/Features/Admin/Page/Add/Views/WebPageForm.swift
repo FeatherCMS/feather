@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import OpenAPIRuntime
 import SGML
@@ -7,14 +7,14 @@ import WebComponents
 
 struct WebPageForm: Component {
 
-    struct FieldState: FeatherAdmin.Object {
+    struct FieldState: FeatherWebAdmin.Object {
         var key: String
         var label: String
         var value: String?
         var error: String?
     }
 
-    struct State: FeatherAdmin.Object {
+    struct State: FeatherWebAdmin.Object {
         var title: FieldState
         var excerpt: FieldState
         var content: FieldState

@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 
 struct AdminRemoveRedirectRule {
     let controller: any AdminRemoveRedirectRuleController

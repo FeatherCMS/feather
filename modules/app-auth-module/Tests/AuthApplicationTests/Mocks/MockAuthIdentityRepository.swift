@@ -1,6 +1,6 @@
 import UserDomain
 
-actor MockAuthIdentityRepository: IdentityRepository {
+actor MockAuthIdentityRepository: Identity.Repository.Interface {
     private let identity: Identity?
 
     init(identity: Identity? = nil) {

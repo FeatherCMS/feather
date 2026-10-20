@@ -1,5 +1,5 @@
 import CSS
-import FeatherAdmin
+import FeatherWebAdmin
 import FeatherModuleKit
 import Foundation
 import HTML

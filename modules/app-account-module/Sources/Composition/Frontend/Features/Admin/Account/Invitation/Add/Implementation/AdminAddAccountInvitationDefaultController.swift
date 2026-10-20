@@ -1,9 +1,9 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import FeatherValidation
 import Hummingbird
 import OpenAPIRuntime
 import UserAdminAPI
-import UserFrontend
+import UserWebAdmin
 
 struct AdminAddAccountInvitationDefaultController:
     AdminAddAccountInvitationController

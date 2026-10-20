@@ -1,7 +1,7 @@
 import AuthAdminAPI
 import AuthAppAPI
 import CSS
-import FeatherAdmin
+import FeatherWebAdmin
 import FeatherValidation
 import FeatherValidationFoundation
 import HTML
@@ -11,28 +11,27 @@ import SGML
 import SystemAdminAPI
 import SystemWebAdmin
 import UserAdminAPI
-import UserAppAPI
-import UserFrontend
+import UserWebAdmin
 import WebBuilders
 import WebComponents
 
 struct AuthMagicLinkForm: Component {
 
-    struct FieldState: FeatherAdmin.Object {
+    struct FieldState: FeatherWebAdmin.Object {
         var key: String
         var label: String
         var value: String?
         var error: String?
     }
 
-    struct CheckboxState: FeatherAdmin.Object {
+    struct CheckboxState: FeatherWebAdmin.Object {
         var key: String
         var label: String
         var value: Bool
         var error: String?
     }
 
-    struct State: FeatherAdmin.Object {
+    struct State: FeatherWebAdmin.Object {
         var credentialId: FieldState
         var emailOptions: [AdminFormFieldSelectAutocomplete.Option]
         var isPersistent: CheckboxState

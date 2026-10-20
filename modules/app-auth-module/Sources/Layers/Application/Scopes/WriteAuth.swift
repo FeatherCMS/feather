@@ -10,14 +10,14 @@ public import UserDomain
 
 // TODO: no need for magic link custom scope for sign in
 public struct WriteAuth: Scope {
-    public let identity: any IdentityRepository
+    public let identity: any Identity.Repository.Interface
     public let credential: any CredentialRepository
     public let authEmail: any AuthEmailRepository
     public let session: any SessionRepository
     public let magicLink: any MagicLinkRepository
 
     public init(
-        identity: any IdentityRepository,
+        identity: any Identity.Repository.Interface,
         credential: any CredentialRepository,
         authEmail: any AuthEmailRepository,
         session: any SessionRepository,

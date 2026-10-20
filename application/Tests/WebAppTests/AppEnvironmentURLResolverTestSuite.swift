@@ -1,5 +1,5 @@
 import Configuration
-import FeatherAdmin
+import FeatherWebAdmin
 import Foundation
 import Testing
 

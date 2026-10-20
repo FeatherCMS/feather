@@ -7,6 +7,7 @@ import AccountInfrastructure
 import AnalyticsInfrastructure
 import SystemInfrastructure
 import SystemModule
+import UserModule
 import UserInfrastructure
 import AuthInfrastructure
 import BlogInfrastructure
@@ -24,7 +25,7 @@ public func buildTestMigrations(
     var events = EventRegistry()
     SystemModule.Event.Handlers.register(in: &events)
     AuthInfrastructure.EventHandlers.register(in: &events)
-    UserInfrastructure.EventHandlers.register(in: &events)
+    UserModule.Event.Handlers.register(in: &events)
     AccountInfrastructure.EventHandlers.register(in: &events)
     AnalyticsInfrastructure.EventHandlers.register(in: &events)
     RedirectInfrastructure.EventHandlers.register(in: &events)

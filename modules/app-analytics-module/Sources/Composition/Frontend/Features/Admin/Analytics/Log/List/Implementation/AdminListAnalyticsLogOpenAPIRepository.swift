@@ -1,5 +1,5 @@
 import AnalyticsAdminAPI
-import FeatherAdmin
+import FeatherWebAdmin
 import OpenAPIRuntime
 
 struct AdminListAnalyticsLogOpenAPIRepository:

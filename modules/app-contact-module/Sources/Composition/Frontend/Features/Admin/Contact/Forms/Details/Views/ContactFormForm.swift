@@ -1,12 +1,12 @@
 import CSS
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import SGML
 import WebBuilders
 import WebComponents
 
 struct ContactFormForm: Component {
-    struct State: FeatherAdmin.Object {
+    struct State: FeatherWebAdmin.Object {
         var key: String
         var name: String
         var successMessage: String

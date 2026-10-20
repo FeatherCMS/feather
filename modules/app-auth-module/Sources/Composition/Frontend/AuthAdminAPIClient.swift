@@ -2,7 +2,7 @@ import AsyncHTTPClient
 public import AuthAdminAPI
 import AuthAppAPI
 import CSS
-public import FeatherAdmin
+public import FeatherWebAdmin
 import FeatherValidation
 import FeatherValidationFoundation
 public import Foundation
@@ -15,8 +15,7 @@ import SGML
 import SystemAdminAPI
 import SystemWebAdmin
 import UserAdminAPI
-import UserAppAPI
-import UserFrontend
+import UserWebAdmin
 import WebBuilders
 import WebComponents
 
@@ -61,11 +60,9 @@ public struct AuthAdminAPIClient: Sendable {
 
 public struct AuthAPIBuilder: Sendable {
     private let apiBaseURL: URL
-    let user: UserAPIBuilder
 
     public init(apiBaseURL: URL) {
         self.apiBaseURL = apiBaseURL
-        self.user = .init(apiBaseURL: apiBaseURL)
     }
 
     public func makeAuthAdmin(
@@ -86,8 +83,8 @@ public struct AuthAPIBuilder: Sendable {
 
     func makeUserAdmin(
         _ context: AuthenticatedRequestContext
-    ) -> UserAdminAPIClient {
-        user.makeUserAdmin(context)
+    ) -> UserWebAdmin.API.Client {
+        .init(apiBaseURL: apiBaseURL, requestContext: context)
     }
 
     func makeSystemAdmin(

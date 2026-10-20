@@ -8,7 +8,7 @@
 import AuthSharedOpenAPIGenerator
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import UserSharedOpenAPIGenerator
+import UserOpenAPIGeneratorSupport
 
 struct UserIdentitySessionListResponse: JSONResponseRepresentable {
     var description: String = "UserIdentity session list response"

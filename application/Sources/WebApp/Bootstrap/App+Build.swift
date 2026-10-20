@@ -5,9 +5,9 @@ import NewsletterFrontend
 import WebFrontend
 import AnalyticsFrontend
 import RedirectFrontend
-import UserFrontend
+import UserWebAdmin
 import SystemWebAdmin
-import FeatherAdmin
+import FeatherWebAdmin
 import Configuration
 import Foundation
 import Hummingbird

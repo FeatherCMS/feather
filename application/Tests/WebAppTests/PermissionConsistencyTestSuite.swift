@@ -1,5 +1,5 @@
 import Foundation
-import FeatherAdmin
+import FeatherWebAdmin
 import Testing
 
 @testable import WebApp

@@ -11,15 +11,15 @@ public import UserDomain
 
 public struct WriteInvitation: Scope {
     public let invitation: any InvitationRepository
-    public let identity: any IdentityRepository
-    public let role: any RoleRepository
+    public let identity: any Identity.Repository.Interface
+    public let role: any Role.Repository.Interface
     public let authEmail: any AuthEmailRepository
     public let credential: any InvitationCredentialWriter
 
     public init(
         invitation: any InvitationRepository,
-        identity: any IdentityRepository,
-        role: any RoleRepository,
+        identity: any Identity.Repository.Interface,
+        role: any Role.Repository.Interface,
         authEmail: any AuthEmailRepository,
         credential: any InvitationCredentialWriter
     ) {

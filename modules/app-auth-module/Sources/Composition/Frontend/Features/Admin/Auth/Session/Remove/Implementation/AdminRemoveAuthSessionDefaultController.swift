@@ -1,5 +1,5 @@
 import AuthContracts
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import Hummingbird
 

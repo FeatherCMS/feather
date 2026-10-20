@@ -148,22 +148,22 @@ actor MockSessionQueries: SessionQueries {
     }
 }
 
-struct DummyIdentityQueries: IdentityQueries {
+struct DummyIdentityQueries: Identity.Query.Interface {
     func list(
-        query: IdentityList.Query
-    ) async throws -> IdentityList {
+        query: Identity.List.Input.Query
+    ) async throws -> Identity.List.Output {
         .init(items: [])
     }
 
     func count(
-        query: IdentityList.Query
+        query: Identity.List.Input.Query
     ) async throws -> Int {
         0
     }
 
     func getBy(
         id: String
-    ) async throws -> IdentityDetail {
+    ) async throws -> Identity.Detail.Output {
         fatalError("not needed in tests")
     }
 

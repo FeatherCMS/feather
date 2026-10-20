@@ -1,18 +1,18 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import WebBuilders
 import WebComponents
 
 struct SettingsForm: Component {
 
-    struct FieldState: FeatherAdmin.Object {
+    struct FieldState: FeatherWebAdmin.Object {
         var key: String
         var label: String
         var value: String?
         var error: String?
     }
 
-    struct State: FeatherAdmin.Object {
+    struct State: FeatherWebAdmin.Object {
         var language: FieldState
         var timezone: FieldState
         var pageSize: FieldState

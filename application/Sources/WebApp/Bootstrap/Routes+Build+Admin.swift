@@ -8,11 +8,11 @@ import NewsletterFrontend
 import WebFrontend
 import AnalyticsFrontend
 import RedirectFrontend
-import UserFrontend
+import UserWebAdmin
 import AccountFrontend
 import SystemWebAdmin
 import AuthFrontend
-import FeatherAdmin
+import FeatherWebAdmin
 import FeatherApplication
 import Hummingbird
 
@@ -34,7 +34,10 @@ func buildAdminRoutes(
         renderingEngine: renderingEngine
     )
     .route(on: router)
-    AdminUser(apiBuilder: apiBuilder.user, renderingEngine: renderingEngine)
+    UserWebAdmin.Router(
+        environment: environment,
+        renderingEngine: renderingEngine
+    )
         .route(on: router)
     SystemWebAdmin.WebAdmin
         .Router(

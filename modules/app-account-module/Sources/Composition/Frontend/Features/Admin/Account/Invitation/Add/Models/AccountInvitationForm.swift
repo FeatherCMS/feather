@@ -1,18 +1,18 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import WebBuilders
 import WebComponents
 
 struct AccountInvitationForm: Component {
 
-    struct FieldState: FeatherAdmin.Object {
+    struct FieldState: FeatherWebAdmin.Object {
         var key: String
         var label: String
         var value: String?
         var error: String?
     }
 
-    struct State: FeatherAdmin.Object {
+    struct State: FeatherWebAdmin.Object {
         var email: FieldState
         var roleIds: FieldState
         var roleOptions: [RoleOptionState]
@@ -28,7 +28,7 @@ struct AccountInvitationForm: Component {
         }
     }
 
-    struct RoleOptionState: FeatherAdmin.Object {
+    struct RoleOptionState: FeatherWebAdmin.Object {
         var value: String
         var label: String
         var isSelected: Bool

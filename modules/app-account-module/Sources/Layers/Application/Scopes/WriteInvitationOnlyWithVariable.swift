@@ -6,12 +6,12 @@ public import UserDomain
 
 public struct WriteInvitationOnlyWithVariable: Scope {
     public let invitation: any InvitationRepository
-    public let role: any RoleRepository
+    public let role: any Role.Repository.Interface
     public let variable: any SystemModule.Variable.Lookup.Interface
 
     public init(
         invitation: any InvitationRepository,
-        role: any RoleRepository,
+        role: any Role.Repository.Interface,
         variable: any SystemModule.Variable.Lookup.Interface
     ) {
         self.invitation = invitation

@@ -11,11 +11,11 @@ public import UserApplication
 public struct AuthScope: Scope {
 
     //    public let system: any SystemQueries
-    public let identity: any IdentityQueries
+    public let identity: any Identity.Query.Interface
     public let rolePermissions: any RolePermissionQueries
 
     public init(
-        identity: any IdentityQueries,
+        identity: any Identity.Query.Interface,
         rolePermissions: any RolePermissionQueries
     ) {
         self.identity = identity

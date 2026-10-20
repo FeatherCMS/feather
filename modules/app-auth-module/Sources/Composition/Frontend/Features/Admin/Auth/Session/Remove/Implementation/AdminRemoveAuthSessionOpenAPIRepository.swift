@@ -1,15 +1,15 @@
 import AuthAdminAPI
-import FeatherAdmin
+import FeatherWebAdmin
 import Hummingbird
 import OpenAPIRuntime
 import UserAdminAPI
-import UserFrontend
+import UserWebAdmin
 
 struct AdminRemoveAuthSessionOpenAPIRepository:
     AdminRemoveAuthSessionRepository
 {
     let api: AuthAdminAPIClient
-    let userAPI: UserAdminAPIClient
+    let userAPI: UserWebAdmin.API.Client
     private let loadIdentityUnauthorizedMessage =
         "Please sign in again to load this user identity."
     private let loadSessionsUnauthorizedMessage =
@@ -19,7 +19,7 @@ struct AdminRemoveAuthSessionOpenAPIRepository:
 
     init(
         api: AuthAdminAPIClient,
-        userAPI: UserAdminAPIClient
+        userAPI: UserWebAdmin.API.Client
     ) {
         self.api = api
         self.userAPI = userAPI

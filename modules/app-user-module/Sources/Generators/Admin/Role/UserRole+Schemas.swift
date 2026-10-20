@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 struct UserRoleIdField: StringSchemaRepresentable {
     var example: String? = "role_manager"
@@ -54,11 +53,5 @@ struct UserRoleListItemSchema: ObjectSchemaRepresentable {
             "key": UserRoleKeyField().reference(),
             "name": UserRoleNameField().reference(required: false),
         ]
-    }
-}
-
-struct UserRoleListSchema: ArraySchemaRepresentable {
-    var items: (any SchemaRepresentable)? {
-        UserRoleListItemSchema().reference()
     }
 }

@@ -42,7 +42,7 @@ let package = Package(
             name: "FeatherOpenAPIGenerator",
             targets: ["FeatherOpenAPIGenerator"]
         ),
-        .library(name: "FeatherAdmin", targets: ["FeatherAdmin"]),
+        .library(name: "FeatherWebAdmin", targets: ["FeatherWebAdmin"]),
     ],
     dependencies: [
         .package(
@@ -213,7 +213,7 @@ let package = Package(
             swiftSettings: swiftSettings
         ),
         .target(
-            name: "FeatherAdmin",
+            name: "FeatherWebAdmin",
             dependencies: [
                 .product(name: "Hummingbird", package: "hummingbird"),
                 .product(name: "HummingbirdAuth", package: "hummingbird-auth"),
@@ -270,7 +270,7 @@ let package = Package(
         .testTarget(
             name: "AdminTests",
             dependencies: [
-                .target(name: "FeatherAdmin"),
+                .target(name: "FeatherWebAdmin"),
                 .product(name: "Hummingbird", package: "hummingbird"),
             ],
             swiftSettings: swiftSettings

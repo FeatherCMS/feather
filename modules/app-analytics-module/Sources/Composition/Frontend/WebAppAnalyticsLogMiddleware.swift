@@ -1,5 +1,5 @@
 import AnalyticsAppAPI
-public import FeatherAdmin
+public import FeatherWebAdmin
 public import Foundation
 import HTTPTypes
 public import Hummingbird

@@ -35,12 +35,12 @@ public struct TableSeedMigration: DatabaseMigration {
             )
             .flatMap { $0 }
 
-        let identityRepository = IdentityDatabaseRepository(context: context)
+        let identityRepository = Identity.Repository.Database(context: context)
         let authEmailRepository = AuthEmailDatabaseRepository(context: context)
         let credentialRepository = CredentialDatabaseRepository(
             context: context
         )
-        let roleRepository = RoleDatabaseRepository(context: context)
+        let roleRepository = Role.Repository.Database(context: context)
         let passwordHasher = BCryptPasswordHasher()
 
         for definition in definitions {
@@ -90,7 +90,7 @@ public struct TableSeedMigration: DatabaseMigration {
 
             if isNewIdentity {
                 try await events.trigger(
-                    event: UserIdentityDidInsert(identityID: identityID),
+                    event: Identity.Event.DidInsert(identityID: identityID),
                     using: context
                 )
             }

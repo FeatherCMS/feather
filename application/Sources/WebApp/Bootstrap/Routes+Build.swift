@@ -11,9 +11,9 @@ import WebFrontend
 import WebContracts
 import AnalyticsFrontend
 import RedirectFrontend
-import UserFrontend
+import UserWebAdmin
 import SystemWebAdmin
-import FeatherAdmin
+import FeatherWebAdmin
 import Hummingbird
 import HummingbirdAuth
 import AuthFrontend
@@ -25,9 +25,9 @@ func buildRouter(
     templateOptions: [WebPageTemplateOption],
     templateDefinitions: [WebTemplateDefinition],
     templatePaths: [URL]
-) async throws -> Router<DefaultRequestContext> {
+) async throws -> Hummingbird.Router<DefaultRequestContext> {
 
-    let router = Router(context: DefaultRequestContext.self)
+    let router = Hummingbird.Router(context: DefaultRequestContext.self)
     let apiBuilder = APIBuilder(apiBaseURL: environment.apiBaseURL)
     let mediaResolver = MediaResolver(
         mediaBaseURL: environment.publicOrigins.mediaBaseURL
@@ -74,7 +74,7 @@ func buildRouter(
     )
     AccountAdminMenuEventHandlers.register(in: &adminEvents)
     AuthAdminMenuEventHandlers.register(in: &adminEvents)
-    UserAdminMenuEventHandlers.register(in: &adminEvents)
+    UserModule.Event.Handlers.register(in: &adminEvents)
     MediaAdminMenuEventHandlers.register(in: &adminEvents)
     RedirectAdminMenuEventHandlers.register(in: &adminEvents)
     AnalyticsAdminMenuEventHandlers.register(in: &adminEvents)

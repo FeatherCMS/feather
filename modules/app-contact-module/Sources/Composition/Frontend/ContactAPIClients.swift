@@ -1,7 +1,7 @@
 import AsyncHTTPClient
 public import ContactAdminAPI
 public import ContactAppAPI
-public import FeatherAdmin
+public import FeatherWebAdmin
 import FeatherValidation
 public import Foundation
 import HTML

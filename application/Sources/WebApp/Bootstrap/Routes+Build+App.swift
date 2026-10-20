@@ -7,17 +7,17 @@ import NewsletterFrontend
 import WebFrontend
 import AnalyticsFrontend
 import RedirectFrontend
-import UserFrontend
+import UserWebAdmin
 import SystemWebAdmin
-import FeatherAdmin
+import FeatherWebAdmin
 import FeatherApplication
 import Hummingbird
 import WebApplication
 import NewsFrontend
 
 func buildAppRoutes(
-    router: Router<DefaultRequestContext>,
-    authRouter: Router<DefaultRequestContext>,
+    router: Hummingbird.Router<DefaultRequestContext>,
+    authRouter: Hummingbird.Router<DefaultRequestContext>,
     renderingEngine: DefaultRenderingEngine,
     themeRenderer: DefaultThemeRenderer,
     publicContentEvents: any EventPublisher,

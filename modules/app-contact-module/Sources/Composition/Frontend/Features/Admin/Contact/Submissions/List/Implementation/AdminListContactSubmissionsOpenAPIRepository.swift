@@ -1,5 +1,5 @@
 import ContactAdminAPI
-import FeatherAdmin
+import FeatherWebAdmin
 
 struct AdminListContactSubmissionsOpenAPIRepository {
     let api: ContactAdminAPIClient

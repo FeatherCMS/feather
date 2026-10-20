@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import OpenAPIRuntime
 
 struct WebPageEditDetailsModel: Sendable {

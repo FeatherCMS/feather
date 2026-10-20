@@ -1,7 +1,7 @@
 import AuthAdminAPI
 import AuthAppAPI
 import CSS
-import FeatherAdmin
+import FeatherWebAdmin
 import FeatherValidation
 import FeatherValidationFoundation
 import HTML
@@ -11,8 +11,7 @@ import SGML
 import SystemAdminAPI
 import SystemWebAdmin
 import UserAdminAPI
-import UserAppAPI
-import UserFrontend
+import UserWebAdmin
 import WebBuilders
 import WebComponents
 
@@ -20,7 +19,7 @@ struct AdminListAuthEmailOpenAPIRepository:
     AdminListAuthEmailRepository
 {
     let api: AuthAdminAPIClient
-    let userAPI: UserAdminAPIClient
+    let userAPI: UserWebAdmin.API.Client
     private let listUnauthorizedMessage =
         "Please sign in again to view user emails."
     private let deleteUnauthorizedMessage =

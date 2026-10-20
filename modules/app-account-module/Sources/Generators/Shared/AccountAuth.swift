@@ -1,7 +1,7 @@
 public import FeatherOpenAPI
 import FeatherOpenAPIGenerator
 public import OpenAPIKit30
-import UserSharedOpenAPIGenerator
+import UserOpenAPIGeneratorSupport
 
 public struct AccountAuthTokenField: StringSchemaRepresentable {
     public var example: String? = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."

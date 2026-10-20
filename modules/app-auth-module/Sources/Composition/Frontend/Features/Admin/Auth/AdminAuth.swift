@@ -1,7 +1,7 @@
 import AuthAdminAPI
 import AuthAppAPI
 import CSS
-public import FeatherAdmin
+public import FeatherWebAdmin
 import FeatherValidation
 import FeatherValidationFoundation
 import HTML
@@ -11,8 +11,7 @@ import SGML
 import SystemAdminAPI
 import SystemWebAdmin
 import UserAdminAPI
-import UserAppAPI
-import UserFrontend
+import UserWebAdmin
 import WebBuilders
 import WebComponents
 

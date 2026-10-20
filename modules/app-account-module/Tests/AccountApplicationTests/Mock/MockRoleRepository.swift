@@ -1,6 +1,6 @@
 import UserDomain
 
-actor MockRoleRepository: RoleRepository {
+actor MockRoleRepository: Role.Repository.Interface {
     func findBy(id: String) async throws -> Role? { nil }
 
     func findBy(name: String) async throws -> Role? { nil }

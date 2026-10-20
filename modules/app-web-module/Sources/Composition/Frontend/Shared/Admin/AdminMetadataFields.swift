@@ -1,5 +1,5 @@
 public import CSS
-public import FeatherAdmin
+public import FeatherWebAdmin
 import Foundation
 public import HTML
 import MediaFrontend
@@ -10,7 +10,7 @@ public import WebComponents
 
 public struct AdminMetadataFields: Component {
 
-    public struct FieldState: FeatherAdmin.Object {
+    public struct FieldState: FeatherWebAdmin.Object {
         public var key: String
         public var label: String
         public var value: String?
@@ -29,7 +29,7 @@ public struct AdminMetadataFields: Component {
         }
     }
 
-    public struct CheckboxState: FeatherAdmin.Object {
+    public struct CheckboxState: FeatherWebAdmin.Object {
         public var key: String
         public var label: String
         public var value: Bool
@@ -48,7 +48,7 @@ public struct AdminMetadataFields: Component {
         }
     }
 
-    public struct State: FeatherAdmin.Object {
+    public struct State: FeatherWebAdmin.Object {
         public var slug: FieldState
         public var template: FieldState
         public var slugPrefix: String?

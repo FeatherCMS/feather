@@ -1,5 +1,4 @@
 import FeatherOpenAPI
-import OpenAPIKit30
 
 struct UserRoleRequestBody: RequestBodyRepresentable {
     var contentMap: ContentMap {

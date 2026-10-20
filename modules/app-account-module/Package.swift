@@ -175,7 +175,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
 
-                .product(name: "UserSharedOpenAPIGenerator", package: "app-user-module"),
+                .product(name: "UserOpenAPIGeneratorSupport", package: "app-user-module"),
             ],
             path: "Sources/Generators/Shared",
             swiftSettings: swiftSettings
@@ -223,7 +223,7 @@ let package = Package(
         .target(
             name: "AccountFrontend",
             dependencies: [
-                .product(name: "FeatherAdmin", package: "feather-core"),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
 
                 .product(name: "AuthAdminAPI", package: "app-auth-module"),
                 .product(name: "AuthAppAPI", package: "app-auth-module"),
@@ -232,9 +232,8 @@ let package = Package(
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
                 .product(name: "UserAdminAPI", package: "app-user-module"),
-                .product(name: "UserContracts", package: "app-user-module"),
-                .product(name: "UserAppAPI", package: "app-user-module"),
-                .product(name: "UserFrontend", package: "app-user-module"),
+                .product(name: "UserModule", package: "app-user-module"),
+                .product(name: "UserWebAdmin", package: "app-user-module"),
 
                 .target(name: "AccountContracts"),
                 .target(name: "AccountAdminAPI"),

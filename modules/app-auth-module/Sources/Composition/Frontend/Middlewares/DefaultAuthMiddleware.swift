@@ -1,5 +1,5 @@
 import AuthAppAPI
-public import FeatherAdmin
+public import FeatherWebAdmin
 public import Foundation
 public import Hummingbird
 

@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 
 protocol AdminRemoveContactSubmissionsPresenter: Sendable {
     func renderRemovePage(items: [AdminRemoveItemContext])

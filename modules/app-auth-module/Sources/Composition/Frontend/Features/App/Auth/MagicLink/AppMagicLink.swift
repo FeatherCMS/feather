@@ -1,6 +1,6 @@
 import AuthAppAPI
 import CSS
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import Hummingbird
 import OpenAPIRuntime
@@ -403,7 +403,7 @@ struct AppMagicLink {
     }
 
     func route(
-        on router: Router<DefaultRequestContext>
+        on router: Hummingbird.Router<DefaultRequestContext>
     ) {
         router.get("/magic-link/", use: getRequest)
         router.post("/magic-link/", use: postRequest)

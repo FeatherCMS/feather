@@ -2,6 +2,7 @@ import FeatherModuleKit
 public import UserAdminAPI
 import UserApplication
 import UserDomain
+import UserModule
 
 extension AdminAPIGateway {
 
@@ -20,7 +21,7 @@ extension AdminAPIGateway {
             subject: subject,
             input: .init(
                 name: body.name,
-                status: Identity.Status(
+                status: Identity.Model.Status(
                     rawValue: body.status?.rawValue ?? "invited"
                 )
                     ?? .invited,

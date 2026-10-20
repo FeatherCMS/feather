@@ -3,12 +3,12 @@ public import FeatherModuleKit
 public import UserDomain
 
 public struct WriteAccount: Scope {
-    public let identity: any IdentityRepository
+    public let identity: any Identity.Repository.Interface
     public let authEmail: any AuthEmailRepository
     public let credential: any CredentialRepository
 
     public init(
-        identity: any IdentityRepository,
+        identity: any Identity.Repository.Interface,
         authEmail: any AuthEmailRepository,
         credential: any CredentialRepository
     ) {

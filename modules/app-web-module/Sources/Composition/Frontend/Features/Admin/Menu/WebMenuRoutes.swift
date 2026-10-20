@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 import Hummingbird
 
 enum WebMenuRoutes {

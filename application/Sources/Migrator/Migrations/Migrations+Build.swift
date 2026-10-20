@@ -16,6 +16,7 @@ import RedirectInfrastructure
 import SystemApplication
 import SystemInfrastructure
 import SystemModule
+import UserModule
 import UserInfrastructure
 import WebInfrastructure
 
@@ -104,7 +105,7 @@ public func buildMigrationEventPublisher(
     SystemModule.Event.Handlers.register(in: &events)
     FeatherVariableSeedEventHandlers.register(in: &events)
     AuthInfrastructure.EventHandlers.register(in: &events)
-    UserInfrastructure.EventHandlers.register(in: &events)
+    UserModule.Event.Handlers.register(in: &events)
     AccountInfrastructure.EventHandlers.register(in: &events)
     AnalyticsInfrastructure.EventHandlers.register(in: &events)
     RedirectInfrastructure.EventHandlers.register(in: &events)

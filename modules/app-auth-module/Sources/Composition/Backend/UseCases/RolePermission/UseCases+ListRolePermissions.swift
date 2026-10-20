@@ -10,7 +10,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 AuthScope(
-                    identity: IdentityDatabaseQueries(
+                    identity: Identity.Query.Database(
                         context: context
                     ),
                     rolePermissions: RolePermissionDatabaseQueries(

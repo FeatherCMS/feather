@@ -14,7 +14,7 @@ extension UseCases {
             scope: { context in
                 WriteInvitationOnlyWithVariable(
                     invitation: InvitationDatabaseRepository(context: context),
-                    role: RoleDatabaseRepository(context: context),
+                    role: Role.Repository.Database(context: context),
                     variable: SystemModule.Variable.Lookup.Database(
                         context: context
                     )

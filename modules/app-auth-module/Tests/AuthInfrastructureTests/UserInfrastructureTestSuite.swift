@@ -120,7 +120,7 @@ struct AuthInfrastructureTestSuite {
                 idGenerator: idGenerator
             )
 
-            _ = try await IdentityDatabaseRepository(context: context)
+            _ = try await Identity.Repository.Database(context: context)
                 .insert(
                     id: "user-2",
                     model: Identity.create(status: .active)
@@ -160,7 +160,7 @@ struct AuthInfrastructureTestSuite {
             )
             #expect(magicLinks.items.map(\.id) == ["magic-link-2"])
 
-            let rootIdentity = try await IdentityDatabaseRepository(
+            let rootIdentity = try await Identity.Repository.Database(
                 context: context
             )
             .findRoot()

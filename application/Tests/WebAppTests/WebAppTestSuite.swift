@@ -2,13 +2,13 @@ import SystemModule
 import CSS
 import AuthFrontend
 import AuthContracts
-import FeatherAdmin
+import FeatherWebAdmin
 import FeatherModuleKit
 import HTML
 import SGML
 import SystemWebAdmin
 import Testing
-import UserFrontend
+import UserWebAdmin
 import AccountFrontend
 @testable import WebFrontend
 import FeatherValidation

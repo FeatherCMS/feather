@@ -1,12 +1,12 @@
 public import AccountAppAPI
 import AsyncHTTPClient
-public import FeatherAdmin
+public import FeatherWebAdmin
 public import Foundation
 public import MediaFrontend
 import NIOCore
 import OpenAPIAsyncHTTPClient
 public import OpenAPIRuntime
-public import UserFrontend
+public import UserWebAdmin
 
 public struct AccountAppAPIClient: Sendable {
     public let client: AccountAppAPI.Client
@@ -56,12 +56,10 @@ public struct AccountAppAPIClient: Sendable {
 public struct AccountAPIBuilder: Sendable {
     private let apiBaseURL: URL
     public let media: MediaAPIBuilder
-    public let user: UserAPIBuilder
 
     public init(apiBaseURL: URL) {
         self.apiBaseURL = apiBaseURL
         self.media = .init(apiBaseURL: apiBaseURL)
-        self.user = .init(apiBaseURL: apiBaseURL)
     }
 
     public func makeAccountApp(
@@ -90,7 +88,7 @@ public struct AccountAPIBuilder: Sendable {
 
     public func makeUserAdmin(
         _ context: AuthenticatedRequestContext
-    ) -> UserAdminAPIClient {
-        user.makeUserAdmin(context)
+    ) -> UserWebAdmin.API.Client {
+        .init(apiBaseURL: apiBaseURL, requestContext: context)
     }
 }

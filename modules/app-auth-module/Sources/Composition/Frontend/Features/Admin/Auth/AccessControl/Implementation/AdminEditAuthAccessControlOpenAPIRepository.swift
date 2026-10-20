@@ -1,7 +1,7 @@
 import AuthAdminAPI
 import AuthAppAPI
 import CSS
-import FeatherAdmin
+import FeatherWebAdmin
 import FeatherValidation
 import FeatherValidationFoundation
 import HTML
@@ -12,8 +12,7 @@ import SystemAdminAPI
 import SystemWebAdmin
 import SystemModule
 import UserAdminAPI
-import UserAppAPI
-import UserFrontend
+import UserWebAdmin
 import WebBuilders
 import WebComponents
 
@@ -21,7 +20,7 @@ struct AdminEditAuthAccessControlOpenAPIRepository:
     AdminEditAuthAccessControlRepository
 {
     let api: AuthAdminAPIClient
-    let userAPI: UserAdminAPIClient
+    let userAPI: UserWebAdmin.API.Client
     let systemAPI: SystemWebAdmin.API.Client
     private let rolesUnauthorizedMessage =
         "Please sign in again to view user roles."
@@ -45,7 +44,7 @@ struct AdminEditAuthAccessControlOpenAPIRepository:
 
     init(
         api: AuthAdminAPIClient,
-        userAPI: UserAdminAPIClient,
+        userAPI: UserWebAdmin.API.Client,
         systemAPI: SystemWebAdmin.API.Client
     ) {
         self.api = api

@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 
 struct AdminViewAnalyticsOverview {
     let controller: any AdminViewAnalyticsOverviewController

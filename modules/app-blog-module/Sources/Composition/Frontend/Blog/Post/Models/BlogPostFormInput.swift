@@ -1,6 +1,6 @@
 import BlogAdminAPI
 import BlogAppAPI
-import FeatherAdmin
+import FeatherWebAdmin
 import FeatherModuleKit
 import FeatherValidation
 import HTML

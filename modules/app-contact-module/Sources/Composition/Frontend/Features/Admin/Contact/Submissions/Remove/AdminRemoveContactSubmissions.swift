@@ -1,4 +1,4 @@
-import FeatherAdmin
+import FeatherWebAdmin
 
 struct AdminRemoveContactSubmissions {
     let controller: any AdminRemoveContactSubmissionsController

@@ -1,6 +1,6 @@
 import UserDomain
 
-actor MockIdentityRepository: IdentityRepository {
+actor MockIdentityRepository: Identity.Repository.Interface {
     private(set) var updateCallCount = 0
     private(set) var replaceRoleIdsCallCount = 0
     private(set) var replacedRoleIds: [String] = []

@@ -20,7 +20,7 @@ public enum EventHandlers {
         }
 
         registry.register(
-            event: UserIdentityDidInsert.self,
+            event: Identity.Event.DidInsert.self,
             context: DatabaseTransactionContext.self
         ) { event, context in
             _ = try await SettingsDatabaseRepository(context: context)

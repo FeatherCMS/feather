@@ -9,10 +9,10 @@ public import FeatherModuleKit
 public import UserApplication
 
 public struct GetCurrentUser: UseCase {
-    let query: any QueryExecutor<ReadIdentity>
+    let query: any QueryExecutor<Identity.Query.Scope>
 
     public init(
-        query: any QueryExecutor<ReadIdentity>
+        query: any QueryExecutor<Identity.Query.Scope>
     ) {
         self.query = query
     }

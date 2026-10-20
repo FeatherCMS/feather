@@ -1,5 +1,5 @@
 import AccountAdminAPI
-import FeatherAdmin
+import FeatherWebAdmin
 import OpenAPIRuntime
 
 struct AdminResendAccountInvitationOpenAPIRepository:

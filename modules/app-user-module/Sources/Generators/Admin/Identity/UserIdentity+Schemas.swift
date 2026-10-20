@@ -7,8 +7,7 @@
 
 import FeatherOpenAPI
 import FeatherOpenAPIGenerator
-import OpenAPIKit30
-import UserSharedOpenAPIGenerator
+import UserOpenAPIGeneratorSupport
 
 struct UserIdentityListItemSchema: ObjectSchemaRepresentable {
     var propertyMap: SchemaMap {
@@ -18,12 +17,6 @@ struct UserIdentityListItemSchema: ObjectSchemaRepresentable {
             "status": UserIdentityStatusField().reference(),
             "roles": UserIdentityRoleIDListSchema().reference(),
         ]
-    }
-}
-
-struct UserIdentityListSchema: ArraySchemaRepresentable {
-    var items: (any SchemaRepresentable)? {
-        UserIdentityListItemSchema().reference()
     }
 }
 

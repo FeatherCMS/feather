@@ -256,7 +256,7 @@ let package = Package(
         .executableTarget(
             name: "WebApp",
             dependencies: [
-                .product(name: "FeatherAdmin", package: "feather-core"),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "WebContracts", package: "app-web-module"),
 
@@ -266,7 +266,7 @@ let package = Package(
                 .product(name: "Mustache", package: "swift-mustache"),
 
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
-                .product(name: "UserFrontend", package: "app-user-module"),
+                .product(name: "UserWebAdmin", package: "app-user-module"),
                 .product(name: "AccountFrontend", package: "app-account-module"),
                 .product(name: "RedirectFrontend", package: "app-redirect-module"),
                 .product(name: "AnalyticsFrontend", package: "app-analytics-module"),
@@ -311,7 +311,6 @@ let package = Package(
                 .product(name: "FeatherStorage", package: "feather-storage"),
 
                 .product(name: "UserAdminAPI", package: "app-user-module"),
-                .product(name: "UserAppAPI", package: "app-user-module"),
                 .product(name: "AccountAdminAPI", package: "app-account-module"),
                 .product(name: "AccountAppAPI", package: "app-account-module"),
                 .product(name: "AccountBackend", package: "app-account-module"),
@@ -407,7 +406,7 @@ let package = Package(
             name: "WebAppTests",
             dependencies: [
                 .product(name: "HummingbirdTesting", package: "hummingbird"),
-                .product(name: "FeatherAdmin", package: "feather-core"),
+                .product(name: "FeatherWebAdmin", package: "feather-core"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(name: "AccountFrontend", package: "app-account-module"),
                 .product(name: "WebFrontend", package: "app-web-module"),

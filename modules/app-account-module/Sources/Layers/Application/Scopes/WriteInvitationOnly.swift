@@ -5,14 +5,14 @@ public import UserDomain
 
 public struct WriteInvitationOnly: Scope {
     public let invitation: any InvitationRepository
-    public let identity: any IdentityRepository
-    public let role: any RoleRepository
+    public let identity: any Identity.Repository.Interface
+    public let role: any Role.Repository.Interface
     public let authEmail: any AuthEmailRepository
 
     public init(
         invitation: any InvitationRepository,
-        identity: any IdentityRepository,
-        role: any RoleRepository,
+        identity: any Identity.Repository.Interface,
+        role: any Role.Repository.Interface,
         authEmail: any AuthEmailRepository
     ) {
         self.invitation = invitation

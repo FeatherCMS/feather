@@ -1,0 +1,79 @@
+import FeatherModuleKit
+import FeatherValidation
+import FeatherWebAdmin
+import HTML
+import Hummingbird
+import UserModule
+
+extension Role.Add.Controller {
+    struct Default: Interface {
+        let buildRuntime:
+            AuthenticatedRuntimeBuilder<
+                any Role.Add.Interactor.Interface,
+                any Role.Add.Presenter.Interface
+            >
+
+        func getAddUserRole(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> HTMLResponse {
+            let (_, presenter) = buildRuntime((request, context))
+            guard
+                context.isCurrentUserAllowed(
+                    to: Role.Permissions.create
+                )
+            else {
+                return try await presenter.renderForbiddenPage()
+            }
+            return try await presenter.renderAddPage(state: .addEmpty())
+        }
+
+        func postAddUserRole(
+            request: Request,
+            context: AuthenticatedRequestContext
+        ) async throws -> Response {
+            let runtime = buildRuntime((request, context))
+            guard
+                context.isCurrentUserAllowed(
+                    to: Role.Permissions.create
+                )
+            else {
+                return try await runtime.presenter
+                    .renderForbiddenPage()
+                    .response(from: request, context: context)
+            }
+            var lastPayload: Role.Add.FormInput?
+            do {
+                let payload = try await request.decode(
+                    as: NonceRequest<Role.Add.FormInput>.self,
+                    context: context
+                )
+                let input = payload.input
+                lastPayload = input
+                guard
+                    await AdminNonceStore.shared.consume(
+                        payload.nonce,
+                        sessionToken: context.sessionToken
+                    )
+                else {
+                    return try await runtime.presenter
+                        .renderInvalidNoncePage()
+                        .response(from: request, context: context)
+                }
+                try await input.validate()
+                try await runtime.interactor.add(input: input)
+                return runtime.presenter.renderSuccess()
+            }
+            catch let error as ValidationError {
+                return try await runtime.presenter
+                    .renderValidationError(input: lastPayload, error: error)
+                    .response(from: request, context: context)
+            }
+            catch let error as Role.Add.Error {
+                return try await runtime.presenter
+                    .renderAddError(input: lastPayload, error: error)
+                    .response(from: request, context: context)
+            }
+        }
+    }
+}

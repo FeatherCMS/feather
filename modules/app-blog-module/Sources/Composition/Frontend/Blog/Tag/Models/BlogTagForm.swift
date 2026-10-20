@@ -1,6 +1,6 @@
 import BlogAdminAPI
 import BlogAppAPI
-import FeatherAdmin
+import FeatherWebAdmin
 import HTML
 import Hummingbird
 import MediaFrontend
@@ -9,13 +9,13 @@ import WebComponents
 import WebFrontend
 
 struct BlogTagForm: Component {
-    struct FieldState: FeatherAdmin.Object {
+    struct FieldState: FeatherWebAdmin.Object {
         var key: String
         var label: String
         var value: String?
         var error: String?
     }
-    struct State: FeatherAdmin.Object {
+    struct State: FeatherWebAdmin.Object {
         var title: FieldState
         var excerpt: FieldState
         var content: FieldState

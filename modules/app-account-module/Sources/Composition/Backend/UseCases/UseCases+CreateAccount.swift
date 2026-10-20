@@ -11,7 +11,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 WriteAccount(
-                    identity: IdentityDatabaseRepository(context: context),
+                    identity: Identity.Repository.Database(context: context),
                     authEmail: AuthEmailDatabaseRepository(context: context),
                     credential: CredentialDatabaseRepository(context: context)
                 )
