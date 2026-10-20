@@ -210,15 +210,15 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.systemJobList(
+                try await server.systemJobQuery(
                     request: $0,
                     body: $1,
                     metadata: $2
                 )
             },
-            method: .get,
+            method: .post,
             path: server.apiPathComponentsWithServerPrefix(
-                "/api/v1/admin/system/jobs"
+                "/api/v1/admin/system/jobs/query"
             )
         )
         try transport.register(
@@ -2145,9 +2145,9 @@ extension UniversalServer where APIHandler: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/system/jobs`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/get(systemJobList)`.
-    fileprivate func systemJobList(
+    /// - Remark: HTTP `POST /api/v1/admin/system/jobs/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/query/post(systemJobQuery)`.
+    fileprivate func systemJobQuery(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -2156,35 +2156,44 @@ extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.SystemJobList.id,
+            forOperation: Operations.SystemJobQuery.id,
             using: {
-                APIHandler.systemJobList($0)
+                APIHandler.systemJobQuery($0)
             },
             deserializer: { request, requestBody, metadata in
-                let query: Operations.SystemJobList.Input.Query = .init(
-                    pageSize: try converter.getOptionalQueryItemAsURI(
-                        in: request.soar_query,
-                        style: .form,
-                        explode: true,
-                        name: "pageSize",
-                        as: Components.Parameters.JobParametersPageSize.self
-                    ),
-                    pageNumber: try converter.getOptionalQueryItemAsURI(
-                        in: request.soar_query,
-                        style: .form,
-                        explode: true,
-                        name: "pageNumber",
-                        as: Components.Parameters.JobParametersPageNumber.self
-                    )
-                )
-                let headers: Operations.SystemJobList.Input.Headers = .init(
+                let headers: Operations.SystemJobQuery.Input.Headers = .init(
                     accept: try converter.extractAcceptHeaderIfPresent(
                         in: request.headerFields
                     )
                 )
-                return Operations.SystemJobList.Input(
-                    query: query,
-                    headers: headers
+                let contentType = converter.extractContentTypeIfPresent(
+                    in: request.headerFields
+                )
+                let body: Operations.SystemJobQuery.Input.Body
+                let chosenContentType = try converter.bestContentType(
+                    received: contentType,
+                    options: [
+                        "application/json"
+                    ]
+                )
+                switch chosenContentType {
+                case "application/json":
+                    body = try await converter.getRequiredRequestBodyAsJSON(
+                        Components.Schemas.SystemJobSearchRequestQuerySchema
+                            .self,
+                        from: requestBody,
+                        transforming: { value in
+                            .json(value)
+                        }
+                    )
+                default:
+                    preconditionFailure(
+                        "bestContentType chose an invalid content type."
+                    )
+                }
+                return Operations.SystemJobQuery.Input(
+                    headers: headers,
+                    body: body
                 )
             },
             serializer: { output, request in

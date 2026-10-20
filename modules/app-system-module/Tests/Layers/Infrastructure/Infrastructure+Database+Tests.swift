@@ -30,6 +30,11 @@ private enum QueryKeys {
         case find
         case createTable
     }
+
+    enum Job: DatabaseQueryKey {
+        case search
+        case count
+    }
 }
 
 @Suite
@@ -259,5 +264,62 @@ struct InfrastructureDatabaseTests {
         #expect(queries[.list]?.first?.sql.contains("OFFSET") == true)
         #expect((queries[.list]?.first?.bindings.count ?? 0) >= 3)
         #expect(queries[.count]?.first?.sql.contains("COUNT") == true)
+    }
+
+    @Test
+    func jobSearchUsesBoundSearchAndStatusFilters() async throws {
+        let connection = MockDatabaseConnection<QueryKeys.Job>(
+            responses: [
+                .init(
+                    key: .search,
+                    rows: [
+                        .init([
+                            "id": .string("job-1"),
+                            "queue_name": .string("default"),
+                            "status": .int(3),
+                            "worker_id": .null,
+                            "last_modified": .date(
+                                Date(timeIntervalSince1970: 1_700_000_000)
+                            ),
+                            "payload": .string("{}"),
+                        ])
+                    ]
+                ),
+                .init(key: .count, rows: [.init(["count": .int(1)])]),
+            ]
+        )
+        let query = SystemModule.Job.Search.Query.Database(
+            context: DatabaseQueryContext(
+                platform: MockDatabasePlatform(),
+                connection: connection,
+                idGenerator: FeatherTesting.IDGenerator.Mock(id: "unused")
+            )
+        )
+
+        let result = try await query.search(
+            query: .init(
+                page: .init(size: 20, number: 2),
+                search: "queue_50%",
+                status: 3
+            )
+        )
+        try await connection.assertAllResponsesConsumed()
+
+        #expect(result.items.map(\.id) == ["job-1"])
+        #expect(result.total == 1)
+        let queries = await connection.executedQueries()
+        let select = try #require(queries[.search]?.first)
+        #expect(select.sql.contains("ILIKE"))
+        #expect(select.sql.contains("jsonb_each"))
+        #expect(select.sql.contains("NULLS LAST"))
+        #expect(select.sql.contains("LIMIT"))
+        #expect(select.sql.contains("OFFSET"))
+        #expect(
+            select.bindings.contains(
+                .init(index: 0, binding: .string("%queue!_50!%%"))
+            )
+        )
+        #expect(select.bindings.contains(where: { $0.binding == .int(3) }))
+        #expect(queries[.count]?.first?.sql.contains("COUNT(*)") == true)
     }
 }

@@ -215,16 +215,16 @@ extension Components {
                 self.body = body
             }
         }
-        public struct SystemJobListResponse: Sendable, Hashable {
-            /// - Remark: Generated from `#/components/responses/SystemJobListResponse/content`.
+        public struct SystemJobSearchSchemaSearchResponse: Sendable, Hashable {
+            /// - Remark: Generated from `#/components/responses/SystemJobSearchSchemaSearchResponse/content`.
             @frozen public enum Body: Sendable, Hashable {
-                /// - Remark: Generated from `#/components/responses/SystemJobListResponse/content/application\/json`.
-                case json(Components.Schemas.SystemJobListSchema)
+                /// - Remark: Generated from `#/components/responses/SystemJobSearchSchemaSearchResponse/content/application\/json`.
+                case json(Components.Schemas.SystemJobSearchSchema)
                 /// The associated value of the enum case if `self` is `.json`.
                 ///
                 /// - Throws: An error if `self` is not `.json`.
                 /// - SeeAlso: `.json`.
-                public var json: Components.Schemas.SystemJobListSchema {
+                public var json: Components.Schemas.SystemJobSearchSchema {
                     get throws {
                         switch self {
                         case .json(let body):
@@ -234,12 +234,16 @@ extension Components {
                 }
             }
             /// Received HTTP response body
-            public var body: Components.Responses.SystemJobListResponse.Body
-            /// Creates a new `SystemJobListResponse`.
+            public var body:
+                Components.Responses.SystemJobSearchSchemaSearchResponse.Body
+            /// Creates a new `SystemJobSearchSchemaSearchResponse`.
             ///
             /// - Parameters:
             ///   - body: Received HTTP response body
-            public init(body: Components.Responses.SystemJobListResponse.Body) {
+            public init(
+                body: Components.Responses.SystemJobSearchSchemaSearchResponse
+                    .Body
+            ) {
                 self.body = body
             }
         }

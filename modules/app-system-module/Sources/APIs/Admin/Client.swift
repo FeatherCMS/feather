@@ -2392,43 +2392,38 @@ public struct Client: APIProtocol {
             }
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/system/jobs`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/get(systemJobList)`.
-    public func systemJobList(_ input: Operations.SystemJobList.Input)
-        async throws -> Operations.SystemJobList.Output
+    /// - Remark: HTTP `POST /api/v1/admin/system/jobs/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/query/post(systemJobQuery)`.
+    public func systemJobQuery(_ input: Operations.SystemJobQuery.Input)
+        async throws -> Operations.SystemJobQuery.Output
     {
         try await client.send(
             input: input,
-            forOperation: Operations.SystemJobList.id,
+            forOperation: Operations.SystemJobQuery.id,
             serializer: { input in
                 let path = try converter.renderedPath(
-                    template: "/api/v1/admin/system/jobs",
+                    template: "/api/v1/admin/system/jobs/query",
                     parameters: []
                 )
                 var request: HTTPTypes.HTTPRequest = .init(
                     soar_path: path,
-                    method: .get
+                    method: .post
                 )
                 suppressMutabilityWarning(&request)
-                try converter.setQueryItemAsURI(
-                    in: &request,
-                    style: .form,
-                    explode: true,
-                    name: "pageSize",
-                    value: input.query.pageSize
-                )
-                try converter.setQueryItemAsURI(
-                    in: &request,
-                    style: .form,
-                    explode: true,
-                    name: "pageNumber",
-                    value: input.query.pageNumber
-                )
                 converter.setAcceptHeader(
                     in: &request.headerFields,
                     contentTypes: input.headers.accept
                 )
-                return (request, nil)
+                let body: OpenAPIRuntime.HTTPBody?
+                switch input.body {
+                case .json(let value):
+                    body = try converter.setRequiredRequestBodyAsJSON(
+                        value,
+                        headerFields: &request.headerFields,
+                        contentType: "application/json; charset=utf-8"
+                    )
+                }
+                return (request, body)
             },
             deserializer: { response, responseBody in
                 switch response.status.code {
@@ -2436,7 +2431,9 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Components.Responses.SystemJobListResponse.Body
+                    let body:
+                        Components.Responses.SystemJobSearchSchemaSearchResponse
+                            .Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2446,7 +2443,7 @@ public struct Client: APIProtocol {
                     switch chosenContentType {
                     case "application/json":
                         body = try await converter.getResponseBodyAsJSON(
-                            Components.Schemas.SystemJobListSchema.self,
+                            Components.Schemas.SystemJobSearchSchema.self,
                             from: responseBody,
                             transforming: { value in
                                 .json(value)
@@ -2462,7 +2459,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Operations.SystemJobList.Output.Unauthorized.Body
+                    let body: Operations.SystemJobQuery.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -2490,7 +2487,7 @@ public struct Client: APIProtocol {
                     let contentType = converter.extractContentTypeIfPresent(
                         in: response.headerFields
                     )
-                    let body: Operations.SystemJobList.Output.Forbidden.Body
+                    let body: Operations.SystemJobQuery.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [

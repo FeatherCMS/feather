@@ -58,16 +58,6 @@ extension Components {
         /// - Remark: Generated from `#/components/parameters/VariableParametersUpdateMask`.
         public typealias VariableParametersUpdateMask = Components.Schemas
             .SystemVariableUpdateMask
-        /// Defaults to 100; values are clamped to 1-100
-        ///
-        /// - Remark: Generated from `#/components/parameters/JobParametersPageSize`.
-        public typealias JobParametersPageSize = Components.Schemas
-            .JobSchemasPageSize
-        /// Defaults to 1; one-based, values below 1 use page 1
-        ///
-        /// - Remark: Generated from `#/components/parameters/JobParametersPageNumber`.
-        public typealias JobParametersPageNumber = Components.Schemas
-            .JobSchemasPageNumber
         /// Worker job id
         ///
         /// - Remark: Generated from `#/components/parameters/SystemJobIdParameter`.

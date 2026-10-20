@@ -8,6 +8,10 @@ extension Job.List {
 
 extension Job.List.Repository {
     protocol Interface: Sendable {
-        func list() async throws -> [Components.Schemas.SystemJobSchema]
+        func search(
+            page: Int,
+            search: String?,
+            status: Int?
+        ) async throws -> Components.Schemas.SystemJobSearchSchema
     }
 }

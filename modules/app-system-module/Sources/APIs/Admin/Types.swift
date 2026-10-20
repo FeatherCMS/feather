@@ -64,10 +64,10 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/system/variables/{systemVariableId}/put(systemVariablePut)`.
     func systemVariablePut(_ input: Operations.SystemVariablePut.Input)
         async throws -> Operations.SystemVariablePut.Output
-    /// - Remark: HTTP `GET /api/v1/admin/system/jobs`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/get(systemJobList)`.
-    func systemJobList(_ input: Operations.SystemJobList.Input) async throws
-        -> Operations.SystemJobList.Output
+    /// - Remark: HTTP `POST /api/v1/admin/system/jobs/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/query/post(systemJobQuery)`.
+    func systemJobQuery(_ input: Operations.SystemJobQuery.Input) async throws
+        -> Operations.SystemJobQuery.Output
     /// - Remark: HTTP `GET /api/v1/admin/system/jobs/{systemJobId}`.
     /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/{systemJobId}/get(systemJobGet)`.
     func systemJobGet(_ input: Operations.SystemJobGet.Input) async throws
@@ -270,16 +270,16 @@ extension APIProtocol {
             )
         )
     }
-    /// - Remark: HTTP `GET /api/v1/admin/system/jobs`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/get(systemJobList)`.
-    public func systemJobList(
-        query: Operations.SystemJobList.Input.Query = .init(),
-        headers: Operations.SystemJobList.Input.Headers = .init()
-    ) async throws -> Operations.SystemJobList.Output {
-        try await systemJobList(
-            Operations.SystemJobList.Input(
-                query: query,
-                headers: headers
+    /// - Remark: HTTP `POST /api/v1/admin/system/jobs/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/query/post(systemJobQuery)`.
+    public func systemJobQuery(
+        headers: Operations.SystemJobQuery.Input.Headers = .init(),
+        body: Operations.SystemJobQuery.Input.Body
+    ) async throws -> Operations.SystemJobQuery.Output {
+        try await systemJobQuery(
+            Operations.SystemJobQuery.Input(
+                headers: headers,
+                body: body
             )
         )
     }

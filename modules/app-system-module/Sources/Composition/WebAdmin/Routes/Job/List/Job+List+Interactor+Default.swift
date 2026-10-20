@@ -1,6 +1,5 @@
 import FeatherAdmin
 import FeatherModuleKit
-import Foundation
 import SystemAdminAPI
 import SystemModule
 
@@ -13,9 +12,13 @@ extension Job.List.Interactor {
             search: String?,
             status: Int?
         ) async throws -> Job.List.Model {
-            let allJobs: [Components.Schemas.SystemJobSchema]
+            let result: Components.Schemas.SystemJobSearchSchema
             do {
-                allJobs = try await repository.list()
+                result = try await repository.search(
+                    page: page,
+                    search: search,
+                    status: status
+                )
             }
             catch let error as OpenAPIRepositoryError {
                 switch error {
@@ -29,56 +32,15 @@ extension Job.List.Interactor {
                         .unavailable
                 }
             }
-            let normalizedSearch = search?.emptyToNil ?? ""
-            let filteredJobs = allJobs.filter { job in
-                guard status == nil || job.status == status else {
-                    return false
-                }
-                guard !normalizedSearch.isEmpty else { return true }
-                return [
-                    job.id,
-                    job.queueName,
-                    job.workerId ?? "",
-                    String(job.status),
-                    job.payload,
-                ]
-                .contains {
-                    $0.localizedCaseInsensitiveContains(normalizedSearch)
-                }
-            }
-            let sortedJobs = filteredJobs.sorted { lhs, rhs in
-                let left = SystemJobPayload(job: lhs).queuedAtTimestamp
-                let right = SystemJobPayload(job: rhs).queuedAtTimestamp
-                switch (left, right) {
-                case (let left?, let right?):
-                    if left != right { return left > right }
-                    return lhs.id > rhs.id
-                case (_?, nil): return true
-                case (nil, _?): return false
-                case (nil, nil): return lhs.id > rhs.id
-                }
-            }
             let pageSize = Job.List.Router.pageSize
             let normalizedPage = max(1, page)
-            let pageIndex = normalizedPage - 1
-            let start =
-                pageIndex > Int.max / pageSize
-                ? Int.max
-                : pageIndex * pageSize
-            let items =
-                start < sortedJobs.count
-                ? Array(
-                    sortedJobs[
-                        start..<start + min(pageSize, sortedJobs.count - start)
-                    ]
-                )
-                : []
+            let items = result.data.items
             return .init(
                 items: items,
                 pageState: .init(
                     page: normalizedPage,
                     pageSize: pageSize,
-                    total: sortedJobs.count
+                    total: result.data.total
                 )
             )
         }

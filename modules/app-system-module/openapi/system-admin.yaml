@@ -471,17 +471,20 @@ paths:
                 $ref: '#/components/schemas/DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema'
       security:
       - bearerAuth: []
-  /api/v1/admin/system/jobs:
-    get:
+  /api/v1/admin/system/jobs/query:
+    post:
       tags:
       - System jobs
-      operationId: systemJobList
-      parameters:
-      - $ref: '#/components/parameters/JobParametersPageSize'
-      - $ref: '#/components/parameters/JobParametersPageNumber'
+      operationId: systemJobQuery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SystemJobSearchRequestQuerySchema'
+        required: true
       responses:
         200:
-          $ref: '#/components/responses/SystemJobListResponse'
+          $ref: '#/components/responses/SystemJobSearchSchemaSearchResponse'
         401:
           description: Unauthorized
           content:
@@ -1040,16 +1043,92 @@ components:
       type: string
       example: Application default timezone.
       nullable: true
-    JobSchemasPageSize:
+    SystemJobSearchRequestQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchPageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - queuedAt
+                example: queuedAt
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/SystemJobStatusField'
+      required:
+      - filters
+    SystemJobStatusField:
       type: integer
-      example: 20
-    JobSchemasPageNumber:
-      type: integer
-      example: 1
-    SystemJobListSchema:
-      type: array
-      items:
-        $ref: '#/components/schemas/SystemJobSchema'
+    SystemJobSearchSchema:
+      type: object
+      properties:
+        query:
+          $ref: '#/components/schemas/SystemJobSearchResponseQuerySchema'
+        data:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                $ref: '#/components/schemas/SystemJobSchema'
+            total:
+              type: integer
+              example: 123
+          required:
+          - items
+          - total
+      required:
+      - query
+      - data
+    SystemJobSearchResponseQuerySchema:
+      type: object
+      properties:
+        page:
+          $ref: '#/components/schemas/SearchResponsePageSchema'
+        sort:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+                enum:
+                - queuedAt
+                example: queuedAt
+              direction:
+                $ref: '#/components/schemas/SortDirection'
+            required:
+            - field
+            - direction
+        filters:
+          type: object
+          example:
+            search: foo
+          properties:
+            search:
+              $ref: '#/components/schemas/SearchStringField'
+            status:
+              $ref: '#/components/schemas/SystemJobStatusField'
+      required:
+      - page
+      - filters
     SystemJobSchema:
       type: object
       properties:
@@ -1115,12 +1194,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/SystemVariableQueryItemSearchSchema'
-    SystemJobListResponse:
-      description: Worker job list response
+    SystemJobSearchSchemaSearchResponse:
+      description: Search response
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/SystemJobListSchema'
+            $ref: '#/components/schemas/SystemJobSearchSchema'
     SystemJobResponse:
       description: Worker job response
       content:
@@ -1202,20 +1281,6 @@ components:
         $ref: '#/components/schemas/SystemVariableUpdateMask'
       description: Comma-separated list of fields to update. Include an optional field
         to clear it when omitted from the request body.
-    JobParametersPageSize:
-      name: pageSize
-      allowEmptyValue: true
-      in: query
-      schema:
-        $ref: '#/components/schemas/JobSchemasPageSize'
-      description: Defaults to 100; values are clamped to 1-100
-    JobParametersPageNumber:
-      name: pageNumber
-      allowEmptyValue: true
-      in: query
-      schema:
-        $ref: '#/components/schemas/JobSchemasPageNumber'
-      description: Defaults to 1; one-based, values below 1 use page 1
     SystemJobIdParameter:
       name: systemJobId
       in: path

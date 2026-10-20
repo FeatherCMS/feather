@@ -1,3 +1,4 @@
+import FeatherDatabase
 import FeatherDatabaseTesting
 import FeatherHTTP
 import Foundation
@@ -8,7 +9,8 @@ import Testing
 @Suite
 struct JobListTests {
     private enum QueryKey: DatabaseQueryKey {
-        case jobList
+        case jobSearch
+        case jobCount
     }
 
     private func array(from body: String) throws -> [[String: Any]] {
@@ -30,20 +32,26 @@ struct JobListTests {
     }
 
     @Test
-    func returnsJobs() async throws {
-        let connection = MockDatabaseConnection<
-            QueryKey
-        >(
+    func searchesJobsWithStatusFilterAndPagination() async throws {
+        let connection = MockDatabaseConnection<QueryKey>(
             responses: [
-                .init(key: .jobList, rows: [jobRow()])
+                .init(key: .jobSearch, rows: [jobRow()]),
+                .init(key: .jobCount, rows: [.init(["count": .int(1)])]),
             ]
         )
         let executor = try SystemAPIHTTPTestSupport.makeExecutor(
             connection: connection
         )
-        let request = FeatherHTTP.Request(
-            method: .get,
-            path: "/api/v1/admin/system/jobs?pageSize=10&pageNumber=1"
+        let request = JSONRequest(
+            method: .post,
+            path: "/api/v1/admin/system/jobs/query",
+            body: Components.Schemas.SystemJobSearchRequestQuerySchema(
+                page: .init(size: 10, number: 2),
+                sort: [
+                    .init(field: .queuedAt, direction: .desc)
+                ],
+                filters: .init(search: "worker", status: 1)
+            )
         )
 
         let body = try await SystemAPIHTTPTestSupport.send(
@@ -51,10 +59,29 @@ struct JobListTests {
             expectedStatus: 200,
             using: executor
         )
-        let items = try array(from: body)
+        let json = try #require(
+            JSONSerialization.jsonObject(with: Data(body.utf8))
+                as? [String: Any]
+        )
+        let query = try #require(json["query"] as? [String: Any])
+        let page = try #require(query["page"] as? [String: Any])
+        #expect(page["size"] as? Int == 10)
+        #expect(page["number"] as? Int == 2)
+        let data = try #require(json["data"] as? [String: Any])
+        #expect(data["total"] as? Int == 1)
+        let items = try #require(data["items"] as? [[String: Any]])
         #expect(items.first?["id"] as? String == "job-1")
-        #expect(items.first?["queueName"] as? String == "default")
-        #expect(items.first?["payload"] as? String == "{}")
+
+        let queries = await connection.executedQueries()
+        #expect(
+            queries[.jobSearch]?.first?.sql.contains("LIMIT") == true
+        )
+        #expect(
+            queries[.jobSearch]?.first?.sql.contains("ILIKE") == true
+        )
+        #expect(
+            queries[.jobCount]?.first?.sql.contains("COUNT(*)") == true
+        )
         try await connection.assertAllResponsesConsumed()
     }
 }

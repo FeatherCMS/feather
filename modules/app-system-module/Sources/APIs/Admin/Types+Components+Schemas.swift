@@ -1145,13 +1145,248 @@ extension Components {
         public typealias SystemVariableNameFieldNullable = Swift.String
         /// - Remark: Generated from `#/components/schemas/SystemVariableNotesFieldNullable`.
         public typealias SystemVariableNotesFieldNullable = Swift.String
-        /// - Remark: Generated from `#/components/schemas/JobSchemasPageSize`.
-        public typealias JobSchemasPageSize = Swift.Int
-        /// - Remark: Generated from `#/components/schemas/JobSchemasPageNumber`.
-        public typealias JobSchemasPageNumber = Swift.Int
-        /// - Remark: Generated from `#/components/schemas/SystemJobListSchema`.
-        public typealias SystemJobListSchema = [Components.Schemas
-            .SystemJobSchema]
+        /// - Remark: Generated from `#/components/schemas/SystemJobSearchRequestQuerySchema`.
+        public struct SystemJobSearchRequestQuerySchema: Codable, Hashable,
+            Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/SystemJobSearchRequestQuerySchema/page`.
+            public var page: Components.Schemas.SearchPageSchema?
+            /// - Remark: Generated from `#/components/schemas/SystemJobSearchRequestQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/SystemJobSearchRequestQuerySchema/SortPayload/field`.
+                @frozen
+                public enum FieldPayload: String, Codable, Hashable, Sendable,
+                    CaseIterable
+                {
+                    case queuedAt = "queuedAt"
+                }
+                /// - Remark: Generated from `#/components/schemas/SystemJobSearchRequestQuerySchema/SortPayload/field`.
+                public var field:
+                    Components.Schemas.SystemJobSearchRequestQuerySchema
+                        .SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/SystemJobSearchRequestQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.SystemJobSearchRequestQuerySchema
+                        .SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/SystemJobSearchRequestQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas
+                .SystemJobSearchRequestQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/SystemJobSearchRequestQuerySchema/sort`.
+            public var sort:
+                Components.Schemas.SystemJobSearchRequestQuerySchema
+                    .SortPayload?
+            /// - Remark: Generated from `#/components/schemas/SystemJobSearchRequestQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/SystemJobSearchRequestQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/SystemJobSearchRequestQuerySchema/filters/status`.
+                public var status: Components.Schemas.SystemJobStatusField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                ///   - status:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    status: Components.Schemas.SystemJobStatusField? = nil
+                ) {
+                    self.search = search
+                    self.status = status
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                    case status
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/SystemJobSearchRequestQuerySchema/filters`.
+            public var filters:
+                Components.Schemas.SystemJobSearchRequestQuerySchema
+                    .FiltersPayload
+            /// Creates a new `SystemJobSearchRequestQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchPageSchema? = nil,
+                sort: Components.Schemas.SystemJobSearchRequestQuerySchema
+                    .SortPayload? = nil,
+                filters: Components.Schemas.SystemJobSearchRequestQuerySchema
+                    .FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/SystemJobStatusField`.
+        public typealias SystemJobStatusField = Swift.Int
+        /// - Remark: Generated from `#/components/schemas/SystemJobSearchSchema`.
+        public struct SystemJobSearchSchema: Codable, Hashable, Sendable {
+            /// - Remark: Generated from `#/components/schemas/SystemJobSearchSchema/query`.
+            public var query:
+                Components.Schemas.SystemJobSearchResponseQuerySchema
+            /// - Remark: Generated from `#/components/schemas/SystemJobSearchSchema/data`.
+            public struct DataPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/SystemJobSearchSchema/data/items`.
+                public var items: [Components.Schemas.SystemJobSchema]
+                /// - Remark: Generated from `#/components/schemas/SystemJobSearchSchema/data/total`.
+                public var total: Swift.Int
+                /// Creates a new `DataPayload`.
+                ///
+                /// - Parameters:
+                ///   - items:
+                ///   - total:
+                public init(
+                    items: [Components.Schemas.SystemJobSchema],
+                    total: Swift.Int
+                ) {
+                    self.items = items
+                    self.total = total
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case items
+                    case total
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/SystemJobSearchSchema/data`.
+            public var data:
+                Components.Schemas.SystemJobSearchSchema.DataPayload
+            /// Creates a new `SystemJobSearchSchema`.
+            ///
+            /// - Parameters:
+            ///   - query:
+            ///   - data:
+            public init(
+                query: Components.Schemas.SystemJobSearchResponseQuerySchema,
+                data: Components.Schemas.SystemJobSearchSchema.DataPayload
+            ) {
+                self.query = query
+                self.data = data
+            }
+            public enum CodingKeys: String, CodingKey {
+                case query
+                case data
+            }
+        }
+        /// - Remark: Generated from `#/components/schemas/SystemJobSearchResponseQuerySchema`.
+        public struct SystemJobSearchResponseQuerySchema: Codable, Hashable,
+            Sendable
+        {
+            /// - Remark: Generated from `#/components/schemas/SystemJobSearchResponseQuerySchema/page`.
+            public var page: Components.Schemas.SearchResponsePageSchema
+            /// - Remark: Generated from `#/components/schemas/SystemJobSearchResponseQuerySchema/SortPayload`.
+            public struct SortPayloadPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/SystemJobSearchResponseQuerySchema/SortPayload/field`.
+                @frozen
+                public enum FieldPayload: String, Codable, Hashable, Sendable,
+                    CaseIterable
+                {
+                    case queuedAt = "queuedAt"
+                }
+                /// - Remark: Generated from `#/components/schemas/SystemJobSearchResponseQuerySchema/SortPayload/field`.
+                public var field:
+                    Components.Schemas.SystemJobSearchResponseQuerySchema
+                        .SortPayloadPayload.FieldPayload
+                /// - Remark: Generated from `#/components/schemas/SystemJobSearchResponseQuerySchema/SortPayload/direction`.
+                public var direction: Components.Schemas.SortDirection
+                /// Creates a new `SortPayloadPayload`.
+                ///
+                /// - Parameters:
+                ///   - field:
+                ///   - direction:
+                public init(
+                    field: Components.Schemas.SystemJobSearchResponseQuerySchema
+                        .SortPayloadPayload.FieldPayload,
+                    direction: Components.Schemas.SortDirection
+                ) {
+                    self.field = field
+                    self.direction = direction
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case field
+                    case direction
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/SystemJobSearchResponseQuerySchema/sort`.
+            public typealias SortPayload = [Components.Schemas
+                .SystemJobSearchResponseQuerySchema.SortPayloadPayload]
+            /// - Remark: Generated from `#/components/schemas/SystemJobSearchResponseQuerySchema/sort`.
+            public var sort:
+                Components.Schemas.SystemJobSearchResponseQuerySchema
+                    .SortPayload?
+            /// - Remark: Generated from `#/components/schemas/SystemJobSearchResponseQuerySchema/filters`.
+            public struct FiltersPayload: Codable, Hashable, Sendable {
+                /// - Remark: Generated from `#/components/schemas/SystemJobSearchResponseQuerySchema/filters/search`.
+                public var search: Components.Schemas.SearchStringField?
+                /// - Remark: Generated from `#/components/schemas/SystemJobSearchResponseQuerySchema/filters/status`.
+                public var status: Components.Schemas.SystemJobStatusField?
+                /// Creates a new `FiltersPayload`.
+                ///
+                /// - Parameters:
+                ///   - search:
+                ///   - status:
+                public init(
+                    search: Components.Schemas.SearchStringField? = nil,
+                    status: Components.Schemas.SystemJobStatusField? = nil
+                ) {
+                    self.search = search
+                    self.status = status
+                }
+                public enum CodingKeys: String, CodingKey {
+                    case search
+                    case status
+                }
+            }
+            /// - Remark: Generated from `#/components/schemas/SystemJobSearchResponseQuerySchema/filters`.
+            public var filters:
+                Components.Schemas.SystemJobSearchResponseQuerySchema
+                    .FiltersPayload
+            /// Creates a new `SystemJobSearchResponseQuerySchema`.
+            ///
+            /// - Parameters:
+            ///   - page:
+            ///   - sort:
+            ///   - filters:
+            public init(
+                page: Components.Schemas.SearchResponsePageSchema,
+                sort: Components.Schemas.SystemJobSearchResponseQuerySchema
+                    .SortPayload? = nil,
+                filters: Components.Schemas.SystemJobSearchResponseQuerySchema
+                    .FiltersPayload
+            ) {
+                self.page = page
+                self.sort = sort
+                self.filters = filters
+            }
+            public enum CodingKeys: String, CodingKey {
+                case page
+                case sort
+                case filters
+            }
+        }
         /// - Remark: Generated from `#/components/schemas/SystemJobSchema`.
         public struct SystemJobSchema: Codable, Hashable, Sendable {
             /// - Remark: Generated from `#/components/schemas/SystemJobSchema/id`.

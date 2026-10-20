@@ -4509,44 +4509,16 @@ public enum Operations {
             }
         }
     }
-    /// - Remark: HTTP `GET /api/v1/admin/system/jobs`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/get(systemJobList)`.
-    public enum SystemJobList {
-        public static let id: Swift.String = "systemJobList"
+    /// - Remark: HTTP `POST /api/v1/admin/system/jobs/query`.
+    /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/query/post(systemJobQuery)`.
+    public enum SystemJobQuery {
+        public static let id: Swift.String = "systemJobQuery"
         public struct Input: Sendable, Hashable {
-            /// - Remark: Generated from `#/paths/api/v1/admin/system/jobs/GET/query`.
-            public struct Query: Sendable, Hashable {
-                /// Defaults to 100; values are clamped to 1-100
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/system/jobs/GET/query/pageSize`.
-                public var pageSize:
-                    Components.Parameters.JobParametersPageSize?
-                /// Defaults to 1; one-based, values below 1 use page 1
-                ///
-                /// - Remark: Generated from `#/paths/api/v1/admin/system/jobs/GET/query/pageNumber`.
-                public var pageNumber:
-                    Components.Parameters.JobParametersPageNumber?
-                /// Creates a new `Query`.
-                ///
-                /// - Parameters:
-                ///   - pageSize: Defaults to 100; values are clamped to 1-100
-                ///   - pageNumber: Defaults to 1; one-based, values below 1 use page 1
-                public init(
-                    pageSize: Components.Parameters.JobParametersPageSize? =
-                        nil,
-                    pageNumber: Components.Parameters.JobParametersPageNumber? =
-                        nil
-                ) {
-                    self.pageSize = pageSize
-                    self.pageNumber = pageNumber
-                }
-            }
-            public var query: Operations.SystemJobList.Input.Query
-            /// - Remark: Generated from `#/paths/api/v1/admin/system/jobs/GET/header`.
+            /// - Remark: Generated from `#/paths/api/v1/admin/system/jobs/query/POST/header`.
             public struct Headers: Sendable, Hashable {
                 public var accept:
                     [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.SystemJobList.AcceptableContentType
+                        Operations.SystemJobQuery.AcceptableContentType
                     >]
                 /// Creates a new `Headers`.
                 ///
@@ -4554,38 +4526,46 @@ public enum Operations {
                 ///   - accept:
                 public init(
                     accept: [OpenAPIRuntime.AcceptHeaderContentType<
-                        Operations.SystemJobList.AcceptableContentType
+                        Operations.SystemJobQuery.AcceptableContentType
                     >] = .defaultValues()
                 ) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.SystemJobList.Input.Headers
+            public var headers: Operations.SystemJobQuery.Input.Headers
+            /// - Remark: Generated from `#/paths/api/v1/admin/system/jobs/query/POST/requestBody`.
+            @frozen public enum Body: Sendable, Hashable {
+                /// - Remark: Generated from `#/paths/api/v1/admin/system/jobs/query/POST/requestBody/content/application\/json`.
+                case json(Components.Schemas.SystemJobSearchRequestQuerySchema)
+            }
+            public var body: Operations.SystemJobQuery.Input.Body
             /// Creates a new `Input`.
             ///
             /// - Parameters:
-            ///   - query:
             ///   - headers:
+            ///   - body:
             public init(
-                query: Operations.SystemJobList.Input.Query = .init(),
-                headers: Operations.SystemJobList.Input.Headers = .init()
+                headers: Operations.SystemJobQuery.Input.Headers = .init(),
+                body: Operations.SystemJobQuery.Input.Body
             ) {
-                self.query = query
                 self.headers = headers
+                self.body = body
             }
         }
         @frozen public enum Output: Sendable, Hashable {
-            /// Worker job list response
+            /// Search response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/get(systemJobList)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/query/post(systemJobQuery)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
-            case ok(Components.Responses.SystemJobListResponse)
+            case ok(Components.Responses.SystemJobSearchSchemaSearchResponse)
             /// The associated value of the enum case if `self` is `.ok`.
             ///
             /// - Throws: An error if `self` is not `.ok`.
             /// - SeeAlso: `.ok`.
-            public var ok: Components.Responses.SystemJobListResponse {
+            public var ok:
+                Components.Responses.SystemJobSearchSchemaSearchResponse
+            {
                 get throws {
                     switch self {
                     case .ok(let response):
@@ -4599,9 +4579,9 @@ public enum Operations {
                 }
             }
             public struct Unauthorized: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/system/jobs/GET/responses/401/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/system/jobs/query/POST/responses/401/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/system/jobs/GET/responses/401/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/system/jobs/query/POST/responses/401/content/application\/json`.
                     case json(
                         Components.Schemas
                             .DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema
@@ -4624,29 +4604,29 @@ public enum Operations {
                 }
                 /// Received HTTP response body
                 public var body:
-                    Operations.SystemJobList.Output.Unauthorized.Body
+                    Operations.SystemJobQuery.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
                 public init(
-                    body: Operations.SystemJobList.Output.Unauthorized.Body
+                    body: Operations.SystemJobQuery.Output.Unauthorized.Body
                 ) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/get(systemJobList)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/query/post(systemJobQuery)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.SystemJobList.Output.Unauthorized)
+            case unauthorized(Operations.SystemJobQuery.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
             public var unauthorized:
-                Operations.SystemJobList.Output.Unauthorized
+                Operations.SystemJobQuery.Output.Unauthorized
             {
                 get throws {
                     switch self {
@@ -4661,9 +4641,9 @@ public enum Operations {
                 }
             }
             public struct Forbidden: Sendable, Hashable {
-                /// - Remark: Generated from `#/paths/api/v1/admin/system/jobs/GET/responses/403/content`.
+                /// - Remark: Generated from `#/paths/api/v1/admin/system/jobs/query/POST/responses/403/content`.
                 @frozen public enum Body: Sendable, Hashable {
-                    /// - Remark: Generated from `#/paths/api/v1/admin/system/jobs/GET/responses/403/content/application\/json`.
+                    /// - Remark: Generated from `#/paths/api/v1/admin/system/jobs/query/POST/responses/403/content/application\/json`.
                     case json(
                         Components.Schemas
                             .DefaultHTTPErrorContentSchemaHTTPErrorEnvelopeSchema
@@ -4685,28 +4665,28 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.SystemJobList.Output.Forbidden.Body
+                public var body: Operations.SystemJobQuery.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
                 public init(
-                    body: Operations.SystemJobList.Output.Forbidden.Body
+                    body: Operations.SystemJobQuery.Output.Forbidden.Body
                 ) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/get(systemJobList)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/system/jobs/query/post(systemJobQuery)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.SystemJobList.Output.Forbidden)
+            case forbidden(Operations.SystemJobQuery.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.SystemJobList.Output.Forbidden {
+            public var forbidden: Operations.SystemJobQuery.Output.Forbidden {
                 get throws {
                     switch self {
                     case .forbidden(let response):

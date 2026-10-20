@@ -1,6 +1,6 @@
 public enum Job {
-    public enum List {}
     public enum Get {}
+    public enum Query {}
     public enum Schemas {}
     public enum Parameters {}
 }

@@ -4,15 +4,14 @@ import SystemInfrastructure
 import SystemModule
 
 extension UseCases {
-
-    func makeListJobs() -> SystemModule.Job.List.UseCase {
+    func makeSearchJobs() -> SystemModule.Job.Search.UseCase {
         .init(
             authorizer: authorizer,
             query: DatabaseQueryExecutor(
                 databaseContext: databaseContext,
                 scope: { context in
-                    SystemModule.Job.List.Scope(
-                        job: SystemModule.Job.List.Query.Database(
+                    SystemModule.Job.Search.Scope(
+                        job: SystemModule.Job.Search.Query.Database(
                             context: context
                         )
                     )
