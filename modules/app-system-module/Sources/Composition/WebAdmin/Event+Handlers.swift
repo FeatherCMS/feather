@@ -1,7 +1,7 @@
 import FeatherAdmin
 public import FeatherModuleKit
 
-extension Admin.Event {
+extension Event {
     public enum Handlers {
 
         public static func register(

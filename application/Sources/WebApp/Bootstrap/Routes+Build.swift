@@ -56,7 +56,7 @@ func buildRouter(
     WebAdminDashboardEventHandlers.register(in: &adminEvents)
     RedirectAdminDashboardEventHandlers.register(in: &adminEvents)
     AnalyticsAdminDashboardEventHandlers.register(in: &adminEvents)
-    SystemModuleWebAdmin.Admin.Event.Handlers.register(
+    SystemModuleWebAdmin.Event.Handlers.register(
         in: &adminEvents,
         routes: systemRoutes
     )
