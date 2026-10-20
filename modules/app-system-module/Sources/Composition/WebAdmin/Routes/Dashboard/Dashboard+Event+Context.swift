@@ -1,24 +1,18 @@
+public import FeatherAdmin
 public import FeatherModuleKit
-public import Foundation
 
 extension Dashboard.Event {
     public struct Context: ExecutionContext {
-        public let apiBaseURL: URL
-        public let sessionToken: String?
-        public let permissions: Set<String>
+        public let requestContext: AuthenticatedRequestContext
         public let from: Double
         public let to: Double
 
         public init(
-            apiBaseURL: URL,
-            sessionToken: String?,
-            permissions: Set<String>,
+            requestContext: AuthenticatedRequestContext,
             from: Double,
             to: Double
         ) {
-            self.apiBaseURL = apiBaseURL
-            self.sessionToken = sessionToken
-            self.permissions = permissions
+            self.requestContext = requestContext
             self.from = from
             self.to = to
         }

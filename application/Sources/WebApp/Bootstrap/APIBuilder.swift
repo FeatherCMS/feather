@@ -1,4 +1,3 @@
-import SystemModule
 import AccountFrontend
 import AnalyticsFrontend
 import AuthFrontend
@@ -9,7 +8,6 @@ import Foundation
 import MediaFrontend
 import NewsletterFrontend
 import RedirectFrontend
-import SystemWebAdmin
 import UserFrontend
 import WebFrontend
 
@@ -22,7 +20,6 @@ struct APIBuilder: Sendable {
     let media: MediaAPIBuilder
     let newsletter: NewsletterAPIBuilder
     let redirect: RedirectAPIBuilder
-    let system: SystemWebAdmin.API.Builder
     let user: UserAPIBuilder
     let web: WebAPIBuilder
 
@@ -35,7 +32,6 @@ struct APIBuilder: Sendable {
         self.media = .init(apiBaseURL: apiBaseURL)
         self.newsletter = .init(apiBaseURL: apiBaseURL)
         self.redirect = .init(apiBaseURL: apiBaseURL)
-        self.system = .init(apiBaseURL: apiBaseURL)
         self.user = .init(apiBaseURL: apiBaseURL)
         self.web = .init(apiBaseURL: apiBaseURL)
     }

@@ -52,10 +52,22 @@ func buildRouter(
     WebFrontend.WebEventHandlers.register(in: &adminEvents)
     BlogFrontend.BlogEventHandlers.register(in: &adminEvents)
     NewsFrontend.NewsEventHandlers.register(in: &adminEvents)
-    BlogAdminDashboardEventHandlers.register(in: &adminEvents)
-    WebAdminDashboardEventHandlers.register(in: &adminEvents)
-    RedirectAdminDashboardEventHandlers.register(in: &adminEvents)
-    AnalyticsAdminDashboardEventHandlers.register(in: &adminEvents)
+    BlogAdminDashboardEventHandlers.register(
+        in: &adminEvents,
+        environment: environment
+    )
+    WebAdminDashboardEventHandlers.register(
+        in: &adminEvents,
+        environment: environment
+    )
+    RedirectAdminDashboardEventHandlers.register(
+        in: &adminEvents,
+        environment: environment
+    )
+    AnalyticsAdminDashboardEventHandlers.register(
+        in: &adminEvents,
+        environment: environment
+    )
     SystemWebAdmin.Event.Handlers.register(
         in: &adminEvents,
         routes: systemRoutes
@@ -163,6 +175,7 @@ func buildRouter(
         .group(context: AuthenticatedRequestContext.self)
     buildAdminRoutes(
         router: adminRouter,
+        environment: environment,
         renderingEngine: renderingEngine,
         adminEvents: adminEvents,
         apiBuilder: apiBuilder,

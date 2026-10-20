@@ -6,7 +6,6 @@ import SystemModule
 extension Dashboard.Controller {
 
     struct Default: Interface {
-        let apiBuilder: API.Builder
         let buildRuntime:
             AuthenticatedRuntimeBuilder<
                 any Dashboard.Interactor.Interface,
@@ -22,10 +21,7 @@ extension Dashboard.Controller {
             let now = Date().timeIntervalSince1970
             let model = try await interactor.getHome(
                 context: .init(
-                    // TODO: pass api instead of these. Dashboard.Event.Context should have AuthenticatedRequestContext
-                    apiBaseURL: apiBuilder.baseURL,
-                    sessionToken: context.sessionToken,
-                    permissions: context.currentUserPermissions,
+                    requestContext: context,
                     from: now - (7 * 24 * 60 * 60),
                     to: now
                 )

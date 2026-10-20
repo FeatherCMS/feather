@@ -11,8 +11,7 @@ extension Dashboard.Interactor {
         ) async throws -> Dashboard.Model {
             let overview =
                 try await events.trigger(
-                    event: Dashboard.Event
-                        .Provider(),
+                    event: Dashboard.Event.Provider(),
                     using: context
                 )
                 .flatMap { $0 }

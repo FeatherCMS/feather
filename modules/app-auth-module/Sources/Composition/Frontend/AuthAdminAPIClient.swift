@@ -14,7 +14,6 @@ public import OpenAPIRuntime
 import SGML
 import SystemAdminAPI
 import SystemWebAdmin
-import SystemModule
 import UserAdminAPI
 import UserAppAPI
 import UserFrontend
@@ -63,12 +62,10 @@ public struct AuthAdminAPIClient: Sendable {
 public struct AuthAPIBuilder: Sendable {
     private let apiBaseURL: URL
     let user: UserAPIBuilder
-    let system: SystemWebAdmin.API.Builder
 
     public init(apiBaseURL: URL) {
         self.apiBaseURL = apiBaseURL
         self.user = .init(apiBaseURL: apiBaseURL)
-        self.system = .init(apiBaseURL: apiBaseURL)
     }
 
     public func makeAuthAdmin(
@@ -96,6 +93,6 @@ public struct AuthAPIBuilder: Sendable {
     func makeSystemAdmin(
         _ context: AuthenticatedRequestContext
     ) -> SystemWebAdmin.API.Client {
-        system.makeSystemAdmin(context)
+        .init(apiBaseURL: apiBaseURL, requestContext: context)
     }
 }

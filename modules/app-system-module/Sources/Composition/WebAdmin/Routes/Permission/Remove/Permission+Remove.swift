@@ -12,7 +12,7 @@ extension Permission.Remove {
         let routes: Permission.Router.Routes
 
         init(
-            apiBuilder: API.Builder,
+            environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
             routes: Permission.Router.Routes
         ) {
@@ -23,7 +23,10 @@ extension Permission.Remove {
                     (
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
-                                api: apiBuilder.makeSystemAdmin(context)
+                                api: API.Client(
+                                    apiBaseURL: environment.apiBaseURL,
+                                    requestContext: context
+                                )
                             )
                         ),
                         presenter: Presenter.Default(

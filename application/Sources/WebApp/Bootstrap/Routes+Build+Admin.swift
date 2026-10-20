@@ -18,6 +18,7 @@ import Hummingbird
 
 func buildAdminRoutes(
     router: any RouterMethods<AuthenticatedRequestContext>,
+    environment: AppEnvironment,
     renderingEngine: any RenderingEngine,
     adminEvents: any EventPublisher,
     apiBuilder: APIBuilder,
@@ -37,7 +38,7 @@ func buildAdminRoutes(
         .route(on: router)
     SystemWebAdmin.WebAdmin
         .Router(
-            apiBuilder: apiBuilder.system,
+            environment: environment,
             renderingEngine: renderingEngine,
             adminEvents: adminEvents,
             routes: systemRoutes

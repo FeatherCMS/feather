@@ -10,9 +10,11 @@ extension API {
     public struct Client: Sendable {
         public let client: SystemAdminAPI.Client
 
+        // TODO: pass envrionment instead of api base url
+        // NOTE: pagination + limit from user settings context?
         public init(
             apiBaseURL: URL,
-            sessionToken: String? = nil
+            requestContext: AuthenticatedRequestContext
         ) {
             self.client = .init(
                 serverURL: apiBaseURL,
@@ -23,7 +25,9 @@ extension API {
                     )
                 ),
                 middlewares: [
-                    ClientAPIAuthMiddleware(sessionToken: sessionToken)
+                    ClientAPIAuthMiddleware(
+                        sessionToken: requestContext.sessionToken
+                    )
                 ]
             )
         }

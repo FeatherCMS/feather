@@ -1,21 +1,26 @@
-import FeatherAdmin
+public import FeatherAdmin
 public import FeatherModuleKit
 import OpenAPIRuntime
 import RedirectAdminAPI
-import SystemWebAdmin
 import SystemModule
+import SystemWebAdmin
 
 public enum RedirectAdminDashboardEventHandlers {
-    public static func register(in events: inout EventRegistry) {
+    public static func register(
+        in events: inout EventRegistry,
+        environment: AppEnvironment
+    ) {
+        let apiBuilder = RedirectAPIBuilder(apiBaseURL: environment.apiBaseURL)
         events.register(
             event: SystemWebAdmin.Dashboard.Event.Provider.self,
             context: SystemWebAdmin.Dashboard.Event.Context.self
         ) { _, context in
-            let api = RedirectAdminAPIClient(
-                apiBaseURL: context.apiBaseURL,
-                sessionToken: context.sessionToken
-            )
-            guard context.permissions.contains("redirect:rules:list") else {
+            let api = apiBuilder.makeRedirectAdmin(context.requestContext)
+            guard
+                context.requestContext.currentUserPermissions.contains(
+                    "redirect:rules:list"
+                )
+            else {
                 return [
                     .init(
                         contentStats: [],

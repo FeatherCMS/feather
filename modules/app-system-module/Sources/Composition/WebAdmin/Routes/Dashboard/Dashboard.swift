@@ -11,14 +11,12 @@ public enum Dashboard {
         let path: WebRoute
 
         init(
-            apiBuilder: API.Builder,
             renderingEngine: any RenderingEngine,
             events: any EventPublisher,
             path: WebRoute
         ) {
             self.path = path
             self.controller = Controller.Default(
-                apiBuilder: apiBuilder,
                 buildRuntime: { request, context in
                     (
                         interactor: Interactor.Default(events: events),

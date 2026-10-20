@@ -14,7 +14,7 @@ extension Variable.List {
         let routes: Variable.Router.Routes
 
         init(
-            apiBuilder: API.Builder,
+            environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
             routes: Variable.Router.Routes
         ) {
@@ -24,7 +24,10 @@ extension Variable.List {
                     (
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
-                                api: apiBuilder.makeSystemAdmin(context)
+                                api: API.Client(
+                                    apiBaseURL: environment.apiBaseURL,
+                                    requestContext: context
+                                )
                             )
                         ),
                         presenter: Presenter.Default(

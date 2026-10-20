@@ -38,50 +38,50 @@ enum Permission {
         }
 
         let routes: Routes
-        private let apiBuilder: API.Builder
+        private let environment: AppEnvironment
         private let renderingEngine: any RenderingEngine
 
         init(
-            apiBuilder: API.Builder,
+            environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
             routes: Routes
         ) {
-            self.apiBuilder = apiBuilder
+            self.environment = environment
             self.renderingEngine = renderingEngine
             self.routes = routes
         }
 
         func route(on router: any RouterMethods<AuthenticatedRequestContext>) {
             List.Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine,
                 routes: routes
             )
             .route(on: router)
 
             View.Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine,
                 routes: routes
             )
             .route(on: router)
 
             Add.Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine,
                 routes: routes
             )
             .route(on: router)
 
             Edit.Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine,
                 routes: routes
             )
             .route(on: router)
 
             Remove.Router(
-                apiBuilder: apiBuilder,
+                environment: environment,
                 renderingEngine: renderingEngine,
                 routes: routes
             )

@@ -14,7 +14,7 @@ extension Job.List {
         let routes: Job.Router.Routes
 
         init(
-            apiBuilder: API.Builder,
+            environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
             routes: Job.Router.Routes
         ) {
@@ -24,7 +24,10 @@ extension Job.List {
                     (
                         interactor: Interactor.Default(
                             repository: Repository.OpenAPI(
-                                api: apiBuilder.makeSystemAdmin(context)
+                                api: API.Client(
+                                    apiBaseURL: environment.apiBaseURL,
+                                    requestContext: context
+                                )
                             )
                         ),
                         presenter: Presenter.Default(

@@ -1,26 +1,27 @@
 import BlogAdminAPI
-import FeatherAdmin
+public import FeatherAdmin
 public import FeatherModuleKit
 import OpenAPIRuntime
-import SystemWebAdmin
 import SystemModule
+import SystemWebAdmin
 
 public enum BlogAdminDashboardEventHandlers {
-    public static func register(in events: inout EventRegistry) {
+    public static func register(
+        in events: inout EventRegistry,
+        environment: AppEnvironment
+    ) {
+        let apiBuilder = BlogAPIBuilder(apiBaseURL: environment.apiBaseURL)
         events.register(
             event: SystemWebAdmin.Dashboard.Event.Provider.self,
             context: SystemWebAdmin.Dashboard.Event.Context.self
         ) { _, context in
-            let api = BlogAdminAPIClient(
-                apiBaseURL: context.apiBaseURL,
-                sessionToken: context.sessionToken
-            )
-            var contentStats: [AdminViewDashboardModel.ContentStat] = []
+            let api = apiBuilder.makeBlogAdmin(context.requestContext)
+            var contentStats: [SystemWebAdmin.Dashboard.Model.ContentStat] = []
 
             await appendCount(
                 label: "Blog posts",
                 permission: "blog:posts:list",
-                permissions: context.permissions,
+                permissions: context.requestContext.currentUserPermissions,
                 operation: {
                     try await countPosts(using: api)
                 },
@@ -29,7 +30,7 @@ public enum BlogAdminDashboardEventHandlers {
             await appendCount(
                 label: "Blog authors",
                 permission: "blog:authors:list",
-                permissions: context.permissions,
+                permissions: context.requestContext.currentUserPermissions,
                 operation: {
                     try await countAuthors(using: api)
                 },
@@ -38,7 +39,7 @@ public enum BlogAdminDashboardEventHandlers {
             await appendCount(
                 label: "Blog tags",
                 permission: "blog:tags:list",
-                permissions: context.permissions,
+                permissions: context.requestContext.currentUserPermissions,
                 operation: {
                     try await countTags(using: api)
                 },
@@ -152,7 +153,7 @@ public enum BlogAdminDashboardEventHandlers {
         permission: String,
         permissions: Set<String>,
         operation: @escaping @Sendable () async throws -> Int,
-        to contentStats: inout [AdminViewDashboardModel.ContentStat]
+        to contentStats: inout [SystemWebAdmin.Dashboard.Model.ContentStat]
     ) async {
         guard permissions.contains(permission),
             let count = try? await operation()

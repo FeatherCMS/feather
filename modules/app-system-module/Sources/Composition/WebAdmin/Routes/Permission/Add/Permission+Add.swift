@@ -12,7 +12,7 @@ extension Permission.Add {
         let routes: Permission.Router.Routes
 
         init(
-            apiBuilder: API.Builder,
+            environment: AppEnvironment,
             renderingEngine: any RenderingEngine,
             routes: Permission.Router.Routes
         ) {
@@ -20,7 +20,10 @@ extension Permission.Add {
             self.controller = Controller.Default(
                 buildRuntime: { request, context in
                     let repository = Repository.OpenAPI(
-                        api: apiBuilder.makeSystemAdmin(context)
+                        api: API.Client(
+                            apiBaseURL: environment.apiBaseURL,
+                            requestContext: context
+                        )
                     )
                     let interactor = Interactor.Default(repository: repository)
                     let presenter = Presenter.Default(

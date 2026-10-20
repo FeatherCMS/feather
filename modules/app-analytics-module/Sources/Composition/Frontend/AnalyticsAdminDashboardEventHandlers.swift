@@ -1,23 +1,28 @@
 import AnalyticsAdminAPI
-import FeatherAdmin
+public import FeatherAdmin
 public import FeatherModuleKit
 import OpenAPIRuntime
-import SystemWebAdmin
 import SystemModule
+import SystemWebAdmin
 
 public enum AnalyticsAdminDashboardEventHandlers {
-    public static func register(in events: inout EventRegistry) {
+    public static func register(
+        in events: inout EventRegistry,
+        environment: AppEnvironment
+    ) {
+        let apiBuilder = AnalyticsAPIBuilder(apiBaseURL: environment.apiBaseURL)
         events.register(
             event: SystemWebAdmin.Dashboard.Event.Provider.self,
             context: SystemWebAdmin.Dashboard.Event.Context.self
         ) { _, context in
-            guard context.permissions.contains("analytics:insights:list") else {
+            guard
+                context.requestContext.currentUserPermissions.contains(
+                    "analytics:insights:list"
+                )
+            else {
                 return []
             }
-            let api = AnalyticsAdminAPIClient(
-                apiBaseURL: context.apiBaseURL,
-                sessionToken: context.sessionToken
-            )
+            let api = apiBuilder.makeAnalyticsAdmin(context.requestContext)
             do {
                 let overview = try await api.withOpenAPIRepositoryErrorMapping {
                     client in

@@ -27,18 +27,18 @@ public struct Router {
         }
     }
 
-    private let apiBuilder: API.Builder
+    private let environment: AppEnvironment
     public let renderingEngine: any RenderingEngine
     private let adminEvents: any EventPublisher
     let routes: Routes
 
     public init(
-        apiBuilder: API.Builder,
+        environment: AppEnvironment,
         renderingEngine: any RenderingEngine,
         adminEvents: any EventPublisher,
         routes: Routes = .standard
     ) {
-        self.apiBuilder = apiBuilder
+        self.environment = environment
         self.renderingEngine = renderingEngine
         self.adminEvents = adminEvents
         self.routes = routes
@@ -54,7 +54,6 @@ public struct Router {
 
         Dashboard
             .Router(
-                apiBuilder: apiBuilder,
                 renderingEngine: renderingEngine,
                 events: adminEvents,
                 path: routes.admin
@@ -69,7 +68,7 @@ public struct Router {
             .route(on: router)
 
         Permission.Router(
-            apiBuilder: apiBuilder,
+            environment: environment,
             renderingEngine: renderingEngine,
             routes: .init(
                 root: routes.root,
@@ -79,7 +78,7 @@ public struct Router {
         .route(on: router)
 
         Variable.Router(
-            apiBuilder: apiBuilder,
+            environment: environment,
             renderingEngine: renderingEngine,
             routes: .init(
                 root: routes.root,
@@ -89,7 +88,7 @@ public struct Router {
         .route(on: router)
 
         Job.Router(
-            apiBuilder: apiBuilder,
+            environment: environment,
             renderingEngine: renderingEngine,
             routes: .init(
                 root: routes.root,
