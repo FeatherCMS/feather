@@ -6,8 +6,7 @@ extension Variable.Edit.Interactor {
     struct Default:
         Interface
     {
-        let repository:
-            any Variable.Edit.Repository.Interface
+        let repository: any Variable.Edit.Repository.Interface
 
         func load(
             id: String

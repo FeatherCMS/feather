@@ -1,5 +1,5 @@
-public import SystemModule
 public import FeatherApplication
+public import SystemModule
 
 extension Variable.Detail {
     public struct Input: DTO {

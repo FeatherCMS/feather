@@ -1,6 +1,6 @@
-public import SystemModule
 public import FeatherModuleKit
 import SystemApplication
+public import SystemModule
 
 extension SystemModule.Event {
     public enum Handlers {

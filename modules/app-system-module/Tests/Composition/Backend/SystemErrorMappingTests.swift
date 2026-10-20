@@ -11,9 +11,11 @@ struct SystemErrorMappingTests {
 
     @Test
     func modelValidationErrorsMapToBadRequest() {
-        let variable = SystemModule.Variable.Model.Error.keyTooShort
+        let variable =
+            SystemModule.Variable.Model.Error.keyTooShort
             as any HTTPErrorRepresentable
-        let permission = SystemModule.Permission.Model.Error.keyTooShort
+        let permission =
+            SystemModule.Permission.Model.Error.keyTooShort
             as any HTTPErrorRepresentable
 
         #expect(variable.status == .badRequest)
@@ -22,9 +24,11 @@ struct SystemErrorMappingTests {
 
     @Test
     func missingEditedRecordsMapToNotFound() {
-        let variable = SystemModule.Variable.Edit.UseCase.Error.notFound
+        let variable =
+            SystemModule.Variable.Edit.UseCase.Error.notFound
             as any HTTPErrorRepresentable
-        let permission = SystemModule.Permission.Edit.UseCase.Error.notFound
+        let permission =
+            SystemModule.Permission.Edit.UseCase.Error.notFound
             as any HTTPErrorRepresentable
 
         #expect(variable.status == .notFound)

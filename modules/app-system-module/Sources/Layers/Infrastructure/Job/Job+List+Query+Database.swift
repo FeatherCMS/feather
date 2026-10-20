@@ -1,8 +1,8 @@
-public import SystemModule
 public import FeatherApplication
 import FeatherDatabase
 public import FeatherInfrastructure
 public import SystemApplication
+public import SystemModule
 
 extension SystemModule.Job.List.Query {
     public struct Database: SystemModule.Job.List.Query.Interface {

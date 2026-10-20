@@ -1,6 +1,6 @@
 public import SystemModule
 
-public extension Job {
-    enum Detail {}
-    enum List {}
+extension Job {
+    public enum Detail {}
+    public enum List {}
 }

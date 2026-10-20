@@ -1,6 +1,6 @@
-public import SystemModule
 public import FeatherModuleKit
 public import SystemDomain
+public import SystemModule
 
 extension Variable.Add {
     public struct Scope: FeatherModuleKit.Scope {

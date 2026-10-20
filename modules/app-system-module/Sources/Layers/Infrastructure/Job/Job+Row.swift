@@ -1,7 +1,7 @@
-import SystemModule
 import FeatherDatabase
 import Foundation
 import SystemApplication
+import SystemModule
 
 struct JobRow {
     let id: String

@@ -1,4 +1,5 @@
 public import SystemModule
+
 extension Variable.List {
     public enum Query {
         public protocol Interface: Sendable {

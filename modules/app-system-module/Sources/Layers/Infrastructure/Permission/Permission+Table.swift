@@ -1,7 +1,7 @@
-import SystemModule
 import FeatherDBAL
 import FeatherInfrastructure
 import Foundation
+import SystemModule
 
 extension Permission {
     struct Table: DatabaseTable {

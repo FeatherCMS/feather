@@ -1,15 +1,15 @@
+import FeatherDBAL
+import FeatherDomain
+public import FeatherInfrastructure
+public import SystemDomain
 public import SystemModule
+
 //
 //  Permission+Repository+Database.swift
 //  app-system-module
 //
 //  Created by Tibor Bödecs on 2026. 06. 18.
 //
-
-import FeatherDBAL
-import FeatherDomain
-public import FeatherInfrastructure
-public import SystemDomain
 
 extension SystemModule.Permission.Repository {
     public struct Database: SystemModule.Permission.Repository.Interface {

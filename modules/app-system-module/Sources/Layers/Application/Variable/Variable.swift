@@ -1,5 +1,5 @@
 public import SystemModule
 
-public extension Variable {
-    enum Event {}
+extension Variable {
+    public enum Event {}
 }

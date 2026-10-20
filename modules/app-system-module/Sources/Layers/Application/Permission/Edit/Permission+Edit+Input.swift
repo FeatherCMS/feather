@@ -1,6 +1,6 @@
-public import SystemModule
 public import FeatherApplication
 public import FeatherDomain
+public import SystemModule
 
 extension Permission.Edit {
     public struct Input: FeatherApplication.DTO {

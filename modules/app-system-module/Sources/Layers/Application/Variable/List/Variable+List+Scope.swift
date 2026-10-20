@@ -1,5 +1,5 @@
-public import SystemModule
 public import FeatherModuleKit
+public import SystemModule
 
 extension Variable.List {
     public struct Scope: FeatherModuleKit.Scope {

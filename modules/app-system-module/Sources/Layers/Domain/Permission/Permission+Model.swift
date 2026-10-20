@@ -1,10 +1,10 @@
+public import FeatherDomain
 public import SystemModule
+
 //
 //  Permission+Model.swift
 //  app-system-module
 //
-
-public import FeatherDomain
 
 extension Permission {
     public struct Model: FeatherDomain.Model {

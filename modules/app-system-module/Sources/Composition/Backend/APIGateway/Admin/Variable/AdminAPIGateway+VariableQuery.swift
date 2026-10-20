@@ -9,7 +9,8 @@ extension AdminAPIGateway {
     public func systemVariableQuery(
         _ input: Operations.SystemVariableQuery.Input
     ) async throws -> Operations.SystemVariableQuery.Output {
-        let query: Components.Schemas.SystemVariableQueryItemSearchRequestQuerySchema
+        let query:
+            Components.Schemas.SystemVariableQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value
@@ -38,7 +39,8 @@ extension AdminAPIGateway {
     }
 
     private func normalizedVariableQuery(
-        from query: Components.Schemas.SystemVariableQueryItemSearchRequestQuerySchema
+        from query: Components.Schemas
+            .SystemVariableQueryItemSearchRequestQuerySchema
     ) -> Components.Schemas.SystemVariableQueryItemSearchRequestQuerySchema {
         let page = searchPage(from: query)
 
@@ -50,7 +52,8 @@ extension AdminAPIGateway {
     }
 
     private func responseVariableQuery(
-        from query: Components.Schemas.SystemVariableQueryItemSearchRequestQuerySchema
+        from query: Components.Schemas
+            .SystemVariableQueryItemSearchRequestQuerySchema
     ) -> Components.Schemas.SystemVariableQueryItemSearchResponseQuerySchema {
         let page = searchPage(from: query)
         let sort = query.sort?
@@ -82,7 +85,8 @@ extension AdminAPIGateway {
     }
 
     private func searchPage(
-        from query: Components.Schemas.SystemVariableQueryItemSearchRequestQuerySchema
+        from query: Components.Schemas
+            .SystemVariableQueryItemSearchRequestQuerySchema
     ) -> Search.Page {
         let defaults = Search.Page()
         return
@@ -94,7 +98,8 @@ extension AdminAPIGateway {
     }
 
     private func variableSearchQuery(
-        from query: Components.Schemas.SystemVariableQueryItemSearchRequestQuerySchema
+        from query: Components.Schemas
+            .SystemVariableQueryItemSearchRequestQuerySchema
     ) -> Variable.Search.Input.Query {
         let sort = (query.sort ?? [])
             .map { rule in

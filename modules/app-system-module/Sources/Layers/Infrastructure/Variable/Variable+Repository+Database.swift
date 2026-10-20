@@ -1,15 +1,15 @@
+import FeatherDBAL
+import FeatherDomain
+public import FeatherInfrastructure
+public import SystemDomain
 public import SystemModule
+
 //
 //  Variable+Repository+Database.swift
 //  app-system-module
 //
 //  Created by Tibor Bödecs on 2026. 06. 18.
 //
-
-import FeatherDBAL
-import FeatherDomain
-public import FeatherInfrastructure
-public import SystemDomain
 
 extension SystemModule.Variable.Repository {
     public struct Database: SystemModule.Variable.Repository.Interface {

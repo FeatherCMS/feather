@@ -1,6 +1,6 @@
-public import SystemModule
 public import FeatherApplication
 public import Foundation
+public import SystemModule
 
 extension Job.Detail {
     public struct Output: DTO, Sendable {

@@ -1,5 +1,5 @@
-public import SystemModule
 public import FeatherModuleKit
+public import SystemModule
 
 extension Job.Detail {
     public struct Scope: FeatherModuleKit.Scope {

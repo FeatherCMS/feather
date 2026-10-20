@@ -1,7 +1,7 @@
-public import SystemModule
 public import FeatherApplication
 public import FeatherModuleKit
 import SystemDomain
+public import SystemModule
 
 extension Variable.Remove {
     public struct UseCase: FeatherApplication.UseCase {

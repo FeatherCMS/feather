@@ -3,7 +3,7 @@ import Hummingbird
 import SystemModule
 
 enum Permission {
-    
+
     struct Router {
         struct Routes {
             let list: WebRoute

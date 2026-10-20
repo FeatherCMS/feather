@@ -1,10 +1,10 @@
 public import FeatherModuleKit
 
-extension Events {
-    public enum MenuItem {}
+extension Admin.Menu {
+    public enum Item {}
 }
 
-extension Events.MenuItem {
+extension Admin.Menu.Item {
     public struct Definition: Sendable {
         public let menuKey: String
         public let label: String

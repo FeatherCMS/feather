@@ -1,8 +1,6 @@
 public import FeatherModuleKit
 
-public enum Events {}
-
-extension Events {
+extension Admin.Menu {
     public struct Context: ExecutionContext {
         public let path: String
         public let permissions: Set<String>

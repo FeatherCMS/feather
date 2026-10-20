@@ -1,5 +1,5 @@
-import SystemModule
 import FeatherModuleKit
+import SystemModule
 
 extension Variable.Remove {
     struct Action: PermissionAction {

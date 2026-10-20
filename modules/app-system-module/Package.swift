@@ -20,9 +20,10 @@ let sharedSwiftSettings: [SwiftSetting] = [
     ),
 ]
 
-let swiftSettings = sharedSwiftSettings + [
-    .treatAllWarnings(as: .error),
-]
+let swiftSettings =
+    sharedSwiftSettings + [
+        .treatAllWarnings(as: .error)
+    ]
 
 let package = Package(
     name: "app-system-module",
@@ -37,11 +38,20 @@ let package = Package(
         .library(name: "SystemModule", targets: ["SystemModule"]),
         .library(name: "SystemDomain", targets: ["SystemDomain"]),
         .library(name: "SystemApplication", targets: ["SystemApplication"]),
-        .library(name: "SystemInfrastructure", targets: ["SystemInfrastructure"]),
+        .library(
+            name: "SystemInfrastructure",
+            targets: ["SystemInfrastructure"]
+        ),
         .library(name: "SystemAdminAPI", targets: ["SystemAdminAPI"]),
         .library(name: "SystemBackend", targets: ["SystemBackend"]),
-        .library(name: "SystemModuleWebAdmin", targets: ["SystemModuleWebAdmin"]),
-        .executable(name: "SystemAdminOpenAPIGenerator", targets: ["SystemAdminOpenAPIGenerator"]),
+        .library(
+            name: "SystemModuleWebAdmin",
+            targets: ["SystemModuleWebAdmin"]
+        ),
+        .executable(
+            name: "SystemAdminOpenAPIGenerator",
+            targets: ["SystemAdminOpenAPIGenerator"]
+        ),
     ],
     dependencies: [
         .package(
@@ -69,7 +79,8 @@ let package = Package(
             from: "2.27.0"
         ),
         .package(
-            url: "https://github.com/hummingbird-project/swift-openapi-hummingbird",
+            url:
+                "https://github.com/hummingbird-project/swift-openapi-hummingbird",
             from: "2.0.1"
         ),
         .package(
@@ -77,7 +88,8 @@ let package = Package(
             from: "1.0.0"
         ),
         .package(
-            url: "https://github.com/feather-framework/feather-http-hummingbird-testing",
+            url:
+                "https://github.com/feather-framework/feather-http-hummingbird-testing",
             exact: "1.0.0-beta.1"
         ),
         .package(
@@ -128,7 +140,10 @@ let package = Package(
         .target(
             name: "SystemInfrastructure",
             dependencies: [
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
                 .product(name: "FeatherDatabase", package: "feather-database"),
 
@@ -142,19 +157,25 @@ let package = Package(
         .target(
             name: "SystemAdminAPI",
             dependencies: [
-                .product(name: "OpenAPIRuntime", package: "swift-openapi-runtime"),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                )
             ],
             path: "Sources/APIs/Admin",
             swiftSettings: sharedSwiftSettings + [
                 // https://github.com/apple/swift-openapi-generator/issues/946
-                .unsafeFlags(["-suppress-warnings"]),
+                .unsafeFlags(["-suppress-warnings"])
             ]
         ),
         // MARK: -
         .executableTarget(
             name: "SystemAdminOpenAPIGenerator",
             dependencies: [
-                .product(name: "FeatherOpenAPIGenerator", package: "feather-core"),
+                .product(
+                    name: "FeatherOpenAPIGenerator",
+                    package: "feather-core"
+                ),
 
                 .product(name: "OpenAPIKitCompat", package: "OpenAPIKit"),
                 .product(name: "Yams", package: "Yams"),
@@ -213,7 +234,10 @@ let package = Package(
             name: "SystemInfrastructureTests",
             dependencies: [
                 .product(name: "FeatherTesting", package: "feather-core"),
-                .product(name: "FeatherDatabaseTesting", package: "feather-database"),
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
                 .product(name: "FeatherDBALTesting", package: "feather-dbal"),
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(name: "FeatherDBAL", package: "feather-dbal"),
@@ -232,13 +256,25 @@ let package = Package(
                 .product(name: "NIOHTTP1", package: "swift-nio"),
                 .product(name: "FeatherHTTP", package: "feather-http"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
-                .product(name: "FeatherInfrastructure", package: "feather-core"),
+                .product(
+                    name: "FeatherInfrastructure",
+                    package: "feather-core"
+                ),
                 .product(name: "FeatherTesting", package: "feather-core"),
-                .product(name: "FeatherHTTPHummingbirdTesting", package: "feather-http-hummingbird-testing"),
-                .product(name: "OpenAPIHummingbird", package: "swift-openapi-hummingbird"),
+                .product(
+                    name: "FeatherHTTPHummingbirdTesting",
+                    package: "feather-http-hummingbird-testing"
+                ),
+                .product(
+                    name: "OpenAPIHummingbird",
+                    package: "swift-openapi-hummingbird"
+                ),
                 .product(name: "HummingbirdTesting", package: "hummingbird"),
                 .product(name: "FeatherDatabase", package: "feather-database"),
-                .product(name: "FeatherDatabaseTesting", package: "feather-database"),
+                .product(
+                    name: "FeatherDatabaseTesting",
+                    package: "feather-database"
+                ),
                 .product(name: "FeatherDBALTesting", package: "feather-dbal"),
                 .product(name: "Hummingbird", package: "hummingbird"),
 

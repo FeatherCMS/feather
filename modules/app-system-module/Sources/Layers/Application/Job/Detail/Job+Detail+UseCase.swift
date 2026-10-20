@@ -1,6 +1,6 @@
-public import SystemModule
 public import FeatherApplication
 public import FeatherModuleKit
+public import SystemModule
 
 extension Job.Detail {
     public struct UseCase: FeatherApplication.UseCase {

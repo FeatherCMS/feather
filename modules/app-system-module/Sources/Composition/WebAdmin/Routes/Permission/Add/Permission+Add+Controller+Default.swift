@@ -4,15 +4,11 @@ import Hummingbird
 import SystemModule
 
 extension Permission.Add.Controller {
-    struct Default:
-        Interface
-    {
+    struct Default: Interface {
         let buildRuntime:
             AuthenticatedRuntimeBuilder<
-                any Permission.Add.Interactor
-                    .Interface,
-                any Permission.Add.Presenter
-                    .Interface
+                any Permission.Add.Interactor.Interface,
+                any Permission.Add.Presenter.Interface
             >
 
         func getAddSystemPermission(

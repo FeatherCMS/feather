@@ -6,8 +6,7 @@ import Hummingbird
 import SystemModule
 
 extension Variable.Add.Controller {
-    struct Default: Interface
-    {
+    struct Default: Interface {
         let buildRuntime:
             AuthenticatedRuntimeBuilder<
                 any Variable.Add.Interactor

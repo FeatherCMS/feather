@@ -5,7 +5,7 @@ import Hummingbird
 import SystemModule
 
 enum Job {
-    
+
     struct Router {
         struct Routes {
             let list: WebRoute

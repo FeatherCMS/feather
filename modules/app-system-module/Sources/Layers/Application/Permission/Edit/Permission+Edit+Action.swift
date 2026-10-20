@@ -1,5 +1,5 @@
-public import SystemModule
 public import FeatherModuleKit
+public import SystemModule
 
 extension Permission.Edit {
     public struct Action: PermissionAction {

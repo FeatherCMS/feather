@@ -1,5 +1,5 @@
-public import SystemModule
 public import SystemDomain
+public import SystemModule
 
 extension Variable.Detail {
     public enum Query {

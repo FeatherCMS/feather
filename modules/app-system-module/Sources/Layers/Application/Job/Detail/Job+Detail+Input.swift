@@ -1,5 +1,5 @@
-public import SystemModule
 public import FeatherApplication
+public import SystemModule
 
 extension Job.Detail {
     public struct Input: DTO {

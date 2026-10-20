@@ -6,8 +6,8 @@ import SystemModuleWebAdmin
 public enum NewsAdminMenuProvider {
     public static func register(in events: inout EventRegistry) {
         events.register(
-            event: SystemModuleWebAdmin.Events.Menu.Provider.self,
-            context: SystemModuleWebAdmin.Events.Context.self
+            event: SystemModuleWebAdmin.Admin.Menu.Group.Provider.self,
+            context: SystemModuleWebAdmin.Admin.Menu.Context.self
         ) { _, _ in
             [
                 .init(

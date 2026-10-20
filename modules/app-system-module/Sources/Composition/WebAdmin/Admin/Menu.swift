@@ -2,29 +2,27 @@ public import FeatherAdmin
 public import FeatherModuleKit
 public import Hummingbird
 
-public enum Menu {}
-
 private struct MenuCatalog: Sendable {
-    let menus: [Events.Menu.Definition]
-    let items: [Events.MenuItem.Definition]
+    let menus: [Admin.Menu.Group.Definition]
+    let items: [Admin.Menu.Item.Definition]
 
     static func load(from events: any EventPublisher) async throws -> Self {
-        let context = Events.Context(
+        let context = Admin.Menu.Context(
             path: "",
             permissions: []
         )
         let menus =
             try await events.trigger(
-                event: Events.Menu.Provider(),
+                event: Admin.Menu.Group.Provider(),
                 using: context
             )
             .flatMap { $0 }
 
-        var items: [Events.MenuItem.Definition] = []
+        var items: [Admin.Menu.Item.Definition] = []
         for menu in menus {
             items +=
                 try await events.trigger(
-                    event: Events.MenuItem.Provider(
+                    event: Admin.Menu.Item.Provider(
                         menuKey: menu.key
                     ),
                     using: context
@@ -35,7 +33,7 @@ private struct MenuCatalog: Sendable {
     }
 }
 
-extension Menu {
+extension Admin.Menu {
     public static func groups(
         for context: AuthenticatedRequestContext,
         request: Request,

@@ -19,7 +19,7 @@ struct DefaultAdminPageRenderContextProvider:
         request: Request,
         context: AuthenticatedRequestContext
     ) async throws -> AdminPageRenderContext {
-        let menuGroups = try await SystemModuleWebAdmin.Menu.groups(
+        let menuGroups = try await SystemModuleWebAdmin.Admin.Menu.groups(
             for: context,
             request: request,
             events: events

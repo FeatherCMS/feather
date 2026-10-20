@@ -1,10 +1,10 @@
-import FeatherModuleKit
 import FeatherDBALTesting
 import FeatherDatabase
 import FeatherDatabaseTesting
 import FeatherHTTP
 import FeatherHTTPHummingbirdTesting
 import FeatherInfrastructure
+import FeatherModuleKit
 import FeatherTesting
 import Hummingbird
 import HummingbirdTesting

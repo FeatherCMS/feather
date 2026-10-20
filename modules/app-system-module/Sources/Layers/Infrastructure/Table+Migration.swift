@@ -1,7 +1,7 @@
-import SystemModule
 public import FeatherDBAL
 public import FeatherDatabase
 public import FeatherInfrastructure
+import SystemModule
 
 public struct TableMigration: DatabaseMigration {
     public let connection: any DatabaseConnection

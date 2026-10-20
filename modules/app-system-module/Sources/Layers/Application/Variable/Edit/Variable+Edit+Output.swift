@@ -1,5 +1,5 @@
-public import SystemModule
 public import FeatherApplication
+public import SystemModule
 
 extension Variable.Edit {
     public struct Output: DTO, Sendable {

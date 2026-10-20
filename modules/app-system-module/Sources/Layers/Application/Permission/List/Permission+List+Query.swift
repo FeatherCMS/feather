@@ -1,4 +1,5 @@
 public import SystemModule
+
 extension Permission.List {
     public enum Query {
         public protocol Interface: Sendable {

@@ -6,8 +6,8 @@ import SystemModuleWebAdmin
 public enum NewsAdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {
         events.register(
-            event: SystemModuleWebAdmin.Events.MenuItem.Provider.self,
-            context: SystemModuleWebAdmin.Events.Context.self
+            event: SystemModuleWebAdmin.Admin.Menu.Item.Provider.self,
+            context: SystemModuleWebAdmin.Admin.Menu.Context.self
         ) { event, _ in
             guard event.menuKey == "news" else { return [] }
             return [

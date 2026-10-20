@@ -1,11 +1,11 @@
+public import FeatherDomain
 public import SystemModule
+
 //
 //  Variable+Model.swift
 //  app-system-module
 //
 //  Created by Binary Birds on 2026. 06. 18.
-
-public import FeatherDomain
 
 extension Variable {
     public struct Model: FeatherDomain.Model {

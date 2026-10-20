@@ -6,8 +6,7 @@ extension Permission.Add.Interactor {
     struct Default:
         Interface
     {
-        let repository:
-            any Permission.Add.Repository.Interface
+        let repository: any Permission.Add.Repository.Interface
 
         func execute(
             entity: Permission.Add.Model

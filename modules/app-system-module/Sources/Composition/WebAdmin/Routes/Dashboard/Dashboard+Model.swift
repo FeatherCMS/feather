@@ -1,4 +1,3 @@
-
 extension Dashboard {
     public struct Overview: Sendable {
         public struct DailyPoint: Sendable {

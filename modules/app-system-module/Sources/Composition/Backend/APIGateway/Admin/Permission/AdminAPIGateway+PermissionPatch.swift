@@ -1,6 +1,6 @@
 import FeatherBackend
-import FeatherModuleKit
 import FeatherDomain
+import FeatherModuleKit
 import Foundation
 import Hummingbird
 public import SystemAdminAPI

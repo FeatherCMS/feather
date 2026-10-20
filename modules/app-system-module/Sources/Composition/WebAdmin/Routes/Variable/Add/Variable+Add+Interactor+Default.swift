@@ -3,10 +3,8 @@ import SystemAdminAPI
 import SystemModule
 
 extension Variable.Add.Interactor {
-    struct Default: Interface
-    {
-        let repository:
-            any Variable.Add.Repository.Interface
+    struct Default: Interface {
+        let repository: any Variable.Add.Repository.Interface
 
         func add(
             input: SystemVariableAddFormInput

@@ -6,8 +6,8 @@ import SystemModuleWebAdmin
 public enum NewsletterAdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {
         events.register(
-            event: SystemModuleWebAdmin.Events.Menu.Provider.self,
-            context: SystemModuleWebAdmin.Events.Context.self
+            event: SystemModuleWebAdmin.Admin.Menu.Group.Provider.self,
+            context: SystemModuleWebAdmin.Admin.Menu.Context.self
         ) { _, _ in
             [
                 .init(
@@ -20,8 +20,8 @@ public enum NewsletterAdminMenuEventHandlers {
             ]
         }
         events.register(
-            event: SystemModuleWebAdmin.Events.MenuItem.Provider.self,
-            context: SystemModuleWebAdmin.Events.Context.self
+            event: SystemModuleWebAdmin.Admin.Menu.Item.Provider.self,
+            context: SystemModuleWebAdmin.Admin.Menu.Context.self
         ) { event, _ in
             guard event.menuKey == "newsletter" else { return [] }
             return [

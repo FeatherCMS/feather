@@ -1,7 +1,7 @@
-public import SystemModule
 import FeatherDBAL
 public import FeatherInfrastructure
 public import SystemApplication
+public import SystemModule
 
 extension SystemModule.Variable.Lookup {
     public struct Database: SystemModule.Variable.Lookup.Interface {

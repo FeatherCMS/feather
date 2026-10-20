@@ -5,8 +5,7 @@ extension Variable.View.Interactor {
     struct Default:
         Interface
     {
-        let repository:
-            any Variable.View.Repository.Interface
+        let repository: any Variable.View.Repository.Interface
 
         func execute(
             entity: Variable.View.Model

@@ -56,7 +56,7 @@ func buildRouter(
     WebAdminDashboardEventHandlers.register(in: &adminEvents)
     RedirectAdminDashboardEventHandlers.register(in: &adminEvents)
     AnalyticsAdminDashboardEventHandlers.register(in: &adminEvents)
-    SystemModuleWebAdmin.Event.Handlers.register(
+    SystemModuleWebAdmin.Admin.Event.Handlers.register(
         in: &adminEvents,
         routes: systemRoutes
     )
@@ -76,7 +76,7 @@ func buildRouter(
     let richContentEditorBlocks =
         (try? await adminEvents.trigger(
             event: AdminRichContentEditorBlockProvider(),
-            using: SystemModuleWebAdmin.Events.Context(
+            using: SystemModuleWebAdmin.Admin.Menu.Context(
                 path: "",
                 permissions: []
             )

@@ -9,7 +9,8 @@ extension AdminAPIGateway {
     public func systemPermissionQuery(
         _ input: Operations.SystemPermissionQuery.Input
     ) async throws -> Operations.SystemPermissionQuery.Output {
-        let query: Components.Schemas.SystemPermissionQueryItemSearchRequestQuerySchema
+        let query:
+            Components.Schemas.SystemPermissionQueryItemSearchRequestQuerySchema
         switch input.body {
         case .json(let value):
             query = value

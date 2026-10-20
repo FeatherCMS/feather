@@ -7,8 +7,8 @@ import SystemModuleWebAdmin
 public enum AuthAdminMenuEventHandlers {
     public static func register(in events: inout EventRegistry) {
         events.register(
-            event: SystemModuleWebAdmin.Events.Menu.Provider.self,
-            context: SystemModuleWebAdmin.Events.Context.self
+            event: SystemModuleWebAdmin.Admin.Menu.Group.Provider.self,
+            context: SystemModuleWebAdmin.Admin.Menu.Context.self
         ) { _, _ in
             [
                 .init(
@@ -21,8 +21,8 @@ public enum AuthAdminMenuEventHandlers {
             ]
         }
         events.register(
-            event: SystemModuleWebAdmin.Events.MenuItem.Provider.self,
-            context: SystemModuleWebAdmin.Events.Context.self
+            event: SystemModuleWebAdmin.Admin.Menu.Item.Provider.self,
+            context: SystemModuleWebAdmin.Admin.Menu.Context.self
         ) { event, _ in
             guard event.menuKey == "auth" else { return [] }
             return [

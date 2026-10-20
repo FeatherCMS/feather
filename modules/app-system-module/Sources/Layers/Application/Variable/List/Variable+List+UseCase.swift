@@ -1,6 +1,6 @@
-public import SystemModule
 public import FeatherApplication
 public import FeatherModuleKit
+public import SystemModule
 
 extension Variable.List {
     public struct UseCase: FeatherApplication.UseCase {

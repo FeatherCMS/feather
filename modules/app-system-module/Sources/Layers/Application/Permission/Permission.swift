@@ -1,5 +1,5 @@
 public import SystemModule
 
-public extension Permission {
-    enum Event {}
+extension Permission {
+    public enum Event {}
 }

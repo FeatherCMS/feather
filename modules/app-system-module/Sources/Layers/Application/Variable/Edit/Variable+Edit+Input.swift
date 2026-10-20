@@ -1,6 +1,6 @@
-public import SystemModule
 public import FeatherApplication
 public import FeatherDomain
+public import SystemModule
 
 extension Variable.Edit {
     public struct Input: DTO {

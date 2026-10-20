@@ -1,4 +1,5 @@
 public import SystemModule
+
 extension Variable {
     public struct Seed: Sendable, Hashable, Codable {
         public let key: String

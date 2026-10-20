@@ -1,8 +1,8 @@
-public import SystemModule
 import FeatherDBAL
 public import FeatherInfrastructure
 public import SystemApplication
 public import SystemDomain
+public import SystemModule
 
 extension SystemModule.Variable.Detail.Query {
     public struct Database: SystemModule.Variable.Detail.Query.Interface {

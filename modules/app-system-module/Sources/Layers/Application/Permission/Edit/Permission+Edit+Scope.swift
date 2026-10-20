@@ -1,6 +1,6 @@
-public import SystemModule
 public import FeatherModuleKit
 public import SystemDomain
+public import SystemModule
 
 extension Permission.Edit {
     public struct Scope: FeatherModuleKit.Scope {

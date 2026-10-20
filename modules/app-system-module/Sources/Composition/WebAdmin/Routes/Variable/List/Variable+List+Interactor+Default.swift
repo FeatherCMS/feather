@@ -7,8 +7,7 @@ extension Variable.List.Interactor {
     struct Default:
         Interface
     {
-        let repository:
-            any Variable.List.Repository.Interface
+        let repository: any Variable.List.Repository.Interface
 
         func listSystemVariables(
             page: Int,

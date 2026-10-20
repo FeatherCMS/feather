@@ -1,5 +1,5 @@
-import SystemModule
 import FeatherDBAL
+import SystemModule
 
 extension Permission.Table: DatabaseTableWithInsert {
     struct Insert: DatabaseTableRowEncodable {

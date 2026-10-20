@@ -1,7 +1,7 @@
-import SystemModule
 import FeatherModuleKit
 public import SystemAdminAPI
 import SystemApplication
+import SystemModule
 
 extension AdminAPIGateway {
 

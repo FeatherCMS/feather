@@ -1,10 +1,10 @@
-import SystemModule
-public import FeatherModuleKit
 public import FeatherDBAL
 public import FeatherDatabase
 public import FeatherInfrastructure
+public import FeatherModuleKit
 import SystemApplication
 import SystemDomain
+import SystemModule
 
 public struct TableSeedMigration: DatabaseMigration {
     public let context: DatabaseTransactionContext
@@ -41,7 +41,7 @@ public struct TableSeedMigration: DatabaseMigration {
         )
         for permission in permissions {
             _ = try await permissionRepository.insert(
-                    try SystemModule.Permission.Model.create(
+                try SystemModule.Permission.Model.create(
                     key: permission.key,
                     name: permission.name,
                     notes: permission.notes

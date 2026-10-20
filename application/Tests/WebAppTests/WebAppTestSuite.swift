@@ -24,10 +24,10 @@ struct WebAppTestSuite {
         AuthAdminMenuEventHandlers.register(in: &events)
 
         let items = try await events.trigger(
-            event: SystemModuleWebAdmin.Events.MenuItem.Provider(
+            event: SystemModuleWebAdmin.Admin.Menu.Item.Provider(
                 menuKey: "auth"
             ),
-            using: SystemModuleWebAdmin.Events.Context(
+            using: SystemModuleWebAdmin.Admin.Menu.Context(
                 path: "/admin/auth/",
                 permissions: []
             )

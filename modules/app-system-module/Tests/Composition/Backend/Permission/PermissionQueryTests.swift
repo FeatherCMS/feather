@@ -42,10 +42,11 @@ struct PermissionQueryTests {
         let request = JSONRequest(
             method: .post,
             path: "/api/v1/admin/system/permissions/query",
-            body: Components.Schemas.SystemPermissionQueryItemSearchRequestQuerySchema(
-                page: .init(size: 150, number: 0),
-                filters: .init(search: "system")
-            )
+            body: Components.Schemas
+                .SystemPermissionQueryItemSearchRequestQuerySchema(
+                    page: .init(size: 150, number: 0),
+                    filters: .init(search: "system")
+                )
         )
 
         let body = try await SystemAPIHTTPTestSupport.send(
@@ -84,10 +85,11 @@ struct PermissionQueryTests {
         let request = JSONRequest(
             method: .post,
             path: "/api/v1/admin/system/permissions/query",
-            body: Components.Schemas.SystemPermissionQueryItemSearchRequestQuerySchema(
-                page: nil,
-                filters: .init()
-            )
+            body: Components.Schemas
+                .SystemPermissionQueryItemSearchRequestQuerySchema(
+                    page: nil,
+                    filters: .init()
+                )
         )
 
         let body = try await SystemAPIHTTPTestSupport.send(

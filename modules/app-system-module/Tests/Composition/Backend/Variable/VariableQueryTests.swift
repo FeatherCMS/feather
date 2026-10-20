@@ -43,10 +43,11 @@ struct VariableQueryTests {
         let request = JSONRequest(
             method: .post,
             path: "/api/v1/admin/system/variables/query",
-            body: Components.Schemas.SystemVariableQueryItemSearchRequestQuerySchema(
-                page: .init(size: 150, number: 0),
-                filters: .init(search: "mail")
-            )
+            body: Components.Schemas
+                .SystemVariableQueryItemSearchRequestQuerySchema(
+                    page: .init(size: 150, number: 0),
+                    filters: .init(search: "mail")
+                )
         )
 
         let body = try await SystemAPIHTTPTestSupport.send(
@@ -86,10 +87,11 @@ struct VariableQueryTests {
         let request = JSONRequest(
             method: .post,
             path: "/api/v1/admin/system/variables/query",
-            body: Components.Schemas.SystemVariableQueryItemSearchRequestQuerySchema(
-                page: nil,
-                filters: .init()
-            )
+            body: Components.Schemas
+                .SystemVariableQueryItemSearchRequestQuerySchema(
+                    page: nil,
+                    filters: .init()
+                )
         )
 
         let body = try await SystemAPIHTTPTestSupport.send(

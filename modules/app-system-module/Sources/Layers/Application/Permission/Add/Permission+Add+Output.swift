@@ -1,5 +1,5 @@
-public import SystemModule
 public import FeatherApplication
+public import SystemModule
 
 extension Permission.Add {
     public struct Output: FeatherApplication.DTO {

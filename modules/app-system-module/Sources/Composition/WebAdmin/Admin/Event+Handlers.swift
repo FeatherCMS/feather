@@ -1,7 +1,7 @@
 import FeatherAdmin
 public import FeatherModuleKit
 
-public enum Event {
+extension Admin.Event {
     public enum Handlers {
 
         public static func register(
@@ -9,8 +9,8 @@ public enum Event {
             routes: Router.Routes = .standard
         ) {
             events.register(
-                event: Events.Menu.Provider.self,
-                context: Events.Context.self
+                event: Admin.Menu.Group.Provider.self,
+                context: Admin.Menu.Context.self
             ) { _, _ in
                 [
                     .init(
@@ -40,8 +40,8 @@ public enum Event {
                 ]
             }
             events.register(
-                event: Events.MenuItem.Provider.self,
-                context: Events.Context.self
+                event: Admin.Menu.Item.Provider.self,
+                context: Admin.Menu.Context.self
             ) { event, _ in
                 guard event.menuKey == "system" else { return [] }
                 return [

@@ -1,6 +1,6 @@
 import FeatherApplication
-import FeatherModuleKit
 import FeatherDomain
+import FeatherModuleKit
 import FeatherTesting
 import SystemDomain
 import SystemModule
