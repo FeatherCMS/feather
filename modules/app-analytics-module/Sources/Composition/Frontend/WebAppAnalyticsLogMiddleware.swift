@@ -1,4 +1,5 @@
 import AnalyticsAppAPI
+public import AnalyticsContracts
 public import FeatherAdmin
 public import Foundation
 import HTTPTypes
@@ -7,11 +8,14 @@ public import Hummingbird
 public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
 
     public let apiBaseURL: URL
+    private let logFilter: any AnalyticsLogFilter
 
     public init(
-        apiBaseURL: URL
+        apiBaseURL: URL,
+        logFilter: any AnalyticsLogFilter
     ) {
         self.apiBaseURL = apiBaseURL
+        self.logFilter = logFilter
     }
 
     public func handle(
@@ -26,7 +30,7 @@ public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
         let response = try await next(request, context)
         let responseCode = Int(response.status.code)
         guard
-            shouldTrack(
+            logFilter.shouldTrack(
                 path: path,
                 method: method,
                 responseCode: responseCode
@@ -42,9 +46,7 @@ public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
         let origin = request.headers[.origin]
         let acceptLanguage = request.headers[.acceptLanguage]
         let userAgent = request.headers[.userAgent]
-        let headers = storedHeaders(from: request)
-        let headersString = headersJSONString(headers)
-
+        let headers = Self.storedHeaders(from: request)
         Task.detached {
             let api = AnalyticsAppAPIClient(
                 apiBaseURL: apiBaseURL,
@@ -53,7 +55,7 @@ public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
             let payload = Components.Schemas.AppAnalyticsLogTrackSchema(
                 method: method,
                 url: url,
-                headers: headersString,
+                headers: headers,
                 ip: ip ?? "",
                 path: path,
                 referer: referer ?? "",
@@ -80,60 +82,22 @@ public struct WebAppAnalyticsLogMiddleware: RouterMiddleware {
         return response
     }
 
-    private func shouldTrack(
-        path: String,
-        method: String,
-        responseCode: Int
-    ) -> Bool {
-        let lowercasedPath = path.lowercased()
-        if isIgnoredPath(lowercasedPath) {
-            return false
-        }
-        if isStaticAsset(lowercasedPath) {
-            return false
-        }
-
-        // Successful page visits remain useful. Skip successful background,
-        // preflight, and write requests; API writes are recorded by the backend.
-        if responseCode >= 400 {
-            return true
-        }
-        return method == "GET" && responseCode < 400
-    }
-
-    private func storedHeaders(from request: Request) -> [String: String] {
+    private static func storedHeaders(from request: Request) -> String {
         let allowedNames: Set<String> = ["accept", "content-type"]
-        return request.headers.reduce(into: [String: String]()) {
+        let headers = request.headers.reduce(into: [String: String]()) {
             result,
             field in
-            let name = field.name.rawName.lowercased()
+            let name = field.name.canonicalName
             guard allowedNames.contains(name) else { return }
             result[name] = String(field.value.prefix(256))
         }
-    }
-
-    private func headersJSONString(_ headers: [String: String]) -> String {
-        let headersData =
-            (try? JSONSerialization.data(withJSONObject: headers))
-            ?? Data("{}".utf8)
-        return String(data: headersData, encoding: .utf8) ?? "{}"
-    }
-
-    private func isStaticAsset(_ path: String) -> Bool {
-        [
-            ".css", ".js", ".mjs", ".map", ".png", ".jpg", ".jpeg",
-            ".gif", ".svg", ".webp", ".ico", ".woff", ".woff2",
-            ".ttf", ".eot", ".avif",
-        ].contains { path.hasSuffix($0) }
-    }
-
-    private func isIgnoredPath(_ path: String) -> Bool {
-        if path == "/health" || path == "/robots.txt" || path == "/favicon.ico" {
-            return true
+        guard
+            let data = try? JSONEncoder().encode(headers),
+            let json = String(data: data, encoding: .utf8)
+        else {
+            return "{}"
         }
-        return [
-            "/.env", "/.git", "/.svn", "/wp-", "/wp/", "/wordpress",
-            "/xmlrpc.php", "/phpmyadmin", "/cgi-bin/",
-        ].contains { path.contains($0) }
+        return json
     }
+
 }

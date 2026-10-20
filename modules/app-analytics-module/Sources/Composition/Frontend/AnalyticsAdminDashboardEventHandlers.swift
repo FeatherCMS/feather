@@ -26,7 +26,8 @@ public enum AnalyticsAdminDashboardEventHandlers {
                             .init(
                                 source: "web_app",
                                 from: context.from,
-                                to: context.to
+                                to: context.to,
+                                dashboardOnly: true
                             )
                         )
                     )
@@ -98,7 +99,7 @@ public enum AnalyticsAdminDashboardEventHandlers {
                                 }
                             ),
                             .init(
-                                title: "Regions",
+                                title: "Language regions",
                                 items: overview.regions.map {
                                     .init(
                                         label: $0.label,

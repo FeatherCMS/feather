@@ -159,6 +159,7 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
 
+                .target(name: "AnalyticsContracts"),
                 .target(name: "AnalyticsInfrastructure"),
                 .target(name: "AnalyticsAdminAPI"),
                 .target(name: "AnalyticsAppAPI"),

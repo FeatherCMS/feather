@@ -12,15 +12,21 @@ public struct LogOverview: DTO {
         public let source: String
         public let from: Double
         public let to: Double
+        public let dashboardOnly: Bool
+        public let notFoundOnly: Bool
 
         public init(
             source: String,
             from: Double,
-            to: Double
+            to: Double,
+            dashboardOnly: Bool = false,
+            notFoundOnly: Bool = false
         ) {
             self.source = source
             self.from = from
             self.to = to
+            self.dashboardOnly = dashboardOnly
+            self.notFoundOnly = notFoundOnly
         }
     }
 
@@ -31,6 +37,11 @@ public struct LogOverview: DTO {
         public let notFoundRequests: Int
         public let clientErrorRequests: Int
         public let serverErrorRequests: Int
+        public let pageViews: Int
+        public let searchRequests: Int
+        public let botRequests: Int
+        public let aiRequests: Int
+        public let humanRequests: Int
 
         package init(
             totalRequests: Int,
@@ -38,7 +49,12 @@ public struct LogOverview: DTO {
             authenticatedRequests: Int,
             notFoundRequests: Int,
             clientErrorRequests: Int,
-            serverErrorRequests: Int
+            serverErrorRequests: Int,
+            pageViews: Int,
+            searchRequests: Int,
+            botRequests: Int,
+            aiRequests: Int,
+            humanRequests: Int
         ) {
             self.totalRequests = totalRequests
             self.averageRequestsPerDay = averageRequestsPerDay
@@ -46,6 +62,11 @@ public struct LogOverview: DTO {
             self.notFoundRequests = notFoundRequests
             self.clientErrorRequests = clientErrorRequests
             self.serverErrorRequests = serverErrorRequests
+            self.pageViews = pageViews
+            self.searchRequests = searchRequests
+            self.botRequests = botRequests
+            self.aiRequests = aiRequests
+            self.humanRequests = humanRequests
         }
     }
 

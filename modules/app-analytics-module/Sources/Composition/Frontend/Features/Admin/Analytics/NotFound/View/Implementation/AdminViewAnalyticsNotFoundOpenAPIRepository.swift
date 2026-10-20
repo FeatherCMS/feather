@@ -20,7 +20,8 @@ struct AdminViewAnalyticsNotFoundOpenAPIRepository:
                     .init(
                         source: "web_app",
                         from: from,
-                        to: to
+                        to: to,
+                        notFoundOnly: true
                     )
                 )
             )

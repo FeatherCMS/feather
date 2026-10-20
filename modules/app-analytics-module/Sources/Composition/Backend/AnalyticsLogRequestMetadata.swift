@@ -3,15 +3,6 @@ import Foundation
 
 public enum AnalyticsLogRequestMetadata {
 
-    public static func headersJSONString(
-        _ headers: [String: String]
-    ) -> String {
-        let headersData =
-            (try? JSONSerialization.data(withJSONObject: headers))
-            ?? Data("{}".utf8)
-        return String(data: headersData, encoding: .utf8) ?? "{}"
-    }
-
     public static func parseAcceptLanguage(
         _ value: String?
     ) -> (language: String?, region: String?) {

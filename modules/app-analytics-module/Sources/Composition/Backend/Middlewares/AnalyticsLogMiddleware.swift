@@ -1,5 +1,7 @@
 import AnalyticsApplication
+public import AnalyticsContracts
 import AnalyticsDomain
+import Foundation
 import HTTPTypes
 public import Hummingbird
 
@@ -8,13 +10,16 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
     private static let forwardedFor = HTTPField.Name("x-forwarded-for")!
     private let analytics: AnalyticsBackend.UseCases
     private let resolveAccountID: @Sendable (Request) async -> String?
+    private let logFilter: any AnalyticsLogFilter
 
     public init(
         analytics: AnalyticsBackend.UseCases,
-        resolveAccountID: @escaping @Sendable (Request) async -> String?
+        resolveAccountID: @escaping @Sendable (Request) async -> String?,
+        logFilter: any AnalyticsLogFilter
     ) {
         self.analytics = analytics
         self.resolveAccountID = resolveAccountID
+        self.logFilter = logFilter
     }
 
     public func handle(
@@ -29,7 +34,7 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
         let response = try await next(request, context)
         let responseCode = Int(response.status.code)
         guard
-            shouldTrack(
+            logFilter.shouldTrack(
                 path: path,
                 method: method,
                 responseCode: responseCode
@@ -41,9 +46,6 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
         let useCase = analytics.makeTrackLog()
         let accountId = await resolveAccountID(request)
         let headers = Self.storedHeaders(from: request)
-        let headersString = AnalyticsLogRequestMetadata.headersJSONString(
-            headers
-        )
         let acceptLanguage = request.headers[.acceptLanguage]
         let userAgent = request.headers[.userAgent]
         let languageComponents =
@@ -60,7 +62,7 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
                     source: .backendAPI,
                     method: method,
                     url: url,
-                    headers: headersString,
+                    headers: headers,
                     ip: request.headers[Self.forwardedFor],
                     path: path,
                     referer: request.headers[.referer],
@@ -90,59 +92,22 @@ public struct AnalyticsLogMiddleware: RouterMiddleware {
         return response
     }
 
-    private func shouldTrack(
-        path: String,
-        method: String,
-        responseCode: Int
-    ) -> Bool {
-        let lowercasedPath = path.lowercased()
-        if Self.isIgnoredPath(lowercasedPath) {
-            return false
-        }
-        if lowercasedPath.hasPrefix("/api/v1/admin/analytics/") {
-            return false
-        }
-        if lowercasedPath == "/api/v1/analytics/logs/track" {
-            return false
-        }
-        if Self.isStaticAsset(lowercasedPath) {
-            return false
-        }
-
-        // Public page visits are tracked by the web app middleware. Keep API
-        // failures and successful state-changing requests here, but skip the
-        // high-volume successful API reads and preflight checks.
-        return responseCode >= 400
-            || (300..<400).contains(responseCode)
-            || ["POST", "PUT", "PATCH", "DELETE"].contains(method)
-    }
-
-    private static func storedHeaders(from request: Request) -> [String: String] {
+    private static func storedHeaders(from request: Request) -> String {
         let allowedNames: Set<String> = ["accept", "content-type"]
-        return request.headers.reduce(into: [String: String]()) {
+        let headers = request.headers.reduce(into: [String: String]()) {
             result,
             field in
-            let name = field.name.rawName.lowercased()
+            let name = field.name.canonicalName
             guard allowedNames.contains(name) else { return }
             result[name] = String(field.value.prefix(256))
         }
-    }
-
-    private static func isStaticAsset(_ path: String) -> Bool {
-        [
-            ".css", ".js", ".mjs", ".map", ".png", ".jpg", ".jpeg",
-            ".gif", ".svg", ".webp", ".ico", ".woff", ".woff2",
-            ".ttf", ".eot", ".avif",
-        ].contains { path.hasSuffix($0) }
-    }
-
-    private static func isIgnoredPath(_ path: String) -> Bool {
-        if path == "/health" || path == "/robots.txt" || path == "/favicon.ico" {
-            return true
+        guard
+            let data = try? JSONEncoder().encode(headers),
+            let json = String(data: data, encoding: .utf8)
+        else {
+            return "{}"
         }
-        return [
-            "/.env", "/.git", "/.svn", "/wp-", "/wp/", "/wordpress",
-            "/xmlrpc.php", "/phpmyadmin", "/cgi-bin/",
-        ].contains { path.contains($0) }
+        return json
     }
+
 }

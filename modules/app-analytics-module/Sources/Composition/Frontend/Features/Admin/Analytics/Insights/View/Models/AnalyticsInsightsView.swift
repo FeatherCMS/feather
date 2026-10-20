@@ -197,11 +197,15 @@ struct AnalyticsInsightsView: Component {
                 sectionHeading(
                     icon: "trendingUp",
                     title: "Traffic",
-                    description: "Requests across the selected time range."
+                    description:
+                        page.source == .web
+                        ? "Human page views across the selected time range."
+                        : "Logged API events across the selected time range."
                 )
                 context.build(
                     NewAdminChartCard(
-                        title: "Daily traffic",
+                        title: page.source == .web
+                            ? "Daily page views" : "Daily API events",
                         chart: NewAdminLineChart(
                             points: page.overview.daily.map {
                                 .init(
@@ -266,34 +270,39 @@ struct AnalyticsInsightsView: Component {
         let kpis = page.overview.kpis
         if page.source == .web {
             return [
-                ("Requests", "\(kpis.totalRequests)"),
+                ("Tracked web events", "\(kpis.totalRequests)"),
                 (
-                    "Avg/day",
+                    "Events/day",
                     kpis.averageRequestsPerDay.formatted(
                         .number.precision(.fractionLength(1))
                     )
                 ),
-                ("Signed-in", "\(kpis.authenticatedRequests)"),
+                ("Authenticated requests", "\(kpis.authenticatedRequests)"),
+                ("Page views", "\(kpis.pageViews)"),
+                ("Searches", "\(kpis.searchRequests)"),
+                ("Human requests (estimated)", "\(kpis.humanRequests)"),
+                ("Bot requests", "\(kpis.botRequests)"),
+                ("AI requests", "\(kpis.aiRequests)"),
                 ("404s", "\(kpis.notFoundRequests)"),
                 ("4xx", "\(kpis.clientErrorRequests)"),
                 ("5xx", "\(kpis.serverErrorRequests)"),
             ]
         }
         return [
-            ("Requests", "\(kpis.totalRequests)"),
+            ("Logged API events", "\(kpis.totalRequests)"),
             (
-                "Avg/day",
+                "Events/day",
                 kpis.averageRequestsPerDay.formatted(
                     .number.precision(.fractionLength(1))
                 )
             ),
             (
-                "Success rate",
+                "Non-error events (logged)",
                 successRate.formatted(.number.precision(.fractionLength(1)))
                     + "%"
             ),
             (
-                "Error rate",
+                "Error events (logged)",
                 errorRate.formatted(.number.precision(.fractionLength(1))) + "%"
             ),
             ("4xx errors", "\(kpis.clientErrorRequests)"),
@@ -311,8 +320,10 @@ struct AnalyticsInsightsView: Component {
                 breakdown("Browsers", overview.browsers),
                 breakdown("Device types", overview.deviceTypes),
                 breakdown("Languages", overview.languages),
-                breakdown("Regions", overview.regions),
+                breakdown("Language regions", overview.regions),
                 breakdown("404 pages", overview.notFoundPaths),
+                breakdown("5xx paths", overview.serverErrorPaths),
+                trafficTypeBreakdown,
             ]
         }
         return [
@@ -334,6 +345,49 @@ struct AnalyticsInsightsView: Component {
                 items: items.map {
                     .init(label: $0.label, value: $0.count, share: $0.share)
                 }
+            )
+        )
+    }
+
+    private var trafficTypeBreakdown: NewAdminChartCard<NewAdminBarChart> {
+        let kpis = page.overview.kpis
+        let trackedRequests = max(0, kpis.totalRequests)
+        let humans = min(max(0, kpis.humanRequests), trackedRequests)
+        let bots = min(max(0, kpis.botRequests), trackedRequests - humans)
+        let ai = min(max(0, kpis.aiRequests), trackedRequests - humans - bots)
+        let humanShare =
+            trackedRequests > 0
+            ? Double(humans) / Double(trackedRequests)
+            : 0
+        let botShare =
+            trackedRequests > 0
+            ? Double(bots) / Double(trackedRequests)
+            : 0
+        let aiShare =
+            trackedRequests > 0
+            ? Double(ai) / Double(trackedRequests)
+            : 0
+
+        return NewAdminChartCard(
+            title: "Traffic by type (estimated from User-Agent)",
+            chart: NewAdminBarChart(
+                items: [
+                    .init(
+                        label: "Human / unrecognized",
+                        value: humans,
+                        share: humanShare
+                    ),
+                    .init(
+                        label: "Bot",
+                        value: bots,
+                        share: botShare
+                    ),
+                    .init(
+                        label: "AI",
+                        value: ai,
+                        share: aiShare
+                    ),
+                ]
             )
         )
     }
