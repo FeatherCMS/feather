@@ -19,3 +19,4 @@
 - [ ] Template editor for web module
 - [ ] Duplicate feature
 - [ ] RCE undo / redo feature
+- [ ] storage + mail ephemeral -> main testing like DatabaseTesting
