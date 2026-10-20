@@ -1,6 +1,7 @@
 import FeatherBackend
 import FeatherDomain
 import FeatherModuleKit
+import Hummingbird
 public import UserAdminAPI
 import UserApplication
 import UserDomain
@@ -28,33 +29,26 @@ extension AdminAPIGateway {
             fields = try .init(input.query.updateMask)
         }
         catch {
-            return badRequest()
+            throw HTTPError(.badRequest)
         }
 
-        let name: FieldChange<String>
-        if fields.contains(.name) {
-            guard let value = body.name else { return badRequest() }
-            name = .set(value)
-        }
-        else {
-            name = .unchanged
-        }
-
-        let roleIds: FieldChange<[String]>
-        if fields.contains(.roleIds) {
-            guard let value = body.roleIds else { return badRequest() }
-            roleIds = .set(value)
-        }
-        else {
-            roleIds = .unchanged
-        }
+        let name = try FieldChange(
+            value: body.name,
+            shouldApply: fields.contains(.name),
+            onMissing: { HTTPError(.badRequest) }
+        )
+        let roleIds = try FieldChange(
+            value: body.roleIds,
+            shouldApply: fields.contains(.roleIds),
+            onMissing: { HTTPError(.badRequest) }
+        )
         let statusValue = body.status.flatMap {
             Identity.Model.Status(rawValue: $0.rawValue)
         }
         let status: FieldChange<Identity.Model.Status>
         if fields.contains(.status) {
-            guard let value = statusValue else { return badRequest() }
-            status = .set(value)
+            guard let statusValue else { throw HTTPError(.badRequest) }
+            status = .set(statusValue)
         }
         else {
             status = .unchanged
@@ -74,23 +68,20 @@ extension AdminAPIGateway {
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(identityDetailSchema(from: result))
             )
         )
     }
 
-    private func badRequest() -> Operations.UserIdentityPatch.Output {
-        .badRequest(
-            .init(
-                body: .json(
-                    .init(
-                        error: .init(
-                            message: "Bad Request",
-                            reason: "Invalid or incomplete updateMask."
-                        )
-                    )
-                )
-            )
-        )
-    }
+}
+
+private func identityDetailSchema(
+    from output: Identity.Detail.Output
+) -> Components.Schemas.UserIdentityDetailSchema {
+    .init(
+        id: output.id,
+        name: output.name,
+        status: .init(rawValue: output.status.rawValue)!,
+        roleIds: output.roleIds
+    )
 }

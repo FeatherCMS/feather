@@ -177,13 +177,17 @@ Within a route feature, keep its files together under
   field, clearing a nullable field, and invalid or incomplete masks.
 - Organize OpenAPI generator source like the System generator: one directory per
   entity and one subdirectory per operation (`Identity/Query/`, `Identity/Get/`,
-  etc.), with the operation definition and its `PathItem` in separately named
-  files. Keep entity-level `PathCollection` and shared operation/tag/parameter
-  declarations beside the entity, and merge entity path collections from the
-  API-level `PathCollection`. Use explicit operation IDs matching the transport
-  operation name, regenerate YAML and Swift API sources from the generator, and
-  remove obsolete generated operations rather than preserving compatibility
-  routes by accident.
+  etc.), with operation definitions in their operation directories. A
+  `PathItem` represents one URL and groups all HTTP methods for that URL; keep
+  one entity `PathItem` for the collection, one `<Entity>+ID+PathItem` for an
+  ID route, and one operation-specific `PathItem` for a distinct route such as
+  `Query`. Do not add duplicate per-verb `PathItem` declarations for operations
+  already grouped under the same path. Keep entity-level `PathCollection` and
+  shared operation/tag/parameter declarations beside the entity, and merge
+  entity path collections from the API-level `PathCollection`. Use explicit
+  operation IDs that match the HTTP verb and resource, regenerate YAML and Swift
+  API sources from the generator, and remove obsolete generated operations
+  rather than preserving compatibility routes by accident.
 
 ## Composition and WebAdmin
 

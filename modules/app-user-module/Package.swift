@@ -294,6 +294,10 @@ let package = Package(
                     name: "OpenAPIHummingbird",
                     package: "swift-openapi-hummingbird"
                 ),
+                .product(
+                    name: "OpenAPIRuntime",
+                    package: "swift-openapi-runtime"
+                ),
                 .product(name: "HummingbirdTesting", package: "hummingbird"),
                 .product(name: "FeatherDatabase", package: "feather-database"),
                 .product(

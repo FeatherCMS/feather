@@ -9,6 +9,7 @@ import FeatherTesting
 import Hummingbird
 import HummingbirdTesting
 import OpenAPIHummingbird
+import OpenAPIRuntime
 import Testing
 import UserAdminAPI
 import UserBackend
@@ -34,6 +35,7 @@ enum UserAPIHTTPTestSupport {
             )
         )
         let router = Router()
+        router.addMiddleware { HTTPErrorStatusMiddleware() }
         try gateway.registerHandlers(on: router)
         return HummingbirdTestingHTTPExecutor(
             app: Application(router: router),
@@ -51,6 +53,28 @@ enum UserAPIHTTPTestSupport {
                 #expect(response.status.code == expectedStatus)
                 return try await response.plainTextBody()
             }
+        }
+    }
+}
+
+private struct HTTPErrorStatusMiddleware: RouterMiddleware {
+    func handle(
+        _ request: Request,
+        context: BasicRequestContext,
+        next:
+            @concurrent (Request, BasicRequestContext) async throws -> Response
+    ) async throws -> Response {
+        do {
+            return try await next(request, context)
+        }
+        catch let error as HTTPError {
+            return Response(status: error.status)
+        }
+        catch let error as OpenAPIRuntime.ServerError {
+            guard let httpError = error.underlyingError as? HTTPError else {
+                throw error
+            }
+            return Response(status: httpError.status)
         }
     }
 }

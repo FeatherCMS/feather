@@ -10,22 +10,22 @@ public enum Operations {
     /// Creates a user identity
     ///
     /// - Remark: HTTP `POST /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityCreate)`.
-    public enum UserIdentityCreate {
-        public static let id: Swift.String = "userIdentityCreate"
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityPost)`.
+    public enum UserIdentityPost {
+        public static let id: Swift.String = "userIdentityPost"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/POST/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserIdentityCreate.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserIdentityPost.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserIdentityCreate.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserIdentityPost.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.UserIdentityCreate.Input.Headers
+            public var headers: Operations.UserIdentityPost.Input.Headers
             public var body: Components.RequestBodies.UserIdentityCreateRequestBody
             /// Creates a new `Input`.
             ///
@@ -33,7 +33,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.UserIdentityCreate.Input.Headers = .init(),
+                headers: Operations.UserIdentityPost.Input.Headers = .init(),
                 body: Components.RequestBodies.UserIdentityCreateRequestBody
             ) {
                 self.headers = headers
@@ -43,7 +43,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// UserIdentity response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityCreate)/responses/201`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityPost)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
             case created(Components.Responses.UserIdentityDetailResponse)
@@ -83,26 +83,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.UserIdentityCreate.Output.Unauthorized.Body
+                public var body: Operations.UserIdentityPost.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.UserIdentityCreate.Output.Unauthorized.Body) {
+                public init(body: Operations.UserIdentityPost.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityCreate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityPost)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.UserIdentityCreate.Output.Unauthorized)
+            case unauthorized(Operations.UserIdentityPost.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.UserIdentityCreate.Output.Unauthorized {
+            public var unauthorized: Operations.UserIdentityPost.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -134,26 +134,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.UserIdentityCreate.Output.Forbidden.Body
+                public var body: Operations.UserIdentityPost.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.UserIdentityCreate.Output.Forbidden.Body) {
+                public init(body: Operations.UserIdentityPost.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityCreate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityPost)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.UserIdentityCreate.Output.Forbidden)
+            case forbidden(Operations.UserIdentityPost.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.UserIdentityCreate.Output.Forbidden {
+            public var forbidden: Operations.UserIdentityPost.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -198,22 +198,22 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)`.
-    public enum UserIdentityRemove {
-        public static let id: Swift.String = "userIdentityRemove"
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)`.
+    public enum UserIdentityDelete {
+        public static let id: Swift.String = "userIdentityDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/DELETE/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserIdentityRemove.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserIdentityDelete.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserIdentityRemove.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserIdentityDelete.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.UserIdentityRemove.Input.Headers
+            public var headers: Operations.UserIdentityDelete.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -221,7 +221,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.UserIdentityRemove.Input.Headers = .init(),
+                headers: Operations.UserIdentityDelete.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
@@ -231,13 +231,13 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             case noContent(Components.Responses.NoContentResponse)
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             public static var noContent: Self {
@@ -279,26 +279,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.UserIdentityRemove.Output.Unauthorized.Body
+                public var body: Operations.UserIdentityDelete.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.UserIdentityRemove.Output.Unauthorized.Body) {
+                public init(body: Operations.UserIdentityDelete.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.UserIdentityRemove.Output.Unauthorized)
+            case unauthorized(Operations.UserIdentityDelete.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.UserIdentityRemove.Output.Unauthorized {
+            public var unauthorized: Operations.UserIdentityDelete.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -330,26 +330,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.UserIdentityRemove.Output.Forbidden.Body
+                public var body: Operations.UserIdentityDelete.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.UserIdentityRemove.Output.Forbidden.Body) {
+                public init(body: Operations.UserIdentityDelete.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.UserIdentityRemove.Output.Forbidden)
+            case forbidden(Operations.UserIdentityDelete.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.UserIdentityRemove.Output.Forbidden {
+            public var forbidden: Operations.UserIdentityDelete.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -1166,9 +1166,9 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `PUT /api/v1/admin/user/identities/{userIdentityId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityUpdate)`.
-    public enum UserIdentityUpdate {
-        public static let id: Swift.String = "userIdentityUpdate"
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityPut)`.
+    public enum UserIdentityPut {
+        public static let id: Swift.String = "userIdentityPut"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/{userIdentityId}/PUT/path`.
             public struct Path: Sendable, Hashable {
@@ -1184,19 +1184,19 @@ public enum Operations {
                     self.userIdentityId = userIdentityId
                 }
             }
-            public var path: Operations.UserIdentityUpdate.Input.Path
+            public var path: Operations.UserIdentityPut.Input.Path
             /// - Remark: Generated from `#/paths/api/v1/admin/user/identities/{userIdentityId}/PUT/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserIdentityUpdate.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserIdentityPut.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserIdentityUpdate.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserIdentityPut.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.UserIdentityUpdate.Input.Headers
+            public var headers: Operations.UserIdentityPut.Input.Headers
             public var body: Components.RequestBodies.UserIdentityUpdateRequestBody
             /// Creates a new `Input`.
             ///
@@ -1205,8 +1205,8 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.UserIdentityUpdate.Input.Path,
-                headers: Operations.UserIdentityUpdate.Input.Headers = .init(),
+                path: Operations.UserIdentityPut.Input.Path,
+                headers: Operations.UserIdentityPut.Input.Headers = .init(),
                 body: Components.RequestBodies.UserIdentityUpdateRequestBody
             ) {
                 self.path = path
@@ -1217,7 +1217,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// UserIdentity response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityUpdate)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityPut)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.UserIdentityDetailResponse)
@@ -1257,26 +1257,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.UserIdentityUpdate.Output.NotFound.Body
+                public var body: Operations.UserIdentityPut.Output.NotFound.Body
                 /// Creates a new `NotFound`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.UserIdentityUpdate.Output.NotFound.Body) {
+                public init(body: Operations.UserIdentityPut.Output.NotFound.Body) {
                     self.body = body
                 }
             }
             /// UserIdentity not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityPut)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.UserIdentityUpdate.Output.NotFound)
+            case notFound(Operations.UserIdentityPut.Output.NotFound)
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.UserIdentityUpdate.Output.NotFound {
+            public var notFound: Operations.UserIdentityPut.Output.NotFound {
                 get throws {
                     switch self {
                     case let .notFound(response):
@@ -1308,26 +1308,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.UserIdentityUpdate.Output.Unauthorized.Body
+                public var body: Operations.UserIdentityPut.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.UserIdentityUpdate.Output.Unauthorized.Body) {
+                public init(body: Operations.UserIdentityPut.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityPut)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.UserIdentityUpdate.Output.Unauthorized)
+            case unauthorized(Operations.UserIdentityPut.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.UserIdentityUpdate.Output.Unauthorized {
+            public var unauthorized: Operations.UserIdentityPut.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -1359,26 +1359,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.UserIdentityUpdate.Output.Forbidden.Body
+                public var body: Operations.UserIdentityPut.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.UserIdentityUpdate.Output.Forbidden.Body) {
+                public init(body: Operations.UserIdentityPut.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityPut)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.UserIdentityUpdate.Output.Forbidden)
+            case forbidden(Operations.UserIdentityPut.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.UserIdentityUpdate.Output.Forbidden {
+            public var forbidden: Operations.UserIdentityPut.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -1423,22 +1423,22 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `POST /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRoleCreate)`.
-    public enum UserRoleCreate {
-        public static let id: Swift.String = "userRoleCreate"
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRolePost)`.
+    public enum UserRolePost {
+        public static let id: Swift.String = "userRolePost"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/POST/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserRoleCreate.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserRolePost.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserRoleCreate.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserRolePost.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.UserRoleCreate.Input.Headers
+            public var headers: Operations.UserRolePost.Input.Headers
             public var body: Components.RequestBodies.UserRoleRequestBody
             /// Creates a new `Input`.
             ///
@@ -1446,7 +1446,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.UserRoleCreate.Input.Headers = .init(),
+                headers: Operations.UserRolePost.Input.Headers = .init(),
                 body: Components.RequestBodies.UserRoleRequestBody
             ) {
                 self.headers = headers
@@ -1456,7 +1456,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// UserRole response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRoleCreate)/responses/201`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRolePost)/responses/201`.
             ///
             /// HTTP response code: `201 created`.
             case created(Components.Responses.UserRoleDetailResponse)
@@ -1496,26 +1496,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.UserRoleCreate.Output.Unauthorized.Body
+                public var body: Operations.UserRolePost.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.UserRoleCreate.Output.Unauthorized.Body) {
+                public init(body: Operations.UserRolePost.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRoleCreate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRolePost)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.UserRoleCreate.Output.Unauthorized)
+            case unauthorized(Operations.UserRolePost.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.UserRoleCreate.Output.Unauthorized {
+            public var unauthorized: Operations.UserRolePost.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -1547,26 +1547,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.UserRoleCreate.Output.Forbidden.Body
+                public var body: Operations.UserRolePost.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.UserRoleCreate.Output.Forbidden.Body) {
+                public init(body: Operations.UserRolePost.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRoleCreate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRolePost)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.UserRoleCreate.Output.Forbidden)
+            case forbidden(Operations.UserRolePost.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.UserRoleCreate.Output.Forbidden {
+            public var forbidden: Operations.UserRolePost.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -1611,22 +1611,22 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)`.
-    public enum UserRoleRemove {
-        public static let id: Swift.String = "userRoleRemove"
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)`.
+    public enum UserRoleDelete {
+        public static let id: Swift.String = "userRoleDelete"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/DELETE/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserRoleRemove.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserRoleDelete.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserRoleRemove.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserRoleDelete.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.UserRoleRemove.Input.Headers
+            public var headers: Operations.UserRoleDelete.Input.Headers
             public var body: Components.RequestBodies.DeleteRequestBody
             /// Creates a new `Input`.
             ///
@@ -1634,7 +1634,7 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                headers: Operations.UserRoleRemove.Input.Headers = .init(),
+                headers: Operations.UserRoleDelete.Input.Headers = .init(),
                 body: Components.RequestBodies.DeleteRequestBody
             ) {
                 self.headers = headers
@@ -1644,13 +1644,13 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             case noContent(Components.Responses.NoContentResponse)
             /// Delete succeeded
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)/responses/204`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)/responses/204`.
             ///
             /// HTTP response code: `204 noContent`.
             public static var noContent: Self {
@@ -1692,26 +1692,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.UserRoleRemove.Output.Unauthorized.Body
+                public var body: Operations.UserRoleDelete.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.UserRoleRemove.Output.Unauthorized.Body) {
+                public init(body: Operations.UserRoleDelete.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.UserRoleRemove.Output.Unauthorized)
+            case unauthorized(Operations.UserRoleDelete.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.UserRoleRemove.Output.Unauthorized {
+            public var unauthorized: Operations.UserRoleDelete.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -1743,26 +1743,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.UserRoleRemove.Output.Forbidden.Body
+                public var body: Operations.UserRoleDelete.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.UserRoleRemove.Output.Forbidden.Body) {
+                public init(body: Operations.UserRoleDelete.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.UserRoleRemove.Output.Forbidden)
+            case forbidden(Operations.UserRoleDelete.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.UserRoleRemove.Output.Forbidden {
+            public var forbidden: Operations.UserRoleDelete.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):
@@ -2579,9 +2579,9 @@ public enum Operations {
         }
     }
     /// - Remark: HTTP `PUT /api/v1/admin/user/roles/{userRoleId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRoleUpdate)`.
-    public enum UserRoleUpdate {
-        public static let id: Swift.String = "userRoleUpdate"
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRolePut)`.
+    public enum UserRolePut {
+        public static let id: Swift.String = "userRolePut"
         public struct Input: Sendable, Hashable {
             /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/{userRoleId}/PUT/path`.
             public struct Path: Sendable, Hashable {
@@ -2597,19 +2597,19 @@ public enum Operations {
                     self.userRoleId = userRoleId
                 }
             }
-            public var path: Operations.UserRoleUpdate.Input.Path
+            public var path: Operations.UserRolePut.Input.Path
             /// - Remark: Generated from `#/paths/api/v1/admin/user/roles/{userRoleId}/PUT/header`.
             public struct Headers: Sendable, Hashable {
-                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserRoleUpdate.AcceptableContentType>]
+                public var accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserRolePut.AcceptableContentType>]
                 /// Creates a new `Headers`.
                 ///
                 /// - Parameters:
                 ///   - accept:
-                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserRoleUpdate.AcceptableContentType>] = .defaultValues()) {
+                public init(accept: [OpenAPIRuntime.AcceptHeaderContentType<Operations.UserRolePut.AcceptableContentType>] = .defaultValues()) {
                     self.accept = accept
                 }
             }
-            public var headers: Operations.UserRoleUpdate.Input.Headers
+            public var headers: Operations.UserRolePut.Input.Headers
             public var body: Components.RequestBodies.UserRoleUpdateRequestBody
             /// Creates a new `Input`.
             ///
@@ -2618,8 +2618,8 @@ public enum Operations {
             ///   - headers:
             ///   - body:
             public init(
-                path: Operations.UserRoleUpdate.Input.Path,
-                headers: Operations.UserRoleUpdate.Input.Headers = .init(),
+                path: Operations.UserRolePut.Input.Path,
+                headers: Operations.UserRolePut.Input.Headers = .init(),
                 body: Components.RequestBodies.UserRoleUpdateRequestBody
             ) {
                 self.path = path
@@ -2630,7 +2630,7 @@ public enum Operations {
         @frozen public enum Output: Sendable, Hashable {
             /// UserRole response
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRoleUpdate)/responses/200`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRolePut)/responses/200`.
             ///
             /// HTTP response code: `200 ok`.
             case ok(Components.Responses.UserRoleDetailResponse)
@@ -2670,26 +2670,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.UserRoleUpdate.Output.NotFound.Body
+                public var body: Operations.UserRolePut.Output.NotFound.Body
                 /// Creates a new `NotFound`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.UserRoleUpdate.Output.NotFound.Body) {
+                public init(body: Operations.UserRolePut.Output.NotFound.Body) {
                     self.body = body
                 }
             }
             /// UserRole not found
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRoleUpdate)/responses/404`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRolePut)/responses/404`.
             ///
             /// HTTP response code: `404 notFound`.
-            case notFound(Operations.UserRoleUpdate.Output.NotFound)
+            case notFound(Operations.UserRolePut.Output.NotFound)
             /// The associated value of the enum case if `self` is `.notFound`.
             ///
             /// - Throws: An error if `self` is not `.notFound`.
             /// - SeeAlso: `.notFound`.
-            public var notFound: Operations.UserRoleUpdate.Output.NotFound {
+            public var notFound: Operations.UserRolePut.Output.NotFound {
                 get throws {
                     switch self {
                     case let .notFound(response):
@@ -2721,26 +2721,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.UserRoleUpdate.Output.Unauthorized.Body
+                public var body: Operations.UserRolePut.Output.Unauthorized.Body
                 /// Creates a new `Unauthorized`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.UserRoleUpdate.Output.Unauthorized.Body) {
+                public init(body: Operations.UserRolePut.Output.Unauthorized.Body) {
                     self.body = body
                 }
             }
             /// Unauthorized
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRoleUpdate)/responses/401`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRolePut)/responses/401`.
             ///
             /// HTTP response code: `401 unauthorized`.
-            case unauthorized(Operations.UserRoleUpdate.Output.Unauthorized)
+            case unauthorized(Operations.UserRolePut.Output.Unauthorized)
             /// The associated value of the enum case if `self` is `.unauthorized`.
             ///
             /// - Throws: An error if `self` is not `.unauthorized`.
             /// - SeeAlso: `.unauthorized`.
-            public var unauthorized: Operations.UserRoleUpdate.Output.Unauthorized {
+            public var unauthorized: Operations.UserRolePut.Output.Unauthorized {
                 get throws {
                     switch self {
                     case let .unauthorized(response):
@@ -2772,26 +2772,26 @@ public enum Operations {
                     }
                 }
                 /// Received HTTP response body
-                public var body: Operations.UserRoleUpdate.Output.Forbidden.Body
+                public var body: Operations.UserRolePut.Output.Forbidden.Body
                 /// Creates a new `Forbidden`.
                 ///
                 /// - Parameters:
                 ///   - body: Received HTTP response body
-                public init(body: Operations.UserRoleUpdate.Output.Forbidden.Body) {
+                public init(body: Operations.UserRolePut.Output.Forbidden.Body) {
                     self.body = body
                 }
             }
             /// Forbidden
             ///
-            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRoleUpdate)/responses/403`.
+            /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRolePut)/responses/403`.
             ///
             /// HTTP response code: `403 forbidden`.
-            case forbidden(Operations.UserRoleUpdate.Output.Forbidden)
+            case forbidden(Operations.UserRolePut.Output.Forbidden)
             /// The associated value of the enum case if `self` is `.forbidden`.
             ///
             /// - Throws: An error if `self` is not `.forbidden`.
             /// - SeeAlso: `.forbidden`.
-            public var forbidden: Operations.UserRoleUpdate.Output.Forbidden {
+            public var forbidden: Operations.UserRolePut.Output.Forbidden {
                 get throws {
                     switch self {
                     case let .forbidden(response):

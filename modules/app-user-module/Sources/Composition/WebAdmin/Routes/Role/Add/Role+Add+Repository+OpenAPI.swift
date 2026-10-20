@@ -15,7 +15,7 @@ extension Role.Add.Repository {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client
-                    .userRoleCreate(
+                    .userRolePost(
                         headers: .init(accept: [.init(contentType: .json)]),
                         body: .json(
                             .init(

@@ -4,7 +4,7 @@ import UserOpenAPIGeneratorSupport
 
 extension Identity.Put {
     struct Operation: Identity.IdentifiableOperation {
-        var operationId: String? { "userIdentityUpdate" }
+        var operationId: String? { "userIdentityPut" }
         var requestBody: (any RequestBodyRepresentable)? {
             UserIdentityUpdateRequestBody().reference()
         }

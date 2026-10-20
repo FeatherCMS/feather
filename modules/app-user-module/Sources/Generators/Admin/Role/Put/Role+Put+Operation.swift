@@ -3,7 +3,7 @@ import FeatherOpenAPIGenerator
 
 extension Role.Put {
     struct Operation: Role.IdentifiableOperation {
-        var operationId: String? { "userRoleUpdate" }
+        var operationId: String? { "userRolePut" }
         var requestBody: (any RequestBodyRepresentable)? {
             UserRoleUpdateRequestBody().reference()
         }

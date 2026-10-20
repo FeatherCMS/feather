@@ -6,9 +6,9 @@ import UserModule
 
 extension AdminAPIGateway {
 
-    public func userIdentityCreate(
-        _ input: Operations.UserIdentityCreate.Input
-    ) async throws -> Operations.UserIdentityCreate.Output {
+    public func userIdentityPost(
+        _ input: Operations.UserIdentityPost.Input
+    ) async throws -> Operations.UserIdentityPost.Output {
         let body: Components.Schemas.UserIdentityCreateSchema
         switch input.body {
         case .json(let value):
@@ -31,8 +31,19 @@ extension AdminAPIGateway {
 
         return .created(
             .init(
-                body: .json(map(result))
+                body: .json(identityDetailSchema(from: result))
             )
         )
     }
+}
+
+private func identityDetailSchema(
+    from output: Identity.Detail.Output
+) -> Components.Schemas.UserIdentityDetailSchema {
+    .init(
+        id: output.id,
+        name: output.name,
+        status: .init(rawValue: output.status.rawValue)!,
+        roleIds: output.roleIds
+    )
 }

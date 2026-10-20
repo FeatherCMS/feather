@@ -49,7 +49,7 @@ extension Role.Edit.Repository {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client
-                    .userRoleUpdate(
+                    .userRolePut(
                         path: .init(userRoleId: id),
                         headers: .init(accept: [.init(contentType: .json)]),
                         body: .json(

@@ -1,8 +1,11 @@
 import FeatherBackend
 import FeatherDomain
 import FeatherModuleKit
+import Hummingbird
 public import UserAdminAPI
 import UserApplication
+import UserDomain
+import UserModule
 
 extension AdminAPIGateway {
 
@@ -25,7 +28,7 @@ extension AdminAPIGateway {
             fields = try .init(input.query.updateMask)
         }
         catch {
-            return badRequest()
+            throw HTTPError(.badRequest)
         }
 
         let name = OptionalFieldChange(
@@ -50,23 +53,20 @@ extension AdminAPIGateway {
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(roleDetailSchema(from: result))
             )
         )
     }
 
-    private func badRequest() -> Operations.UserRolePatch.Output {
-        .badRequest(
-            .init(
-                body: .json(
-                    .init(
-                        error: .init(
-                            message: "Bad Request",
-                            reason: "Invalid updateMask."
-                        )
-                    )
-                )
-            )
-        )
-    }
+}
+
+private func roleDetailSchema(
+    from output: Role.Detail.Output
+) -> Components.Schemas.UserRoleDetailSchema {
+    .init(
+        id: output.id,
+        key: output.key,
+        name: output.name,
+        notes: output.notes
+    )
 }

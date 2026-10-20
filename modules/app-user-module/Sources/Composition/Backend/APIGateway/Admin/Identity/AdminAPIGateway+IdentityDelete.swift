@@ -4,9 +4,9 @@ import UserApplication
 
 extension AdminAPIGateway {
 
-    public func userIdentityRemove(
-        _ input: Operations.UserIdentityRemove.Input
-    ) async throws -> Operations.UserIdentityRemove.Output {
+    public func userIdentityDelete(
+        _ input: Operations.UserIdentityDelete.Input
+    ) async throws -> Operations.UserIdentityDelete.Output {
         let body: Components.Schemas.DeleteRequestSchema
         switch input.body {
         case .json(let value):

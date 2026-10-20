@@ -3,7 +3,7 @@ import FeatherOpenAPIGenerator
 
 extension Role.Post {
     struct Operation: Role.Operation {
-        var operationId: String? { "userRoleCreate" }
+        var operationId: String? { "userRolePost" }
         var requestBody: (any RequestBodyRepresentable)? {
             UserRoleRequestBody().reference()
         }

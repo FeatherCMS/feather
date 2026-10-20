@@ -4,9 +4,9 @@ import UserApplication
 
 extension AdminAPIGateway {
 
-    public func userRoleRemove(
-        _ input: Operations.UserRoleRemove.Input
-    ) async throws -> Operations.UserRoleRemove.Output {
+    public func userRoleDelete(
+        _ input: Operations.UserRoleDelete.Input
+    ) async throws -> Operations.UserRoleDelete.Output {
         let body: Components.Schemas.DeleteRequestSchema
         switch input.body {
         case .json(let value):

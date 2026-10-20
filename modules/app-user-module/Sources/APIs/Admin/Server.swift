@@ -26,7 +26,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userIdentityCreate(
+                try await server.userIdentityPost(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -37,7 +37,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userIdentityRemove(
+                try await server.userIdentityDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -81,7 +81,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userIdentityUpdate(
+                try await server.userIdentityPut(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -92,7 +92,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userRoleCreate(
+                try await server.userRolePost(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -103,7 +103,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userRoleRemove(
+                try await server.userRoleDelete(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -147,7 +147,7 @@ extension APIProtocol {
         )
         try transport.register(
             {
-                try await server.userRoleUpdate(
+                try await server.userRolePut(
                     request: $0,
                     body: $1,
                     metadata: $2
@@ -165,8 +165,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
     /// Creates a user identity
     ///
     /// - Remark: HTTP `POST /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityCreate)`.
-    func userIdentityCreate(
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityPost)`.
+    func userIdentityPost(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -175,12 +175,12 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.UserIdentityCreate.id,
+            forOperation: Operations.UserIdentityPost.id,
             using: {
-                APIHandler.userIdentityCreate($0)
+                APIHandler.userIdentityPost($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.UserIdentityCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.UserIdentityPost.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.UserIdentityCreateRequestBody
                 let chosenContentType = try converter.bestContentType(
@@ -201,7 +201,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.UserIdentityCreate.Input(
+                return Operations.UserIdentityPost.Input(
                     headers: headers,
                     body: body
                 )
@@ -269,8 +269,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)`.
-    func userIdentityRemove(
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)`.
+    func userIdentityDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -279,12 +279,12 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.UserIdentityRemove.id,
+            forOperation: Operations.UserIdentityDelete.id,
             using: {
-                APIHandler.userIdentityRemove($0)
+                APIHandler.userIdentityDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.UserIdentityRemove.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.UserIdentityDelete.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
@@ -305,7 +305,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.UserIdentityRemove.Input(
+                return Operations.UserIdentityDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -725,8 +725,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `PUT /api/v1/admin/user/identities/{userIdentityId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityUpdate)`.
-    func userIdentityUpdate(
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityPut)`.
+    func userIdentityPut(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -735,17 +735,17 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.UserIdentityUpdate.id,
+            forOperation: Operations.UserIdentityPut.id,
             using: {
-                APIHandler.userIdentityUpdate($0)
+                APIHandler.userIdentityPut($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.UserIdentityUpdate.Input.Path = .init(userIdentityId: try converter.getPathParameterAsURI(
+                let path: Operations.UserIdentityPut.Input.Path = .init(userIdentityId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
                     name: "userIdentityId",
                     as: Components.Parameters.UserIdentityIdParameter.self
                 ))
-                let headers: Operations.UserIdentityUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.UserIdentityPut.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.UserIdentityUpdateRequestBody
                 let chosenContentType = try converter.bestContentType(
@@ -766,7 +766,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.UserIdentityUpdate.Input(
+                return Operations.UserIdentityPut.Input(
                     path: path,
                     headers: headers,
                     body: body
@@ -853,8 +853,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRoleCreate)`.
-    func userRoleCreate(
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRolePost)`.
+    func userRolePost(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -863,12 +863,12 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.UserRoleCreate.id,
+            forOperation: Operations.UserRolePost.id,
             using: {
-                APIHandler.userRoleCreate($0)
+                APIHandler.userRolePost($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.UserRoleCreate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.UserRolePost.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.UserRoleRequestBody
                 let chosenContentType = try converter.bestContentType(
@@ -889,7 +889,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.UserRoleCreate.Input(
+                return Operations.UserRolePost.Input(
                     headers: headers,
                     body: body
                 )
@@ -957,8 +957,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)`.
-    func userRoleRemove(
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)`.
+    func userRoleDelete(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -967,12 +967,12 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.UserRoleRemove.id,
+            forOperation: Operations.UserRoleDelete.id,
             using: {
-                APIHandler.userRoleRemove($0)
+                APIHandler.userRoleDelete($0)
             },
             deserializer: { request, requestBody, metadata in
-                let headers: Operations.UserRoleRemove.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.UserRoleDelete.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.DeleteRequestBody
                 let chosenContentType = try converter.bestContentType(
@@ -993,7 +993,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.UserRoleRemove.Input(
+                return Operations.UserRoleDelete.Input(
                     headers: headers,
                     body: body
                 )
@@ -1413,8 +1413,8 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
         )
     }
     /// - Remark: HTTP `PUT /api/v1/admin/user/roles/{userRoleId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRoleUpdate)`.
-    func userRoleUpdate(
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRolePut)`.
+    func userRolePut(
         request: HTTPTypes.HTTPRequest,
         body: OpenAPIRuntime.HTTPBody?,
         metadata: OpenAPIRuntime.ServerRequestMetadata
@@ -1423,17 +1423,17 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
             request: request,
             requestBody: body,
             metadata: metadata,
-            forOperation: Operations.UserRoleUpdate.id,
+            forOperation: Operations.UserRolePut.id,
             using: {
-                APIHandler.userRoleUpdate($0)
+                APIHandler.userRolePut($0)
             },
             deserializer: { request, requestBody, metadata in
-                let path: Operations.UserRoleUpdate.Input.Path = .init(userRoleId: try converter.getPathParameterAsURI(
+                let path: Operations.UserRolePut.Input.Path = .init(userRoleId: try converter.getPathParameterAsURI(
                     in: metadata.pathParameters,
                     name: "userRoleId",
                     as: Components.Parameters.RoleParametersID.self
                 ))
-                let headers: Operations.UserRoleUpdate.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
+                let headers: Operations.UserRolePut.Input.Headers = .init(accept: try converter.extractAcceptHeaderIfPresent(in: request.headerFields))
                 let contentType = converter.extractContentTypeIfPresent(in: request.headerFields)
                 let body: Components.RequestBodies.UserRoleUpdateRequestBody
                 let chosenContentType = try converter.bestContentType(
@@ -1454,7 +1454,7 @@ fileprivate extension UniversalServer where APIHandler: APIProtocol {
                 default:
                     preconditionFailure("bestContentType chose an invalid content type.")
                 }
-                return Operations.UserRoleUpdate.Input(
+                return Operations.UserRolePut.Input(
                     path: path,
                     headers: headers,
                     body: body

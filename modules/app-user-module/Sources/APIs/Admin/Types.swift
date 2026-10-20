@@ -10,11 +10,11 @@ public protocol APIProtocol: Sendable {
     /// Creates a user identity
     ///
     /// - Remark: HTTP `POST /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityCreate)`.
-    func userIdentityCreate(_ input: Operations.UserIdentityCreate.Input) async throws -> Operations.UserIdentityCreate.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityPost)`.
+    func userIdentityPost(_ input: Operations.UserIdentityPost.Input) async throws -> Operations.UserIdentityPost.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)`.
-    func userIdentityRemove(_ input: Operations.UserIdentityRemove.Input) async throws -> Operations.UserIdentityRemove.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)`.
+    func userIdentityDelete(_ input: Operations.UserIdentityDelete.Input) async throws -> Operations.UserIdentityDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/user/identities/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/query/post(userIdentityQuery)`.
     func userIdentityQuery(_ input: Operations.UserIdentityQuery.Input) async throws -> Operations.UserIdentityQuery.Output
@@ -25,14 +25,14 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/patch(userIdentityPatch)`.
     func userIdentityPatch(_ input: Operations.UserIdentityPatch.Input) async throws -> Operations.UserIdentityPatch.Output
     /// - Remark: HTTP `PUT /api/v1/admin/user/identities/{userIdentityId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityUpdate)`.
-    func userIdentityUpdate(_ input: Operations.UserIdentityUpdate.Input) async throws -> Operations.UserIdentityUpdate.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityPut)`.
+    func userIdentityPut(_ input: Operations.UserIdentityPut.Input) async throws -> Operations.UserIdentityPut.Output
     /// - Remark: HTTP `POST /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRoleCreate)`.
-    func userRoleCreate(_ input: Operations.UserRoleCreate.Input) async throws -> Operations.UserRoleCreate.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRolePost)`.
+    func userRolePost(_ input: Operations.UserRolePost.Input) async throws -> Operations.UserRolePost.Output
     /// - Remark: HTTP `DELETE /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)`.
-    func userRoleRemove(_ input: Operations.UserRoleRemove.Input) async throws -> Operations.UserRoleRemove.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)`.
+    func userRoleDelete(_ input: Operations.UserRoleDelete.Input) async throws -> Operations.UserRoleDelete.Output
     /// - Remark: HTTP `POST /api/v1/admin/user/roles/query`.
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/query/post(userRoleQuery)`.
     func userRoleQuery(_ input: Operations.UserRoleQuery.Input) async throws -> Operations.UserRoleQuery.Output
@@ -43,8 +43,8 @@ public protocol APIProtocol: Sendable {
     /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/patch(userRolePatch)`.
     func userRolePatch(_ input: Operations.UserRolePatch.Input) async throws -> Operations.UserRolePatch.Output
     /// - Remark: HTTP `PUT /api/v1/admin/user/roles/{userRoleId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRoleUpdate)`.
-    func userRoleUpdate(_ input: Operations.UserRoleUpdate.Input) async throws -> Operations.UserRoleUpdate.Output
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRolePut)`.
+    func userRolePut(_ input: Operations.UserRolePut.Input) async throws -> Operations.UserRolePut.Output
 }
 
 /// Convenience overloads for operation inputs.
@@ -54,23 +54,23 @@ extension APIProtocol {
     /// Creates a user identity
     ///
     /// - Remark: HTTP `POST /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityCreate)`.
-    public func userIdentityCreate(
-        headers: Operations.UserIdentityCreate.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityPost)`.
+    public func userIdentityPost(
+        headers: Operations.UserIdentityPost.Input.Headers = .init(),
         body: Components.RequestBodies.UserIdentityCreateRequestBody
-    ) async throws -> Operations.UserIdentityCreate.Output {
-        try await userIdentityCreate(Operations.UserIdentityCreate.Input(
+    ) async throws -> Operations.UserIdentityPost.Output {
+        try await userIdentityPost(Operations.UserIdentityPost.Input(
             headers: headers,
             body: body
         ))
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)`.
-    public func userIdentityRemove(
-        headers: Operations.UserIdentityRemove.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)`.
+    public func userIdentityDelete(
+        headers: Operations.UserIdentityDelete.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.UserIdentityRemove.Output {
-        try await userIdentityRemove(Operations.UserIdentityRemove.Input(
+    ) async throws -> Operations.UserIdentityDelete.Output {
+        try await userIdentityDelete(Operations.UserIdentityDelete.Input(
             headers: headers,
             body: body
         ))
@@ -113,36 +113,36 @@ extension APIProtocol {
         ))
     }
     /// - Remark: HTTP `PUT /api/v1/admin/user/identities/{userIdentityId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityUpdate)`.
-    public func userIdentityUpdate(
-        path: Operations.UserIdentityUpdate.Input.Path,
-        headers: Operations.UserIdentityUpdate.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityPut)`.
+    public func userIdentityPut(
+        path: Operations.UserIdentityPut.Input.Path,
+        headers: Operations.UserIdentityPut.Input.Headers = .init(),
         body: Components.RequestBodies.UserIdentityUpdateRequestBody
-    ) async throws -> Operations.UserIdentityUpdate.Output {
-        try await userIdentityUpdate(Operations.UserIdentityUpdate.Input(
+    ) async throws -> Operations.UserIdentityPut.Output {
+        try await userIdentityPut(Operations.UserIdentityPut.Input(
             path: path,
             headers: headers,
             body: body
         ))
     }
     /// - Remark: HTTP `POST /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRoleCreate)`.
-    public func userRoleCreate(
-        headers: Operations.UserRoleCreate.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRolePost)`.
+    public func userRolePost(
+        headers: Operations.UserRolePost.Input.Headers = .init(),
         body: Components.RequestBodies.UserRoleRequestBody
-    ) async throws -> Operations.UserRoleCreate.Output {
-        try await userRoleCreate(Operations.UserRoleCreate.Input(
+    ) async throws -> Operations.UserRolePost.Output {
+        try await userRolePost(Operations.UserRolePost.Input(
             headers: headers,
             body: body
         ))
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)`.
-    public func userRoleRemove(
-        headers: Operations.UserRoleRemove.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)`.
+    public func userRoleDelete(
+        headers: Operations.UserRoleDelete.Input.Headers = .init(),
         body: Components.RequestBodies.DeleteRequestBody
-    ) async throws -> Operations.UserRoleRemove.Output {
-        try await userRoleRemove(Operations.UserRoleRemove.Input(
+    ) async throws -> Operations.UserRoleDelete.Output {
+        try await userRoleDelete(Operations.UserRoleDelete.Input(
             headers: headers,
             body: body
         ))
@@ -185,13 +185,13 @@ extension APIProtocol {
         ))
     }
     /// - Remark: HTTP `PUT /api/v1/admin/user/roles/{userRoleId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRoleUpdate)`.
-    public func userRoleUpdate(
-        path: Operations.UserRoleUpdate.Input.Path,
-        headers: Operations.UserRoleUpdate.Input.Headers = .init(),
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRolePut)`.
+    public func userRolePut(
+        path: Operations.UserRolePut.Input.Path,
+        headers: Operations.UserRolePut.Input.Headers = .init(),
         body: Components.RequestBodies.UserRoleUpdateRequestBody
-    ) async throws -> Operations.UserRoleUpdate.Output {
-        try await userRoleUpdate(Operations.UserRoleUpdate.Input(
+    ) async throws -> Operations.UserRolePut.Output {
+        try await userRolePut(Operations.UserRolePut.Input(
             path: path,
             headers: headers,
             body: body

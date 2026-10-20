@@ -36,11 +36,11 @@ public struct Client: APIProtocol {
     /// Creates a user identity
     ///
     /// - Remark: HTTP `POST /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityCreate)`.
-    public func userIdentityCreate(_ input: Operations.UserIdentityCreate.Input) async throws -> Operations.UserIdentityCreate.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/post(userIdentityPost)`.
+    public func userIdentityPost(_ input: Operations.UserIdentityPost.Input) async throws -> Operations.UserIdentityPost.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.UserIdentityCreate.id,
+            forOperation: Operations.UserIdentityPost.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/user/identities",
@@ -92,7 +92,7 @@ public struct Client: APIProtocol {
                     return .created(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.UserIdentityCreate.Output.Unauthorized.Body
+                    let body: Operations.UserIdentityPost.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -114,7 +114,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.UserIdentityCreate.Output.Forbidden.Body
+                    let body: Operations.UserIdentityPost.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -147,11 +147,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/identities`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityRemove)`.
-    public func userIdentityRemove(_ input: Operations.UserIdentityRemove.Input) async throws -> Operations.UserIdentityRemove.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/delete(userIdentityDelete)`.
+    public func userIdentityDelete(_ input: Operations.UserIdentityDelete.Input) async throws -> Operations.UserIdentityDelete.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.UserIdentityRemove.id,
+            forOperation: Operations.UserIdentityDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/user/identities",
@@ -183,7 +183,7 @@ public struct Client: APIProtocol {
                     return .noContent(.init())
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.UserIdentityRemove.Output.Unauthorized.Body
+                    let body: Operations.UserIdentityDelete.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -205,7 +205,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.UserIdentityRemove.Output.Forbidden.Body
+                    let body: Operations.UserIdentityDelete.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -639,11 +639,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `PUT /api/v1/admin/user/identities/{userIdentityId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityUpdate)`.
-    public func userIdentityUpdate(_ input: Operations.UserIdentityUpdate.Input) async throws -> Operations.UserIdentityUpdate.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/identities/{userIdentityId}/put(userIdentityPut)`.
+    public func userIdentityPut(_ input: Operations.UserIdentityPut.Input) async throws -> Operations.UserIdentityPut.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.UserIdentityUpdate.id,
+            forOperation: Operations.UserIdentityPut.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/user/identities/{}",
@@ -697,7 +697,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.UserIdentityUpdate.Output.NotFound.Body
+                    let body: Operations.UserIdentityPut.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -719,7 +719,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.UserIdentityUpdate.Output.Unauthorized.Body
+                    let body: Operations.UserIdentityPut.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -741,7 +741,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.UserIdentityUpdate.Output.Forbidden.Body
+                    let body: Operations.UserIdentityPut.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -774,11 +774,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `POST /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRoleCreate)`.
-    public func userRoleCreate(_ input: Operations.UserRoleCreate.Input) async throws -> Operations.UserRoleCreate.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/post(userRolePost)`.
+    public func userRolePost(_ input: Operations.UserRolePost.Input) async throws -> Operations.UserRolePost.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.UserRoleCreate.id,
+            forOperation: Operations.UserRolePost.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/user/roles",
@@ -830,7 +830,7 @@ public struct Client: APIProtocol {
                     return .created(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.UserRoleCreate.Output.Unauthorized.Body
+                    let body: Operations.UserRolePost.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -852,7 +852,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.UserRoleCreate.Output.Forbidden.Body
+                    let body: Operations.UserRolePost.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -885,11 +885,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `DELETE /api/v1/admin/user/roles`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleRemove)`.
-    public func userRoleRemove(_ input: Operations.UserRoleRemove.Input) async throws -> Operations.UserRoleRemove.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/delete(userRoleDelete)`.
+    public func userRoleDelete(_ input: Operations.UserRoleDelete.Input) async throws -> Operations.UserRoleDelete.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.UserRoleRemove.id,
+            forOperation: Operations.UserRoleDelete.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/user/roles",
@@ -921,7 +921,7 @@ public struct Client: APIProtocol {
                     return .noContent(.init())
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.UserRoleRemove.Output.Unauthorized.Body
+                    let body: Operations.UserRoleDelete.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -943,7 +943,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.UserRoleRemove.Output.Forbidden.Body
+                    let body: Operations.UserRoleDelete.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1377,11 +1377,11 @@ public struct Client: APIProtocol {
         )
     }
     /// - Remark: HTTP `PUT /api/v1/admin/user/roles/{userRoleId}`.
-    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRoleUpdate)`.
-    public func userRoleUpdate(_ input: Operations.UserRoleUpdate.Input) async throws -> Operations.UserRoleUpdate.Output {
+    /// - Remark: Generated from `#/paths//api/v1/admin/user/roles/{userRoleId}/put(userRolePut)`.
+    public func userRolePut(_ input: Operations.UserRolePut.Input) async throws -> Operations.UserRolePut.Output {
         try await client.send(
             input: input,
-            forOperation: Operations.UserRoleUpdate.id,
+            forOperation: Operations.UserRolePut.id,
             serializer: { input in
                 let path = try converter.renderedPath(
                     template: "/api/v1/admin/user/roles/{}",
@@ -1435,7 +1435,7 @@ public struct Client: APIProtocol {
                     return .ok(.init(body: body))
                 case 404:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.UserRoleUpdate.Output.NotFound.Body
+                    let body: Operations.UserRolePut.Output.NotFound.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1457,7 +1457,7 @@ public struct Client: APIProtocol {
                     return .notFound(.init(body: body))
                 case 401:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.UserRoleUpdate.Output.Unauthorized.Body
+                    let body: Operations.UserRolePut.Output.Unauthorized.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [
@@ -1479,7 +1479,7 @@ public struct Client: APIProtocol {
                     return .unauthorized(.init(body: body))
                 case 403:
                     let contentType = converter.extractContentTypeIfPresent(in: response.headerFields)
-                    let body: Operations.UserRoleUpdate.Output.Forbidden.Body
+                    let body: Operations.UserRolePut.Output.Forbidden.Body
                     let chosenContentType = try converter.bestContentType(
                         received: contentType,
                         options: [

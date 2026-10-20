@@ -2,12 +2,14 @@ import FeatherDomain
 import FeatherModuleKit
 public import UserAdminAPI
 import UserApplication
+import UserDomain
+import UserModule
 
 extension AdminAPIGateway {
 
-    public func userRoleUpdate(
-        _ input: Operations.UserRoleUpdate.Input
-    ) async throws -> Operations.UserRoleUpdate.Output {
+    public func userRolePut(
+        _ input: Operations.UserRolePut.Input
+    ) async throws -> Operations.UserRolePut.Output {
         let body: Components.Schemas.UserRoleUpdateSchema
         switch input.body {
         case .json(let value):
@@ -27,8 +29,19 @@ extension AdminAPIGateway {
 
         return .ok(
             .init(
-                body: .json(map(result))
+                body: .json(roleDetailSchema(from: result))
             )
         )
     }
+}
+
+private func roleDetailSchema(
+    from output: Role.Detail.Output
+) -> Components.Schemas.UserRoleDetailSchema {
+    .init(
+        id: output.id,
+        key: output.key,
+        name: output.name,
+        notes: output.notes
+    )
 }

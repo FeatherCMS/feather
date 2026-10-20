@@ -1,6 +1,8 @@
+import FeatherApplication
 import FeatherModuleKit
 public import UserAdminAPI
 import UserApplication
+import UserModule
 
 extension AdminAPIGateway {
 
@@ -15,7 +17,7 @@ extension AdminAPIGateway {
 
         let subject = try await CurrentSubject.require()
         let useCase = useCases.makeSearchRoles()
-        let objectQuery = map(query)
+        let objectQuery = roleSearchInput(from: query)
 
         let result = try await useCase.execute(
             subject: subject,
@@ -28,7 +30,9 @@ extension AdminAPIGateway {
                     .init(
                         query: mapResponse(query),
                         data: .init(
-                            items: result.items.map(map),
+                            items: result.items.map {
+                                roleSearchItemSchema(from: $0)
+                            },
                             total: result.total
                         )
                     )
@@ -55,4 +59,33 @@ private func mapResponse(
             },
         filters: .init(search: query.filters.search)
     )
+}
+
+private func roleSearchInput(
+    from query: Components.Schemas.UserRoleListItemSearchRequestQuerySchema
+) -> Role.Search.Input.Query {
+    .init(
+        page: .init(
+            size: query.page?.size ?? 20,
+            number: query.page?.number ?? 1
+        ),
+        sort: (query.sort ?? [])
+            .map { rule in
+                let direction: Search.SortDirection
+                switch rule.direction {
+                case .asc:
+                    direction = .asc
+                case .desc:
+                    direction = .desc
+                }
+                return .init(field: .id, direction: direction)
+            },
+        search: query.filters.search
+    )
+}
+
+private func roleSearchItemSchema(
+    from item: Role.Search.Output.Item
+) -> Components.Schemas.UserRoleListItemSchema {
+    .init(id: item.id, key: item.key, name: item.name)
 }

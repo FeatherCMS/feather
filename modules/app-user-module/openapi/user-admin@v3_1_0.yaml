@@ -18,7 +18,7 @@ paths:
       - UserIdentities
       summary: Create user identity
       description: Creates a user identity
-      operationId: userIdentityCreate
+      operationId: userIdentityPost
       requestBody:
         $ref: '#/components/requestBodies/UserIdentityCreateRequestBody'
       responses:
@@ -41,7 +41,7 @@ paths:
     delete:
       tags:
       - UserIdentities
-      operationId: userIdentityRemove
+      operationId: userIdentityDelete
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -122,7 +122,7 @@ paths:
     put:
       tags:
       - UserIdentities
-      operationId: userIdentityUpdate
+      operationId: userIdentityPut
       parameters:
       - $ref: '#/components/parameters/UserIdentityIdParameter'
       requestBody:
@@ -192,7 +192,7 @@ paths:
     post:
       tags:
       - UserRoles
-      operationId: userRoleCreate
+      operationId: userRolePost
       requestBody:
         $ref: '#/components/requestBodies/UserRoleRequestBody'
       responses:
@@ -215,7 +215,7 @@ paths:
     delete:
       tags:
       - UserRoles
-      operationId: userRoleRemove
+      operationId: userRoleDelete
       requestBody:
         $ref: '#/components/requestBodies/DeleteRequestBody'
       responses:
@@ -296,7 +296,7 @@ paths:
     put:
       tags:
       - UserRoles
-      operationId: userRoleUpdate
+      operationId: userRolePut
       parameters:
       - $ref: '#/components/parameters/RoleParametersID'
       requestBody:

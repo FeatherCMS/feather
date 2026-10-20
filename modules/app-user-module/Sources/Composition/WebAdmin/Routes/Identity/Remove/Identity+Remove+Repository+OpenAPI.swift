@@ -40,7 +40,7 @@ extension Identity.Remove.Repository {
             ids: [String]
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.userIdentityRemove(
+                let response = try await client.userIdentityDelete(
                     body: .json(.init(ids: ids))
                 )
                 switch response {

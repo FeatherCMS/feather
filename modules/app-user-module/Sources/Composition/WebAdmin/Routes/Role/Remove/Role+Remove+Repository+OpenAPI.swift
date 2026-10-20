@@ -40,7 +40,7 @@ extension Role.Remove.Repository {
             ids: [String]
         ) async throws {
             try await api.withOpenAPIRepositoryErrorMapping { client in
-                let response = try await client.userRoleRemove(
+                let response = try await client.userRoleDelete(
                     body: .json(.init(ids: ids))
                 )
                 switch response {

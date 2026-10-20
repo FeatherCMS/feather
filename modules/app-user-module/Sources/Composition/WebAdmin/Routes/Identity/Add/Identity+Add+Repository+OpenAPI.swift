@@ -13,7 +13,7 @@ extension Identity.Add.Repository {
             try await api.withOpenAPIRepositoryErrorMapping { client in
                 let response =
                     try await client
-                    .userIdentityCreate(
+                    .userIdentityPost(
                         headers: .init(accept: [.init(contentType: .json)]),
                         body: .json(
                             .init(
