@@ -6,6 +6,11 @@ import WebBuilders
 import WebComponents
 
 struct ContactFormForm: Component {
+    enum Mode: Equatable {
+        case details
+        case fields
+    }
+
     struct State: FeatherAdmin.Object {
         var key: String
         var name: String
@@ -23,6 +28,7 @@ struct ContactFormForm: Component {
     var action: String
     var submitLabel: String
     var isReadOnly: Bool = false
+    var mode: Mode = .details
 
     func selectors() -> [any Selector] {
         [
@@ -114,68 +120,66 @@ struct ContactFormForm: Component {
             if let error = state.error {
                 P(error).class("new-admin-form__error")
             }
-            context.build(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: "key",
-                        label: "Key",
-                        value: state.key,
-                        isRequired: true,
-                        isReadOnly: isReadOnly
+            if mode == .details {
+                context.build(
+                    NewAdminFormFieldInput(
+                        state: .init(
+                            name: "key",
+                            label: "Key",
+                            value: state.key,
+                            isRequired: true,
+                            isReadOnly: isReadOnly
+                        )
                     )
                 )
-            )
-            context.build(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: "name",
-                        label: "Name",
-                        value: state.name,
-                        isRequired: true,
-                        isReadOnly: isReadOnly
+                context.build(
+                    NewAdminFormFieldInput(
+                        state: .init(
+                            name: "name",
+                            label: "Name",
+                            value: state.name,
+                            isRequired: true,
+                            isReadOnly: isReadOnly
+                        )
                     )
                 )
-            )
-            context.build(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: "successMessage",
-                        label: "Success message",
-                        value: state.successMessage,
-                        help: "Shown after a successful submission.",
-                        isReadOnly: isReadOnly
+                context.build(
+                    NewAdminFormFieldInput(
+                        state: .init(
+                            name: "successMessage",
+                            label: "Success message",
+                            value: state.successMessage,
+                            help: "Shown after a successful submission.",
+                            isReadOnly: isReadOnly
+                        )
                     )
                 )
-            )
-            context.build(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: "failureMessage",
-                        label: "Failure message",
-                        value: state.failureMessage,
-                        help: "Shown when a submission cannot be processed.",
-                        isReadOnly: isReadOnly
+                context.build(
+                    NewAdminFormFieldInput(
+                        state: .init(
+                            name: "failureMessage",
+                            label: "Failure message",
+                            value: state.failureMessage,
+                            help:
+                                "Shown when a submission cannot be processed.",
+                            isReadOnly: isReadOnly
+                        )
                     )
                 )
-            )
-            context.build(
-                NewAdminFormFieldInput(
-                    state: .init(
-                        name: "redirectUrl",
-                        label: "Redirect URL",
-                        value: state.redirectUrl ?? "",
-                        help: "Optional URL to use after submission.",
-                        isReadOnly: isReadOnly
+                context.build(
+                    NewAdminFormFieldInput(
+                        state: .init(
+                            name: "redirectUrl",
+                            label: "Redirect URL",
+                            value: state.redirectUrl ?? "",
+                            help: "Optional URL to use after submission.",
+                            isReadOnly: isReadOnly
+                        )
                     )
                 )
-            )
-            if !state.availableFields.isEmpty {
+            }
+            if mode == .fields, !state.availableFields.isEmpty {
                 Section {
-                    H3("Fields").class("contact-form-field-group-title")
-                    P(
-                        "Choose fields and drag selected fields to set their order."
-                    )
-                    .class("contact-form-field-group-help")
                     Div {
                         Div {
                             H4("Selected fields")
@@ -195,24 +199,29 @@ struct ContactFormForm: Component {
                             )
                         }
                         .class("contact-form-field-group")
-                        Div {
-                            H4("Available fields")
-                                .class("contact-form-field-group-title")
-                            Div {
-                                for field in availableUnselectedFields {
-                                    fieldRow(
-                                        field: field,
-                                        isSelected: false,
-                                        context: &context
-                                    )
+                        context.build(
+                            NewAdminFormGroup(
+                                id:
+                                    "contact-form-available-fields-\(state.key)",
+                                title:
+                                    "Available fields (\(availableUnselectedFields.count))",
+                                isOpen: false
+                            ) {
+                                Div {
+                                    for field in availableUnselectedFields {
+                                        fieldRow(
+                                            field: field,
+                                            isSelected: false,
+                                            context: &context
+                                        )
+                                    }
                                 }
+                                .class(
+                                    "contact-form-field-list",
+                                    "contact-form-available-fields"
+                                )
                             }
-                            .class(
-                                "contact-form-field-list",
-                                "contact-form-available-fields"
-                            )
-                        }
-                        .class("contact-form-field-group")
+                        )
                     }
                     .class("contact-form-field-picker")
                 }
@@ -220,7 +229,9 @@ struct ContactFormForm: Component {
             if !isReadOnly {
                 Div { context.build(NewAdminSubmitButton(submitLabel)) }
                     .class("new-admin-form__actions")
-                Script(reorderScript())
+                if mode == .fields {
+                    Script(reorderScript())
+                }
             }
         }
         return context.build(form)

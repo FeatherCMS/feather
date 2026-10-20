@@ -59,6 +59,7 @@ enum ContactAdminRoutes {
 
     static let formDetailsRoute = formDetails(formKey)
     static let formEditRoute = formEdit(formKey)
+    static let formFieldsRoute = formFields(formKey)
     static let formEmailsRoute = formEmails(formKey)
     static let formEmailAddRoute = formEmailAdd(formKey)
     static let formEmailEditRoute = formEmailEdit(
@@ -91,6 +92,10 @@ enum ContactAdminRoutes {
 
     static func formEdit(_ id: RouterPath) -> RouterPath {
         forms.appendingPath(id).appendingPath(RouterPath("edit"))
+    }
+
+    static func formFields(_ id: RouterPath) -> RouterPath {
+        forms.appendingPath(id).appendingPath(RouterPath("fields"))
     }
 
     static func fieldRemove(_ id: RouterPath) -> RouterPath {

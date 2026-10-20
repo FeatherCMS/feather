@@ -10,6 +10,8 @@ import WebComponents
 
 struct ContactFieldsTableContent: Component {
     let fields: [AdminContactFieldRow]
+    let forms: [AdminContactFormFilterOption]
+    let formKey: String?
     let pageState: NewAdminListPageState
     let search: String
     let permissions: NewAdminListActions
@@ -18,7 +20,8 @@ struct ContactFieldsTableContent: Component {
         let returnTo = NewAdminLocation.url(
             path: ContactAdminRoutes.fields.description,
             page: pageState.page,
-            search: search
+            search: search,
+            queryItems: formKey.map { [("form", $0)] } ?? []
         )
         return context.build(
             NewAdminList(
@@ -34,12 +37,16 @@ struct ContactFieldsTableContent: Component {
                     else if fields.isEmpty {
                         context.build(
                             NewAdminListEmptyState(
-                                message: search.isEmpty
+                                message: search.isEmpty && formKey == nil
                                     ? "No contact form fields yet."
-                                    : "No contact form fields match your search.",
+                                    : formKey == nil
+                                        ? "No contact form fields match your search."
+                                        : search.isEmpty
+                                            ? "This form has no assigned fields."
+                                            : "No assigned fields match your search.",
                                 icon: FeatherIcons.inbox(),
                                 action: {
-                                    if search.isEmpty {
+                                    if search.isEmpty && formKey == nil {
                                         if permissions.allows(
                                             ContactPermissions.Fields.create
                                         ) {
@@ -52,12 +59,17 @@ struct ContactFieldsTableContent: Component {
                                             )
                                         }
                                     }
-                                    else {
+                                    else if !search.isEmpty {
                                         context.build(
                                             NewAdminButton(
                                                 "Reset search",
-                                                href: ContactAdminRoutes.fields
-                                                    .description,
+                                                href: NewAdminLocation.url(
+                                                    path: ContactAdminRoutes
+                                                        .fields.description,
+                                                    queryItems: formKey.map {
+                                                        [("form", $0)]
+                                                    } ?? []
+                                                ),
                                                 style: .secondary
                                             )
                                         )
@@ -228,8 +240,34 @@ struct ContactFieldsTableContent: Component {
                             state: .init(
                                 action: ContactAdminRoutes.fields.description,
                                 placeholder: "Quick search contact fields",
-                                search: search
-                            )
+                                search: search,
+                                resetPath: NewAdminLocation.url(
+                                    path: ContactAdminRoutes.fields.description,
+                                    queryItems: formKey.map { [("form", $0)] }
+                                        ?? []
+                                )
+                            ),
+                            additionalFields: {
+                                Label {
+                                    Span("Form").class("visually-hidden")
+                                    Select {
+                                        Option("All forms").value("")
+                                            .if(formKey == nil) {
+                                                $0.selected()
+                                            }
+                                        for form in forms {
+                                            Option(form.name)
+                                                .value(form.key)
+                                                .if(form.key == formKey) {
+                                                    $0.selected()
+                                                }
+                                        }
+                                    }
+                                    .name("form")
+                                    .ariaLabel("Filter fields by form")
+                                    .class("form-filter-select")
+                                }
+                            }
                         )
                     )
                 },
@@ -254,7 +292,10 @@ struct ContactFieldsTableContent: Component {
                             state: .init(
                                 path: ContactAdminRoutes.fields.description,
                                 pageState: pageState,
-                                search: search
+                                search: search,
+                                queryItems: formKey.map {
+                                    [.init(name: "form", value: $0)]
+                                } ?? []
                             )
                         )
                     )

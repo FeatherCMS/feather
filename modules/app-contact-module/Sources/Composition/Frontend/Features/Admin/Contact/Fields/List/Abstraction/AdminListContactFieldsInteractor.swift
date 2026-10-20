@@ -8,5 +8,5 @@ import WebBuilders
 import WebComponents
 
 protocol AdminListContactFieldsInteractor: Sendable {
-    func list() async throws -> [AdminContactFieldRow]
+    func list(formKey: String?) async throws -> AdminContactFieldsList
 }

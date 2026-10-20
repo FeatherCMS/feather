@@ -13,6 +13,7 @@ struct ContactFieldAddPage: Component {
         let allowedValues: [String]
         let isRequired: Bool
         let position: String
+        let formKey: String?
         let error: String?
         let fieldErrors: [String: String]
         let breadcrumb: [NewAdminBreadcrumb.Link]
@@ -43,7 +44,10 @@ struct ContactFieldAddPage: Component {
                         isRequired: state.isRequired,
                         position: state.position
                     ),
-                    action: ContactAdminRoutes.fieldAdd.description,
+                    action: NewAdminLocation.url(
+                        path: ContactAdminRoutes.fieldAdd.description,
+                        queryItems: state.formKey.map { [("form", $0)] } ?? []
+                    ),
                     submitLabel: "Add field",
                     error: state.error,
                     fieldErrors: state.fieldErrors
