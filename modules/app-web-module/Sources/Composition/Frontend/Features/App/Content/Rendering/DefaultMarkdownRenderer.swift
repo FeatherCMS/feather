@@ -118,9 +118,9 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
         _ markup: any Markup,
         renderers: [any WebMarkdownBlockRenderer],
         context: WebMarkdownRenderingContext
-    ) async -> (html: String, usesFormSubmissionNonce: Bool) {
+    ) async -> (html: String, usesFormSubmissionNonce: Bool, node: WebMarkdownBlockRendererRequest.Child?) {
         guard let directive = markup as? BlockDirective else {
-            return (HTMLFormatter.format(markup), false)
+            return (HTMLFormatter.format(markup), false, nil)
         }
 
         let arguments = directiveArguments(from: directive.argumentText)
@@ -136,22 +136,15 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
                 childUsesFormSubmissionNonce =
                     childUsesFormSubmissionNonce
                     || rendered.usesFormSubmissionNonce
-                children.append(
-                    .init(
-                        name: childDirective.name,
-                        arguments: directiveArguments(
-                            from: childDirective.argumentText
-                        ),
-                        html: rendered.html
-                    )
-                )
+                if let node = rendered.node { children.append(node) }
                 continue
             }
             children.append(
                 .init(
                     name: "",
                     arguments: [:],
-                    html: HTMLFormatter.format(child)
+                    html: HTMLFormatter.format(child),
+                    children: []
                 )
             )
         }
@@ -170,19 +163,23 @@ public struct DefaultMarkdownRenderer: WebContentRenderer {
             if directive.name.caseInsensitiveCompare("Cell") == .orderedSame {
                 return (
                     children.map { $0.html }.joined(),
-                    childUsesFormSubmissionNonce
+                    childUsesFormSubmissionNonce,
+                    .init(name: directive.name, arguments: arguments, html: children.map { $0.html }.joined(), children: children)
                 )
             }
-            return (HTMLFormatter.format(markup), false)
+            let html = HTMLFormatter.format(markup)
+            return (html, false, .init(name: directive.name, arguments: arguments, html: html, children: children))
         }
         guard let html = await renderer.render(request: request) else {
-            return (HTMLFormatter.format(markup), false)
+            let html = HTMLFormatter.format(markup)
+            return (html, false, .init(name: directive.name, arguments: arguments, html: html, children: children))
         }
         return (
             html,
             childUsesFormSubmissionNonce
                 || (renderer.usesFormSubmissionNonce
-                    && context.formSubmissionNonce != nil)
+                    && context.formSubmissionNonce != nil),
+            .init(name: directive.name, arguments: arguments, html: html, children: children)
         )
     }
 

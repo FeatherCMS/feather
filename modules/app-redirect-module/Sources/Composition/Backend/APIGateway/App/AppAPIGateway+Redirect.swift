@@ -6,8 +6,14 @@ extension AppAPIGateway {
     public func redirectRuleGet(
         _ input: Operations.RedirectRuleGet.Input
     ) async throws -> Operations.RedirectRuleGet.Output {
-        let rule = try await useCases.makeGetPublicRuleBySource()
-            .execute(source: input.query.source)
+        let rule: PublicRedirectRule
+        do {
+            rule = try await useCases.makeGetPublicRuleBySource()
+                .execute(source: input.query.source)
+        } catch GetPublicRuleBySource.Error.notFound {
+            return .notFound(.init())
+        }
+
         return .ok(
             .init(
                 body: .json(

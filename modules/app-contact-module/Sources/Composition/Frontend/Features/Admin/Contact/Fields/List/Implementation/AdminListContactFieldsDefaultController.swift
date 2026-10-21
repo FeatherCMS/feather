@@ -1,5 +1,6 @@
 import ContactContracts
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import Foundation
 import HTML
@@ -28,8 +29,10 @@ struct AdminListContactFieldsDefaultController:
             return try await presenter.renderForbiddenPage()
         }
         let search = request.querySearch() ?? ""
+        let formKey = request.queryString("form")?.whitespaceTrimmed.emptyToNil
         do {
-            let fields = try await interactor.list()
+            let result = try await interactor.list(formKey: formKey)
+            let fields = result.fields
                 .filter {
                     search.isEmpty
                         || $0.key.localizedCaseInsensitiveContains(search)
@@ -37,6 +40,8 @@ struct AdminListContactFieldsDefaultController:
                 }
             return try await presenter.renderList(
                 fields: fields,
+                forms: result.forms,
+                formKey: formKey,
                 search: search,
                 error: nil,
                 permissions: context.currentUserPermissions
@@ -45,6 +50,8 @@ struct AdminListContactFieldsDefaultController:
         catch {
             return try await presenter.renderList(
                 fields: [],
+                forms: [],
+                formKey: formKey,
                 search: search,
                 error: error.displayMessage,
                 permissions: context.currentUserPermissions

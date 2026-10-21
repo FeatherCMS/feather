@@ -11,7 +11,7 @@ struct AdminListContactFieldsDefaultInteractor:
     AdminListContactFieldsInteractor
 {
     let repository: AdminListContactFieldsOpenAPIRepository
-    func list() async throws -> [AdminContactFieldRow] {
-        try await repository.list()
+    func list(formKey: String?) async throws -> AdminContactFieldsList {
+        try await repository.listWithForms(formKey: formKey)
     }
 }

@@ -6,6 +6,8 @@ struct AnalyticsLogOverviewDateField: DoubleSchemaRepresentable {
     var example: Double? = 1_717_171_717
 }
 
+struct AnalyticsLogOverviewDashboardOnlyField: BoolSchemaRepresentable {}
+
 public struct AnalyticsLogOverviewQuerySchema: ObjectSchemaRepresentable {
     public init() {}
 
@@ -14,6 +16,10 @@ public struct AnalyticsLogOverviewQuerySchema: ObjectSchemaRepresentable {
             "source": AnalyticsLogSourceField(),
             "from": AnalyticsLogOverviewDateField(),
             "to": AnalyticsLogOverviewDateField(),
+            "dashboardOnly": AnalyticsLogOverviewDashboardOnlyField()
+                .reference(required: false),
+            "notFoundOnly": AnalyticsLogOverviewDashboardOnlyField()
+                .reference(required: false),
         ]
     }
 }
@@ -35,6 +41,11 @@ struct AnalyticsLogOverviewKPISchema: ObjectSchemaRepresentable {
             "notFoundRequests": AnalyticsLogOverviewKPIIntField(),
             "clientErrorRequests": AnalyticsLogOverviewKPIIntField(),
             "serverErrorRequests": AnalyticsLogOverviewKPIIntField(),
+            "pageViews": AnalyticsLogOverviewKPIIntField(),
+            "searchRequests": AnalyticsLogOverviewKPIIntField(),
+            "botRequests": AnalyticsLogOverviewKPIIntField(),
+            "aiRequests": AnalyticsLogOverviewKPIIntField(),
+            "humanRequests": AnalyticsLogOverviewKPIIntField(),
         ]
     }
 }

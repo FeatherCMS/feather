@@ -23,7 +23,10 @@ struct AdminAddContactFieldDefaultInteractor:
             fieldErrors: [:]
         )
     }
-    func postAddContactField(payload: ContactFieldFormInput)
+    func postAddContactField(
+        payload: ContactFieldFormInput,
+        formKey: String?
+    )
         async throws -> AdminAddContactFieldModel
     {
         if let error = payload.allowedValuesValidationError {
@@ -39,7 +42,10 @@ struct AdminAddContactFieldDefaultInteractor:
             )
         }
         do {
-            try await repository.createField(form: payload)
+            try await repository.createField(
+                form: payload,
+                assignToFormKey: formKey
+            )
             return .init(
                 key: "",
                 type: "text",
@@ -62,6 +68,9 @@ struct AdminAddContactFieldDefaultInteractor:
             case .notFound, .failure, .transport:
                 throw AdminAddContactFieldError.unavailable
             }
+        }
+        catch let error as AdminAddContactFieldError {
+            throw error
         }
     }
 }

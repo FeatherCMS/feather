@@ -17,6 +17,8 @@ struct AdminListContactFieldsDefaultPresenter:
     let renderingEngine: any RenderingEngine
     func renderList(
         fields: [AdminContactFieldRow],
+        forms: [AdminContactFormFilterOption],
+        formKey: String?,
         search: String,
         error: String?,
         permissions: Set<String>
@@ -38,6 +40,8 @@ struct AdminListContactFieldsDefaultPresenter:
             content: ContactFieldsTable(
                 state: .init(
                     fields: pageItems,
+                    forms: forms,
+                    formKey: formKey,
                     pageState: pageState,
                     search: search,
                     error: error,

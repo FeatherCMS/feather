@@ -1,4 +1,6 @@
+import ContactContracts
 import FeatherAdmin
+import FeatherContracts
 import FeatherValidation
 import HTML
 import Hummingbird
@@ -25,6 +27,45 @@ struct AdminEditContactFormDefaultPresenter: AdminEditContactFormPresenter {
         )
     }
 
+    func renderFieldsPage(
+        item: AdminContactFormDetailsItem,
+        error: String?,
+        permissions: Set<String>
+    ) async throws -> HTMLResponse {
+        try await renderingEngine.renderNewAdminPage(
+            request: request,
+            context: context,
+            title: "Contact form fields",
+            content: ContactFormFieldsPage(
+                state: .init(
+                    key: item.key,
+                    isReadOnly: !permissions.contains(
+                        ContactPermissions.Forms.update.rawValue
+                    ),
+                    canAddField: permissions.contains(
+                        ContactPermissions.Forms.update.rawValue
+                    )
+                        && permissions.contains(
+                            ContactPermissions.Fields.create.rawValue
+                        ),
+                    form: .init(
+                        key: item.key,
+                        name: item.name,
+                        successMessage: item.successMessage,
+                        failureMessage: item.failureMessage,
+                        redirectUrl: item.redirectUrl,
+                        fieldIDs: item.selectedFieldIDs,
+                        availableFields: item.availableFields,
+                        mails: item.mails,
+                        error: error,
+                        success: nil
+                    ),
+                    breadcrumb: ContactAdminRoutes.formsBreadcrumb
+                )
+            )
+        )
+    }
+
     private func renderPage(
         key: String,
         item: AdminContactFormDetailsItem,
@@ -38,7 +79,9 @@ struct AdminEditContactFormDefaultPresenter: AdminEditContactFormPresenter {
             content: ContactFormEditPage(
                 state: .init(
                     key: key,
-                    isReadOnly: !permissions.contains("contact:forms:update"),
+                    isReadOnly: !permissions.contains(
+                        ContactPermissions.Forms.update.rawValue
+                    ),
                     form: .init(
                         key: item.key,
                         name: item.name,

@@ -30,6 +30,10 @@ extension LogTable.Row {
             column: "user_agent",
             as: String?.self
         )
+        self.trafficCategory = try row.decode(
+            column: "traffic_category",
+            as: String.self
+        )
         self.language = try row.decode(column: "language", as: String?.self)
         self.region = try row.decode(column: "region", as: String?.self)
         self.osName = try row.decode(column: "os_name", as: String?.self)
@@ -92,6 +96,7 @@ struct LogTable {
             let origin: String?
             let acceptLanguage: String?
             let userAgent: String?
+            let trafficCategory: String
             let language: String?
             let region: String?
             let osName: String?
@@ -119,6 +124,7 @@ struct LogTable {
         let origin: String?
         let acceptLanguage: String?
         let userAgent: String?
+        let trafficCategory: String
         let language: String?
         let region: String?
         let osName: String?
@@ -156,6 +162,7 @@ struct LogTable {
                     origin,
                     accept_language,
                     user_agent,
+                    traffic_category,
                     language,
                     region,
                     os_name,
@@ -185,6 +192,7 @@ struct LogTable {
                     \#(row.origin),
                     \#(row.acceptLanguage),
                     \#(row.userAgent),
+                    \#(row.trafficCategory),
                     \#(row.language),
                     \#(row.region),
                     \#(row.osName),

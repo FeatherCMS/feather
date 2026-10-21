@@ -1,4 +1,5 @@
 import AuthApplication
+import Environment
 import Hummingbird
 import OpenAPIHummingbird
 import OpenAPIRuntime
@@ -102,7 +103,8 @@ func buildRouter(
                     .makeTokenAuth()
                     .execute(.init(token: token))?
                     .identityId
-            }
+            },
+            logFilter: BackendAPIAnalyticsLogFilter()
         )
     }
 

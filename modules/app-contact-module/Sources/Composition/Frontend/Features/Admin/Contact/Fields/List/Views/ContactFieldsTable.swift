@@ -10,6 +10,8 @@ import WebComponents
 struct ContactFieldsTable: Component {
     struct State {
         let fields: [AdminContactFieldRow]
+        let forms: [AdminContactFormFilterOption]
+        let formKey: String?
         let pageState: NewAdminListPageState
         let search: String
         let error: String?
@@ -36,6 +38,8 @@ struct ContactFieldsTable: Component {
             context.build(
                 ContactFieldsTableContent(
                     fields: state.fields,
+                    forms: state.forms,
+                    formKey: state.formKey,
                     pageState: state.pageState,
                     search: state.search,
                     permissions: state.permissions

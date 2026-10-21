@@ -88,10 +88,14 @@ struct AdminViewDashboardComponent: Component {
             }
             Custom(".admin-dashboard__insights-grid") {
                 Display(.grid)
-                GridTemplateColumns(.repeat(3, .fraction(1.fr)))
+                UnsafeRawProperty(
+                    name: "grid-template-columns",
+                    value: "repeat(3, minmax(0, 1fr))"
+                )
                 Gap(24.px)
             }
             Custom(".admin-dashboard .new-admin-chart-card") {
+                MinWidth(0.px)
                 Gap(20.px)
                 Padding(24.px)
                 BorderRadius(18.px)
@@ -140,7 +144,10 @@ struct AdminViewDashboardComponent: Component {
                 GridTemplateColumns(.repeat(3, .fraction(1.fr)))
             }
             Custom(".admin-dashboard__insights-grid") {
-                GridTemplateColumns(.repeat(2, .fraction(1.fr)))
+                UnsafeRawProperty(
+                    name: "grid-template-columns",
+                    value: "repeat(2, minmax(0, 1fr))"
+                )
             }
         }
         Media(.maxWidth(850.px)) {
@@ -148,7 +155,10 @@ struct AdminViewDashboardComponent: Component {
                 GridTemplateColumns(.fraction(1.fr))
             }
             Custom(".admin-dashboard__insights-grid") {
-                GridTemplateColumns(.fraction(1.fr))
+                UnsafeRawProperty(
+                    name: "grid-template-columns",
+                    value: "minmax(0, 1fr)"
+                )
             }
             Custom(".admin-dashboard__stats") {
                 GridTemplateColumns(.repeat(2, .fraction(1.fr)))

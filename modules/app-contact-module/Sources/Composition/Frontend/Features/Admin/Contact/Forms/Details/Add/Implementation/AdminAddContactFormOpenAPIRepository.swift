@@ -13,7 +13,9 @@ struct AdminAddContactFormOpenAPIRepository {
 
     func availableFields() async throws -> [AdminContactFormFieldOption] {
         try await api.withOpenAPIRepositoryErrorMapping { client in
-            let response = try await client.contactFieldList()
+            let response = try await client.contactFieldList(
+                .init(query: .init(form: nil))
+            )
             switch response {
             case .ok(let value):
                 return try value.body.json.map {

@@ -4,6 +4,7 @@ public struct AdminRichContentEditorBlockDefinition: Codable, Hashable, Sendable
     public enum Editor: String, Codable, Hashable, Sendable {
         case reference
         case text
+        case marker
     }
 
     public let type: String
@@ -13,6 +14,8 @@ public struct AdminRichContentEditorBlockDefinition: Codable, Hashable, Sendable
     public let argument: String
     public let editor: Editor
     public let pickerEndpoint: String?
+    public let isContainer: Bool
+    public let isContainerChild: Bool
 
     public init(
         type: String,
@@ -21,7 +24,9 @@ public struct AdminRichContentEditorBlockDefinition: Codable, Hashable, Sendable
         directive: String,
         argument: String = "key",
         editor: Editor = .reference,
-        pickerEndpoint: String? = nil
+        pickerEndpoint: String? = nil,
+        isContainer: Bool = false,
+        isContainerChild: Bool = false
     ) {
         self.type = type
         self.title = title
@@ -30,6 +35,8 @@ public struct AdminRichContentEditorBlockDefinition: Codable, Hashable, Sendable
         self.argument = argument
         self.editor = editor
         self.pickerEndpoint = pickerEndpoint
+        self.isContainer = isContainer
+        self.isContainerChild = isContainerChild
     }
 }
 

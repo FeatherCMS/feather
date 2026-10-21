@@ -3,4 +3,5 @@ enum AdminAddContactFieldError: Error, Sendable {
     case forbidden
     case conflict
     case unavailable
+    case createdButNotAssigned
 }

@@ -34,6 +34,7 @@ public struct TableMigration: DatabaseMigration {
                 origin TEXT NULL,
                 accept_language TEXT NULL,
                 user_agent TEXT NULL,
+                traffic_category TEXT NOT NULL DEFAULT 'human',
                 language TEXT NULL,
                 region TEXT NULL,
                 os_name TEXT NULL,
@@ -66,6 +67,10 @@ public struct TableMigration: DatabaseMigration {
             #"""
             CREATE INDEX IF NOT EXISTS analytics_log_source_idx
                 ON analytics_log (source);
+            """#,
+            #"""
+            CREATE INDEX IF NOT EXISTS analytics_log_source_created_at_idx
+                ON analytics_log (source, created_at DESC);
             """#,
         ]
 
