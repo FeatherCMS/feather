@@ -5,9 +5,7 @@ import SystemAdminAPI
 import SystemModule
 
 extension Permission.List.Repository {
-    struct OpenAPI:
-        Permission.List.Repository.Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
         private let listUnauthorizedMessage =
             "Please sign in again to view system permissions."

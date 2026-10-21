@@ -5,7 +5,7 @@ public import SystemApplication
 public import SystemModule
 
 extension SystemModule.Permission.Search.Query {
-    public struct Database: SystemModule.Permission.Search.Query.Interface {
+    public struct Database: Interface {
         private let accessLayer: DatabaseAccessLayer<Permission.Table>
 
         public init(context: any DatabaseContext) {

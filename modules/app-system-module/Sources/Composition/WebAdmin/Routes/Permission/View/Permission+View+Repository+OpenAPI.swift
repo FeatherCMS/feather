@@ -5,9 +5,7 @@ import SystemAdminAPI
 import SystemModule
 
 extension Permission.View.Repository {
-    struct OpenAPI:
-        Permission.View.Repository.Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func get(

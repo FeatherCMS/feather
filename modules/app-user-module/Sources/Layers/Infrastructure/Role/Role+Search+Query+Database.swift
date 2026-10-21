@@ -18,7 +18,7 @@ extension Role.Table.List {
 }
 
 extension Role.Search.Query {
-    public struct Database: Role.Search.Query.Interface {
+    public struct Database: Interface {
         public let context: DatabaseQueryContext
 
         public init(context: DatabaseQueryContext) {

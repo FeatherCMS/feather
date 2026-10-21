@@ -3,7 +3,7 @@ import Hummingbird
 import UserModule
 
 extension Overview.Controller {
-    struct Default: Overview.Controller.Interface {
+    struct Default: Interface {
         let buildRuntime:
             AuthenticatedRuntimeBuilder<
                 any Overview.Interactor.Interface,

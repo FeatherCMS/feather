@@ -27,7 +27,7 @@ extension Identity.Table.List {
 }
 
 extension Identity.Search.Query {
-    public struct Database: Identity.Search.Query.Interface {
+    public struct Database: Interface {
         public let context: DatabaseQueryContext
 
         public init(context: DatabaseQueryContext) {

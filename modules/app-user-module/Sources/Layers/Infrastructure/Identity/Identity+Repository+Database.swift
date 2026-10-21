@@ -31,7 +31,7 @@ extension Identity.Table.Detail {
 }
 
 extension Identity.Repository {
-    public struct Database: Identity.Repository.Interface {
+    public struct Database: Interface {
 
         public let context: DatabaseTransactionContext
         public init(context: DatabaseTransactionContext) {

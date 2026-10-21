@@ -74,9 +74,11 @@ and the System module's current structure.
 
 ## Package and validation
 
-- Declare every imported Swift module as a direct dependency of the target
-  using it, including `public import`s. Remove unused dependencies after moves;
-  do not rely on transitive module visibility.
+- Do not mirror every Swift import with a direct package dependency. Rely on
+  transitive module availability when SwiftPM/the compiler permits it; add a
+  direct product dependency only when required to build. Remove unused direct
+  dependencies after moves, and use `public import` only for deliberate
+  re-exports.
 - Test targets use shared database/DBAL mocks, not a PostgreSQL or other
   concrete driver. Composition tests exercise the generated API router and
   gateway with the mock database and authorizer; assert the HTTP contract and

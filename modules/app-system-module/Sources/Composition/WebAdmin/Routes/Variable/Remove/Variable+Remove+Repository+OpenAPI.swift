@@ -5,9 +5,7 @@ import SystemAdminAPI
 import SystemModule
 
 extension Variable.Remove.Repository {
-    struct OpenAPI:
-        Variable.Remove.Repository.Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func delete(

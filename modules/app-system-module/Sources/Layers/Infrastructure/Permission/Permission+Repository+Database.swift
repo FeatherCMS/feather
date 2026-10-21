@@ -12,7 +12,7 @@ public import SystemModule
 //
 
 extension SystemModule.Permission.Repository {
-    public struct Database: SystemModule.Permission.Repository.Interface {
+    public struct Database: Interface {
 
         public let context: any DatabaseContext
         private let accessLayer: DatabaseAccessLayer<Permission.Table>

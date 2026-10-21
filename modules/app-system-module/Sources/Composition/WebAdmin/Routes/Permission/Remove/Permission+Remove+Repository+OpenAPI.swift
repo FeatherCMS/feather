@@ -5,9 +5,7 @@ import SystemAdminAPI
 import SystemModule
 
 extension Permission.Remove.Repository {
-    struct OpenAPI:
-        Permission.Remove.Repository.Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func delete(

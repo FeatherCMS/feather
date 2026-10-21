@@ -87,9 +87,11 @@ specific context; it must stay consistent with the shared conventions.
 
 ## Validation and documentation
 
-- Declare every imported module as a direct dependency of its target. Remove
-  unused target dependencies after code moves; do not rely on transitive module
-  visibility.
+- Do not mirror every Swift import with a direct package dependency. Rely on
+  transitive module availability when SwiftPM/the compiler permits it; add a
+  direct product dependency only when required to build. Remove unused direct
+  dependencies after code moves, and use `public import` only for deliberate
+  re-exports.
 - Keep this guide synchronized with the shared conventions and current source
   layout. Do not restore instructions for the old `Features/Admin`,
   `Abstraction/Implementation`, or frontend `buildRuntime` structure.

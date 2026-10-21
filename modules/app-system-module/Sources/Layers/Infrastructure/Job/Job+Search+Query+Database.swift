@@ -6,7 +6,7 @@ public import SystemApplication
 public import SystemModule
 
 extension SystemModule.Job.Search.Query {
-    public struct Database: SystemModule.Job.Search.Query.Interface {
+    public struct Database: Interface {
         public let context: DatabaseQueryContext
 
         public init(context: DatabaseQueryContext) {

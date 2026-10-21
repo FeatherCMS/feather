@@ -5,7 +5,7 @@ public import SystemDomain
 public import SystemModule
 
 extension SystemModule.Variable.Detail.Query {
-    public struct Database: SystemModule.Variable.Detail.Query.Interface {
+    public struct Database: Interface {
         private let accessLayer: DatabaseAccessLayer<Variable.Table>
 
         public init(context: any DatabaseContext) {

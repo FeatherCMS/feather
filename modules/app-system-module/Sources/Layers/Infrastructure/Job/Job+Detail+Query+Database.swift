@@ -4,7 +4,7 @@ public import SystemApplication
 public import SystemModule
 
 extension SystemModule.Job.Detail.Query {
-    public struct Database: SystemModule.Job.Detail.Query.Interface {
+    public struct Database: Interface {
         public let context: DatabaseQueryContext
 
         public init(context: DatabaseQueryContext) {

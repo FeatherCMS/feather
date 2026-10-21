@@ -12,7 +12,7 @@ public import SystemModule
 //
 
 extension SystemModule.Variable.Repository {
-    public struct Database: SystemModule.Variable.Repository.Interface {
+    public struct Database: Interface {
 
         public let context: any DatabaseContext
         private let accessLayer: DatabaseAccessLayer<Variable.Table>

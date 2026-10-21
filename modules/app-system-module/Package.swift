@@ -55,10 +55,6 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/apple/swift-log",
-            from: "1.15.0"
-        ),
-        .package(
             url: "https://github.com/mattpolzin/OpenAPIKit",
             from: "7.0.0"
         ),
@@ -82,10 +78,6 @@ let package = Package(
             url:
                 "https://github.com/hummingbird-project/swift-openapi-hummingbird",
             from: "2.0.1"
-        ),
-        .package(
-            url: "https://github.com/swift-server/async-http-client",
-            from: "1.0.0"
         ),
         .package(
             url:
@@ -202,7 +194,6 @@ let package = Package(
             name: "SystemWebAdmin",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
-                .product(name: "FeatherModuleKit", package: "feather-core"),
 
                 .target(name: "SystemModule"),
                 .target(name: "SystemAdminAPI"),
@@ -253,7 +244,6 @@ let package = Package(
             name: "SystemBackendTests",
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
-                .product(name: "NIOHTTP1", package: "swift-nio"),
                 .product(name: "FeatherHTTP", package: "feather-http"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),
                 .product(

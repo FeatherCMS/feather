@@ -38,11 +38,14 @@ server/client package. Package target names use the module name (`UserModule`, `
 `UserWebAdmin` for User). Test targets live under `Tests/Layers/...` and
 `Tests/Composition/...`, mirroring the layer they exercise.
 
-Declare every imported Swift module as a direct dependency of the target that
-imports it, including `public import`s. Do not rely on a transitive dependency
-to make a module visible. Conversely, remove target dependencies that no source
-file in that target uses; review each target's imports against its
-`Package.swift` dependencies after moving code between targets.
+Do not mirror every Swift `import` as a direct package dependency. A module
+provided transitively by an existing dependency does not need a separate
+manifest entry unless SwiftPM or the compiler requires one for that target.
+Add direct product dependencies when required by a diagnostic or when the
+target otherwise cannot build with its intended imports. Remove directly
+declared dependencies that the target no longer needs. Review imports and
+manifest dependencies together after moving code between targets, but do not
+add direct dependencies solely to make the lists match.
 
 Infrastructure database tests should use the shared `FeatherDatabaseTesting`
 mock connection and `FeatherDBALTesting` mock platform. They can assert query
@@ -176,6 +179,12 @@ Within a route feature, keep its files together under
   segments matching its namespace, e.g. `Identity+Add+Input.swift` and
   `Identity+Repository.swift`. Do not add `Typealias` compatibility shims for
   a deliberate rename.
+- Inside an extension of a namespace, refer to its immediate nested types
+  directly instead of repeating the full qualified path. For example, within
+  the Identity.Search.Query extension, write Database: Interface rather than
+  Database: Identity.Search.Query.Interface. Apply this to implementations
+  and conformances throughout module and composition code; keep qualification
+  for types outside the extended namespace or when needed to disambiguate.
 - Keep filenames, declared type names, and namespace paths in sync after moves.
   Remove stale file-header names and old directory names, and search for the old
   symbol/path across the entire repository, generated-code boundaries aside.
@@ -403,8 +412,9 @@ shared conventions.
 
 - [ ] Products, targets, dependencies, and API ownership match the module's
   actual public surfaces; no unused app-facing API/client remains.
-- [ ] Every imported module is a direct dependency of the importing target, and
-  unused target dependencies have been removed.
+- [ ] Direct package dependencies are present where SwiftPM/the compiler
+  requires them; transitive dependencies have not been duplicated in the
+  manifest, and unused direct target dependencies have been removed.
 - [ ] Source tree is layered and entity-first; cross-entity infrastructure is
   intentionally placed at the layer root.
 - [ ] Public symbols and source filenames tell the same namespace story.
@@ -427,8 +437,9 @@ shared conventions.
   authorization, and operation-specific behavior independently of HTTP tests.
 - [ ] Event declarations and every publisher, registry, migration, mock, and
   downstream consumer use the new module/entity event namespace.
-- [ ] Cross-module imports expose the renamed public API intentionally; public
-  imports are not retained merely to silence a missing direct dependency.
+- [ ] Cross-module imports expose the renamed public API intentionally; use
+  `public import` only for deliberate re-exports, and add direct dependencies
+  only when required rather than to mirror the import list.
 - [ ] WebAdmin clients receive `AppEnvironment` plus the authenticated request
   context at the request boundary, consistently across related modules.
 - [ ] Docker-based tests use an isolated database/service namespace; never run a

@@ -26,7 +26,7 @@ extension Role.Table.Detail {
 }
 
 extension Role.Repository {
-    public struct Database: Role.Repository.Interface {
+    public struct Database: Interface {
 
         public let context: DatabaseTransactionContext
         public let idGenerator: any IDGenerator

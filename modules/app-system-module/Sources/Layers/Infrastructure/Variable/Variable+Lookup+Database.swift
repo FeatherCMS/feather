@@ -4,7 +4,7 @@ public import SystemApplication
 public import SystemModule
 
 extension SystemModule.Variable.Lookup {
-    public struct Database: SystemModule.Variable.Lookup.Interface {
+    public struct Database: Interface {
         private let accessLayer: DatabaseAccessLayer<Variable.Table>
 
         public init(context: any DatabaseContext) {

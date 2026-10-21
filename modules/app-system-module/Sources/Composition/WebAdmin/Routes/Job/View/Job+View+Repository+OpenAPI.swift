@@ -4,7 +4,7 @@ import SystemAdminAPI
 import SystemModule
 
 extension Job.View.Repository {
-    struct OpenAPI: Job.View.Repository.Interface {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func get(id: String) async throws -> SystemJobDetailsModel {

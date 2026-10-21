@@ -5,9 +5,7 @@ import SystemAdminAPI
 import SystemModule
 
 extension Variable.List.Repository {
-    struct OpenAPI:
-        Variable.List.Repository.Interface
-    {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func listSystemVariables(

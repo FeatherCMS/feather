@@ -76,10 +76,6 @@ let package = Package(
             url: "https://github.com/hummingbird-project/hummingbird",
             from: "2.27.0"
         ),
-        .package(
-            url: "https://github.com/swift-server/async-http-client",
-            from: "1.0.0"
-        ),
         .package(path: "../../feather-core"),
         .package(
             url: "https://github.com/feather-framework/feather-database",
@@ -99,7 +95,8 @@ let package = Package(
             exact: "1.0.0-beta.1"
         ),
         .package(
-            url: "https://github.com/hummingbird-project/swift-openapi-hummingbird",
+            url:
+                "https://github.com/hummingbird-project/swift-openapi-hummingbird",
             from: "2.0.1"
         ),
         .package(path: "../app-system-module"),
@@ -208,11 +205,6 @@ let package = Package(
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
                 .product(name: "NIOHTTP1", package: "swift-nio"),
-                .product(
-                    name: "SystemApplication",
-                    package: "app-system-module"
-                ),
-                .product(name: "SystemModule", package: "app-system-module"),
 
                 .target(name: "UserInfrastructure"),
                 .target(name: "UserApplication"),
@@ -227,7 +219,6 @@ let package = Package(
             name: "UserWebAdmin",
             dependencies: [
                 .product(name: "FeatherWebAdmin", package: "feather-core"),
-                .product(name: "FeatherModuleKit", package: "feather-core"),
 
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "SystemWebAdmin", package: "app-system-module"),
@@ -278,7 +269,6 @@ let package = Package(
             name: "UserBackendTests",
             dependencies: [
                 .product(name: "FeatherBackend", package: "feather-core"),
-                .product(name: "NIOHTTP1", package: "swift-nio"),
                 .product(name: "FeatherHTTP", package: "feather-http"),
                 .product(name: "HTTPTypes", package: "swift-http-types"),
                 .product(name: "FeatherModuleKit", package: "feather-core"),

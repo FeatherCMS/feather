@@ -19,7 +19,7 @@ extension Identity.Table.Detail {
 }
 
 extension Identity.Detail.Query {
-    public struct Database: Identity.Detail.Query.Interface {
+    public struct Database: Interface {
         public let context: DatabaseQueryContext
 
         public init(context: DatabaseQueryContext) {

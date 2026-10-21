@@ -19,7 +19,7 @@ extension Role.Table.Detail {
 }
 
 extension Role.Detail.Query {
-    public struct Database: Role.Detail.Query.Interface {
+    public struct Database: Interface {
         public let context: DatabaseQueryContext
 
         public init(context: DatabaseQueryContext) {

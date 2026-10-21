@@ -4,7 +4,7 @@ import SystemAdminAPI
 import SystemModule
 
 extension Job.List.Repository {
-    struct OpenAPI: Job.List.Repository.Interface {
+    struct OpenAPI: Interface {
         let api: API.Client
 
         func search(

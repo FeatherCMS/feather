@@ -5,7 +5,7 @@ public import SystemApplication
 public import SystemModule
 
 extension SystemModule.Permission.List.Query {
-    public struct Database: SystemModule.Permission.List.Query.Interface {
+    public struct Database: Interface {
         private let accessLayer: DatabaseAccessLayer<Permission.Table>
 
         public init(context: any DatabaseContext) {
