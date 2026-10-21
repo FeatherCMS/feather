@@ -363,6 +363,7 @@ let package = Package(
                 .product(name: "SystemBackend", package: "app-system-module"),
                 .product(name: "RedirectBackend", package: "app-redirect-module"),
                 .product(name: "UserBackend", package: "app-user-module"),
+                .product(name: "UserModule", package: "app-user-module"),
 
                 .target(name: "Environment"),
             ],

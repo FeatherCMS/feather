@@ -10,16 +10,12 @@ public import UserModule
 
 extension Identity.Search {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Action: PermissionAction {
-            let key = Identity.Permissions.list
-        }
-
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Identity.Query.Scope>
+        let query: any QueryExecutor<Identity.Search.Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Identity.Query.Scope>
+            query: any QueryExecutor<Identity.Search.Scope>
         ) {
             self.authorizer = authorizer
             self.query = query
@@ -27,8 +23,8 @@ extension Identity.Search {
 
         public func execute(
             subject: Subject,
-            input: Identity.Search.Input
-        ) async throws -> Identity.Search.Output {
+            input: Input
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)

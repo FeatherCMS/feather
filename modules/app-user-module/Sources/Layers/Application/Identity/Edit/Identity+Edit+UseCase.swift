@@ -1,7 +1,7 @@
 public import FeatherApplication
 import FeatherDomain
 public import FeatherModuleKit
-public import UserDomain
+import UserDomain
 public import UserModule
 
 //
@@ -13,20 +13,16 @@ public import UserModule
 extension Identity.Edit {
     public struct UseCase: FeatherApplication.UseCase {
 
-        struct Action: PermissionAction {
-            let key: PermissionKey = Identity.Permissions.update
-        }
-
         struct Error: UseCaseError {
             let message: String
         }
 
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Identity.Repository.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Identity.Repository.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -34,8 +30,8 @@ extension Identity.Edit {
 
         public func execute(
             subject: Subject,
-            input: Identity.Edit.Input
-        ) async throws -> Identity.Detail.Output {
+            input: Input
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -77,14 +73,13 @@ extension Identity.Edit {
                     persistedRoleIds = currentRoleIds
                 }
 
-                let detail = updated.asDetail
                 return .init(
-                    id: detail.id,
-                    name: detail.name,
+                    id: updated.id,
+                    name: updated.name,
                     roleIds: persistedRoleIds,
-                    status: detail.status,
-                    createdAt: detail.createdAt,
-                    updatedAt: detail.updatedAt
+                    status: updated.status,
+                    createdAt: updated.createdAt,
+                    updatedAt: updated.updatedAt
                 )
             }
         }

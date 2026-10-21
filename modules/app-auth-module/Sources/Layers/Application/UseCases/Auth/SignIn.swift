@@ -7,6 +7,7 @@
 import AuthDomain
 import FeatherApplication
 import UserDomain
+import UserModule
 
 import struct Foundation.Date
 
@@ -15,7 +16,7 @@ protocol SignIn: UseCase {
     func makeAuthResponse(
         userIdentityRepository: any Identity.Repository.Interface,
         userSessionRepository: any SessionRepository,
-        user: Identity,
+        user: Identity.Model,
         authenticationType: String,
         authenticationReference: String,
         isPersistent: Bool
@@ -28,7 +29,7 @@ extension SignIn {
     func makeAuthResponse(
         userIdentityRepository: any Identity.Repository.Interface,
         userSessionRepository: any SessionRepository,
-        user: Identity,
+        user: Identity.Model,
         authenticationType: String,
         authenticationReference: String,
         isPersistent: Bool

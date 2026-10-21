@@ -10,16 +10,12 @@ public import UserModule
 
 extension Identity.Detail {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Action: PermissionAction {
-            let key = Identity.Permissions.read
-        }
-
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Identity.Query.Scope>
+        let query: any QueryExecutor<Identity.Detail.Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Identity.Query.Scope>
+            query: any QueryExecutor<Identity.Detail.Scope>
         ) {
             self.authorizer = authorizer
             self.query = query
@@ -27,8 +23,8 @@ extension Identity.Detail {
 
         public func execute(
             subject: Subject,
-            input: Identity.Detail.Input
-        ) async throws -> Identity.Detail.Output {
+            input: Input
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -37,19 +33,7 @@ extension Identity.Detail {
             }
 
             return try await query.run { scope in
-                var identity = try await scope.identity.getBy(id: input.id)
-                let roleIds = try await scope.identity.getRoleIdsBy(
-                    identityId: identity.id
-                )
-                identity = .init(
-                    id: identity.id,
-                    name: identity.name,
-                    roleIds: roleIds,
-                    status: identity.status,
-                    createdAt: identity.createdAt,
-                    updatedAt: identity.updatedAt
-                )
-                return identity
+                try await scope.identity.find(id: input.id)
             }
         }
     }

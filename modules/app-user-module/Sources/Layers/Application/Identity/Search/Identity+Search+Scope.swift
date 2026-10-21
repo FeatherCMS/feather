@@ -1,13 +1,7 @@
-//
-//  Identity.Query.Scope.swift
-//  app-user-module
-//
-//  Created by Binary Birds on 2026. 06. 18.
-
 public import FeatherModuleKit
 public import UserModule
 
-extension Identity.Query {
+extension Identity.Search {
     public struct Scope: FeatherModuleKit.Scope {
         public let identity: any Interface
 

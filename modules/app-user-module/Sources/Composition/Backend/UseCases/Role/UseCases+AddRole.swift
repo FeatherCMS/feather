@@ -9,7 +9,7 @@ extension UseCases {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Role.Repository.Scope(
+                Role.Add.Scope(
                     role: Role.Repository.Database(context: context)
                 )
             }

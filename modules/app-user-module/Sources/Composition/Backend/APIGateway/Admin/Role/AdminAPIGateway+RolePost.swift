@@ -35,7 +35,7 @@ extension AdminAPIGateway {
 }
 
 private func roleDetailSchema(
-    from output: Role.Detail.Output
+    from output: Role.Add.Output
 ) -> Components.Schemas.UserRoleDetailSchema {
     .init(
         id: output.id,

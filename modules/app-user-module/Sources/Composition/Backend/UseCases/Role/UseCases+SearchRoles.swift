@@ -9,8 +9,8 @@ extension UseCases {
         let query = DatabaseQueryExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Role.Query.Scope(
-                    role: Role.Query.Database(
+                Role.Search.Scope(
+                    role: Role.Search.Database(
                         context: context
                     )
                 )

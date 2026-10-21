@@ -8,6 +8,7 @@ import FeatherApplication
 import FeatherModuleKit
 import SystemApplication
 import Testing
+import UserModule
 
 import struct Foundation.Date
 
@@ -483,7 +484,7 @@ private func makeCredential() -> Credential {
     )
 }
 
-private func makeIdentity() -> Identity {
+private func makeIdentity() -> Identity.Model {
     .init(
         id: "identity-1",
         status: .active,

@@ -9,9 +9,8 @@ extension UseCases {
         let transaction = DatabaseTransactionExecutor(
             databaseContext: databaseContext,
             scope: { context in
-                Identity.Repository.Scope(
-                    identity: Identity.Repository.Database(context: context),
-                    role: Role.Repository.Database(context: context)
+                Identity.Remove.Scope(
+                    identity: Identity.Repository.Database(context: context)
                 )
             }
         )

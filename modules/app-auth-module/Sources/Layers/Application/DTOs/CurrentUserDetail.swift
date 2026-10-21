@@ -7,6 +7,7 @@
 
 public import FeatherApplication
 public import UserApplication
+public import UserModule
 
 public struct CurrentUserDetail: DTO {
     public var user: Identity.Detail.Output

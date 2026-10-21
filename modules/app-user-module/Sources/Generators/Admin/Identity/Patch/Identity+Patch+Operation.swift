@@ -16,7 +16,7 @@ extension Identity.Patch {
         }
         var responseMap: ResponseMap {
             [
-                200: UserIdentityDetailResponse().reference(),
+                200: Identity.Get.Response().reference(),
                 400: DefaultHTTPErrorContentResponse(
                     description: "Bad Request"
                 ),

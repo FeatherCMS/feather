@@ -8,10 +8,10 @@ extension Identity.Post {
         var summary: String? { "Create user identity" }
         var description: String? { "Creates a user identity" }
         var requestBody: (any RequestBodyRepresentable)? {
-            UserIdentityCreateRequestBody().reference()
+            Identity.Post.RequestBody().reference()
         }
         var responseMap: ResponseMap {
-            [201: UserIdentityDetailResponse().reference()]
+            [201: Identity.Get.Response().reference()]
         }
     }
 }

@@ -7,15 +7,16 @@
 public import AuthDomain
 public import FeatherApplication
 public import UserDomain
+public import UserModule
 
 public struct AuthDetail: DTO {
-    public var user: Identity
+    public var user: Identity.Model
     public var session: Session
     public var roles: [String]
     public var permissions: [String]
 
     public init(
-        user: Identity,
+        user: Identity.Model,
         session: Session,
         roles: [String],
         permissions: [String]

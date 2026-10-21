@@ -7,6 +7,7 @@
 public import AuthDomain
 public import FeatherModuleKit
 public import UserDomain
+public import UserModule
 
 // TODO: no need for magic link custom scope for sign in
 public struct WriteAuth: Scope {

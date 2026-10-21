@@ -1,6 +1,6 @@
 public import FeatherApplication
 public import FeatherModuleKit
-public import UserDomain
+import UserDomain
 public import UserModule
 
 //
@@ -11,16 +11,12 @@ public import UserModule
 
 extension Role.Add {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Action: PermissionAction {
-            let key = Role.Permissions.create
-        }
-
         let authorizer: any Authorizer
-        let transaction: any TransactionExecutor<Role.Repository.Scope>
+        let transaction: any TransactionExecutor<Scope>
 
         public init(
             authorizer: any Authorizer,
-            transaction: any TransactionExecutor<Role.Repository.Scope>
+            transaction: any TransactionExecutor<Scope>
         ) {
             self.authorizer = authorizer
             self.transaction = transaction
@@ -28,8 +24,8 @@ extension Role.Add {
 
         public func execute(
             subject: Subject,
-            input: Role.Add.Input
-        ) async throws -> Role.Detail.Output {
+            input: Input
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -47,7 +43,14 @@ extension Role.Add {
                 )
             }
 
-            return model.asDetail
+            return .init(
+                id: model.id,
+                key: model.key,
+                name: model.name,
+                notes: model.notes,
+                createdAt: model.createdAt,
+                updatedAt: model.updatedAt
+            )
         }
     }
 

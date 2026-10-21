@@ -94,8 +94,13 @@ Within a route feature, keep its files together under
 - Nest application operations under their entity and operation, for example
   `Identity.Add.Input`, `Identity.Add.Output`, and `Identity.Add.UseCase`.
   Read/search contracts belong under named query namespaces, not in unrelated
-  list operation types. Scope/action types should also be nested with the
-  operation or query that owns them.
+  list operation types. Every operation owns its `Action`, `Input`, `Output`,
+  `Scope`, and `UseCase` declarations as applicable. Keep each declaration in
+  its own operation directory and source file (for example,
+  `Identity+Edit+Action.swift`, `Identity+Edit+Input.swift`,
+  `Identity+Edit+Output.swift`, `Identity+Edit+Scope.swift`, and
+  `Identity+Edit+UseCase.swift`); do not hide actions inside use-case types or
+  reuse a neighboring operation's scope/output just because the fields match.
 - Keep request and response models separate from the use-case implementation:
   `Identity.Add.Input`, `Identity.Add.Output`, and `Identity.Add.UseCase` are
   sibling declarations, normally in `Identity+Add+Input.swift`,
@@ -112,8 +117,10 @@ Within a route feature, keep its files together under
   under the same abstraction: `Identity.Repository.Interface` and
   `Identity.Repository.Database`; `Identity.Query.Interface` and
   `Identity.Query.Database`. Put shared executor scopes under the abstraction
-  they bind to (`Identity.Query.Scope`, `Identity.Repository.Scope`); use
-  operation-specific scopes when their capabilities differ. Name files to
+  they bind to (`Identity.Query.Scope`, `Identity.Repository.Scope`) only when
+  the scope is genuinely shared. Use operation-specific executor scopes for
+  use-cases (`Identity.Add.Scope`, `Identity.Edit.Scope`, etc.) and include
+  only the repositories/query interfaces that operation needs. Name files to
   match, e.g.
   `Identity+Repository+Interface.swift` and `Identity+Query+Database.swift`.
 - Put database tables below the entity (`Identity.Table`) and name cross-entity

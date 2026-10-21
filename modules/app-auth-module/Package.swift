@@ -132,6 +132,8 @@ let package = Package(
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "UserApplication", package: "app-user-module"),
+                .product(name: "UserDomain", package: "app-user-module"),
+                .product(name: "UserModule", package: "app-user-module"),
                 .product(name: "WebApplication", package: "app-web-module"),
 
                 .target(name: "AuthDomain"),
@@ -149,6 +151,7 @@ let package = Package(
                 .product(name: "SystemModule", package: "app-system-module"),
 
                 .product(name: "UserApplication", package: "app-user-module"),
+                .product(name: "UserModule", package: "app-user-module"),
                 .product(name: "UserInfrastructure", package: "app-user-module"),
                 .product(name: "WebDomain", package: "app-web-module"),
 
@@ -212,6 +215,7 @@ let package = Package(
                 .product(name: "SystemAdminAPI", package: "app-system-module"),
                 .product(name: "SystemInfrastructure", package: "app-system-module"),
                 .product(name: "UserBackend", package: "app-user-module"),
+                .product(name: "UserModule", package: "app-user-module"),
 
                 .target(name: "AuthInfrastructure"),
                 .target(name: "AuthAdminAPI"),
@@ -253,6 +257,7 @@ let package = Package(
                 .product(name: "SystemApplication", package: "app-system-module"),
                 .product(name: "SystemModule", package: "app-system-module"),
                 .product(name: "UserDomain", package: "app-user-module"),
+                .product(name: "UserModule", package: "app-user-module"),
 
                 .target(name: "AuthApplication"),
             ],

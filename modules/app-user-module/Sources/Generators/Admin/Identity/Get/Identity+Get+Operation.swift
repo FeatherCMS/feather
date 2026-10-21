@@ -7,7 +7,7 @@ extension Identity.Get {
         var operationId: String? { "userIdentityGet" }
         var responseMap: ResponseMap {
             [
-                200: UserIdentityDetailResponse().reference(),
+                200: Identity.Get.Response().reference(),
                 404: CustomResponse(description: "UserIdentity not found"),
             ]
         }

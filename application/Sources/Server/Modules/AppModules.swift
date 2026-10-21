@@ -3,6 +3,7 @@ import FeatherInfrastructure
 import AuthApplication
 import AuthInfrastructure
 import UserInfrastructure
+import UserModule
 import MediaBackend
 import MediaInfrastructure
 import AnalyticsBackend
@@ -49,7 +50,7 @@ struct AppModules: Sendable {
             databaseContext: infrastructure.databaseContext,
             scope: { context in
                 return AuthScope(
-                    identity: Identity.Query.Database(
+                    identity: Identity.Authorization.Query.Database(
                         context: context
                     ),
                     rolePermissions: RolePermissionDatabaseQueries(

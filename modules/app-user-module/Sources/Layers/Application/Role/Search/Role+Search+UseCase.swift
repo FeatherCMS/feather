@@ -10,16 +10,12 @@ public import UserModule
 
 extension Role.Search {
     public struct UseCase: FeatherApplication.UseCase {
-        struct Action: PermissionAction {
-            let key = Role.Permissions.list
-        }
-
         let authorizer: any Authorizer
-        let query: any QueryExecutor<Role.Query.Scope>
+        let query: any QueryExecutor<Role.Search.Scope>
 
         public init(
             authorizer: any Authorizer,
-            query: any QueryExecutor<Role.Query.Scope>
+            query: any QueryExecutor<Role.Search.Scope>
         ) {
             self.authorizer = authorizer
             self.query = query
@@ -27,8 +23,8 @@ extension Role.Search {
 
         public func execute(
             subject: Subject,
-            input: Role.Search.Input
-        ) async throws -> Role.Search.Output {
+            input: Input
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)

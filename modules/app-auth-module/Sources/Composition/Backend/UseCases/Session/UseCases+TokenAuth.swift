@@ -2,6 +2,7 @@ public import AuthApplication
 import AuthInfrastructure
 import FeatherInfrastructure
 import UserInfrastructure
+import UserModule
 
 extension UseCases {
 

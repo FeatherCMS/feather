@@ -38,7 +38,7 @@ extension AdminAPIGateway {
 }
 
 private func identityDetailSchema(
-    from output: Identity.Detail.Output
+    from output: Identity.Add.Output
 ) -> Components.Schemas.UserIdentityDetailSchema {
     .init(
         id: output.id,

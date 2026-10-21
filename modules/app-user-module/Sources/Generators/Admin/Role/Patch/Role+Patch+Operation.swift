@@ -15,7 +15,7 @@ extension Role.Patch {
         }
         var responseMap: ResponseMap {
             [
-                200: UserRoleDetailResponse().reference(),
+                200: Role.Get.Response().reference(),
                 400: DefaultHTTPErrorContentResponse(
                     description: "Bad Request"
                 ),

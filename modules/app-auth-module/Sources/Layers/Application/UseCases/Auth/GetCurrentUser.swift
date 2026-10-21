@@ -7,14 +7,21 @@
 public import FeatherApplication
 public import FeatherModuleKit
 public import UserApplication
+public import UserModule
 
 public struct GetCurrentUser: UseCase {
-    let query: any QueryExecutor<Identity.Query.Scope>
+    let detailQuery: any QueryExecutor<Identity.Detail.Scope>
+    let authorizationQuery:
+        any QueryExecutor<Identity.Authorization.Query.Scope>
 
     public init(
-        query: any QueryExecutor<Identity.Query.Scope>
+        detailQuery: any QueryExecutor<Identity.Detail.Scope>,
+        authorizationQuery: any QueryExecutor<
+            Identity.Authorization.Query.Scope
+        >
     ) {
-        self.query = query
+        self.detailQuery = detailQuery
+        self.authorizationQuery = authorizationQuery
     }
 
     public struct Input: DTO {
@@ -36,22 +43,19 @@ public struct GetCurrentUser: UseCase {
             )
         }
 
-        return try await query.run { scope in
-            let identity = try await scope.identity.getBy(id: input.id)
-
-            async let roles = scope.identity.getRolesBy(
-                identityId: identity.id
-            )
-
-            async let permissions = scope.identity.getPermissionsBy(
-                identityId: identity.id
-            )
-
-            return try await CurrentUserDetail(
-                user: identity,
-                roles: roles,
-                permissions: permissions
-            )
+        let identity = try await detailQuery.run { scope in
+            try await scope.identity.find(id: input.id)
         }
+        async let roles = authorizationQuery.run { scope in
+            try await scope.identity.getRolesBy(identityId: identity.id)
+        }
+        async let permissions = authorizationQuery.run { scope in
+            try await scope.identity.getPermissionsBy(identityId: identity.id)
+        }
+        return try await CurrentUserDetail(
+            user: identity,
+            roles: roles,
+            permissions: permissions
+        )
     }
 }

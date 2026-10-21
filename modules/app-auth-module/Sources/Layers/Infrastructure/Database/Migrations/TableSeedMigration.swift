@@ -6,13 +6,14 @@
 
 import AuthDomain
 import FeatherDBAL
-public import FeatherModuleKit
 public import FeatherDatabase
 import FeatherDomain
 public import FeatherInfrastructure
+public import FeatherModuleKit
 import UserApplication
 import UserDomain
 import UserInfrastructure
+import UserModule
 
 public struct TableSeedMigration: DatabaseMigration {
 
@@ -48,7 +49,9 @@ public struct TableSeedMigration: DatabaseMigration {
         let roleDefinitions =
             try await events.trigger(
                 event: Role.Event.Seed.Provider(),
-                using: UserModule.Event.Context(idGenerator: context.idGenerator)
+                using: UserModule.Event.Context(
+                    idGenerator: context.idGenerator
+                )
             )
             .flatMap { $0 }
 
@@ -66,16 +69,11 @@ public struct TableSeedMigration: DatabaseMigration {
                 )
                 .flatMap { $0 }
 
-            for permission in Set(permissions) {
-                guard
-                    try await rolePermissionRepository.findBy(
-                        roleId: role.id,
-                        permissionId: permission.rawValue
-                    ) == nil
-                else {
-                    continue
-                }
-
+            for permission in Set(permissions)
+            where try await rolePermissionRepository.findBy(
+                roleId: role.id,
+                permissionId: permission.rawValue
+            ) == nil {
                 _ = try await rolePermissionRepository.insert(
                     try RolePermission.create(
                         roleId: role.id,
@@ -85,14 +83,14 @@ public struct TableSeedMigration: DatabaseMigration {
             }
         }
 
-        let identity: Identity
+        let identity: Identity.Model
         if let existing = try await identityRepository.findRoot() {
             identity = existing
         }
         else {
             identity = try await identityRepository.insert(
                 id: context.idGenerator.generate(),
-                model: Identity.create(status: .active, isRoot: true)
+                model: Identity.Model.create(status: .active, isRoot: true)
             )
         }
 

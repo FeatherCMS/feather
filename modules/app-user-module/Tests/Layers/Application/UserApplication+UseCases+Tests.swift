@@ -26,7 +26,7 @@ struct UserApplicationTestSuite {
         let roleRepo = MockRoleRepository(result: makeRole(id: "r-1"))
         let events = MockEventPublisher()
         let transaction = MockTransactionExecutor(
-            context: Identity.Repository.Scope(
+            context: Identity.Add.Scope(
                 identity: identityRepo,
                 role: roleRepo
             )
@@ -54,12 +54,9 @@ struct UserApplicationTestSuite {
 
     @Test
     func searchIdentitiesForbidden() async throws {
-        let queries = MockIdentityQueries(
-            detailResult: makeIdentityDetail(id: "a-3"),
-            searchResult: .init(items: [], total: 0)
-        )
+        let queries = MockIdentitySearch(result: .init(items: [], total: 0))
         let queryExecutor = MockQueryExecutor(
-            context: Identity.Query.Scope(identity: queries)
+            context: Identity.Search.Scope(identity: queries)
         )
         let authorizer = MockAuthorizer(result: false)
         let useCase = Identity.Search.UseCase(
@@ -80,7 +77,7 @@ struct UserApplicationTestSuite {
     func addRoleSuccess() async throws {
         let roleRepo = MockRoleRepository(result: makeRole(id: "r-2"))
         let transaction = MockTransactionExecutor(
-            context: Role.Repository.Scope(role: roleRepo)
+            context: Role.Add.Scope(role: roleRepo)
         )
         let authorizer = MockAuthorizer(result: true)
         let useCase = Role.Add.UseCase(
@@ -104,12 +101,9 @@ struct UserApplicationTestSuite {
 
     @Test
     func searchRolesReturnsItemsAndTotal() async throws {
-        let queries = MockRoleQueries(
-            detailResult: makeRoleDetail(id: "r-3"),
-            searchResult: .init(items: [], total: 7)
-        )
+        let queries = MockRoleSearch(result: .init(items: [], total: 7))
         let queryExecutor = MockQueryExecutor(
-            context: Role.Query.Scope(role: queries)
+            context: Role.Search.Scope(role: queries)
         )
         let authorizer = MockAuthorizer(result: true)
         let useCase = Role.Search.UseCase(
@@ -133,7 +127,7 @@ struct UserApplicationTestSuite {
             deleteResult: ["r-4"]
         )
         let transaction = MockTransactionExecutor(
-            context: Role.Repository.Scope(role: roleRepo)
+            context: Role.Remove.Scope(role: roleRepo)
         )
         let authorizer = MockAuthorizer(result: false)
         let useCase = Role.Remove.UseCase(

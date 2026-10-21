@@ -3,11 +3,15 @@ public import FeatherModuleKit
 public enum Identity {
     public enum Add {}
     public enum Edit {}
-    public enum Detail {}
+    public enum Detail {
+        public enum Query {}
+    }
     public enum List {}
     public enum Search {}
     public enum Remove {}
-    public enum Query {}
+    public enum Authorization {
+        public enum Query {}
+    }
     public enum Event {
         public enum Seed {}
     }

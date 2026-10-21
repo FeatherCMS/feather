@@ -1,6 +1,6 @@
 public import FeatherApplication
 public import FeatherModuleKit
-public import UserDomain
+import UserDomain
 public import UserModule
 
 //
@@ -15,19 +15,14 @@ extension Identity.Add {
             let message: String
         }
 
-        struct Action: PermissionAction {
-            let key = Identity.Permissions.create
-        }
-
         let authorizer: any Authorizer
-        let transaction:
-            any ContextualTransactionExecutor<Identity.Repository.Scope>
+        let transaction: any ContextualTransactionExecutor<Scope>
         let events: any EventPublisher
 
         public init(
             authorizer: any Authorizer,
             transaction: any ContextualTransactionExecutor<
-                Identity.Repository.Scope
+                Scope
             >,
             events: any EventPublisher
         ) {
@@ -38,8 +33,8 @@ extension Identity.Add {
 
         public func execute(
             subject: Subject,
-            input: Identity.Add.Input
-        ) async throws -> Identity.Detail.Output {
+            input: Input
+        ) async throws -> Output {
             let action = Action()
 
             guard try await authorizer.can(subject: subject, perform: action)
@@ -72,14 +67,13 @@ extension Identity.Add {
                 let persistedRoleIds = try await scope.identity.findRoleIdsBy(
                     identityId: model.id
                 )
-                let detail = model.asDetail
                 return .init(
-                    id: detail.id,
-                    name: detail.name,
+                    id: model.id,
+                    name: model.name,
                     roleIds: persistedRoleIds,
-                    status: detail.status,
-                    createdAt: detail.createdAt,
-                    updatedAt: detail.updatedAt
+                    status: model.status,
+                    createdAt: model.createdAt,
+                    updatedAt: model.updatedAt
                 )
             }
         }

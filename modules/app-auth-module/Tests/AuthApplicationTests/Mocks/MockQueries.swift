@@ -7,6 +7,7 @@
 import AuthDomain
 import Foundation
 import UserApplication
+import UserModule
 
 @testable import AuthApplication
 
@@ -148,25 +149,7 @@ actor MockSessionQueries: SessionQueries {
     }
 }
 
-struct DummyIdentityQueries: Identity.Query.Interface {
-    func list(
-        query: Identity.List.Input.Query
-    ) async throws -> Identity.List.Output {
-        .init(items: [])
-    }
-
-    func count(
-        query: Identity.List.Input.Query
-    ) async throws -> Int {
-        0
-    }
-
-    func getBy(
-        id: String
-    ) async throws -> Identity.Detail.Output {
-        fatalError("not needed in tests")
-    }
-
+struct DummyIdentityQueries: Identity.Authorization.Query.Interface {
     func getRolesBy(
         identityId: String
     ) async throws -> [String] {

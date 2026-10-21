@@ -7,15 +7,16 @@
 
 public import FeatherModuleKit
 public import UserApplication
+public import UserModule
 
 public struct AuthScope: Scope {
 
     //    public let system: any SystemQueries
-    public let identity: any Identity.Query.Interface
+    public let identity: any Identity.Authorization.Query.Interface
     public let rolePermissions: any RolePermissionQueries
 
     public init(
-        identity: any Identity.Query.Interface,
+        identity: any Identity.Authorization.Query.Interface,
         rolePermissions: any RolePermissionQueries
     ) {
         self.identity = identity

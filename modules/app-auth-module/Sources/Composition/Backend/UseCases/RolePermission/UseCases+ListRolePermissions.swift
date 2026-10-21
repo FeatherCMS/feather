@@ -2,6 +2,7 @@ import AuthApplication
 import AuthInfrastructure
 import FeatherInfrastructure
 import UserInfrastructure
+import UserModule
 
 extension UseCases {
 
@@ -10,7 +11,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 AuthScope(
-                    identity: Identity.Query.Database(
+                    identity: Identity.Authorization.Query.Database(
                         context: context
                     ),
                     rolePermissions: RolePermissionDatabaseQueries(

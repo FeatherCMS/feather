@@ -1,8 +1,9 @@
 import AuthApplication
 import AuthInfrastructure
-import FeatherModuleKit
 import FeatherInfrastructure
+import FeatherModuleKit
 import UserInfrastructure
+import UserModule
 
 extension UseCases {
     private func authEmailTransaction() -> any TransactionExecutor<
