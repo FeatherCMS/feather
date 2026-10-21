@@ -12,7 +12,7 @@ import UserApplication
 public import UserDomain
 public import UserModule
 
-extension Identity.Table.Row {
+extension Identity.Table.Detail {
     var asDomain: Identity.Model {
         get throws {
             guard let status = Identity.Model.Status(rawValue: status) else {
@@ -63,7 +63,7 @@ extension Identity.Repository {
                 let saved = try await accessLayer.selectFirst(
                     by: \.id,
                     equals: id,
-                    as: Identity.Table.Row.self
+                    as: Identity.Table.Detail.self
                 )
             else {
                 throw RepositoryError.notFound
@@ -80,7 +80,7 @@ extension Identity.Repository {
             return try await accessLayer.selectFirst(
                 by: \.id,
                 equals: id,
-                as: Identity.Table.Row.self
+                as: Identity.Table.Detail.self
             )?
             .asDomain
         }
@@ -90,7 +90,7 @@ extension Identity.Repository {
                 context: context
             )
             return try await accessLayer.selectFirst(
-                as: Identity.Table.Row.self
+                as: Identity.Table.Detail.self
             ) {
                 $0.where(\.isRoot, equals: true)
                     .order(by: [.init(by: \.createdAt)]).limit(1)
@@ -101,10 +101,10 @@ extension Identity.Repository {
         public func findRoleIdsBy(
             identityId: String
         ) async throws -> [String] {
-            let rows = try await DatabaseAccessLayer<Identity.Table.RoleLink>(
+            let rows = try await DatabaseAccessLayer<IdentityRole.Table>(
                 context: context
             )
-            .select(as: Identity.Table.RoleLink.RoleID.self) {
+            .select(as: IdentityRole.Table.RoleID.self) {
                 $0.where(\.identityId, equals: identityId)
                     .order(by: [.init(by: \.roleId)])
             }
@@ -131,7 +131,7 @@ extension Identity.Repository {
                 let updated = try await accessLayer.selectFirst(
                     by: \.id,
                     equals: model.id,
-                    as: Identity.Table.Row.self
+                    as: Identity.Table.Detail.self
                 )
             else {
                 throw RepositoryError.notFound
@@ -143,7 +143,7 @@ extension Identity.Repository {
             identityId: String,
             roleIds: [String]
         ) async throws {
-            let accessLayer = DatabaseAccessLayer<Identity.Table.RoleLink>(
+            let accessLayer = DatabaseAccessLayer<IdentityRole.Table>(
                 context: context
             )
             try await accessLayer.delete(
@@ -153,7 +153,7 @@ extension Identity.Repository {
             try await accessLayer.insert(
                 Array(Set(roleIds))
                     .map {
-                        Identity.Table.RoleLink.Insert(
+                        IdentityRole.Table.Insert(
                             roleId: $0,
                             identityId: identityId
                         )

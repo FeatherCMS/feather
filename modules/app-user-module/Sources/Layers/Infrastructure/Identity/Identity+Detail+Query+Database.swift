@@ -5,7 +5,7 @@ public import UserApplication
 import UserDomain
 public import UserModule
 
-extension Identity.Table.Row {
+extension Identity.Table.Detail {
     func asDetail(roleIds: [String]) -> Identity.Detail.Output {
         .init(
             id: id,
@@ -34,15 +34,15 @@ extension Identity.Detail.Query {
                 let row = try await accessLayer.selectFirst(
                     by: \.id,
                     equals: id,
-                    as: Identity.Table.Row.self
+                    as: Identity.Table.Detail.self
                 )
             else {
                 throw RepositoryError.notFound
             }
             let roleIds = try await DatabaseAccessLayer<
-                Identity.Table.RoleLink
+                IdentityRole.Table
             >(context: context)
-            .select(as: Identity.Table.RoleLink.RoleID.self) {
+            .select(as: IdentityRole.Table.RoleID.self) {
                 $0.where(\.identityId, equals: id)
                     .order(by: [.init(by: \.roleId)])
             }

@@ -10,7 +10,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Role.Search.Scope(
-                    role: Role.Search.Database(
+                    role: Role.Search.Query.Database(
                         context: context
                     )
                 )

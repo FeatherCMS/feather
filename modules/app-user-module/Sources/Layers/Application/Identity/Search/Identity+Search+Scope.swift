@@ -3,9 +3,9 @@ public import UserModule
 
 extension Identity.Search {
     public struct Scope: FeatherModuleKit.Scope {
-        public let identity: any Interface
+        public let identity: any Identity.Search.Query.Interface
 
-        public init(identity: any Interface) {
+        public init(identity: any Identity.Search.Query.Interface) {
             self.identity = identity
         }
     }

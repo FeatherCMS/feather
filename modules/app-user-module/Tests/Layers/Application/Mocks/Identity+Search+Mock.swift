@@ -2,7 +2,7 @@ import UserModule
 
 @testable import UserApplication
 
-actor MockIdentitySearch: Identity.Search.Interface {
+actor MockIdentitySearch: Identity.Search.Query.Interface {
     private(set) var searchCallCount = 0
     private let result: Identity.Search.Output
 

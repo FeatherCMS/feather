@@ -13,7 +13,6 @@ struct IdentityListTests {
         case identityIDs
         case links
         case roles
-        case count
     }
 
     @Test
@@ -61,7 +60,6 @@ struct IdentityListTests {
                     ]
                 ),
                 .init(key: .roles, rows: [.init(["name": .string("admin")])]),
-                .init(key: .count, rows: [.init(["count": .int(1)])]),
             ]
         )
         let executor = try UserAPIHTTPTestSupport.makeExecutor(

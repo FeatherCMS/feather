@@ -11,7 +11,7 @@ extension AdminAPIGateway {
     ) async throws -> Operations.UserIdentityList.Output {
         let subject = try await CurrentSubject.require()
         let limit = min(max(input.query.limit ?? 20, 1), 100)
-        let result = try await useCases.makeSearchIdentities()
+        let result = try await useCases.makeListIdentities()
             .execute(
                 subject: subject,
                 input: .init(
@@ -31,7 +31,7 @@ extension AdminAPIGateway {
     }
 
     private func identityListItemSchema(
-        from item: Identity.Search.Output.Item
+        from item: Identity.List.Output.Item
     ) -> Components.Schemas.UserIdentityListItemSchema {
         .init(
             id: item.id,

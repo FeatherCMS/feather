@@ -6,14 +6,14 @@
 
 import AuthApplication
 import FeatherApplication
-import FeatherModuleKit
+import FeatherDBALPostgres
 import FeatherDatabase
 import FeatherDatabasePostgres
-import FeatherDBALPostgres
-import FeatherSQL
-import FeatherSQLPostgres
 import FeatherDomain
 import FeatherInfrastructure
+import FeatherModuleKit
+import FeatherSQL
+import FeatherSQLPostgres
 import Foundation
 import Logging
 import NIOSSL
@@ -90,7 +90,10 @@ struct AuthInfrastructureTestSuite {
                         ),
                         events: events
                     ),
-                    UserInfrastructure.TableMigration(connection: connection),
+                    UserInfrastructure.TableMigration(
+                        connection: connection,
+                        platform: PostgresDatabasePlatform()
+                    ),
                     UserInfrastructure.TableSeedMigration(
                         context: .init(
                             platform: PostgresDatabasePlatform(),
@@ -160,10 +163,11 @@ struct AuthInfrastructureTestSuite {
             )
             #expect(magicLinks.items.map(\.id) == ["magic-link-2"])
 
-            let rootIdentity = try await Identity.Repository.Database(
-                context: context
-            )
-            .findRoot()
+            let rootIdentity = try await Identity.Repository
+                .Database(
+                    context: context
+                )
+                .findRoot()
 
             #expect(rootIdentity != nil)
             #expect(rootIdentity?.id.isEmpty == false)

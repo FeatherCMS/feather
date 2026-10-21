@@ -9,7 +9,7 @@ private struct IdentitySearchRoleName: DatabaseTableRowDecodable {
     let name: String?
 }
 
-extension Identity.Table.Row {
+extension Identity.Table.List {
     var asIdentityStatus: Identity.Model.Status {
         .init(rawValue: status) ?? .deactivated
     }
@@ -26,8 +26,8 @@ extension Identity.Table.Row {
     }
 }
 
-extension Identity.Search {
-    public struct Database: Identity.Search.Interface {
+extension Identity.Search.Query {
+    public struct Database: Identity.Search.Query.Interface {
         public let context: DatabaseQueryContext
 
         public init(context: DatabaseQueryContext) {
@@ -47,8 +47,9 @@ extension Identity.Search {
             let accessLayer = DatabaseAccessLayer<Identity.Table>(
                 context: context
             )
-            let rows = try await accessLayer.select(as: Identity.Table.Row.self)
-            { initial in
+            let rows = try await accessLayer.select(
+                as: Identity.Table.List.self
+            ) { initial in
                 var result = initial
                 if let search = query.search {
                     result = result.where(
@@ -91,13 +92,15 @@ extension Identity.Search {
         }
 
         private func roleNames(identityId: String) async throws -> [String] {
-            let links = try await DatabaseAccessLayer<Identity.Table.RoleLink>(
+            let roleIDs = try await DatabaseAccessLayer<
+                IdentityRole.Table
+            >(
                 context: context
             )
-            .select(as: Identity.Table.RoleLink.Row.self) {
+            .select(as: IdentityRole.Table.RoleID.self) {
                 $0.where(\.identityId, equals: identityId)
             }
-            let roleIDs = links.map(\.roleId)
+            .map(\.roleId)
             guard !roleIDs.isEmpty else { return [] }
             return try await DatabaseAccessLayer<Role.Table>(context: context)
                 .select(as: IdentitySearchRoleName.self) { query in
@@ -116,7 +119,7 @@ extension Identity.Search {
             let roleRows = try await DatabaseAccessLayer<Role.Table>(
                 context: context
             )
-            .select(as: Role.Table.Row.self) { initial in
+            .select(as: Role.Table.List.self) { initial in
                 initial.where(
                     searchText: role,
                     columns: [
@@ -129,10 +132,10 @@ extension Identity.Search {
             let roleIDs = roleRows.map(\.id)
             guard !roleIDs.isEmpty else { return [] }
 
-            return try await DatabaseAccessLayer<Identity.Table.RoleLink>(
+            return try await DatabaseAccessLayer<IdentityRole.Table>(
                 context: context
             )
-            .select(as: Identity.Table.RoleLink.IdentityID.self) {
+            .select(as: IdentityRole.Table.IdentityID.self) {
                 $0.where(\.roleId, in: roleIDs)
             }
             .map(\.identityId)

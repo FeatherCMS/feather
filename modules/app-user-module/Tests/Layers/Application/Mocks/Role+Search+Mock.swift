@@ -2,7 +2,7 @@ import UserModule
 
 @testable import UserApplication
 
-actor MockRoleSearch: Role.Search.Interface {
+actor MockRoleSearch: Role.Search.Query.Interface {
     private(set) var searchCallCount = 0
     private let result: Role.Search.Output
 

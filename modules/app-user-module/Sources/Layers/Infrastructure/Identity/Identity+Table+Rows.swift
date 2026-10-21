@@ -47,12 +47,3 @@ extension Identity.Table: DatabaseTableWithUpdate {
 }
 
 extension Identity.Table: DatabaseTableWithDelete {}
-
-extension Identity.Table.RoleLink: DatabaseTableWithInsert {
-    struct Insert: DatabaseTableRowEncodable {
-        let roleId: String
-        let identityId: String
-    }
-}
-
-extension Identity.Table.RoleLink: DatabaseTableWithDelete {}

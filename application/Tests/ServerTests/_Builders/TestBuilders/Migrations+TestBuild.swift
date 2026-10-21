@@ -52,7 +52,10 @@ public func buildTestMigrations(
         RedirectInfrastructure.TableMigration(connection: connection),
         BlogInfrastructure.TableMigration(connection: connection),
         NewsInfrastructure.TableMigration(connection: connection),
-        UserInfrastructure.TableMigration(connection: connection),
+        UserInfrastructure.TableMigration(
+            connection: connection,
+            platform: PostgresDatabasePlatform()
+        ),
         AccountInfrastructure.TableMigration(connection: connection),
         AuthInfrastructure.TableMigration(connection: connection),
         ContactInfrastructure.TableMigration(

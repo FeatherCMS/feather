@@ -9,7 +9,6 @@ import UserAdminAPI
 struct RoleListTests {
     private enum QueryKey: DatabaseQueryKey {
         case search
-        case count
     }
 
     @Test
@@ -29,8 +28,7 @@ struct RoleListTests {
                             "updated_at": .date(date),
                         ])
                     ]
-                ),
-                .init(key: .count, rows: [.init(["count": .int(1)])]),
+                )
             ]
         )
         let executor = try UserAPIHTTPTestSupport.makeExecutor(

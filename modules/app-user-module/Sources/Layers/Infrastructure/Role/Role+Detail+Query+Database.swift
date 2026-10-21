@@ -5,7 +5,7 @@ public import UserApplication
 import UserDomain
 public import UserModule
 
-extension Role.Table.Row {
+extension Role.Table.Detail {
     var asDetail: Role.Detail.Output {
         .init(
             id: id,
@@ -31,7 +31,7 @@ extension Role.Detail.Query {
                 let row = try await DatabaseAccessLayer<Role.Table>(
                     context: context
                 )
-                .selectFirst(by: \.id, equals: id, as: Role.Table.Row.self)
+                .selectFirst(by: \.id, equals: id, as: Role.Table.Detail.self)
             else {
                 throw RepositoryError.notFound
             }

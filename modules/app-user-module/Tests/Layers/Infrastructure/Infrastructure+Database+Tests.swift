@@ -1,3 +1,4 @@
+import FeatherDBALTesting
 import FeatherDatabase
 import FeatherDatabaseTesting
 import FeatherInfrastructure
@@ -17,7 +18,10 @@ struct UserInfrastructureDatabaseTests {
         let connection = MockDatabaseConnection<QueryKey>(
             responses: (0..<4).map { _ in .init(key: .migration) }
         )
-        let migration = TableMigration(connection: connection)
+        let migration = TableMigration(
+            connection: connection,
+            platform: MockDatabasePlatform()
+        )
 
         try await migration.apply(on: connection)
         try await connection.assertAllResponsesConsumed()

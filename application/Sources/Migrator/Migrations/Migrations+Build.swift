@@ -43,10 +43,16 @@ public func buildMigrations(
         RedirectInfrastructure.TableMigration(connection: connection),
         BlogInfrastructure.TableMigration(connection: connection),
         NewsInfrastructure.TableMigration(connection: connection),
-        UserInfrastructure.TableMigration(connection: connection),
+        UserInfrastructure.TableMigration(
+            connection: connection,
+            platform: platform
+        ),
         AccountInfrastructure.TableMigration(connection: connection),
         AuthInfrastructure.TableMigration(connection: connection),
-        ContactInfrastructure.TableMigration(connection: connection, platform: platform),
+        ContactInfrastructure.TableMigration(
+            connection: connection,
+            platform: platform
+        ),
         NewsletterInfrastructure.TableMigration(connection: connection),
 
         // Media folder structure

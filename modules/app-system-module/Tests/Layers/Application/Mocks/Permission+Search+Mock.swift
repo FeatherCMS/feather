@@ -3,7 +3,7 @@ import SystemModule
 @testable import SystemApplication
 
 extension SystemModule.Permission.Search {
-    actor Mock: Interface {
+    actor Mock: Query.Interface {
         private(set) var searchCallCount = 0
         private(set) var lastQuery: SystemModule.Permission.Search.Input.Query?
 

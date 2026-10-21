@@ -9,7 +9,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 SystemModule.Permission.Search.Scope(
-                    permission: SystemModule.Permission.Search.Database(
+                    permission: SystemModule.Permission.Search.Query.Database(
                         context: context
                     )
                 )

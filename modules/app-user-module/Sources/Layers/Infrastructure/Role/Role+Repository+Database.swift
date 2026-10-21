@@ -12,7 +12,7 @@ public import UserModule
 
 import struct Foundation.Date
 
-extension Role.Table.Row {
+extension Role.Table.Detail {
     var asDomain: Role.Model {
         .init(
             id: id,
@@ -40,7 +40,7 @@ extension Role.Repository {
             id: String
         ) async throws -> Role.Model? {
             try await DatabaseAccessLayer<Role.Table>(context: context)
-                .selectFirst(by: \.id, equals: id, as: Role.Table.Row.self)?
+                .selectFirst(by: \.id, equals: id, as: Role.Table.Detail.self)?
                 .asDomain
         }
 
@@ -49,7 +49,7 @@ extension Role.Repository {
         ) async throws -> Role.Model? {
             try await DatabaseAccessLayer<Role.Table>(context: context)
                 .selectFirst(
-                    as: Role.Table.Row.self
+                    as: Role.Table.Detail.self
                 ) { $0.where(\.name, equals: name) }?
                 .asDomain
         }
@@ -58,7 +58,7 @@ extension Role.Repository {
             key: String
         ) async throws -> Role.Model? {
             try await DatabaseAccessLayer<Role.Table>(context: context)
-                .selectFirst(by: \.key, equals: key, as: Role.Table.Row.self)?
+                .selectFirst(by: \.key, equals: key, as: Role.Table.Detail.self)?
                 .asDomain
         }
 
@@ -79,7 +79,7 @@ extension Role.Repository {
                 let saved = try await accessLayer.selectFirst(
                     by: \.id,
                     equals: id,
-                    as: Role.Table.Row.self
+                    as: Role.Table.Detail.self
                 )
             else {
                 throw RepositoryError.notFound
@@ -104,7 +104,7 @@ extension Role.Repository {
                 let updated = try await accessLayer.selectFirst(
                     by: \.id,
                     equals: model.id,
-                    as: Role.Table.Row.self
+                    as: Role.Table.Detail.self
                 )
             else {
                 throw RepositoryError.notFound

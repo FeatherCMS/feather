@@ -16,15 +16,5 @@ extension Role {
             let createdAt = DatabaseTableColumn<Date>(name: "created_at")
             let updatedAt = DatabaseTableColumn<Date>(name: "updated_at")
         }
-
-        struct Row: DatabaseTableRowDecodable {
-            let id: String
-            let key: String
-            let name: String?
-            let notes: String?
-            let createdAt: Date
-            let updatedAt: Date
-        }
-
     }
 }

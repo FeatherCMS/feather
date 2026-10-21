@@ -9,7 +9,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 SystemModule.Variable.Search.Scope(
-                    variable: SystemModule.Variable.Search.Database(
+                    variable: SystemModule.Variable.Search.Query.Database(
                         context: context
                     )
                 )

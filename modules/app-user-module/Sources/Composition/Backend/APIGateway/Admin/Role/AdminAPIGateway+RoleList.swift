@@ -10,7 +10,7 @@ extension AdminAPIGateway {
     ) async throws -> Operations.UserRoleList.Output {
         let subject = try await CurrentSubject.require()
         let limit = min(max(input.query.limit ?? 20, 1), 100)
-        let result = try await useCases.makeSearchRoles()
+        let result = try await useCases.makeListRoles()
             .execute(
                 subject: subject,
                 input: .init(
@@ -29,7 +29,7 @@ extension AdminAPIGateway {
     }
 
     private func roleListItemSchema(
-        from item: Role.Search.Output.Item
+        from item: Role.List.Output.Item
     ) -> Components.Schemas.UserRoleListItemSchema {
         .init(id: item.id, key: item.key, name: item.name)
     }

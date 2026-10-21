@@ -4,7 +4,7 @@ public import FeatherInfrastructure
 public import UserApplication
 public import UserModule
 
-extension Role.Table.Row {
+extension Role.Table.List {
     var asSearchItem: Role.Search.Output.Item {
         .init(
             id: id,
@@ -17,8 +17,8 @@ extension Role.Table.Row {
     }
 }
 
-extension Role.Search {
-    public struct Database: Role.Search.Interface {
+extension Role.Search.Query {
+    public struct Database: Role.Search.Query.Interface {
         public let context: DatabaseQueryContext
 
         public init(context: DatabaseQueryContext) {
@@ -30,7 +30,7 @@ extension Role.Search {
         {
             let accessLayer = DatabaseAccessLayer<Role.Table>(context: context)
             let items =
-                try await accessLayer.select(as: Role.Table.Row.self) {
+                try await accessLayer.select(as: Role.Table.List.self) {
                     initial in
                     var result = initial
                     if let search = query.search {

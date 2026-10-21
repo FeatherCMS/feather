@@ -34,7 +34,7 @@ extension SystemModule.Job.Search.Query {
             let orderDirection = direction == .asc ? " ASC" : " DESC"
 
             let items = try await context.connection.run(
-                query: listQuery(
+                query: searchItemsQuery(
                     searchPattern: searchPattern,
                     status: status,
                     pageSize: page.size,
@@ -56,7 +56,7 @@ extension SystemModule.Job.Search.Query {
             return .init(items: items, total: total)
         }
 
-        private func listQuery(
+        private func searchItemsQuery(
             searchPattern: String?,
             status: Int?,
             pageSize: Int,

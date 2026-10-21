@@ -10,7 +10,7 @@ extension UseCases {
             databaseContext: databaseContext,
             scope: { context in
                 Identity.Search.Scope(
-                    identity: Identity.Search.Database(
+                    identity: Identity.Search.Query.Database(
                         context: context
                     )
                 )
